@@ -1,0 +1,147 @@
+---
+de:
+  admin:
+    navigation:
+      label: Verwaltung
+      users: Benutzer
+      verifications: Prüfung
+      reports: Meldungen
+      privacy_requests: Datenschutzanfragen
+      site: Zur Website
+    users:
+      link: Benutzer verwalten
+      eyebrow: Verwaltung
+      you: Sie
+      not_recorded: Nicht angegeben
+      timezone: Die Zeiten werden in der Zeitzone Europe/Brussels angezeigt.
+      index:
+        title: Benutzer — LawRelay-Verwaltung
+        heading: Benutzer
+        intro: Suchen Sie ein Konto und verwalten Sie seinen Zugang.
+        total:
+          one: 1 Benutzer
+          other: "%{count} Benutzer"
+        list_label: Benutzerkonten
+        empty_title: Keine Benutzer gefunden
+        empty_body: Versuchen Sie einen anderen Namen, eine andere E-Mail-Adresse oder einen anderen Filter.
+      filters:
+        label: Benutzer suchen
+        search: Suchen
+        search_hint: Name, E-Mail oder Kanzlei
+        status: Kontozugang
+        verification: Anwaltsprüfung
+        all: Alle
+        apply: Suchen
+        clear: Zurücksetzen
+      fields:
+        role: Rolle
+        firm: Kanzlei
+        status: Kontozugang
+        email_status: E-Mail-Adresse
+        marketplace_access: Zugang zu Aufträgen
+        mfa: Administrator-MFA
+        created_at: Registriert
+        suspension_reason: Grund der Sperrung
+        firm_status: Kanzleiprüfung
+        lawyer_status: Anwaltsprüfung
+        directory_name: Name im Verzeichnis
+        directory_email: Eingetragene E-Mail
+        directory_email_status: Eingetragene E-Mail bestätigt
+        first_name: Vorname
+        last_name: Nachname
+        email_address: E-Mail-Adresse
+        locale: Sprache der Oberfläche
+        reason: Interner Grund
+      status:
+        active: Aktiv
+        suspended: Gesperrt
+      verification:
+        pending: Ausstehend
+        verified: Geprüft
+        rejected: Abgelehnt
+        suspended: Gesperrt
+        not_required: Nicht erforderlich
+      roles:
+        member: Mitglied
+        admin: Administrator
+      email:
+        verified: Bestätigt
+        pending: Nicht bestätigt
+      marketplace:
+        available: Verfügbar
+        unavailable: Nicht verfügbar
+      mfa:
+        configured: Eingerichtet
+        missing: Nicht eingerichtet
+        not_required: Nicht erforderlich
+      actions:
+        manage: Verwalten
+        back: Alle Benutzer
+        directory: Profil auf advocaat.be öffnen
+        review_verification: Berufliche Prüfung ansehen
+        save: Konto speichern
+      show:
+        title: "%{name} — LawRelay-Verwaltung"
+        overview: Kontoübersicht
+        professional: Berufliche Angaben
+        account: Kontodaten
+        access: Zugang verwalten
+        protected: Administratorkonten können hier nur eingesehen werden.
+        identity_hint: Änderungen am Namen oder an der E-Mail-Adresse melden bestehende Sitzungen ab und erfordern eine neue berufliche Prüfung. Eine geänderte E-Mail-Adresse muss bestätigt werden.
+      access:
+        suspend:
+          heading: Konto sperren
+          body: Sperrt dieses Konto und meldet alle Sitzungen ab.
+          submit: Konto sperren
+        restore:
+          heading: Zugang wiederherstellen
+          body: Erlaubt die erneute Anmeldung. Für Aufträge gelten weiterhin die üblichen Prüfungen.
+          submit: Zugang wiederherstellen
+        revoke_sessions:
+          heading: Alle Sitzungen abmelden
+          body: Meldet die Sitzungen dieses Benutzers ab. Eine erneute Anmeldung ist möglich.
+          submit: Alle Sitzungen abmelden
+      sessions:
+        heading: Aktive Sitzungen
+        limit: Bis zu 20 Sitzungen
+        started: Angemeldet
+        last_active: Zuletzt aktiv
+        expires: Läuft ab
+        active: Aktiv
+        expired: Abgelaufen
+        empty: Keine aktiven Sitzungen.
+      audit:
+        heading: Letzte Aktivitäten
+        limit: Bis zu 30 Ereignisse
+        system: System
+        changed_fields: 'Geänderte Felder: %{fields}'
+        empty: Keine Aktivitäten erfasst.
+        actions:
+          admin_user_updated: Kontodaten geändert
+          admin_user_suspended: Konto gesperrt
+          admin_user_restored: Kontozugang wiederhergestellt
+          admin_user_sessions_revoked: Sitzungen abgemeldet
+          account_updated: Kontodaten geändert
+          admin_bootstrapped: Administratorkonto erstellt
+          verification_directory_matched: Verzeichnisprofil abgeglichen
+          verification_directory_email_confirmed: Eingetragene E-Mail bestätigt
+          verification_directory_activated: Beruflicher Zugang geprüft
+          verification_approved: Berufliche Prüfung genehmigt
+          verification_rejected: Berufliche Prüfung abgelehnt
+      pagination:
+        label: Benutzerseiten
+        previous: Zurück
+        next: Weiter
+        page: Seite %{current} von %{total}
+      errors:
+        heading: Änderung prüfen
+        protected_account: Administratorkonten können hier nicht geändert werden.
+        reason_required: Geben Sie einen Grund für diese Aktion an.
+        reason_too_long: Der Grund darf höchstens 2.000 Zeichen enthalten.
+        invalid_action: Wählen Sie eine gültige Kontoaktion.
+        invalid_details: Prüfen Sie die Kontodaten und versuchen Sie es erneut.
+      notices:
+        updated: Kontodaten gespeichert.
+        suspended: Das Konto ist gesperrt und seine Sitzungen sind abgemeldet.
+        restored: Kontozugang wiederhergestellt.
+        sessions_revoked: Alle Sitzungen dieses Kontos sind abgemeldet.

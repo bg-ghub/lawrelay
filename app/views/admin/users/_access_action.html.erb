@@ -1,0 +1,11 @@
+<%= form_with url: action_path, scope: :user_management, namespace: dom_id(@user, action_name), method: :patch, class: "admin-user-access-form" do |form| %>
+  <fieldset>
+    <legend><%= t("admin.users.access.#{action_name}.heading") %></legend>
+    <p><%= t("admin.users.access.#{action_name}.body") %></p>
+    <div class="field-group">
+      <%= form.label :reason, t("admin.users.fields.reason") %>
+      <%= form.text_area :reason, required: true, maxlength: 2_000, rows: 2, value: (params[:action] == action_name ? params.dig(:user_management, :reason) : nil), aria: { invalid: params[:action] == action_name && @management_error.present?, describedby: params[:action] == action_name && @management_error.present? ? "admin-user-errors" : nil } %>
+    </div>
+    <div class="form-actions"><%= form.submit t("admin.users.access.#{action_name}.submit"), class: "button #{button_class}" %></div>
+  </fieldset>
+<% end %>

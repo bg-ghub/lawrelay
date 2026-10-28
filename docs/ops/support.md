@@ -6,7 +6,7 @@ Migadu Micro permits [20 outgoing attempts per day across the account](https://w
 
 ## Daily triage
 
-1. Review the support inbox and the MFA-protected admin queues: `/nl/admin/verifications`, `/nl/admin/reports`, `/nl/admin/privacy_requests`.
+1. Review the support inbox and MFA-protected administration: `/nl/admin/users`, `/nl/admin/verifications`, `/nl/admin/reports`, `/nl/admin/privacy_requests`. Administrator sign-in opens user management; the Admin navigation links the queues.
 2. Prioritise suspected disclosure, takeover, urgent access loss, and failed mail. Escalate security incidents through [incident-response.md](incident-response.md).
 3. Record a private reference, received date, category, owner, next action, and next review date. Keep contact details, screenshots, and correspondence outside GitHub and this repository.
 4. Reply in the user's language when possible. Ask for the affected page, approximate time, browser, and a record reference; never ask for passwords, MFA codes, client names, case facts, or documents.
@@ -14,6 +14,10 @@ Migadu Micro permits [20 outgoing attempts per day across the account](https://w
 
 ## Verification and access
 
+- Find the account by name, email or firm in user management. Check account access, email proof, professional verification and the primary firm separately; they are different controls.
+- For a compromised or abusive member account, suspend it with a reason. This signs out its sessions and blocks sign-in; it does not alter the firm, its colleagues or published assignments. Restore only after review, with a recorded reason. Restoration does not grant professional verification.
+- Use session sign-out for an active account that only needs its devices disconnected. The user can sign in again. Name/email corrections clear professional proof and sign out the affected account; a changed email must be confirmed again.
+- Administrator accounts are read-only in this console. Use the audited operator recovery procedure for administrator changes; never weaken MFA to make a support action easier.
 - Compare the account with the actual `advocaat.be` profile and the published professional email. A matching name alone does not prove control of that identity.
 - For an expired link, use the existing resend flow. For a wrong or inaccessible directory email, ask the lawyer to correct the official listing; do not confirm a different person's account.
 - Do not disclose whether another person's email or profile is registered. Handle competing claims privately using the official profile and verified contact channel.

@@ -32,7 +32,7 @@ module Authentication
       resumed_session = Session.includes(:user).find_by(id: session_id)
       return unless resumed_session
 
-      if resumed_session.expired?
+      if resumed_session.expired? || !resumed_session.user.active?
         resumed_session.destroy!
         cookies.delete(:session_id)
         return
@@ -48,7 +48,7 @@ module Authentication
     end
 
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || dashboard_url
+      session.delete(:return_to_after_authenticating) || (current_user.system_admin? ? admin_users_url : dashboard_url)
     end
 
     def start_new_session_for(user)

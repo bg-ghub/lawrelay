@@ -13,6 +13,7 @@ Rails.application.config.filter_parameters += [
   :description,
   :details,
   :note,
+  :reason,
   :title,
   :scope_indication,
   :mfa_code,

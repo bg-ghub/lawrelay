@@ -1,0 +1,147 @@
+---
+en:
+  admin:
+    navigation:
+      label: Administration
+      users: Users
+      verifications: Verification
+      reports: Reports
+      privacy_requests: Privacy requests
+      site: Back to site
+    users:
+      link: Manage users
+      eyebrow: Administration
+      you: You
+      not_recorded: Not recorded
+      timezone: Times are shown in Europe/Brussels.
+      index:
+        title: Users — LawRelay admin
+        heading: Users
+        intro: Find an account and manage its access.
+        total:
+          one: 1 user
+          other: "%{count} users"
+        list_label: User accounts
+        empty_title: No users found
+        empty_body: Try another name, email or filter.
+      filters:
+        label: Find users
+        search: Search
+        search_hint: Name, email or firm
+        status: Account access
+        verification: Lawyer check
+        all: All
+        apply: Search
+        clear: Clear
+      fields:
+        role: Role
+        firm: Firm
+        status: Account access
+        email_status: Email
+        marketplace_access: Marketplace access
+        mfa: Administrator MFA
+        created_at: Registered
+        suspension_reason: Suspension reason
+        firm_status: Firm check
+        lawyer_status: Lawyer check
+        directory_name: Directory name
+        directory_email: Listed email
+        directory_email_status: Listed email confirmed
+        first_name: First name
+        last_name: Last name
+        email_address: Email address
+        locale: Interface language
+        reason: Internal reason
+      status:
+        active: Active
+        suspended: Suspended
+      verification:
+        pending: Pending
+        verified: Verified
+        rejected: Rejected
+        suspended: Suspended
+        not_required: Not required
+      roles:
+        member: Member
+        admin: Administrator
+      email:
+        verified: Confirmed
+        pending: Not confirmed
+      marketplace:
+        available: Available
+        unavailable: Not available
+      mfa:
+        configured: Configured
+        missing: Not configured
+        not_required: Not required
+      actions:
+        manage: Manage
+        back: All users
+        directory: Open advocaat.be profile
+        review_verification: Review professional verification
+        save: Save account
+      show:
+        title: "%{name} — LawRelay admin"
+        overview: Account overview
+        professional: Professional details
+        account: Account details
+        access: Access controls
+        protected: Administrator accounts are read-only here.
+        identity_hint: Name or email changes sign out existing sessions and require a new professional check. A changed email must be confirmed.
+      access:
+        suspend:
+          heading: Suspend account
+          body: Blocks this account and signs out all its sessions.
+          submit: Suspend account
+        restore:
+          heading: Restore access
+          body: Allows sign-in again. Marketplace access still needs the normal verification checks.
+          submit: Restore access
+        revoke_sessions:
+          heading: Sign out all sessions
+          body: Signs out this user's sessions. They can sign in again.
+          submit: Sign out all sessions
+      sessions:
+        heading: Active sessions
+        limit: Up to 20 sessions
+        started: Signed in
+        last_active: Last active
+        expires: Expires
+        active: Active
+        expired: Expired
+        empty: No active sessions.
+      audit:
+        heading: Recent activity
+        limit: Up to 30 events
+        system: System
+        changed_fields: 'Fields changed: %{fields}'
+        empty: No activity recorded.
+        actions:
+          admin_user_updated: Account details updated
+          admin_user_suspended: Account suspended
+          admin_user_restored: Account access restored
+          admin_user_sessions_revoked: Sessions signed out
+          account_updated: Account details updated
+          admin_bootstrapped: Administrator account created
+          verification_directory_matched: Directory profile matched
+          verification_directory_email_confirmed: Listed email confirmed
+          verification_directory_activated: Professional access verified
+          verification_approved: Professional verification approved
+          verification_rejected: Professional verification rejected
+      pagination:
+        label: User pages
+        previous: Previous
+        next: Next
+        page: Page %{current} of %{total}
+      errors:
+        heading: Check this change
+        protected_account: Administrator accounts cannot be changed here.
+        reason_required: Add a reason for this action.
+        reason_too_long: Keep the reason under 2,000 characters.
+        invalid_action: Choose a valid account action.
+        invalid_details: Check the account details and try again.
+      notices:
+        updated: Account details saved.
+        suspended: The account is suspended and its sessions are signed out.
+        restored: Account access restored.
+        sessions_revoked: All sessions for this account are signed out.

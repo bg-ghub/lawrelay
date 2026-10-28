@@ -32,6 +32,15 @@ class User < ApplicationRecord
   validates :locale, inclusion: { in: LOCALES }
   validates :system_role, inclusion: { in: SYSTEM_ROLES }
   validates :password, length: { minimum: 12 }, allow_nil: true
+  validates :suspension_reason, length: { maximum: 2_000 }, allow_nil: true
+
+  def suspended?
+    suspended_at.present?
+  end
+
+  def active?
+    !suspended?
+  end
 
   def full_name
     [ first_name, last_name ].compact_blank.join(" ")
@@ -54,7 +63,7 @@ class User < ApplicationRecord
   end
 
   def marketplace_verified?
-    email_verified? && lawyer_profile&.verified? && primary_firm&.verified?
+    active? && email_verified? && lawyer_profile&.verified? && primary_firm&.verified?
   end
 
   def system_admin?

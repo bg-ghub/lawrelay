@@ -5,6 +5,17 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-28
+
+### Added
+
+- MFA-protected user administration with search, filters, account details, audited identity edits, suspension/restoration and session revocation.
+- Administrator navigation and a direct user-management landing page after sign-in.
+
+### Fixed
+
+- Suspended accounts cannot sign in, reuse sessions, or activate verification through old links or queued directory checks. Firm and colleague access remain unchanged.
+
 ## [0.2.1] - 2026-10-28
 
 ### Fixed
@@ -46,7 +57,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/bg-ghub/lawrelay/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/bg-ghub/lawrelay/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/bg-ghub/lawrelay/compare/v0.1.0...v0.1.1

@@ -30,6 +30,19 @@ class EmailVerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "This verification link is invalid or has expired.", flash[:alert]
   end
 
+  test "suspended accounts cannot confirm an existing email link" do
+    user = users(:two)
+    user.update!(email_verified_at: nil)
+    token = user.email_verification_token
+    user.update!(suspended_at: Time.current, suspension_reason: "Account review")
+
+    get email_verification_path(token:, locale: :en)
+    assert_redirected_to new_session_path(locale: :en)
+    post confirm_email_verification_path(token:, locale: :en)
+    assert_redirected_to new_session_path(locale: :en)
+    assert_not user.reload.email_verified?
+  end
+
   test "sends a signed-in lawyer to their dashboard when verification completes access" do
     user = users(:two)
     firm = Firm.create!(name: "Verified Email Legal", verification_status: "pending")
