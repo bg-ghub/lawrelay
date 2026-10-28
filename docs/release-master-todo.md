@@ -90,7 +90,7 @@ At this price, one paying office should cover basic hosting/email infrastructure
 - [x] Create the public GitHub repository and push the code.
 - [x] Confirm `config/master.key`, `.env*`, databases, uploads, and provider secrets are ignored and absent from history.
 - [x] Run Gitleaks and targeted account/token/path scans before the first push; no findings.
-- [ ] Protect the main branch and require CI before merge; enable private vulnerability reporting.
+- [x] Protect `main` against force-push/deletion, require version/security/lint/unit/system CI, enforce checks for administrators, and enable private vulnerability reporting plus secret push protection.
 - [ ] Make the CI runner work consistently on Windows and Linux; the current aggregate `bin/ci` command assumes a Unix shell locally.
 - [x] Add a SemVer-enforced `VERSION`, release tag, CI tag/version check, and changelog.
 - [x] Replace the generated README with setup, environment, test, deploy, backup, and incident instructions.
