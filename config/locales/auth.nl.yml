@@ -120,6 +120,9 @@ nl:
         heading: "Hallo %{name},"
         body: "Gebruik de veilige link hieronder om een nieuw LawRelay-wachtwoord te kiezen."
         action: "Nieuw wachtwoord kiezen"
+        duration_minutes:
+          one: "1 minuut"
+          other: "%{count} minuten"
         expiry: "Deze link verloopt over %{duration}. Heb je dit niet gevraagd, dan kun je dit bericht negeren."
       email_verification:
         subject: "Bevestig je LawRelay-e-mailadres"
