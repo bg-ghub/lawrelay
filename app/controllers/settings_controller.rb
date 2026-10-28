@@ -5,16 +5,12 @@ class SettingsController < ApplicationController
   end
 
   def update
-    email_changed = user_params[:email_address].present? &&
-      user_params[:email_address].strip.casecmp?(@user.email_address) == false
     profile_requires_review = profile_review_required?
     directory_identity_changed = directory_identity_changed?
     firm_requires_review = firm_review_required?
 
     ApplicationRecord.transaction do
       @user.assign_attributes(user_params)
-      @user.email_verified_at = nil if email_changed
-
       @profile.assign_attributes(profile_params)
       clear_directory_evidence! if directory_identity_changed
       reset_profile_verification! if profile_requires_review || directory_identity_changed
@@ -27,12 +23,11 @@ class SettingsController < ApplicationController
       @user.save!
       @profile.save!
       @firm.save! if @can_manage_firm
-      record_changes!(email_changed:, profile_requires_review:, firm_requires_review:)
+      record_changes!(profile_requires_review:, firm_requires_review:)
     end
 
-    EmailVerificationMailer.verify(@user).deliver_later if email_changed
     Directory::VerificationJob.perform_later(@user.id) if directory_identity_changed && !protected_profile?(@profile)
-    redirect_to settings_path(locale: @user.locale), notice: update_notice(email_changed, profile_requires_review || directory_identity_changed, firm_requires_review)
+    redirect_to settings_path(locale: @user.locale), notice: update_notice(profile_requires_review || directory_identity_changed, firm_requires_review)
   rescue ActiveRecord::RecordInvalid
     render :show, status: :unprocessable_content
   end
@@ -47,7 +42,7 @@ class SettingsController < ApplicationController
   end
 
   def user_params
-    params.fetch(:account, {}).permit(:first_name, :last_name, :email_address, :locale)
+    params.fetch(:account, {}).permit(:first_name, :last_name, :locale)
   end
 
   def profile_params
@@ -79,7 +74,7 @@ class SettingsController < ApplicationController
   def directory_identity_changed?
     return false if @profile.new_record?
 
-    user_params.to_h.slice("first_name", "last_name", "email_address").any? do |attribute, value|
+    user_params.to_h.slice("first_name", "last_name").any? do |attribute, value|
       @user.public_send(attribute).to_s != value.to_s.strip
     end
   end
@@ -120,7 +115,7 @@ class SettingsController < ApplicationController
     @firm.assign_attributes(verification_status: "pending", verified_at: nil)
   end
 
-  def record_changes!(email_changed:, profile_requires_review:, firm_requires_review:)
+  def record_changes!(profile_requires_review:, firm_requires_review:)
     changed_models = [ @user, @profile, (@firm if @can_manage_firm) ].compact.select(&:saved_changes?)
     changed_models.each do |record|
       AuditEvent.create!(
@@ -128,13 +123,12 @@ class SettingsController < ApplicationController
         actor_user: @user,
         firm: @firm,
         action: "account.updated",
-        metadata: { changed_fields: record.saved_changes.keys, email_changed:, profile_requires_review:, firm_requires_review: }
+        metadata: { changed_fields: record.saved_changes.keys, profile_requires_review:, firm_requires_review: }
       )
     end
   end
 
-  def update_notice(email_changed, profile_requires_review, firm_requires_review)
-    return t("settings.notices.email_reverification") if email_changed
+  def update_notice(profile_requires_review, firm_requires_review)
     return t("settings.notices.review_required") if profile_requires_review || firm_requires_review
 
     t("settings.notices.updated")

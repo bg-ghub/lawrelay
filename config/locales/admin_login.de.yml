@@ -1,0 +1,14 @@
+de:
+  admin:
+    login:
+      title: "Administrator-Anmeldung — LawRelay"
+      link: "Admin-Anmeldung"
+      eyebrow: "Verwaltung"
+      heading: "Als Administrator anmelden."
+      lede: "Geben Sie das Administratorpasswort ein, um fortzufahren. Anschließend ist ein Bestätigungscode erforderlich."
+      form_title: "Administratorzugang"
+      password: "Passwort"
+      submit: "Weiter"
+      forgot_password: "Passwort vergessen?"
+      invalid: "Das Administratorpasswort ist ungültig."
+      rate_limited: "Zu viele Versuche. Bitte versuchen Sie es später erneut."

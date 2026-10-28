@@ -1,0 +1,24 @@
+de:
+  email_change:
+    link: "E-Mail-Adresse ändern"
+    title: "E-Mail-Adresse ändern — LawRelay"
+    eyebrow: "Kontosicherheit"
+    heading: "Ihre Anmelde-E-Mail ändern"
+    lede: "Aktualisieren Sie Ihre Adresse zuerst auf advocaat.be. Wir senden eine Bestätigung an die neue Adresse und prüfen den offiziellen Eintrag erneut. Ist er noch nicht aktualisiert, versuchen Sie es später erneut."
+    admin_lede: "Wir senden einen Bestätigungslink an Ihre neue Anmelde-E-Mail-Adresse."
+    notices:
+      sent: "Wir haben einen Bestätigungslink an Ihre neue E-Mail-Adresse gesendet."
+    errors:
+      password: "Ihr aktuelles Passwort ist nicht korrekt."
+      unchanged: "Geben Sie eine andere E-Mail-Adresse als Ihre aktuelle ein."
+      unavailable: "Ihr Konto ist nicht mehr verfügbar. Bitte melden Sie sich erneut an."
+      rate_limited: "Bitte warten Sie, bevor Sie eine weitere E-Mail-Änderung versuchen."
+    form:
+      legend: "Neue E-Mail-Adresse"
+      current: "Aktuelle E-Mail-Adresse"
+      new_email: "Neue E-Mail-Adresse"
+      password: "Aktuelles Passwort"
+      hint: "Wir prüfen die bestehenden Verzeichnisnachweise erneut. Kanzlei und Kolleginnen und Kollegen bleiben unverändert."
+      admin_hint: "Ihre aktuelle Sitzung bleibt angemeldet; andere Sitzungen werden abgemeldet."
+      submit: "E-Mail-Adresse ändern"
+      cancel: "Abbrechen"

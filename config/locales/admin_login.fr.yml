@@ -1,0 +1,14 @@
+fr:
+  admin:
+    login:
+      title: "Connexion administrateur — LawRelay"
+      link: "Connexion administrateur"
+      eyebrow: "Administration"
+      heading: "Connexion administrateur."
+      lede: "Saisissez le mot de passe administrateur pour continuer. Un code de vérification sera ensuite requis."
+      form_title: "Accès administrateur"
+      password: "Mot de passe"
+      submit: "Continuer"
+      forgot_password: "Mot de passe oublié ?"
+      invalid: "Le mot de passe administrateur n’est pas valide."
+      rate_limited: "Trop de tentatives. Réessayez plus tard."

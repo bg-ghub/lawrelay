@@ -41,22 +41,15 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "billing@example.test", @account.firm.billing_email
   end
 
-  test "email changes require a new verification, clear directory proof, and requeue the check" do
-    directory_profile = verified_directory_profile!
+  test "settings ignores a forged direct email update" do
+    original_email = @account.user.email_address
 
-    assert_enqueued_emails 1 do
-      assert_enqueued_with(job: Directory::VerificationJob, args: [ @account.user.id ]) do
-        patch settings_path(locale: :en), params: valid_params(account: { email_address: "new-address@example.test" })
-      end
+    assert_no_enqueued_emails do
+      patch settings_path(locale: :en), params: valid_params(account: { email_address: "new-address@example.test" })
     end
 
     assert_redirected_to settings_path(locale: :en)
-    @account.user.reload
-    assert_equal "new-address@example.test", @account.user.email_address
-    assert_nil @account.user.email_verified_at
-    assert_nil directory_profile.reload.directory_profile_id
-    assert_nil directory_profile.directory_email_verified_at
-    assert_nil directory_profile.directory_identity_digest
+    assert_equal original_email, @account.user.reload.email_address
   end
 
   test "name changes reset directory verification and queue a fresh check" do

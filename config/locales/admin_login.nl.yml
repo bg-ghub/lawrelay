@@ -1,0 +1,14 @@
+nl:
+  admin:
+    login:
+      title: "Beheerdersaanmelding — LawRelay"
+      link: "Beheerlogin"
+      eyebrow: "Beheer"
+      heading: "Aanmelden als beheerder."
+      lede: "Voer het beheerderswachtwoord in om verder te gaan. Daarna is een verificatiecode vereist."
+      form_title: "Beheerderstoegang"
+      password: "Wachtwoord"
+      submit: "Doorgaan"
+      forgot_password: "Wachtwoord vergeten?"
+      invalid: "Het beheerderswachtwoord is niet geldig."
+      rate_limited: "Te veel pogingen. Probeer het later opnieuw."

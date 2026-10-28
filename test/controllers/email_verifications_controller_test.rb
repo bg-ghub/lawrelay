@@ -91,4 +91,17 @@ class EmailVerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_not profile.reload.directory_email_verified?
     assert_not firm.reload.verified?
   end
+
+  test "a signed-in operator returns to the MFA-protected admin area after email confirmation" do
+    user = users(:two)
+    user.update!(system_role: "admin", email_verified_at: nil)
+    sign_in_as(user)
+
+    post confirm_email_verification_path(token: user.email_verification_token, locale: :en)
+
+    assert_redirected_to admin_users_path(locale: :en)
+    assert_predicate user.reload, :email_verified?
+    follow_redirect!
+    assert_redirected_to admin_mfa_setup_path(locale: :en)
+  end
 end

@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       post :retry_directory
     end
     resource :settings, only: %i[show update]
+    get "settings/email", to: "email_changes#new", as: :email_change
+    post "settings/email", to: "email_changes#create"
     resources :privacy_requests, only: %i[index new create]
 
     get "billing", to: "billing#show", as: :billing
@@ -41,6 +43,8 @@ Rails.application.routes.draw do
     end
     namespace :admin do
       root "users#index"
+      get "login", to: "sessions#new", as: :login
+      post "login", to: "sessions#create"
       resources :users, only: %i[index show update] do
         member do
           patch :suspend

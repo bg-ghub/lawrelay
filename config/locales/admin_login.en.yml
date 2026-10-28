@@ -1,0 +1,14 @@
+en:
+  admin:
+    login:
+      title: "Administrator sign in — LawRelay"
+      link: "Admin sign-in"
+      eyebrow: "Administration"
+      heading: "Administrator sign in."
+      lede: "Enter the administrator password to continue. A verification code is required next."
+      form_title: "Administrator access"
+      password: "Password"
+      submit: "Continue"
+      forgot_password: "Forgot password?"
+      invalid: "The administrator password is not valid."
+      rate_limited: "Too many attempts. Please try again later."

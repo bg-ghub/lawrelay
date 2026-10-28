@@ -29,7 +29,8 @@ class PasswordsController < ApplicationController
     end
 
     if updated
-      redirect_to new_session_path, notice: t("auth.passwords.reset")
+      destination = @user.system_admin? ? admin_login_path : new_session_path
+      redirect_to destination, notice: t("auth.passwords.reset")
     else
       redirect_to edit_password_path(token: params[:token]), alert: t("auth.passwords.invalid_password")
     end
