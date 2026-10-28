@@ -7,6 +7,8 @@ module Billing
     end
 
     def call
+      return unless paid_release?
+
       event = register_event
       payment = BillingPayment.find_by(provider: "mollie", provider_payment_id: @payment_id)
       return event.update!(status: "ignored", processed_at: Time.current) unless payment
@@ -32,6 +34,10 @@ module Billing
     end
 
     private
+
+    def paid_release?
+      ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
+    end
 
     def register_event
       digest = Digest::SHA256.hexdigest(@payload.to_json)

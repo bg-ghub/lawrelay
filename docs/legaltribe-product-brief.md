@@ -28,6 +28,12 @@ The live application at `app.legaltribe.eu` is still operating. A read-only revi
 
 The review also exposed patterns LawRelay should deliberately improve rather than copy. LegalTribe shows requester identity and matter descriptions before acceptance, its public Terms and Privacy routes still contain placeholder text, and the permanent cookie dialog dominates authenticated pages. LawRelay therefore keeps closed matters participant-only, exchanges contact details only after acceptance, requires an explicit no-confidential-data confirmation, and treats complete legal/operator disclosure as a release gate.
 
+### Public registration follow-up
+
+LegalTribe's live `/register` page asks for surname, first name, email, password/confirmation, an “I am a lawyer” checkbox, and terms/privacy acceptance. No official-directory field or invitation code is visible. This establishes its public registration interface, not its unobservable backend verification rules.
+
+LawRelay's operator selected open registration for lawyers listed on `advocaat.be`, without invitation or cohort limits. LawRelay checks the official profile and control of its published professional email before granting marketplace access; free beta access follows verification automatically.
+
 ## Sources reviewed
 
 - [LegalTribe public website](https://www.legaltribe.eu/)

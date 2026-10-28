@@ -1,0 +1,36 @@
+fr:
+  directory_onboarding:
+    registration:
+      legend: "Votre inscription officielle"
+      profile_url: "Lien vers votre profil Advocaat.be"
+      profile_url_hint: "Nous vérifions le profil public, le nom et l’adresse professionnelle publiée. Si elle diffère de votre adresse de connexion, nous vous demanderons aussi de la confirmer."
+      invalid_profile_url: "doit être un lien vers votre profil public d’avocat sur Advocaat.be"
+      find_profile: "Trouver votre profil sur Advocaat.be"
+      firm_hint: "Nous l’utilisons uniquement pour configurer votre espace de travail."
+      aside_one_title: "Votre profil"
+      aside_one_body: "Collez le lien vers votre profil public Advocaat.be. Aucun numéro de barreau à encoder."
+      aside_two_title: "Une vérification rapide"
+      aside_two_body: "Nous vérifions l’annuaire actuel après la création de votre compte."
+      aside_three_title: "Et c’est parti"
+      aside_three_body: "Dès que votre adresse de connexion et votre identité professionnelle sont confirmées, l’accès est ouvert automatiquement."
+    status:
+      lede: "L’accès à la plateforme s’ouvre après confirmation de votre adresse de connexion et de votre inscription professionnelle officielle."
+      directory: "Annuaire officiel"
+      states:
+        pending: "Vérification de votre profil public"
+        matched: "Profil trouvé"
+      pending_title: "Vérification de votre profil officiel"
+      pending_body: "Nous vérifions le profil Advocaat.be que vous avez partagé. Cela peut prendre un instant."
+      confirmation_title: "Confirmez votre adresse professionnelle publiée"
+      confirmation_body: "Nous avons envoyé un lien de confirmation à %{email}, l’adresse publiée sur votre profil officiel."
+      ready_title: "Identité professionnelle confirmée"
+      ready_body: "La vérification de l’annuaire est terminée. L’accès s’ouvrira automatiquement une fois tous les contrôles terminés."
+      retry: "Vérifier à nouveau"
+      retry_queued: "Nous reverrons votre profil officiel sous peu."
+      retry_rate_limited: "Veuillez patienter avant de demander une nouvelle vérification."
+      fallback_html: "Si votre inscription publique est correcte mais que cela ne fonctionne pas, contactez %{support_email}."
+    settings:
+      directory_profile: "Profil officiel"
+      open_directory_profile: "Ouvrir votre profil Advocaat.be"
+      directory_profile_hint: "Ce lien sert à confirmer votre identité professionnelle."
+      identity_hint: "Modifier votre nom déclenche une nouvelle vérification. Pour un autre profil officiel, contactez le support."

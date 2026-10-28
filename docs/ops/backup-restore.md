@@ -1,65 +1,117 @@
 # Backup and restore
 
-A backup is not complete until it is encrypted, copied off the application host, monitored, and restored successfully.
+This runbook is for the initial single Linux/Docker host. It does not create a cloud bucket, credentials, or DNS record; the operator supplies those separately. Keep recovery keys and provider credentials in the password manager and root-only server files, never in this repository.
 
-## Data inventory
+## What is protected
 
-The initial single-node deployment persists the `lawrelay_storage` Docker volume. It contains:
+The `lawrelay_storage` Docker volume holds the authoritative SQLite databases and local Active Storage files. `script/ops/lawrelay-backup` creates online SQLite copies of:
 
-- Primary SQLite database
-- Solid Cache, Queue, and Cable databases
-- Local Active Storage files
-- Temporary backup artifacts created during backup
+- `production.sqlite3`
+- `production_queue.sqlite3`
+- `production_cable.sqlite3`
 
-The primary database and uploaded files are authoritative. Cache can be rebuilt. Queue and Cable state require a documented decision during recovery.
+It runs `PRAGMA integrity_check` on each copy. It deliberately excludes `production_cache.sqlite3`, which Rails can rebuild. It archives the remaining persistent files, excluding live SQLite/WAL files and temporary backup directories. The resulting snapshot is encrypted by restic before it leaves the host.
 
-## Backup design
+## One-time server installation
 
-- Use SQLite's online backup API/CLI for a transactionally consistent primary database copy.
-- Back up Active Storage and the consistent database copy with an encrypted tool such as restic.
-- Send encrypted backups to an EEA destination in a separate provider/account or failure domain.
-- Keep encryption/recovery keys in the password manager, not on the server.
-- Alert on missed jobs, repository errors, unexpected backup size, and retention failures.
-- Suggested starting retention: 7 daily, 4 weekly, and 12 monthly recovery points. Confirm accounting/legal retention separately.
-- Do not back up cache files unless restore testing proves a need.
+Install the required host packages using the supported package manager: Docker, `python3`, `sqlite3`, `restic`, `curl`, `util-linux` (for `flock`), and GNU tar. Do not put S3 or SMTP credentials in shell history.
 
-## Backup procedure
+Copy the reviewed scripts and units from the release checkout:
 
-1. Create a timestamped staging directory on the persistent volume with restrictive permissions.
-2. Use `sqlite3 ... ".backup ..."` against the live primary database.
-3. Run `PRAGMA integrity_check` on the copied database and require `ok`.
-4. Snapshot Active Storage files and the copied database with the encrypted backup tool.
-5. Verify the remote snapshot exists and record its ID, size, duration, and source host.
-6. Remove the temporary local copy only after remote verification.
-7. Emit a success metric; alert when no success is received within the expected window.
+```sh
+sudo install -d -m 0700 /etc/lawrelay /var/lib/lawrelay-backup/state /var/lib/lawrelay-restore-drills
+sudo install -m 0750 script/ops/lawrelay-backup /usr/local/libexec/lawrelay-backup
+sudo install -m 0750 script/ops/lawrelay-restore-drill /usr/local/libexec/lawrelay-restore-drill
+sudo install -m 0750 script/ops/lawrelay-health /usr/local/libexec/lawrelay-health
+sudo install -m 0750 script/ops/lawrelay-notify /usr/local/libexec/lawrelay-notify
+sudo install -m 0644 script/ops/systemd/lawrelay-*.service script/ops/systemd/lawrelay-*.timer /etc/systemd/system/
+```
 
-Never copy a live SQLite database file with plain `cp` and assume it is consistent.
+Create `/etc/lawrelay/backup.env` as root, mode `0600`. This is an example shape only; replace all placeholder values without printing the completed file:
+
+```sh
+RESTIC_REPOSITORY=s3:https://S3-ENDPOINT/BUCKET/lawrelay
+RESTIC_PASSWORD_FILE=/etc/lawrelay/restic-password
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_DEFAULT_REGION=...
+LAWRELAY_STORAGE_VOLUME=lawrelay_storage
+LAWRELAY_BACKUP_WORK_ROOT=/var/lib/lawrelay-backup
+```
+
+Use a distinct, encrypted, access-restricted off-host repository, ideally in an EEA failure domain separate from the application host. Put the restic passphrase in `/etc/lawrelay/restic-password` with mode `0600`; it must not appear in `backup.env`, a command line, logs, or this repo. For an S3-compatible provider, use the documented restic endpoint/credential variables for that provider. Restrict the backup identity to the backup bucket/prefix and test recovery before relying on it.
+
+Create `/etc/lawrelay/health.env` with mode `0600`:
+
+```sh
+LAWRELAY_BASE_URL=https://lawrelay.be
+LAWRELAY_STORAGE_VOLUME=lawrelay_storage
+LAWRELAY_BACKUP_STATE_DIR=/var/lib/lawrelay-backup/state
+LAWRELAY_BACKUP_MAX_AGE_HOURS=26
+LAWRELAY_DISK_WARN_PERCENT=85
+# Optional: exact Docker container name for an additional running-state check.
+# LAWRELAY_DOCKER_CONTAINER=lawrelay-web-...
+```
+
+Optional private alerts use `/etc/lawrelay/alert.env`, mode `0600`:
+
+```sh
+# LAWRELAY_ALERT_WEBHOOK_URL=https://private-alert-endpoint.example/...
+# LAWRELAY_ALERT_EMAIL=operator-recovery-address@example.com
+# LAWRELAY_SMTP_ENV_FILE=/home/deploy/lawrelay/production.env
+# Optional; defaults to SMTP_USERNAME from the protected production env file.
+# LAWRELAY_ALERT_FROM=no-reply@lawrelay.be
+# Optional: suppress repeat delivery of the same message for six hours.
+# LAWRELAY_ALERT_DEDUP_DIR=/var/lib/lawrelay-alerts
+# LAWRELAY_ALERT_DEDUP_HOURS=6
+```
+
+The notification script always records failures to journald. Systemd `OnFailure` is the normal single notification path; set `LAWRELAY_NOTIFY_DIRECT=true` only for intentionally manual/non-systemd use. When the webhook is configured it sends only a short operational message. When `LAWRELAY_ALERT_EMAIL` is configured, it uses Python's standard library to read the mail settings and credentials from the root-readable Docker-format production env file (without sourcing/evaluating it). It honors `SMTP_ADDRESS`, `SMTP_PORT`, `SMTP_SSL`, and `SMTP_STARTTLS`: use implicit TLS for a reachable port 465, or mandatory STARTTLS for port 587 when the host blocks 465. It refuses an unencrypted or ambiguous configuration before authentication. It sends a fixed subject and synthetic operational event only—never credentials, database contents, or user data. Alert-transport failures are logged by class only (configuration, authentication, transport, or internal). A root-only SHA-256 marker is written only after a transport accepts an alert, suppressing the same message for six hours by default. Do not put SMTP passwords in a unit file or this repository.
+
+Enable the jobs:
+
+```sh
+sudo systemctl daemon-reload
+sudo systemctl enable --now lawrelay-backup.timer lawrelay-health.timer
+sudo systemctl list-timers 'lawrelay-*'
+```
+
+Run and inspect the first backup before inviting users:
+
+```sh
+sudo systemctl start lawrelay-backup.service
+sudo journalctl -u lawrelay-backup.service -n 100 --no-pager
+sudo systemctl start lawrelay-health.service
+```
+
+The backup script holds an exclusive lock, so a second timer/manual run exits safely. Successful runs update `/var/lib/lawrelay-backup/state/last-success`; failed jobs remain visible in `systemctl` and trigger `lawrelay-failure@.service`. Retention is 7 daily, 4 weekly, and 12 monthly snapshots. Review repository capacity and legal retention requirements separately.
 
 ## Restore drill
 
-Run before inviting users, after material storage changes, and at least quarterly.
+Before beta, after storage changes, and at least quarterly, run an isolated verification:
 
-1. Select a recovery point without revealing production data to unauthorized staff.
-2. Restore into an isolated staging host and volume.
-3. Restore the primary database and Active Storage tree.
-4. Run `PRAGMA integrity_check`.
-5. Boot the exact compatible application version.
-6. Verify schema version, representative record counts, attachments, authentication, authorization, and background jobs.
-7. Confirm sensitive data is absent from logs and monitoring.
-8. Record recovery point objective achieved, recovery time, gaps, and named remediation owner.
-9. Securely destroy the drill environment and restored data.
+```sh
+sudo systemctl start lawrelay-restore-drill.service
+sudo journalctl -u lawrelay-restore-drill.service -n 100 --no-pager
+```
 
-## Production recovery
+The command restores the latest snapshot tagged `lawrelay` into a newly-created `0700` temporary directory under `/var/lib/lawrelay-restore-drills`, opens the databases read-only for integrity checks, lists the storage archive, then deletes that temporary directory. It never mounts or overwrites `lawrelay_storage`.
 
-1. Declare an incident and stop writes.
-2. Preserve the damaged database/volume for evidence.
-3. Identify the last known-good recovery point and expected data-loss window.
-4. Restore into a new volume; do not overwrite the only copy.
-5. Run integrity and application smoke tests.
-6. Switch the application to the restored volume only after approval.
-7. Notify affected users/regulators when the incident process requires it.
-8. Keep a timeline of every command, decision, and custodian.
+Record the snapshot date, duration, result, data-loss window, and any gap in the private incident log. A full quarterly drill should additionally restore to an isolated host/volume, boot the exact release, and verify authentication, authorization, representative records, attachments, mail/jobs, and schema version.
 
-## Restore acceptance
+## Recovery and rollback
 
-A release is blocked until a person other than the backup implementer can follow this document and complete a successful restore without undocumented knowledge.
+Do not restore into the sole production volume. For corruption or loss:
+
+1. Declare an incident, stop writes, and preserve the original volume for evidence.
+2. Select a known-good restic snapshot and calculate the expected data-loss window.
+3. Restore into a new, isolated directory/volume and run SQLite integrity checks.
+4. Extract the storage archive and point a compatible application release at the new volume.
+5. Smoke-test login, permissions, assignments, attachments, mail, queues, and billing before switching traffic.
+6. Have the incident commander approve the cutover; retain the prior volume until recovery is accepted.
+
+For a bad application release with intact data, use the deployment rollback procedure first. For failed backup configuration, disable only the affected timer with `sudo systemctl disable --now lawrelay-backup.timer`, preserve logs, fix the root-only environment file, then run a manual backup and restore drill before re-enabling it.
+
+## Limits
+
+The SQLite copies are transactionally consistent. The storage archive is a point-in-time file archive; avoid concurrent bulk uploads during the backup window. This small-host design is not a substitute for tested multi-region disaster recovery, separate database replication, or a legal retention policy.

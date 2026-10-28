@@ -1,11 +1,11 @@
 en:
   pages:
     shared:
-      version: "Draft version: %{date}"
-      not_configured: "To be completed before launch"
+      version: "Last updated: %{date}"
+      not_configured: "Not available"
       navigation_label: "Commercial and legal information"
-      draft_warning_title: "Operator details are still missing"
-      draft_warning_body: "This draft is not ready for publication. Configure the operator identity and obtain Belgian legal review before accepting real users or payments."
+      draft_warning_title: "Operator details are unavailable"
+      draft_warning_body: "The operator details could not be loaded. Please contact LawRelay before using the service."
     navigation:
       pricing: "Pricing"
       privacy: "Privacy"
@@ -14,74 +14,73 @@ en:
       legal_notice: "Legal notice"
     pricing:
       meta_title: "Pricing — LawRelay"
-      eyebrow: "simple platform pricing"
-      title: "Pay for the workspace, not for the legal fee."
-      introduction: "Posting offices pay LawRelay for access. Responding lawyers join free, and the lawyers settle their professional fees directly with each other."
+      eyebrow: "founding beta"
+      title: "Free while we build this properly."
+      introduction: "LawRelay is free during the founding beta. There is no checkout, subscription, or payment request. Lawyers always agree and settle professional fees directly with each other."
       beta:
         kicker: "founding beta"
         price: "€0"
-        title: "Invitation-only pilot"
-        body: "A limited group of verified Belgian lawyers helps shape the workflow before paid access begins."
+        title: "Open registration for listed lawyers"
+        body: "Any lawyer listed on advocaat.be can register. Marketplace access follows a check against the official directory; beta access is free."
         features:
-          - "Verified pilot participants"
-          - "Post and respond during the agreed trial"
+          - "Registration open to lawyers listed on advocaat.be"
+          - "Directory check before marketplace access"
+          - "Post and respond to professional assignments"
           - "Direct feedback to the LawRelay team"
       launch:
-        kicker: "launch hypothesis"
-        price: "€49 / month excl. VAT"
-        title: "One plan per posting office"
-        body: "Monthly access for an office that wants to publish assignments. The final offer is subject to pilot validation and professional review."
+        kicker: "after the beta"
+        price: "Not available yet"
+        title: "No paid plan during beta"
+        body: "Paid subscriptions are not offered or collected during the founding beta. If that changes, the terms and pricing will be published before it takes effect."
         features:
-          - "Post court cover and legal assignments"
-          - "Receive and compare responses"
-          - "Responding lawyers use LawRelay free"
-          - "Cancel monthly"
+          - "No payment details requested"
+          - "No automatic renewal"
+          - "Clear notice before any paid offer"
+          - "Professional fees remain direct"
       direct_fees:
         title: "Lawyer-to-lawyer fees stay outside LawRelay"
         body: "The requester and the selected lawyer agree, invoice, and pay each other directly. LawRelay does not hold assignment funds, operate escrow, or deduct a percentage of professional fees."
-      review_notice: "Pricing is a product hypothesis, not a binding offer. VAT, Peppol invoicing, billing terms, and professional-conduct compliance must be confirmed before paid launch."
+      review_notice: "Founding-beta access is free. LawRelay does not collect platform fees during this beta."
     privacy:
       meta_title: "Privacy notice — LawRelay"
       eyebrow: "privacy"
-      title: "How LawRelay intends to handle personal data."
-      introduction: "This is a working draft for a verified lawyer marketplace. It must be completed with the operator identity, actual vendors, and final retention schedule before launch."
+      title: "How LawRelay handles personal data."
+      introduction: "This notice explains the limited personal data used to run LawRelay's founding beta for verified Belgian lawyers."
       sections:
         controller:
           heading: "1. Who controls your data"
           paragraphs:
-            - "The LawRelay operator will be the controller for account, verification, marketplace, support, security, and billing data. Its legal identity and contact details appear in the legal notice once configured."
-            - "Privacy questions and rights requests should be sent to the privacy contact listed in the legal notice."
+            - "Gauthier Berth is the controller for account, verification, marketplace, support, and security data. Contact details are available in the legal notice."
+            - "Send privacy questions and rights requests to privacy@lawrelay.be."
         scope:
           heading: "2. Data we process"
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records."
             - "Professional-verification data, such as bar, bar number, firm, role, and verification evidence or status."
             - "Profile, assignment, proposal, acceptance, cancellation, and audit-event data."
-            - "Billing identifiers, VAT and invoice details, subscription status, and payment-provider references; never full card or bank credentials."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
           paragraphs:
             - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
         purposes:
           heading: "3. Why and on what basis"
           bullets:
-            - "To create and secure accounts, verify eligibility, provide matching features, and administer subscriptions: performance of the service agreement."
-            - "To issue and retain compliant invoices and respond to lawful requests: legal obligations."
+            - "To create and secure accounts, verify eligibility, and provide matching features: performance of the service agreement."
             - "To prevent abuse, secure the service, support users, improve reliability, and establish or defend claims: legitimate interests, balanced against user rights."
-            - "For optional analytics or marketing communications only where valid consent or another documented basis applies."
+            - "LawRelay does not use optional analytics."
         sharing:
           heading: "4. Who receives data"
           paragraphs:
-            - "Data is shared only as required to operate the service: with the requesting or responding lawyer as the workflow requires, authorised LawRelay staff, and contracted hosting, email, support, security, payment, invoicing, and backup providers."
-            - "A current subprocessor list and data-processing agreements must be in place before launch. Data is not sold."
+            - "Data is shared only as required to operate the service: with the requesting or responding lawyer as the workflow requires, authorised LawRelay staff, and contracted hosting, transactional-email, security, and backup providers."
+            - "Data is not sold."
         transfers:
           heading: "5. Location and transfers"
           paragraphs:
-            - "LawRelay intends to keep production data in the European Economic Area. If a provider transfers personal data outside the EEA, LawRelay will document the transfer mechanism and supplementary safeguards before using that provider."
+            - "Production hosting is provided from Germany by Hetzner. Encrypted backups are stored in AWS S3 in Frankfurt. Transactional email is provided by Migadu in Switzerland; Switzerland benefits from an EU adequacy decision."
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "Data will be kept only for the period needed for the account, marketplace workflow, security, support, and legal obligations. Billing records may need to be retained after an account is closed."
-            - "The exact retention schedule and automatic-deletion jobs are release blockers and must be inserted here before the service accepts real data."
+            - "Account and marketplace data are kept while your account is active, then deleted on request unless professional, contractual, security, or legal obligations require a hold."
+            - "Backups follow a 7 daily / 4 weekly / 12 monthly schedule. Rights requests are handled through a manual queue."
         rights:
           heading: "7. Your rights"
           paragraphs:
@@ -96,16 +95,16 @@ en:
       meta_title: "Terms of service — LawRelay"
       eyebrow: "terms of service"
       title: "Rules for using LawRelay."
-      introduction: "These draft B2B terms describe the intended service. They are not final and must be reviewed against Belgian law and professional-conduct rules before launch."
+      introduction: "These terms govern the free LawRelay founding beta for professional users."
       sections:
         agreement:
           heading: "1. Agreement and operator"
           paragraphs:
-            - "These terms govern use of LawRelay by professional users. The contracting operator and its contact details appear in the legal notice once configured. Creating an account or using the service after accepting a published version forms the service agreement."
+            - "These terms govern use of LawRelay by professional users. The contracting operator is Gauthier Berth; contact details appear in the legal notice. Creating an account or using the service after accepting a published version forms the service agreement."
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
-            - "The marketplace is intended for verified lawyers and authorised firm staff. Users must provide accurate professional details, keep them current, protect their credentials, and promptly report compromised access. Verification does not constitute endorsement or a guarantee of competence."
+            - "Registration is open to lawyers listed on the official advocaat.be directory. Marketplace access follows a directory check. Users must provide accurate professional details, keep them current, protect their credentials, and promptly report compromised access. Verification does not constitute endorsement or a guarantee of competence."
         role:
           heading: "3. LawRelay's role"
           paragraphs:
@@ -128,8 +127,8 @@ en:
         platform_fees:
           heading: "7. LawRelay fees and billing"
           paragraphs:
-            - "Founding-beta access is free for the agreed period. The proposed launch price is €49 per month excluding VAT for each posting office, cancellable monthly. Only the price and conditions shown at checkout or in an accepted order are binding."
-            - "Invoices, payment timing, failed-payment handling, credits, and cancellation rights will be specified before paid launch and must comply with Belgian structured B2B invoicing requirements."
+            - "Founding-beta access is free. LawRelay does not offer paid subscriptions, collect platform fees, or ask for payment details during this beta."
+            - "If LawRelay later offers paid access, the applicable price and terms will be published before any payment is requested."
         professional_fees:
           heading: "8. Professional fees"
           paragraphs:
@@ -137,7 +136,8 @@ en:
         moderation:
           heading: "9. Reports, moderation, and suspension"
           paragraphs:
-            - "Users may report unlawful, unsafe, or rule-breaking content. LawRelay may investigate, request information, restrict content, suspend access, or terminate an account proportionately. Applicable notice, complaint, and appeal processes will be published before launch."
+            - "Users may report unlawful, unsafe, or rule-breaking content to support@lawrelay.be. LawRelay may investigate, request information, restrict content, suspend access, or terminate an account proportionately."
+            - "If you disagree with a moderation decision, reply to the decision email or write to support@lawrelay.be with the relevant account and assignment reference. LawRelay will review the request and reply within a reasonable time."
         intellectual_property:
           heading: "10. Intellectual property"
           paragraphs:
@@ -145,16 +145,17 @@ en:
         availability:
           heading: "11. Availability and changes"
           paragraphs:
-            - "LawRelay may maintain, update, or change the service and does not promise uninterrupted availability. Material changes that adversely affect a paid plan will be communicated reasonably in advance where practicable."
+            - "LawRelay may maintain, update, or change the service and does not promise uninterrupted availability. Material changes to the beta will be communicated reasonably in advance where practicable."
         liability:
           heading: "12. Liability, termination, and law"
           paragraphs:
-            - "A final, counsel-approved liability allocation, governing-law clause, competent court, termination process, data-export window, and mandatory-law carve-outs must be inserted before launch. Nothing in these draft terms excludes liability that cannot legally be excluded."
+            - "You may stop using the beta and request account deletion at any time by writing to support@lawrelay.be. LawRelay may end beta access on reasonable notice or immediately where needed for security, law, or these terms."
+            - "Belgian law governs these terms. Any mandatory rights that apply to you remain unaffected. Nothing in these terms excludes liability that cannot legally be excluded."
     cookies:
       meta_title: "Cookie notice — LawRelay"
       eyebrow: "cookies"
       title: "A deliberately small cookie footprint."
-      introduction: "The current LawRelay prototype uses only technology needed to keep the service secure and functioning."
+      introduction: "LawRelay uses only technology needed to keep the service secure and functioning."
       sections:
         current_use:
           heading: "1. What is used today"
@@ -180,7 +181,7 @@ en:
       meta_title: "Legal notice — LawRelay"
       eyebrow: "operator information"
       title: "Who operates LawRelay."
-      introduction: "Belgian business-identification details must remain easy, direct, and permanently accessible. Missing fields below block publication."
+      introduction: "Belgian business-identification details are provided here in a direct and permanent form."
       fields:
         legal_name: "Legal or trading name"
         registered_address: "Registered address"

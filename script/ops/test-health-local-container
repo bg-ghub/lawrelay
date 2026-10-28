@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# Runs the operational health script against the locally running production-like
+# container. It deliberately mocks only host dependencies, not HTTP responses.
+set -eu
+
+project_root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
+image=${LAWRELAY_HEALTH_TEST_IMAGE:-lawrelay:launch-candidate}
+base_url=${LAWRELAY_HEALTH_TEST_BASE_URL:-http://host.docker.internal:3100}
+fixtures="$project_root/test/fixtures/ops-health"
+
+docker run --rm \
+  -v "$project_root/script/ops:/ops:ro" \
+  -v "$fixtures/bin:/test-bin:ro" \
+  -v "$fixtures/volume:/fixture-volume:ro" \
+  -v "$fixtures/state:/fixture-state:ro" \
+  -e "PATH=/test-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
+  -e "LAWRELAY_BASE_URL=$base_url" \
+  -e "LAWRELAY_BACKUP_STATE_DIR=/fixture-state" \
+  -e "LAWRELAY_STORAGE_VOLUME=lawrelay_storage" \
+  -e "LAWRELAY_DISK_WARN_PERCENT=85" \
+  "$image" sh /ops/lawrelay-health

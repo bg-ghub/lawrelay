@@ -1,0 +1,1 @@
+health-check fixture; not a SQLite database because sqlite3 is intentionally mocked.

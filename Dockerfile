@@ -11,7 +11,8 @@ ENV RAILS_ENV=production \
     BUNDLE_WITHOUT="development:test" \
     THRUSTER_HTTP_PORT=3000 \
     THRUSTER_TARGET_PORT=3001 \
-    THRUSTER_FORWARD_HEADERS=true
+    THRUSTER_FORWARD_HEADERS=true \
+    THRUSTER_LOG_REQUESTS=false
 
 # Runtime libraries only. TLS is terminated by Kamal Proxy, while Thruster
 # supplies compression and static-file handling on the container port.

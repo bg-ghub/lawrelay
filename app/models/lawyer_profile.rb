@@ -5,6 +5,8 @@ class LawyerProfile < ApplicationRecord
 
   normalizes :bar_association, :bar_number, with: ->(value) { value.to_s.strip.upcase }
   normalizes :professional_email, with: ->(value) { value.to_s.strip.downcase.presence }
+  normalizes :directory_profile_url, with: ->(value) { value.to_s.strip.presence }
+  normalizes :directory_email, with: ->(value) { value.to_s.strip.downcase.presence }
   normalizes :availability_note, with: ->(value) { value.to_s.strip.presence }
 
   before_validation :normalize_matching_preferences
@@ -19,6 +21,18 @@ class LawyerProfile < ApplicationRecord
 
   def verified?
     verification_status == "verified" && verified_at.present?
+  end
+
+  def directory_matched?
+    directory_profile_id.present? && directory_profile_url.present? && directory_name.present? && directory_email.present? && directory_checked_at.present?
+  end
+
+  def directory_email_verified?
+    directory_email_verified_at.present?
+  end
+
+  def directory_confirmation_required?
+    directory_matched? && !directory_email_verified? && !directory_email.to_s.casecmp?(user.email_address.to_s)
   end
 
   private

@@ -1,9 +1,13 @@
 require "active_support/core_ext/integer/time"
+require_relative "../../lib/sensitive_log_formatter"
 
 Rails.application.configure do
   app_host = ENV.fetch("APP_HOST", "lawrelay.be")
   app_protocol = ENV.fetch("APP_PROTOCOL", "https")
   smtp_address = ENV["SMTP_ADDRESS"].presence
+  smtp_port = ENV.fetch("SMTP_PORT", 587).to_i
+  smtp_ssl = ActiveModel::Type::Boolean.new.cast(ENV.fetch("SMTP_SSL", "false"))
+  smtp_starttls = ActiveModel::Type::Boolean.new.cast(ENV.fetch("SMTP_STARTTLS", "true"))
 
   config.enable_reloading = false
   config.eager_load = true
@@ -25,6 +29,7 @@ Rails.application.configure do
 
   config.log_tags = [ :request_id ]
   config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.logger.formatter = SensitiveLogFormatter.new
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.silence_healthcheck_path = "/up"
   config.active_support.report_deprecations = false
@@ -40,13 +45,16 @@ Rails.application.configure do
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: smtp_address,
-      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      port: smtp_port,
       domain: ENV.fetch("SMTP_DOMAIN", app_host),
       user_name: ENV["SMTP_USERNAME"],
       password: ENV["SMTP_PASSWORD"],
       authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
-      ssl: ActiveModel::Type::Boolean.new.cast(ENV.fetch("SMTP_SSL", "false")),
-      enable_starttls_auto: ActiveModel::Type::Boolean.new.cast(ENV.fetch("SMTP_STARTTLS", "true")),
+      ssl: smtp_ssl,
+      # Port 587 must upgrade with STARTTLS; do not silently fall back to
+      # opportunistic transport encryption.
+      enable_starttls: smtp_starttls,
+      enable_starttls_auto: false,
       open_timeout: ENV.fetch("SMTP_OPEN_TIMEOUT", 5).to_i,
       read_timeout: ENV.fetch("SMTP_READ_TIMEOUT", 5).to_i
     }.compact

@@ -1,0 +1,7 @@
+<p><%= t("directory_mail.confirm.greeting", name: @profile.directory_name) %></p>
+
+<p><%= t("directory_mail.confirm.body_html", login_email: @login_email).html_safe %></p>
+
+<p><%= link_to t("directory_mail.confirm.action"), @confirmation_url %></p>
+
+<p><%= t("directory_mail.confirm.ignore") %></p>

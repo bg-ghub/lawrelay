@@ -5,9 +5,15 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-28
+
 ### Added
 
 - Public `info@lawrelay.be` contact link across all four interface languages.
+- Free open beta with official-directory and professional-email verification, automatic access, and disabled paid checkout.
+- Published operator details and beta pricing, privacy, terms, and contact copy in NL/FR/DE/EN.
+- Production database/storage readiness, deployment preflight, and container smoke checks in CI.
+- Private image deployment with Caddy TLS, encrypted off-host backups, restore drills, and operational checks.
 
 ## [0.1.1] - 2026-10-28
 
@@ -27,6 +33,7 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/bg-ghub/lawrelay/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/bg-ghub/lawrelay/releases/tag/v0.1.0

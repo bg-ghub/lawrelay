@@ -1,6 +1,7 @@
 module Billing
   class ManualPaymentConfirmationService
     class InvalidConfirmation < StandardError; end
+    class PaymentsUnavailableDuringBeta < InvalidConfirmation; end
 
     Result = Data.define(:subscription, :invoice, :payment, :activated)
 
@@ -11,6 +12,7 @@ module Billing
     end
 
     def call
+      validate_paid_release!
       validate_operator!
       validate_reference!
 
@@ -59,6 +61,12 @@ module Billing
     end
 
     private
+
+    def validate_paid_release!
+      return if ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
+
+      raise PaymentsUnavailableDuringBeta, "Manual payment confirmation is unavailable during the founding beta"
+    end
 
     def validate_operator!
       raise InvalidConfirmation, "A system administrator is required" unless @actor_user&.system_admin?

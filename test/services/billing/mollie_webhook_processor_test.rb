@@ -62,6 +62,24 @@ class Billing::MollieWebhookProcessorTest < ActiveSupport::TestCase
     assert_equal "suspended", subscription.reload.status
   end
 
+  test "beta ignores Mollie callbacks without changing billing state" do
+    account, subscription, payment = create_pending_payment
+    gateway = Object.new
+    gateway.define_singleton_method(:payment) { raise "Mollie must not be called during beta" }
+
+    assert_no_difference("WebhookEvent.count") do
+      assert_nil Billing::MollieWebhookProcessor.new(
+        payment_id: payment.provider_payment_id,
+        payload: { "id" => payment.provider_payment_id },
+        gateway:
+      ).call
+    end
+
+    assert_equal "pending", payment.reload.status
+    assert_equal "pending", subscription.reload.status
+    assert_equal "pending", account.reload.status
+  end
+
   private
 
   def create_pending_payment
@@ -80,10 +98,20 @@ class Billing::MollieWebhookProcessorTest < ActiveSupport::TestCase
     gateway = Object.new
     gateway.define_singleton_method(:payment) { |_id| { "status" => status } }
 
-    Billing::MollieWebhookProcessor.new(
-      payment_id: payment_id,
-      payload: { "id" => payment_id },
-      gateway: gateway
-    ).call
+    with_release_mode("paid") do
+      Billing::MollieWebhookProcessor.new(
+        payment_id:,
+        payload: { "id" => payment_id },
+        gateway:
+      ).call
+    end
+  end
+
+  def with_release_mode(mode)
+    original = ENV["LAWRELAY_RELEASE_MODE"]
+    ENV["LAWRELAY_RELEASE_MODE"] = mode
+    yield
+  ensure
+    original.nil? ? ENV.delete("LAWRELAY_RELEASE_MODE") : ENV["LAWRELAY_RELEASE_MODE"] = original
   end
 end

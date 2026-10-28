@@ -1,0 +1,32 @@
+{
+	# Caddy stores ACME account material and certificates in its named volume.
+	email info@lawrelay.be
+	# Recovery and verification URLs contain signed credentials. Keep request
+	# URIs out of proxy error events as well as application request logs.
+	log default {
+		format filter {
+			wrap json
+			fields {
+				request>uri delete
+			}
+		}
+	}
+}
+
+www.lawrelay.be {
+	redir https://lawrelay.be{uri} permanent
+}
+
+lawrelay.be {
+	encode zstd gzip
+
+	header {
+		# The app sets HSTS itself once HTTPS is established.
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "DENY"
+		-Server
+	}
+
+	reverse_proxy app:3000
+}

@@ -6,21 +6,23 @@ class Billing::ManualPaymentConfirmationServiceTest < ActiveSupport::TestCase
     result = Billing::ManualInvoiceService.new(billing_account: account).call
     operator = create_operator
 
-    travel_to Time.zone.parse("2026-10-28 10:00:00") do
-      confirmation = service_for(result.payment, operator).call
+    with_release_mode("paid") do
+      travel_to Time.zone.parse("2026-10-28 10:00:00") do
+        confirmation = service_for(result.payment, operator).call
 
-      assert confirmation.activated
-      assert_equal "paid", result.payment.reload.status
-      assert_equal "paid", result.invoice.reload.status
-      assert_equal "active", result.subscription.reload.status
-      assert_equal 1.month.from_now, result.subscription.current_period_ends_at
-      assert_equal "active", account.reload.status
-      assert_equal 1, AuditEvent.where(auditable: result.payment, action: "billing.manual_payment_confirmed").count
+        assert confirmation.activated
+        assert_equal "paid", result.payment.reload.status
+        assert_equal "paid", result.invoice.reload.status
+        assert_equal "active", result.subscription.reload.status
+        assert_equal 1.month.from_now, result.subscription.current_period_ends_at
+        assert_equal "active", account.reload.status
+        assert_equal 1, AuditEvent.where(auditable: result.payment, action: "billing.manual_payment_confirmed").count
 
-      repeated = service_for(result.payment, operator).call
-      assert_not repeated.activated
-      assert_equal 1.month.from_now, result.subscription.reload.current_period_ends_at
-      assert_equal 1, AuditEvent.where(auditable: result.payment, action: "billing.manual_payment_confirmed").count
+        repeated = service_for(result.payment, operator).call
+        assert_not repeated.activated
+        assert_equal 1.month.from_now, result.subscription.reload.current_period_ends_at
+        assert_equal 1, AuditEvent.where(auditable: result.payment, action: "billing.manual_payment_confirmed").count
+      end
     end
   end
 
@@ -30,9 +32,26 @@ class Billing::ManualPaymentConfirmationServiceTest < ActiveSupport::TestCase
     result.subscription.cancel!
     account.update!(status: "cancelled")
 
-    assert_raises(Billing::ManualPaymentConfirmationService::InvalidConfirmation) do
-      service_for(result.payment, create_operator).call
+    with_release_mode("paid") do
+      assert_raises(Billing::ManualPaymentConfirmationService::InvalidConfirmation) do
+        service_for(result.payment, create_operator).call
+      end
     end
+  end
+
+  test "does not confirm a manual payment during beta" do
+    account = BillingAccount.create!(firm: Firm.create!(name: "Beta manual #{SecureRandom.uuid}"))
+    result = Billing::ManualInvoiceService.new(billing_account: account).call
+
+    assert_no_difference("AuditEvent.count") do
+      assert_raises(Billing::ManualPaymentConfirmationService::PaymentsUnavailableDuringBeta) do
+        service_for(result.payment, create_operator).call
+      end
+    end
+
+    assert_equal "pending", result.payment.reload.status
+    assert_equal "pending", result.subscription.reload.status
+    assert_equal "pending", account.reload.status
   end
 
   private
@@ -54,5 +73,13 @@ class Billing::ManualPaymentConfirmationServiceTest < ActiveSupport::TestCase
       last_name: "Operator",
       system_role: "admin"
     )
+  end
+
+  def with_release_mode(mode)
+    original = ENV["LAWRELAY_RELEASE_MODE"]
+    ENV["LAWRELAY_RELEASE_MODE"] = mode
+    yield
+  ensure
+    original.nil? ? ENV.delete("LAWRELAY_RELEASE_MODE") : ENV["LAWRELAY_RELEASE_MODE"] = original
   end
 end

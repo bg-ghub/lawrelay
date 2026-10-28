@@ -19,12 +19,17 @@ class RegistrationsController < ApplicationController
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
     @user.accepted_privacy_version = PRIVACY_VERSION if @terms_accepted
     models_valid = @user.valid? & @firm.valid? & @lawyer_profile.valid?
+    unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])
+      @lawyer_profile.errors.add(:directory_profile_url, t("directory_onboarding.registration.invalid_profile_url"))
+      models_valid = false
+    end
     @user.errors.add(:base, t("auth.registration.errors.accept_terms")) unless @terms_accepted
 
     if @terms_accepted && models_valid
       persist_registration!
       start_new_session_for(@user)
       EmailVerificationMailer.verify(@user).deliver_later
+      Directory::VerificationJob.perform_later(@user.id)
       redirect_to verification_status_path, notice: t("auth.registration.created")
     else
       collect_errors
@@ -57,9 +62,12 @@ class RegistrationsController < ApplicationController
       billing_email: email
     )
     @lawyer_profile = @user.build_lawyer_profile(
-      bar_association: attributes[:bar_association],
-      bar_number: attributes[:bar_number],
+      # Existing schema requires a registry value before the official lookup.
+      # Keep it opaque so a public directory UUID cannot be squatted at signup.
+      bar_association: "OVB",
+      bar_number: "PENDING-#{SecureRandom.uuid}",
       professional_email: email,
+      directory_profile_url: Directory::AdvocaatBeProfileLookup.canonical_profile_url(attributes[:directory_profile_url]),
       spoken_languages: [ locale.upcase ]
     )
     @form_values = attributes.except(:password, :password_confirmation).stringify_keys
@@ -84,7 +92,7 @@ class RegistrationsController < ApplicationController
   def registration_params
     params.require(:registration).permit(
       :first_name, :last_name, :email_address, :password, :password_confirmation,
-      :firm_name, :enterprise_number, :vat_number, :bar_association, :bar_number,
+      :firm_name, :enterprise_number, :vat_number, :directory_profile_url,
       :locale, :terms_accepted
     )
   end

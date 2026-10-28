@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+
+case "$*" in
+  *quick_check*) printf '%s\n' ok ;;
+  *solid_queue_failed_executions*) printf '%s\n' 0 ;;
+  *solid_queue_ready_executions*|*solid_queue_scheduled_executions*) printf '%s\n' 0 ;;
+  *) printf '%s\n' ok ;;
+esac

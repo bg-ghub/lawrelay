@@ -24,21 +24,23 @@ After propagation, require Migadu's domain diagnostics to pass and independently
 
 ## 3. Configure Rails SMTP
 
-Migadu documents implicit TLS on `smtp.migadu.com:465`. Configure production with:
+Migadu supports implicit TLS on port 465 and required STARTTLS on port 587. The Hetzner production host blocks outbound 465; port 587 was tested reachable. Configure this deployment with:
 
 ```text
 SMTP_ADDRESS=smtp.migadu.com
-SMTP_PORT=465
+SMTP_PORT=587
 SMTP_DOMAIN=lawrelay.be
-SMTP_USERNAME=no-reply@lawrelay.be
+SMTP_USERNAME=admin@lawrelay.be
 SMTP_PASSWORD=<secret from the deployment secret manager>
 SMTP_AUTHENTICATION=plain
-SMTP_SSL=true
-SMTP_STARTTLS=false
+SMTP_SSL=false
+SMTP_STARTTLS=true
 MAIL_FROM=LawRelay <no-reply@lawrelay.be>
 ```
 
 `SMTP_USERNAME` and `SMTP_PASSWORD` are Kamal secrets. The other values are non-secret deployment configuration.
+
+The current `no-reply@` address is a sending identity under the `admin@` mailbox. Authenticate as `admin@` to send using that identity. The `info@` identity can sign in using the same mailbox password, but cannot send as the other identities. This distinction was verified with live SMTP delivery.
 
 ## 4. Delivery acceptance test
 

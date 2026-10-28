@@ -1,8 +1,9 @@
 # LawRelay release master plan
 
 Last audited: 28 October 2026
-Current verdict: **Substantial local release candidate; NO-GO for external beta, confidential matters, or live payments until the external launch gates below are closed.**
-Current safe use: local/internal product demo and controlled QA with synthetic data.
+Current verdict: **Free founding beta selected by the operator; production deployment and acceptance checks are in progress. Paid subscriptions remain disabled.**
+Current scope: verified Belgian lawyers, minimal professional assignment briefs, no client identities, case facts, or documents.
+The operator explicitly selected open registration for lawyers listed on `advocaat.be`, with official-directory and email verification. Earlier references below to a small invitation-only pilot are superseded; there is no founding-cohort limit.
 
 This document is the release source of truth. A checked item means the result was verified, not merely started. Legal and tax items must be validated by Belgian counsel/accounting professionals; this checklist is product and engineering guidance, not legal advice.
 
@@ -33,22 +34,23 @@ This document is the release source of truth. A checked item means the result wa
 - [x] Brakeman: no static-analysis warnings.
 - [x] Bundler Audit and Importmap Audit: no known vulnerable dependencies.
 - [x] `lawrelay.be` is registered and delegated to Route 53 nameservers.
-- [ ] `lawrelay.eu` registrar rejection remains under AWS Support investigation; AWS confirmed both failed attempts generated no charge and Route 53 had €0/zero recorded charges for 1 September–28 October 2026. The support-case identifier is intentionally excluded from source control. It is not required for a `.be` launch.
+- [ ] `lawrelay.eu` remains unregistered. AWS Support confirmed the account is restricted from additional domain registrations and will not lift the restriction. Failed attempts were not charged. Another registrar can be used later; this does not block the `.be` launch.
 - [x] A separate Hetzner project and local `hcloud` context named `lawrelay` exist.
-- [x] LawRelay remains open-source under AGPL-3.0-or-later, while source and Git history are temporarily stored in the private `github.com/bg-ghub/lawrelay` repository; releases use SemVer (current patch `0.1.1`), a changelog, contribution/security policies, and clean staged Gitleaks scans.
-- [ ] Production application. The Hetzner project has no server or other resources.
-- [ ] Live DNS. `lawrelay.be` has no A/AAAA record, `www.lawrelay.be` does not exist, and no MX record was found.
+- [x] LawRelay remains licensed under AGPL-3.0-or-later with source stored in the private `github.com/bg-ghub/lawrelay` repository; the founding beta is SemVer `0.2.0`.
+- [x] Production server provisioned in Hetzner Nuremberg: CX23, 2 shared cores, 4 GB RAM, restricted SSH, firewall, security updates, and automatic provider backups.
+- [x] Migadu Micro account, domain activation, mail identities, MX/verification/SPF/DKIM/DMARC records, SMTP authentication, application-sender delivery, and contact-inbox receipt are verified.
+- [ ] Public web DNS/TLS and complete deployment acceptance. Preserve all existing Migadu mail records.
 - [x] Real account, authorization, notification, billing-foundation, invoice-foundation, privacy-draft, and terms-draft code exists.
 - [ ] Live providers, final legal/operator data, production support, and production infrastructure are not configured.
 
 ## Decisions that block implementation
 
-- [ ] **Operator identity:** record legal name, legal form, registered address, enterprise number, VAT number/status, professional email, phone number, and responsible contact.
+- [x] **Operator identity:** Gauthier Berth, using the public WetWijzer operator details at the user's request; see `config/operator.yml`.
 - [ ] **Market boundary:** confirm that only verified Belgian lawyers/law firms can view or post assignments.
 - [ ] **Data boundary:** confirm that LawRelay will not accept client names, case facts, pleadings, documents, or privileged communications in the initial release.
-- [ ] **Commercial model:** approve a fixed platform subscription or fixed listing/access fee that is independent of the lawyer's fee and the outcome of the assignment.
-- [ ] **Launch cohort:** identify 5–15 founding lawyers/firms for an invite-only pilot.
-- [ ] **Support owner:** name the person responsible for verification, moderation, privacy requests, billing questions, and incidents.
+- [x] **Commercial model:** free founding beta now, paid subscriptions later. Payment requests and paid activation must remain disabled in beta mode.
+- [x] **Admission:** open to lawyers listed on `advocaat.be`; directory and email verification replace invitation-based admission.
+- [x] **Support owner:** Gauthier Berth, as the operator, is responsible for verification exceptions, moderation, privacy requests, and incidents. Paid billing is disabled.
 - [ ] **Professional review:** obtain written review from Belgian counsel familiar with OVB and AVOCATS.BE rules before charging users.
 - [ ] **Brand clearance:** perform and document BOIP/EUIPO trademark searches before investing in a public launch under the LawRelay name.
 
@@ -134,8 +136,8 @@ At this price, one paying office should cover basic hosting/email infrastructure
 
 - [x] Choose Migadu as the transactional mailbox/SMTP provider and add a deployment runbook.
 - [ ] Record/review Migadu's data-processing terms and subprocessors.
-- [ ] Copy the account-specific Migadu MX, verification, SPF, and DKIM records into Route 53; deploy DMARC monitoring and then enforce it after alignment tests.
-- [ ] Create and monitor `support@`, `privacy@`, `security@`, and `no-reply@lawrelay.be` in Migadu.
+- [x] Copy the account-specific Migadu MX, verification, SPF, and DKIM records into Route 53. Migadu diagnostics pass; DMARC uses its recommended quarantine policy. External header alignment still needs recipient-side confirmation.
+- [x] Create `info@`, `support@`, `privacy@`, `security@`, and `no-reply@lawrelay.be` in Migadu; these route into the operator mailbox.
 - [x] Replace `from@example.com` and `example.com` production sender defaults with an environment-configured LawRelay sender.
 - [x] Build and locally test email verification, password reset, new proposal, accepted/declined, and cancellation mailers; provider delivery is not live.
 - [ ] Add billing and account-security notice mailers before the paid pilot.
@@ -185,7 +187,7 @@ At this price, one paying office should cover basic hosting/email infrastructure
 
 ### 8. Production infrastructure
 
-- [ ] Choose and create the smallest appropriate Hetzner production server; no paid resource exists today.
+- [x] Create the small Hetzner CX23 production server in Nuremberg with provider backups enabled.
 - [ ] Create a separate staging environment and separate credentials/data.
 - [x] Replace placeholder deploy targets with required environment variables so accidental placeholder deployment fails.
 - [x] Add and validate a multi-stage non-root production container image compatible with Kamal/Thruster; local keys and runtime data are excluded from its build context.

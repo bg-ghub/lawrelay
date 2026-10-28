@@ -28,12 +28,11 @@
 
       <fieldset class="form-section">
         <legend><%= t("settings.profile.legend") %></legend>
-        <div class="form-row">
-          <div class="field-group"><%= form.label "profile[bar_association]", t("auth.fields.bar_association") %><%= form.text_field "profile[bar_association]", value: @profile.bar_association, required: true %></div>
-          <div class="field-group"><%= form.label "profile[bar_number]", t("auth.fields.bar_number") %><%= form.text_field "profile[bar_number]", value: @profile.bar_number, required: true %></div>
-        </div>
+        <% if @profile.directory_profile_url.present? %>
+          <div class="field-group"><strong><%= t("directory_onboarding.settings.directory_profile") %></strong><p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><p class="field-hint"><%= t("directory_onboarding.settings.directory_profile_hint") %></p></div>
+        <% end %>
         <div class="field-group"><%= form.label "profile[bar_admission_year]", t("settings.profile.bar_admission_year") %><%= form.number_field "profile[bar_admission_year]", value: @profile.bar_admission_year, min: 1900, max: Date.current.year, placeholder: t("settings.profile.bar_admission_year_placeholder") %></div>
-        <div class="field-group"><%= form.label "profile[professional_email]", t("auth.fields.professional_email") %><%= form.email_field "profile[professional_email]", value: @profile.professional_email, autocomplete: "email" %><p class="field-hint"><%= t("settings.profile.review_hint") %></p></div>
+        <p class="field-hint"><%= t("directory_onboarding.settings.identity_hint") %></p>
         <div class="form-row">
           <div class="field-group"><%= form.label "profile[spoken_languages][]", t("settings.profile.languages") %><%= form.text_field "profile[spoken_languages][]", value: @profile.spoken_languages.join(", "), name: "profile[spoken_languages][]", placeholder: t("settings.profile.languages_placeholder") %></div>
           <div class="field-group"><%= form.label "profile[practice_areas][]", t("settings.profile.practice_areas") %><%= form.text_field "profile[practice_areas][]", value: @profile.practice_areas.join(", "), name: "profile[practice_areas][]", placeholder: t("settings.profile.practice_areas_placeholder") %></div>
