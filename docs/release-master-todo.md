@@ -13,7 +13,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Directory profile lookup, professional-email confirmation, account email verification, and suspended-account protections are implemented and tested.
 - [x] Private assignments, proposals, settings, and admin routes require authentication and authorization.
 - [x] Private GitHub repository; source remains unpublished to the public.
-- [x] Production image deployed manually on Hetzner: revision `78f08b0c2952`.
+- [x] Production image deployed on Hetzner: `lawrelay:0.2.0-dc4f2f19500c`, matching SemVer tag `v0.2.0`.
 - [x] Linux suite: 154 runs / 902 assertions; system checks: 4 / 13. Static/security scans pass.
 - [x] Off-host backups and isolated restore drill pass (`9d55cfca`); nightly backups and five-minute health checks are enabled. Owner SMTP alerting was tested.
 - [x] Production administrator password email completed through Migadu after configuring 10-second connection and 30-second read timeouts. The queue has no failed or pending jobs. Recipient-side inbox/header checks remain below.
