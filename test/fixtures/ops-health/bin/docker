@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "$1" = "volume" ] && [ "$2" = "inspect" ]; then
+  printf '%s\n' /fixture-volume
+  exit 0
+fi
+
+if [ "$1" = "inspect" ]; then
+  printf '%s\n' true
+  exit 0
+fi
+
+exit 1

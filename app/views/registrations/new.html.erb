@@ -30,21 +30,18 @@
       </fieldset>
 
       <fieldset class="form-section">
-        <legend><%= t("auth.registration.professional_details") %></legend>
-        <div class="form-row">
-          <div class="field-group"><%= form.label :bar_association, t("auth.fields.bar_association") %><%= form.text_field :bar_association, required: true, value: @form_values["bar_association"], placeholder: t("auth.registration.bar_placeholder") %></div>
-          <div class="field-group"><%= form.label :bar_number, t("auth.fields.bar_number") %><%= form.text_field :bar_number, required: true, value: @form_values["bar_number"] %></div>
+        <legend><%= t("directory_onboarding.registration.legend") %></legend>
+        <div class="field-group">
+          <%= form.label :directory_profile_url, t("directory_onboarding.registration.profile_url") %>
+          <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url" %>
+          <p class="field-hint"><%= t("directory_onboarding.registration.profile_url_hint") %></p>
+          <p class="field-hint"><%= link_to t("directory_onboarding.registration.find_profile"), "https://www.advocaat.be/nl/zoek-een-advocaat", target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
         </div>
-        <p class="field-hint"><%= t("auth.registration.verification_hint") %></p>
       </fieldset>
 
       <fieldset class="form-section">
         <legend><%= t("auth.registration.firm_details") %></legend>
-        <div class="field-group"><%= form.label :firm_name, t("auth.fields.firm_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"] %></div>
-        <div class="form-row">
-          <div class="field-group"><%= form.label :enterprise_number, t("auth.fields.enterprise_number") %><%= form.text_field :enterprise_number, value: @form_values["enterprise_number"], placeholder: "0123.456.789" %></div>
-          <div class="field-group"><%= form.label :vat_number, t("auth.fields.vat_number") %><%= form.text_field :vat_number, value: @form_values["vat_number"], placeholder: "BE 0123.456.789" %></div>
-        </div>
+        <div class="field-group"><%= form.label :firm_name, t("auth.fields.firm_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"] %><p class="field-hint"><%= t("directory_onboarding.registration.firm_hint") %></p></div>
       </fieldset>
 
       <fieldset class="form-section">
@@ -65,9 +62,9 @@
     <% end %>
 
     <aside class="posting-aside">
-      <span class="posting-aside__number">01</span><h2><%= t("auth.registration.aside_one_title") %></h2><p><%= t("auth.registration.aside_one_body") %></p>
-      <span class="posting-aside__number">02</span><h2><%= t("auth.registration.aside_two_title") %></h2><p><%= t("auth.registration.aside_two_body") %></p>
-      <span class="posting-aside__number">03</span><h2><%= t("auth.registration.aside_three_title") %></h2><p><%= t("auth.registration.aside_three_body") %></p>
+      <span class="posting-aside__number">01</span><h2><%= t("directory_onboarding.registration.aside_one_title") %></h2><p><%= t("directory_onboarding.registration.aside_one_body") %></p>
+      <span class="posting-aside__number">02</span><h2><%= t("directory_onboarding.registration.aside_two_title") %></h2><p><%= t("directory_onboarding.registration.aside_two_body") %></p>
+      <span class="posting-aside__number">03</span><h2><%= t("directory_onboarding.registration.aside_three_title") %></h2><p><%= t("directory_onboarding.registration.aside_three_body") %></p>
     </aside>
   </div>
 </main>

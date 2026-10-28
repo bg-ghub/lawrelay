@@ -1,0 +1,8 @@
+de:
+  billing:
+    beta:
+      title: "LawRelay Gründer-Beta"
+      price: "€0 · kostenlos während der Beta"
+      description: "Der Zugang wird automatisch geöffnet, sobald Ihre E-Mail und Ihr Eintrag im offiziellen Anwaltsverzeichnis verifiziert sind."
+    notices:
+      payments_unavailable_during_beta: "Während der Gründer-Beta ist keine Abrechnung verfügbar."

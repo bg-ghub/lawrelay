@@ -1,0 +1,27 @@
+en:
+  admin:
+    founding_accesses:
+      link: "Founding access"
+      eyebrow: "Founding beta"
+      title: "Complimentary access"
+      intro: "Grant a verified firm a short, recorded founding-beta period. This never creates a payment or replaces a paid plan."
+      back: "Back to verification"
+      verified_firm: "Verified firm"
+      active_until: "Active until %{date}"
+      no_access: "No complimentary access"
+      enterprise_number: "Enterprise number"
+      vat_number: "VAT number"
+      billing_email: "Billing email"
+      administrators: "Firm administrators"
+      expires_on: "Access ends on"
+      grant: "Grant access"
+      revoke: "Revoke access"
+      paid_plan: "This firm has a paid plan. Founding access cannot be applied."
+      empty_title: "No verified firms"
+      empty_body: "Verify a firm before granting founding access."
+      notices:
+        granted: "Founding access was granted to %{name}."
+        revoked: "Founding access was revoked for %{name}."
+        invalid_expiry: "Choose an end date from today through one year from today."
+        unverified_firm: "Only verified firms can receive founding access."
+        paid_account: "This firm already has a paid billing plan."

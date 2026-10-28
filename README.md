@@ -1,12 +1,14 @@
 # LawRelay
 
 [![CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-0.1.1-orange.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.2.0-orange.svg)](CHANGELOG.md)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 
 LawRelay is a multilingual, lawyer-only marketplace for court cover and bounded legal assignments in Belgium.
 
-The repository is temporarily private and the application is not deployed while development continues. Use synthetic data only—never client names, case facts, documents, privileged material, or production credentials.
+Live beta: [lawrelay.be](https://lawrelay.be)
+
+The repository is private during the founding beta. Only verified Belgian lawyers can enter the marketplace. Keep client names, case facts, documents, and privileged material outside LawRelay.
 
 ## Features
 

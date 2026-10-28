@@ -17,6 +17,20 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
     get verification_status_path(locale: :en)
 
     assert_response :success
-    assert_includes response.body, "Professional review"
+    assert_includes response.body, "Checking your official profile"
+  end
+
+  test "queues a directory retry without looking up the provider in the request" do
+    user = users(:one)
+    firm = Firm.create!(name: "Retry Legal", verification_status: "pending")
+    user.memberships.create!(firm: firm, role: "owner")
+    user.create_lawyer_profile!(bar_association: "OVB", bar_number: "RETRY-1", directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a")
+    sign_in_as(user)
+
+    assert_enqueued_with(job: Directory::VerificationJob, args: [ user.id ]) do
+      post retry_directory_verification_status_path(locale: :en)
+    end
+
+    assert_redirected_to verification_status_path(locale: :en)
   end
 end

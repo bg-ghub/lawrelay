@@ -26,8 +26,8 @@ de:
       learn_more: Mehr erfahren
       contact: Kontakt
       made_for_belgium: Für Belgien gemacht
-      demo_notice: Ein lokaler Arbeitsbereich für Anwältinnen und Anwälte. Dies ist eine Demo; bitte keine vertraulichen Fallinformationen einstellen.
-      demo_disclaimer: Demo — keine Rechtsberatung
+      demo_notice: Kostenlose Gründungs-Beta. Die Registrierung steht auf advocaat.be gelisteten Anwälten offen; der Marktplatz-Zugang folgt nach einer Verzeichnisprüfung. Keine Mandantennamen, Sachverhalte oder Dokumente einstellen.
+      demo_disclaimer: LawRelay koordiniert Kontakt; es erteilt keine Rechtsberatung.
     home:
       title: "LawRelay — die passende Kollegin oder den passenden Kollegen finden"
       og_description: Stellen Sie eine Sitzungsvertretung oder einen juristischen Auftrag ein und finden Sie eine Kollegin oder einen Kollegen.
@@ -37,7 +37,7 @@ de:
         heading_middle: für eine
         heading_emphasis: Verhandlung?
         lede: Stellen Sie Ihre Anfrage ein, erhalten Sie Rückmeldungen und wählen Sie die passende Person für Ihre Sache.
-        note: Prototyp für belgische Anwältinnen und Anwälte. Ohne Vermittler.
+        note: Kostenlose Gründungs-Beta. Die Registrierung steht auf advocaat.be gelisteten Anwälten offen.
       product:
         aria_label: Beispiel des LawRelay-Arbeitsbereichs
         today: Heute
@@ -75,7 +75,7 @@ de:
         belgium: Belgien
         empty_heading: Noch keine Aufträge.
         empty_body: Stellen Sie den ersten ein und machen Sie Ihre Anfrage für Kolleginnen und Kollegen sichtbar.
-        demo_caption: Beispielaufträge in dieser Demo.
+        demo_caption: Aufträge sind nur für verifizierte Mitglieder sichtbar.
       how:
         eyebrow: so funktioniert es
         heading_before: Von der Anfrage
@@ -95,7 +95,7 @@ de:
         eyebrow: fragen
         heading_before: Gut zu
         heading_after: wissen.
-        lede: Dies ist ein funktionierender Prototyp für Anwältinnen und Anwälte.
+        lede: Eine kostenlose Gründungs-Beta mit offener Registrierung für auf advocaat.be gelistete Anwälte.
         items:
           "0":
             question: Für wen ist LawRelay?
@@ -108,7 +108,7 @@ de:
             answer: Ja. Sie können ein RichtHonorar angeben oder selbst ein Angebot machen.
           "3":
             question: Ist das schon live?
-            answer: Noch nicht. Bitte teilen Sie hier keine vertraulichen Fallinformationen.
+            answer: Ja. Auf advocaat.be gelistete Anwälte können sich registrieren; der Marktplatz-Zugang folgt nach einer Verzeichnisprüfung. Keine Mandantennamen, Sachverhalte oder Dokumente teilen.
       cta:
         eyebrow: bereit loszulegen?
         heading_before: Auftrag einstellen.

@@ -26,8 +26,8 @@ nl:
       learn_more: Meer weten
       contact: Contact
       made_for_belgium: Gemaakt voor België
-      demo_notice: Een lokale, advocaatgerichte werkruimte. Dit is een demonstratieomgeving; plaats geen vertrouwelijke dossierinformatie.
-      demo_disclaimer: Demo — geen juridisch advies
+      demo_notice: Gratis oprichtingsbeta. Registratie staat open voor advocaten op advocaat.be; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
+      demo_disclaimer: LawRelay coördineert contact; het verleent geen juridisch advies.
     home:
       title: "LawRelay — collega’s vinden voor je praktijk"
       og_description: Plaats een zittingsvervanging of juridische opdracht en vind een confrater.
@@ -37,7 +37,7 @@ nl:
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: Plaats je vraag, ontvang reacties en kies de confrater die past bij je dossier.
-        note: Prototype voor Belgische advocaten. Geen tussenpersonen.
+        note: Gratis oprichtingsbeta. Registratie staat open voor advocaten op advocaat.be.
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
@@ -75,7 +75,7 @@ nl:
         belgium: België
         empty_heading: Nog geen opdrachten.
         empty_body: Plaats de eerste en maak je vraag zichtbaar voor confraters.
-        demo_caption: Voorbeeldopdrachten in deze demo.
+        demo_caption: Opdrachten zijn alleen zichtbaar voor geverifieerde leden.
       how:
         eyebrow: zo werkt het
         heading_before: Van vraag
@@ -95,7 +95,7 @@ nl:
         eyebrow: vragen
         heading_before: Goed om
         heading_after: te weten.
-        lede: Dit is een werkend prototype voor advocaten.
+        lede: Een gratis oprichtingsbeta met open registratie voor advocaten op advocaat.be.
         items:
           "0":
             question: Voor wie is LawRelay?
@@ -108,7 +108,7 @@ nl:
             answer: Ja. Je kunt een richttarief meegeven of zelf een voorstel doen.
           "3":
             question: Is dit al live?
-            answer: Nog niet. Deel hier geen vertrouwelijke dossierinformatie.
+            answer: Ja. Advocaten op advocaat.be kunnen zich registreren; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
       cta:
         eyebrow: klaar om te beginnen?
         heading_before: Plaats je opdracht.

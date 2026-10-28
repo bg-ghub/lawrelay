@@ -1,0 +1,166 @@
+#!/usr/bin/env sh
+# Emits an operational alert without printing credentials. The optional webhook
+# is intended for a private incident channel, not for customer communication.
+set -eu
+umask 077
+
+message=${1:-"LawRelay operational check failed"}
+tag=${LAWRELAY_LOG_TAG:-lawrelay-ops}
+dedup_dir=${LAWRELAY_ALERT_DEDUP_DIR:-/var/lib/lawrelay-alerts}
+dedup_hours=${LAWRELAY_ALERT_DEDUP_HOURS:-6}
+
+if command -v logger >/dev/null 2>&1; then
+  logger -p user.err -t "$tag" -- "$message"
+fi
+
+case "$dedup_hours" in
+  ''|0|*[!0-9]*) dedup_hours=6 ;;
+esac
+dedup_minutes=$((dedup_hours * 60))
+delivered=false
+marker=''
+
+# Do not spend the alert quota repeatedly on the same systemd failure. A marker
+# is written only after one configured transport actually accepts the alert.
+if [ -n "${LAWRELAY_ALERT_WEBHOOK_URL:-}" ] || [ -n "${LAWRELAY_ALERT_EMAIL:-}" ]; then
+  if ! command -v awk >/dev/null 2>&1 \
+    || ! command -v find >/dev/null 2>&1 \
+    || ! command -v flock >/dev/null 2>&1 \
+    || ! command -v sha256sum >/dev/null 2>&1 \
+    || ! mkdir -p "$dedup_dir" 2>/dev/null; then
+    if command -v logger >/dev/null 2>&1; then
+      logger -t "$tag" -- "alert delivery unavailable: rate-limit setup"
+    fi
+    exit 0
+  fi
+  chmod 700 "$dedup_dir" 2>/dev/null || true
+  exec 9>"$dedup_dir/.lock"
+  if ! flock -n 9; then
+    if command -v logger >/dev/null 2>&1; then
+      logger -t "$tag" -- "alert delivery suppressed: another sender is active"
+    fi
+    exit 0
+  fi
+  message_hash=$(printf '%s' "$message" | sha256sum | awk '{print $1}')
+  marker="$dedup_dir/$message_hash"
+  if [ -f "$marker" ] && find "$marker" -mmin "-$dedup_minutes" -print -quit 2>/dev/null | grep -q .; then
+    if command -v logger >/dev/null 2>&1; then
+      logger -t "$tag" -- "alert delivery suppressed: duplicate within ${dedup_hours}h"
+    fi
+    exit 0
+  fi
+fi
+
+# A webhook is deliberately optional: a failed alert transport must not hide
+# the original backup/health failure. Keep its URL in a root-only env file.
+if [ -n "${LAWRELAY_ALERT_WEBHOOK_URL:-}" ] && command -v curl >/dev/null 2>&1 && command -v sed >/dev/null 2>&1; then
+  payload=$(printf '{"text":"%s"}' "$(printf '%s' "$message" | sed 's/\\/\\\\/g; s/"/\\"/g')")
+  curl --fail --silent --show-error --max-time 15 \
+    -H 'Content-Type: application/json' \
+    --data "$payload" "$LAWRELAY_ALERT_WEBHOOK_URL" >/dev/null 2>&1 && delivered=true || true
+fi
+
+# The production Docker env file is parsed by Python rather than sourced: it is
+# data, not shell code. The body intentionally contains only this synthetic
+# operational event and never application/user data or configuration values.
+if [ -n "${LAWRELAY_ALERT_EMAIL:-}" ]; then
+  smtp_env_file=${LAWRELAY_SMTP_ENV_FILE:-/home/deploy/lawrelay/production.env}
+  if ! command -v python3 >/dev/null 2>&1; then
+    log_result=2
+  elif [ ! -r "$smtp_env_file" ]; then
+    log_result=2
+  else
+    log_result=0
+    python3 - "$message" "$LAWRELAY_ALERT_EMAIL" "$smtp_env_file" "${LAWRELAY_ALERT_FROM:-}" >/dev/null 2>&1 <<'PY' || log_result=$?
+import re
+import smtplib
+import ssl
+import sys
+from email.message import EmailMessage
+
+message, recipient, env_path, configured_sender = sys.argv[1:]
+
+try:
+    values = {}
+    with open(env_path, encoding="utf-8") as env_file:
+        for raw_line in env_file:
+            line = raw_line.rstrip("\r\n")
+            if not line or line.lstrip().startswith("#"):
+                continue
+            key, separator, value = line.partition("=")
+            if not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key):
+                continue
+            if key in {"SMTP_USERNAME", "SMTP_PASSWORD", "SMTP_ADDRESS", "SMTP_PORT", "SMTP_SSL", "SMTP_STARTTLS"}:
+                values[key] = value
+    username = values.get("SMTP_USERNAME")
+    password = values.get("SMTP_PASSWORD")
+    if not username or not password or not recipient:
+        raise ValueError("configuration")
+    address = values.get("SMTP_ADDRESS", "smtp.migadu.com")
+    port = int(values.get("SMTP_PORT", "465"))
+
+    def required_bool(key, default):
+        value = values.get(key, default).lower()
+        if value == "true":
+            return True
+        if value == "false":
+            return False
+        raise ValueError("configuration")
+
+    use_ssl = required_bool("SMTP_SSL", "true")
+    use_starttls = required_bool("SMTP_STARTTLS", "false")
+    # Never authenticate over cleartext, and do not silently fall back from an
+    # encrypted submission mode to a weaker one.
+    if not address or not (1 <= port <= 65535) or use_ssl == use_starttls:
+        raise ValueError("configuration")
+except (OSError, ValueError):
+    sys.exit(2)
+
+safe_event = " ".join(message.split())[:500]
+mail = EmailMessage()
+mail["From"] = configured_sender or username
+mail["To"] = recipient
+mail["Subject"] = "LawRelay operational alert"
+mail.set_content(
+    "A LawRelay operational alert was raised.\n\n"
+    f"Event: {safe_event}\n\n"
+    "Review the protected server journal for operational details."
+)
+
+try:
+    context = ssl.create_default_context()
+    if use_ssl:
+        client = smtplib.SMTP_SSL(address, port, context=context, timeout=15)
+    else:
+        client = smtplib.SMTP(address, port, timeout=15)
+        client.ehlo()
+        client.starttls(context=context)
+        client.ehlo()
+    with client:
+        client.login(username, password)
+        client.send_message(mail)
+except smtplib.SMTPAuthenticationError:
+    sys.exit(3)
+except (OSError, smtplib.SMTPException):
+    sys.exit(4)
+except Exception:
+    sys.exit(5)
+PY
+  fi
+
+  case "$log_result" in
+    0) log_line="SMTP owner alert sent"; delivered=true ;;
+    2) log_line="SMTP owner alert unavailable: configuration" ;;
+    3) log_line="SMTP owner alert unavailable: authentication" ;;
+    4) log_line="SMTP owner alert unavailable: transport" ;;
+    *) log_line="SMTP owner alert unavailable: internal" ;;
+  esac
+  if command -v logger >/dev/null 2>&1; then
+    logger -t "$tag" -- "$log_line"
+  fi
+fi
+
+if [ "$delivered" = true ] && [ -n "$marker" ]; then
+  : >"$marker"
+  chmod 600 "$marker" 2>/dev/null || true
+fi

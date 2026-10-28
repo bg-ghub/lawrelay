@@ -15,12 +15,14 @@ class PagesControllerTest < ActionController::TestCase
     end
   end
 
-  test "does not invent missing operator information" do
+  test "renders the configured operator and dedicated contact addresses" do
     get :legal_notice, params: { locale: "en" }
 
     assert_response :success
-    assert_select ".form-error"
-    assert_includes response.body, I18n.t("pages.shared.not_configured", locale: :en)
+    assert_select ".form-error", count: 0
+    assert_includes response.body, "Gauthier Berth"
+    assert_includes response.body, "privacy@lawrelay.be"
+    assert_includes response.body, "support@lawrelay.be"
   end
 
   test "renders the general contact address in the footer for every supported locale" do

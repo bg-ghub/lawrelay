@@ -1,0 +1,8 @@
+en:
+  billing:
+    beta:
+      title: "LawRelay founding beta"
+      price: "€0 · free during beta"
+      description: "Access opens automatically once your email and official lawyer-directory listing are verified."
+    notices:
+      payments_unavailable_during_beta: "Billing is not available during the founding beta."

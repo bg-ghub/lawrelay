@@ -1,0 +1,36 @@
+de:
+  directory_onboarding:
+    registration:
+      legend: "Ihr offizieller Eintrag"
+      profile_url: "Link zu Ihrem Advocaat.be-Profil"
+      profile_url_hint: "Wir prüfen das öffentliche Profil, den Namen und die veröffentlichte berufliche E-Mail-Adresse. Falls sie von Ihrer Anmeldeadresse abweicht, bitten wir auch dort um Bestätigung."
+      invalid_profile_url: "muss ein Link zu Ihrem öffentlichen Anwaltsprofil auf Advocaat.be sein"
+      find_profile: "Ihr Profil auf Advocaat.be finden"
+      firm_hint: "Wir verwenden dies nur zur Einrichtung Ihres Arbeitsbereichs."
+      aside_one_title: "Ihr Profil"
+      aside_one_body: "Fügen Sie den Link zu Ihrem öffentlichen Advocaat.be-Profil ein. Keine Eingabe einer Anwaltsnummer nötig."
+      aside_two_title: "Eine kurze Prüfung"
+      aside_two_body: "Nach der Kontoerstellung prüfen wir das aktuelle Verzeichnis."
+      aside_three_title: "Dann kann es losgehen"
+      aside_three_body: "Sobald Ihre Anmeldeadresse und berufliche Identität bestätigt sind, wird der Zugang automatisch geöffnet."
+    status:
+      lede: "Der Marktplatzzugang öffnet sich, nachdem wir Ihre Anmeldeadresse und Ihren offiziellen beruflichen Eintrag bestätigt haben."
+      directory: "Offizielles Verzeichnis"
+      states:
+        pending: "Öffentliches Profil wird geprüft"
+        matched: "Profil gefunden"
+      pending_title: "Ihr offizielles Profil wird geprüft"
+      pending_body: "Wir prüfen das von Ihnen angegebene Advocaat.be-Profil. Das kann einen Moment dauern."
+      confirmation_title: "Bestätigen Sie Ihre veröffentlichte berufliche E-Mail"
+      confirmation_body: "Wir haben einen Bestätigungslink an %{email} gesendet, die Adresse in Ihrem offiziellen Profil."
+      ready_title: "Berufliche Identität bestätigt"
+      ready_body: "Die Verzeichnisprüfung ist abgeschlossen. Der Marktplatzzugang öffnet sich automatisch, sobald alle Prüfungen abgeschlossen sind."
+      retry: "Erneut prüfen"
+      retry_queued: "Wir prüfen Ihr offizielles Profil in Kürze erneut."
+      retry_rate_limited: "Bitte warten Sie kurz, bevor Sie eine erneute Prüfung anfordern."
+      fallback_html: "Wenn Ihr öffentlicher Eintrag korrekt ist und es trotzdem nicht funktioniert, kontaktieren Sie %{support_email}."
+    settings:
+      directory_profile: "Offizielles Verzeichnisprofil"
+      open_directory_profile: "Ihr Advocaat.be-Profil öffnen"
+      directory_profile_hint: "Dieser Link dient zur Bestätigung Ihrer beruflichen Identität."
+      identity_hint: "Eine Namensänderung löst eine neue Verzeichnisprüfung aus. Für ein anderes offizielles Profil kontaktieren Sie den Support."
