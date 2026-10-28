@@ -47,6 +47,12 @@ jobs:
         run: bin/bundler-audit check --update
       - name: Audit import-map dependencies
         run: bin/importmap audit
+      - name: Check external probes and operational alerts without sending
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          python3 script/ops/test-external-uptime.py
+          sh script/ops/test-notify-no-send
 
   lint:
     runs-on: ubuntu-latest

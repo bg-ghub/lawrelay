@@ -6,7 +6,7 @@ nl:
       profile_url_hint: "We controleren het openbare profiel, de naam en het gepubliceerde professionele e-mailadres. Is dat adres anders dan je inlogadres, dan vragen we ook daar een bevestiging."
       invalid_profile_url: "moet een link zijn naar je openbare advocatenprofiel op Advocaat.be"
       find_profile: "Zoek je profiel op Advocaat.be"
-      firm_hint: "Dit gebruiken we alleen om je werkruimte in te richten."
+      firm_hint: "De naam van je kantoor of zelfstandige praktijk."
       aside_one_title: "Je profiel"
       aside_one_body: "Plak de link naar je openbare profiel op Advocaat.be. Je hoeft geen balienummer in te vullen."
       aside_two_title: "Een korte controle"

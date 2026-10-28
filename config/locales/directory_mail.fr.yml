@@ -3,8 +3,8 @@ fr:
     confirm:
       subject: "Confirmez votre adresse e-mail professionnelle LawRelay"
       greeting: "Bonjour %{name},"
-      body: "Un compte LawRelay a été créé avec votre profil public avocat.be et l’adresse de connexion %{login_email}. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle :"
-      body_html: "Un compte LawRelay a été créé avec votre profil public avocat.be et l’adresse de connexion <strong>%{login_email}</strong>. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle."
+      body: "Un compte LawRelay a été créé avec votre profil public advocaat.be et l’adresse de connexion %{login_email}. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle :"
+      body_html: "Un compte LawRelay a été créé avec votre profil public advocaat.be et l’adresse de connexion <strong>%{login_email}</strong>. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle."
       action: "Confirmer l’adresse e-mail professionnelle"
       ignore: "Si ce n’est pas vous, ignorez cet e-mail. Le lien expire dans 48 heures."
     notices:

@@ -6,7 +6,7 @@ en:
       profile_url_hint: "We check the public profile, its name and its published professional email. If that email differs from your sign-in address, we will also ask you to confirm it."
       invalid_profile_url: "must be a link to your public Advocaat.be lawyer profile"
       find_profile: "Find your profile on Advocaat.be"
-      firm_hint: "This is only used to set up your workspace."
+      firm_hint: "The name of your firm or practice."
       aside_one_title: "Your profile"
       aside_one_body: "Paste the link to your public Advocaat.be profile. No bar number to type in."
       aside_two_title: "A quick check"

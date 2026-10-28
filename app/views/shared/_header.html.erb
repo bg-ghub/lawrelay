@@ -1,11 +1,11 @@
-<header class="site-header" data-controller="mobile-nav" data-action="keydown.esc@window->mobile-nav#close">
+<header class="site-header" data-controller="mobile-nav" data-action="keydown.esc@window->mobile-nav#close click@window->mobile-nav#closeOutside focusout->mobile-nav#closeOnFocusOut resize@window->mobile-nav#reset turbo:before-cache@document->mobile-nav#reset">
   <div class="shell header-inner">
     <%= link_to root_path, class: "brand", aria: { label: t("marketing.header.home_label") } do %>
       <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
       <span>Law<span>Relay</span></span>
     <% end %>
 
-    <nav class="primary-nav" aria-label="<%= t("marketing.header.primary_navigation") %>" data-mobile-nav-target="menu">
+    <nav id="primary-navigation" class="primary-nav" aria-label="<%= t("marketing.header.primary_navigation") %>" data-mobile-nav-target="menu">
       <%= link_to t("marketing.header.how_it_works"), root_path(anchor: "how-it-works"), data: { action: "mobile-nav#close" } %>
       <%= link_to t("marketing.header.for_lawyers"), root_path(anchor: "for-lawyers"), data: { action: "mobile-nav#close" } %>
       <%= link_to t("marketing.header.discover_assignments"), assignments_path, data: { action: "mobile-nav#close" } %>
@@ -22,7 +22,7 @@
 
     <div class="header-actions">
       <nav class="language-nav" aria-label="<%= t("marketing.language_switcher") %>">
-        <details class="language-menu">
+        <details class="language-menu" data-controller="language-menu" data-action="keydown.esc@window->language-menu#close click@window->language-menu#closeOutside focusout->language-menu#closeOnFocusOut turbo:before-cache@document->language-menu#close">
           <summary aria-label="<%= t("marketing.language_switcher") %>">
             <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8">
               <circle cx="12" cy="12" r="9"></circle>
@@ -63,7 +63,7 @@
         <%= link_to t("auth.sessions.submit"), new_session_path, class: "header-login" %>
         <%= link_to t("auth.sessions.create_account"), new_registration_path, class: "button button-small button-dark" %>
       <% end %>
-      <button class="menu-toggle" type="button" aria-label="<%= t("marketing.header.open_menu") %>" aria-expanded="false" data-mobile-nav-target="button" data-action="mobile-nav#toggle">
+      <button class="menu-toggle" type="button" aria-label="<%= t("marketing.header.open_menu") %>" aria-controls="primary-navigation" aria-expanded="false" data-mobile-nav-target="button" data-action="mobile-nav#toggle">
         <span></span><span></span>
       </button>
     </div>

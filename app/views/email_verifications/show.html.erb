@@ -1,0 +1,9 @@
+<% content_for :title, t("auth.email_verifications.review.title") %>
+<section class="new-assignment shell">
+  <div class="dashboard-panel">
+    <h1><%= t("auth.email_verifications.review.title") %></h1>
+    <p><%= t("auth.email_verifications.review.explanation") %></p>
+    <p><strong><%= t("auth.email_verifications.review.account_label") %>:</strong> <%= @user.email_address %></p>
+    <%= button_to t("auth.email_verifications.review.submit"), confirm_email_verification_path(token: params[:token], locale: @user.locale), method: :post, class: "button button--dark" %>
+  </div>
+</section>

@@ -1,4 +1,4 @@
-<main class="dashboard-page shell">
+<div class="dashboard-page shell">
   <div class="dashboard-heading"><div><p class="eyebrow"><%= t("marketplace.dashboard.eyebrow") %></p><h1><%= t("marketplace.dashboard.title") %></h1><p><%= t("marketplace.dashboard.lede") %></p></div><div class="dashboard-actions"><% if current_user.firm_administrator? %><%= link_to t("billing.eyebrow"), billing_path, class: "button button--ghost" %><% end %><% if current_user.system_admin? %><%= link_to t("admin.verifications.eyebrow"), admin_verifications_path, class: "button button--ghost" %><%= link_to t("trust.admin.eyebrow"), admin_reports_path, class: "button button--ghost" %><% end %><%= link_to new_assignment_path, class: "button button--dark" do %><%= t("marketplace.dashboard.new_assignment") %> <span aria-hidden="true">→</span><% end %></div></div>
   <section class="dashboard-summary" aria-label="<%= t("marketplace.dashboard.summary_aria") %>">
     <div class="summary-card"><span><%= t("marketplace.dashboard.open_assignments") %></span><strong><%= @open_assignments.size %></strong><small><%= t("marketplace.dashboard.open_assignments_hint") %></small></div>
@@ -24,4 +24,4 @@
       <ul class="notification-list"><% @notifications.each do |notification| %><li><%= link_to notification_path(notification), class: "notification-list__item" do %><span><%= t("workflow.notifications.#{notification.kind}") %></span><span aria-hidden="true">→</span><% end %></li><% end %></ul>
     </section>
   <% end %>
-</main>
+</div>

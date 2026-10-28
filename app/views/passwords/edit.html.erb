@@ -1,5 +1,5 @@
 <% content_for :title, t("auth.passwords.edit.title") %>
-<main class="new-assignment shell">
+<div class="new-assignment shell">
   <div class="new-assignment__intro">
     <p class="eyebrow"><%= t("auth.passwords.eyebrow") %></p>
     <h1><%= t("auth.passwords.edit.heading") %></h1>
@@ -11,14 +11,14 @@
         <legend><%= t("auth.passwords.edit.form_title") %></legend>
         <div class="field-group">
           <%= form.label :password, t("auth.fields.new_password") %>
-          <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password", maxlength: 72 %>
+          <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %>
         </div>
         <div class="field-group">
           <%= form.label :password_confirmation, t("auth.fields.password_confirmation") %>
-          <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72 %>
+          <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %>
         </div>
       </fieldset>
       <div class="form-actions"><%= form.submit t("auth.passwords.edit.submit"), class: "button button--dark" %></div>
     <% end %>
   </div>
-</main>
+</div>

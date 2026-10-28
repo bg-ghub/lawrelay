@@ -2,7 +2,7 @@ require "test_helper"
 
 class InvoiceTest < ActiveSupport::TestCase
   def billing_account
-    user = User.create!(email_address: "billing-#{SecureRandom.uuid}@example.test", password: "password123", password_confirmation: "password123", first_name: "Billing", last_name: "Owner")
+    user = User.create!(email_address: "billing-#{SecureRandom.uuid}@example.test", password: "password1234", password_confirmation: "password1234", first_name: "Billing", last_name: "Owner")
     firm = Firm.create!(name: "Billing Firm #{SecureRandom.uuid}")
     Membership.create!(user:, firm:, role: "owner")
     BillingAccount.create!(firm:)

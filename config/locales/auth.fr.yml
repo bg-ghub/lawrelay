@@ -34,6 +34,7 @@ fr:
       sent: "Si ce compte existe, les instructions de réinitialisation ont été envoyées."
       reset: "Votre mot de passe a été modifié."
       mismatch: "Les mots de passe ne correspondent pas."
+      invalid_password: "Utilisez au moins 12 caractères et saisissez deux fois le même mot de passe."
       invalid: "Ce lien de réinitialisation est invalide ou a expiré."
       rate_limited: "Trop de demandes. Réessayez plus tard."
       new:
@@ -59,7 +60,7 @@ fr:
       agreement: "Accord"
       email_hint: "Utilisez l’adresse liée à votre pratique professionnelle."
       bar_placeholder: "Par exemple : Barreau de Bruxelles"
-      verification_hint: "Nous vérifions ces données manuellement. N’indiquez aucune information de client ou de dossier."
+      verification_hint: "Nous vérifions votre profil dans l’annuaire officiel. N’indiquez aucune information de client ou de dossier."
       agree_heading: "J’accepte les règles de la plateforme"
       agree_before: "J’ai lu et j’accepte les"
       terms: "conditions"
@@ -78,6 +79,12 @@ fr:
         rate_limited: "Trop de tentatives d’inscription. Réessayez plus tard."
         accept_terms: "Vous devez accepter les conditions et la déclaration de confidentialité."
         already_registered: "Ces données de compte, cabinet ou barreau sont déjà enregistrées."
+    email_verifications:
+      review:
+        title: "Confirmer votre adresse e-mail"
+        explanation: "Confirmez cette adresse pour votre compte LawRelay. Continuez uniquement si vous avez créé ce compte."
+        account_label: "Compte"
+        submit: "Confirmer l’adresse e-mail"
     email_verification:
       verified: "Votre adresse e-mail est confirmée."
       verified_sign_in: "Votre adresse e-mail est confirmée. Connectez-vous pour continuer."
@@ -103,7 +110,7 @@ fr:
       resent: "Un nouveau lien a été envoyé si une confirmation est encore nécessaire."
       rate_limited: "Veuillez patienter avant de demander un autre e-mail."
     verification:
-      marketplace_required: "Nous devons vérifier votre e-mail, votre inscription au barreau et votre cabinet avant d’ouvrir l’accès."
+      marketplace_required: "Confirmez votre e-mail et votre profil dans l’annuaire officiel avant d’accéder aux missions."
     authorization:
       firm_admin_required: "Seul un administrateur du cabinet peut effectuer cette action."
       admin_required: "Vous n’avez pas accès à cette section."

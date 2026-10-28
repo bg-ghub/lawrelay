@@ -67,8 +67,8 @@ class Billing::ManualPaymentConfirmationServiceTest < ActiveSupport::TestCase
   def create_operator
     User.create!(
       email_address: "billing-operator-#{SecureRandom.uuid}@example.test",
-      password: "password123",
-      password_confirmation: "password123",
+      password: "password1234",
+      password_confirmation: "password1234",
       first_name: "Billing",
       last_name: "Operator",
       system_role: "admin"

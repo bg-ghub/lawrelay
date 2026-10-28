@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "ready", to: "readiness#show", as: :readiness
+  get "health/operations", to: "operational_health#show"
   get "robots.txt", to: "seo#robots", defaults: { format: :text }
   get "sitemap.xml", to: "seo#sitemap", defaults: { format: :xml }
   post "webhooks/mollie", to: "webhooks/mollie#create"
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
     resources :passwords, param: :token, only: %i[new create edit update]
     resource :registration, only: %i[new create]
     get "email-verification/:token", to: "email_verifications#show", as: :email_verification
+    post "email-verification/:token", to: "email_verifications#confirm", as: :confirm_email_verification
     get "directory-verification/:token", to: "directory_verifications#show", as: :directory_verification
     post "directory-verification/:token", to: "directory_verifications#confirm", as: :confirm_directory_verification
     resource :verification_status, only: %i[show create], controller: "verification_status" do

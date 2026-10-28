@@ -10,7 +10,7 @@ nl:
     notices:
       confirmed: "Je professionele e-mailadres is bevestigd. Meld je aan om verder te gaan."
       invalid: "Deze bevestigingslink is ongeldig of verlopen."
-      already_claimed: "Dit directoryprofiel is al voor een ander account bevestigd. Neem contact op met support als je hulp nodig hebt."
+      already_claimed: "Dit profiel in de advocatenlijst is al voor een ander account bevestigd. Neem contact op met support als je hulp nodig hebt."
     page:
       eyebrow: "Bevestiging professioneel e-mailadres"
       heading: "Bevestig dit LawRelay-account"

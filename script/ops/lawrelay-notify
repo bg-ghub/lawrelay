@@ -4,7 +4,13 @@
 set -eu
 umask 077
 
-message=${1:-"LawRelay operational check failed"}
+if [ "$#" -gt 0 ]; then
+  # Preserve a complete event even if a caller supplied unquoted words.
+  # Distinct units must also produce distinct rate-limit fingerprints.
+  message="$*"
+else
+  message="LawRelay operational check failed"
+fi
 tag=${LAWRELAY_LOG_TAG:-lawrelay-ops}
 dedup_dir=${LAWRELAY_ALERT_DEDUP_DIR:-/var/lib/lawrelay-alerts}
 dedup_hours=${LAWRELAY_ALERT_DEDUP_HOURS:-6}

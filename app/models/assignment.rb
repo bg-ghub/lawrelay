@@ -76,7 +76,7 @@ class Assignment < ApplicationRecord
   end
 
   def manageable_by?(user)
-    user.present? && (creator_user_id == user.id || user.firm_administrator?(firm))
+    owned_by?(user) && (creator_user_id == user.id || user.firm_administrator?(firm))
   end
 
   def visible_to?(user)

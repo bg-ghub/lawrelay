@@ -26,7 +26,7 @@ nl:
       learn_more: Meer weten
       contact: Contact
       made_for_belgium: Gemaakt voor België
-      demo_notice: Gratis oprichtingsbeta. Registratie staat open voor advocaten op advocaat.be; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
+      demo_notice: Gratis bèta. Registratie staat open voor advocaten op advocaat.be; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
       demo_disclaimer: LawRelay coördineert contact; het verleent geen juridisch advies.
     home:
       title: "LawRelay — collega’s vinden voor je praktijk"
@@ -37,7 +37,7 @@ nl:
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: Plaats je vraag, ontvang reacties en kies de confrater die past bij je dossier.
-        note: Gratis oprichtingsbeta. Registratie staat open voor advocaten op advocaat.be.
+        note: Gratis bèta. Registratie staat open voor advocaten op advocaat.be.
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
@@ -95,7 +95,7 @@ nl:
         eyebrow: vragen
         heading_before: Goed om
         heading_after: te weten.
-        lede: Een gratis oprichtingsbeta met open registratie voor advocaten op advocaat.be.
+        lede: Een gratis bèta met open registratie voor advocaten op advocaat.be.
         items:
           "0":
             question: Voor wie is LawRelay?

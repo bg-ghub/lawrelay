@@ -18,12 +18,23 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    if @user.update(params.permit(:password, :password_confirmation))
-      @user.sessions.destroy_all
+    updated = @user.with_lock do
+      User.find_by_password_reset_token!(params[:token])
+      if params[:password].present? && @user.update(params.permit(:password, :password_confirmation))
+        @user.sessions.destroy_all
+        true
+      else
+        false
+      end
+    end
+
+    if updated
       redirect_to new_session_path, notice: t("auth.passwords.reset")
     else
-      redirect_to edit_password_path(token: params[:token]), alert: t("auth.passwords.mismatch")
+      redirect_to edit_password_path(token: params[:token]), alert: t("auth.passwords.invalid_password")
     end
+  rescue ActiveSupport::MessageVerifier::InvalidSignature, ActiveRecord::RecordNotFound
+    redirect_to new_password_path, alert: t("auth.passwords.invalid")
   end
 
   private

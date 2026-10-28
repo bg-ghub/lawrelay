@@ -68,6 +68,81 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     assert_no_text "Closed private assignment"
   end
 
+  test "mobile navigation and the language picker support keyboard dismissal" do
+    page.current_window.resize_to(390, 844)
+    visit root_path(locale: :en)
+
+    menu_button = find(".menu-toggle")
+    assert_equal "primary-navigation", menu_button["aria-controls"]
+    menu_button.send_keys(:enter)
+    assert_selector ".menu-toggle[aria-expanded='true']"
+    assert_equal "How it works", page.driver.browser.switch_to.active_element.text
+    page.driver.browser.switch_to.active_element.send_keys(:escape)
+    assert_selector ".menu-toggle[aria-expanded='false']"
+    assert_equal menu_button.native, page.driver.browser.switch_to.active_element
+
+    find(".language-menu summary").send_keys(:enter)
+    assert_selector ".language-menu[open]"
+    find(".language-menu summary").send_keys(:tab)
+    assert_equal "Nederlands", page.driver.browser.switch_to.active_element.text.split.last
+    page.driver.browser.switch_to.active_element.send_keys(:escape)
+    assert_no_selector ".language-menu[open]"
+    assert_equal "summary", page.driver.browser.switch_to.active_element.tag_name
+  ensure
+    page.current_window.resize_to(1400, 1400)
+  end
+
+  test "public pages have one main landmark and fit narrow viewports in all languages" do
+    %i[nl fr de en].each do |locale|
+      [ 320, 800, 1280 ].each do |width|
+        page.current_window.resize_to(width, 900)
+        visit new_registration_path(locale:)
+
+        assert_selector "html[lang='#{locale}']"
+        assert_equal 1, all("main", visible: :all).size
+        assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, page.evaluate_script("window.innerWidth"), "Registration overflows at #{width}px in #{locale}"
+        all("form.assignment-form input:not([type='hidden']):not([type='submit'])").each do |field|
+          assert field.native.accessible_name.present?, "Missing accessible input label for #{field[:id]}"
+        end
+      end
+    end
+  ensure
+    page.current_window.resize_to(1400, 1400)
+  end
+
+  test "keyboard users can skip the header and see which assignment kind has focus" do
+    account = create_system_account("keyboard")
+    sign_in_through_browser(account.user)
+    visit new_assignment_path(locale: :en)
+
+    find(".skip-link", visible: :all).send_keys(:enter)
+    assert_equal "main-content", page.driver.browser.switch_to.active_element.attribute("id")
+
+    court_kind = find("input[value='court_replacement']", visible: :all)
+    court_kind.send_keys(:space)
+    assert_equal court_kind.native, page.driver.browser.switch_to.active_element
+    assert_selector ".kind-option:has(input:focus-visible)"
+    court_kind.send_keys(:right)
+    assert find("input[value='legal_task']", visible: :all).checked?
+    assert_selector "#assignment_languages", visible: :visible
+  end
+
+  test "registration validation moves focus to the error summary" do
+    visit new_registration_path(locale: :en)
+    fill_in "registration_first_name", with: "Test"
+    fill_in "registration_last_name", with: "Lawyer"
+    fill_in "registration_email_address", with: "system-invalid-#{SecureRandom.hex(5)}@example.test"
+    fill_in "registration_password", with: "password1234"
+    fill_in "registration_password_confirmation", with: "anotherpass12"
+    fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+    fill_in "registration_firm_name", with: "System-test office"
+    find("#registration_terms_accepted").check
+    find("form.assignment-form input[type='submit']").click
+
+    assert_selector ".form-error[role='alert']"
+    assert_includes page.driver.browser.switch_to.active_element.attribute("class"), "form-error"
+  end
+
   private
 
   def create_system_account(prefix)

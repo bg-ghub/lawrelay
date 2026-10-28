@@ -1,0 +1,99 @@
+#!/usr/bin/env sh
+# Restore and boot current/rollback images against an isolated backup copy.
+# No production env file, credentials, Docker network or host ports are used.
+set -eu
+umask 077
+
+root=/var/lib/lawrelay-restore-drills
+current_image=${LAWRELAY_DRILL_CURRENT_IMAGE:?Set the exact current local image}
+rollback_image=${LAWRELAY_DRILL_ROLLBACK_IMAGE:?Set the exact compatible preceding local image}
+production_container=${LAWRELAY_DOCKER_CONTAINER:-lawrelay-app}
+smoke_script=${LAWRELAY_RESTORE_SMOKE_SCRIPT:-/usr/local/libexec/lawrelay-recovery-smoke.rb}
+
+log() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*"; }
+fail() { log "isolated boot drill failed: $*"; exit 1; }
+for command in restic sqlite3 docker python3 flock; do command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"; done
+[ -n "${RESTIC_REPOSITORY:-}" ] || fail "RESTIC_REPOSITORY is not configured"
+[ -n "${RESTIC_PASSWORD_FILE:-}" ] || fail "RESTIC_PASSWORD_FILE is not configured"
+[ -r "$RESTIC_PASSWORD_FILE" ] || fail "RESTIC_PASSWORD_FILE is not readable"
+[ -r "$smoke_script" ] || fail "recovery smoke script is missing"
+[ "$current_image" != "$rollback_image" ] || fail "current and rollback images must be distinct"
+for image in "$current_image" "$rollback_image"; do
+  case "$image" in lawrelay:*) ;; *) fail "only explicitly tagged local LawRelay images are allowed" ;; esac
+  docker image inspect "$image" >/dev/null 2>&1 || fail "required image is not already available locally"
+done
+
+mkdir -p "$root"
+chmod 700 "$root"
+exec 9>"$root/boot-drill.lock"
+flock -n 9 || fail "another boot drill is running"
+production_before=$(docker inspect --format '{{.Id}} {{.Image}} {{.State.Running}} {{.State.StartedAt}}' "$production_container") || fail "production container is unavailable"
+case "$production_before" in *' true '*) ;; *) fail "production container is not running" ;; esac
+drill=$(mktemp -d "$root/boot.XXXXXX") || fail "could not create the isolated restore directory"
+container="lawrelay-drill-$(basename "$drill" | tr . -)"
+cleanup() {
+  docker rm --force "$container" >/dev/null 2>&1 || true
+  # This is the exact directory just returned by mktemp under the fixed root.
+  case "$drill" in "$root"/boot.*) rm -rf -- "$drill" ;; *) log "refused unexpected cleanup path" ;; esac
+}
+trap cleanup EXIT HUP INT TERM
+
+restic restore --tag lawrelay latest --target "$drill/restored" || fail "encrypted backup restore failed"
+[ -f "$drill/restored/manifest" ] || fail "snapshot manifest is missing"
+mkdir -p "$drill/storage"
+for database in production.sqlite3 production_queue.sqlite3 production_cable.sqlite3; do
+  source="$drill/restored/databases/$database"
+  [ -f "$source" ] || fail "restored database is missing"
+  [ "$(sqlite3 -readonly "$source" 'PRAGMA integrity_check;')" = ok ] || fail "restored database integrity check failed"
+  cp -- "$source" "$drill/storage/$database"
+done
+python3 - "$drill/restored/storage.tar" "$drill/storage" <<'PY' || fail "safe storage extraction failed"
+import sys
+import tarfile
+with tarfile.open(sys.argv[1]) as archive:
+    # Refuses outside paths, unsafe links, devices and other special members.
+    archive.extractall(sys.argv[2], filter="data")
+PY
+chown -R 1000:1000 "$drill/storage"
+
+boot_and_check() {
+  image=$1
+  phase=$2
+  log "starting isolated $phase image: $image"
+  docker run --detach --name "$container" --network none --pull never \
+    --memory 768m --cpus 0.75 --pids-limit 128 --security-opt no-new-privileges \
+    --mount "type=bind,source=$drill/storage,target=/rails/storage" \
+    --env RAILS_ENV=production --env SECRET_KEY_BASE_DUMMY=1 \
+    --env APP_HOST=drill.lawrelay.invalid --env APP_PROTOCOL=https \
+    --env ASSUME_SSL=true --env FORCE_SSL=true --env RAILS_LOG_LEVEL=warn \
+    --env SOLID_QUEUE_IN_PUMA=false --env WEB_CONCURRENCY=0 \
+    --env LAWRELAY_RELEASE_MODE=beta --env LAWRELAY_BILLING_ENFORCED=true \
+    "$image" /bin/sh -c 'set -e; unset SOLID_QUEUE_IN_PUMA; bundle exec rails db:prepare; exec ./bin/thrust ./bin/rails server' >/dev/null || fail "could not start isolated image"
+  ready=false
+  for attempt in $(seq 1 40); do
+    if docker exec "$container" curl --fail --silent --max-time 3 http://127.0.0.1:3000/ready >/dev/null 2>&1; then
+      ready=true
+      break
+    fi
+    [ "$(docker inspect --format '{{.State.Running}}' "$container")" = true ] || fail "isolated image stopped before readiness"
+    sleep 2
+  done
+  [ "$ready" = true ] || fail "isolated image did not become ready"
+  # Legacy Puma config treated the string "false" as true. The actual server
+  # environment is therefore unset above, independent of the image version.
+  processes=$(docker top "$container" -eo pid,args) || fail "could not inspect isolated image processes"
+  if printf '%s\n' "$processes" | grep -Eq 'solid-queue-(supervisor|worker|dispatcher|scheduler)|solid_queue'; then
+    fail "unexpected queue process in isolated image"
+  fi
+  log "isolated $phase image has no Solid Queue processes"
+  docker exec -i "$container" ./bin/rails runner - <"$smoke_script" || fail "isolated application smoke failed"
+  docker rm --force "$container" >/dev/null || fail "could not stop isolated drill image"
+  log "isolated $phase image passed readiness, authentication and authorization checks"
+}
+
+boot_and_check "$current_image" current
+# Reuse the already-migrated isolated copy to test backward schema compatibility.
+boot_and_check "$rollback_image" rollback
+production_after=$(docker inspect --format '{{.Id}} {{.Image}} {{.State.Running}} {{.State.StartedAt}}' "$production_container") || fail "could not verify production after the drill"
+[ "$production_before" = "$production_after" ] || fail "production running identity changed during the drill"
+log "restore/current-image/rollback-image drill passed; production container unchanged; isolated data removed on exit"

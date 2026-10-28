@@ -34,6 +34,7 @@ en:
       sent: "Password reset instructions have been sent if that account exists."
       reset: "Your password has been reset."
       mismatch: "The passwords did not match."
+      invalid_password: "Use at least 12 characters and make sure both passwords match."
       invalid: "This password reset link is invalid or has expired."
       rate_limited: "Too many requests. Please try again later."
       new:
@@ -59,7 +60,7 @@ en:
       agreement: "Agreement"
       email_hint: "Use the address associated with your professional practice."
       bar_placeholder: "For example: Brussels Bar"
-      verification_hint: "We manually verify these details. Do not enter client or matter information."
+      verification_hint: "We check your official directory profile. Do not enter client or matter information."
       agree_heading: "I accept the platform rules"
       agree_before: "I have read and accept the"
       terms: "terms"
@@ -78,6 +79,12 @@ en:
         rate_limited: "Too many registration attempts. Please try again later."
         accept_terms: "You must accept the terms and privacy notice."
         already_registered: "These account, firm, or bar details are already registered."
+    email_verifications:
+      review:
+        title: "Confirm your email"
+        explanation: "Confirm this address for your LawRelay account. Only continue if you created this account."
+        account_label: "Account"
+        submit: "Confirm email"
     email_verification:
       verified: "Your email is verified."
       verified_sign_in: "Your email is verified. Sign in to continue."
@@ -103,7 +110,7 @@ en:
       resent: "A new verification link has been sent if verification is still required."
       rate_limited: "Please wait before requesting another verification email."
     verification:
-      marketplace_required: "We need to verify your email, bar registration, and firm before marketplace access opens."
+      marketplace_required: "Confirm your email and official directory profile before marketplace access opens."
     authorization:
       firm_admin_required: "Only a firm administrator can do that."
       admin_required: "You do not have access to that area."

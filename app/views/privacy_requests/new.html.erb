@@ -1,9 +1,9 @@
 <% content_for :title, t("trust.privacy_requests.new.title") %>
-<main class="new-assignment shell trust-page">
+<div class="new-assignment shell trust-page">
   <div class="new-assignment__intro"><p class="eyebrow"><%= t("trust.privacy_requests.eyebrow") %></p><h1><%= t("trust.privacy_requests.new.heading") %></h1><p><%= t("trust.privacy_requests.new.lede") %></p></div>
   <div class="new-assignment__layout">
     <%= form_with model: @privacy_request, class: "assignment-form" do |form| %>
-      <% if @privacy_request.errors.any? %><div class="form-error" role="alert"><strong><%= t("trust.errors.heading") %></strong><ul><% @privacy_request.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
+      <% if @privacy_request.errors.any? %><div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><strong><%= t("trust.errors.heading") %></strong><ul><% @privacy_request.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
       <fieldset class="form-section">
         <legend><%= t("trust.privacy_requests.new.legend") %></legend>
         <div class="field-group"><%= form.label :kind, t("trust.privacy_requests.new.kind") %><%= form.select :kind, PrivacyRequest::KINDS.map { |kind| [t("trust.privacy_requests.kinds.#{kind}"), kind] }, { prompt: t("trust.privacy_requests.new.kind_prompt") }, required: true, class: "select-field" %></div>
@@ -12,4 +12,4 @@
       <div class="form-actions"><%= link_to t("trust.actions.cancel"), privacy_requests_path, class: "button button--ghost" %><%= form.submit t("trust.privacy_requests.new.submit"), class: "button button--dark" %></div>
     <% end %>
   </div>
-</main>
+</div>

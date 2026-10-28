@@ -14,14 +14,14 @@ fr:
       legal_notice: "Mentions légales"
     pricing:
       meta_title: "Tarifs — LawRelay"
-      eyebrow: "bêta fondatrice"
-      title: "Gratuit, le temps de bien construire le service."
-      introduction: "LawRelay est gratuit pendant la bêta fondatrice. Il n'y a ni paiement, ni abonnement, ni demande de paiement. Les avocats conviennent toujours directement entre eux de leurs honoraires."
+      eyebrow: "bêta"
+      title: "Gratuit pendant la bêta."
+      introduction: "LawRelay est gratuit pendant la bêta. Il n'y a ni paiement, ni abonnement, ni demande de paiement. Les avocats conviennent toujours directement entre eux de leurs honoraires."
       beta:
-        kicker: "bêta fondatrice"
+        kicker: "bêta"
         price: "0 €"
         title: "Inscription ouverte aux avocats inscrits"
-        body: "Tout avocat inscrit sur avocat.be peut créer un compte. L'accès à la plateforme suit une vérification dans l'annuaire officiel ; l'accès bêta est gratuit."
+        body: "Tout avocat inscrit sur advocaat.be peut créer un compte. L'accès à la plateforme suit une vérification dans l'annuaire officiel ; l'accès bêta est gratuit."
         features:
           - "Inscription ouverte aux avocats inscrits sur advocaat.be"
           - "Vérification de l'annuaire avant l'accès à la plateforme"
@@ -31,7 +31,7 @@ fr:
         kicker: "après la bêta"
         price: "Pas encore disponible"
         title: "Aucune formule payante pendant la bêta"
-        body: "Aucun abonnement payant n'est proposé ni encaissé pendant la bêta fondatrice. Si cela change, les conditions et le prix seront publiés avant toute prise d'effet."
+        body: "Aucun abonnement payant n'est proposé ni encaissé pendant la bêta. Si cela change, les conditions et le prix seront publiés avant toute prise d'effet."
         features:
           - "Aucune donnée de paiement demandée"
           - "Aucun renouvellement automatique"
@@ -40,12 +40,12 @@ fr:
       direct_fees:
         title: "Les honoraires entre avocats restent hors de LawRelay"
         body: "Le donneur d'ordre et l'avocat choisi conviennent directement des modalités, se facturent et se paient. LawRelay ne détient pas les fonds, ne fournit pas de séquestre et ne prélève aucun pourcentage sur les honoraires."
-      review_notice: "L'accès à la bêta fondatrice est gratuit. LawRelay n'encaisse aucun frais de plateforme pendant cette bêta."
+      review_notice: "L'accès à la bêta est gratuit. LawRelay n'encaisse aucun frais de plateforme pendant cette bêta."
     privacy:
       meta_title: "Déclaration de confidentialité — LawRelay"
       eyebrow: "vie privée"
       title: "Comment LawRelay traite les données personnelles."
-      introduction: "Cette déclaration explique les données personnelles limitées utilisées pour la bêta fondatrice de LawRelay, destinée aux avocats belges vérifiés."
+      introduction: "Cette déclaration explique les données personnelles limitées utilisées pour la bêta de LawRelay, destinée aux avocats belges vérifiés."
       sections:
         controller:
           heading: "1. Qui est responsable du traitement"
@@ -56,7 +56,7 @@ fr:
           heading: "2. Données traitées"
           bullets:
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
-            - "Données de vérification professionnelle : barreau, numéro de barreau, cabinet, rôle et preuve ou statut de vérification."
+            - "Données de vérification professionnelle : profil dans l’annuaire officiel, nom et e-mail professionnel publiés, coordonnées du cabinet et statut de vérification."
             - "Données de profil, mission, candidature, acceptation, annulation et audit."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
           paragraphs:
@@ -75,7 +75,7 @@ fr:
         transfers:
           heading: "5. Lieu et transferts"
           paragraphs:
-            - "L'hébergement de production est fourni depuis l'Allemagne par Hetzner. Les sauvegardes chiffrées sont stockées dans AWS S3 à Francfort. L'e-mail transactionnel est fourni par Migadu en Suisse ; la Suisse bénéficie d'une décision d'adéquation de l'UE."
+            - "Hetzner héberge l’application en Allemagne. Les sauvegardes chiffrées sont stockées dans AWS S3 à Francfort. Migadu, fournisseur suisse d’e-mail, indique que ses serveurs de messagerie sont situés en France."
         retention:
           heading: "6. Conservation"
           paragraphs:
@@ -95,7 +95,7 @@ fr:
       meta_title: "Conditions d'utilisation — LawRelay"
       eyebrow: "conditions d'utilisation"
       title: "Les règles d'utilisation de LawRelay."
-      introduction: "Ces conditions régissent la bêta fondatrice gratuite de LawRelay pour les utilisateurs professionnels."
+      introduction: "Ces conditions régissent la bêta gratuite de LawRelay pour les utilisateurs professionnels."
       sections:
         agreement:
           heading: "1. Contrat et exploitant"
@@ -104,7 +104,7 @@ fr:
         eligibility:
           heading: "2. Accès et vérification"
           paragraphs:
-            - "L'inscription est ouverte aux avocats repris dans l'annuaire officiel avocat.be. L'accès à la plateforme suit une vérification dans cet annuaire. Les utilisateurs fournissent des données professionnelles exactes, les actualisent, protègent leur accès et signalent immédiatement toute compromission. La vérification n'est ni une recommandation ni une garantie de compétence."
+            - "L'inscription est ouverte aux avocats repris dans l'annuaire officiel advocaat.be. L'accès à la plateforme suit une vérification dans cet annuaire. Les utilisateurs fournissent des données professionnelles exactes, les actualisent, protègent leur accès et signalent immédiatement toute compromission. La vérification n'est ni une recommandation ni une garantie de compétence."
         role:
           heading: "3. Rôle de LawRelay"
           paragraphs:
@@ -127,7 +127,7 @@ fr:
         platform_fees:
           heading: "7. Prix LawRelay et facturation"
           paragraphs:
-            - "L'accès à la bêta fondatrice est gratuit. LawRelay ne propose aucun abonnement payant, n'encaisse aucun frais de plateforme et ne demande aucune donnée de paiement pendant cette bêta."
+            - "L'accès à la bêta est gratuit. LawRelay ne propose aucun abonnement payant, n'encaisse aucun frais de plateforme et ne demande aucune donnée de paiement pendant cette bêta."
             - "Si LawRelay propose ultérieurement un accès payant, le prix et les conditions applicables seront publiés avant toute demande de paiement."
         professional_fees:
           heading: "8. Honoraires professionnels"

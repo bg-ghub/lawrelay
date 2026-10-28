@@ -35,6 +35,13 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "must accept"
   end
 
+  test "rejects a short password submitted without browser validation" do
+    assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
+      post registration_path(locale: :en), params: { registration: valid_registration.merge(password: "short", password_confirmation: "short") }
+    end
+    assert_response :unprocessable_content
+  end
+
   test "requires an official Advocaat.be lawyer profile link" do
     assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
       post registration_path(locale: :en), params: { registration: valid_registration.merge(directory_profile_url: "https://example.test/lawyer") }

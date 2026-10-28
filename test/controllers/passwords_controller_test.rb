@@ -41,7 +41,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     assert_changes -> { @user.reload.password_digest } do
-      put password_path(token: @user.password_reset_token, locale: :en), params: { password: "new", password_confirmation: "new" }
+      put password_path(token: @user.password_reset_token, locale: :en), params: { password: "new-long-password", password_confirmation: "new-long-password" }
       assert_redirected_to new_session_path(locale: :en)
     end
 
@@ -57,7 +57,31 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     end
 
     follow_redirect!
-    assert_notice "passwords did not match"
+    assert_notice "at least 12 characters"
+  end
+
+  test "short or missing passwords do not reset credentials or revoke sessions" do
+    @user.sessions.create!(expires_at: 1.day.from_now)
+    token = @user.password_reset_token
+
+    [ {}, { password: "" }, { password: "short", password_confirmation: "short" } ].each do |attributes|
+      assert_no_changes -> { @user.reload.password_digest } do
+        assert_no_difference "@user.sessions.count" do
+          put password_path(token:, locale: :en), params: attributes
+        end
+      end
+      assert_redirected_to edit_password_path(token:, locale: :en)
+    end
+  end
+
+  test "changing the account email invalidates an outstanding password reset" do
+    token = @user.password_reset_token
+    @user.update!(email_address: "changed-recovery@example.test")
+
+    assert_no_changes -> { @user.reload.password_digest } do
+      put password_path(token:, locale: :en), params: { password: "new-long-password", password_confirmation: "new-long-password" }
+    end
+    assert_redirected_to new_password_path(locale: :en)
   end
 
   private

@@ -4,7 +4,7 @@ Description=LawRelay failure notification for %i
 [Service]
 Type=oneshot
 EnvironmentFile=-/etc/lawrelay/alert.env
-ExecStart=/usr/local/libexec/lawrelay-notify LawRelay systemd unit failed: %i
+ExecStart=/usr/local/libexec/lawrelay-notify "LawRelay systemd unit failed: %i"
 User=root
 Group=root
 NoNewPrivileges=true
