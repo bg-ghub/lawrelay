@@ -16,7 +16,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   test "user management requires administrator role and fresh MFA" do
     sign_out
     get "/fr/admin/users"
-    assert_redirected_to "/fr/session/new"
+    assert_redirected_to "/fr/admin/login"
     sign_in_as(@user)
     get "/fr/admin/users"
     assert_redirected_to "/fr"

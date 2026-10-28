@@ -28,6 +28,7 @@
     <aside class="posting-aside">
       <span class="posting-aside__number">01</span><h2><%= t("auth.sessions.new_here") %></h2><p><%= t("auth.sessions.new_here_body") %></p>
       <%= link_to t("auth.sessions.create_account"), new_registration_path, class: "text-link" %>
+      <p><%= link_to t("admin.login.link"), admin_login_path, class: "text-link" %></p>
     </aside>
   </div>
 </div>

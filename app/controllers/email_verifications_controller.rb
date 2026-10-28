@@ -19,7 +19,11 @@ class EmailVerificationsController < ApplicationController
     Directory::Verification.activate_if_ready!(user: user)
 
     if authenticated? && Current.user == user
-      destination = user.reload.marketplace_verified? ? dashboard_path : verification_status_path
+      destination = if user.system_admin?
+        admin_users_path
+      else
+        user.reload.marketplace_verified? ? dashboard_path : verification_status_path
+      end
       redirect_to destination, notice: t("auth.email_verification.verified")
     else
       redirect_to new_session_path, notice: t("auth.email_verification.verified_sign_in")

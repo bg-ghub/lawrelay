@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-28
+
+### Added
+
+- Dedicated administrator sign-in with a password followed by authenticator verification.
+- Password-confirmed email changes in settings, with confirmation at the new address, a fresh official-directory check, and sign-out of other devices.
+
+### Fixed
+
+- Return administrators to the admin area after email confirmation.
+- Use the requested Dutch wording for outsourcing assignments.
+
 ## [0.3.0] - 2026-10-28
 
 ### Added
@@ -57,7 +69,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/bg-ghub/lawrelay/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bg-ghub/lawrelay/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/bg-ghub/lawrelay/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...v0.2.0
