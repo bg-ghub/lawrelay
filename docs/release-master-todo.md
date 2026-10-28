@@ -39,12 +39,12 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Isolated encrypted restore and compatible-image rollback boot checks; authentication, private-record boundaries and no-worker/no-network isolation verified. See [operations evidence](ops/beta-ops-checks.md).
 - [x] Host alert message truncation fixed and full-event/dedup behavior tested without sending. Operator confirmed the earlier synthetic alert reached Proton.
 - [x] Hourly secret-free external monitoring implemented for homepage, login, readiness, generic queue health and TLS expiry; private owner incidents and synthetic failure/recovery controls are included.
+- [x] Hosted monitoring and synthetic failure/repeat/recovery acceptance passed; the owner GitHub inbox received the incident. The deployed `0.2.1` restore/rollback drill also passed, including generic queue-health 200→503→200 on the isolated copy.
 
 ## Remaining human or live evidence
 
-- [ ] Finish GitHub-hosted monitoring, synthetic incident/inbox acceptance and the `0.2.1` recovery drill; record actual results in [operations evidence](ops/beta-ops-checks.md).
 - [ ] Confirm password/verification email inbox placement and recipient-side SPF/DKIM/DMARC results. Receipt of the operational alert confirms that message only.
-- [ ] Operator completes administrator password setup and authenticator MFA; recovery codes/control-plane access stay private.
+- [ ] Operator completes administrator password setup and authenticator MFA; authenticator/provider recovery material and control-plane access stay private. A fresh setup email was sent after `0.2.1` deployment.
 - [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.
 - [ ] External independent security review/penetration test; the engineering review is not a substitute.
 - [ ] Manual screen-reader and physical Safari/iOS/Android testing, plus independent accessibility review. Automated browser checks are not WCAG certification.
