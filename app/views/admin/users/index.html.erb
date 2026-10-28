@@ -1,0 +1,81 @@
+<% content_for :title, t("admin.users.index.title") %>
+<div class="dashboard-page shell admin-users-page">
+  <div class="dashboard-heading">
+    <div>
+      <p class="eyebrow"><%= t("admin.users.eyebrow") %></p>
+      <h1><%= t("admin.users.index.heading") %></h1>
+      <p><%= t("admin.users.index.intro") %></p>
+    </div>
+    <span class="admin-users-total"><%= t("admin.users.index.total", count: @total_count) %></span>
+  </div>
+
+  <section class="dashboard-panel admin-users-filters" aria-label="<%= t("admin.users.filters.label") %>">
+    <%= form_with url: admin_users_path, method: :get, class: "admin-users-filter-form" do |form| %>
+      <div class="field-group admin-users-search">
+        <%= form.label :q, t("admin.users.filters.search") %>
+        <%= form.search_field :q, value: @query, maxlength: 100, placeholder: t("admin.users.filters.search_hint"), autocomplete: "off" %>
+      </div>
+      <div class="field-group">
+        <%= form.label :status, t("admin.users.filters.status") %>
+        <%= form.select :status, [[t("admin.users.filters.all"), ""], [t("admin.users.status.active"), "active"], [t("admin.users.status.suspended"), "suspended"]], selected: @status_filter %>
+      </div>
+      <div class="field-group">
+        <%= form.label :verification, t("admin.users.filters.verification") %>
+        <%= form.select :verification, [[t("admin.users.filters.all"), ""], *%w[pending verified rejected suspended].map { |status| [t("admin.users.verification.#{status}"), status] }], selected: @verification_filter %>
+      </div>
+      <div class="field-group">
+        <%= form.label :role, t("admin.users.fields.role") %>
+        <%= form.select :role, [[t("admin.users.filters.all"), ""], [t("admin.users.roles.member"), "member"], [t("admin.users.roles.admin"), "admin"]], selected: @role_filter %>
+      </div>
+      <div class="admin-users-filter-actions">
+        <%= form.submit t("admin.users.filters.apply"), class: "button button--dark" %>
+        <%= link_to t("admin.users.filters.clear"), admin_users_path, class: "text-link" %>
+      </div>
+    <% end %>
+  </section>
+
+  <% if @users.any? %>
+    <ul class="admin-user-list" aria-label="<%= t("admin.users.index.list_label") %>">
+      <% @users.each do |user| %>
+        <% profile = user.lawyer_profile %>
+        <% firm = user.primary_firm %>
+        <li class="dashboard-panel admin-user-row">
+          <div class="admin-user-identity">
+            <h2><%= link_to user.full_name, admin_user_path(user), class: "text-link" %></h2>
+            <p><%= user.email_address %></p>
+            <small><%= t("admin.users.roles.#{user.system_role}") %><% if user.id == current_user.id %> · <%= t("admin.users.you") %><% end %></small>
+          </div>
+          <div class="admin-user-row-fact">
+            <span class="admin-user-caption"><%= t("admin.users.fields.firm") %></span>
+            <strong><%= firm&.name || t("admin.users.not_recorded") %></strong>
+          </div>
+          <div class="admin-user-row-fact">
+            <span class="admin-user-caption"><%= t("admin.users.fields.status") %></span>
+            <span class="status-pill <%= "admin-user-status--suspended" if user.suspended? %>"><%= t("admin.users.status.#{user.suspended? ? 'suspended' : 'active'}") %></span>
+          </div>
+          <div class="admin-user-row-fact">
+            <span class="admin-user-caption"><%= t("admin.users.filters.verification") %></span>
+            <strong><%= user.system_admin? ? t("admin.users.verification.not_required") : t("admin.users.verification.#{profile&.verification_status || 'pending'}") %></strong>
+          </div>
+          <%= link_to admin_user_path(user), class: "button button--ghost admin-user-manage" do %>
+            <%= t("admin.users.actions.manage") %><span class="admin-users-sr-only"> <%= user.full_name %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+
+    <% if @total_pages > 1 %>
+      <% page_filters = { q: @query, status: @status_filter, verification: @verification_filter, role: @role_filter, per_page: @per_page } %>
+      <nav class="admin-users-pagination" aria-label="<%= t("admin.users.pagination.label") %>">
+        <% if @page > 1 %><%= link_to t("admin.users.pagination.previous"), admin_users_path(**page_filters, page: @page - 1), class: "button button--ghost" %><% end %>
+        <span aria-current="page"><%= t("admin.users.pagination.page", current: @page, total: @total_pages) %></span>
+        <% if @page < @total_pages %><%= link_to t("admin.users.pagination.next"), admin_users_path(**page_filters, page: @page + 1), class: "button button--ghost" %><% end %>
+      </nav>
+    <% end %>
+  <% else %>
+    <section class="empty-state">
+      <h2><%= t("admin.users.index.empty_title") %></h2>
+      <p><%= t("admin.users.index.empty_body") %></p>
+    </section>
+  <% end %>
+</div>

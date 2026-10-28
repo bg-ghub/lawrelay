@@ -42,4 +42,35 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path(locale: :en)
     assert_not Session.exists?(expired_session.id)
   end
+
+  test "suspended accounts cannot sign in even with the correct password" do
+    @user.update!(suspended_at: Time.current)
+    assert_no_difference "Session.count" do
+      post session_path(locale: :en), params: { email_address: @user.email_address, password: "password" }
+    end
+    assert_redirected_to new_session_path(locale: :en)
+    assert_nil cookies[:session_id]
+  end
+
+  test "an existing cookie cannot resume an account suspended outside the normal action" do
+    sign_in_as(@user)
+    session_id = Current.session.id
+    @user.update!(suspended_at: Time.current)
+    get dashboard_path(locale: :en)
+    assert_redirected_to new_session_path(locale: :en)
+    assert_not Session.exists?(session_id)
+  end
+
+  test "administrators land on user management without a professional profile" do
+    @user.update!(system_role: "admin")
+    post session_path(locale: :en), params: { email_address: @user.email_address, password: "password" }
+    assert_redirected_to admin_users_path(locale: :en)
+  end
+
+  test "administrator sign-in preserves an explicit requested destination" do
+    @user.update!(system_role: "admin")
+    get "/fr/admin/verifications"
+    post session_path(locale: :fr), params: { email_address: @user.email_address, password: "password" }
+    assert_redirected_to "http://www.example.com/fr/admin/verifications"
+  end
 end

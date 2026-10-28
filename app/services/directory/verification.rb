@@ -25,6 +25,7 @@ module Directory
     end
 
     def request!(directory_profile_url: nil)
+      return Result.new(status: :protected, profile: @profile) unless @user.active?
       return Result.new(status: :missing_profile, profile: nil) unless @profile
       @profile.update!(directory_profile_url:) if directory_profile_url.present?
       requested_url = @profile.directory_profile_url
@@ -37,6 +38,7 @@ module Directory
       ApplicationRecord.transaction do
         @user.lock!
         @profile.lock!
+        return Result.new(status: :protected, profile: @profile) unless @user.active?
         return Result.new(status: :stale, profile: @profile) unless @profile.directory_profile_url == requested_url && @user.full_name == requested_name
 
         @profile.update!(
@@ -63,6 +65,7 @@ module Directory
       ApplicationRecord.transaction do
         @user.lock!
         profile.lock!
+        return Result.new(status: :protected, profile:) unless @user.active?
         return Result.new(status: :invalid, profile:) unless identity_current?(profile)
 
         profile.update!(directory_email_verified_at: Time.current)
@@ -77,6 +80,7 @@ module Directory
     end
 
     def activate_if_ready!
+      return Result.new(status: :protected, profile: @profile) unless @user.active?
       return Result.new(status: :pending, profile: @profile) unless @profile
       firm = @user.primary_firm
       return Result.new(status: :pending, profile: @profile) unless firm
@@ -86,6 +90,7 @@ module Directory
         @user.lock!
         @profile.lock!
         firm.lock!
+        return Result.new(status: :protected, profile: @profile) unless @user.active?
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
         return Result.new(status: :pending, profile: @profile) unless identity_current?(@profile)
         if @user.email_verified? && !@profile.directory_email_verified? && same_email?(@user.email_address, @profile.directory_email)

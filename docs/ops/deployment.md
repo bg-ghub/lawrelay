@@ -51,6 +51,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+From `0.3.0`, account suspensions are enforced by the application. Releases before `0.3.0` ignore this status. Do not restore public traffic on an older release when accounts have been suspended: use a forward fix or a compatible recovery build that preserves suspension enforcement. Booting an older image on an isolated copy is not approval to downgrade production access controls.
+
 1. Pause new admissions and record the incident owner and the previous image tag.
 2. Restore the preceding known-good image tar (or rebuild the exact committed version) and use the same deployment procedure with that version.
 3. Do not reverse a production migration automatically. Assess data compatibility and use the tested restoration process only when necessary.

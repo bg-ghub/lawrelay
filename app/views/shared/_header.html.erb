@@ -12,7 +12,11 @@
       <%= link_to t("pages.navigation.pricing"), pricing_path, data: { action: "mobile-nav#close" } %>
       <%= link_to t("marketing.header.questions"), root_path(anchor: "questions"), data: { action: "mobile-nav#close" } %>
       <% if authenticated? %>
-        <%= link_to t("marketing.header.dashboard"), dashboard_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
+        <% if current_user.system_admin? %>
+          <%= link_to t("admin.users.link"), admin_users_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
+        <% else %>
+          <%= link_to t("marketing.header.dashboard"), dashboard_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
+        <% end %>
         <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "mobile-nav-action mobile-nav-only" %>
       <% else %>
         <%= link_to t("auth.sessions.submit"), new_session_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
@@ -40,7 +44,8 @@
                   <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span aria-hidden="true">✓</span>
                 </span>
               <% else %>
-                <%= link_to url_for(locale: locale), class: item_class, lang: locale, hreflang: locale do %>
+                <% language_destination = controller_path == "admin/users" && @user.present? ? admin_user_path(@user, locale: locale) : url_for(locale: locale) %>
+                <%= link_to language_destination, class: item_class, lang: locale, hreflang: locale do %>
                   <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span></span>
                 <% end %>
               <% end %>
@@ -49,9 +54,11 @@
         </details>
       </nav>
       <% if authenticated? %>
-        <%= link_to current_user.full_name, settings_path, class: "header-login" %>
+        <%= link_to current_user.full_name, (current_user.system_admin? ? admin_users_path : settings_path), class: "header-login" %>
         <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "header-logout header-login" %>
-        <% if current_user.marketplace_verified? %>
+        <% if current_user.system_admin? %>
+          <%= link_to t("admin.users.link"), admin_users_path, class: "button button-small button-dark" %>
+        <% elsif current_user.marketplace_verified? %>
           <%= link_to new_assignment_path, class: "button button-small button-dark" do %>
             <span><%= t("marketing.actions.post_assignment") %></span>
             <span aria-hidden="true">↗</span>
