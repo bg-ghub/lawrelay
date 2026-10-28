@@ -14,9 +14,9 @@ LawRelay is **pre-release**. Use local/demo data only. Do not enter client names
 
 The application deliberately keeps the lawyer-to-lawyer mandate and fee outside LawRelay. Platform billing is separate from the underlying legal assignment.
 
-## Open source
+## Source and licensing
 
-LawRelay is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). Modified versions offered over a network must make their corresponding source available under the license. Contributions are welcome under [CONTRIBUTING.md](CONTRIBUTING.md); report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+The repository is private while LawRelay is under active development. Its current source license remains the [GNU Affero General Public License v3.0 or later](LICENSE), ready for a future publication decision. Authorized collaborators should follow [CONTRIBUTING.md](CONTRIBUTING.md) and report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 ## Stack
 
@@ -151,7 +151,7 @@ The SQLite databases and Active Storage uploads live under `/rails/storage`. Mou
 
 ## Release process
 
-1. Work in the public Git repository without committing user data, credentials, environment files, databases, uploads, or private support material.
+1. Work in the private Git repository without committing user data, credentials, environment files, databases, uploads, or private support material.
 2. Require the CI workflow on every pull request.
 3. Deploy to staging and run authentication, authorization, mail, billing, and backup smoke tests.
 4. Create and test an off-host backup immediately before production deployment.

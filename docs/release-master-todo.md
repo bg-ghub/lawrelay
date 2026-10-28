@@ -33,9 +33,9 @@ This document is the release source of truth. A checked item means the result wa
 - [x] Brakeman: no static-analysis warnings.
 - [x] Bundler Audit and Importmap Audit: no known vulnerable dependencies.
 - [x] `lawrelay.be` is registered and delegated to Route 53 nameservers.
-- [ ] `lawrelay.eu` registrar rejection remains under AWS Support investigation; AWS confirmed both failed attempts generated no charge and Route 53 had €0/zero recorded charges for 1 September–28 October 2026. The private support-case identifier is intentionally excluded from this public repository. It is not required for a `.be` launch.
+- [ ] `lawrelay.eu` registrar rejection remains under AWS Support investigation; AWS confirmed both failed attempts generated no charge and Route 53 had €0/zero recorded charges for 1 September–28 October 2026. The support-case identifier is intentionally excluded from source control. It is not required for a `.be` launch.
 - [x] A separate Hetzner project and local `hcloud` context named `lawrelay` exist.
-- [x] Public source and Git history are published at `github.com/bg-ghub/lawrelay`; releases use SemVer (current patch `0.1.1`), AGPL-3.0-or-later, a changelog, contribution/security policies, and clean staged Gitleaks scans.
+- [x] Source and Git history are stored in the private `github.com/bg-ghub/lawrelay` repository; releases use SemVer (current patch `0.1.1`), AGPL-3.0-or-later, a changelog, contribution/security policies, and clean staged Gitleaks scans.
 - [ ] Production application. The Hetzner project has no server or other resources.
 - [ ] Live DNS. `lawrelay.be` has no A/AAAA record, `www.lawrelay.be` does not exist, and no MX record was found.
 - [x] Real account, authorization, notification, billing-foundation, invoice-foundation, privacy-draft, and terms-draft code exists.
@@ -87,7 +87,7 @@ At this price, one paying office should cover basic hosting/email infrastructure
 ### 1. Repository and delivery foundation
 
 - [x] Create the first reviewed Git commit and SemVer `v0.1.0` tag.
-- [x] Create the public GitHub repository and push the code.
+- [x] Create the private GitHub repository and push the code.
 - [x] Confirm `config/master.key`, `.env*`, databases, uploads, and provider secrets are ignored and absent from history.
 - [x] Run Gitleaks and targeted account/token/path scans before the first push; no findings.
 - [x] Protect `main` against force-push/deletion, require version/security/lint/unit/system CI, enforce checks for administrators, and enable private vulnerability reporting plus secret push protection.
