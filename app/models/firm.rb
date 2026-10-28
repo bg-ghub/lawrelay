@@ -22,9 +22,15 @@ class Firm < ApplicationRecord
   end
 
   def posting_access?
+    return verified? if self.class.beta_mode?
+
     return true unless self.class.billing_enforced?
 
     billing_account&.posting_access? || false
+  end
+
+  def self.beta_mode?
+    ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "beta"
   end
 
   def self.billing_enforced?(environment: Rails.env)

@@ -8,6 +8,7 @@ class SettingsController < ApplicationController
     email_changed = user_params[:email_address].present? &&
       user_params[:email_address].strip.casecmp?(@user.email_address) == false
     profile_requires_review = profile_review_required?
+    directory_identity_changed = directory_identity_changed?
     firm_requires_review = firm_review_required?
 
     ApplicationRecord.transaction do
@@ -15,7 +16,8 @@ class SettingsController < ApplicationController
       @user.email_verified_at = nil if email_changed
 
       @profile.assign_attributes(profile_params)
-      reset_profile_verification! if profile_requires_review
+      clear_directory_evidence! if directory_identity_changed
+      reset_profile_verification! if profile_requires_review || directory_identity_changed
 
       if @can_manage_firm
         @firm.assign_attributes(firm_params)
@@ -29,7 +31,8 @@ class SettingsController < ApplicationController
     end
 
     EmailVerificationMailer.verify(@user).deliver_later if email_changed
-    redirect_to settings_path(locale: @user.locale), notice: update_notice(email_changed, profile_requires_review, firm_requires_review)
+    Directory::VerificationJob.perform_later(@user.id) if directory_identity_changed && !protected_profile?(@profile)
+    redirect_to settings_path(locale: @user.locale), notice: update_notice(email_changed, profile_requires_review || directory_identity_changed, firm_requires_review)
   rescue ActiveRecord::RecordInvalid
     render :show, status: :unprocessable_content
   end
@@ -49,7 +52,7 @@ class SettingsController < ApplicationController
 
   def profile_params
     permitted = params.fetch(:profile, {}).permit(
-      :bar_association, :bar_number, :professional_email, :bar_admission_year, :availability_note,
+      :bar_admission_year, :availability_note,
       spoken_languages: [], practice_areas: [], court_preferences: []
     )
     permitted[:spoken_languages] = list_values(permitted[:spoken_languages]) if permitted.key?(:spoken_languages)
@@ -68,8 +71,16 @@ class SettingsController < ApplicationController
   def profile_review_required?
     return false if @profile.new_record?
 
-    profile_params.to_h.slice("bar_association", "bar_number", "professional_email").any? do |attribute, value|
+    profile_params.to_h.slice("professional_email").any? do |attribute, value|
       @profile.public_send(attribute).to_s != value.to_s.strip
+    end
+  end
+
+  def directory_identity_changed?
+    return false if @profile.new_record?
+
+    user_params.to_h.slice("first_name", "last_name", "email_address").any? do |attribute, value|
+      @user.public_send(attribute).to_s != value.to_s.strip
     end
   end
 
@@ -82,10 +93,30 @@ class SettingsController < ApplicationController
   end
 
   def reset_profile_verification!
+    return if protected_profile?(@profile)
+
     @profile.assign_attributes(verification_status: "pending", verified_at: nil, verification_note: nil)
   end
 
+  def clear_directory_evidence!
+    @profile.assign_attributes(
+      directory_profile_id: nil,
+      directory_name: nil,
+      directory_email: nil,
+      directory_checked_at: nil,
+      directory_email_verified_at: nil,
+      directory_confirmation_requested_at: nil,
+      directory_identity_digest: nil
+    )
+  end
+
+  def protected_profile?(profile)
+    profile.verification_status.in?(%w[rejected suspended])
+  end
+
   def reset_firm_verification!
+    return if @firm.verification_status.in?(%w[rejected suspended])
+
     @firm.assign_attributes(verification_status: "pending", verified_at: nil)
   end
 

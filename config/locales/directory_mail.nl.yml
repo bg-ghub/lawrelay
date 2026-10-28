@@ -1,0 +1,19 @@
+nl:
+  directory_mail:
+    confirm:
+      subject: "Bevestig je professionele e-mailadres voor LawRelay"
+      greeting: "Hallo %{name},"
+      body: "Er werd een LawRelay-account aangemaakt met je publieke advocaat.be-profiel en het inlogadres %{login_email}. Bevestig alleen als je zelf precies dit account hebt aangemaakt en dit professionele e-mailadres beheert:"
+      body_html: "Er werd een LawRelay-account aangemaakt met je publieke advocaat.be-profiel en het inlogadres <strong>%{login_email}</strong>. Bevestig alleen als je zelf precies dit account hebt aangemaakt en dit professionele e-mailadres beheert."
+      action: "Professioneel e-mailadres bevestigen"
+      ignore: "Was jij dit niet? Negeer deze e-mail. De link verloopt na 48 uur."
+    notices:
+      confirmed: "Je professionele e-mailadres is bevestigd. Meld je aan om verder te gaan."
+      invalid: "Deze bevestigingslink is ongeldig of verlopen."
+      already_claimed: "Dit directoryprofiel is al voor een ander account bevestigd. Neem contact op met support als je hulp nodig hebt."
+    page:
+      eyebrow: "Bevestiging professioneel e-mailadres"
+      heading: "Bevestig dit LawRelay-account"
+      body: "Je bevestigt het LawRelay-account van %{name}, met inlogadres %{login_email}."
+      notice: "Ga alleen verder als je precies dit account zelf hebt aangemaakt."
+      action: "Dit account bevestigen"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily LawRelay encrypted backup
+
+[Timer]
+OnCalendar=*-*-* 02:15:00 Europe/Brussels
+Persistent=true
+RandomizedDelaySec=20m
+Unit=lawrelay-backup.service
+
+[Install]
+WantedBy=timers.target

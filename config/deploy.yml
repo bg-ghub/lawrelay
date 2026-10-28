@@ -35,14 +35,25 @@ env:
     ASSUME_SSL: true
     FORCE_SSL: true
     ACTIVE_STORAGE_SERVICE: local
-    SMTP_ADDRESS: <%= ENV.fetch("SMTP_ADDRESS") %>
+    SMTP_ADDRESS: <%= ENV.fetch("SMTP_ADDRESS", "smtp.migadu.com") %>
     SMTP_PORT: <%= ENV.fetch("SMTP_PORT", "587") %>
     SMTP_DOMAIN: <%= ENV.fetch("SMTP_DOMAIN", ENV.fetch("APP_HOST", "lawrelay.be")) %>
     MAIL_FROM: <%= ENV.fetch("MAIL_FROM", "LawRelay <no-reply@lawrelay.be>") %>
     SMTP_AUTHENTICATION: <%= ENV.fetch("SMTP_AUTHENTICATION", "plain") %>
     SMTP_SSL: <%= ENV.fetch("SMTP_SSL", "false") %>
     SMTP_STARTTLS: <%= ENV.fetch("SMTP_STARTTLS", "true") %>
+    LAWRELAY_LEGAL_NAME: <%= ENV.fetch("LAWRELAY_LEGAL_NAME", "Gauthier Berth") %>
+    LAWRELAY_REGISTERED_ADDRESS: <%= ENV.fetch("LAWRELAY_REGISTERED_ADDRESS", "Koningin Astridlaan 210 bus A, 9000 Gent, Belgium") %>
+    LAWRELAY_ENTERPRISE_NUMBER: <%= ENV.fetch("LAWRELAY_ENTERPRISE_NUMBER", "0781.961.243") %>
+    LAWRELAY_VAT_NUMBER: <%= ENV.fetch("LAWRELAY_VAT_NUMBER", "BE0781.961.243") %>
+    LAWRELAY_LEGAL_EMAIL: <%= ENV.fetch("LAWRELAY_LEGAL_EMAIL", "info@lawrelay.be") %>
+    LAWRELAY_PRIVACY_EMAIL: <%= ENV.fetch("LAWRELAY_PRIVACY_EMAIL", "privacy@lawrelay.be") %>
+    LAWRELAY_SUPPORT_EMAIL: <%= ENV.fetch("LAWRELAY_SUPPORT_EMAIL", "support@lawrelay.be") %>
+    LAWRELAY_PHONE: <%= ENV.fetch("LAWRELAY_PHONE", "+32 474 78 09 57") %>
+    LAWRELAY_PROFESSIONAL_BODY: <%= ENV.fetch("LAWRELAY_PROFESSIONAL_BODY", "Balie Brussel (Nederlandse Orde)") %>
+    LAWRELAY_PROFESSIONAL_RULES_URL: <%= ENV.fetch("LAWRELAY_PROFESSIONAL_RULES_URL", "https://www.ordevanvlaamsebalies.be/nl/deontologie") %>
     LAWRELAY_BILLING_ENFORCED: <%= ENV.fetch("LAWRELAY_BILLING_ENFORCED", "true") %>
+    LAWRELAY_RELEASE_MODE: <%= ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") %>
     RAILS_LOG_LEVEL: info
     SOLID_QUEUE_IN_PUMA: true
 

@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     resources :passwords, param: :token, only: %i[new create edit update]
     resource :registration, only: %i[new create]
     get "email-verification/:token", to: "email_verifications#show", as: :email_verification
-    resource :verification_status, only: %i[show create], controller: "verification_status"
+    get "directory-verification/:token", to: "directory_verifications#show", as: :directory_verification
+    post "directory-verification/:token", to: "directory_verifications#confirm", as: :confirm_directory_verification
+    resource :verification_status, only: %i[show create], controller: "verification_status" do
+      post :retry_directory
+    end
     resource :settings, only: %i[show update]
     resources :privacy_requests, only: %i[index new create]
 
@@ -39,6 +43,7 @@ Rails.application.routes.draw do
       get "mfa/challenge", to: "mfa#challenge", as: :mfa_challenge
       post "mfa/challenge", to: "mfa#verify"
       resources :verifications, only: %i[index update]
+      resources :founding_accesses, param: :firm_id, only: %i[index create destroy]
       resources :reports, only: %i[index update]
       resources :privacy_requests, only: %i[index update]
     end

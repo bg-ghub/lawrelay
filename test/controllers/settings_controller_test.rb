@@ -41,29 +41,79 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "billing@example.test", @account.firm.billing_email
   end
 
-  test "email changes require a new verification and send an email" do
+  test "email changes require a new verification, clear directory proof, and requeue the check" do
+    directory_profile = verified_directory_profile!
+
     assert_enqueued_emails 1 do
-      patch settings_path(locale: :en), params: valid_params(account: { email_address: "new-address@example.test" })
+      assert_enqueued_with(job: Directory::VerificationJob, args: [ @account.user.id ]) do
+        patch settings_path(locale: :en), params: valid_params(account: { email_address: "new-address@example.test" })
+      end
     end
 
     assert_redirected_to settings_path(locale: :en)
     @account.user.reload
     assert_equal "new-address@example.test", @account.user.email_address
     assert_nil @account.user.email_verified_at
+    assert_nil directory_profile.reload.directory_profile_id
+    assert_nil directory_profile.directory_email_verified_at
+    assert_nil directory_profile.directory_identity_digest
   end
 
-  test "professional identity changes return the profile and firm to review" do
-    patch settings_path(locale: :en), params: valid_params(
-      profile: { bar_number: "UPDATED-123" },
-      firm: { vat_number: "BE0999999999" }
-    )
+  test "name changes reset directory verification and queue a fresh check" do
+    profile = verified_directory_profile!
 
-    @account.profile.reload
-    @account.firm.reload
-    assert_equal "pending", @account.profile.verification_status
-    assert_nil @account.profile.verified_at
-    assert_equal "pending", @account.firm.verification_status
-    assert_nil @account.firm.verified_at
+    assert_enqueued_with(job: Directory::VerificationJob, args: [ @account.user.id ]) do
+      patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
+    end
+
+    profile.reload
+    assert_equal "pending", profile.verification_status
+    assert_nil profile.verified_at
+    assert_nil profile.directory_profile_id
+    assert_nil profile.directory_email
+    assert_nil profile.directory_identity_digest
+  end
+
+  test "a suspended profile remains suspended when identity details are changed" do
+    profile = verified_directory_profile!(verification_status: "suspended")
+
+    assert_no_enqueued_jobs only: Directory::VerificationJob do
+      patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
+    end
+
+    profile.reload
+    assert_equal "suspended", profile.verification_status
+    assert_nil profile.directory_profile_id
+    assert_nil profile.directory_identity_digest
+  end
+
+  test "a rejected profile remains rejected when identity details are changed" do
+    profile = verified_directory_profile!(verification_status: "rejected")
+
+    assert_no_enqueued_jobs only: Directory::VerificationJob do
+      patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
+    end
+
+    profile.reload
+    assert_equal "rejected", profile.verification_status
+    assert_nil profile.directory_profile_id
+    assert_nil profile.directory_identity_digest
+  end
+
+  test "a suspended firm remains suspended when its details are changed" do
+    @account.firm.update!(verification_status: "suspended")
+
+    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0999999999" })
+
+    assert_equal "suspended", @account.firm.reload.verification_status
+  end
+
+  test "a rejected firm remains rejected when its details are changed" do
+    @account.firm.update!(verification_status: "rejected")
+
+    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0999999999" })
+
+    assert_equal "rejected", @account.firm.reload.verification_status
   end
 
   test "firm members cannot update firm records" do
@@ -87,8 +137,24 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   def valid_params(account: {}, profile: {}, firm: {})
     {
       account: { first_name: @account.user.first_name, last_name: @account.user.last_name, email_address: @account.user.email_address, locale: @account.user.locale }.merge(account),
-      profile: { bar_association: @account.profile.bar_association, bar_number: @account.profile.bar_number, professional_email: @account.profile.professional_email, bar_admission_year: @account.profile.bar_admission_year, spoken_languages: @account.profile.spoken_languages, practice_areas: @account.profile.practice_areas, court_preferences: @account.profile.court_preferences, availability_note: @account.profile.availability_note }.merge(profile),
+      profile: { bar_admission_year: @account.profile.bar_admission_year, spoken_languages: @account.profile.spoken_languages, practice_areas: @account.profile.practice_areas, court_preferences: @account.profile.court_preferences, availability_note: @account.profile.availability_note }.merge(profile),
       firm: { name: @account.firm.name, enterprise_number: @account.firm.enterprise_number, vat_number: @account.firm.vat_number, billing_email: @account.firm.billing_email, phone: @account.firm.phone, address_line_1: @account.firm.address_line_1, postal_code: @account.firm.postal_code, city: @account.firm.city }.merge(firm)
     }
+  end
+
+  def verified_directory_profile!(verification_status: "verified")
+    @account.profile.update!(
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_name: @account.user.full_name,
+      directory_email: @account.user.email_address,
+      directory_checked_at: Time.current,
+      directory_email_verified_at: Time.current,
+      directory_confirmation_requested_at: Time.current,
+      directory_identity_digest: "directory-proof",
+      verification_status:,
+      verified_at: (Time.current if verification_status == "verified")
+    )
+    @account.profile
   end
 end

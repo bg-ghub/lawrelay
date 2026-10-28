@@ -9,17 +9,35 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @owner
   end
 
-  test "firm owner can view billing and request one manual invoice" do
-    get billing_url(locale: "en")
+  test "firm owner can view billing and request one manual invoice in paid release mode" do
+    with_release_mode("paid") do
+      get billing_url(locale: "en")
 
-    assert_response :success
-    assert_select "h1", /LawRelay plan/
+      assert_response :success
+      assert_select "h2", "LawRelay Office"
 
-    post billing_checkout_url(locale: "en")
+      post billing_checkout_url(locale: "en")
+    end
 
     assert_redirected_to billing_url(locale: "en")
     assert_equal 1, Invoice.count
     assert_equal "manual_required", Invoice.last.peppol_status
+  end
+
+  test "beta release mode does not create manual billing records" do
+    get billing_url(locale: "en")
+
+    assert_response :success
+    assert_select "h2", "LawRelay founding beta"
+    assert_select "body", text: /€49/, count: 0
+    assert_select "input[value='Request manual invoice']", count: 0
+
+    assert_no_difference([ "Invoice.count", "Subscription.count", "BillingPayment.count" ]) do
+      post billing_checkout_url(locale: "en")
+    end
+
+    assert_redirected_to billing_url(locale: "en")
+    assert_equal "Billing is not available during the founding beta.", flash[:alert]
   end
 
   test "firm member cannot request an invoice" do
@@ -40,5 +58,13 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   def verify_user(user)
     user.update!(email_verified_at: Time.current)
     LawyerProfile.create!(user:, bar_association: "OVB", bar_number: "#{SecureRandom.random_number(1_000_000)}", verification_status: "verified", verified_at: Time.current)
+  end
+
+  def with_release_mode(mode)
+    original = ENV["LAWRELAY_RELEASE_MODE"]
+    ENV["LAWRELAY_RELEASE_MODE"] = mode
+    yield
+  ensure
+    original.nil? ? ENV.delete("LAWRELAY_RELEASE_MODE") : ENV["LAWRELAY_RELEASE_MODE"] = original
   end
 end

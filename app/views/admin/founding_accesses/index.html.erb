@@ -1,0 +1,60 @@
+<main class="dashboard-page shell">
+  <div class="dashboard-heading">
+    <div>
+      <p class="eyebrow"><%= t("admin.founding_accesses.eyebrow") %></p>
+      <h1><%= t("admin.founding_accesses.title") %></h1>
+      <p><%= t("admin.founding_accesses.intro") %></p>
+    </div>
+    <%= link_to t("admin.founding_accesses.back"), admin_verifications_path, class: "button button--ghost" %>
+  </div>
+
+  <% if @firms.any? %>
+    <div class="assignment-list">
+      <% @firms.each do |firm| %>
+        <% account = firm.billing_account %>
+        <% grant_active = account&.plan_key == "founding_beta" && account.posting_access? %>
+        <article class="dashboard-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow"><%= t("admin.founding_accesses.verified_firm") %></p>
+              <h2><%= firm.name %></h2>
+            </div>
+            <span class="status-pill"><%= grant_active ? t("admin.founding_accesses.active_until", date: l(account.complimentary_access_until.to_date)) : t("admin.founding_accesses.no_access") %></span>
+          </div>
+
+          <dl class="detail-facts">
+            <div><dt><%= t("admin.founding_accesses.enterprise_number") %></dt><dd><%= firm.enterprise_number.presence || "—" %></dd></div>
+            <div><dt><%= t("admin.founding_accesses.vat_number") %></dt><dd><%= firm.vat_number.presence || "—" %></dd></div>
+            <div><dt><%= t("admin.founding_accesses.billing_email") %></dt><dd><%= firm.billing_email.presence || "—" %></dd></div>
+            <div><dt><%= t("admin.founding_accesses.administrators") %></dt><dd><%= firm.users.select { |user| user.firm_administrator?(firm) }.map { |user| "#{user.full_name} · #{user.email_address}" }.join("; ").presence || "—" %></dd></div>
+          </dl>
+
+          <% if account&.plan_key == "lawrelay_office" %>
+            <p><%= t("admin.founding_accesses.paid_plan") %></p>
+          <% else %>
+            <%= form_with url: admin_founding_accesses_path, scope: :founding_access, class: "assignment-form" do |form| %>
+              <%= hidden_field_tag :firm_id, firm.id %>
+              <div class="field-group">
+                <%= form.label :expires_on, t("admin.founding_accesses.expires_on") %>
+                <%= form.date_field :expires_on, min: Date.current, max: Date.current + 1.year, required: true, value: grant_active ? account.complimentary_access_until.to_date : nil %>
+              </div>
+              <div class="form-actions">
+                <%= form.submit t("admin.founding_accesses.grant"), class: "button button--dark" %>
+              </div>
+            <% end %>
+            <% if account&.complimentary_access_until.present? %>
+              <div class="form-actions">
+                <%= button_to t("admin.founding_accesses.revoke"), admin_founding_access_path(firm_id: firm.id), method: :delete, class: "button button--ghost" %>
+              </div>
+            <% end %>
+          <% end %>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="empty-state">
+      <h2><%= t("admin.founding_accesses.empty_title") %></h2>
+      <p><%= t("admin.founding_accesses.empty_body") %></p>
+    </section>
+  <% end %>
+</main>

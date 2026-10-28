@@ -1,14 +1,14 @@
 <% content_for :title, t("auth.verification_status.title") %>
-<main class="new-assignment shell">
+<section class="new-assignment shell">
   <div class="new-assignment__intro">
     <p class="eyebrow"><%= t("auth.verification_status.eyebrow") %></p>
     <h1><%= t("auth.verification_status.heading", name: @user.first_name) %></h1>
-    <p><%= t("auth.verification_status.lede") %></p>
+    <p><%= t("directory_onboarding.status.lede") %></p>
   </div>
 
   <div class="dashboard-summary">
     <div class="summary-card"><span><%= t("auth.verification_status.email") %></span><strong><%= @user.email_verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@user.email_verified? ? 'verified' : 'pending'}") %></small></div>
-    <div class="summary-card"><span><%= t("auth.verification_status.bar") %></span><strong><%= @lawyer_profile&.verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@lawyer_profile&.verification_status || 'pending'}") %></small></div>
+    <div class="summary-card"><span><%= t("directory_onboarding.status.directory") %></span><strong><%= @lawyer_profile&.directory_matched? ? "✓" : "…" %></strong><small><%= t("directory_onboarding.status.states.#{@lawyer_profile&.directory_matched? ? 'matched' : 'pending'}") %></small></div>
     <div class="summary-card"><span><%= t("auth.verification_status.firm") %></span><strong><%= @firm&.verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@firm&.verification_status || 'pending'}") %></small></div>
   </div>
 
@@ -20,8 +20,18 @@
     </section>
   <% else %>
     <section class="form-section">
-      <h2><%= t("auth.verification_status.review_title") %></h2>
-      <p><%= t("auth.verification_status.review_body") %></p>
+      <% if @lawyer_profile&.directory_confirmation_required? %>
+        <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
+        <p><%= t("directory_onboarding.status.confirmation_body", email: @lawyer_profile.directory_email) %></p>
+      <% elsif @lawyer_profile&.directory_email_verified? %>
+        <h2><%= t("directory_onboarding.status.ready_title") %></h2>
+        <p><%= t("directory_onboarding.status.ready_body") %></p>
+      <% else %>
+        <h2><%= t("directory_onboarding.status.pending_title") %></h2>
+        <p><%= t("directory_onboarding.status.pending_body") %></p>
+        <%= button_to t("directory_onboarding.status.retry"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
+      <% end %>
+      <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to("info@lawrelay.be")) %></p>
     </section>
   <% end %>
-</main>
+</section>

@@ -1,0 +1,27 @@
+fr:
+  admin:
+    founding_accesses:
+      link: "Accès fondateur"
+      eyebrow: "Bêta fondateur"
+      title: "Accès gratuit"
+      intro: "Accordez à un cabinet vérifié une courte période bêta consignée. Cela ne crée jamais de paiement et ne remplace pas une offre payante."
+      back: "Retour aux vérifications"
+      verified_firm: "Cabinet vérifié"
+      active_until: "Actif jusqu’au %{date}"
+      no_access: "Pas d’accès gratuit"
+      enterprise_number: "Numéro d’entreprise"
+      vat_number: "Numéro de TVA"
+      billing_email: "E-mail de facturation"
+      administrators: "Administrateurs du cabinet"
+      expires_on: "Fin de l’accès"
+      grant: "Accorder l’accès"
+      revoke: "Retirer l’accès"
+      paid_plan: "Ce cabinet dispose d’une offre payante. L’accès fondateur ne peut pas être appliqué."
+      empty_title: "Aucun cabinet vérifié"
+      empty_body: "Vérifiez un cabinet avant d’accorder l’accès fondateur."
+      notices:
+        granted: "L’accès fondateur a été accordé à %{name}."
+        revoked: "L’accès fondateur a été retiré pour %{name}."
+        invalid_expiry: "Choisissez une date de fin comprise entre aujourd’hui et un an."
+        unverified_firm: "Seuls les cabinets vérifiés peuvent recevoir l’accès fondateur."
+        paid_account: "Ce cabinet dispose déjà d’une offre de facturation payante."

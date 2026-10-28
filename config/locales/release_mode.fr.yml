@@ -1,0 +1,8 @@
+fr:
+  billing:
+    beta:
+      title: "Bêta fondateur LawRelay"
+      price: "€0 · gratuit pendant la bêta"
+      description: "L’accès s’ouvre automatiquement après vérification de votre e-mail et de votre inscription dans l’annuaire officiel des avocats."
+    notices:
+      payments_unavailable_during_beta: "La facturation n’est pas disponible pendant la bêta fondateur."

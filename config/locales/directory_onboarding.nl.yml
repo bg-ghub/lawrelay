@@ -1,0 +1,36 @@
+nl:
+  directory_onboarding:
+    registration:
+      legend: "Je officiële vermelding"
+      profile_url: "Link naar je profiel op Advocaat.be"
+      profile_url_hint: "We controleren het openbare profiel, de naam en het gepubliceerde professionele e-mailadres. Is dat adres anders dan je inlogadres, dan vragen we ook daar een bevestiging."
+      invalid_profile_url: "moet een link zijn naar je openbare advocatenprofiel op Advocaat.be"
+      find_profile: "Zoek je profiel op Advocaat.be"
+      firm_hint: "Dit gebruiken we alleen om je werkruimte in te richten."
+      aside_one_title: "Je profiel"
+      aside_one_body: "Plak de link naar je openbare profiel op Advocaat.be. Je hoeft geen balienummer in te vullen."
+      aside_two_title: "Een korte controle"
+      aside_two_body: "Na je registratie controleren we de actuele lijst."
+      aside_three_title: "Daarna kun je starten"
+      aside_three_body: "Zodra je inlogadres en professionele identiteit bevestigd zijn, krijg je automatisch toegang."
+    status:
+      lede: "Toegang tot de marktplaats opent nadat we je inlogadres en officiële professionele vermelding hebben bevestigd."
+      directory: "Officiële lijst"
+      states:
+        pending: "Je openbare profiel wordt gecontroleerd"
+        matched: "Profiel gevonden"
+      pending_title: "Je officiële profiel wordt gecontroleerd"
+      pending_body: "We controleren het profiel op Advocaat.be dat je doorgaf. Dit kan even duren."
+      confirmation_title: "Bevestig je gepubliceerde professionele e-mail"
+      confirmation_body: "We stuurden een bevestigingslink naar %{email}, het adres op je officiële profiel."
+      ready_title: "Professionele identiteit bevestigd"
+      ready_body: "De lijstcontrole is klaar. Je krijgt automatisch toegang zodra alle controles rond zijn."
+      retry: "Opnieuw controleren"
+      retry_queued: "We controleren je officiële profiel binnenkort opnieuw."
+      retry_rate_limited: "Wacht even voor je de lijst opnieuw laat controleren."
+      fallback_html: "Is je openbare vermelding juist maar lukt dit niet, neem dan contact op via %{support_email}."
+    settings:
+      directory_profile: "Officieel profiel"
+      open_directory_profile: "Open je profiel op Advocaat.be"
+      directory_profile_hint: "We gebruiken deze link om je professionele identiteit te bevestigen."
+      identity_hint: "Als je je naam wijzigt, controleren we de lijst opnieuw. Voor een ander officieel profiel neem je contact op met support."
