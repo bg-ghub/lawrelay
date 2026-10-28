@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-28
+
+### Fixed
+
+- Preserve executable modes and portable Ruby shebangs for Rails, audit, deployment, and container binstubs on Linux checkouts.
+
 ## [0.1.0] - 2026-10-28
 
 ### Added
@@ -17,5 +23,6 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/bg-ghub/lawrelay/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/bg-ghub/lawrelay/releases/tag/v0.1.0

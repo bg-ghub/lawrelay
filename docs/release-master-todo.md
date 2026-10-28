@@ -35,7 +35,7 @@ This document is the release source of truth. A checked item means the result wa
 - [x] `lawrelay.be` is registered and delegated to Route 53 nameservers.
 - [ ] `lawrelay.eu` registrar rejection remains under AWS Support investigation; AWS confirmed both failed attempts generated no charge and Route 53 had €0/zero recorded charges for 1 September–28 October 2026. The private support-case identifier is intentionally excluded from this public repository. It is not required for a `.be` launch.
 - [x] A separate Hetzner project and local `hcloud` context named `lawrelay` exist.
-- [x] Public source and Git history are published at `github.com/bg-ghub/lawrelay`; the release uses SemVer `0.1.0`, AGPL-3.0-or-later, a changelog, contribution/security policies, and a clean staged Gitleaks scan.
+- [x] Public source and Git history are published at `github.com/bg-ghub/lawrelay`; releases use SemVer (current patch `0.1.1`), AGPL-3.0-or-later, a changelog, contribution/security policies, and clean staged Gitleaks scans.
 - [ ] Production application. The Hetzner project has no server or other resources.
 - [ ] Live DNS. `lawrelay.be` has no A/AAAA record, `www.lawrelay.be` does not exist, and no MX record was found.
 - [x] Real account, authorization, notification, billing-foundation, invoice-foundation, privacy-draft, and terms-draft code exists.
