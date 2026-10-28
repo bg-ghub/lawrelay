@@ -1,0 +1,33 @@
+# Keep credentials, identifiers, and potentially privileged matter text out of
+# request logs and error-report payloads. Error-tracking integrations must apply
+# an equivalent denylist before events leave the application.
+Rails.application.config.filter_parameters += [
+  :passw,
+  :password,
+  :password_confirmation,
+  :email,
+  :email_address,
+  :phone,
+  :name,
+  :address,
+  :description,
+  :message,
+  :q,
+  :secret,
+  :token,
+  :authorization,
+  :cookie,
+  :session,
+  :api_key,
+  :client_secret,
+  :_key,
+  :crypt,
+  :salt,
+  :certificate,
+  :otp,
+  :ssn,
+  :iban,
+  :card_number,
+  :cvv,
+  :cvc
+]

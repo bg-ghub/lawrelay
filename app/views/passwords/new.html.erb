@@ -1,0 +1,23 @@
+<% content_for :title, t("auth.passwords.new.title") %>
+<main class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("auth.passwords.eyebrow") %></p>
+    <h1><%= t("auth.passwords.new.heading") %></h1>
+    <p><%= t("auth.passwords.new.lede") %></p>
+  </div>
+  <div class="new-assignment__layout">
+    <%= form_with url: passwords_path, class: "assignment-form" do |form| %>
+      <fieldset class="form-section">
+        <legend><%= t("auth.passwords.new.form_title") %></legend>
+        <div class="field-group">
+          <%= form.label :email_address, t("auth.fields.professional_email") %>
+          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <%= link_to t("auth.actions.back_to_sign_in"), new_session_path, class: "button button--ghost" %>
+        <%= form.submit t("auth.passwords.new.submit"), class: "button button--dark" %>
+      </div>
+    <% end %>
+  </div>
+</main>

@@ -1,0 +1,53 @@
+<main class="dashboard-page shell">
+  <div class="dashboard-heading">
+    <div>
+      <p class="eyebrow"><%= t("admin.verifications.eyebrow") %></p>
+      <h1><%= t("admin.verifications.title") %></h1>
+      <p><%= t("admin.verifications.intro") %></p>
+    </div>
+    <%= link_to t("admin.verifications.back"), dashboard_path, class: "button button--ghost" %>
+  </div>
+
+  <% if @users.any? %>
+    <div class="assignment-list">
+      <% @users.each do |user| %>
+        <% firm = user.primary_firm %>
+        <% profile = user.lawyer_profile %>
+        <article class="dashboard-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow"><%= t("admin.verifications.account") %></p>
+              <h2><%= user.full_name %></h2>
+            </div>
+            <span class="status-pill"><%= user.email_verified? ? t("admin.verifications.email_verified") : t("admin.verifications.email_unverified") %></span>
+          </div>
+
+          <dl class="detail-facts">
+            <div><dt><%= t("admin.verifications.email") %></dt><dd><%= user.email_address %></dd></div>
+            <div><dt><%= t("admin.verifications.firm") %></dt><dd><%= firm&.name || "—" %></dd></div>
+            <div><dt><%= t("admin.verifications.enterprise_number") %></dt><dd><%= firm&.enterprise_number.presence || "—" %></dd></div>
+            <div><dt><%= t("admin.verifications.bar") %></dt><dd><%= [profile&.bar_association, profile&.bar_number].compact_blank.join(" · ").presence || "—" %></dd></div>
+            <div><dt><%= t("admin.verifications.firm_status") %></dt><dd><%= firm&.verification_status || t("admin.verifications.missing") %></dd></div>
+            <div><dt><%= t("admin.verifications.lawyer_status") %></dt><dd><%= profile&.verification_status || t("admin.verifications.missing") %></dd></div>
+          </dl>
+
+          <%= form_with url: admin_verification_path(user), method: :patch, scope: :verification, class: "assignment-form" do |form| %>
+            <div class="field-group">
+              <%= form.label :note, t("admin.verifications.note") %>
+              <%= form.text_area :note, rows: 3, maxlength: 2_000, placeholder: t("admin.verifications.note_placeholder"), value: profile&.verification_note %>
+            </div>
+            <div class="form-actions">
+              <%= form.button t("admin.verifications.reject"), name: "decision", value: "reject", class: "button button--ghost" %>
+              <%= form.button t("admin.verifications.approve"), name: "decision", value: "approve", class: "button button--dark" %>
+            </div>
+          <% end %>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="empty-state">
+      <h2><%= t("admin.verifications.empty_title") %></h2>
+      <p><%= t("admin.verifications.empty_body") %></p>
+    </section>
+  <% end %>
+</main>

@@ -1,0 +1,88 @@
+nl:
+  trust:
+    actions:
+      cancel: "Annuleren"
+    errors:
+      heading: "Controleer even:"
+    statuses:
+      pending: "In afwachting"
+      open: "Open"
+      in_review: "In behandeling"
+      completed: "Afgerond"
+      rejected: "Afgewezen"
+      resolved: "Opgelost"
+      dismissed: "Gesloten zonder gevolg"
+    privacy_requests:
+      eyebrow: "Privacyverzoeken"
+      kinds:
+        access_export: "Mijn gegevens inkijken of exporteren"
+        correction: "Mijn gegevens verbeteren"
+        deletion: "Mijn accountgegevens verwijderen"
+        restriction: "De verwerking beperken"
+        objection: "Bezwaar maken tegen verwerking"
+      notices:
+        created: "Je privacyverzoek is geregistreerd."
+        rate_limited: "Wacht even voordat je een nieuw privacyverzoek indient."
+      index:
+        title: "Privacyverzoeken — LawRelay"
+        heading: "Je privacyverzoeken"
+        lede: "Volg verzoeken over de persoonsgegevens die LawRelay over je bewaart."
+        new: "Nieuw verzoek"
+        empty: "Je hebt nog geen privacyverzoek ingediend."
+      new:
+        title: "Nieuw privacyverzoek — LawRelay"
+        heading: "Vertel ons wat je nodig hebt."
+        lede: "We registreren het verzoek en de afhandeling, zodat niets verloren gaat."
+        legend: "Verzoek"
+        kind: "Type verzoek"
+        kind_prompt: "Kies een verzoek"
+        details: "Wat moeten we weten?"
+        details_placeholder: "Omschrijf kort over welke gegevens of welk account het gaat."
+        retention_note: "Een accountverwijdering wist geen facturen of auditgegevens die LawRelay wettelijk moet bewaren."
+        submit: "Verzoek indienen"
+    reports:
+      eyebrow: "Meld een probleem"
+      categories:
+        confidentiality: "Bevat vertrouwelijke of identificerende informatie"
+        misleading: "Misleidend of onjuist"
+        unavailable: "Niet meer beschikbaar"
+        misconduct: "Mogelijke deontologische inbreuk"
+        other: "Ander probleem"
+      errors:
+        own_assignment: "Je kunt een opdracht van je eigen kantoor niet melden."
+      notices:
+        created: "Bedankt. De melding is geregistreerd voor controle."
+        rate_limited: "Je hebt de meldingslimiet bereikt. Probeer het later opnieuw."
+      new:
+        title: "Opdracht melden — LawRelay"
+        heading: "Meld deze opdracht"
+        lede: "Vertel wat we moeten controleren in ‘%{title}’."
+        legend: "Probleem"
+        category: "Reden"
+        category_prompt: "Kies een reden"
+        details: "Korte toelichting"
+        details_placeholder: "Omschrijf het probleem zonder cliënt- of dossiergegevens toe te voegen."
+        safety_note: "Vermeld geen beroepsgeheim, cliëntnamen of documenten."
+        submit: "Melding verzenden"
+    admin:
+      eyebrow: "Vertrouwen en veiligheid"
+      resolution_note: "Interne afhandelingsnota"
+      review: "Start controle"
+      resolve: "Oplossen"
+      dismiss: "Zonder gevolg sluiten"
+      complete: "Afronden"
+      reject: "Afwijzen"
+      notices:
+        updated: "Het dossier is bijgewerkt."
+        invalid_decision: "Kies een geldige actie."
+        note_required: "Voeg een afhandelingsnota toe voordat je dit dossier sluit."
+      reports:
+        title: "Meldingen — LawRelay-beheer"
+        heading: "Meldingen over opdrachten"
+        lede: "Beoordeel problemen zonder dossiergegevens buiten LawRelay te kopiëren."
+        empty: "Er zijn geen meldingen te beoordelen."
+      privacy_requests:
+        title: "Privacyverzoeken — LawRelay-beheer"
+        heading: "Privacyverzoeken"
+        lede: "Volg elk verzoek tot een gedocumenteerde uitkomst."
+        empty: "Er zijn geen privacyverzoeken te beoordelen."

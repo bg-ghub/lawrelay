@@ -1,0 +1,88 @@
+en:
+  trust:
+    actions:
+      cancel: "Cancel"
+    errors:
+      heading: "Please check:"
+    statuses:
+      pending: "Pending"
+      open: "Open"
+      in_review: "In review"
+      completed: "Completed"
+      rejected: "Rejected"
+      resolved: "Resolved"
+      dismissed: "Dismissed"
+    privacy_requests:
+      eyebrow: "Privacy requests"
+      kinds:
+        access_export: "Access or export my data"
+        correction: "Correct my data"
+        deletion: "Delete my account data"
+        restriction: "Restrict processing"
+        objection: "Object to processing"
+      notices:
+        created: "Your privacy request has been recorded."
+        rate_limited: "Please wait before submitting another privacy request."
+      index:
+        title: "Privacy requests — LawRelay"
+        heading: "Your privacy requests"
+        lede: "Track requests about the personal data LawRelay holds about you."
+        new: "New request"
+        empty: "You have not submitted a privacy request."
+      new:
+        title: "New privacy request — LawRelay"
+        heading: "Tell us what you need."
+        lede: "We record the request and its handling so nothing gets lost."
+        legend: "Request details"
+        kind: "Request type"
+        kind_prompt: "Choose a request"
+        details: "What should we know?"
+        details_placeholder: "Briefly explain the data or account concerned."
+        retention_note: "Account deletion does not erase invoices or audit records that LawRelay must retain by law."
+        submit: "Submit request"
+    reports:
+      eyebrow: "Report a concern"
+      categories:
+        confidentiality: "Contains confidential or identifying information"
+        misleading: "Misleading or inaccurate"
+        unavailable: "No longer available"
+        misconduct: "Possible professional misconduct"
+        other: "Other concern"
+      errors:
+        own_assignment: "You cannot report your own firm's assignment."
+      notices:
+        created: "Thanks. The report has been recorded for review."
+        rate_limited: "You have reached the report limit. Please try again later."
+      new:
+        title: "Report assignment — LawRelay"
+        heading: "Report this assignment"
+        lede: "Tell us what needs review in “%{title}”."
+        legend: "Concern"
+        category: "Reason"
+        category_prompt: "Choose a reason"
+        details: "Short explanation"
+        details_placeholder: "Describe the issue without adding client or case details."
+        safety_note: "Do not include privileged information, client names or documents."
+        submit: "Send report"
+    admin:
+      eyebrow: "Trust operations"
+      resolution_note: "Internal resolution note"
+      review: "Start review"
+      resolve: "Resolve"
+      dismiss: "Dismiss"
+      complete: "Complete"
+      reject: "Reject"
+      notices:
+        updated: "The trust record has been updated."
+        invalid_decision: "Choose a valid review action."
+        note_required: "Add a resolution note before closing this record."
+      reports:
+        title: "Reports — LawRelay admin"
+        heading: "Assignment reports"
+        lede: "Review concerns without copying matter details outside LawRelay."
+        empty: "No reports need review."
+      privacy_requests:
+        title: "Privacy requests — LawRelay admin"
+        heading: "Privacy requests"
+        lede: "Track each request to a documented outcome."
+        empty: "No privacy requests need review."

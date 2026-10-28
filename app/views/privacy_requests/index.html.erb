@@ -1,0 +1,21 @@
+<% content_for :title, t("trust.privacy_requests.index.title") %>
+<main class="dashboard-page shell trust-page">
+  <div class="dashboard-heading">
+    <div><p class="eyebrow"><%= t("trust.privacy_requests.eyebrow") %></p><h1><%= t("trust.privacy_requests.index.heading") %></h1><p><%= t("trust.privacy_requests.index.lede") %></p></div>
+    <%= link_to t("trust.privacy_requests.index.new"), new_privacy_request_path, class: "button button--dark" %>
+  </div>
+  <section class="dashboard-panel">
+    <% if @privacy_requests.any? %>
+      <div class="trust-list">
+        <% @privacy_requests.each do |request_record| %>
+          <article class="trust-row">
+            <div><strong><%= t("trust.privacy_requests.kinds.#{request_record.kind}") %></strong><p><%= l request_record.created_at, format: :long %></p></div>
+            <span class="status-pill"><%= t("trust.statuses.#{request_record.status}") %></span>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="muted-copy"><%= t("trust.privacy_requests.index.empty") %></p>
+    <% end %>
+  </section>
+</main>

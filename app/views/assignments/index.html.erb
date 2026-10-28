@@ -1,0 +1,92 @@
+<main class="marketplace-page">
+  <section class="marketplace-hero shell">
+    <div>
+      <p class="eyebrow"><%= t("marketplace.index.eyebrow") %></p>
+      <h1><%= t("marketplace.index.title") %></h1>
+      <p class="lede"><%= t("marketplace.index.lede") %></p>
+    </div>
+    <%= link_to new_assignment_path, class: "button button--dark" do %>
+      <%= t("marketplace.index.post_assignment") %> <span aria-hidden="true">→</span>
+    <% end %>
+  </section>
+
+  <section class="marketplace-content shell" aria-label="<%= t("marketplace.index.open_assignments_aria") %>">
+    <aside class="filter-panel" aria-label="<%= t("marketplace.index.filters_aria") %>">
+      <div class="filter-panel__heading">
+        <p class="eyebrow"><%= t("marketplace.index.refine") %></p>
+        <%= link_to t("marketplace.index.clear_filters"), assignments_path, class: "text-link" if params[:q].present? || params[:kind].present? || params[:city].present? || params[:practice_area].present? %>
+      </div>
+
+      <%= form_with url: assignments_path, method: :get, class: "filter-form", data: { controller: "assignment-filter", action: "change->assignment-filter#submit" } do |form| %>
+        <div class="field-group">
+          <%= form.label :q, t("marketplace.index.search_label") %>
+          <div class="search-field">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <%= form.search_field :q, value: params[:q], placeholder: t("marketplace.index.search_placeholder"), autocomplete: "off", data: { action: "input->assignment-filter#debounce" } %>
+          </div>
+        </div>
+
+        <fieldset class="field-group">
+          <legend><%= t("marketplace.index.assignment_type") %></legend>
+          <label class="choice-row"><%= form.radio_button :kind, "", checked: params[:kind].blank? %><span><%= t("marketplace.index.all") %></span></label>
+          <label class="choice-row"><%= form.radio_button :kind, "court_replacement", checked: params[:kind] == "court_replacement" %><span><%= t("marketplace.index.court_replacement") %></span></label>
+          <label class="choice-row"><%= form.radio_button :kind, "legal_task", checked: params[:kind] == "legal_task" %><span><%= t("marketplace.kinds.legal_task") %></span></label>
+        </fieldset>
+
+        <div class="field-group">
+          <%= form.label :city, t("marketplace.index.region_label") %>
+          <%= form.select :city, options_for_select([[t("marketplace.index.all_regions"), ""]] + @cities.map { |city| [city, city] }, params[:city]), {}, class: "select-field" %>
+        </div>
+
+        <div class="field-group">
+          <%= form.label :practice_area, t("marketplace.index.practice_area_label") %>
+          <%= form.select :practice_area, options_for_select([[t("marketplace.index.all_practice_areas"), ""]] + @practice_areas.map { |area| [area, area] }, params[:practice_area]), {}, class: "select-field" %>
+        </div>
+
+        <noscript><%= form.submit t("marketplace.index.apply_filters"), class: "button button--dark button--full" %></noscript>
+      <% end %>
+    </aside>
+
+    <div class="assignment-results">
+      <div class="result-meta">
+        <p><strong><%= @assignments.size %></strong> <%= t("marketplace.index.results", count: @assignments.size) %></p>
+        <span class="result-meta__note"><%= t("marketplace.index.demo") %></span>
+      </div>
+
+      <% if @assignments.any? %>
+        <div class="assignment-list">
+          <% @assignments.each do |assignment| %>
+            <article class="assignment-card <%= "assignment-card--urgent" if assignment.urgent? %>">
+              <div class="assignment-card__topline">
+                <span class="assignment-kind"><%= assignment.kind == "court_replacement" ? t("marketplace.kinds.court_replacement") : t("marketplace.kinds.legal_task") %></span>
+                <% if assignment.urgent? %><span class="urgent-badge"><%= t("marketplace.urgent") %></span><% end %>
+              </div>
+              <div class="assignment-card__body">
+                <div>
+                  <h2><%= link_to assignment.title, assignment_path(assignment) %></h2>
+                  <p><%= truncate(assignment.description, length: 150) %></p>
+                </div>
+                <dl class="assignment-facts">
+                  <div><dt><%= t("marketplace.index.when") %></dt><dd><%= l assignment.starts_at, format: "%d/%m · %H:%M" %></dd></div>
+                  <div><dt><%= t("marketplace.index.where") %></dt><dd><%= [assignment.court, assignment.city].compact_blank.join(" · ") %></dd></div>
+                  <div><dt><%= t("marketplace.index.practice_area") %></dt><dd><%= assignment.practice_area %></dd></div>
+                </dl>
+              </div>
+              <div class="assignment-card__footer">
+                <div class="rate-note"><span><%= t("marketplace.index.guideline_rate") %></span><strong>€ <%= number_with_delimiter(assignment.fee_cents.to_i / 100) %></strong></div>
+                <%= link_to assignment_path(assignment), class: "button button--outline button--small" do %><%= t("marketplace.index.view_assignment") %> <span aria-hidden="true">→</span><% end %>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <span class="empty-state__icon" aria-hidden="true">⌕</span>
+          <h2><%= t("marketplace.index.empty_title") %></h2>
+          <p><%= t("marketplace.index.empty_body") %></p>
+          <%= link_to t("marketplace.index.all_assignments"), assignments_path, class: "button button--dark" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

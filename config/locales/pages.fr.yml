@@ -1,0 +1,203 @@
+fr:
+  pages:
+    shared:
+      version: "Version provisoire : %{date}"
+      not_configured: "À compléter avant le lancement"
+      navigation_label: "Informations commerciales et juridiques"
+      draft_warning_title: "Les données de l'exploitant sont encore manquantes"
+      draft_warning_body: "Ce projet n'est pas prêt à être publié. Renseignez l'identité de l'exploitant et faites vérifier les textes en droit belge avant d'accepter de vrais utilisateurs ou paiements."
+    navigation:
+      pricing: "Tarifs"
+      privacy: "Vie privée"
+      terms: "Conditions"
+      cookies: "Cookies"
+      legal_notice: "Mentions légales"
+    pricing:
+      meta_title: "Tarifs — LawRelay"
+      eyebrow: "un tarif de plateforme simple"
+      title: "Payez l'espace de travail, pas les honoraires."
+      introduction: "Les cabinets qui publient des missions paient l'accès à LawRelay. Les avocats qui répondent participent gratuitement et règlent directement leurs honoraires entre eux."
+      beta:
+        kicker: "bêta fondatrice"
+        price: "0 €"
+        title: "Pilote sur invitation"
+        body: "Un groupe limité d'avocats belges vérifiés aide à affiner le fonctionnement avant le début de l'accès payant."
+        features:
+          - "Participants au pilote vérifiés"
+          - "Publication et réponses pendant la période d'essai convenue"
+          - "Retour direct à l'équipe LawRelay"
+      launch:
+        kicker: "hypothèse de lancement"
+        price: "49 € / mois hors TVA"
+        title: "Une formule par cabinet qui publie"
+        body: "Accès mensuel pour un cabinet qui souhaite publier des missions. L'offre définitive dépend du pilote et d'une vérification déontologique."
+        features:
+          - "Publier des remplacements d'audience et missions juridiques"
+          - "Recevoir et comparer les réponses"
+          - "Utilisation gratuite pour les avocats qui répondent"
+          - "Résiliable chaque mois"
+      direct_fees:
+        title: "Les honoraires entre avocats restent hors de LawRelay"
+        body: "Le donneur d'ordre et l'avocat choisi conviennent directement des modalités, se facturent et se paient. LawRelay ne détient pas les fonds, ne fournit pas de séquestre et ne prélève aucun pourcentage sur les honoraires."
+      review_notice: "Ce tarif est une hypothèse de produit, pas une offre ferme. TVA, facturation Peppol, modalités de paiement et conformité déontologique doivent être confirmées avant le lancement payant."
+    privacy:
+      meta_title: "Déclaration de confidentialité — LawRelay"
+      eyebrow: "vie privée"
+      title: "Comment LawRelay entend traiter les données personnelles."
+      introduction: "Il s'agit d'un projet de travail pour une plateforme d'avocats vérifiés. L'identité de l'exploitant, les fournisseurs réels et les durées définitives de conservation doivent être ajoutés avant le lancement."
+      sections:
+        controller:
+          heading: "1. Qui est responsable du traitement"
+          paragraphs:
+            - "L'exploitant de LawRelay sera responsable des données de compte, vérification, place de marché, assistance, sécurité et facturation. Son identité légale et ses coordonnées figureront dans les mentions légales une fois configurées."
+            - "Les questions de confidentialité et demandes d'exercice de droits seront adressées au contact vie privée indiqué dans les mentions légales."
+        scope:
+          heading: "2. Données traitées"
+          bullets:
+            - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
+            - "Données de vérification professionnelle : barreau, numéro de barreau, cabinet, rôle et preuve ou statut de vérification."
+            - "Données de profil, mission, candidature, acceptation, annulation et audit."
+            - "Identifiants de facturation, données TVA et de facture, statut d'abonnement et références du prestataire de paiement ; jamais les données complètes d'une carte ou d'un compte bancaire."
+            - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
+          paragraphs:
+            - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."
+        purposes:
+          heading: "3. Finalités et bases juridiques"
+          bullets:
+            - "Créer et sécuriser les comptes, vérifier l'accès, fournir la mise en relation et gérer les abonnements : exécution du contrat de service."
+            - "Émettre et conserver des factures conformes et répondre aux demandes légales : obligations légales."
+            - "Prévenir les abus, sécuriser le service, assister les utilisateurs, améliorer la fiabilité et établir ou défendre des droits : intérêts légitimes mis en balance avec les droits des utilisateurs."
+            - "Analyses facultatives ou communications marketing uniquement avec un consentement valable ou une autre base documentée."
+        sharing:
+          heading: "4. Destinataires"
+          paragraphs:
+            - "Les données ne sont partagées que pour exploiter le service : avec l'avocat demandeur ou répondant lorsque le parcours l'exige, le personnel LawRelay autorisé et les prestataires contractuels d'hébergement, e-mail, assistance, sécurité, paiement, facturation et sauvegarde."
+            - "Une liste actuelle de sous-traitants et des accords de traitement doivent exister avant le lancement. Les données ne sont pas vendues."
+        transfers:
+          heading: "5. Lieu et transferts"
+          paragraphs:
+            - "LawRelay entend conserver les données de production dans l'Espace économique européen. Si un prestataire transfère des données hors EEE, le mécanisme de transfert et les garanties complémentaires seront documentés avant son utilisation."
+        retention:
+          heading: "6. Conservation"
+          paragraphs:
+            - "Les données ne seront conservées que le temps nécessaire au compte, au parcours de mise en relation, à la sécurité, à l'assistance et aux obligations légales. Les données de facturation peuvent devoir être conservées après la fermeture d'un compte."
+            - "Le calendrier exact et les suppressions automatiques sont des conditions de lancement et doivent être ajoutés ici avant de traiter de vraies données."
+        rights:
+          heading: "7. Vos droits"
+          paragraphs:
+            - "Selon la base juridique et les circonstances, vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou la portabilité, ou vous opposer au traitement. Vous pouvez retirer un consentement sans affecter le traitement licite antérieur."
+            - "Vous pouvez introduire une plainte auprès de l'Autorité de protection des données. LawRelay peut vérifier votre identité avant d'exécuter une demande."
+        security:
+          heading: "8. Sécurité, incidents et modifications"
+          paragraphs:
+            - "LawRelay appliquera des contrôles d'accès, le chiffrement en transit, une authentification sûre, une journalisation limitée, des sauvegardes, une surveillance et des procédures d'incident adaptées au risque. Aucun service en ligne ne peut promettre une sécurité absolue."
+            - "Les modifications importantes seront datées et, le cas échéant, communiquées via le service ou par e-mail."
+    terms:
+      meta_title: "Conditions d'utilisation — LawRelay"
+      eyebrow: "conditions d'utilisation"
+      title: "Les règles d'utilisation de LawRelay."
+      introduction: "Ces conditions B2B provisoires décrivent le service envisagé. Elles ne sont pas définitives et doivent être vérifiées au regard du droit belge et des règles déontologiques avant lancement."
+      sections:
+        agreement:
+          heading: "1. Contrat et exploitant"
+          paragraphs:
+            - "Ces conditions régissent l'utilisation de LawRelay par des professionnels. L'exploitant contractant et ses coordonnées figureront dans les mentions légales une fois configurés. La création d'un compte ou l'utilisation du service après acceptation d'une version publiée forme le contrat de service."
+        eligibility:
+          heading: "2. Accès et vérification"
+          paragraphs:
+            - "La place de marché est destinée aux avocats vérifiés et au personnel autorisé des cabinets. Les utilisateurs fournissent des données professionnelles exactes, les actualisent, protègent leur accès et signalent immédiatement toute compromission. La vérification n'est ni une recommandation ni une garantie de compétence."
+        role:
+          heading: "3. Rôle de LawRelay"
+          paragraphs:
+            - "LawRelay fournit un logiciel pour publier des missions, recevoir des réponses et coordonner une mise en relation entre avocats. Il n'est ni cabinet d'avocats, employeur, client, mandataire, service de séquestre ni partie à la collaboration, et ne donne pas de conseil juridique."
+        professional_duties:
+          heading: "4. Responsabilité professionnelle"
+          bullets:
+            - "Chaque avocat reste responsable du pouvoir de déléguer, des conflits d'intérêts, de l'indépendance, de la compétence, des délais, règles de procédure, du secret professionnel, de l'assurance, de la communication au client et des obligations du barreau."
+            - "Une mise en relation ou un statut vérifié ne remplace jamais les vérifications propres de l'avocat."
+            - "Les utilisateurs conviennent directement de l'étendue, des honoraires, de la facturation et de l'organisation pratique."
+        content:
+          heading: "5. Missions et contenu interdit"
+          paragraphs:
+            - "Les utilisateurs ne publient que des informations professionnelles exactes, nécessaires et qu'ils sont autorisés à partager. Identités des clients, faits du dossier, documents, preuves, communications confidentielles, contenu illicite, spam, demandes discriminatoires et annonces trompeuses sont interdits."
+            - "LawRelay peut supprimer, restreindre ou conserver un contenu lorsque cela est raisonnablement nécessaire pour la sécurité, la conformité, un litige ou une obligation légale."
+        workflow:
+          heading: "6. Réponses et mises en relation"
+          paragraphs:
+            - "Le donneur d'ordre choisit qui contacter ou sélectionner. LawRelay ne garantit ni réponse, ni mise en relation, disponibilité, résultat, qualité ou paiement par un autre utilisateur. Les utilisateurs confirment chaque engagement et délai hors plateforme."
+        platform_fees:
+          heading: "7. Prix LawRelay et facturation"
+          paragraphs:
+            - "L'accès à la bêta fondatrice est gratuit pendant la période convenue. Le prix de lancement proposé est de 49 € par mois hors TVA par cabinet publiant, résiliable mensuellement. Seuls le prix et les conditions présentés au paiement ou dans une commande acceptée sont contraignants."
+            - "Factures, délai de paiement, échecs, avoirs et résiliation seront précisés avant le lancement payant et devront respecter la facturation B2B structurée belge."
+        professional_fees:
+          heading: "8. Honoraires professionnels"
+          paragraphs:
+            - "Les honoraires d'une mission sont convenus, facturés et payés directement entre avocats ou cabinets. LawRelay ne détient pas ces fonds, ne prélève pas de commission et ne garantit pas le paiement."
+        moderation:
+          heading: "9. Signalement, modération et suspension"
+          paragraphs:
+            - "Les utilisateurs peuvent signaler un contenu illicite, dangereux ou contraire aux règles. LawRelay peut enquêter, demander des informations, restreindre un contenu, suspendre l'accès ou fermer un compte de manière proportionnée. Les procédures applicables de notification, plainte et recours seront publiées avant lancement."
+        intellectual_property:
+          heading: "10. Propriété intellectuelle"
+          paragraphs:
+            - "Les utilisateurs conservent les droits sur leur contenu et accordent à LawRelay une licence limitée pour l'héberger, l'afficher, le transmettre et le traiter uniquement afin d'exploiter et sécuriser le service. LawRelay et ses concédants conservent les droits sur la plateforme, la marque et le logiciel."
+        availability:
+          heading: "11. Disponibilité et modifications"
+          paragraphs:
+            - "LawRelay peut maintenir, mettre à jour ou modifier le service et ne promet pas une disponibilité ininterrompue. Les modifications importantes défavorables à une formule payante seront, si possible, annoncées raisonnablement à l'avance."
+        liability:
+          heading: "12. Responsabilité, fin et droit applicable"
+          paragraphs:
+            - "Une répartition des responsabilités validée par un avocat, le droit applicable, le tribunal compétent, la procédure de fin, la période d'exportation des données et les réserves de droit impératif doivent être ajoutés avant lancement. Rien dans ce projet n'exclut une responsabilité qui ne peut légalement l'être."
+    cookies:
+      meta_title: "Déclaration relative aux cookies — LawRelay"
+      eyebrow: "cookies"
+      title: "Une utilisation volontairement minimale des cookies."
+      introduction: "Le prototype LawRelay actuel n'utilise que la technologie nécessaire à un service sûr et fonctionnel."
+      sections:
+        current_use:
+          heading: "1. Ce qui est utilisé aujourd'hui"
+          paragraphs:
+            - "Un cookie de session signé sécurise la session du navigateur et pourra mémoriser l'état connecté lorsque les comptes seront actifs. Des jetons de sécurité empêchent les requêtes falsifiées. Ces fonctions sont strictement nécessaires au service demandé."
+        no_tracking:
+          heading: "2. Pas de suivi facultatif dans la version actuelle"
+          paragraphs:
+            - "LawRelay ne place actuellement aucun cookie publicitaire, de profilage comportemental ou d'analyse facultative. La langue figure dans l'URL de la page, pas dans un cookie de suivi."
+        retention:
+          heading: "3. Durée et contrôle"
+          paragraphs:
+            - "La technologie de session est limitée à la durée et aux besoins de sécurité du service. Vous pouvez supprimer les cookies dans le navigateur, mais le blocage des cookies nécessaires peut empêcher la connexion ou les formulaires de fonctionner."
+        future:
+          heading: "4. Si des cookies facultatifs sont ajoutés"
+          paragraphs:
+            - "LawRelay mettra cette déclaration à jour et demandera un consentement préalable et granulaire avant tout cookie non nécessaire. Refuser devra être aussi simple qu'accepter et le consentement restera révocable."
+        contact:
+          heading: "5. Questions"
+          paragraphs:
+            - "Les questions sur les cookies et la vie privée peuvent être envoyées au contact vie privée des mentions légales."
+    legal_notice:
+      meta_title: "Mentions légales — LawRelay"
+      eyebrow: "informations sur l'exploitant"
+      title: "Qui exploite LawRelay."
+      introduction: "Les données d'identification imposées en Belgique doivent être facilement, directement et durablement accessibles. Tout champ manquant ci-dessous bloque la publication."
+      fields:
+        legal_name: "Dénomination sociale ou commerciale"
+        registered_address: "Siège social"
+        enterprise_number: "Numéro d'entreprise"
+        vat_number: "Numéro ou statut TVA"
+        legal_email: "Contact juridique"
+        privacy_email: "Contact vie privée"
+        support_email: "Assistance"
+        phone: "Téléphone"
+        professional_body: "Ordre professionnel ou autorité de contrôle, le cas échéant"
+        professional_rules_url: "Règles professionnelles applicables, le cas échéant"
+      sections:
+        service:
+          heading: "Nature du service"
+          paragraphs:
+            - "LawRelay est une plateforme B2B de coordination et de mise en relation pour avocats vérifiés. Ce n'est pas un cabinet d'avocats, il ne donne pas de conseil juridique et ne représente aucun client."
+        content:
+          heading: "Contenu du site"
+          paragraphs:
+            - "Les informations générales du site sont fournies à titre de présentation du produit et peuvent évoluer. Elles ne constituent pas un conseil juridique, fiscal, comptable ou déontologique."

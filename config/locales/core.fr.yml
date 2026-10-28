@@ -1,0 +1,8 @@
+fr:
+  notices:
+    assignment_created: "Votre mission a été publiée. Des confrères peuvent maintenant y répondre."
+    proposal_created: "Votre candidature a été envoyée. Le donneur d’ordre sera averti."
+  assignments:
+    kinds:
+      court_replacement: "Remplacement d’audience"
+      legal_task: "Mission juridique"

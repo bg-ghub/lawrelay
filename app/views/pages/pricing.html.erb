@@ -1,0 +1,45 @@
+<% content_for :title, t("pages.pricing.meta_title") %>
+<section class="marketplace-page">
+  <div class="shell">
+    <%= render "pages/navigation" %>
+    <header class="marketplace-hero">
+      <div>
+        <p class="eyebrow"><%= t("pages.pricing.eyebrow") %></p>
+        <h1><%= t("pages.pricing.title") %></h1>
+        <p class="lede"><%= t("pages.pricing.introduction") %></p>
+      </div>
+    </header>
+
+    <div class="pathway-grid">
+      <article class="pathway-card pathway-card-paper">
+        <p class="pathway-kicker"><%= t("pages.pricing.beta.kicker") %></p>
+        <h2><%= t("pages.pricing.beta.price") %></h2>
+        <h3><%= t("pages.pricing.beta.title") %></h3>
+        <p><%= t("pages.pricing.beta.body") %></p>
+        <ul class="trust-list">
+          <% t("pages.pricing.beta.features").each do |feature| %>
+            <li><span aria-hidden="true">✓</span><%= feature %></li>
+          <% end %>
+        </ul>
+      </article>
+
+      <article class="pathway-card pathway-card-ink">
+        <p class="pathway-kicker"><%= t("pages.pricing.launch.kicker") %></p>
+        <h2><%= t("pages.pricing.launch.price") %></h2>
+        <h3><%= t("pages.pricing.launch.title") %></h3>
+        <p><%= t("pages.pricing.launch.body") %></p>
+        <ul class="trust-list">
+          <% t("pages.pricing.launch.features").each do |feature| %>
+            <li><span aria-hidden="true">✓</span><%= feature %></li>
+          <% end %>
+        </ul>
+      </article>
+    </div>
+
+    <section class="detail-section detail-section--soft">
+      <h2><%= t("pages.pricing.direct_fees.title") %></h2>
+      <p><%= t("pages.pricing.direct_fees.body") %></p>
+    </section>
+    <p class="muted-copy"><%= t("pages.pricing.review_notice") %></p>
+  </div>
+</section>

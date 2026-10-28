@@ -1,0 +1,28 @@
+nl:
+  admin:
+    verifications:
+      eyebrow: "Beheer"
+      title: "Advocaten verifiëren"
+      intro: "Controleer de beroeps- en kantoorgegevens voordat je toegang tot de marktplaats geeft."
+      back: "Terug naar overzicht"
+      account: "Account"
+      email: "E-mail"
+      email_verified: "E-mail bevestigd"
+      email_unverified: "E-mail nog niet bevestigd"
+      firm: "Kantoor"
+      enterprise_number: "Ondernemingsnummer"
+      bar: "Balie-inschrijving"
+      firm_status: "Status kantoor"
+      lawyer_status: "Status advocaat"
+      missing: "Ontbreekt"
+      note: "Interne controlenotitie"
+      note_placeholder: "Noteer wat je controleerde en waarom je deze beslissing nam."
+      approve: "Goedkeuren"
+      reject: "Afwijzen"
+      empty_title: "Niets te controleren"
+      empty_body: "Er wachten geen verificaties van advocaten of kantoren."
+      notices:
+        approved: "%{name} is goedgekeurd."
+        rejected: "%{name} is afgewezen."
+        incomplete_account: "Bij dit account ontbreekt een kantoor of advocatenprofiel."
+        invalid_decision: "Kies goedkeuren of afwijzen."

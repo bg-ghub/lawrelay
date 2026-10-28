@@ -1,0 +1,15 @@
+<% content_for :title, t("trust.reports.new.title") %>
+<main class="new-assignment shell trust-page">
+  <div class="new-assignment__intro"><p class="eyebrow"><%= t("trust.reports.eyebrow") %></p><h1><%= t("trust.reports.new.heading") %></h1><p><%= t("trust.reports.new.lede", title: @assignment.title) %></p></div>
+  <div class="new-assignment__layout">
+    <%= form_with model: @report, url: assignment_reports_path(@assignment), class: "assignment-form" do |form| %>
+      <% if @report.errors.any? %><div class="form-error" role="alert"><strong><%= t("trust.errors.heading") %></strong><ul><% @report.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
+      <fieldset class="form-section">
+        <legend><%= t("trust.reports.new.legend") %></legend>
+        <div class="field-group"><%= form.label :category, t("trust.reports.new.category") %><%= form.select :category, Report::CATEGORIES.map { |category| [t("trust.reports.categories.#{category}"), category] }, { prompt: t("trust.reports.new.category_prompt") }, required: true, class: "select-field" %></div>
+        <div class="field-group"><%= form.label :details, t("trust.reports.new.details") %><%= form.text_area :details, maxlength: 2000, required: true, rows: 6, placeholder: t("trust.reports.new.details_placeholder") %><p class="field-hint"><%= t("trust.reports.new.safety_note") %></p></div>
+      </fieldset>
+      <div class="form-actions"><%= link_to t("trust.actions.cancel"), assignment_path(@assignment), class: "button button--ghost" %><%= form.submit t("trust.reports.new.submit"), class: "button button--dark" %></div>
+    <% end %>
+  </div>
+</main>

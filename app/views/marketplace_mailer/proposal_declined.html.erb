@@ -1,0 +1,3 @@
+<h1><%= t("workflow.mailers.proposal_declined.heading") %></h1>
+<p><%= t("workflow.mailers.proposal_declined.body", title: @assignment.title) %></p>
+<p><%= link_to t("workflow.mailers.browse_assignments"), assignments_url(locale: @recipient.locale) %></p>

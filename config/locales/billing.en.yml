@@ -1,0 +1,35 @@
+en:
+  billing:
+    eyebrow: Billing
+    title: Your LawRelay plan
+    lede: Keep your office ready to post assignments. Colleagues can continue to respond free of charge.
+    plan:
+      title: LawRelay Office
+      price: €49 / month
+      tax_note: excluding VAT
+      description: One clear monthly platform fee for your office.
+      direct_settlement: LawRelay never handles the fee agreed between lawyers; you settle that directly.
+      active: Your plan is active.
+      contact_administrator: Ask a firm administrator to manage billing.
+    actions:
+      request_invoice: Request manual invoice
+      cancel: Cancel plan
+    invoices:
+      title: Invoices
+      empty: No invoices yet.
+      draft: Draft invoice
+      due: "Due: %{date}"
+    statuses:
+      draft: Draft
+      issued: Issued
+      paid: Paid
+      void: Void
+      overdue: Overdue
+    notices:
+      posting_plan_required: An active office plan is required to post assignments.
+      rate_limited: Please wait before requesting another invoice.
+      invoice_requested: "Invoice %{number} is queued for manual accounting handoff. Your plan activates after payment is recorded."
+      subscription_cancelled: Your plan has been cancelled.
+      payment_confirmation_pending: We will activate your plan only after payment confirmation.
+      no_firm: You need a firm to manage billing.
+      administrator_required: Only a firm administrator can manage billing.

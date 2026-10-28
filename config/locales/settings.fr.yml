@@ -1,0 +1,42 @@
+fr:
+  settings:
+    title: "Paramètres du compte — LawRelay"
+    eyebrow: "Votre compte"
+    heading: "Gardez vos informations à jour."
+    lede: "Utilisez des coordonnées auxquelles vos confrères et LawRelay peuvent se fier."
+    save: "Enregistrer les modifications"
+    errors:
+      heading: "À vérifier :"
+    notices:
+      updated: "Vos paramètres ont été mis à jour."
+      email_reverification: "Votre adresse e-mail a été modifiée. Vérifiez la nouvelle adresse avant de retrouver l’accès à la plateforme."
+      review_required: "Vos informations ont été mises à jour. Nous devons examiner à nouveau les éléments professionnels modifiés avant de rétablir l’accès à la plateforme."
+    account:
+      legend: "Compte"
+      language: "Langue préférée"
+      email_hint: "Modifier cette adresse suspend la vérification e-mail jusqu’à la confirmation de la nouvelle adresse."
+    profile:
+      legend: "Profil professionnel"
+      review_hint: "Modifier votre inscription au barreau ou votre e-mail professionnel déclenche un nouvel examen professionnel."
+      languages: "Langues"
+      languages_placeholder: "Par exemple : NL, FR, EN"
+      practice_areas: "Domaines de pratique"
+      practice_areas_placeholder: "Par exemple : droit commercial, droit de la famille"
+      bar_admission_year: "Inscrit au barreau depuis"
+      bar_admission_year_placeholder: "Par exemple : 2018"
+      court_preferences: "Couverture des juridictions"
+      court_preferences_placeholder: "Par exemple : tribunal de l’entreprise de Bruxelles, Anvers"
+      court_preferences_hint: "Indiquez les juridictions ou villes où vous êtes à l’aise pour remplacer un confrère."
+      availability_note: "Note de disponibilité"
+      availability_note_placeholder: "Par exemple : disponible pour les audiences du matin les mardis et jeudis."
+    firm:
+      legend: "Cabinet et facturation"
+      billing_email: "E-mail de facturation"
+      phone: "Téléphone"
+      address: "Adresse"
+      postal_code: "Code postal"
+      city: "Ville"
+      review_hint: "Modifier le nom du cabinet, le numéro d’entreprise ou le numéro de TVA déclenche un nouvel examen du cabinet."
+    aside:
+      title: "Un profil confidentiel"
+      body: "Ces informations servent à la vérification et au contact opérationnel. Elles ne sont pas publiées aux autres avocats avant une mise en relation."

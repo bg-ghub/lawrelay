@@ -1,0 +1,42 @@
+nl:
+  settings:
+    title: "Accountinstellingen — LawRelay"
+    eyebrow: "Je account"
+    heading: "Houd je gegevens actueel."
+    lede: "Gebruik contactgegevens waarop collega’s en LawRelay kunnen vertrouwen."
+    save: "Wijzigingen opslaan"
+    errors:
+      heading: "Controleer even:"
+    notices:
+      updated: "Je instellingen zijn bijgewerkt."
+      email_reverification: "Je e-mailadres is bijgewerkt. Bevestig het nieuwe adres voordat je opnieuw toegang krijgt tot de marktplaats."
+      review_required: "Je gegevens zijn bijgewerkt. We moeten de gewijzigde professionele gegevens opnieuw beoordelen voordat je opnieuw toegang krijgt tot de marktplaats."
+    account:
+      legend: "Account"
+      language: "Voorkeurstaal"
+      email_hint: "Bij een nieuw e-mailadres vervalt je e-mailverificatie tot je het nieuwe adres bevestigt."
+    profile:
+      legend: "Professioneel profiel"
+      review_hint: "Een wijziging van je baliegegevens of professioneel e-mailadres start een nieuwe professionele controle."
+      languages: "Talen"
+      languages_placeholder: "Bijvoorbeeld: NL, FR, EN"
+      practice_areas: "Rechtsdomeinen"
+      practice_areas_placeholder: "Bijvoorbeeld: handelsrecht, familierecht"
+      bar_admission_year: "Aan de balie sinds"
+      bar_admission_year_placeholder: "Bijvoorbeeld: 2018"
+      court_preferences: "Rechtbankdekking"
+      court_preferences_placeholder: "Bijvoorbeeld: ondernemingsrechtbank Brussel, Antwerpen"
+      court_preferences_hint: "Vermeld rechtbanken of steden waar je graag een zitting waarneemt."
+      availability_note: "Beschikbaarheidsnotitie"
+      availability_note_placeholder: "Bijvoorbeeld: beschikbaar voor ochtendzittingen op dinsdag en donderdag."
+    firm:
+      legend: "Kantoor en facturatie"
+      billing_email: "E-mailadres facturatie"
+      phone: "Telefoon"
+      address: "Adres"
+      postal_code: "Postcode"
+      city: "Gemeente"
+      review_hint: "Een wijziging van de kantoornaam, het ondernemingsnummer of btw-nummer start een nieuwe kantoorcontrole."
+    aside:
+      title: "Een afgeschermd profiel"
+      body: "We gebruiken deze gegevens voor verificatie en operationeel contact. Andere advocaten zien ze pas na een match."

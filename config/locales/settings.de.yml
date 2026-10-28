@@ -1,0 +1,42 @@
+de:
+  settings:
+    title: "Kontoeinstellungen — LawRelay"
+    eyebrow: "Ihr Konto"
+    heading: "Halten Sie Ihre Angaben aktuell."
+    lede: "Verwenden Sie Kontaktdaten, auf die sich Kolleginnen, Kollegen und LawRelay verlassen können."
+    save: "Änderungen speichern"
+    errors:
+      heading: "Bitte prüfen:"
+    notices:
+      updated: "Ihre Einstellungen wurden aktualisiert."
+      email_reverification: "Ihre E-Mail-Adresse wurde geändert. Bitte bestätigen Sie die neue Adresse, bevor der Marktplatz-Zugang weiterläuft."
+      review_required: "Ihre Angaben wurden aktualisiert. Wir müssen die geänderten beruflichen Angaben erneut prüfen, bevor der Marktplatz-Zugang weiterläuft."
+    account:
+      legend: "Konto"
+      language: "Bevorzugte Sprache"
+      email_hint: "Wenn Sie diese Adresse ändern, endet die E-Mail-Verifizierung, bis Sie die neue Adresse bestätigen."
+    profile:
+      legend: "Berufliches Profil"
+      review_hint: "Eine Änderung der Kammerangaben oder beruflichen E-Mail startet eine neue berufliche Prüfung."
+      languages: "Sprachen"
+      languages_placeholder: "Zum Beispiel: NL, FR, EN"
+      practice_areas: "Rechtsgebiete"
+      practice_areas_placeholder: "Zum Beispiel: Handelsrecht, Familienrecht"
+      bar_admission_year: "Zugelassen seit"
+      bar_admission_year_placeholder: "Zum Beispiel: 2018"
+      court_preferences: "Gerichtsabdeckung"
+      court_preferences_placeholder: "Zum Beispiel: Unternehmensgericht Brüssel, Antwerpen"
+      court_preferences_hint: "Nennen Sie Gerichte oder Orte, an denen Sie Termine übernehmen können."
+      availability_note: "Verfügbarkeitsnotiz"
+      availability_note_placeholder: "Zum Beispiel: dienstags und donnerstags vormittags verfügbar."
+    firm:
+      legend: "Kanzlei und Abrechnung"
+      billing_email: "E-Mail für Rechnungen"
+      phone: "Telefon"
+      address: "Adresse"
+      postal_code: "Postleitzahl"
+      city: "Ort"
+      review_hint: "Eine Änderung von Kanzleiname, Unternehmensnummer oder USt-IdNr. startet eine neue Kanzleiprüfung."
+    aside:
+      title: "Ein geschütztes Profil"
+      body: "Diese Angaben werden zur Verifizierung und für den operativen Kontakt verwendet. Andere Anwälte sehen sie erst nach einer Vermittlung."

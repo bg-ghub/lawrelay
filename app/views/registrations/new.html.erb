@@ -1,0 +1,73 @@
+<% content_for :title, t("auth.registration.title") %>
+<main class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("auth.registration.eyebrow") %></p>
+    <h1><%= t("auth.registration.heading") %></h1>
+    <p><%= t("auth.registration.lede") %></p>
+  </div>
+
+  <div class="new-assignment__layout">
+    <%= form_with scope: :registration, url: registration_path, class: "assignment-form" do |form| %>
+      <% if @registration_errors.any? %>
+        <div class="form-error" role="alert">
+          <strong><%= t("auth.registration.error_heading") %></strong>
+          <ul><% @registration_errors.each do |message| %><li><%= message %></li><% end %></ul>
+        </div>
+      <% end %>
+
+      <fieldset class="form-section">
+        <legend><%= t("auth.registration.identity") %></legend>
+        <div class="form-row">
+          <div class="field-group"><%= form.label :first_name, t("auth.fields.first_name") %><%= form.text_field :first_name, required: true, autocomplete: "given-name", value: @form_values["first_name"] %></div>
+          <div class="field-group"><%= form.label :last_name, t("auth.fields.last_name") %><%= form.text_field :last_name, required: true, autocomplete: "family-name", value: @form_values["last_name"] %></div>
+        </div>
+        <div class="field-group"><%= form.label :email_address, t("auth.fields.professional_email") %><%= form.email_field :email_address, required: true, autocomplete: "email", value: @form_values["email_address"] %><p class="field-hint"><%= t("auth.registration.email_hint") %></p></div>
+        <div class="form-row">
+          <div class="field-group"><%= form.label :password, t("auth.fields.password") %><%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
+          <div class="field-group"><%= form.label :password_confirmation, t("auth.fields.password_confirmation") %><%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
+        </div>
+        <%= form.hidden_field :locale, value: I18n.locale %>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend><%= t("auth.registration.professional_details") %></legend>
+        <div class="form-row">
+          <div class="field-group"><%= form.label :bar_association, t("auth.fields.bar_association") %><%= form.text_field :bar_association, required: true, value: @form_values["bar_association"], placeholder: t("auth.registration.bar_placeholder") %></div>
+          <div class="field-group"><%= form.label :bar_number, t("auth.fields.bar_number") %><%= form.text_field :bar_number, required: true, value: @form_values["bar_number"] %></div>
+        </div>
+        <p class="field-hint"><%= t("auth.registration.verification_hint") %></p>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend><%= t("auth.registration.firm_details") %></legend>
+        <div class="field-group"><%= form.label :firm_name, t("auth.fields.firm_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"] %></div>
+        <div class="form-row">
+          <div class="field-group"><%= form.label :enterprise_number, t("auth.fields.enterprise_number") %><%= form.text_field :enterprise_number, value: @form_values["enterprise_number"], placeholder: "0123.456.789" %></div>
+          <div class="field-group"><%= form.label :vat_number, t("auth.fields.vat_number") %><%= form.text_field :vat_number, value: @form_values["vat_number"], placeholder: "BE 0123.456.789" %></div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend><%= t("auth.registration.agreement") %></legend>
+        <label class="toggle-row">
+          <%= form.check_box :terms_accepted, { required: true, checked: @terms_accepted }, "1", "0" %>
+          <span>
+            <strong><%= t("auth.registration.agree_heading") %></strong>
+            <small><%= t("auth.registration.agree_before") %> <%= link_to t("auth.registration.terms"), terms_path, class: "text-link" %> <%= t("auth.registration.and") %> <%= link_to t("auth.registration.privacy"), privacy_path, class: "text-link" %>.</small>
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="form-actions">
+        <%= link_to t("auth.actions.already_registered"), new_session_path, class: "button button--ghost" %>
+        <%= form.submit t("auth.registration.submit"), class: "button button--dark" %>
+      </div>
+    <% end %>
+
+    <aside class="posting-aside">
+      <span class="posting-aside__number">01</span><h2><%= t("auth.registration.aside_one_title") %></h2><p><%= t("auth.registration.aside_one_body") %></p>
+      <span class="posting-aside__number">02</span><h2><%= t("auth.registration.aside_two_title") %></h2><p><%= t("auth.registration.aside_two_body") %></p>
+      <span class="posting-aside__number">03</span><h2><%= t("auth.registration.aside_three_title") %></h2><p><%= t("auth.registration.aside_three_body") %></p>
+    </aside>
+  </div>
+</main>

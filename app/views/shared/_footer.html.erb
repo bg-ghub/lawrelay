@@ -1,0 +1,33 @@
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div class="footer-intro">
+      <%= link_to root_path, class: "brand brand-light", aria: { label: t("marketing.header.home_label") } do %>
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Law<span>Relay</span></span>
+      <% end %>
+      <p><%= t("marketing.footer.intro") %></p>
+    </div>
+    <div class="footer-column">
+      <p class="footer-label"><%= t("marketing.footer.platform") %></p>
+      <%= link_to t("marketing.header.discover_assignments"), assignments_path %>
+      <%= link_to t("marketing.actions.post_assignment"), new_assignment_path %>
+      <%= link_to t("marketing.header.dashboard"), dashboard_path %>
+    </div>
+    <div class="footer-column">
+      <p class="footer-label"><%= t("marketing.footer.learn_more") %></p>
+      <%= link_to t("pages.navigation.pricing"), pricing_path %>
+      <%= link_to t("pages.navigation.privacy"), privacy_path %>
+      <%= link_to t("pages.navigation.terms"), terms_path %>
+      <%= link_to t("pages.navigation.cookies"), cookies_path %>
+      <%= link_to t("pages.navigation.legal_notice"), legal_notice_path %>
+    </div>
+    <div class="footer-column">
+      <p class="footer-label"><%= t("marketing.footer.made_for_belgium") %></p>
+      <p class="footer-note"><%= t("marketing.footer.demo_notice") %></p>
+    </div>
+  </div>
+  <div class="shell footer-bottom">
+    <p>© <%= Date.current.year %> LawRelay</p>
+    <p><%= t("marketing.footer.demo_disclaimer") %></p>
+  </div>
+</footer>

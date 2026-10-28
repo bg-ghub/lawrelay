@@ -1,0 +1,31 @@
+fr:
+  mfa:
+    eyebrow: "Sécurité administrateur"
+    code_label: "Code d’authentification"
+    code_hint: "Saisissez le code actuel de votre application d’authentification."
+    notices:
+      required: "Confirmez votre code d’authentification avant d’ouvrir l’administration."
+      enabled: "La MFA administrateur est maintenant active."
+      verified: "Accès administrateur confirmé."
+      invalid_code: "Ce code est invalide ou a déjà été utilisé."
+      rate_limited: "Trop de tentatives. Patientez puis réessayez."
+    setup:
+      title: "Configurer la MFA administrateur — LawRelay"
+      heading: "Protégez ce compte administrateur."
+      lede: "Ajoutez LawRelay à une application d’authentification, puis confirmez un code."
+      secret_legend: "Ajouter le compte"
+      secret_instruction: "Saisissez cette clé de configuration dans votre application. Gardez-la privée."
+      uri_hint: "La plupart des applications acceptent une clé manuelle ; LawRelay ne conserve volontairement pas de code QR."
+      uri_summary: "Afficher le lien d’authentification"
+      confirm_legend: "Confirmer la configuration"
+      submit: "Activer la MFA"
+      aside_title: "Requise pour l’administration"
+      aside_body: "La MFA est obligatoire pour la vérification, la modération et l’administration de la vie privée."
+    challenge:
+      title: "Confirmer l’accès administrateur — LawRelay"
+      heading: "Une dernière vérification."
+      lede: "Saisissez le code actuel de votre application pour continuer."
+      legend: "Confirmer l’accès"
+      submit: "Continuer"
+      aside_title: "Accès limité dans le temps"
+      aside_body: "Cette vérification supplémentaire expire après 12 heures ou dès votre déconnexion."
