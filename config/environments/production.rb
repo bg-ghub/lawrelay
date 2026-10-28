@@ -28,8 +28,9 @@ Rails.application.configure do
   }
 
   config.log_tags = [ :request_id ]
-  config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
-  config.logger.formatter = SensitiveLogFormatter.new
+  production_logger = ActiveSupport::Logger.new(STDOUT)
+  production_logger.formatter = SensitiveLogFormatter.new
+  config.logger = ActiveSupport::TaggedLogging.new(production_logger)
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.silence_healthcheck_path = "/up"
   config.active_support.report_deprecations = false
