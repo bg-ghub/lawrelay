@@ -5,6 +5,10 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+### Added
+
+- Public `info@lawrelay.be` contact link across all four interface languages.
+
 ## [0.1.1] - 2026-10-28
 
 ### Fixed

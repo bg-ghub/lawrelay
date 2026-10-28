@@ -7,6 +7,7 @@ Migadu is the selected transactional mailbox/SMTP provider for LawRelay. Route 5
 Create and verify at least:
 
 - `no-reply@lawrelay.be` for application delivery;
+- `info@lawrelay.be` for general contact;
 - `support@lawrelay.be` for user support;
 - `privacy@lawrelay.be` for data-protection requests;
 - `security@lawrelay.be` for security contact.
@@ -46,7 +47,7 @@ Before inviting any user:
 1. send verification and password-reset messages to at least one external mailbox on two different providers;
 2. verify links use `https://lawrelay.be` and expire as designed;
 3. inspect message headers for SPF, DKIM, and DMARC pass/alignment;
-4. reply to support/privacy addresses and confirm they reach a monitored inbox;
+4. reply to info/support/privacy addresses and confirm they reach a monitored inbox;
 5. document bounce/complaint handling and the named person who monitors it;
 6. record the provider's data-processing terms and subprocessor entry in the vendor register.
 

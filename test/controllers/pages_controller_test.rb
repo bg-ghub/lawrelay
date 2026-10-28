@@ -22,4 +22,14 @@ class PagesControllerTest < ActionController::TestCase
     assert_select ".form-error"
     assert_includes response.body, I18n.t("pages.shared.not_configured", locale: :en)
   end
+
+  test "renders the general contact address in the footer for every supported locale" do
+    I18n.available_locales.each do |locale|
+      get :pricing, params: { locale: locale }
+
+      assert_response :success
+      assert_select "a[href='mailto:info@lawrelay.be']", text: "info@lawrelay.be"
+      assert_select ".footer-label", text: I18n.t("marketing.footer.contact", locale: locale)
+    end
+  end
 end
