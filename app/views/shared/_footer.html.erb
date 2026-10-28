@@ -22,6 +22,8 @@
       <%= link_to t("pages.navigation.legal_notice"), legal_notice_path %>
     </div>
     <div class="footer-column">
+      <p class="footer-label"><%= t("marketing.footer.contact") %></p>
+      <%= mail_to "info@lawrelay.be", "info@lawrelay.be" %>
       <p class="footer-label"><%= t("marketing.footer.made_for_belgium") %></p>
       <p class="footer-note"><%= t("marketing.footer.demo_notice") %></p>
     </div>
