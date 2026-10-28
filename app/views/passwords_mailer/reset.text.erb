@@ -4,4 +4,4 @@
 
 <%= @reset_url %>
 
-<%= t("auth.mailers.password_reset.expiry", duration: distance_of_time_in_words(0, @user.password_reset_token_expires_in)) %>
+<%= t("auth.mailers.password_reset.expiry", duration: t("auth.mailers.password_reset.duration_minutes", count: @reset_expiry_minutes)) %>
