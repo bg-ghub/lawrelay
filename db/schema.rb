@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_28_110001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_28_213000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -299,7 +299,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_110001) do
     t.string "admin_mfa_pending_secret_ciphertext"
     t.datetime "admin_mfa_enabled_at"
     t.datetime "admin_mfa_last_verified_at"
+    t.datetime "suspended_at"
+    t.text "suspension_reason"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["suspended_at"], name: "index_users_on_suspended_at"
   end
 
   create_table "webhook_events", force: :cascade do |t|

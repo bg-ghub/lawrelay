@@ -7,7 +7,7 @@ module Directory
 
     def perform(user_id)
       user = User.find_by(id: user_id)
-      Verification.request!(user:) if user&.lawyer_profile&.directory_profile_url.present?
+      Verification.request!(user:) if user&.active? && user.lawyer_profile&.directory_profile_url.present?
     end
   end
 end

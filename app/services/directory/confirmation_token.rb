@@ -16,7 +16,7 @@ module Directory
       payload = encryptor.decrypt_and_verify(token)
       profile = LawyerProfile.find(payload.fetch("profile_id"))
       user = profile.user
-      raise ActiveSupport::MessageVerifier::InvalidSignature unless profile.user_id == payload.fetch("user_id") &&
+      raise ActiveSupport::MessageVerifier::InvalidSignature unless user.active? && profile.user_id == payload.fetch("user_id") &&
         profile.directory_profile_id == payload.fetch("directory_profile_id") &&
         ActiveSupport::SecurityUtils.secure_compare(profile.directory_identity_digest.to_s, payload.fetch("identity_digest").to_s) &&
         ActiveSupport::SecurityUtils.secure_compare(profile.directory_email.to_s, payload.fetch("directory_email").to_s) &&

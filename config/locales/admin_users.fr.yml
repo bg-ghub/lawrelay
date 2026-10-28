@@ -1,0 +1,147 @@
+---
+fr:
+  admin:
+    navigation:
+      label: Administration
+      users: Utilisateurs
+      verifications: Vérification
+      reports: Signalements
+      privacy_requests: Demandes de confidentialité
+      site: Retour au site
+    users:
+      link: Admin
+      eyebrow: Administration
+      you: Vous
+      not_recorded: Non renseigné
+      timezone: Les heures sont affichées dans le fuseau Europe/Brussels.
+      index:
+        title: Utilisateurs — Administration LawRelay
+        heading: Utilisateurs
+        intro: Retrouvez un compte et gérez son accès.
+        total:
+          one: 1 utilisateur
+          other: "%{count} utilisateurs"
+        list_label: Comptes utilisateurs
+        empty_title: Aucun utilisateur trouvé
+        empty_body: Essayez un autre nom, une autre adresse e-mail ou un autre filtre.
+      filters:
+        label: Rechercher des utilisateurs
+        search: Rechercher
+        search_hint: Nom, e-mail ou cabinet
+        status: Accès au compte
+        verification: Vérification de l'avocat
+        all: Tous
+        apply: Rechercher
+        clear: Effacer
+      fields:
+        role: Rôle
+        firm: Cabinet
+        status: Accès au compte
+        email_status: Adresse e-mail
+        marketplace_access: Accès aux missions
+        mfa: MFA administrateur
+        created_at: Inscription
+        suspension_reason: Motif de suspension
+        firm_status: Vérification du cabinet
+        lawyer_status: Vérification de l'avocat
+        directory_name: Nom dans l'annuaire
+        directory_email: E-mail répertorié
+        directory_email_status: E-mail répertorié confirmé
+        first_name: Prénom
+        last_name: Nom
+        email_address: Adresse e-mail
+        locale: Langue de l'interface
+        reason: Motif interne
+      status:
+        active: Actif
+        suspended: Suspendu
+      verification:
+        pending: En attente
+        verified: Vérifié
+        rejected: Refusé
+        suspended: Suspendu
+        not_required: Non requis
+      roles:
+        member: Membre
+        admin: Administrateur
+      email:
+        verified: Confirmée
+        pending: Non confirmée
+      marketplace:
+        available: Disponible
+        unavailable: Indisponible
+      mfa:
+        configured: Configurée
+        missing: Non configurée
+        not_required: Non requise
+      actions:
+        manage: Gérer
+        back: Tous les utilisateurs
+        directory: Ouvrir le profil sur advocaat.be
+        review_verification: Consulter la vérification professionnelle
+        save: Enregistrer le compte
+      show:
+        title: "%{name} — Administration LawRelay"
+        overview: Aperçu du compte
+        professional: Données professionnelles
+        account: Données du compte
+        access: Gestion de l'accès
+        protected: Les comptes administrateurs sont consultables uniquement ici.
+        identity_hint: Une modification du nom ou de l'e-mail déconnecte les sessions et entraîne une nouvelle vérification professionnelle. Une nouvelle adresse e-mail doit être confirmée.
+      access:
+        suspend:
+          heading: Suspendre le compte
+          body: Bloque ce compte et déconnecte toutes ses sessions.
+          submit: Suspendre le compte
+        restore:
+          heading: Rétablir l'accès
+          body: Autorise à nouveau la connexion. L'accès aux missions reste soumis aux vérifications habituelles.
+          submit: Rétablir l'accès
+        revoke_sessions:
+          heading: Déconnecter toutes les sessions
+          body: Déconnecte les sessions de cet utilisateur. Il pourra se reconnecter.
+          submit: Déconnecter les sessions
+      sessions:
+        heading: Sessions actives
+        limit: Jusqu'à 20 sessions
+        started: Connexion
+        last_active: Dernière activité
+        expires: Expiration
+        active: Active
+        expired: Expirée
+        empty: Aucune session active.
+      audit:
+        heading: Activité récente
+        limit: Jusqu'à 30 événements
+        system: Système
+        changed_fields: 'Champs modifiés : %{fields}'
+        empty: Aucune activité enregistrée.
+        actions:
+          admin_user_updated: Données du compte modifiées
+          admin_user_suspended: Compte suspendu
+          admin_user_restored: Accès au compte rétabli
+          admin_user_sessions_revoked: Sessions déconnectées
+          account_updated: Données du compte modifiées
+          admin_bootstrapped: Compte administrateur créé
+          verification_directory_matched: Profil correspondant dans l'annuaire
+          verification_directory_email_confirmed: E-mail répertorié confirmé
+          verification_directory_activated: Accès professionnel vérifié
+          verification_approved: Vérification professionnelle approuvée
+          verification_rejected: Vérification professionnelle refusée
+      pagination:
+        label: Pages d'utilisateurs
+        previous: Précédente
+        next: Suivante
+        page: Page %{current} sur %{total}
+      errors:
+        heading: Vérifiez cette modification
+        protected_account: Les comptes administrateurs ne peuvent pas être modifiés ici.
+        reason_required: Ajoutez un motif pour cette action.
+        reason_too_long: Limitez le motif à 2 000 caractères.
+        invalid_action: Choisissez une action valide.
+        invalid_details: Vérifiez les données du compte et réessayez.
+      notices:
+        updated: Données du compte enregistrées.
+        suspended: Le compte est suspendu et ses sessions sont déconnectées.
+        restored: Accès au compte rétabli.
+        sessions_revoked: Toutes les sessions de ce compte sont déconnectées.

@@ -40,6 +40,14 @@ Rails.application.routes.draw do
       end
     end
     namespace :admin do
+      root "users#index"
+      resources :users, only: %i[index show update] do
+        member do
+          patch :suspend
+          patch :restore
+          patch :revoke_sessions, path: "revoke-sessions"
+        end
+      end
       get "mfa/setup", to: "mfa#setup", as: :mfa_setup
       post "mfa/setup", to: "mfa#confirm_setup"
       get "mfa/challenge", to: "mfa#challenge", as: :mfa_challenge

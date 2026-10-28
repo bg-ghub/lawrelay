@@ -1,0 +1,21 @@
+.admin-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #c5d2cc;
+}
+
+.admin-navigation a {
+  color: #173f3b;
+  font-weight: 700;
+  padding: .4rem .1rem;
+  text-underline-offset: .25rem;
+}
+
+.admin-navigation a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}

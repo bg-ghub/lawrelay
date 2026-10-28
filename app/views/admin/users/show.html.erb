@@ -1,0 +1,127 @@
+<% content_for :title, t("admin.users.show.title", name: @user.full_name) %>
+<% protected_account = @user.system_admin? || @user.id == current_user.id %>
+<div class="dashboard-page shell admin-users-page">
+  <div class="dashboard-heading">
+    <div>
+      <p class="eyebrow"><%= t("admin.users.eyebrow") %></p>
+      <h1><%= @user.full_name %></h1>
+      <p><%= @user.email_address %></p>
+    </div>
+    <%= link_to t("admin.users.actions.back"), admin_users_path, class: "button button--ghost" %>
+  </div>
+
+  <% if @management_error.present? || @user.errors.any? %>
+    <div id="admin-user-errors" class="form-error admin-user-errors" role="alert" tabindex="-1" data-controller="form-errors">
+      <strong><%= t("admin.users.errors.heading") %></strong>
+      <ul>
+        <% if @management_error.present? %><li><%= @management_error %></li><% end %>
+        <% @user.errors.full_messages.each do |message| %><li><%= message %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="admin-user-detail-grid">
+    <section class="dashboard-panel admin-user-overview" aria-labelledby="user-overview-heading">
+      <h2 id="user-overview-heading"><%= t("admin.users.show.overview") %></h2>
+      <dl class="detail-facts">
+        <div><dt><%= t("admin.users.fields.status") %></dt><dd><span class="status-pill <%= "admin-user-status--suspended" if @user.suspended? %>"><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></span></dd></div>
+        <div><dt><%= t("admin.users.fields.role") %></dt><dd><%= t("admin.users.roles.#{@user.system_role}") %></dd></div>
+        <div><dt><%= t("admin.users.fields.email_status") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
+        <div><dt><%= t("admin.users.fields.marketplace_access") %></dt><dd><%= t("admin.users.marketplace.#{@user.marketplace_verified? ? 'available' : 'unavailable'}") %></dd></div>
+        <div><dt><%= t("admin.users.fields.mfa") %></dt><dd><%= @user.system_admin? ? t("admin.users.mfa.#{@user.admin_mfa_configured? ? 'configured' : 'missing'}") : t("admin.users.mfa.not_required") %></dd></div>
+        <div><dt><%= t("admin.users.fields.created_at") %></dt><dd><time datetime="<%= @user.created_at.iso8601 %>"><%= l(@user.created_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></dd></div>
+      </dl>
+      <% if @user.suspended? %>
+        <div class="admin-user-suspension">
+          <strong><%= t("admin.users.fields.suspension_reason") %></strong>
+          <p><%= @user.suspension_reason %></p>
+          <small><time datetime="<%= @user.suspended_at.iso8601 %>"><%= l(@user.suspended_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></small>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="dashboard-panel" aria-labelledby="user-professional-heading">
+      <h2 id="user-professional-heading"><%= t("admin.users.show.professional") %></h2>
+      <dl class="detail-facts">
+        <div><dt><%= t("admin.users.fields.firm") %></dt><dd><%= @firm&.name || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.firm_status") %></dt><dd><%= @firm ? t("admin.users.verification.#{@firm.verification_status}") : t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.lawyer_status") %></dt><dd><%= @profile ? t("admin.users.verification.#{@profile.verification_status}") : t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.directory_name") %></dt><dd><%= @profile&.directory_name.presence || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.directory_email") %></dt><dd><%= @profile&.directory_email.presence || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.directory_email_status") %></dt><dd><%= @profile&.directory_email_verified? ? t("admin.users.email.verified") : t("admin.users.email.pending") %></dd></div>
+      </dl>
+      <% directory_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(@profile&.directory_profile_url) %>
+      <% if directory_url %><p><%= link_to t("admin.users.actions.directory"), directory_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><% end %>
+      <% unless @user.system_admin? %><p><%= link_to t("admin.users.actions.review_verification"), admin_verifications_path, class: "text-link" %></p><% end %>
+    </section>
+
+    <section class="dashboard-panel" aria-labelledby="user-account-heading">
+      <h2 id="user-account-heading"><%= t("admin.users.show.account") %></h2>
+      <% if protected_account %>
+        <p class="muted-copy"><%= t("admin.users.show.protected") %></p>
+      <% else %>
+        <%= form_with model: @user, url: admin_user_path(@user), scope: :user, method: :patch, class: "assignment-form" do |form| %>
+          <div class="form-row">
+            <div class="field-group"><%= form.label :first_name, t("admin.users.fields.first_name") %><%= form.text_field :first_name, required: true, maxlength: 100, autocomplete: "off", aria: { invalid: @user.errors.include?(:first_name), describedby: @user.errors.include?(:first_name) ? "admin-user-errors" : "identity-change-hint" } %></div>
+            <div class="field-group"><%= form.label :last_name, t("admin.users.fields.last_name") %><%= form.text_field :last_name, required: true, maxlength: 100, autocomplete: "off", aria: { invalid: @user.errors.include?(:last_name), describedby: @user.errors.include?(:last_name) ? "admin-user-errors" : "identity-change-hint" } %></div>
+          </div>
+          <div class="field-group"><%= form.label :email_address, t("admin.users.fields.email_address") %><%= form.email_field :email_address, required: true, autocomplete: "off", aria: { invalid: @user.errors.include?(:email_address), describedby: @user.errors.include?(:email_address) ? "admin-user-errors identity-change-hint" : "identity-change-hint" } %></div>
+          <div class="field-group"><%= form.label :locale, t("admin.users.fields.locale") %><%= form.select :locale, [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], {}, aria: { invalid: @user.errors.include?(:locale), describedby: @user.errors.include?(:locale) ? "admin-user-errors" : nil } %></div>
+          <p id="identity-change-hint" class="field-hint"><%= t("admin.users.show.identity_hint") %></p>
+          <div class="form-actions"><%= form.submit t("admin.users.actions.save"), class: "button button--dark" %></div>
+        <% end %>
+      <% end %>
+    </section>
+
+    <section class="dashboard-panel" aria-labelledby="user-access-heading">
+      <h2 id="user-access-heading"><%= t("admin.users.show.access") %></h2>
+      <% if protected_account %>
+        <p class="muted-copy"><%= t("admin.users.show.protected") %></p>
+      <% else %>
+        <% if @user.suspended? %>
+          <%= render "access_action", action_path: restore_admin_user_path(@user), action_name: "restore", button_class: "button--dark" %>
+        <% else %>
+          <%= render "access_action", action_path: suspend_admin_user_path(@user), action_name: "suspend", button_class: "button--ghost" %>
+        <% end %>
+        <%= render "access_action", action_path: revoke_sessions_admin_user_path(@user), action_name: "revoke_sessions", button_class: "button--ghost" %>
+      <% end %>
+    </section>
+  </div>
+
+  <section class="dashboard-panel admin-user-sessions" aria-labelledby="user-sessions-heading">
+    <div class="panel-heading"><h2 id="user-sessions-heading"><%= t("admin.users.sessions.heading") %></h2><small><%= t("admin.users.sessions.limit") %></small></div>
+    <% if @sessions.any? %>
+      <ul class="admin-user-session-list">
+        <% @sessions.each do |user_session| %>
+          <li>
+            <dl>
+              <div><dt><%= t("admin.users.sessions.started") %></dt><dd><time datetime="<%= user_session.created_at.iso8601 %>"><%= l(user_session.created_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></dd></div>
+              <div><dt><%= t("admin.users.sessions.last_active") %></dt><dd><%= user_session.last_seen_at ? l(user_session.last_seen_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") : "—" %></dd></div>
+              <div><dt><%= t("admin.users.sessions.expires") %></dt><dd><time datetime="<%= user_session.expires_at.iso8601 %>"><%= l(user_session.expires_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></dd></div>
+            </dl>
+            <span class="status-pill"><%= t("admin.users.sessions.#{user_session.expired? ? 'expired' : 'active'}") %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %><p class="muted-copy"><%= t("admin.users.sessions.empty") %></p><% end %>
+  </section>
+
+  <section class="dashboard-panel admin-user-audit" aria-labelledby="user-audit-heading">
+    <div class="panel-heading"><h2 id="user-audit-heading"><%= t("admin.users.audit.heading") %></h2><small><%= t("admin.users.audit.limit") %></small></div>
+    <% if @audit_events.any? %>
+      <ol class="admin-user-audit-list">
+        <% @audit_events.each do |event| %>
+          <li>
+            <div class="admin-user-audit-heading"><strong><%= t("admin.users.audit.actions.#{event.action.tr('.', '_')}", default: event.action.humanize) %></strong><time datetime="<%= event.created_at.iso8601 %>"><%= l(event.created_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></div>
+            <p><%= event.actor_user&.full_name || t("admin.users.audit.system") %></p>
+            <% changed_fields = Array(event.metadata["changed_fields"]) & %w[first_name last_name email_address locale] %>
+            <% if changed_fields.any? %><p><%= t("admin.users.audit.changed_fields", fields: changed_fields.map { |field| t("admin.users.fields.#{field}") }.join(", ")) %></p><% end %>
+            <% reason = event.metadata["reason"].presence || event.metadata["note"].presence %>
+            <% if reason %><p class="admin-user-audit-reason"><%= reason %></p><% end %>
+          </li>
+        <% end %>
+      </ol>
+    <% else %><p class="muted-copy"><%= t("admin.users.audit.empty") %></p><% end %>
+    <p class="field-hint"><%= t("admin.users.timezone") %></p>
+  </section>
+</div>

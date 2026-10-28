@@ -1,0 +1,147 @@
+---
+nl:
+  admin:
+    navigation:
+      label: Beheer
+      users: Gebruikers
+      verifications: Verificatie
+      reports: Meldingen
+      privacy_requests: Privacyverzoeken
+      site: Terug naar de website
+    users:
+      link: Beheer
+      eyebrow: Beheer
+      you: Jij
+      not_recorded: Niet ingevuld
+      timezone: Tijden worden weergegeven in Europe/Brussels.
+      index:
+        title: Gebruikers — LawRelay-beheer
+        heading: Gebruikers
+        intro: Zoek een account en beheer de toegang.
+        total:
+          one: 1 gebruiker
+          other: "%{count} gebruikers"
+        list_label: Gebruikersaccounts
+        empty_title: Geen gebruikers gevonden
+        empty_body: Probeer een andere naam, een ander e-mailadres of een ander filter.
+      filters:
+        label: Gebruikers zoeken
+        search: Zoeken
+        search_hint: Naam, e-mailadres of kantoor
+        status: Accounttoegang
+        verification: Advocatencontrole
+        all: Alle
+        apply: Zoeken
+        clear: Wissen
+      fields:
+        role: Rol
+        firm: Kantoor
+        status: Accounttoegang
+        email_status: E-mailadres
+        marketplace_access: Toegang tot opdrachten
+        mfa: MFA voor beheerders
+        created_at: Geregistreerd
+        suspension_reason: Reden van schorsing
+        firm_status: Kantoorcontrole
+        lawyer_status: Advocatencontrole
+        directory_name: Naam in de lijst
+        directory_email: Vermeld e-mailadres
+        directory_email_status: Vermeld e-mailadres bevestigd
+        first_name: Voornaam
+        last_name: Achternaam
+        email_address: E-mailadres
+        locale: Interfacetaal
+        reason: Interne reden
+      status:
+        active: Actief
+        suspended: Geschorst
+      verification:
+        pending: In afwachting
+        verified: Geverifieerd
+        rejected: Afgewezen
+        suspended: Geschorst
+        not_required: Niet nodig
+      roles:
+        member: Lid
+        admin: Beheerder
+      email:
+        verified: Bevestigd
+        pending: Niet bevestigd
+      marketplace:
+        available: Beschikbaar
+        unavailable: Niet beschikbaar
+      mfa:
+        configured: Ingesteld
+        missing: Niet ingesteld
+        not_required: Niet nodig
+      actions:
+        manage: Beheren
+        back: Alle gebruikers
+        directory: Profiel op advocaat.be openen
+        review_verification: Professionele verificatie bekijken
+        save: Account opslaan
+      show:
+        title: "%{name} — LawRelay-beheer"
+        overview: Accountoverzicht
+        professional: Professionele gegevens
+        account: Accountgegevens
+        access: Toegang beheren
+        protected: Beheerdersaccounts kunnen hier alleen worden bekeken.
+        identity_hint: Een wijziging van naam of e-mailadres meldt bestaande sessies af en vereist een nieuwe professionele controle. Een gewijzigd e-mailadres moet worden bevestigd.
+      access:
+        suspend:
+          heading: Account schorsen
+          body: Blokkeert dit account en meldt alle sessies af.
+          submit: Account schorsen
+        restore:
+          heading: Toegang herstellen
+          body: Aanmelden kan weer. Voor toegang tot opdrachten blijven de gebruikelijke controles nodig.
+          submit: Toegang herstellen
+        revoke_sessions:
+          heading: Alle sessies afmelden
+          body: Meldt alle sessies van deze gebruiker af. Opnieuw aanmelden blijft mogelijk.
+          submit: Alle sessies afmelden
+      sessions:
+        heading: Actieve sessies
+        limit: Maximaal 20 sessies
+        started: Aangemeld
+        last_active: Laatst actief
+        expires: Verloopt
+        active: Actief
+        expired: Verlopen
+        empty: Geen actieve sessies.
+      audit:
+        heading: Recente activiteit
+        limit: Maximaal 30 gebeurtenissen
+        system: Systeem
+        changed_fields: 'Gewijzigde velden: %{fields}'
+        empty: Geen activiteit geregistreerd.
+        actions:
+          admin_user_updated: Accountgegevens gewijzigd
+          admin_user_suspended: Account geschorst
+          admin_user_restored: Accounttoegang hersteld
+          admin_user_sessions_revoked: Sessies afgemeld
+          account_updated: Accountgegevens gewijzigd
+          admin_bootstrapped: Beheerdersaccount aangemaakt
+          verification_directory_matched: Profiel in de lijst gevonden
+          verification_directory_email_confirmed: Vermeld e-mailadres bevestigd
+          verification_directory_activated: Professionele toegang geverifieerd
+          verification_approved: Professionele verificatie goedgekeurd
+          verification_rejected: Professionele verificatie afgewezen
+      pagination:
+        label: Gebruikerspagina's
+        previous: Vorige
+        next: Volgende
+        page: Pagina %{current} van %{total}
+      errors:
+        heading: Controleer deze wijziging
+        protected_account: Beheerdersaccounts kunnen hier niet worden gewijzigd.
+        reason_required: Voeg een reden toe voor deze actie.
+        reason_too_long: Gebruik minder dan 2.000 tekens voor de reden.
+        invalid_action: Kies een geldige accountactie.
+        invalid_details: Controleer de accountgegevens en probeer opnieuw.
+      notices:
+        updated: Accountgegevens opgeslagen.
+        suspended: Het account is geschorst en alle sessies zijn afgemeld.
+        restored: Accounttoegang hersteld.
+        sessions_revoked: Alle sessies van dit account zijn afgemeld.

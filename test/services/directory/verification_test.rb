@@ -61,6 +61,23 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     assert_equal "suspended", @profile.reload.verification_status
   end
 
+  test "account suspension prevents directory requests and confirmations without changing the firm" do
+    @user.update!(email_verified_at: Time.current)
+    Directory::Verification.request!(user: @user, lookup: @lookup)
+    token = Directory::ConfirmationToken.generate(@profile.reload)
+    @user.update!(suspended_at: Time.current, suspension_reason: "Account review")
+    failing_lookup = Object.new
+    def failing_lookup.call(**) = raise("Suspended accounts must not fetch the directory")
+
+    assert_equal :protected, Directory::Verification.request!(user: @user.reload, lookup: failing_lookup).status
+    assert_equal :protected, Directory::Verification.confirm!(@profile.reload).status
+    assert_equal :protected, Directory::Verification.activate_if_ready!(user: @user).status
+    assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { Directory::ConfirmationToken.find_profile!(token) }
+    assert_not @profile.reload.directory_email_verified?
+    assert_equal "pending", @profile.verification_status
+    assert_equal "pending", @firm.reload.verification_status
+  end
+
   test "confirmation token is bound to the stored directory identity" do
     @profile.update!(directory_profile_id: @evidence.profile_id, directory_profile_url: @evidence.source_url, directory_name: @evidence.name,
       directory_email: @evidence.email, directory_checked_at: Time.current, directory_identity_digest: "digest")
