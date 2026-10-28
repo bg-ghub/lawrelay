@@ -110,7 +110,7 @@ class AdminUsersTest < ApplicationSystemTestCase
   test "user management is labelled and fits narrow screens in all four languages" do
     sign_in_admin
     %i[nl fr de en].each do |locale|
-      [ 320, 1280 ].each do |width|
+      [ 320, 1100, 1280, 1366 ].each do |width|
         resize_viewport(width, 900)
         visit admin_users_path(locale:)
         assert_selector "html[lang='#{locale}']"

@@ -9,7 +9,7 @@ fr:
       privacy_requests: Demandes de confidentialité
       site: Retour au site
     users:
-      link: Gérer les utilisateurs
+      link: Admin
       eyebrow: Administration
       you: Vous
       not_recorded: Non renseigné

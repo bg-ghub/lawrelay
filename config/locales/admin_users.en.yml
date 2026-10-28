@@ -9,7 +9,7 @@ en:
       privacy_requests: Privacy requests
       site: Back to site
     users:
-      link: Manage users
+      link: Admin
       eyebrow: Administration
       you: You
       not_recorded: Not recorded
