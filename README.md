@@ -1,5 +1,9 @@
 # LawRelay
 
+[![CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/badge/version-0.1.0-orange.svg)](CHANGELOG.md)
+[![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
+
 LawRelay is a multilingual, lawyer-only marketplace for court cover and bounded legal assignments in Belgium. The interface supports Dutch, French, German, and English while keeping one neutral set of English URL slugs.
 
 Current version: **0.1.0**. LawRelay follows [Semantic Versioning](https://semver.org/); releases and breaking changes are recorded in [CHANGELOG.md](CHANGELOG.md).

@@ -35,7 +35,7 @@ This document is the release source of truth. A checked item means the result wa
 - [x] `lawrelay.be` is registered and delegated to Route 53 nameservers.
 - [ ] `lawrelay.eu` registrar rejection remains under AWS Support investigation; AWS confirmed both failed attempts generated no charge and Route 53 had €0/zero recorded charges for 1 September–28 October 2026. The private support-case identifier is intentionally excluded from this public repository. It is not required for a `.be` launch.
 - [x] A separate Hetzner project and local `hcloud` context named `lawrelay` exist.
-- [ ] Public Git history/release provenance. Secret scanning, the first commit, the `v0.1.0` tag, and GitHub publication are in progress.
+- [x] Public source and Git history are published at `github.com/bg-ghub/lawrelay`; the release uses SemVer `0.1.0`, AGPL-3.0-or-later, a changelog, contribution/security policies, and a clean staged Gitleaks scan.
 - [ ] Production application. The Hetzner project has no server or other resources.
 - [ ] Live DNS. `lawrelay.be` has no A/AAAA record, `www.lawrelay.be` does not exist, and no MX record was found.
 - [x] Real account, authorization, notification, billing-foundation, invoice-foundation, privacy-draft, and terms-draft code exists.
@@ -86,13 +86,13 @@ At this price, one paying office should cover basic hosting/email infrastructure
 
 ### 1. Repository and delivery foundation
 
-- [ ] Create the first reviewed Git commit and SemVer `v0.1.0` tag.
-- [ ] Create the public GitHub repository and push the code.
-- [ ] Confirm `config/master.key`, `.env*`, databases, uploads, and provider secrets are ignored and absent from history.
-- [ ] Run secret scanning before the first push.
+- [x] Create the first reviewed Git commit and SemVer `v0.1.0` tag.
+- [x] Create the public GitHub repository and push the code.
+- [x] Confirm `config/master.key`, `.env*`, databases, uploads, and provider secrets are ignored and absent from history.
+- [x] Run Gitleaks and targeted account/token/path scans before the first push; no findings.
 - [ ] Protect the main branch and require CI before merge; enable private vulnerability reporting.
 - [ ] Make the CI runner work consistently on Windows and Linux; the current aggregate `bin/ci` command assumes a Unix shell locally.
-- [ ] Add release tags and a short changelog.
+- [x] Add a SemVer-enforced `VERSION`, release tag, CI tag/version check, and changelog.
 - [x] Replace the generated README with setup, environment, test, deploy, backup, and incident instructions.
 
 ### 2. Identity, verification, and authorization
@@ -188,6 +188,7 @@ At this price, one paying office should cover basic hosting/email infrastructure
 - [ ] Choose and create the smallest appropriate Hetzner production server; no paid resource exists today.
 - [ ] Create a separate staging environment and separate credentials/data.
 - [x] Replace placeholder deploy targets with required environment variables so accidental placeholder deployment fails.
+- [x] Add and validate a multi-stage non-root production container image compatible with Kamal/Thruster; local keys and runtime data are excluded from its build context.
 - [ ] Use a private container registry and pinned images.
 - [ ] Harden SSH, use a non-root deploy user, disable password login, restrict the firewall, and enable security updates.
 - [ ] Prefer managed or separately backed-up PostgreSQL for production; if SQLite is retained for a tiny beta, document concurrency limits and prove backup/restore.
