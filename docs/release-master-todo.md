@@ -17,7 +17,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Linux suite: 154 runs / 902 assertions; system checks: 4 / 13. Static/security scans pass.
 - [x] Off-host backups and isolated restore drill pass (`9d55cfca`); nightly backups and five-minute health checks are enabled. Owner SMTP alerting was tested.
 - [x] Production administrator password email completed through Migadu after configuring 10-second connection and 30-second read timeouts. The queue has no failed or pending jobs. Recipient-side inbox/header checks remain below.
-- [ ] Hosted GitHub CI is not green: the budget was exhausted before jobs started and PR 9 is unmerged. Do not describe CI as passing until a real run completes.
+- [x] GitHub-hosted Actions starts jobs again under the existing account budget. [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml) checks SemVer, security, lint, Rails/browser tests, and the production container; release merges wait for every check to pass.
 
 ## Verified controls
 
