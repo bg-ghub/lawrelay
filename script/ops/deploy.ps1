@@ -104,7 +104,7 @@ chmod 600 production.env
 printf '%s\n' 'LAWRELAY_IMAGE=$image' > release.env
 docker volume inspect lawrelay_storage >/dev/null 2>&1 || docker volume create lawrelay_storage >/dev/null
 docker load --input '$remoteArchive' >/dev/null
-docker compose --env-file production.env --env-file release.env -f compose.production.yml up --detach --remove-orphans
+docker compose --env-file release.env -f compose.production.yml up --detach --remove-orphans
 for attempt in `$(seq 1 24); do
   status=`$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}starting{{end}}' lawrelay-app 2>/dev/null || true)
   [ "`$status" = healthy ] && break

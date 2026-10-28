@@ -44,7 +44,7 @@ After deployment and DNS propagation:
 - `http://lawrelay.be` redirects to canonical HTTPS; `www` redirects to `lawrelay.be`.
 - NL, FR, DE, and EN public pages work; an account verified through the official directory can sign in and complete the intended assignment flow.
 - A transactional test email is delivered from the configured Migadu identity.
-- `docker compose -f /home/deploy/lawrelay/compose.production.yml ps` shows `lawrelay-app` healthy.
+- `cd /home/deploy/lawrelay && docker compose --env-file release.env -f compose.production.yml ps` shows `lawrelay-app` healthy.
 - The backup job and restore drill in [backup-restore.md](backup-restore.md) have passed before inviting real users.
 
 ## Rollback
