@@ -110,3 +110,44 @@ jobs:
           name: system-test-screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [ version, test ]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build application image
+        run: docker build --tag lawrelay-ci:${{ github.sha }} .
+      - name: Smoke-test production container
+        env:
+          IMAGE: lawrelay-ci:${{ github.sha }}
+        run: |
+          docker run --detach --rm --name lawrelay-ci --publish 3000:3000 \
+            --env RAILS_ENV=production \
+            --env SECRET_KEY_BASE_DUMMY=1 \
+            --env APP_HOST=ci.lawrelay.invalid \
+            --env SMTP_ADDRESS=smtp.migadu.com \
+            --env SMTP_PORT=587 \
+            --env SMTP_USERNAME=ci@lawrelay.invalid \
+            --env SMTP_PASSWORD=dummy-ci-password \
+            --env SMTP_SSL=false \
+            --env SMTP_STARTTLS=true \
+            --env SOLID_QUEUE_IN_PUMA=true \
+            "$IMAGE"
+
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error --header 'Host: ci.lawrelay.invalid' http://127.0.0.1:3000/ready; then
+              exit 0
+            fi
+            sleep 1
+          done
+
+          docker logs lawrelay-ci
+          exit 1
+      - name: Show container logs on failure
+        if: failure()
+        run: docker logs lawrelay-ci || true
+      - name: Stop smoke-test container
+        if: always()
+        run: docker stop lawrelay-ci || true

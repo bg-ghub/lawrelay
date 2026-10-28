@@ -5,7 +5,10 @@
       <h1><%= t("admin.verifications.title") %></h1>
       <p><%= t("admin.verifications.intro") %></p>
     </div>
-    <%= link_to t("admin.verifications.back"), dashboard_path, class: "button button--ghost" %>
+    <div class="form-actions">
+      <%= link_to t("admin.founding_accesses.link"), admin_founding_accesses_path, class: "button button--ghost" %>
+      <%= link_to t("admin.verifications.back"), dashboard_path, class: "button button--ghost" %>
+    </div>
   </div>
 
   <% if @users.any? %>

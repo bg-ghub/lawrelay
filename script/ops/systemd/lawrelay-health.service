@@ -1,0 +1,15 @@
+[Unit]
+Description=LawRelay health and recovery-signal check
+After=docker.service network-online.target
+Wants=network-online.target
+OnFailure=lawrelay-failure@%n.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/lawrelay/health.env
+EnvironmentFile=-/etc/lawrelay/alert.env
+ExecStart=/usr/local/libexec/lawrelay-health
+User=root
+Group=root
+NoNewPrivileges=true
+PrivateTmp=true

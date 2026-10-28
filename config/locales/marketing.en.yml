@@ -26,8 +26,8 @@ en:
       learn_more: Learn more
       contact: Contact
       made_for_belgium: Made for Belgium
-      demo_notice: A local workspace for lawyers. This is a demo environment; do not post confidential case information.
-      demo_disclaimer: Demo — not legal advice
+      demo_notice: Free founding beta. Registration is open to lawyers listed on advocaat.be; marketplace access follows a directory check. Do not include client names, case facts, or documents.
+      demo_disclaimer: LawRelay coordinates contact; it does not provide legal advice.
     home:
       title: "LawRelay — find the right colleague for your practice"
       og_description: Post a court cover request or legal assignment and find a colleague.
@@ -37,7 +37,7 @@ en:
         heading_middle: for a
         heading_emphasis: hearing?
         lede: Post your request, receive responses, and choose the colleague who fits your matter.
-        note: Prototype for Belgian lawyers. No middlemen.
+        note: Free founding beta. Registration is open to lawyers listed on advocaat.be.
       product:
         aria_label: Example of the LawRelay workspace
         today: Today
@@ -75,7 +75,7 @@ en:
         belgium: Belgium
         empty_heading: No assignments yet.
         empty_body: Post the first one and make your request visible to colleagues.
-        demo_caption: Sample assignments in this demo.
+        demo_caption: Assignments are visible only to verified members.
       how:
         eyebrow: how it works
         heading_before: From request
@@ -95,7 +95,7 @@ en:
         eyebrow: questions
         heading_before: Good to
         heading_after: know.
-        lede: This is a working prototype for lawyers.
+        lede: A free founding beta with open registration for lawyers listed on advocaat.be.
         items:
           "0":
             question: Who is LawRelay for?
@@ -108,7 +108,7 @@ en:
             answer: Yes. You can add an indicative rate or make a proposal yourself.
           "3":
             question: Is this live already?
-            answer: Not yet. Please do not share confidential case information here.
+            answer: Yes. Lawyers listed on advocaat.be can register; marketplace access follows a directory check. Do not share client names, case facts, or documents.
       cta:
         eyebrow: ready to begin?
         heading_before: Post your assignment.

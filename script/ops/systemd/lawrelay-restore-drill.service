@@ -1,0 +1,13 @@
+[Unit]
+Description=LawRelay isolated restore drill
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/lawrelay/backup.env
+ExecStart=/usr/local/libexec/lawrelay-restore-drill
+User=root
+Group=root
+NoNewPrivileges=true
+PrivateTmp=true

@@ -1,0 +1,27 @@
+nl:
+  admin:
+    founding_accesses:
+      link: "Toegang voor starters"
+      eyebrow: "Startbèta"
+      title: "Gratis toegang"
+      intro: "Geef een geverifieerd kantoor een korte, geregistreerde startperiode. Dit maakt nooit een betaling aan en vervangt geen betaald plan."
+      back: "Terug naar verificatie"
+      verified_firm: "Geverifieerd kantoor"
+      active_until: "Actief tot %{date}"
+      no_access: "Geen gratis toegang"
+      enterprise_number: "Ondernemingsnummer"
+      vat_number: "Btw-nummer"
+      billing_email: "Facturatie-e-mail"
+      administrators: "Kantoorbeheerders"
+      expires_on: "Toegang eindigt op"
+      grant: "Toegang geven"
+      revoke: "Toegang intrekken"
+      paid_plan: "Dit kantoor heeft een betaald plan. Starttoegang kan niet worden toegepast."
+      empty_title: "Geen geverifieerde kantoren"
+      empty_body: "Verifieer een kantoor voordat je starttoegang geeft."
+      notices:
+        granted: "Starttoegang is gegeven aan %{name}."
+        revoked: "Starttoegang is ingetrokken voor %{name}."
+        invalid_expiry: "Kies een einddatum van vandaag tot maximaal een jaar vanaf vandaag."
+        unverified_firm: "Alleen geverifieerde kantoren kunnen starttoegang krijgen."
+        paid_account: "Dit kantoor heeft al een betaald facturatieplan."

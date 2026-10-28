@@ -1,0 +1,74 @@
+#!/usr/bin/env sh
+# Encrypted off-host backup for a single Docker-hosted LawRelay instance.
+set -eu
+umask 077
+
+volume=${LAWRELAY_STORAGE_VOLUME:-lawrelay_storage}
+work_root=${LAWRELAY_BACKUP_WORK_ROOT:-/var/lib/lawrelay-backup}
+state_dir=${LAWRELAY_BACKUP_STATE_DIR:-$work_root/state}
+lock_file=${LAWRELAY_BACKUP_LOCK_FILE:-$work_root/backup.lock}
+notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
+notify_direct=${LAWRELAY_NOTIFY_DIRECT:-false}
+tag=${LAWRELAY_LOG_TAG:-lawrelay-backup}
+
+log() {
+  if command -v logger >/dev/null 2>&1; then logger -t "$tag" -- "$*"; fi
+  printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*"
+}
+fail() {
+  log "backup failed: $*"
+  # systemd OnFailure provides the normal, single alert path.
+  [ "$notify_direct" = true ] && [ -x "$notify" ] && "$notify" "LawRelay backup failed on $(hostname): $*" || true
+  exit 1
+}
+
+for command in docker flock sqlite3 restic tar; do command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"; done
+[ -n "${RESTIC_REPOSITORY:-}" ] || fail "RESTIC_REPOSITORY is not configured"
+[ -n "${RESTIC_PASSWORD_FILE:-}" ] || fail "RESTIC_PASSWORD_FILE is not configured"
+[ -r "$RESTIC_PASSWORD_FILE" ] || fail "RESTIC_PASSWORD_FILE is not readable"
+
+mkdir -p "$work_root" "$state_dir"
+chmod 700 "$work_root" "$state_dir"
+exec 9>"$lock_file"
+flock -n 9 || { log "backup already running; skipping"; exit 0; }
+
+mountpoint=$(docker volume inspect --format '{{ .Mountpoint }}' "$volume" 2>/dev/null) || fail "Docker volume not found: $volume"
+[ -d "$mountpoint" ] || fail "volume mountpoint is unavailable"
+
+stage=$(mktemp -d "$work_root/stage.XXXXXX") || fail "could not create staging directory"
+cleanup() { rm -rf "$stage"; }
+trap cleanup EXIT HUP INT TERM
+mkdir -p "$stage/databases"
+
+backup_db() {
+  name=$1
+  source="$mountpoint/$name"
+  destination="$stage/databases/$name"
+  [ -f "$source" ] || fail "expected database is missing: $name"
+  # SQLite's backup API makes a consistent copy without stopping the app.
+  sqlite3 "$source" ".backup '$destination'" || fail "SQLite backup failed for $name"
+  [ "$(sqlite3 -readonly "$destination" 'PRAGMA integrity_check;')" = "ok" ] || fail "integrity check failed for $name"
+}
+
+backup_db production.sqlite3
+backup_db production_queue.sqlite3
+backup_db production_cable.sqlite3
+
+# Cache is intentionally omitted: Rails can recreate it. Archive uploaded files
+# and any other persistent storage while excluding live SQLite/WAL files.
+tar -C "$mountpoint" \
+  --exclude='production*.sqlite3' --exclude='production*.sqlite3-*' \
+  --exclude='tmp' --exclude='backups' \
+  -cf "$stage/storage.tar" . || fail "storage archive failed"
+
+printf '%s\n' "created_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >"$stage/manifest"
+printf '%s\n' "volume=$volume" >>"$stage/manifest"
+printf '%s\n' "databases=production.sqlite3,production_queue.sqlite3,production_cable.sqlite3" >>"$stage/manifest"
+
+(cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" databases storage.tar manifest) || fail "restic backup failed"
+restic snapshots --tag lawrelay --latest 1 --json >/dev/null || fail "could not verify LawRelay restic snapshot"
+restic forget --group-by host,tags --tag lawrelay --keep-daily 7 --keep-weekly 4 --keep-monthly 12 --prune || fail "restic retention failed"
+
+date -u +%Y-%m-%dT%H:%M:%SZ >"$state_dir/last-success"
+chmod 600 "$state_dir/last-success"
+log "backup completed"

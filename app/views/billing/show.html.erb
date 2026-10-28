@@ -8,37 +8,45 @@
   </div>
 
   <section class="form-section">
-    <h2><%= t("billing.plan.title") %></h2>
-    <p><strong><%= t("billing.plan.price") %></strong> <%= t("billing.plan.tax_note") %></p>
-    <p class="muted-copy"><%= t("billing.plan.description") %></p>
-    <p class="field-hint"><%= t("billing.plan.direct_settlement") %></p>
+    <% if billing_checkout_available? %>
+      <h2><%= t("billing.plan.title") %></h2>
+      <p><strong><%= t("billing.plan.price") %></strong> <%= t("billing.plan.tax_note") %></p>
+      <p class="muted-copy"><%= t("billing.plan.description") %></p>
+      <p class="field-hint"><%= t("billing.plan.direct_settlement") %></p>
 
-    <% if @subscription&.active? %>
-      <p class="privacy-note"><%= t("billing.plan.active") %></p>
-      <% if Current.user.firm_administrator?(@firm) %>
-        <%= button_to t("billing.actions.cancel"), billing_cancel_path, method: :post, class: "button button--ghost" %>
-      <% end %>
-    <% elsif Current.user.firm_administrator?(@firm) %>
-      <%= button_to t("billing.actions.request_invoice"), billing_checkout_path, method: :post, class: "button button--dark" %>
-    <% else %>
-      <p class="field-hint"><%= t("billing.plan.contact_administrator") %></p>
-    <% end %>
-  </section>
-
-  <section class="detail-section">
-    <h2><%= t("billing.invoices.title") %></h2>
-    <% if @invoices.any? %>
-      <div class="compact-list">
-        <% @invoices.each do |invoice| %>
-          <div class="compact-row">
-            <span class="compact-row__copy"><strong><%= invoice.number || t("billing.invoices.draft") %></strong><small><%= t("billing.invoices.due", date: invoice.due_on || "—") %></small></span>
-            <span class="status-pill"><%= t("billing.statuses.#{invoice.status}") %></span>
-            <strong>€ <%= number_with_delimiter(invoice.total_cents / 100.0, separator: ",") %></strong>
-          </div>
+      <% if @subscription&.active? %>
+        <p class="privacy-note"><%= t("billing.plan.active") %></p>
+        <% if Current.user.firm_administrator?(@firm) %>
+          <%= button_to t("billing.actions.cancel"), billing_cancel_path, method: :post, class: "button button--ghost" %>
         <% end %>
-      </div>
+      <% elsif Current.user.firm_administrator?(@firm) %>
+        <%= button_to t("billing.actions.request_invoice"), billing_checkout_path, method: :post, class: "button button--dark" %>
+      <% else %>
+        <p class="field-hint"><%= t("billing.plan.contact_administrator") %></p>
+      <% end %>
     <% else %>
-      <p class="muted-copy"><%= t("billing.invoices.empty") %></p>
+      <h2><%= t("billing.beta.title") %></h2>
+      <p><strong><%= t("billing.beta.price") %></strong></p>
+      <p class="muted-copy"><%= t("billing.beta.description") %></p>
     <% end %>
   </section>
+
+  <% if billing_checkout_available? %>
+    <section class="detail-section">
+      <h2><%= t("billing.invoices.title") %></h2>
+      <% if @invoices.any? %>
+        <div class="compact-list">
+          <% @invoices.each do |invoice| %>
+            <div class="compact-row">
+              <span class="compact-row__copy"><strong><%= invoice.number || t("billing.invoices.draft") %></strong><small><%= t("billing.invoices.due", date: invoice.due_on || "—") %></small></span>
+              <span class="status-pill"><%= t("billing.statuses.#{invoice.status}") %></span>
+              <strong>€ <%= number_with_delimiter(invoice.total_cents / 100.0, separator: ",") %></strong>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="muted-copy"><%= t("billing.invoices.empty") %></p>
+      <% end %>
+    </section>
+  <% end %>
 </main>

@@ -1,0 +1,2 @@
+# One duration in an automated test was misclassified as a credential.
+d6ad3091a900daf3bbba0bc634407a43d625bf20:test/controllers/admin/founding_accesses_controller_test.rb:generic-api-key:108

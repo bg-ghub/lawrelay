@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_28_090014) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_28_110001) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -151,7 +151,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_090014) do
     t.integer "bar_admission_year"
     t.json "court_preferences", default: [], null: false
     t.string "availability_note"
+    t.string "directory_profile_url"
+    t.string "directory_profile_id"
+    t.string "directory_name"
+    t.string "directory_email"
+    t.datetime "directory_checked_at"
+    t.datetime "directory_email_verified_at"
+    t.datetime "directory_confirmation_requested_at"
+    t.string "directory_identity_digest"
     t.index ["bar_association", "bar_number"], name: "index_lawyer_profiles_on_bar_association_and_bar_number", unique: true
+    t.index ["directory_profile_id"], name: "index_lawyer_profiles_on_directory_profile_id", unique: true, where: "directory_profile_id IS NOT NULL AND directory_email_verified_at IS NOT NULL"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
     t.index ["verification_status"], name: "index_lawyer_profiles_on_verification_status"
   end

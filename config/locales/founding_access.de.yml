@@ -1,0 +1,27 @@
+de:
+  admin:
+    founding_accesses:
+      link: "Gründerzugang"
+      eyebrow: "Gründer-Beta"
+      title: "Kostenloser Zugang"
+      intro: "Gewähren Sie einer verifizierten Kanzlei einen kurzen, protokollierten Beta-Zeitraum. Dadurch entsteht keine Zahlung und kein kostenpflichtiger Tarif wird ersetzt."
+      back: "Zurück zur Prüfung"
+      verified_firm: "Verifizierte Kanzlei"
+      active_until: "Aktiv bis %{date}"
+      no_access: "Kein kostenloser Zugang"
+      enterprise_number: "Unternehmensnummer"
+      vat_number: "Umsatzsteuer-ID"
+      billing_email: "Rechnungs-E-Mail"
+      administrators: "Kanzlei-Administratoren"
+      expires_on: "Zugang endet am"
+      grant: "Zugang gewähren"
+      revoke: "Zugang widerrufen"
+      paid_plan: "Diese Kanzlei hat einen kostenpflichtigen Tarif. Gründerzugang kann nicht angewendet werden."
+      empty_title: "Keine verifizierten Kanzleien"
+      empty_body: "Verifizieren Sie eine Kanzlei, bevor Sie Gründerzugang gewähren."
+      notices:
+        granted: "Gründerzugang wurde %{name} gewährt."
+        revoked: "Gründerzugang für %{name} wurde widerrufen."
+        invalid_expiry: "Wählen Sie ein Enddatum von heute bis maximal ein Jahr ab heute."
+        unverified_firm: "Nur verifizierte Kanzleien können Gründerzugang erhalten."
+        paid_account: "Diese Kanzlei hat bereits einen kostenpflichtigen Abrechnungstarif."

@@ -22,6 +22,8 @@
               <% value = @operator[field] %>
               <% if field == :professional_rules_url && value.present? %>
                 <%= link_to value, value, rel: "noopener" %>
+              <% elsif %i[legal_email privacy_email support_email].include?(field) && value.present? %>
+                <%= mail_to value %>
               <% else %>
                 <%= value.presence || t("pages.shared.not_configured") %>
               <% end %>

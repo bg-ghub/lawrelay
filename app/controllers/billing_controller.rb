@@ -1,4 +1,6 @@
 class BillingController < ApplicationController
+  helper_method :billing_checkout_available?
+
   rate_limit to: 3, within: 1.hour, only: :checkout, by: -> { current_user&.id },
     with: -> { redirect_to billing_path, alert: t("billing.notices.rate_limited") }
 
@@ -12,6 +14,10 @@ class BillingController < ApplicationController
   end
 
   def checkout
+    unless billing_checkout_available?
+      return redirect_to billing_path, alert: t("billing.notices.payments_unavailable_during_beta")
+    end
+
     result = Billing::ManualInvoiceService.new(billing_account: @billing_account).call
     Billing::ManualPeppolInvoiceService.new(result.invoice).call
 
@@ -47,5 +53,9 @@ class BillingController < ApplicationController
     return if Current.user&.firm_administrator?(@firm)
 
     redirect_to billing_path, alert: t("billing.notices.administrator_required")
+  end
+
+  def billing_checkout_available?
+    ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
   end
 end

@@ -26,8 +26,8 @@ fr:
       learn_more: En savoir plus
       contact: Contact
       made_for_belgium: Pensé pour la Belgique
-      demo_notice: Un espace de travail local pour avocats. Ceci est une démo ; ne publiez aucune information de dossier confidentielle.
-      demo_disclaimer: Démo — pas un avis juridique
+      demo_notice: Bêta fondatrice gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
+      demo_disclaimer: LawRelay coordonne le contact ; il ne fournit pas de conseil juridique.
     home:
       title: "LawRelay — trouvez le bon confrère pour votre cabinet"
       og_description: Publiez un remplacement d'audience ou une mission juridique et trouvez un confrère.
@@ -37,7 +37,7 @@ fr:
         heading_middle: pour une
         heading_emphasis: audience ?
         lede: Publiez votre demande, recevez des réponses et choisissez le confrère adapté à votre dossier.
-        note: Prototype pour les avocats belges. Sans intermédiaire.
+        note: Bêta fondatrice gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be.
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui
@@ -75,7 +75,7 @@ fr:
         belgium: Belgique
         empty_heading: Pas encore de mission.
         empty_body: Publiez la première et rendez votre demande visible pour vos confrères.
-        demo_caption: Missions d'exemple dans cette démo.
+        demo_caption: Les missions sont visibles uniquement par les membres vérifiés.
       how:
         eyebrow: comment ça marche
         heading_before: De la demande
@@ -95,7 +95,7 @@ fr:
         eyebrow: questions
         heading_before: Bon à
         heading_after: savoir.
-        lede: Ceci est un prototype fonctionnel pour les avocats.
+        lede: Une bêta fondatrice gratuite avec inscription ouverte aux avocats inscrits sur advocaat.be.
         items:
           "0":
             question: À qui s'adresse LawRelay ?
@@ -108,7 +108,7 @@ fr:
             answer: Oui. Vous pouvez indiquer un tarif de référence ou faire votre propre proposition.
           "3":
             question: Est-ce déjà en ligne ?
-            answer: Pas encore. Ne partagez aucune information de dossier confidentielle ici.
+            answer: Oui. Les avocats inscrits sur advocaat.be peuvent créer un compte ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
       cta:
         eyebrow: prêt à commencer ?
         heading_before: Publiez votre mission.

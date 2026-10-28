@@ -1,0 +1,74 @@
+name: lawrelay
+
+# This file intentionally uses a locally-loaded image rather than a registry.
+# `script/ops/deploy.ps1` supplies LAWRELAY_IMAGE through release.env on the host.
+services:
+  app:
+    image: ${LAWRELAY_IMAGE:?LAWRELAY_IMAGE must be set by the deployment script}
+    container_name: lawrelay-app
+    env_file:
+      # `raw` preserves literal characters (notably `$`) in SMTP passwords.
+      # Docker Compose v2.30+ is required on the host.
+      - path: ./production.env
+        format: raw
+    expose:
+      - "3000"
+    volumes:
+      - lawrelay_storage:/rails/storage
+    networks:
+      - private
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent --show-error http://127.0.0.1:3000/ready >/dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 45s
+    mem_limit: 1500m
+    cpus: 1.50
+    pids_limit: 256
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  caddy:
+    image: caddy:2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
+    container_name: lawrelay-caddy
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - private
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.50
+    pids_limit: 128
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  private:
+    # No app ports are published. This bridge remains egress-capable for
+    # Migadu SMTP and Caddy's ACME certificate checks.
+
+volumes:
+  # Explicitly external: backups, deploys, and compose project names must never
+  # create an accidental replacement volume.
+  lawrelay_storage:
+    external: true
+    name: lawrelay_storage
+  caddy_data:
+  caddy_config:
