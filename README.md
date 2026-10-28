@@ -14,9 +14,9 @@ LawRelay is **pre-release**. Use local/demo data only. Do not enter client names
 
 The application deliberately keeps the lawyer-to-lawyer mandate and fee outside LawRelay. Platform billing is separate from the underlying legal assignment.
 
-## Source and licensing
+## Open source
 
-The repository is private while LawRelay is under active development. Its current source license remains the [GNU Affero General Public License v3.0 or later](LICENSE), ready for a future publication decision. Authorized collaborators should follow [CONTRIBUTING.md](CONTRIBUTING.md) and report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+LawRelay is open-source software licensed under the [GNU Affero General Public License v3.0 or later](LICENSE). The GitHub repository is temporarily private and the application is not published or deployed while active development continues. Authorized collaborators should follow [CONTRIBUTING.md](CONTRIBUTING.md) and report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 ## Stack
 
