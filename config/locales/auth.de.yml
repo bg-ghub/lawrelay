@@ -120,6 +120,9 @@ de:
         heading: "Hallo %{name},"
         body: "Verwenden Sie den sicheren Link, um ein neues LawRelay-Passwort festzulegen."
         action: "Neues Passwort wählen"
+        duration_minutes:
+          one: "1 Minute"
+          other: "%{count} Minuten"
         expiry: "Dieser Link läuft in %{duration} ab. Falls Sie ihn nicht angefordert haben, ignorieren Sie diese Nachricht."
       email_verification:
         subject: "LawRelay-E-Mail bestätigen"
