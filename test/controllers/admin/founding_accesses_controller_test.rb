@@ -105,7 +105,7 @@ class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
     account = BillingAccount.create!(
       firm: @firm,
       status: "active",
-      complimentary_access_until: 20.days.from_now
+      complimentary_access_until: 20.days.from_now # gitleaks:allow (a test expiry, not an access credential)
     )
     sign_in_as(@admin, admin_mfa: true)
 
