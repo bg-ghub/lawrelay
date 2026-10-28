@@ -61,6 +61,7 @@ class AdminUsersTest < ApplicationSystemTestCase
       click_button "Save account"
     end
     assert_text "Account details saved."
+    assert_selector "h1", text: "Updated Peeters"
     assert_equal "Updated", @account.user.reload.first_name
     assert_equal "pending", @account.profile.reload.verification_status
     assert @account.firm.reload.verified?
