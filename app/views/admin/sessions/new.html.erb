@@ -1,0 +1,24 @@
+<% content_for :title, t("admin.login.title") %>
+<div class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("admin.login.eyebrow") %></p>
+    <h1><%= t("admin.login.heading") %></h1>
+    <p><%= t("admin.login.lede") %></p>
+  </div>
+
+  <div class="new-assignment__layout">
+    <%= form_with url: admin_login_path, class: "assignment-form" do |form| %>
+      <fieldset class="form-section">
+        <legend><%= t("admin.login.form_title") %></legend>
+        <div class="field-group">
+          <%= form.label :password, t("admin.login.password") %>
+          <%= form.password_field :password, required: true, autofocus: true, autocomplete: "current-password", maxlength: 72 %>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <%= link_to t("admin.login.forgot_password"), new_password_path(email_address: @password_reset_email), class: "button button--ghost" %>
+        <%= form.submit t("admin.login.submit"), class: "button button--dark" %>
+      </div>
+    <% end %>
+  </div>
+</div>

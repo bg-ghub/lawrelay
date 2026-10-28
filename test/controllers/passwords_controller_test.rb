@@ -60,6 +60,22 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "at least 12 characters"
   end
 
+  test "an administrator returns to password-only sign-in after a reset without bypassing MFA" do
+    @user.update!(system_role: "admin")
+    @user.sessions.create!
+
+    put password_path(token: @user.password_reset_token, locale: :en), params: {
+      password: "new-long-password", password_confirmation: "new-long-password"
+    }
+
+    assert_redirected_to admin_login_path(locale: :en)
+    assert_empty @user.reload.sessions
+    post admin_login_path(locale: :en), params: { password: "new-long-password" }
+    assert_redirected_to admin_users_path(locale: :en)
+    follow_redirect!
+    assert_redirected_to admin_mfa_setup_path(locale: :en)
+  end
+
   test "short or missing passwords do not reset credentials or revoke sessions" do
     @user.sessions.create!(expires_at: 1.day.from_now)
     token = @user.password_reset_token

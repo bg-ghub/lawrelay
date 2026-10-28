@@ -1,0 +1,24 @@
+en:
+  email_change:
+    link: "Change email"
+    title: "Change email — LawRelay"
+    eyebrow: "Account security"
+    heading: "Change your sign-in email"
+    lede: "First update your address on advocaat.be. We will send a confirmation to the new address and check the official listing again. If it has not updated yet, you can retry later."
+    admin_lede: "We will send a confirmation link to your new sign-in email address."
+    notices:
+      sent: "We sent a confirmation link to your new email address."
+    errors:
+      password: "Your current password is incorrect."
+      unchanged: "Enter an email address different from your current one."
+      unavailable: "Your account is no longer available. Please sign in again."
+      rate_limited: "Please wait before trying another email change."
+    form:
+      legend: "New email address"
+      current: "Current email"
+      new_email: "New email"
+      password: "Current password"
+      hint: "Your existing directory evidence will be checked again. Your firm and colleagues are unchanged."
+      admin_hint: "Your current session stays signed in; other sessions will be signed out."
+      submit: "Change email"
+      cancel: "Cancel"

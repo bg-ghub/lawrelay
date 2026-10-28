@@ -147,8 +147,8 @@ class AdminUsersTest < ApplicationSystemTestCase
 
   def sign_in_admin
     visit admin_users_path(locale: :en)
-    assert_current_path new_session_path(locale: :en)
-    fill_in "email_address", with: @admin.email_address
+    assert_current_path admin_login_path(locale: :en)
+    assert_no_selector "input[type='email']"
     fill_in "password", with: "password1234"
     find("form.assignment-form input[type='submit']").click
     assert_current_path admin_mfa_challenge_path(locale: :en)

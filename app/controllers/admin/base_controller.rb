@@ -5,6 +5,11 @@ module Admin
 
     private
 
+    def request_authentication
+      session[:return_to_after_authenticating] = request.url
+      redirect_to admin_login_path
+    end
+
     def require_admin_mfa
       return if Current.session&.admin_mfa_verified?
 

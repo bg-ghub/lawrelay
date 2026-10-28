@@ -26,6 +26,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] No client-content fields in the initial assignment flow; posting confirmation warns against client names, facts, and documents.
 - [x] Admin MFA, verification queue, privacy-request queue, and moderation controls.
 - [x] MFA-protected user management: search/filter accounts, inspect verification and sessions, edit basic details, suspend/restore accounts and revoke sessions with audit records. Administrator accounts are protected from edits in this console.
+- [x] Dedicated administrator password/MFA sign-in and password-confirmed self-service email changes with new-address confirmation, a fresh directory check and revocation of other sessions.
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.

@@ -9,6 +9,12 @@
 - Never place a secret in Git, a ticket, chat, screenshot, shell history, image layer, or application log.
 - Review access quarterly and immediately after a role change.
 
+## Application sign-in
+
+Use `/:locale/admin/login` for password-only administrator sign-in, followed by authenticator verification. It resolves the sole administrator, or the administrator identified by `LAWRELAY_ADMIN_USER_ID` when configured. An invalid configured ID or ambiguous accounts fail closed; additional administrators can use the ordinary email/password login.
+
+Members change their sign-in address through Settings → Change email. The current password, confirmation at the new address and a fresh advocaat.be check are required for marketplace access. Other sessions are revoked. Administrators can change their own address from the admin navigation after MFA; their password and authenticator remain unchanged.
+
 ## Secret inventory
 
 Track an owner, environment, storage location, creation date, last rotation, scope, and recovery process for:
