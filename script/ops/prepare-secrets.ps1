@@ -60,6 +60,7 @@ if (-not $BackupOnly) {
     'SOLID_QUEUE_IN_PUMA=true', 'LAWRELAY_BILLING_ENFORCED=true', 'LAWRELAY_RELEASE_MODE=beta',
     'SMTP_ADDRESS=smtp.migadu.com', 'SMTP_PORT=587', 'SMTP_DOMAIN=lawrelay.be',
     'SMTP_AUTHENTICATION=plain', 'SMTP_SSL=false', 'SMTP_STARTTLS=true',
+    'SMTP_OPEN_TIMEOUT=10', 'SMTP_READ_TIMEOUT=30',
     "SMTP_USERNAME=$($localConfig['SMTP_USERNAME'])", "SMTP_PASSWORD=$($localConfig['SMTP_PASSWORD'])",
     'MAIL_FROM=LawRelay <no-reply@lawrelay.be>',
     "SECRET_KEY_BASE=$($state.SECRET_KEY_BASE)",

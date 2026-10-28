@@ -6,6 +6,8 @@
 
 LawRelay is a multilingual, lawyer-only marketplace for court cover and bounded legal assignments in Belgium.
 
+Live beta: [lawrelay.be](https://lawrelay.be)
+
 The repository is private during the founding beta. Only verified Belgian lawyers can enter the marketplace. Keep client names, case facts, documents, and privileged material outside LawRelay.
 
 ## Features
