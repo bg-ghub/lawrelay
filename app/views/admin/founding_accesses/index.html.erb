@@ -1,4 +1,4 @@
-<main class="dashboard-page shell">
+<div class="dashboard-page shell">
   <div class="dashboard-heading">
     <div>
       <p class="eyebrow"><%= t("admin.founding_accesses.eyebrow") %></p>
@@ -32,8 +32,8 @@
           <% if account&.plan_key == "lawrelay_office" %>
             <p><%= t("admin.founding_accesses.paid_plan") %></p>
           <% else %>
-            <%= form_with url: admin_founding_accesses_path, scope: :founding_access, class: "assignment-form" do |form| %>
-              <%= hidden_field_tag :firm_id, firm.id %>
+            <%= form_with url: admin_founding_accesses_path, scope: :founding_access, namespace: dom_id(firm), class: "assignment-form" do |form| %>
+              <%= hidden_field_tag :firm_id, firm.id, id: nil %>
               <div class="field-group">
                 <%= form.label :expires_on, t("admin.founding_accesses.expires_on") %>
                 <%= form.date_field :expires_on, min: Date.current, max: Date.current + 1.year, required: true, value: grant_active ? account.complimentary_access_until.to_date : nil %>
@@ -57,4 +57,4 @@
       <p><%= t("admin.founding_accesses.empty_body") %></p>
     </section>
   <% end %>
-</main>
+</div>

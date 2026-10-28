@@ -33,7 +33,7 @@
   </head>
 
   <body class="site-shell">
-    <a class="skip-link" href="#main-content"><%= t("marketing.layout.skip_to_content") %></a>
+    <a class="skip-link" href="#main-content" data-turbo="false"><%= t("marketing.layout.skip_to_content") %></a>
     <%= render "shared/header" %>
     <% if flash.any? %>
       <div class="flash-stack" aria-live="polite" aria-atomic="true">
@@ -45,7 +45,7 @@
         <% end %>
       </div>
     <% end %>
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
       <%= yield %>
     </main>
     <%= render "shared/footer" %>

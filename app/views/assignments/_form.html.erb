@@ -1,6 +1,6 @@
 <%= form_with model: assignment, class: "assignment-form", data: { controller: "assignment-kind" } do |form| %>
   <% if assignment.errors.any? %>
-    <div class="form-error" role="alert"><strong><%= t("marketplace.form.error_heading") %></strong><ul><% assignment.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div>
+    <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><strong><%= t("marketplace.form.error_heading") %></strong><ul><% assignment.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div>
   <% end %>
 
   <fieldset class="form-section">
@@ -27,8 +27,8 @@
     </div>
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= form.label :languages, t("marketplace.form.languages_label") %>
-      <%= form.text_field :languages, placeholder: t("marketplace.form.languages_placeholder"), disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %>
-      <p class="field-hint"><%= t("marketplace.form.languages_hint") %></p>
+      <%= form.text_field :languages, placeholder: t("marketplace.form.languages_placeholder"), disabled: !assignment.legal_task?, aria: { describedby: "assignment-languages-hint" }, data: { assignment_kind_target: "legalInput" } %>
+      <p class="field-hint" id="assignment-languages-hint"><%= t("marketplace.form.languages_hint") %></p>
     </div>
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= form.label :scope_indication, t("marketplace.form.scope_indication_label") %>
@@ -38,7 +38,7 @@
 
   <fieldset class="form-section">
     <legend><%= t("marketplace.form.schedule_legend") %></legend>
-    <div class="field-group"><%= form.label :response_deadline_at, t("marketplace.form.response_deadline_label") %><%= form.datetime_local_field :response_deadline_at, required: true %><p class="field-hint"><%= t("marketplace.form.response_deadline_hint") %></p></div>
+    <div class="field-group"><%= form.label :response_deadline_at, t("marketplace.form.response_deadline_label") %><%= form.datetime_local_field :response_deadline_at, required: true, aria: { describedby: "assignment-deadline-hint" } %><p class="field-hint" id="assignment-deadline-hint"><%= t("marketplace.form.response_deadline_hint") %></p></div>
     <div class="form-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
       <div class="field-group"><%= form.label :starts_at, t("marketplace.form.hearing_at_label"), for: "assignment_hearing_at" %><%= form.datetime_local_field :starts_at, id: "assignment_hearing_at", required: assignment.court_replacement?, disabled: assignment.legal_task?, data: { assignment_kind_target: "courtInput" } %></div>
       <div class="field-group"><%= form.label :duration_minutes, t("marketplace.form.duration_label") %><%= form.number_field :duration_minutes, min: 15, step: 15, required: assignment.court_replacement?, disabled: assignment.legal_task?, placeholder: "60", data: { assignment_kind_target: "courtInput" } %></div>
@@ -54,12 +54,12 @@
   </fieldset>
 
   <fieldset class="form-section"><legend><%= t("marketplace.form.conditions_legend") %></legend>
-    <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 5, required: true, value: assignment.fee_cents.to_i.positive? ? assignment.fee_cents.to_i / 100 : nil, placeholder: "250" %><p class="field-hint"><%= t("marketplace.form.fee_hint") %></p></div>
+    <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 5, required: true, value: assignment.fee_cents.to_i.positive? ? assignment.fee_cents.to_i / 100 : nil, placeholder: "250", aria: { describedby: "assignment-fee-hint" } %><p class="field-hint" id="assignment-fee-hint"><%= t("marketplace.form.fee_hint") %></p></div>
     <label class="form-check">
-      <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true %>
+      <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true, aria: { describedby: "assignment-content-hint" } %>
       <span><%= t("marketplace.form.content_rules_label") %></span>
     </label>
-    <p class="field-hint"><%= t("marketplace.form.content_rules_hint_html", privacy_link: link_to(t("pages.navigation.privacy"), privacy_path)) %></p>
+    <p class="field-hint" id="assignment-content-hint"><%= t("marketplace.form.content_rules_hint_html", privacy_link: link_to(t("pages.navigation.privacy"), privacy_path)) %></p>
   </fieldset>
   <div class="form-actions"><%= link_to t("marketplace.form.cancel"), assignments_path, class: "button button--ghost" %><%= form.submit t("marketplace.form.submit"), class: "button button--dark" %></div>
 <% end %>

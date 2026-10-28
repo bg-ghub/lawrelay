@@ -2,7 +2,7 @@ require "test_helper"
 
 class BillingControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @owner = User.create!(email_address: "owner-#{SecureRandom.uuid}@example.test", password: "password123", password_confirmation: "password123", first_name: "Billing", last_name: "Owner")
+    @owner = User.create!(email_address: "owner-#{SecureRandom.uuid}@example.test", password: "password1234", password_confirmation: "password1234", first_name: "Billing", last_name: "Owner")
     @firm = Firm.create!(name: "Billing Firm #{SecureRandom.uuid}", verification_status: "verified", verified_at: Time.current)
     Membership.create!(user: @owner, firm: @firm, role: "owner")
     verify_user @owner
@@ -28,7 +28,7 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     get billing_url(locale: "en")
 
     assert_response :success
-    assert_select "h2", "LawRelay founding beta"
+    assert_select "h2", "LawRelay beta"
     assert_select "body", text: /€49/, count: 0
     assert_select "input[value='Request manual invoice']", count: 0
 
@@ -37,11 +37,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to billing_url(locale: "en")
-    assert_equal "Billing is not available during the founding beta.", flash[:alert]
+    assert_equal "Billing is not available during the beta.", flash[:alert]
   end
 
   test "firm member cannot request an invoice" do
-    member = User.create!(email_address: "member-#{SecureRandom.uuid}@example.test", password: "password123", password_confirmation: "password123", first_name: "Billing", last_name: "Member")
+    member = User.create!(email_address: "member-#{SecureRandom.uuid}@example.test", password: "password1234", password_confirmation: "password1234", first_name: "Billing", last_name: "Member")
     Membership.create!(user: member, firm: @firm, role: "member")
     verify_user member
     sign_out

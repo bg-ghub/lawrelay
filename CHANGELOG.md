@@ -5,6 +5,19 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-28
+
+### Fixed
+
+- Bind verification and recovery links to the current email; require explicit email confirmation and enforce password length on the server.
+- Require current firm membership to manage assignments and redact MFA codes and professional free text from request logs.
+- Improve keyboard navigation, form labels, focus, mobile menus, reduced motion and page landmarks.
+- Correct official-directory links and provider locations across NL/FR/DE/EN.
+
+### Added
+
+- External uptime checks, safe alert drills, isolated rollback/restore evidence, and beta support/privacy/feedback runbooks.
+
 ## [0.2.0] - 2026-10-28
 
 ### Added
@@ -33,7 +46,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/bg-ghub/lawrelay/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/bg-ghub/lawrelay/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/bg-ghub/lawrelay/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/bg-ghub/lawrelay/releases/tag/v0.1.0

@@ -85,6 +85,33 @@ class MarketplaceAccessControlTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/en/assignments/#{assignment.id}"
   end
 
+  test "a former firm member cannot manage assignments they originally created" do
+    former_owner = create_marketplace_account(prefix: "departed")
+    new_office = create_marketplace_account(prefix: "newoffice")
+    candidate = create_marketplace_account(prefix: "departedcandidate")
+    open_assignment = create_assignment_for(former_owner)
+    matched_assignment = create_assignment_for(former_owner, status: "matched")
+    proposal = create_proposal_for(open_assignment, candidate)
+    former_owner.user.memberships.destroy_all
+    former_owner.user.memberships.create!(firm: new_office.firm, role: "owner")
+    sign_in_as(former_owner.user)
+
+    assert_not open_assignment.manageable_by?(former_owner.user.reload)
+    assert_no_difference "AuditEvent.count" do
+      patch cancel_assignment_path(open_assignment, locale: :en)
+      assert_redirected_to assignments_path(locale: :en)
+      patch complete_assignment_path(matched_assignment, locale: :en)
+      assert_redirected_to assignments_path(locale: :en)
+      patch accept_assignment_proposal_path(open_assignment, proposal, locale: :en)
+      assert_redirected_to assignment_path(open_assignment, locale: :en)
+      patch decline_assignment_proposal_path(open_assignment, proposal, locale: :en)
+      assert_redirected_to assignment_path(open_assignment, locale: :en)
+    end
+    assert_equal "open", open_assignment.reload.status
+    assert_equal "matched", matched_assignment.reload.status
+    assert_equal "pending", proposal.reload.status
+  end
+
   test "ordinary firm member cannot mutate a colleague's assignment" do
     owner = create_marketplace_account(prefix: "managerowner")
     colleague = User.create!(

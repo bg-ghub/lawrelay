@@ -14,24 +14,24 @@ nl:
       legal_notice: "Wettelijke informatie"
     pricing:
       meta_title: "Prijzen — LawRelay"
-      eyebrow: "oprichtingsbeta"
-      title: "Gratis terwijl we dit goed opbouwen."
-      introduction: "LawRelay is gratis tijdens de oprichtingsbeta. Er is geen checkout, abonnement of betaalverzoek. Advocaten spreken erelonen altijd rechtstreeks met elkaar af."
+      eyebrow: "bèta"
+      title: "Gratis tijdens de bèta."
+      introduction: "LawRelay is gratis tijdens de bèta. Er is geen checkout, abonnement of betaalverzoek. Advocaten spreken erelonen altijd rechtstreeks met elkaar af."
       beta:
-        kicker: "oprichtingsbeta"
+        kicker: "bèta"
         price: "€0"
         title: "Open registratie voor advocaten in de lijst"
-        body: "Elke advocaat die op advocaat.be staat, kan zich registreren. Toegang tot de marktplaats volgt na een controle in de officiële lijst; betatoegang is gratis."
+        body: "Elke advocaat die op advocaat.be staat, kan zich registreren. Toegang tot de marktplaats volgt na een controle in de officiële lijst; toegang tijdens de bèta is gratis."
         features:
           - "Registratie open voor advocaten op advocaat.be"
           - "Lijstcontrole vóór toegang tot de marktplaats"
           - "Professionele opdrachten plaatsen en beantwoorden"
           - "Rechtstreekse feedback aan het LawRelay-team"
       launch:
-        kicker: "na de beta"
+        kicker: "na de bèta"
         price: "Nog niet beschikbaar"
-        title: "Geen betalend plan tijdens de beta"
-        body: "Tijdens de oprichtingsbeta worden geen betalende abonnementen aangeboden of geïnd. Als dat verandert, publiceren we de voorwaarden en prijs vooraf."
+        title: "Geen betalend plan tijdens de bèta"
+        body: "Tijdens de bèta worden geen betalende abonnementen aangeboden of geïnd. Als dat verandert, publiceren we de voorwaarden en prijs vooraf."
         features:
           - "Geen betaalgegevens gevraagd"
           - "Geen automatische verlenging"
@@ -40,12 +40,12 @@ nl:
       direct_fees:
         title: "Erelonen tussen advocaten blijven buiten LawRelay"
         body: "De opdrachtgever en de gekozen advocaat maken rechtstreeks afspraken, factureren elkaar en betalen elkaar. LawRelay houdt geen opdrachtsommen aan, biedt geen derdenrekening en trekt geen percentage van erelonen af."
-      review_notice: "Toegang tot de oprichtingsbeta is gratis. LawRelay int tijdens deze beta geen platformkosten."
+      review_notice: "Toegang tot de bèta is gratis. LawRelay int tijdens deze bèta geen platformkosten."
     privacy:
       meta_title: "Privacyverklaring — LawRelay"
       eyebrow: "privacy"
       title: "Hoe LawRelay persoonsgegevens behandelt."
-      introduction: "Deze verklaring legt uit welke beperkte persoonsgegevens LawRelay gebruikt voor de oprichtingsbeta voor geverifieerde Belgische advocaten."
+      introduction: "Deze verklaring legt uit welke beperkte persoonsgegevens LawRelay gebruikt voor de bèta voor geverifieerde Belgische advocaten."
       sections:
         controller:
           heading: "1. Wie verantwoordelijk is"
@@ -56,7 +56,7 @@ nl:
           heading: "2. Welke gegevens we verwerken"
           bullets:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
-            - "Professionele verificatiegegevens, zoals balie, balienummer, kantoor, rol en verificatiebewijs of -status."
+            - "Professionele verificatiegegevens, waaronder je officiële profiel, de vermelde naam en het professionele e-mailadres, kantoorgegevens en verificatiestatus."
             - "Profiel-, opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
           paragraphs:
@@ -75,7 +75,7 @@ nl:
         transfers:
           heading: "5. Locatie en doorgiften"
           paragraphs:
-            - "Productiehosting gebeurt in Duitsland bij Hetzner. Versleutelde back-ups staan in AWS S3 in Frankfurt. Transactionele e-mail verloopt via Migadu in Zwitserland; Zwitserland geniet een adequaatheidsbesluit van de EU."
+            - "Hetzner host de toepassing in Duitsland. Versleutelde back-ups staan in AWS S3 Frankfurt. Migadu, een Zwitserse e-mailprovider, vermeldt dat zijn e-mailservers in Frankrijk staan."
         retention:
           heading: "6. Bewaring"
           paragraphs:
@@ -95,7 +95,7 @@ nl:
       meta_title: "Gebruiksvoorwaarden — LawRelay"
       eyebrow: "gebruiksvoorwaarden"
       title: "Afspraken voor het gebruik van LawRelay."
-      introduction: "Deze voorwaarden regelen de gratis oprichtingsbeta van LawRelay voor professionele gebruikers."
+      introduction: "Deze voorwaarden regelen de gratis bèta van LawRelay voor professionele gebruikers."
       sections:
         agreement:
           heading: "1. Overeenkomst en uitbater"
@@ -127,7 +127,7 @@ nl:
         platform_fees:
           heading: "7. LawRelay-kosten en facturatie"
           paragraphs:
-            - "Toegang tot de oprichtingsbeta is gratis. LawRelay biedt tijdens deze beta geen betalende abonnementen aan, int geen platformkosten en vraagt geen betaalgegevens."
+            - "Toegang tot de bèta is gratis. LawRelay biedt tijdens deze bèta geen betalende abonnementen aan, int geen platformkosten en vraagt geen betaalgegevens."
             - "Als LawRelay later betalende toegang aanbiedt, worden de toepasselijke prijs en voorwaarden gepubliceerd voordat een betaling wordt gevraagd."
         professional_fees:
           heading: "8. Erelonen"
@@ -145,11 +145,11 @@ nl:
         availability:
           heading: "11. Beschikbaarheid en wijzigingen"
           paragraphs:
-            - "LawRelay kan de dienst onderhouden, bijwerken of wijzigen en belooft geen ononderbroken beschikbaarheid. Belangrijke wijzigingen aan de beta worden waar haalbaar redelijk vooraf meegedeeld."
+            - "LawRelay kan de dienst onderhouden, bijwerken of wijzigen en belooft geen ononderbroken beschikbaarheid. Belangrijke wijzigingen aan de bèta worden waar haalbaar redelijk vooraf meegedeeld."
         liability:
           heading: "12. Aansprakelijkheid, einde en recht"
           paragraphs:
-            - "U kunt stoppen met de beta en accountverwijdering vragen via support@lawrelay.be. LawRelay kan toegang tot de beta beëindigen met een redelijke kennisgeving of onmiddellijk wanneer dat nodig is voor beveiliging, wet of deze voorwaarden."
+            - "U kunt stoppen met de bèta en accountverwijdering vragen via support@lawrelay.be. LawRelay kan toegang tot de bèta beëindigen met een redelijke kennisgeving of onmiddellijk wanneer dat nodig is voor beveiliging, wet of deze voorwaarden."
             - "Belgisch recht is van toepassing op deze voorwaarden. Dwingende rechten die op u van toepassing zijn, blijven onverlet. Niets in deze voorwaarden sluit aansprakelijkheid uit die wettelijk niet kan worden uitgesloten."
     cookies:
       meta_title: "Cookieverklaring — LawRelay"

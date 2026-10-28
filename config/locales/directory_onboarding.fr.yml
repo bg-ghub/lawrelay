@@ -6,7 +6,7 @@ fr:
       profile_url_hint: "Nous vérifions le profil public, le nom et l’adresse professionnelle publiée. Si elle diffère de votre adresse de connexion, nous vous demanderons aussi de la confirmer."
       invalid_profile_url: "doit être un lien vers votre profil public d’avocat sur Advocaat.be"
       find_profile: "Trouver votre profil sur Advocaat.be"
-      firm_hint: "Nous l’utilisons uniquement pour configurer votre espace de travail."
+      firm_hint: "Le nom de votre cabinet ou de votre activité indépendante."
       aside_one_title: "Votre profil"
       aside_one_body: "Collez le lien vers votre profil public Advocaat.be. Aucun numéro de barreau à encoder."
       aside_two_title: "Une vérification rapide"

@@ -14,11 +14,11 @@ en:
       legal_notice: "Legal notice"
     pricing:
       meta_title: "Pricing — LawRelay"
-      eyebrow: "founding beta"
-      title: "Free while we build this properly."
-      introduction: "LawRelay is free during the founding beta. There is no checkout, subscription, or payment request. Lawyers always agree and settle professional fees directly with each other."
+      eyebrow: "beta"
+      title: "Free during the beta."
+      introduction: "LawRelay is free during the beta. There is no checkout, subscription, or payment request. Lawyers always agree and settle professional fees directly with each other."
       beta:
-        kicker: "founding beta"
+        kicker: "beta"
         price: "€0"
         title: "Open registration for listed lawyers"
         body: "Any lawyer listed on advocaat.be can register. Marketplace access follows a check against the official directory; beta access is free."
@@ -31,7 +31,7 @@ en:
         kicker: "after the beta"
         price: "Not available yet"
         title: "No paid plan during beta"
-        body: "Paid subscriptions are not offered or collected during the founding beta. If that changes, the terms and pricing will be published before it takes effect."
+        body: "Paid subscriptions are not offered or collected during the beta. If that changes, the terms and pricing will be published before it takes effect."
         features:
           - "No payment details requested"
           - "No automatic renewal"
@@ -40,12 +40,12 @@ en:
       direct_fees:
         title: "Lawyer-to-lawyer fees stay outside LawRelay"
         body: "The requester and the selected lawyer agree, invoice, and pay each other directly. LawRelay does not hold assignment funds, operate escrow, or deduct a percentage of professional fees."
-      review_notice: "Founding-beta access is free. LawRelay does not collect platform fees during this beta."
+      review_notice: "Beta access is free. LawRelay does not collect platform fees during this beta."
     privacy:
       meta_title: "Privacy notice — LawRelay"
       eyebrow: "privacy"
       title: "How LawRelay handles personal data."
-      introduction: "This notice explains the limited personal data used to run LawRelay's founding beta for verified Belgian lawyers."
+      introduction: "This notice explains the limited personal data used to run LawRelay's beta for verified Belgian lawyers."
       sections:
         controller:
           heading: "1. Who controls your data"
@@ -56,7 +56,7 @@ en:
           heading: "2. Data we process"
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records."
-            - "Professional-verification data, such as bar, bar number, firm, role, and verification evidence or status."
+            - "Professional-verification data, including your official directory profile, listed name and professional email, firm details, and verification status."
             - "Profile, assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
           paragraphs:
@@ -75,7 +75,7 @@ en:
         transfers:
           heading: "5. Location and transfers"
           paragraphs:
-            - "Production hosting is provided from Germany by Hetzner. Encrypted backups are stored in AWS S3 in Frankfurt. Transactional email is provided by Migadu in Switzerland; Switzerland benefits from an EU adequacy decision."
+            - "Hetzner hosts the application in Germany. Encrypted backups are stored in AWS S3 Frankfurt. Migadu, a Swiss email provider, states that its email servers are located in France."
         retention:
           heading: "6. Retention"
           paragraphs:
@@ -95,7 +95,7 @@ en:
       meta_title: "Terms of service — LawRelay"
       eyebrow: "terms of service"
       title: "Rules for using LawRelay."
-      introduction: "These terms govern the free LawRelay founding beta for professional users."
+      introduction: "These terms govern the free LawRelay beta for professional users."
       sections:
         agreement:
           heading: "1. Agreement and operator"
@@ -127,7 +127,7 @@ en:
         platform_fees:
           heading: "7. LawRelay fees and billing"
           paragraphs:
-            - "Founding-beta access is free. LawRelay does not offer paid subscriptions, collect platform fees, or ask for payment details during this beta."
+            - "Beta access is free. LawRelay does not offer paid subscriptions, collect platform fees, or ask for payment details during this beta."
             - "If LawRelay later offers paid access, the applicable price and terms will be published before any payment is requested."
         professional_fees:
           heading: "8. Professional fees"

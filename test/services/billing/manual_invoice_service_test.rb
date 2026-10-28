@@ -2,7 +2,7 @@ require "test_helper"
 
 class Billing::ManualInvoiceServiceTest < ActiveSupport::TestCase
   test "creates a pending subscription, invoice and payment" do
-    user = User.create!(email_address: "manual-#{SecureRandom.uuid}@example.test", password: "password123", password_confirmation: "password123", first_name: "Manual", last_name: "Owner")
+    user = User.create!(email_address: "manual-#{SecureRandom.uuid}@example.test", password: "password1234", password_confirmation: "password1234", first_name: "Manual", last_name: "Owner")
     firm = Firm.create!(name: "Manual Firm #{SecureRandom.uuid}")
     Membership.create!(user:, firm:, role: "owner")
     account = BillingAccount.create!(firm:)
@@ -17,7 +17,7 @@ class Billing::ManualInvoiceServiceTest < ActiveSupport::TestCase
   end
 
   test "reuses a pending invoice request instead of duplicating it" do
-    user = User.create!(email_address: "reuse-#{SecureRandom.uuid}@example.test", password: "password123", password_confirmation: "password123", first_name: "Reuse", last_name: "Owner")
+    user = User.create!(email_address: "reuse-#{SecureRandom.uuid}@example.test", password: "password1234", password_confirmation: "password1234", first_name: "Reuse", last_name: "Owner")
     firm = Firm.create!(name: "Reuse Firm #{SecureRandom.uuid}")
     Membership.create!(user:, firm:, role: "owner")
     account = BillingAccount.create!(firm:)
