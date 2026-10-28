@@ -1,5 +1,5 @@
 <% content_for :title, t("trust.privacy_requests.index.title") %>
-<main class="dashboard-page shell trust-page">
+<div class="dashboard-page shell trust-page">
   <div class="dashboard-heading">
     <div><p class="eyebrow"><%= t("trust.privacy_requests.eyebrow") %></p><h1><%= t("trust.privacy_requests.index.heading") %></h1><p><%= t("trust.privacy_requests.index.lede") %></p></div>
     <%= link_to t("trust.privacy_requests.index.new"), new_privacy_request_path, class: "button button--dark" %>
@@ -18,4 +18,4 @@
       <p class="muted-copy"><%= t("trust.privacy_requests.index.empty") %></p>
     <% end %>
   </section>
-</main>
+</div>

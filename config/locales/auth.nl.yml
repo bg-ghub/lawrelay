@@ -34,6 +34,7 @@ nl:
       sent: "Als dit account bestaat, zijn de instructies voor een nieuw wachtwoord verstuurd."
       reset: "Je wachtwoord is gewijzigd."
       mismatch: "De wachtwoorden komen niet overeen."
+      invalid_password: "Gebruik minstens 12 tekens en zorg dat beide wachtwoorden overeenkomen."
       invalid: "Deze herstellink is ongeldig of verlopen."
       rate_limited: "Te veel aanvragen. Probeer het later opnieuw."
       new:
@@ -59,7 +60,7 @@ nl:
       agreement: "Akkoord"
       email_hint: "Gebruik het adres dat bij je advocatenpraktijk hoort."
       bar_placeholder: "Bijvoorbeeld: Balie Brussel"
-      verification_hint: "We controleren deze gegevens handmatig. Vul hier geen cliënt- of dossierinformatie in."
+      verification_hint: "We controleren je officiële profiel. Vul hier geen cliënt- of dossierinformatie in."
       agree_heading: "Ik ga akkoord met de platformregels"
       agree_before: "Ik heb de"
       terms: "voorwaarden"
@@ -78,6 +79,12 @@ nl:
         rate_limited: "Te veel registratiepogingen. Probeer het later opnieuw."
         accept_terms: "Je moet akkoord gaan met de voorwaarden en privacyverklaring."
         already_registered: "Deze account-, kantoor- of baliegegevens zijn al geregistreerd."
+    email_verifications:
+      review:
+        title: "E-mailadres bevestigen"
+        explanation: "Bevestig dit adres voor je LawRelay-account. Ga alleen verder als je dit account zelf hebt aangemaakt."
+        account_label: "Account"
+        submit: "Bevestig e-mailadres"
     email_verification:
       verified: "Je e-mailadres is bevestigd."
       verified_sign_in: "Je e-mailadres is bevestigd. Meld je aan om verder te gaan."
@@ -103,7 +110,7 @@ nl:
       resent: "Er is een nieuwe bevestigingslink verstuurd als dat nog nodig is."
       rate_limited: "Wacht even voordat je opnieuw een bevestigingsmail vraagt."
     verification:
-      marketplace_required: "We verifiëren eerst je e-mail, balie-inschrijving en kantoor voor je toegang krijgt."
+      marketplace_required: "Bevestig je e-mailadres en je officiële profiel voor je toegang krijgt tot de marktplaats."
     authorization:
       firm_admin_required: "Alleen een kantoorbeheerder kan dit doen."
       admin_required: "Je hebt geen toegang tot dit onderdeel."

@@ -26,7 +26,7 @@ fr:
       learn_more: En savoir plus
       contact: Contact
       made_for_belgium: Pensé pour la Belgique
-      demo_notice: Bêta fondatrice gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
+      demo_notice: Bêta gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
       demo_disclaimer: LawRelay coordonne le contact ; il ne fournit pas de conseil juridique.
     home:
       title: "LawRelay — trouvez le bon confrère pour votre cabinet"
@@ -37,7 +37,7 @@ fr:
         heading_middle: pour une
         heading_emphasis: audience ?
         lede: Publiez votre demande, recevez des réponses et choisissez le confrère adapté à votre dossier.
-        note: Bêta fondatrice gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be.
+        note: Bêta gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be.
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui
@@ -95,7 +95,7 @@ fr:
         eyebrow: questions
         heading_before: Bon à
         heading_after: savoir.
-        lede: Une bêta fondatrice gratuite avec inscription ouverte aux avocats inscrits sur advocaat.be.
+        lede: Une bêta gratuite avec inscription ouverte aux avocats inscrits sur advocaat.be.
         items:
           "0":
             question: À qui s'adresse LawRelay ?

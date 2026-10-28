@@ -14,11 +14,11 @@ de:
       legal_notice: "Anbieterangaben"
     pricing:
       meta_title: "Preise — LawRelay"
-      eyebrow: "Gründungs-Beta"
-      title: "Kostenlos, während wir den Dienst richtig aufbauen."
-      introduction: "LawRelay ist während der Gründungs-Beta kostenlos. Es gibt weder Checkout noch Abonnement oder Zahlungsaufforderung. Anwälte vereinbaren ihre Honorare immer direkt miteinander."
+      eyebrow: "Beta"
+      title: "Kostenlos während der Beta."
+      introduction: "LawRelay ist während der Beta kostenlos. Es gibt weder Checkout noch Abonnement oder Zahlungsaufforderung. Anwälte vereinbaren ihre Honorare immer direkt miteinander."
       beta:
-        kicker: "Gründungs-Beta"
+        kicker: "Beta"
         price: "0 €"
         title: "Offene Registrierung für eingetragene Anwälte"
         body: "Jeder auf advocaat.be gelistete Anwalt kann sich registrieren. Der Marktplatz-Zugang folgt nach einer Prüfung im offiziellen Verzeichnis; der Beta-Zugang ist kostenlos."
@@ -31,7 +31,7 @@ de:
         kicker: "nach der Beta"
         price: "Noch nicht verfügbar"
         title: "Kein kostenpflichtiger Tarif während der Beta"
-        body: "Während der Gründungs-Beta werden keine kostenpflichtigen Abonnements angeboten oder abgerechnet. Falls sich das ändert, werden Bedingungen und Preis vorher veröffentlicht."
+        body: "Während der Beta werden keine kostenpflichtigen Abonnements angeboten oder abgerechnet. Falls sich das ändert, werden Bedingungen und Preis vorher veröffentlicht."
         features:
           - "Keine Zahlungsdaten erforderlich"
           - "Keine automatische Verlängerung"
@@ -40,12 +40,12 @@ de:
       direct_fees:
         title: "Anwaltshonorare bleiben außerhalb von LawRelay"
         body: "Auftraggeber und ausgewählter Anwalt vereinbaren, fakturieren und bezahlen direkt miteinander. LawRelay verwahrt keine Auftragsgelder, bietet kein Treuhandkonto an und zieht keinen Anteil vom Honorar ab."
-      review_notice: "Der Zugang zur Gründungs-Beta ist kostenlos. LawRelay erhebt während dieser Beta keine Plattformgebühren."
+      review_notice: "Der Zugang zur Beta ist kostenlos. LawRelay erhebt während dieser Beta keine Plattformgebühren."
     privacy:
       meta_title: "Datenschutzhinweise — LawRelay"
       eyebrow: "Datenschutz"
       title: "Wie LawRelay personenbezogene Daten verarbeitet."
-      introduction: "Diese Hinweise erklären die begrenzten personenbezogenen Daten, die LawRelay für die Gründungs-Beta für verifizierte belgische Anwälte verwendet."
+      introduction: "Diese Hinweise erklären die begrenzten personenbezogenen Daten, die LawRelay für die Beta für verifizierte belgische Anwälte verwendet."
       sections:
         controller:
           heading: "1. Wer verantwortlich ist"
@@ -56,7 +56,7 @@ de:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
             - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten."
-            - "Daten zur beruflichen Verifizierung wie Kammer, Zulassungsnummer, Kanzlei, Rolle sowie Nachweis oder Status der Prüfung."
+            - "Daten zur beruflichen Verifizierung: Ihr offizielles Verzeichnisprofil, der veröffentlichte Name und die berufliche E-Mail-Adresse, Kanzleiangaben und Prüfstatus."
             - "Profil-, Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
           paragraphs:
@@ -75,7 +75,7 @@ de:
         transfers:
           heading: "5. Ort und Übermittlungen"
           paragraphs:
-            - "Das Produktionshosting erfolgt über Hetzner in Deutschland. Verschlüsselte Backups werden in AWS S3 in Frankfurt gespeichert. Transaktionale E-Mails stellt Migadu in der Schweiz bereit; für die Schweiz besteht ein EU-Angemessenheitsbeschluss."
+            - "Hetzner hostet die Anwendung in Deutschland. Verschlüsselte Backups liegen in AWS S3 in Frankfurt. Migadu, ein Schweizer E-Mail-Anbieter, gibt an, dass sich seine E-Mail-Server in Frankreich befinden."
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
@@ -95,7 +95,7 @@ de:
       meta_title: "Nutzungsbedingungen — LawRelay"
       eyebrow: "Nutzungsbedingungen"
       title: "Regeln für die Nutzung von LawRelay."
-      introduction: "Diese Bedingungen regeln die kostenlose LawRelay-Gründungs-Beta für berufliche Nutzer."
+      introduction: "Diese Bedingungen regeln die kostenlose LawRelay-Beta für berufliche Nutzer."
       sections:
         agreement:
           heading: "1. Vertrag und Betreiber"
@@ -127,7 +127,7 @@ de:
         platform_fees:
           heading: "7. LawRelay-Entgelt und Abrechnung"
           paragraphs:
-            - "Der Zugang zur Gründungs-Beta ist kostenlos. LawRelay bietet während dieser Beta keine kostenpflichtigen Abonnements an, erhebt keine Plattformgebühren und verlangt keine Zahlungsdaten."
+            - "Der Zugang zur Beta ist kostenlos. LawRelay bietet während dieser Beta keine kostenpflichtigen Abonnements an, erhebt keine Plattformgebühren und verlangt keine Zahlungsdaten."
             - "Falls LawRelay später kostenpflichtigen Zugang anbietet, werden der geltende Preis und die Bedingungen vor einer Zahlungsaufforderung veröffentlicht."
         professional_fees:
           heading: "8. Anwaltshonorare"

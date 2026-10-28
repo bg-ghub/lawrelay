@@ -1,0 +1,40 @@
+# Beta support and moderation
+
+Owner: Gauthier Berth. Intake: `support@lawrelay.be`; privacy: `privacy@lawrelay.be`; security: `security@lawrelay.be`. These identities route to the monitored operator mailbox. There is no published response-time SLA.
+
+Migadu Micro permits [20 outgoing attempts per day across the account](https://www.migadu.com/pricing/). Verification, proposal notifications, support replies and owner alerts share that budget. This infrastructure quota does not limit registration eligibility or create an invitation cap. Failed mail jobs trigger the existing owner health-alert route; if the Migadu quota is exhausted, SMTP alerts can also fail, so inspect the protected health journal. Check the failure before retrying; keep delivery smoke tests minimal.
+
+## Daily triage
+
+1. Review the support inbox and the MFA-protected admin queues: `/nl/admin/verifications`, `/nl/admin/reports`, `/nl/admin/privacy_requests`.
+2. Prioritise suspected disclosure, takeover, urgent access loss, and failed mail. Escalate security incidents through [incident-response.md](incident-response.md).
+3. Record a private reference, received date, category, owner, next action, and next review date. Keep contact details, screenshots, and correspondence outside GitHub and this repository.
+4. Reply in the user's language when possible. Ask for the affected page, approximate time, browser, and a record reference; never ask for passwords, MFA codes, client names, case facts, or documents.
+5. Record the outcome and tell the user what changed. Check that the issue is resolved before closing it.
+
+## Verification and access
+
+- Compare the account with the actual `advocaat.be` profile and the published professional email. A matching name alone does not prove control of that identity.
+- For an expired link, use the existing resend flow. For a wrong or inaccessible directory email, ask the lawyer to correct the official listing; do not confirm a different person's account.
+- Do not disclose whether another person's email or profile is registered. Handle competing claims privately using the official profile and verified contact channel.
+- Record evidence and the reason for any manual decision in the audit trail. Do not override a rejection or suspension just to clear a pending check.
+
+## Content reports and appeals
+
+1. Open the report, review only the material needed, and record a proportionate decision and reason. Preserve relevant evidence with restricted access.
+2. Where content may expose confidential material, contain visibility promptly using a reviewed operator action; escalate suspected exposure as an incident.
+3. The current report screen records review and resolution. **Resolving a report does not itself hide content or suspend an account.** Perform and verify any required remediation before marking the report resolved. Do not improvise database changes.
+4. Notify the affected user through their verified contact channel. State the affected reference, action, reason, and how to appeal to `support@lawrelay.be`; omit confidential reporter information and security details.
+5. For an appeal, reopen the private record, consider the user's explanation and new evidence, and record a fresh decision. Obtain a second reviewer where available; a single-operator review must be described honestly.
+
+## Privacy requests
+
+1. Acknowledge receipt and record the request, scope, identity check, applicable deadline, and any necessary hold. Escalate uncertain scope or competing obligations for legal review.
+2. Use the signed-in request queue or a verified contact channel. Request only the identity evidence needed; avoid collecting identity documents by default.
+3. Identify the relevant account, marketplace, support, audit, and backup data. Keep other users' data out of exports and replies.
+4. The admin request screen records progress; **marking a request completed does not export, correct, or delete data**. Carry out the reviewed action, verify its result, and record the action reference before completion.
+5. Explain any partial fulfilment, hold, or refusal and the available complaint route. For deletion, apply the reviewed retention process and backup handling rather than promising immediate removal from every snapshot.
+
+## Beta feedback
+
+Use [beta-feedback.md](beta-feedback.md) for product feedback. Reports and privacy requests remain in their own queues. No billing, subscription activation, or payment collection belongs in the free-beta support flow.

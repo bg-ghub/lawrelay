@@ -26,7 +26,7 @@ en:
       learn_more: Learn more
       contact: Contact
       made_for_belgium: Made for Belgium
-      demo_notice: Free founding beta. Registration is open to lawyers listed on advocaat.be; marketplace access follows a directory check. Do not include client names, case facts, or documents.
+      demo_notice: Free beta. Registration is open to lawyers listed on advocaat.be; marketplace access follows a directory check. Do not include client names, case facts, or documents.
       demo_disclaimer: LawRelay coordinates contact; it does not provide legal advice.
     home:
       title: "LawRelay — find the right colleague for your practice"
@@ -37,7 +37,7 @@ en:
         heading_middle: for a
         heading_emphasis: hearing?
         lede: Post your request, receive responses, and choose the colleague who fits your matter.
-        note: Free founding beta. Registration is open to lawyers listed on advocaat.be.
+        note: Free beta. Registration is open to lawyers listed on advocaat.be.
       product:
         aria_label: Example of the LawRelay workspace
         today: Today
@@ -95,7 +95,7 @@ en:
         eyebrow: questions
         heading_before: Good to
         heading_after: know.
-        lede: A free founding beta with open registration for lawyers listed on advocaat.be.
+        lede: A free beta with open registration for lawyers listed on advocaat.be.
         items:
           "0":
             question: Who is LawRelay for?

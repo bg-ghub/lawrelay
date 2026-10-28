@@ -1,4 +1,4 @@
-<main class="dashboard-page shell">
+<div class="dashboard-page shell">
   <div class="dashboard-heading">
     <div>
       <p class="eyebrow"><%= t("admin.verifications.eyebrow") %></p>
@@ -34,7 +34,7 @@
             <div><dt><%= t("admin.verifications.lawyer_status") %></dt><dd><%= profile&.verification_status || t("admin.verifications.missing") %></dd></div>
           </dl>
 
-          <%= form_with url: admin_verification_path(user), method: :patch, scope: :verification, class: "assignment-form" do |form| %>
+          <%= form_with url: admin_verification_path(user), method: :patch, scope: :verification, namespace: dom_id(user), class: "assignment-form" do |form| %>
             <div class="field-group">
               <%= form.label :note, t("admin.verifications.note") %>
               <%= form.text_area :note, rows: 3, maxlength: 2_000, placeholder: t("admin.verifications.note_placeholder"), value: profile&.verification_note %>
@@ -53,4 +53,4 @@
       <p><%= t("admin.verifications.empty_body") %></p>
     </section>
   <% end %>
-</main>
+</div>

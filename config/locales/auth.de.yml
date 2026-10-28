@@ -34,6 +34,7 @@ de:
       sent: "Falls dieses Konto besteht, wurden Anweisungen zum Zurücksetzen gesendet."
       reset: "Ihr Passwort wurde geändert."
       mismatch: "Die Passwörter stimmen nicht überein."
+      invalid_password: "Verwenden Sie mindestens 12 Zeichen und geben Sie beide Male dasselbe Passwort ein."
       invalid: "Dieser Link zum Zurücksetzen ist ungültig oder abgelaufen."
       rate_limited: "Zu viele Anfragen. Bitte versuchen Sie es später erneut."
       new:
@@ -59,7 +60,7 @@ de:
       agreement: "Zustimmung"
       email_hint: "Verwenden Sie die Adresse Ihrer beruflichen Tätigkeit."
       bar_placeholder: "Zum Beispiel: Rechtsanwaltskammer Eupen"
-      verification_hint: "Wir prüfen diese Angaben manuell. Tragen Sie keine Mandats- oder Falldaten ein."
+      verification_hint: "Wir prüfen Ihr offizielles Verzeichnisprofil. Tragen Sie keine Mandats- oder Falldaten ein."
       agree_heading: "Ich akzeptiere die Plattformregeln"
       agree_before: "Ich habe die"
       terms: "Nutzungsbedingungen"
@@ -78,6 +79,12 @@ de:
         rate_limited: "Zu viele Registrierungsversuche. Bitte versuchen Sie es später erneut."
         accept_terms: "Sie müssen den Bedingungen und der Datenschutzerklärung zustimmen."
         already_registered: "Diese Konto-, Kanzlei- oder Kammerdaten sind bereits registriert."
+    email_verifications:
+      review:
+        title: "E-Mail-Adresse bestätigen"
+        explanation: "Bestätigen Sie diese Adresse für Ihr LawRelay-Konto. Fahren Sie nur fort, wenn Sie dieses Konto erstellt haben."
+        account_label: "Konto"
+        submit: "E-Mail bestätigen"
     email_verification:
       verified: "Ihre E-Mail-Adresse ist bestätigt."
       verified_sign_in: "Ihre E-Mail-Adresse ist bestätigt. Melden Sie sich an, um fortzufahren."
@@ -103,7 +110,7 @@ de:
       resent: "Falls noch nötig, wurde ein neuer Bestätigungslink gesendet."
       rate_limited: "Bitte warten Sie, bevor Sie eine weitere E-Mail anfordern."
     verification:
-      marketplace_required: "Wir prüfen zuerst Ihre E-Mail, Kammerzulassung und Kanzlei, bevor der Zugang freigeschaltet wird."
+      marketplace_required: "Bestätigen Sie Ihre E-Mail und Ihr offizielles Verzeichnisprofil, um auf Aufträge zuzugreifen."
     authorization:
       firm_admin_required: "Nur ein Kanzleiadministrator kann diese Aktion ausführen."
       admin_required: "Sie haben keinen Zugriff auf diesen Bereich."

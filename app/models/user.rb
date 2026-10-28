@@ -1,3 +1,5 @@
+require "digest"
+
 class User < ApplicationRecord
   class InvalidAdminMfaCode < StandardError; end
 
@@ -5,6 +7,13 @@ class User < ApplicationRecord
   LOCALES = %w[nl fr de en].freeze
 
   has_secure_password
+  generates_token_for :email_verification, expires_in: 48.hours do
+    Digest::SHA256.hexdigest(email_address)
+  end
+  generates_token_for :password_reset, expires_in: 15.minutes do
+    [ Digest::SHA256.hexdigest(email_address), password_salt&.last(10) ]
+  end
+  before_update :clear_email_verification, if: :will_save_change_to_email_address?
   has_many :sessions, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :firms, through: :memberships
@@ -22,6 +31,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true, length: { maximum: 100 }
   validates :locale, inclusion: { in: LOCALES }
   validates :system_role, inclusion: { in: SYSTEM_ROLES }
+  validates :password, length: { minimum: 12 }, allow_nil: true
 
   def full_name
     [ first_name, last_name ].compact_blank.join(" ")
@@ -109,14 +119,21 @@ class User < ApplicationRecord
   end
 
   def email_verification_token
-    signed_id(purpose: :email_verification, expires_in: 48.hours)
+    generate_token_for(:email_verification)
   end
 
   def self.find_by_email_verification_token!(token)
-    find_signed!(token, purpose: :email_verification)
+    find_by_token_for!(:email_verification, token)
   end
 
   private
+
+  def clear_email_verification
+    self.email_verified_at = nil
+    # Include NULL in the SQL even when this object was loaded before another
+    # request verified the old address.
+    email_verified_at_will_change!
+  end
 
   def admin_mfa_secret
     decrypt_admin_mfa_secret(admin_mfa_secret_ciphertext)

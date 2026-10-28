@@ -5,4 +5,35 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(email_address: " DOWNCASED@EXAMPLE.COM ")
     assert_equal("downcased@example.com", user.email_address)
   end
+
+  test "email change clears verification even with a stale unverified object" do
+    user = users(:one)
+    user.update!(email_verified_at: nil)
+    stale_user = User.find(user.id)
+    user.update!(email_verified_at: Time.current)
+
+    stale_user.update!(email_address: "new@example.test")
+
+    assert_nil user.reload.email_verified_at
+  end
+
+  test "email tokens expire and are bound to the current normalized address" do
+    user = users(:one)
+    token = user.email_verification_token
+    assert_equal user, User.find_by_email_verification_token!(token)
+    user.update!(email_address: "replacement@example.test")
+    assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(token) }
+
+    fresh_token = user.email_verification_token
+    travel 49.hours do
+      assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(fresh_token) }
+    end
+  end
+
+  test "password minimum applies to new passwords without blocking other updates" do
+    user = users(:one)
+    assert user.update(first_name: "Changed")
+    assert_not user.update(password: "short", password_confirmation: "short")
+    assert user.errors.of_kind?(:password, :too_short)
+  end
 end

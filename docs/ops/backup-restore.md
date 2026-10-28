@@ -97,7 +97,32 @@ sudo journalctl -u lawrelay-restore-drill.service -n 100 --no-pager
 
 The command restores the latest snapshot tagged `lawrelay` into a newly-created `0700` temporary directory under `/var/lib/lawrelay-restore-drills`, opens the databases read-only for integrity checks, lists the storage archive, then deletes that temporary directory. It never mounts or overwrites `lawrelay_storage`.
 
-Record the snapshot date, duration, result, data-loss window, and any gap in the private incident log. A full quarterly drill should additionally restore to an isolated host/volume, boot the exact release, and verify authentication, authorization, representative records, attachments, mail/jobs, and schema version.
+Record the snapshot date, duration, result, data-loss window, and any gap in the private incident log.
+
+### Isolated application and compatible-image rollback drill
+
+The boot drill goes further than SQLite integrity checks. It restores the latest encrypted LawRelay snapshot under a new temporary directory, safely extracts storage, boots the current image, then boots an explicitly chosen compatible preceding image against the same migrated copy. It verifies four locale pages, schema/readiness, login, verified marketplace access, private-assignment ownership boundaries and the admin gate using disposable synthetic records.
+
+The drill containers use `--network none`, publish no ports, run with constrained memory/CPU, and receive no production environment file or SMTP/AWS/SSH credentials. The actual server process unsets `SOLID_QUEUE_IN_PUMA`, including for legacy images that treat the string `false` as true; the helper separately verifies that no Solid Queue processes exist. All writes go into the disposable restore copy. It confirms that the production container ID, image, running state and start time remain unchanged. It removes only its exact generated container and temporary restore directory on exit.
+
+Install the helper and smoke script alongside the existing restore helper:
+
+```sh
+sudo install -m 0750 script/ops/lawrelay-restore-boot-drill /usr/local/libexec/lawrelay-restore-boot-drill
+sudo install -m 0640 script/ops/lawrelay-recovery-smoke.rb /usr/local/libexec/lawrelay-recovery-smoke.rb
+```
+
+Select images that already exist locally and are known to support the restored schema. Substitute the exact release tags; the helper never pulls an image or reverses a migration:
+
+```sh
+sudo systemd-run --wait --collect --pipe --unit=lawrelay-isolated-boot-drill \
+  -p EnvironmentFile=/etc/lawrelay/backup.env -p PrivateTmp=true \
+  --setenv=LAWRELAY_DRILL_CURRENT_IMAGE=lawrelay:0.2.0-dc4f2f19500c \
+  --setenv=LAWRELAY_DRILL_ROLLBACK_IMAGE=lawrelay:0.2.0-78f08b0c2952 \
+  /usr/local/libexec/lawrelay-restore-boot-drill
+```
+
+Never run `lawrelay-recovery-smoke.rb` on the production container: it intentionally creates synthetic records in a disposable copy. It refuses the production hostname, configured SMTP, or enabled queue workers. This drill proves restoration and compatibility for the tested pair only; it does not authorize an unreviewed schema downgrade or production traffic switch. Actual mail delivery, executing restored jobs, real-account MFA recovery and cross-host/provider recovery remain separate checks. Re-run after storage/schema changes and at least quarterly.
 
 ## Recovery and rollback
 

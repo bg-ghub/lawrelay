@@ -13,8 +13,8 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Directory profile lookup, professional-email confirmation, account email verification, and suspended-account protections are implemented and tested.
 - [x] Private assignments, proposals, settings, and admin routes require authentication and authorization.
 - [x] Private GitHub repository; source remains unpublished to the public.
-- [x] Production image deployed on Hetzner: `lawrelay:0.2.0-dc4f2f19500c`, matching SemVer tag `v0.2.0`.
-- [x] Linux suite: 154 runs / 902 assertions; system checks: 4 / 13. Static/security scans pass.
+- [x] Free-beta deployment on Hetzner with immutable image/version pins; the runtime revision is recorded in the protected `release.env`.
+- [x] Automated regressions, static/security scans, and Chrome/Firefox/Edge system checks. The CI link records the current revision's results.
 - [x] Off-host backups and isolated restore drill pass (`9d55cfca`); nightly backups and five-minute health checks are enabled. Owner SMTP alerting was tested.
 - [x] Production administrator password email completed through Migadu after configuring 10-second connection and 30-second read timeouts. The queue has no failed or pending jobs. Recipient-side inbox/header checks remain below.
 - [x] GitHub-hosted Actions starts jobs again under the existing account budget. [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml) checks SemVer, security, lint, Rails/browser tests, and the production container; release merges wait for every check to pass.
@@ -28,18 +28,28 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.
-- [x] SemVer `0.2.0`, changelog, AGPL-3.0-or-later license, secret exclusions, and repository secret scans.
+- [x] SemVer and changelog, AGPL-3.0-or-later license, secret exclusions, and repository secret scans. The beta-readiness patch is `0.2.1`.
 
-## Remaining founding-beta work
+## Beta follow-through completed
 
-- [ ] Confirm external inbox arrival and SPF/DKIM/DMARC alignment on recipient-side headers; SMTP acceptance alone does not prove inbox placement.
-- [ ] Complete native-speaker legal and UX review of NL/FR/DE/EN signup, verification, marketplace, pricing, privacy, terms, and legal notice copy. Do not call template legal text approved before Belgian counsel reviews it.
-- [ ] Confirm the operator's legal details, platform role, complaints/support process, privacy contact, retention, and processor/DPA register with counsel.
-- [ ] Add an external uptime monitor for homepage, login, and readiness; keep an on-call owner and test alert delivery.
-- [ ] Collect feedback from the first real users and record onboarding, verification, posting, response, match, and support issues.
-- [ ] Arrange an independent security review/penetration test before broad public access.
-- [ ] Review accessibility and browser/device coverage; fix material WCAG and keyboard/screen-reader issues.
-- [ ] Keep real assignments behind authentication and continue monitoring logs, disk, queue, TLS, mail, and backup health.
+- [x] Engineering security review and fixes: address-bound email/recovery links, explicit email-confirmation POST, server password minimum, current firm-membership authorization and MFA/free-text log filtering.
+- [x] Keyboard/focus/labels/landmarks/contrast/mobile fixes; all four signup locales checked at 320/800/1280px in Chrome, Firefox and Edge.
+- [x] Multilingual editorial review, corrected `advocaat.be` references, and accurate Migadu Swiss-company/French-email-server disclosure.
+- [x] [Support/moderation/privacy/appeals playbook](ops/support.md), [feedback intake and recording process](ops/beta-feedback.md), and [provider/data/retention register](ops/data-register.md).
+- [x] Isolated encrypted restore and compatible-image rollback boot checks; authentication, private-record boundaries and no-worker/no-network isolation verified. See [operations evidence](ops/beta-ops-checks.md).
+- [x] Host alert message truncation fixed and full-event/dedup behavior tested without sending. Operator confirmed the earlier synthetic alert reached Proton.
+- [x] Hourly secret-free external monitoring implemented for homepage, login, readiness, generic queue health and TLS expiry; private owner incidents and synthetic failure/recovery controls are included.
+
+## Remaining human or live evidence
+
+- [ ] Finish GitHub-hosted monitoring, synthetic incident/inbox acceptance and the `0.2.1` recovery drill; record actual results in [operations evidence](ops/beta-ops-checks.md).
+- [ ] Confirm password/verification email inbox placement and recipient-side SPF/DKIM/DMARC results. Receipt of the operational alert confirms that message only.
+- [ ] Operator completes administrator password setup and authenticator MFA; recovery codes/control-plane access stay private.
+- [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.
+- [ ] External independent security review/penetration test; the engineering review is not a substitute.
+- [ ] Manual screen-reader and physical Safari/iOS/Android testing, plus independent accessibility review. Automated browser checks are not WCAG certification.
+- [ ] Collect actual user feedback and outcomes using the prepared process; no users or feedback are fabricated.
+- [ ] Ongoing operator work: triage, moderation/privacy execution, mail quota/capacity review, backup/log/queue/TLS checks and human incident rehearsal. Migadu Micro allows 20 outgoing attempts/day across the account; no plan was changed.
 
 ## Paid launch — later, not enabled
 

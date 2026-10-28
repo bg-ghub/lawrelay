@@ -2,7 +2,7 @@ fr:
   admin:
     founding_accesses:
       link: "Accès fondateur"
-      eyebrow: "Bêta fondateur"
+      eyebrow: "Bêta"
       title: "Accès gratuit"
       intro: "Accordez à un cabinet vérifié une courte période bêta consignée. Cela ne crée jamais de paiement et ne remplace pas une offre payante."
       back: "Retour aux vérifications"

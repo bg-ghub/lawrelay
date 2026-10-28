@@ -1,5 +1,5 @@
 <% content_for :title, t("settings.title") %>
-<main class="new-assignment shell settings-page">
+<div class="new-assignment shell settings-page">
   <div class="new-assignment__intro">
     <p class="eyebrow"><%= t("settings.eyebrow") %></p>
     <h1><%= t("settings.heading") %></h1>
@@ -10,7 +10,7 @@
     <%= form_with url: settings_path, method: :patch, class: "assignment-form" do |form| %>
       <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>
       <% if errors.any? %>
-        <div class="form-error" role="alert">
+        <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors">
           <strong><%= t("settings.errors.heading") %></strong>
           <ul><% errors.each do |message| %><li><%= message %></li><% end %></ul>
         </div>
@@ -67,4 +67,4 @@
 
     <aside class="posting-aside"><span class="posting-aside__number">01</span><h2><%= t("settings.aside.title") %></h2><p><%= t("settings.aside.body") %></p></aside>
   </div>
-</main>
+</div>

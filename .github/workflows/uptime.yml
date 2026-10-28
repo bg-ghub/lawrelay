@@ -1,0 +1,45 @@
+name: Uptime
+
+on:
+  schedule:
+    # Run away from the busy start of each hour. GitHub schedules can be late.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      self_test:
+        description: "Synthetic alert test; does not change or probe production"
+        type: choice
+        default: "off"
+        options: ["off", "failure", "recovery"]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: lawrelay-uptime
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check public HTTPS from outside Hetzner
+        id: probe
+        continue-on-error: true
+        env:
+          UPTIME_SELF_TEST: ${{ inputs.self_test || 'off' }}
+          UPTIME_RESULT_PATH: ${{ runner.temp }}/lawrelay-uptime.json
+        run: python3 script/ops/external-uptime.py probe
+      - name: Open one private owner incident or close it after recovery
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPTIME_RESULT_PATH: ${{ runner.temp }}/lawrelay-uptime.json
+          LAWRELAY_ALERT_OWNER: bg-ghub
+        run: python3 script/ops/external-uptime.py notify
+      - name: Mark unhealthy checks as failed
+        if: ${{ steps.probe.outcome == 'failure' }}
+        run: exit 1

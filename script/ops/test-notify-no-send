@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+# Captures mocked transports; never makes HTTP/SMTP requests or reads real envs.
+set -eu
+umask 077
+
+ops=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+temporary=$(mktemp -d)
+cleanup() { rm -rf -- "$temporary"; }
+trap cleanup EXIT HUP INT TERM
+mkdir "$temporary/bin" "$temporary/dedup"
+cat >"$temporary/bin/logger" <<'SH'
+#!/usr/bin/env sh
+printf '%s\n' "$*" >>"$LAWRELAY_TEST_LOG"
+SH
+cat >"$temporary/bin/python3" <<'SH'
+#!/usr/bin/env sh
+# The real notifier supplies the synthetic event as the second argument.
+printf '%s\n' "$2" >>"$LAWRELAY_TEST_MESSAGES"
+cat >/dev/null
+exit 0
+SH
+cat >"$temporary/bin/curl" <<'SH'
+#!/usr/bin/env sh
+exit 99
+SH
+chmod 700 "$temporary/bin/logger" "$temporary/bin/python3" "$temporary/bin/curl"
+: >"$temporary/mock.env"
+export PATH="$temporary/bin:$PATH"
+export LAWRELAY_TEST_LOG="$temporary/log"
+export LAWRELAY_TEST_MESSAGES="$temporary/messages"
+export LAWRELAY_ALERT_EMAIL=owner@example.invalid
+export LAWRELAY_ALERT_WEBHOOK_URL=
+export LAWRELAY_SMTP_ENV_FILE="$temporary/mock.env"
+export LAWRELAY_ALERT_DEDUP_DIR="$temporary/dedup"
+
+# Unquoted legacy invocation must retain the entire message.
+sh "$ops/lawrelay-notify" LawRelay systemd unit failed: lawrelay-health.service
+grep -Fx 'LawRelay systemd unit failed: lawrelay-health.service' "$temporary/messages" >/dev/null
+# Repeating the same event must not send again.
+sh "$ops/lawrelay-notify" "LawRelay systemd unit failed: lawrelay-health.service"
+[ "$(wc -l <"$temporary/messages" | tr -d ' ')" -eq 1 ]
+# A different failed unit must have a distinct fingerprint and complete event.
+sh "$ops/lawrelay-notify" LawRelay systemd unit failed: lawrelay-backup.service
+grep -Fx 'LawRelay systemd unit failed: lawrelay-backup.service' "$temporary/messages" >/dev/null
+[ "$(wc -l <"$temporary/messages" | tr -d ' ')" -eq 2 ]
+printf '%s\n' 'No-send alert checks passed: full events, duplicate suppression and distinct-unit fingerprints.'
