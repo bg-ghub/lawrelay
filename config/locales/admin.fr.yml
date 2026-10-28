@@ -1,0 +1,28 @@
+fr:
+  admin:
+    verifications:
+      eyebrow: "Administration"
+      title: "Vérification des avocats"
+      intro: "Contrôlez les données professionnelles et du cabinet avant d’autoriser l’accès à la plateforme."
+      back: "Retour au tableau de bord"
+      account: "Compte"
+      email: "E-mail"
+      email_verified: "E-mail vérifié"
+      email_unverified: "E-mail en attente"
+      firm: "Cabinet"
+      enterprise_number: "Numéro d’entreprise"
+      bar: "Inscription au barreau"
+      firm_status: "Statut du cabinet"
+      lawyer_status: "Statut de l’avocat"
+      missing: "Manquant"
+      note: "Note interne de vérification"
+      note_placeholder: "Indiquez ce qui a été contrôlé et le motif de la décision."
+      approve: "Approuver"
+      reject: "Refuser"
+      empty_title: "Rien à vérifier"
+      empty_body: "Aucune vérification d’avocat ou de cabinet n’est en attente."
+      notices:
+        approved: "%{name} a été approuvé."
+        rejected: "%{name} a été refusé."
+        incomplete_account: "Ce compte ne comporte pas de cabinet ou de profil d’avocat."
+        invalid_decision: "Choisissez d’approuver ou de refuser."

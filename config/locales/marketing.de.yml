@@ -1,0 +1,114 @@
+de:
+  marketing:
+    locale_name: Deutsch
+    language_switcher: Sprache wählen
+    actions:
+      post_assignment: Auftrag einstellen
+      browse_assignments: Aufträge ansehen
+      view: Ansehen
+    layout:
+      title: "LawRelay — die passende Kollegin oder den passenden Kollegen finden"
+      description: LawRelay verbindet belgische Anwältinnen und Anwälte für Sitzungsvertretungen und juristische Aufträge.
+      skip_to_content: Zum Inhalt springen
+      dismiss_notice: Hinweis schließen
+    header:
+      home_label: LawRelay — Startseite
+      primary_navigation: Hauptnavigation
+      how_it_works: So funktioniert es
+      for_lawyers: Für Anwältinnen und Anwälte
+      discover_assignments: Aufträge entdecken
+      questions: Fragen
+      dashboard: Meine Übersicht
+      open_menu: Menü öffnen
+    footer:
+      intro: Ein Ort für Anwältinnen und Anwälte, um Vertretungen zu organisieren und Aufträge zu teilen.
+      platform: Plattform
+      learn_more: Mehr erfahren
+      made_for_belgium: Für Belgien gemacht
+      demo_notice: Ein lokaler Arbeitsbereich für Anwältinnen und Anwälte. Dies ist eine Demo; bitte keine vertraulichen Fallinformationen einstellen.
+      demo_disclaimer: Demo — keine Rechtsberatung
+    home:
+      title: "LawRelay — die passende Kollegin oder den passenden Kollegen finden"
+      og_description: Stellen Sie eine Sitzungsvertretung oder einen juristischen Auftrag ein und finden Sie eine Kollegin oder einen Kollegen.
+      hero:
+        eyebrow: für Anwältinnen und Anwälte
+        heading_before: Kollegin oder Kollege gesucht
+        heading_middle: für eine
+        heading_emphasis: Verhandlung?
+        lede: Stellen Sie Ihre Anfrage ein, erhalten Sie Rückmeldungen und wählen Sie die passende Person für Ihre Sache.
+        note: Prototyp für belgische Anwältinnen und Anwälte. Ohne Vermittler.
+      product:
+        aria_label: Beispiel des LawRelay-Arbeitsbereichs
+        today: Heute
+        response_received: Eine Rückmeldung erhalten
+        court_replacement: Sitzungsvertretung
+        court_example: Familiengericht Antwerpen
+        city: Antwerpen
+        tomorrow: morgen, 10:00 Uhr
+        responses: 3 Rückmeldungen
+        compare: Vergleichen
+        profile_rate: Profil & Honorar
+        choose: Wählen
+        at_your_pace: in Ihrem Tempo
+      pathways:
+        eyebrow: für beide Seiten der Anwaltschaft
+        heading_before: Wobei können wir
+        heading_after: Ihnen helfen?
+        lede: Eine Vertretung finden oder selbst einen Auftrag übernehmen. Alles an einem Ort.
+        requester:
+          kicker: Ich brauche Unterstützung
+          heading_before: Finden Sie eine Kollegin
+          heading_after: oder einen Kollegen.
+          body: Teilen Sie Datum, Ort und Ihren Bedarf mit. Danach vergleichen Sie die Rückmeldungen.
+        responder:
+          kicker: Ich habe Kapazität
+          heading_before: Übernehmen Sie Arbeit,
+          heading_after: die zu Ihnen passt.
+          body: Sehen Sie Sitzungsvertretungen und juristische Aufträge in Ihrer Region oder Ihrem Fachgebiet.
+      opportunities:
+        eyebrow: offene Aufträge
+        heading_before: Was steht
+        heading_emphasis: heute an?
+        all: Alle Aufträge
+        by_arrangement: Nach Vereinbarung
+        belgium: Belgien
+        empty_heading: Noch keine Aufträge.
+        empty_body: Stellen Sie den ersten ein und machen Sie Ihre Anfrage für Kolleginnen und Kollegen sichtbar.
+        demo_caption: Beispielaufträge in dieser Demo.
+      how:
+        eyebrow: so funktioniert es
+        heading_before: Von der Anfrage
+        heading_after: zur Vereinbarung.
+        lede: Stellen Sie Ihren Auftrag ein, erhalten Sie Rückmeldungen und entscheiden Sie selbst.
+        steps:
+          "0":
+            heading: Auftrag einstellen
+            body: Geben Sie Art, Datum, Ort und mögliche Präferenzen an.
+          "1":
+            heading: Rückmeldungen ansehen
+            body: Kolleginnen und Kollegen antworten mit Verfügbarkeit und Honorar.
+          "2":
+            heading: Auswahl treffen
+            body: Wählen Sie, wen Sie kontaktieren möchten, und klären Sie die Details gemeinsam.
+      faq:
+        eyebrow: fragen
+        heading_before: Gut zu
+        heading_after: wissen.
+        lede: Dies ist ein funktionierender Prototyp für Anwältinnen und Anwälte.
+        items:
+          "0":
+            question: Für wen ist LawRelay?
+            answer: Für Anwältinnen und Anwälte, die eine Sitzungsvertretung benötigen, Arbeit übertragen oder einen Auftrag übernehmen möchten.
+          "1":
+            question: Wie wähle ich eine Kollegin oder einen Kollegen?
+            answer: Vergleichen Sie Erfahrung, Verfügbarkeit und Honorar. Die Entscheidung liegt bei Ihnen.
+          "2":
+            question: Kann ich mein eigenes Honorar vorschlagen?
+            answer: Ja. Sie können ein RichtHonorar angeben oder selbst ein Angebot machen.
+          "3":
+            question: Ist das schon live?
+            answer: Noch nicht. Bitte teilen Sie hier keine vertraulichen Fallinformationen.
+      cta:
+        eyebrow: bereit loszulegen?
+        heading_before: Auftrag einstellen.
+        heading_after: Rückmeldungen erhalten.

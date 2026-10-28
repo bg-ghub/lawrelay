@@ -1,0 +1,114 @@
+en:
+  marketing:
+    locale_name: English
+    language_switcher: Choose language
+    actions:
+      post_assignment: Post an assignment
+      browse_assignments: Browse assignments
+      view: View
+    layout:
+      title: "LawRelay — find the right colleague for your practice"
+      description: LawRelay connects Belgian lawyers for court cover and legal assignments.
+      skip_to_content: Skip to content
+      dismiss_notice: Dismiss notice
+    header:
+      home_label: LawRelay — home
+      primary_navigation: Primary navigation
+      how_it_works: How it works
+      for_lawyers: For lawyers
+      discover_assignments: Discover assignments
+      questions: Questions
+      dashboard: My overview
+      open_menu: Open menu
+    footer:
+      intro: A place for lawyers to arrange cover and share assignments.
+      platform: Platform
+      learn_more: Learn more
+      made_for_belgium: Made for Belgium
+      demo_notice: A local workspace for lawyers. This is a demo environment; do not post confidential case information.
+      demo_disclaimer: Demo — not legal advice
+    home:
+      title: "LawRelay — find the right colleague for your practice"
+      og_description: Post a court cover request or legal assignment and find a colleague.
+      hero:
+        eyebrow: for lawyers
+        heading_before: Need a colleague
+        heading_middle: for a
+        heading_emphasis: hearing?
+        lede: Post your request, receive responses, and choose the colleague who fits your matter.
+        note: Prototype for Belgian lawyers. No middlemen.
+      product:
+        aria_label: Example of the LawRelay workspace
+        today: Today
+        response_received: A response received
+        court_replacement: Court cover
+        court_example: Antwerp Family Court
+        city: Antwerp
+        tomorrow: tomorrow, 10:00
+        responses: 3 responses
+        compare: Compare
+        profile_rate: profile & rate
+        choose: Choose
+        at_your_pace: at your own pace
+      pathways:
+        eyebrow: for both sides of the bar
+        heading_before: How can we
+        heading_after: help you?
+        lede: Find cover or take on an assignment yourself. Keep it all in one place.
+        requester:
+          kicker: I need help
+          heading_before: Find a colleague
+          heading_after: for your assignment.
+          body: Share the date, place, and what you need. Then compare the responses.
+        responder:
+          kicker: I have capacity
+          heading_before: Take on work
+          heading_after: that suits you.
+          body: Browse court cover and legal assignments in your area or field.
+      opportunities:
+        eyebrow: open assignments
+        heading_before: What is happening
+        heading_emphasis: today?
+        all: All assignments
+        by_arrangement: By arrangement
+        belgium: Belgium
+        empty_heading: No assignments yet.
+        empty_body: Post the first one and make your request visible to colleagues.
+        demo_caption: Sample assignments in this demo.
+      how:
+        eyebrow: how it works
+        heading_before: From request
+        heading_after: to arrangement.
+        lede: Post your assignment, receive responses, and make the call yourself.
+        steps:
+          "0":
+            heading: Post your assignment
+            body: Add the type of work, date, place, and any preferences.
+          "1":
+            heading: Review responses
+            body: Colleagues respond with their availability and rate.
+          "2":
+            heading: Make your choice
+            body: Choose who to contact and arrange the practical details together.
+      faq:
+        eyebrow: questions
+        heading_before: Good to
+        heading_after: know.
+        lede: This is a working prototype for lawyers.
+        items:
+          "0":
+            question: Who is LawRelay for?
+            answer: Lawyers who need court cover, want to outsource work, or want to take on an assignment.
+          "1":
+            question: How do I choose a colleague?
+            answer: Compare experience, availability, and rate. The choice is yours.
+          "2":
+            question: Can I propose my own rate?
+            answer: Yes. You can add an indicative rate or make a proposal yourself.
+          "3":
+            question: Is this live already?
+            answer: Not yet. Please do not share confidential case information here.
+      cta:
+        eyebrow: ready to begin?
+        heading_before: Post your assignment.
+        heading_after: Receive responses.

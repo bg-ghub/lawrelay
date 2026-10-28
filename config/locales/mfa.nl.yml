@@ -1,0 +1,31 @@
+nl:
+  mfa:
+    eyebrow: "Beveiliging voor beheerders"
+    code_label: "Authenticatiecode"
+    code_hint: "Voer de huidige code uit je authenticator-app in."
+    notices:
+      required: "Bevestig eerst je authenticatorcode om beheer te openen."
+      enabled: "MFA voor beheerders is nu actief."
+      verified: "Beheerstoegang bevestigd."
+      invalid_code: "Deze code is ongeldig of al gebruikt."
+      rate_limited: "Te veel codepogingen. Wacht even en probeer opnieuw."
+    setup:
+      title: "MFA voor beheerders instellen — LawRelay"
+      heading: "Bescherm dit beheerdersaccount."
+      lede: "Voeg LawRelay toe aan een authenticator-app en bevestig daarna één code."
+      secret_legend: "Account toevoegen"
+      secret_instruction: "Voer deze instelsleutel in je authenticator-app in. Hou ze privé."
+      uri_hint: "De meeste apps aanvaarden een instelsleutel manueel; LawRelay bewaart bewust geen QR-code."
+      uri_summary: "Authenticatorlink tonen"
+      confirm_legend: "Instelling bevestigen"
+      submit: "MFA inschakelen"
+      aside_title: "Verplicht voor beheer"
+      aside_body: "MFA is verplicht voor verificatie, moderatie en privacybeheer."
+    challenge:
+      title: "Beheerstoegang bevestigen — LawRelay"
+      heading: "Nog één korte controle."
+      lede: "Voer de huidige code uit je authenticator-app in om verder te gaan."
+      legend: "Toegang bevestigen"
+      submit: "Verder"
+      aside_title: "Tijdelijke toegang"
+      aside_body: "Deze extra controle vervalt na 12 uur of zodra je je afmeldt."

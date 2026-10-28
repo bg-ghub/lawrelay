@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+rm -f /rails/tmp/pids/server.pid
+
+# This app currently runs as one Kamal web process with SQLite databases on
+# the persistent /rails/storage volume. Prepare all schemas before Puma starts.
+if [ "${1:-}" = "./bin/thrust" ]; then
+  bundle exec rails db:prepare
+fi
+
+exec "$@"

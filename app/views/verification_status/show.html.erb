@@ -1,0 +1,27 @@
+<% content_for :title, t("auth.verification_status.title") %>
+<main class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("auth.verification_status.eyebrow") %></p>
+    <h1><%= t("auth.verification_status.heading", name: @user.first_name) %></h1>
+    <p><%= t("auth.verification_status.lede") %></p>
+  </div>
+
+  <div class="dashboard-summary">
+    <div class="summary-card"><span><%= t("auth.verification_status.email") %></span><strong><%= @user.email_verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@user.email_verified? ? 'verified' : 'pending'}") %></small></div>
+    <div class="summary-card"><span><%= t("auth.verification_status.bar") %></span><strong><%= @lawyer_profile&.verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@lawyer_profile&.verification_status || 'pending'}") %></small></div>
+    <div class="summary-card"><span><%= t("auth.verification_status.firm") %></span><strong><%= @firm&.verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@firm&.verification_status || 'pending'}") %></small></div>
+  </div>
+
+  <% unless @user.email_verified? %>
+    <section class="form-section">
+      <h2><%= t("auth.verification_status.check_inbox") %></h2>
+      <p><%= t("auth.verification_status.check_inbox_body", email: @user.email_address) %></p>
+      <%= button_to t("auth.verification_status.resend"), verification_status_path, method: :post, class: "button button--dark" %>
+    </section>
+  <% else %>
+    <section class="form-section">
+      <h2><%= t("auth.verification_status.review_title") %></h2>
+      <p><%= t("auth.verification_status.review_body") %></p>
+    </section>
+  <% end %>
+</main>

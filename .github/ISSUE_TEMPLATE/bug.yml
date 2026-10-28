@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible LawRelay problem using synthetic data only.
+title: "[Bug]: "
+labels: [ "bug" ]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include client information, matter facts, credentials, production data, or security vulnerabilities.
+  - type: input
+    id: version
+    attributes:
+      label: LawRelay version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Use synthetic examples and include the expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List the smallest safe set of steps that reproduces the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, operating system, Ruby version, and relevant non-secret configuration.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed personal, confidential, privileged, credential, and production information.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

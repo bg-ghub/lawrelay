@@ -1,0 +1,203 @@
+en:
+  pages:
+    shared:
+      version: "Draft version: %{date}"
+      not_configured: "To be completed before launch"
+      navigation_label: "Commercial and legal information"
+      draft_warning_title: "Operator details are still missing"
+      draft_warning_body: "This draft is not ready for publication. Configure the operator identity and obtain Belgian legal review before accepting real users or payments."
+    navigation:
+      pricing: "Pricing"
+      privacy: "Privacy"
+      terms: "Terms"
+      cookies: "Cookies"
+      legal_notice: "Legal notice"
+    pricing:
+      meta_title: "Pricing — LawRelay"
+      eyebrow: "simple platform pricing"
+      title: "Pay for the workspace, not for the legal fee."
+      introduction: "Posting offices pay LawRelay for access. Responding lawyers join free, and the lawyers settle their professional fees directly with each other."
+      beta:
+        kicker: "founding beta"
+        price: "€0"
+        title: "Invitation-only pilot"
+        body: "A limited group of verified Belgian lawyers helps shape the workflow before paid access begins."
+        features:
+          - "Verified pilot participants"
+          - "Post and respond during the agreed trial"
+          - "Direct feedback to the LawRelay team"
+      launch:
+        kicker: "launch hypothesis"
+        price: "€49 / month excl. VAT"
+        title: "One plan per posting office"
+        body: "Monthly access for an office that wants to publish assignments. The final offer is subject to pilot validation and professional review."
+        features:
+          - "Post court cover and legal assignments"
+          - "Receive and compare responses"
+          - "Responding lawyers use LawRelay free"
+          - "Cancel monthly"
+      direct_fees:
+        title: "Lawyer-to-lawyer fees stay outside LawRelay"
+        body: "The requester and the selected lawyer agree, invoice, and pay each other directly. LawRelay does not hold assignment funds, operate escrow, or deduct a percentage of professional fees."
+      review_notice: "Pricing is a product hypothesis, not a binding offer. VAT, Peppol invoicing, billing terms, and professional-conduct compliance must be confirmed before paid launch."
+    privacy:
+      meta_title: "Privacy notice — LawRelay"
+      eyebrow: "privacy"
+      title: "How LawRelay intends to handle personal data."
+      introduction: "This is a working draft for a verified lawyer marketplace. It must be completed with the operator identity, actual vendors, and final retention schedule before launch."
+      sections:
+        controller:
+          heading: "1. Who controls your data"
+          paragraphs:
+            - "The LawRelay operator will be the controller for account, verification, marketplace, support, security, and billing data. Its legal identity and contact details appear in the legal notice once configured."
+            - "Privacy questions and rights requests should be sent to the privacy contact listed in the legal notice."
+        scope:
+          heading: "2. Data we process"
+          bullets:
+            - "Account and contact data, including name, professional email, preferred language, and authentication records."
+            - "Professional-verification data, such as bar, bar number, firm, role, and verification evidence or status."
+            - "Profile, assignment, proposal, acceptance, cancellation, and audit-event data."
+            - "Billing identifiers, VAT and invoice details, subscription status, and payment-provider references; never full card or bank credentials."
+            - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
+          paragraphs:
+            - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
+        purposes:
+          heading: "3. Why and on what basis"
+          bullets:
+            - "To create and secure accounts, verify eligibility, provide matching features, and administer subscriptions: performance of the service agreement."
+            - "To issue and retain compliant invoices and respond to lawful requests: legal obligations."
+            - "To prevent abuse, secure the service, support users, improve reliability, and establish or defend claims: legitimate interests, balanced against user rights."
+            - "For optional analytics or marketing communications only where valid consent or another documented basis applies."
+        sharing:
+          heading: "4. Who receives data"
+          paragraphs:
+            - "Data is shared only as required to operate the service: with the requesting or responding lawyer as the workflow requires, authorised LawRelay staff, and contracted hosting, email, support, security, payment, invoicing, and backup providers."
+            - "A current subprocessor list and data-processing agreements must be in place before launch. Data is not sold."
+        transfers:
+          heading: "5. Location and transfers"
+          paragraphs:
+            - "LawRelay intends to keep production data in the European Economic Area. If a provider transfers personal data outside the EEA, LawRelay will document the transfer mechanism and supplementary safeguards before using that provider."
+        retention:
+          heading: "6. Retention"
+          paragraphs:
+            - "Data will be kept only for the period needed for the account, marketplace workflow, security, support, and legal obligations. Billing records may need to be retained after an account is closed."
+            - "The exact retention schedule and automatic-deletion jobs are release blockers and must be inserted here before the service accepts real data."
+        rights:
+          heading: "7. Your rights"
+          paragraphs:
+            - "Depending on the legal basis and circumstances, you may request access, correction, deletion, restriction, portability, or object to processing. You may withdraw consent without affecting earlier lawful processing."
+            - "You may lodge a complaint with the Belgian Data Protection Authority. LawRelay may need to verify your identity before fulfilling a request."
+        security:
+          heading: "8. Security, incidents, and changes"
+          paragraphs:
+            - "LawRelay will use access controls, encryption in transit, secure authentication, logging controls, backups, monitoring, and incident procedures appropriate to the risk. No online service can promise absolute security."
+            - "Material changes will be dated and communicated through the service or by email where appropriate."
+    terms:
+      meta_title: "Terms of service — LawRelay"
+      eyebrow: "terms of service"
+      title: "Rules for using LawRelay."
+      introduction: "These draft B2B terms describe the intended service. They are not final and must be reviewed against Belgian law and professional-conduct rules before launch."
+      sections:
+        agreement:
+          heading: "1. Agreement and operator"
+          paragraphs:
+            - "These terms govern use of LawRelay by professional users. The contracting operator and its contact details appear in the legal notice once configured. Creating an account or using the service after accepting a published version forms the service agreement."
+        eligibility:
+          heading: "2. Eligibility and verification"
+          paragraphs:
+            - "The marketplace is intended for verified lawyers and authorised firm staff. Users must provide accurate professional details, keep them current, protect their credentials, and promptly report compromised access. Verification does not constitute endorsement or a guarantee of competence."
+        role:
+          heading: "3. LawRelay's role"
+          paragraphs:
+            - "LawRelay provides software for publishing assignments, receiving responses, and coordinating an introduction between lawyers. It is not a law firm, employer, client, agent, escrow service, or party to the lawyer-to-lawyer engagement, and it does not provide legal advice."
+        professional_duties:
+          heading: "4. Professional responsibility"
+          bullets:
+            - "Each lawyer remains responsible for authority to delegate, conflicts checks, independence, competence, deadlines, court rules, professional secrecy, insurance, client communication, and all bar obligations."
+            - "A match or verification status never replaces the lawyer's own due diligence."
+            - "Users must agree the scope, professional fee, invoicing, and practical arrangements directly."
+        content:
+          heading: "5. Assignments and prohibited content"
+          paragraphs:
+            - "Users may publish only accurate, necessary professional information and must have the right to share it. Client identities, case facts, documents, evidence, privileged communications, unlawful content, spam, discriminatory requests, and misleading listings are prohibited."
+            - "LawRelay may remove, restrict, or preserve content where reasonably required for safety, compliance, disputes, or legal obligations."
+        workflow:
+          heading: "6. Responses and matches"
+          paragraphs:
+            - "The requester decides whom to contact or select. LawRelay does not guarantee a response, match, availability, outcome, quality, or payment by another user. Users must confirm every engagement and deadline outside the platform."
+        platform_fees:
+          heading: "7. LawRelay fees and billing"
+          paragraphs:
+            - "Founding-beta access is free for the agreed period. The proposed launch price is €49 per month excluding VAT for each posting office, cancellable monthly. Only the price and conditions shown at checkout or in an accepted order are binding."
+            - "Invoices, payment timing, failed-payment handling, credits, and cancellation rights will be specified before paid launch and must comply with Belgian structured B2B invoicing requirements."
+        professional_fees:
+          heading: "8. Professional fees"
+          paragraphs:
+            - "Professional fees for an assignment are agreed, invoiced, and paid directly between the lawyers or firms. LawRelay does not hold those funds, deduct a commission, or guarantee payment."
+        moderation:
+          heading: "9. Reports, moderation, and suspension"
+          paragraphs:
+            - "Users may report unlawful, unsafe, or rule-breaking content. LawRelay may investigate, request information, restrict content, suspend access, or terminate an account proportionately. Applicable notice, complaint, and appeal processes will be published before launch."
+        intellectual_property:
+          heading: "10. Intellectual property"
+          paragraphs:
+            - "Users retain rights in content they submit and grant LawRelay a limited licence to host, display, transmit, and process it only to operate and secure the service. LawRelay and its licensors retain rights in the platform, brand, and software."
+        availability:
+          heading: "11. Availability and changes"
+          paragraphs:
+            - "LawRelay may maintain, update, or change the service and does not promise uninterrupted availability. Material changes that adversely affect a paid plan will be communicated reasonably in advance where practicable."
+        liability:
+          heading: "12. Liability, termination, and law"
+          paragraphs:
+            - "A final, counsel-approved liability allocation, governing-law clause, competent court, termination process, data-export window, and mandatory-law carve-outs must be inserted before launch. Nothing in these draft terms excludes liability that cannot legally be excluded."
+    cookies:
+      meta_title: "Cookie notice — LawRelay"
+      eyebrow: "cookies"
+      title: "A deliberately small cookie footprint."
+      introduction: "The current LawRelay prototype uses only technology needed to keep the service secure and functioning."
+      sections:
+        current_use:
+          heading: "1. What is used today"
+          paragraphs:
+            - "A signed session cookie keeps the browser session secure and allows the application to remember authenticated state when account features are enabled. Security tokens help prevent forged requests. These functions are strictly necessary for the requested service."
+        no_tracking:
+          heading: "2. No optional tracking in the current release"
+          paragraphs:
+            - "LawRelay does not currently place advertising, behavioural-profiling, or optional analytics cookies. Language is carried in the page URL rather than a tracking cookie."
+        retention:
+          heading: "3. Duration and control"
+          paragraphs:
+            - "Session technology is limited to the duration and security needs of the service. You can remove cookies through browser settings, but blocking necessary cookies may prevent login or forms from working."
+        future:
+          heading: "4. If optional cookies are added"
+          paragraphs:
+            - "LawRelay will update this notice and request prior, granular consent before any non-essential cookie is used. Rejecting must be as easy as accepting, and consent must remain withdrawable."
+        contact:
+          heading: "5. Questions"
+          paragraphs:
+            - "Cookie and privacy questions can be sent to the privacy contact in the legal notice."
+    legal_notice:
+      meta_title: "Legal notice — LawRelay"
+      eyebrow: "operator information"
+      title: "Who operates LawRelay."
+      introduction: "Belgian business-identification details must remain easy, direct, and permanently accessible. Missing fields below block publication."
+      fields:
+        legal_name: "Legal or trading name"
+        registered_address: "Registered address"
+        enterprise_number: "Enterprise number"
+        vat_number: "VAT number or status"
+        legal_email: "Legal contact email"
+        privacy_email: "Privacy contact"
+        support_email: "Support contact"
+        phone: "Telephone"
+        professional_body: "Professional body or supervisory authority, if applicable"
+        professional_rules_url: "Applicable professional rules, if applicable"
+      sections:
+        service:
+          heading: "Nature of the service"
+          paragraphs:
+            - "LawRelay is a B2B coordination and matching platform for verified lawyers. It is not a law firm and does not provide legal advice or represent clients."
+        content:
+          heading: "Website content"
+          paragraphs:
+            - "General information on this website is provided for product information and may change. It is not legal, tax, accounting, or professional-conduct advice."

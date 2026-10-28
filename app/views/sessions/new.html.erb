@@ -1,0 +1,33 @@
+<% content_for :title, t("auth.sessions.title") %>
+<main class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("auth.sessions.eyebrow") %></p>
+    <h1><%= t("auth.sessions.heading") %></h1>
+    <p><%= t("auth.sessions.lede") %></p>
+  </div>
+
+  <div class="new-assignment__layout">
+    <%= form_with url: session_path, class: "assignment-form" do |form| %>
+      <fieldset class="form-section">
+        <legend><%= t("auth.sessions.form_title") %></legend>
+        <div class="field-group">
+          <%= form.label :email_address, t("auth.fields.professional_email") %>
+          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+        </div>
+        <div class="field-group">
+          <%= form.label :password, t("auth.fields.password") %>
+          <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <%= link_to t("auth.sessions.forgot_password"), new_password_path, class: "button button--ghost" %>
+        <%= form.submit t("auth.sessions.submit"), class: "button button--dark" %>
+      </div>
+    <% end %>
+
+    <aside class="posting-aside">
+      <span class="posting-aside__number">01</span><h2><%= t("auth.sessions.new_here") %></h2><p><%= t("auth.sessions.new_here_body") %></p>
+      <%= link_to t("auth.sessions.create_account"), new_registration_path, class: "text-link" %>
+    </aside>
+  </div>
+</main>

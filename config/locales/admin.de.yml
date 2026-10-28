@@ -1,0 +1,28 @@
+de:
+  admin:
+    verifications:
+      eyebrow: "Verwaltung"
+      title: "Anwaltsprüfung"
+      intro: "Prüfen Sie Berufs- und Kanzleidaten, bevor Sie den Zugang zum Marktplatz freigeben."
+      back: "Zurück zur Übersicht"
+      account: "Konto"
+      email: "E-Mail"
+      email_verified: "E-Mail bestätigt"
+      email_unverified: "E-Mail ausstehend"
+      firm: "Kanzlei"
+      enterprise_number: "Unternehmensnummer"
+      bar: "Kammerzulassung"
+      firm_status: "Kanzleistatus"
+      lawyer_status: "Anwaltsstatus"
+      missing: "Fehlt"
+      note: "Interner Prüfvermerk"
+      note_placeholder: "Notieren Sie, was geprüft wurde und warum diese Entscheidung getroffen wurde."
+      approve: "Genehmigen"
+      reject: "Ablehnen"
+      empty_title: "Nichts zu prüfen"
+      empty_body: "Es stehen keine Prüfungen von Anwälten oder Kanzleien aus."
+      notices:
+        approved: "%{name} wurde genehmigt."
+        rejected: "%{name} wurde abgelehnt."
+        incomplete_account: "Bei diesem Konto fehlt eine Kanzlei oder ein Anwaltsprofil."
+        invalid_decision: "Wählen Sie Genehmigen oder Ablehnen."

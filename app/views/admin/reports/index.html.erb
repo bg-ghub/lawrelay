@@ -1,0 +1,9 @@
+<% content_for :title, t("trust.admin.reports.title") %>
+<main class="dashboard-page shell trust-page">
+  <div class="dashboard-heading"><div><p class="eyebrow"><%= t("trust.admin.eyebrow") %></p><h1><%= t("trust.admin.reports.heading") %></h1><p><%= t("trust.admin.reports.lede") %></p></div><%= link_to t("trust.admin.privacy_requests.heading"), admin_privacy_requests_path, class: "button button--ghost" %></div>
+  <section class="dashboard-panel">
+    <% if @reports.any? %>
+      <div class="trust-list"><% @reports.each do |report| %><article class="trust-row trust-row--admin"><div><strong><%= t("trust.reports.categories.#{report.category}") %></strong><p><%= report.reportable.try(:title) %> · <%= report.reporter_user.full_name %></p><p><%= report.details %></p></div><span class="status-pill"><%= t("trust.statuses.#{report.status}") %></span><%= form_with model: [:admin, report], class: "trust-review-form" do |form| %><%= form.text_area :resolution_note, rows: 2, maxlength: 2000, placeholder: t("trust.admin.resolution_note") %><div><%= form.button t("trust.admin.review"), name: :decision, value: "review", class: "button button--ghost button--small" %><%= form.button t("trust.admin.resolve"), name: :decision, value: "resolve", class: "button button--dark button--small" %><%= form.button t("trust.admin.dismiss"), name: :decision, value: "dismiss", class: "button button--ghost button--small" %></div><% end %></article><% end %></div>
+    <% else %><p class="muted-copy"><%= t("trust.admin.reports.empty") %></p><% end %>
+  </section>
+</main>

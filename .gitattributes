@@ -1,0 +1,15 @@
+# See https://git-scm.com/docs/gitattributes for more about git attribute files.
+
+# Keep scripts and source portable across Windows and Linux. Windows command
+# wrappers retain CRLF; all other detected text is stored and checked out as LF.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.png binary
+
+# Mark the database schema as having been generated.
+db/schema.rb linguist-generated
+
+# Mark any vendored files as having been vendored.
+vendor/* linguist-vendored
+config/credentials/*.yml.enc diff=rails_credentials
+config/credentials.yml.enc diff=rails_credentials

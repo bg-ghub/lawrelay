@@ -1,0 +1,8 @@
+de:
+  notices:
+    assignment_created: "Ihr Auftrag wurde veröffentlicht. Geeignete Kolleginnen und Kollegen können jetzt antworten."
+    proposal_created: "Ihre Bewerbung wurde gesendet. Der Auftraggeber wird benachrichtigt."
+  assignments:
+    kinds:
+      court_replacement: "Vertretung bei Gericht"
+      legal_task: "Juristischer Auftrag"

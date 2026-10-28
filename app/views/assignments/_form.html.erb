@@ -1,0 +1,65 @@
+<%= form_with model: assignment, class: "assignment-form", data: { controller: "assignment-kind" } do |form| %>
+  <% if assignment.errors.any? %>
+    <div class="form-error" role="alert"><strong><%= t("marketplace.form.error_heading") %></strong><ul><% assignment.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div>
+  <% end %>
+
+  <fieldset class="form-section">
+    <legend><%= t("marketplace.form.kind_legend") %></legend>
+    <div class="kind-picker">
+      <label class="kind-option"><%= form.radio_button :kind, "court_replacement", checked: assignment.kind != "legal_task", data: { action: "change->assignment-kind#toggle" } %><span class="kind-option__icon" aria-hidden="true">⚖</span><span><strong><%= t("marketplace.kinds.court_replacement") %></strong><small><%= t("marketplace.form.court_replacement_hint") %></small></span></label>
+      <label class="kind-option"><%= form.radio_button :kind, "legal_task", checked: assignment.kind == "legal_task", data: { action: "change->assignment-kind#toggle" } %><span class="kind-option__icon" aria-hidden="true">✦</span><span><strong><%= t("marketplace.kinds.legal_task") %></strong><small><%= t("marketplace.form.legal_task_hint") %></small></span></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-section">
+    <legend><%= t("marketplace.form.details_legend") %></legend>
+    <div class="field-group"><%= form.label :title, t("marketplace.form.title_label") %><%= form.text_field :title, required: true, maxlength: 160, placeholder: t("marketplace.form.title_placeholder") %></div>
+    <div class="field-group"><%= form.label :description, t("marketplace.form.description_label") %><%= form.text_area :description, rows: 5, required: true, maxlength: 4000, placeholder: t("marketplace.form.description_placeholder") %></div>
+    <div class="field-group"><%= form.label :practice_area, t("marketplace.form.practice_area_label") %><%= form.select :practice_area, t("marketplace.practice_areas").map { |_key, label| [ label, label ] }, { prompt: t("marketplace.form.practice_area_prompt") }, required: true, class: "select-field" %></div>
+
+    <div class="field-group" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
+      <%= form.label :assignment_subtype, t("marketplace.form.court_subtype_label"), for: "assignment_court_subtype" %>
+      <%= form.select :assignment_subtype, Assignment::SUBTYPES.fetch(:court_replacement).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.court_subtype_prompt") }, id: "assignment_court_subtype", required: assignment.court_replacement?, disabled: assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "courtInput" } %>
+    </div>
+    <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
+      <%= form.label :assignment_subtype, t("marketplace.form.legal_subtype_label"), for: "assignment_legal_subtype" %>
+      <%= form.select :assignment_subtype, Assignment::SUBTYPES.fetch(:legal_task).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.legal_subtype_prompt") }, id: "assignment_legal_subtype", required: assignment.legal_task?, disabled: !assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "legalInput" } %>
+    </div>
+    <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
+      <%= form.label :languages, t("marketplace.form.languages_label") %>
+      <%= form.text_field :languages, placeholder: t("marketplace.form.languages_placeholder"), disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %>
+      <p class="field-hint"><%= t("marketplace.form.languages_hint") %></p>
+    </div>
+    <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
+      <%= form.label :scope_indication, t("marketplace.form.scope_indication_label") %>
+      <%= form.text_field :scope_indication, maxlength: 250, placeholder: t("marketplace.form.scope_indication_placeholder"), disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-section">
+    <legend><%= t("marketplace.form.schedule_legend") %></legend>
+    <div class="field-group"><%= form.label :response_deadline_at, t("marketplace.form.response_deadline_label") %><%= form.datetime_local_field :response_deadline_at, required: true %><p class="field-hint"><%= t("marketplace.form.response_deadline_hint") %></p></div>
+    <div class="form-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
+      <div class="field-group"><%= form.label :starts_at, t("marketplace.form.hearing_at_label"), for: "assignment_hearing_at" %><%= form.datetime_local_field :starts_at, id: "assignment_hearing_at", required: assignment.court_replacement?, disabled: assignment.legal_task?, data: { assignment_kind_target: "courtInput" } %></div>
+      <div class="field-group"><%= form.label :duration_minutes, t("marketplace.form.duration_label") %><%= form.number_field :duration_minutes, min: 15, step: 15, required: assignment.court_replacement?, disabled: assignment.legal_task?, placeholder: "60", data: { assignment_kind_target: "courtInput" } %></div>
+    </div>
+    <div class="form-row" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
+      <div class="field-group"><%= form.label :delivery_due_at, t("marketplace.form.delivery_due_label") %><%= form.datetime_local_field :delivery_due_at, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %></div>
+      <div class="field-group"><%= form.label :starts_at, t("marketplace.form.execution_deadline_label"), for: "assignment_execution_deadline" %><%= form.datetime_local_field :starts_at, id: "assignment_execution_deadline", required: assignment.legal_task?, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %></div>
+    </div>
+    <div class="form-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
+      <div class="field-group"><%= form.label :court, t("marketplace.form.court_label") %><%= form.text_field :court, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 180, placeholder: t("marketplace.form.court_placeholder"), data: { assignment_kind_target: "courtInput" } %></div>
+      <div class="field-group"><%= form.label :city, t("marketplace.form.city_label") %><%= form.text_field :city, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 100, placeholder: t("marketplace.form.city_placeholder"), data: { assignment_kind_target: "courtInput" } %></div>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-section"><legend><%= t("marketplace.form.conditions_legend") %></legend>
+    <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 5, required: true, value: assignment.fee_cents.to_i.positive? ? assignment.fee_cents.to_i / 100 : nil, placeholder: "250" %><p class="field-hint"><%= t("marketplace.form.fee_hint") %></p></div>
+    <label class="form-check">
+      <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true %>
+      <span><%= t("marketplace.form.content_rules_label") %></span>
+    </label>
+    <p class="field-hint"><%= t("marketplace.form.content_rules_hint_html", privacy_link: link_to(t("pages.navigation.privacy"), privacy_path)) %></p>
+  </fieldset>
+  <div class="form-actions"><%= link_to t("marketplace.form.cancel"), assignments_path, class: "button button--ghost" %><%= form.submit t("marketplace.form.submit"), class: "button button--dark" %></div>
+<% end %>

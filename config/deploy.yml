@@ -1,0 +1,69 @@
+service: lawrelay
+
+# Required when invoking Kamal. Keeping these values out of this file prevents
+# accidental deployment to the wrong host or registry.
+image: <%= ENV.fetch("KAMAL_IMAGE") %>
+
+servers:
+  web:
+    - <%= ENV.fetch("LAWRELAY_SERVER_IP") %>
+
+proxy:
+  ssl: true
+  host: <%= ENV.fetch("APP_HOST", "lawrelay.be") %>
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 3
+
+registry:
+  server: <%= ENV.fetch("KAMAL_REGISTRY_SERVER", "ghcr.io") %>
+  username: <%= ENV.fetch("KAMAL_REGISTRY_USERNAME") %>
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  secret:
+    - RAILS_MASTER_KEY
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+  clear:
+    APP_HOST: <%= ENV.fetch("APP_HOST", "lawrelay.be") %>
+    APP_PROTOCOL: https
+    ADDITIONAL_HOSTS: <%= ENV.fetch("ADDITIONAL_HOSTS", "www.lawrelay.be") %>
+    ASSUME_SSL: true
+    FORCE_SSL: true
+    ACTIVE_STORAGE_SERVICE: local
+    SMTP_ADDRESS: <%= ENV.fetch("SMTP_ADDRESS") %>
+    SMTP_PORT: <%= ENV.fetch("SMTP_PORT", "587") %>
+    SMTP_DOMAIN: <%= ENV.fetch("SMTP_DOMAIN", ENV.fetch("APP_HOST", "lawrelay.be")) %>
+    MAIL_FROM: <%= ENV.fetch("MAIL_FROM", "LawRelay <no-reply@lawrelay.be>") %>
+    SMTP_AUTHENTICATION: <%= ENV.fetch("SMTP_AUTHENTICATION", "plain") %>
+    SMTP_SSL: <%= ENV.fetch("SMTP_SSL", "false") %>
+    SMTP_STARTTLS: <%= ENV.fetch("SMTP_STARTTLS", "true") %>
+    LAWRELAY_BILLING_ENFORCED: <%= ENV.fetch("LAWRELAY_BILLING_ENFORCED", "true") %>
+    RAILS_LOG_LEVEL: info
+    SOLID_QUEUE_IN_PUMA: true
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"
+
+# SQLite, Active Storage, Solid Cache, Solid Queue, and Solid Cable live here.
+# Production deployment is blocked until the off-host backup job in
+# docs/ops/backup-restore.md is installed and a restore drill has passed.
+volumes:
+  - "lawrelay_storage:/rails/storage"
+
+asset_path: /rails/public/assets
+
+builder:
+  arch: amd64
+
+ssh:
+  user: <%= ENV.fetch("KAMAL_SSH_USER", "deploy") %>
+
+retain_containers: 5

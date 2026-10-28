@@ -1,0 +1,88 @@
+de:
+  trust:
+    actions:
+      cancel: "Abbrechen"
+    errors:
+      heading: "Bitte prüfen Sie:"
+    statuses:
+      pending: "Ausstehend"
+      open: "Offen"
+      in_review: "In Prüfung"
+      completed: "Abgeschlossen"
+      rejected: "Abgelehnt"
+      resolved: "Gelöst"
+      dismissed: "Ohne Maßnahme geschlossen"
+    privacy_requests:
+      eyebrow: "Datenschutzanfragen"
+      kinds:
+        access_export: "Meine Daten einsehen oder exportieren"
+        correction: "Meine Daten berichtigen"
+        deletion: "Meine Kontodaten löschen"
+        restriction: "Verarbeitung einschränken"
+        objection: "Der Verarbeitung widersprechen"
+      notices:
+        created: "Ihre Datenschutzanfrage wurde erfasst."
+        rate_limited: "Bitte warten Sie, bevor Sie eine weitere Anfrage senden."
+      index:
+        title: "Datenschutzanfragen — LawRelay"
+        heading: "Ihre Datenschutzanfragen"
+        lede: "Verfolgen Sie Anfragen zu den personenbezogenen Daten, die LawRelay über Sie speichert."
+        new: "Neue Anfrage"
+        empty: "Sie haben noch keine Datenschutzanfrage gestellt."
+      new:
+        title: "Neue Datenschutzanfrage — LawRelay"
+        heading: "Sagen Sie uns, was Sie benötigen."
+        lede: "Wir dokumentieren Anfrage und Bearbeitung, damit nichts verloren geht."
+        legend: "Anfrage"
+        kind: "Art der Anfrage"
+        kind_prompt: "Anfrage auswählen"
+        details: "Was sollten wir wissen?"
+        details_placeholder: "Beschreiben Sie kurz die betreffenden Daten oder das Konto."
+        retention_note: "Eine Kontolöschung entfernt keine Rechnungen oder Prüfprotokolle, die LawRelay gesetzlich aufbewahren muss."
+        submit: "Anfrage senden"
+    reports:
+      eyebrow: "Problem melden"
+      categories:
+        confidentiality: "Enthält vertrauliche oder identifizierende Informationen"
+        misleading: "Irreführend oder unrichtig"
+        unavailable: "Nicht mehr verfügbar"
+        misconduct: "Möglicher Berufsrechtsverstoß"
+        other: "Anderes Problem"
+      errors:
+        own_assignment: "Sie können keinen Auftrag Ihrer eigenen Kanzlei melden."
+      notices:
+        created: "Danke. Die Meldung wurde zur Prüfung erfasst."
+        rate_limited: "Sie haben das Meldelimit erreicht. Versuchen Sie es später erneut."
+      new:
+        title: "Auftrag melden — LawRelay"
+        heading: "Diesen Auftrag melden"
+        lede: "Beschreiben Sie, was bei „%{title}“ geprüft werden sollte."
+        legend: "Problem"
+        category: "Grund"
+        category_prompt: "Grund auswählen"
+        details: "Kurze Erläuterung"
+        details_placeholder: "Beschreiben Sie das Problem ohne Mandanten- oder Falldaten."
+        safety_note: "Fügen Sie keine Berufsgeheimnisse, Mandantennamen oder Dokumente ein."
+        submit: "Meldung senden"
+    admin:
+      eyebrow: "Vertrauen und Sicherheit"
+      resolution_note: "Interner Bearbeitungsvermerk"
+      review: "Prüfung starten"
+      resolve: "Lösen"
+      dismiss: "Schließen"
+      complete: "Abschließen"
+      reject: "Ablehnen"
+      notices:
+        updated: "Der Vorgang wurde aktualisiert."
+        invalid_decision: "Wählen Sie eine gültige Aktion."
+        note_required: "Fügen Sie vor dem Abschluss einen Bearbeitungsvermerk hinzu."
+      reports:
+        title: "Meldungen — LawRelay-Administration"
+        heading: "Auftragsmeldungen"
+        lede: "Prüfen Sie Probleme, ohne Falldaten außerhalb von LawRelay zu kopieren."
+        empty: "Keine Meldungen zur Prüfung."
+      privacy_requests:
+        title: "Datenschutzanfragen — LawRelay-Administration"
+        heading: "Datenschutzanfragen"
+        lede: "Verfolgen Sie jede Anfrage bis zu einem dokumentierten Ergebnis."
+        empty: "Keine Datenschutzanfragen zur Prüfung."

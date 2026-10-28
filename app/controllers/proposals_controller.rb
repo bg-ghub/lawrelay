@@ -1,0 +1,125 @@
+class ProposalsController < ApplicationController
+  rate_limit to: 30, within: 1.hour, only: :create, by: -> { current_user&.id },
+    with: -> { redirect_to @assignment || assignments_path, alert: t("workflow.errors.rate_limited") }
+
+  before_action :require_verified_lawyer
+  before_action :set_assignment
+  before_action :set_proposal, only: %i[accept decline withdraw]
+
+  def create
+    if @assignment.owned_by?(current_user)
+      return redirect_to @assignment, alert: t("workflow.errors.cannot_propose_to_own_assignment")
+    end
+
+    if @assignment.status != "open"
+      return redirect_to @assignment, alert: t("workflow.errors.assignment_not_open")
+    end
+
+    @proposal = @assignment.proposals.build(proposal_params)
+    @proposal.user = current_user
+    @proposal.firm = current_firm
+    @proposal.name = current_user.full_name
+    @proposal.email = current_user.email_address
+
+    if @proposal.save
+      @proposal.audit_events.create!(actor_user: current_user, firm: current_firm, action: "proposal.created")
+      notify_assignment_owner
+      redirect_to @assignment, notice: t("notices.proposal_created")
+    else
+      @owner_view = false
+      @existing_proposal = @proposal
+      @proposals = Proposal.none
+      render "assignments/show", status: :unprocessable_content
+    end
+  end
+
+  def accept
+    return owner_only unless @assignment.manageable_by?(current_user)
+
+    declined_proposals = []
+    @assignment.with_lock do
+      raise ActiveRecord::RecordInvalid, @assignment unless @assignment.status == "open" && @proposal.status == "pending"
+
+      @proposal.accept!(actor: current_user)
+      @assignment.proposals.where.not(id: @proposal.id).where(status: "pending").find_each do |other_proposal|
+        other_proposal.decline!(actor: current_user)
+        declined_proposals << other_proposal
+      end
+      @assignment.update!(status: "matched")
+      @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.matched", metadata: { proposal_id: @proposal.id })
+    end
+
+    notify_candidate("proposal_accepted")
+    MarketplaceMailer.proposal_accepted(@proposal).deliver_later
+    declined_proposals.each do |declined_proposal|
+      notify_candidate("proposal_declined", proposal: declined_proposal)
+      MarketplaceMailer.proposal_declined(declined_proposal).deliver_later
+    end
+    redirect_to @assignment, notice: t("workflow.notices.proposal_accepted")
+  rescue ActiveRecord::RecordInvalid, Proposal::InvalidTransition
+    redirect_to @assignment, alert: t("workflow.errors.cannot_accept_proposal")
+  end
+
+  def decline
+    return owner_only unless @assignment.manageable_by?(current_user)
+
+    @proposal.decline!(actor: current_user)
+    notify_candidate("proposal_declined")
+    MarketplaceMailer.proposal_declined(@proposal).deliver_later
+    redirect_to @assignment, notice: t("workflow.notices.proposal_declined")
+  rescue Proposal::InvalidTransition
+    redirect_to @assignment, alert: t("workflow.errors.cannot_decline_proposal")
+  end
+
+  def withdraw
+    unless @proposal.owned_by?(current_user)
+      return redirect_to @assignment, alert: t("workflow.errors.proposer_only")
+    end
+
+    @proposal.withdraw!(actor: current_user)
+    redirect_to @assignment, notice: t("workflow.notices.proposal_withdrawn")
+  rescue Proposal::InvalidTransition
+    redirect_to @assignment, alert: t("workflow.errors.cannot_withdraw_proposal")
+  end
+
+  private
+
+  def set_assignment
+    @assignment = Assignment.includes(:creator_user, :firm).find(params[:assignment_id])
+  end
+
+  def set_proposal
+    @proposal = @assignment.proposals.find(params[:id])
+  end
+
+  def owner_only
+    redirect_to @assignment, alert: t("workflow.errors.owner_only")
+  end
+
+  def proposal_params
+    attributes = params.require(:proposal).permit(:rate_cents, :rate_kind, :message)
+    attributes[:rate_cents] = euros_to_cents(attributes[:rate_cents])
+    attributes
+  end
+
+  def euros_to_cents(value)
+    return nil if value.blank?
+
+    (BigDecimal(value.to_s.tr(",", ".")) * 100).round.to_i
+  rescue ArgumentError
+    value
+  end
+
+  def notify_assignment_owner
+    return unless @assignment.creator_user
+
+    @assignment.creator_user.notifications.create!(kind: "new_proposal", subject: @proposal, data: { assignment_id: @assignment.id })
+    MarketplaceMailer.new_proposal(@proposal).deliver_later
+  end
+
+  def notify_candidate(kind, proposal: @proposal)
+    return unless proposal.user
+
+    proposal.user.notifications.create!(kind: kind, subject: proposal, data: { assignment_id: @assignment.id })
+  end
+end

@@ -1,0 +1,28 @@
+en:
+  admin:
+    verifications:
+      eyebrow: "Administration"
+      title: "Lawyer verification"
+      intro: "Review the professional and firm details before granting marketplace access."
+      back: "Back to dashboard"
+      account: "Account"
+      email: "Email"
+      email_verified: "Email verified"
+      email_unverified: "Email pending"
+      firm: "Firm"
+      enterprise_number: "Enterprise number"
+      bar: "Bar registration"
+      firm_status: "Firm status"
+      lawyer_status: "Lawyer status"
+      missing: "Missing"
+      note: "Internal review note"
+      note_placeholder: "Record what was checked and why this decision was made."
+      approve: "Approve"
+      reject: "Reject"
+      empty_title: "Nothing to review"
+      empty_body: "There are no pending lawyer or firm verifications."
+      notices:
+        approved: "%{name} was approved."
+        rejected: "%{name} was rejected."
+        incomplete_account: "This account is missing a firm or lawyer profile."
+        invalid_decision: "Choose approve or reject."

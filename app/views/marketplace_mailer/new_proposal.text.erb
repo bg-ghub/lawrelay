@@ -1,0 +1,3 @@
+<%= t("workflow.mailers.new_proposal.body", name: @proposal.display_name, title: @assignment.title) %>
+
+<%= assignment_url(@assignment, locale: @recipient.locale) %>

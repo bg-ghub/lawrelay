@@ -1,0 +1,157 @@
+class User < ApplicationRecord
+  class InvalidAdminMfaCode < StandardError; end
+
+  SYSTEM_ROLES = %w[member admin].freeze
+  LOCALES = %w[nl fr de en].freeze
+
+  has_secure_password
+  has_many :sessions, dependent: :destroy
+  has_many :memberships, dependent: :destroy
+  has_many :firms, through: :memberships
+  has_one :lawyer_profile, dependent: :destroy
+  has_many :created_assignments, class_name: "Assignment", foreign_key: :creator_user_id, inverse_of: :creator_user, dependent: :restrict_with_error
+  has_many :proposals, dependent: :restrict_with_error
+  has_many :notifications, dependent: :destroy
+  has_many :privacy_requests, dependent: :restrict_with_error
+  has_many :submitted_reports, class_name: "Report", foreign_key: :reporter_user_id, inverse_of: :reporter_user, dependent: :restrict_with_error
+
+  normalizes :email_address, with: ->(e) { e.strip.downcase }
+  normalizes :first_name, :last_name, with: ->(value) { value.to_s.strip }
+
+  validates :email_address, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :first_name, :last_name, presence: true, length: { maximum: 100 }
+  validates :locale, inclusion: { in: LOCALES }
+  validates :system_role, inclusion: { in: SYSTEM_ROLES }
+
+  def full_name
+    [ first_name, last_name ].compact_blank.join(" ")
+  end
+
+  def primary_membership
+    memberships.includes(:firm).order(:created_at).first
+  end
+
+  def primary_firm
+    primary_membership&.firm
+  end
+
+  def firm_administrator?(firm = primary_firm)
+    memberships.find_by(firm: firm)&.administrator? || false
+  end
+
+  def email_verified?
+    email_verified_at.present?
+  end
+
+  def marketplace_verified?
+    email_verified? && lawyer_profile&.verified? && primary_firm&.verified?
+  end
+
+  def system_admin?
+    system_role == "admin"
+  end
+
+  def admin_mfa_configured?
+    admin_mfa_enabled_at.present? && admin_mfa_secret_ciphertext.present?
+  end
+
+  def begin_admin_mfa_setup!
+    return admin_mfa_pending_secret if admin_mfa_pending_secret.present?
+
+    secret = ROTP::Base32.random_base32
+    update!(admin_mfa_pending_secret_ciphertext: encrypt_admin_mfa_secret(secret))
+    secret
+  end
+
+  def admin_mfa_pending_secret
+    decrypt_admin_mfa_secret(admin_mfa_pending_secret_ciphertext)
+  end
+
+  def admin_mfa_provisioning_uri(secret = admin_mfa_pending_secret)
+    return if secret.blank?
+
+    ROTP::TOTP.new(secret, issuer: "LawRelay").provisioning_uri(email_address)
+  end
+
+  def enable_admin_mfa!(code)
+    with_lock do
+      secret = admin_mfa_pending_secret
+      verified_at = verify_admin_mfa_secret(secret, code)
+      raise InvalidAdminMfaCode unless verified_at
+
+      update!(
+        admin_mfa_secret_ciphertext: admin_mfa_pending_secret_ciphertext,
+        admin_mfa_pending_secret_ciphertext: nil,
+        admin_mfa_enabled_at: Time.current,
+        admin_mfa_last_verified_at: Time.at(verified_at)
+      )
+      Time.at(verified_at)
+    end
+  end
+
+  def verify_admin_mfa_code!(code)
+    with_lock do
+      verified_at = verify_admin_mfa_secret(admin_mfa_secret, code, after: admin_mfa_last_verified_at)
+      raise InvalidAdminMfaCode unless verified_at
+
+      update!(admin_mfa_last_verified_at: Time.at(verified_at))
+      Time.at(verified_at)
+    end
+  end
+
+  def reset_admin_mfa!
+    update!(
+      admin_mfa_secret_ciphertext: nil,
+      admin_mfa_pending_secret_ciphertext: nil,
+      admin_mfa_enabled_at: nil,
+      admin_mfa_last_verified_at: nil
+    )
+  end
+
+  def email_verification_token
+    signed_id(purpose: :email_verification, expires_in: 48.hours)
+  end
+
+  def self.find_by_email_verification_token!(token)
+    find_signed!(token, purpose: :email_verification)
+  end
+
+  private
+
+  def admin_mfa_secret
+    decrypt_admin_mfa_secret(admin_mfa_secret_ciphertext)
+  end
+
+  def verify_admin_mfa_secret(secret, code, after: nil)
+    return if secret.blank? || code.to_s.strip.blank?
+
+    ROTP::TOTP.new(secret, issuer: "LawRelay").verify(
+      code.to_s.strip,
+      drift_behind: 30,
+      drift_ahead: 30,
+      after: after&.to_i
+    )
+  end
+
+  def encrypt_admin_mfa_secret(secret)
+    self.class.admin_mfa_encryptor.encrypt_and_sign(secret)
+  end
+
+  def decrypt_admin_mfa_secret(ciphertext)
+    return if ciphertext.blank?
+
+    self.class.admin_mfa_encryptor.decrypt_and_verify(ciphertext)
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
+    nil
+  end
+
+  def self.admin_mfa_encryptor
+    @admin_mfa_encryptor ||= ActiveSupport::MessageEncryptor.new(
+      Rails.application.key_generator.generate_key(
+        "lawrelay/admin-mfa-secret/v1",
+        ActiveSupport::MessageEncryptor.key_len
+      ),
+      cipher: "aes-256-gcm"
+    )
+  end
+end

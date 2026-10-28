@@ -1,0 +1,203 @@
+de:
+  pages:
+    shared:
+      version: "Entwurfsfassung: %{date}"
+      not_configured: "Vor dem Start zu ergänzen"
+      navigation_label: "Geschäftliche und rechtliche Informationen"
+      draft_warning_title: "Angaben zum Betreiber fehlen noch"
+      draft_warning_body: "Dieser Entwurf ist nicht veröffentlichungsreif. Ergänzen Sie die Identität des Betreibers und lassen Sie die Texte nach belgischem Recht prüfen, bevor echte Nutzer oder Zahlungen zugelassen werden."
+    navigation:
+      pricing: "Preise"
+      privacy: "Datenschutz"
+      terms: "Bedingungen"
+      cookies: "Cookies"
+      legal_notice: "Anbieterangaben"
+    pricing:
+      meta_title: "Preise — LawRelay"
+      eyebrow: "ein einfaches Plattformmodell"
+      title: "Bezahlen Sie für den Arbeitsbereich, nicht für das Anwaltshonorar."
+      introduction: "Kanzleien, die Aufträge einstellen, bezahlen den Zugang zu LawRelay. Antwortende Anwältinnen und Anwälte nehmen kostenlos teil; die Honorare rechnen die Beteiligten direkt miteinander ab."
+      beta:
+        kicker: "Gründungs-Beta"
+        price: "0 €"
+        title: "Pilotphase auf Einladung"
+        body: "Eine begrenzte Gruppe verifizierter belgischer Anwältinnen und Anwälte gestaltet den Ablauf mit, bevor der kostenpflichtige Zugang beginnt."
+        features:
+          - "Verifizierte Pilot-Teilnehmende"
+          - "Aufträge und Antworten während der vereinbarten Testphase"
+          - "Direktes Feedback an das LawRelay-Team"
+      launch:
+        kicker: "Preishypothese zum Start"
+        price: "49 € / Monat zzgl. MwSt."
+        title: "Ein Tarif pro einstellender Kanzlei"
+        body: "Monatlicher Zugang für eine Kanzlei, die Aufträge veröffentlichen möchte. Das endgültige Angebot hängt von der Pilotphase und einer berufsrechtlichen Prüfung ab."
+        features:
+          - "Terminsvertretungen und juristische Aufträge einstellen"
+          - "Antworten erhalten und vergleichen"
+          - "Antwortende Anwälte nutzen LawRelay kostenlos"
+          - "Monatlich kündbar"
+      direct_fees:
+        title: "Anwaltshonorare bleiben außerhalb von LawRelay"
+        body: "Auftraggeber und ausgewählter Anwalt vereinbaren, fakturieren und bezahlen direkt miteinander. LawRelay verwahrt keine Auftragsgelder, bietet kein Treuhandkonto an und zieht keinen Anteil vom Honorar ab."
+      review_notice: "Der Preis ist eine Produkthypothese und kein verbindliches Angebot. Mehrwertsteuer, Peppol-Rechnungen, Zahlungsbedingungen und Berufsrechtskonformität müssen vor dem kostenpflichtigen Start bestätigt werden."
+    privacy:
+      meta_title: "Datenschutzhinweise — LawRelay"
+      eyebrow: "Datenschutz"
+      title: "Wie LawRelay personenbezogene Daten verarbeiten will."
+      introduction: "Dies ist ein Arbeitsentwurf für einen Marktplatz verifizierter Anwälte. Betreiberidentität, tatsächliche Dienstleister und endgültige Aufbewahrungsfristen müssen vor dem Start ergänzt werden."
+      sections:
+        controller:
+          heading: "1. Wer verantwortlich ist"
+          paragraphs:
+            - "Der Betreiber von LawRelay wird Verantwortlicher für Konto-, Verifizierungs-, Marktplatz-, Support-, Sicherheits- und Abrechnungsdaten. Seine rechtliche Identität und Kontaktdaten stehen nach der Konfiguration in den Anbieterangaben."
+            - "Datenschutzfragen und Betroffenenanträge sind an den dort genannten Datenschutzkontakt zu richten."
+        scope:
+          heading: "2. Welche Daten wir verarbeiten"
+          bullets:
+            - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten."
+            - "Daten zur beruflichen Verifizierung wie Kammer, Zulassungsnummer, Kanzlei, Rolle sowie Nachweis oder Status der Prüfung."
+            - "Profil-, Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
+            - "Abrechnungskennungen, Mehrwertsteuer- und Rechnungsangaben, Abonnementstatus und Referenzen des Zahlungsdienstleisters; niemals vollständige Karten- oder Bankdaten."
+            - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
+          paragraphs:
+            - "LawRelay ist nicht für Mandantennamen, Sachverhalte, Schriftsätze, Beweismittel, Dokumente oder vertrauliche Kommunikation bestimmt. Diese Informationen müssen in Systemen unter Kontrolle der beteiligten Anwälte bleiben."
+        purposes:
+          heading: "3. Zwecke und Rechtsgrundlagen"
+          bullets:
+            - "Konten anlegen und sichern, Berechtigung prüfen, Vermittlungsfunktionen bereitstellen und Abonnements verwalten: Erfüllung des Dienstleistungsvertrags."
+            - "Ordnungsgemäße Rechnungen ausstellen und aufbewahren sowie rechtmäßige Anfragen beantworten: rechtliche Verpflichtungen."
+            - "Missbrauch verhindern, den Dienst sichern, Nutzer unterstützen, Zuverlässigkeit verbessern und Ansprüche begründen oder abwehren: berechtigte Interessen nach Abwägung mit den Nutzerrechten."
+            - "Optionale Analysen oder Marketingkommunikation nur bei wirksamer Einwilligung oder einer anderen dokumentierten Grundlage."
+        sharing:
+          heading: "4. Empfänger"
+          paragraphs:
+            - "Daten werden nur für den Betrieb geteilt: mit dem anfragenden oder antwortenden Anwalt, soweit der Ablauf dies erfordert, befugten LawRelay-Mitarbeitern und vertraglichen Anbietern für Hosting, E-Mail, Support, Sicherheit, Zahlung, Rechnungsstellung und Sicherung."
+            - "Eine aktuelle Unterauftragsverarbeiterliste und Auftragsverarbeitungsverträge müssen vor dem Start bestehen. Daten werden nicht verkauft."
+        transfers:
+          heading: "5. Ort und Übermittlungen"
+          paragraphs:
+            - "LawRelay beabsichtigt, Produktionsdaten im Europäischen Wirtschaftsraum zu speichern. Übermittelt ein Anbieter Daten außerhalb des EWR, werden Übermittlungsgrundlage und ergänzende Garantien vor seiner Nutzung dokumentiert."
+        retention:
+          heading: "6. Aufbewahrung"
+          paragraphs:
+            - "Daten werden nur so lange aufbewahrt, wie Konto, Marktplatzablauf, Sicherheit, Support und gesetzliche Pflichten es erfordern. Abrechnungsunterlagen können nach Kontoschließung weiter aufzubewahren sein."
+            - "Der genaue Aufbewahrungsplan und automatische Löschvorgänge sind Startvoraussetzungen und müssen vor der Verarbeitung echter Daten hier ergänzt werden."
+        rights:
+          heading: "7. Ihre Rechte"
+          paragraphs:
+            - "Je nach Rechtsgrundlage und Umständen können Sie Auskunft, Berichtigung, Löschung, Einschränkung oder Übertragbarkeit verlangen oder widersprechen. Eine Einwilligung kann ohne Auswirkung auf die vorherige rechtmäßige Verarbeitung widerrufen werden."
+            - "Sie können sich bei der belgischen Datenschutzbehörde beschweren. LawRelay darf Ihre Identität vor Bearbeitung eines Antrags prüfen."
+        security:
+          heading: "8. Sicherheit, Vorfälle und Änderungen"
+          paragraphs:
+            - "LawRelay setzt risikogerechte Zugriffskontrollen, Transportverschlüsselung, sichere Authentifizierung, begrenzte Protokollierung, Backups, Überwachung und Vorfallverfahren ein. Kein Onlinedienst kann absolute Sicherheit versprechen."
+            - "Wesentliche Änderungen werden datiert und, soweit angemessen, im Dienst oder per E-Mail mitgeteilt."
+    terms:
+      meta_title: "Nutzungsbedingungen — LawRelay"
+      eyebrow: "Nutzungsbedingungen"
+      title: "Regeln für die Nutzung von LawRelay."
+      introduction: "Diese vorläufigen B2B-Bedingungen beschreiben den geplanten Dienst. Sie sind nicht endgültig und müssen vor dem Start nach belgischem Recht und Berufsrecht geprüft werden."
+      sections:
+        agreement:
+          heading: "1. Vertrag und Betreiber"
+          paragraphs:
+            - "Diese Bedingungen regeln die Nutzung von LawRelay durch berufliche Nutzer. Vertragspartner und Kontaktdaten stehen nach Konfiguration in den Anbieterangaben. Kontoerstellung oder Nutzung nach Zustimmung zu einer veröffentlichten Fassung begründet den Dienstleistungsvertrag."
+        eligibility:
+          heading: "2. Zugang und Verifizierung"
+          paragraphs:
+            - "Der Marktplatz ist für verifizierte Anwälte und befugte Kanzleimitarbeiter bestimmt. Nutzer machen richtige berufliche Angaben, halten sie aktuell, schützen den Zugang und melden Kompromittierungen sofort. Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
+        role:
+          heading: "3. Rolle von LawRelay"
+          paragraphs:
+            - "LawRelay stellt Software bereit, um Aufträge zu veröffentlichen, Antworten zu erhalten und eine Vermittlung zwischen Anwälten zu koordinieren. Es ist keine Kanzlei, kein Arbeitgeber, Mandant, Vertreter, Treuhanddienst und keine Partei der Zusammenarbeit und erteilt keine Rechtsberatung."
+        professional_duties:
+          heading: "4. Berufliche Verantwortung"
+          bullets:
+            - "Jeder Anwalt bleibt verantwortlich für die Befugnis zur Delegation, Konfliktprüfung, Unabhängigkeit, Kompetenz, Fristen, Gerichtsregeln, Berufsgeheimnis, Versicherung, Mandantenkommunikation und alle Kammerpflichten."
+            - "Eine Vermittlung oder ein Verifizierungsstatus ersetzt nie die eigene Prüfung."
+            - "Umfang, Honorar, Abrechnung und praktische Durchführung vereinbaren die Nutzer direkt."
+        content:
+          heading: "5. Aufträge und verbotene Inhalte"
+          paragraphs:
+            - "Nutzer veröffentlichen nur richtige, notwendige berufliche Informationen, die sie teilen dürfen. Mandantenidentitäten, Sachverhalte, Dokumente, Beweise, vertrauliche Kommunikation, rechtswidrige Inhalte, Spam, diskriminierende Anfragen und irreführende Angebote sind verboten."
+            - "LawRelay darf Inhalte entfernen, beschränken oder sichern, wenn dies für Sicherheit, Compliance, Streitigkeiten oder rechtliche Pflichten angemessen erforderlich ist."
+        workflow:
+          heading: "6. Antworten und Vermittlungen"
+          paragraphs:
+            - "Der Auftraggeber entscheidet, wen er kontaktiert oder auswählt. LawRelay garantiert keine Antwort, Vermittlung, Verfügbarkeit, Ergebnis, Qualität oder Zahlung durch andere Nutzer. Jede Beauftragung und Frist ist außerhalb der Plattform zu bestätigen."
+        platform_fees:
+          heading: "7. LawRelay-Entgelt und Abrechnung"
+          paragraphs:
+            - "Der Zugang zur Gründungs-Beta ist im vereinbarten Zeitraum kostenlos. Der vorgeschlagene Startpreis beträgt 49 € monatlich zzgl. MwSt. pro einstellender Kanzlei und ist monatlich kündbar. Verbindlich sind nur Preis und Bedingungen beim Checkout oder in einem angenommenen Auftrag."
+            - "Rechnungen, Zahlungsfrist, Fehlzahlungen, Gutschriften und Kündigung werden vor dem kostenpflichtigen Start festgelegt und müssen den belgischen Anforderungen an strukturierte B2B-Rechnungen entsprechen."
+        professional_fees:
+          heading: "8. Anwaltshonorare"
+          paragraphs:
+            - "Honorare für einen Auftrag werden direkt zwischen Anwälten oder Kanzleien vereinbart, fakturiert und bezahlt. LawRelay verwahrt diese Gelder nicht, zieht keine Provision ab und garantiert keine Zahlung."
+        moderation:
+          heading: "9. Meldung, Moderation und Sperrung"
+          paragraphs:
+            - "Nutzer können rechtswidrige, unsichere oder regelwidrige Inhalte melden. LawRelay darf prüfen, Informationen anfordern, Inhalte beschränken, Zugänge sperren oder Konten verhältnismäßig beenden. Anwendbare Mitteilungs-, Beschwerde- und Einspruchsverfahren werden vor dem Start veröffentlicht."
+        intellectual_property:
+          heading: "10. Geistiges Eigentum"
+          paragraphs:
+            - "Nutzer behalten Rechte an eingestellten Inhalten und erteilen LawRelay eine beschränkte Lizenz, sie ausschließlich für Betrieb und Sicherheit zu hosten, anzuzeigen, zu übertragen und zu verarbeiten. LawRelay und Lizenzgeber behalten Rechte an Plattform, Marke und Software."
+        availability:
+          heading: "11. Verfügbarkeit und Änderungen"
+          paragraphs:
+            - "LawRelay darf den Dienst warten, aktualisieren oder ändern und verspricht keine unterbrechungsfreie Verfügbarkeit. Wesentliche nachteilige Änderungen eines kostenpflichtigen Tarifs werden soweit möglich angemessen vorab mitgeteilt."
+        liability:
+          heading: "12. Haftung, Beendigung und Recht"
+          paragraphs:
+            - "Eine anwaltlich geprüfte Haftungsregelung, Rechtswahl, zuständiges Gericht, Beendigungsverfahren, Exportfrist und Vorbehalte zwingenden Rechts müssen vor dem Start ergänzt werden. Dieser Entwurf schließt keine Haftung aus, die gesetzlich nicht ausgeschlossen werden darf."
+    cookies:
+      meta_title: "Cookie-Hinweise — LawRelay"
+      eyebrow: "Cookies"
+      title: "Bewusst wenige Cookies."
+      introduction: "Der aktuelle LawRelay-Prototyp nutzt nur Technik, die für einen sicheren und funktionierenden Dienst erforderlich ist."
+      sections:
+        current_use:
+          heading: "1. Was derzeit verwendet wird"
+          paragraphs:
+            - "Ein signiertes Sitzungscookie schützt die Browsersitzung und kann nach Einführung von Konten den Anmeldestatus speichern. Sicherheitstoken verhindern gefälschte Anfragen. Diese Funktionen sind für den angeforderten Dienst unbedingt erforderlich."
+        no_tracking:
+          heading: "2. Kein optionales Tracking in der aktuellen Fassung"
+          paragraphs:
+            - "LawRelay setzt derzeit keine Werbe-, Profiling- oder optionalen Analyse-Cookies. Die Sprache steht in der Seiten-URL und nicht in einem Tracking-Cookie."
+        retention:
+          heading: "3. Dauer und Kontrolle"
+          paragraphs:
+            - "Sitzungstechnik wird auf Dauer und Sicherheitsbedarf des Dienstes beschränkt. Sie können Cookies im Browser löschen; das Blockieren notwendiger Cookies kann jedoch Anmeldung oder Formulare verhindern."
+        future:
+          heading: "4. Falls optionale Cookies hinzukommen"
+          paragraphs:
+            - "LawRelay aktualisiert diese Hinweise und holt vorherige, granulare Einwilligung ein, bevor nicht erforderliche Cookies genutzt werden. Ablehnen muss so einfach wie Annehmen sein und die Einwilligung widerrufbar bleiben."
+        contact:
+          heading: "5. Fragen"
+          paragraphs:
+            - "Fragen zu Cookies und Datenschutz können an den Datenschutzkontakt in den Anbieterangaben gerichtet werden."
+    legal_notice:
+      meta_title: "Anbieterangaben — LawRelay"
+      eyebrow: "Informationen zum Betreiber"
+      title: "Wer LawRelay betreibt."
+      introduction: "Die belgischen Pflichtangaben müssen leicht, unmittelbar und dauerhaft zugänglich sein. Fehlende Felder blockieren die Veröffentlichung."
+      fields:
+        legal_name: "Gesellschafts- oder Handelsname"
+        registered_address: "Sitzanschrift"
+        enterprise_number: "Unternehmensnummer"
+        vat_number: "Mehrwertsteuernummer oder -status"
+        legal_email: "Rechtlicher Kontakt"
+        privacy_email: "Datenschutzkontakt"
+        support_email: "Supportkontakt"
+        phone: "Telefon"
+        professional_body: "Berufsorganisation oder Aufsichtsbehörde, falls anwendbar"
+        professional_rules_url: "Anwendbare Berufsregeln, falls anwendbar"
+      sections:
+        service:
+          heading: "Art des Dienstes"
+          paragraphs:
+            - "LawRelay ist eine B2B-Koordinations- und Vermittlungsplattform für verifizierte Anwälte. Es ist keine Kanzlei, erteilt keine Rechtsberatung und vertritt keine Mandanten."
+        content:
+          heading: "Inhalt der Website"
+          paragraphs:
+            - "Allgemeine Websiteinformationen dienen der Produktinformation und können sich ändern. Sie sind keine Rechts-, Steuer-, Buchhaltungs- oder Berufsrechtsberatung."

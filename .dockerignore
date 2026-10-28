@@ -1,0 +1,36 @@
+# Source control and CI metadata
+.git
+.github
+.kamal
+
+# Environment, credentials, and local secrets
+.env*
+config/master.key
+config/*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+
+# Local runtime data — production receives an empty persistent /rails/storage
+# volume, never a developer database or uploaded file.
+log/*
+!log/.keep
+tmp/*
+!tmp/.keep
+storage/*
+!storage/.keep
+
+# Generated or local dependency artifacts
+public/assets
+node_modules
+vendor/bundle
+.bundle
+coverage
+
+# Not needed to build or run the production image
+test
+docs
+*.sqlite3
+*.sqlite3-*
+*.log

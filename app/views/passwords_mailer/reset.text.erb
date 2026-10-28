@@ -1,0 +1,7 @@
+<%= t("auth.mailers.password_reset.heading", name: @user.first_name) %>
+
+<%= t("auth.mailers.password_reset.body") %>
+
+<%= @reset_url %>
+
+<%= t("auth.mailers.password_reset.expiry", duration: distance_of_time_in_words(0, @user.password_reset_token_expires_in)) %>

@@ -1,0 +1,203 @@
+nl:
+  pages:
+    shared:
+      version: "Conceptversie: %{date}"
+      not_configured: "Nog in te vullen voor de lancering"
+      navigation_label: "Commerciële en juridische informatie"
+      draft_warning_title: "Gegevens van de uitbater ontbreken nog"
+      draft_warning_body: "Dit concept is niet klaar voor publicatie. Vul de identiteit van de uitbater in en laat de teksten Belgisch-juridisch nakijken voordat echte gebruikers of betalingen worden aanvaard."
+    navigation:
+      pricing: "Prijzen"
+      privacy: "Privacy"
+      terms: "Voorwaarden"
+      cookies: "Cookies"
+      legal_notice: "Wettelijke informatie"
+    pricing:
+      meta_title: "Prijzen — LawRelay"
+      eyebrow: "eenvoudige platformprijs"
+      title: "Betaal voor de werkruimte, niet voor het ereloon."
+      introduction: "Kantoren die opdrachten plaatsen, betalen voor toegang tot LawRelay. Reagerende advocaten nemen gratis deel. De advocaten regelen hun erelonen rechtstreeks onderling."
+      beta:
+        kicker: "oprichtingsbeta"
+        price: "€0"
+        title: "Pilot op uitnodiging"
+        body: "Een beperkte groep geverifieerde Belgische advocaten helpt de werkwijze verfijnen vóór de betalende toegang start."
+        features:
+          - "Geverifieerde deelnemers"
+          - "Plaatsen en reageren tijdens de afgesproken testperiode"
+          - "Rechtstreekse feedback aan het LawRelay-team"
+      launch:
+        kicker: "lanceringshypothese"
+        price: "€49 / maand excl. btw"
+        title: "Eén plan per plaatsend kantoor"
+        body: "Maandelijkse toegang voor een kantoor dat opdrachten wil publiceren. Het definitieve aanbod hangt af van de pilot en een deontologische toets."
+        features:
+          - "Zittingsvervangingen en juridische opdrachten plaatsen"
+          - "Reacties ontvangen en vergelijken"
+          - "Reagerende advocaten gebruiken LawRelay gratis"
+          - "Maandelijks opzegbaar"
+      direct_fees:
+        title: "Erelonen tussen advocaten blijven buiten LawRelay"
+        body: "De opdrachtgever en de gekozen advocaat maken rechtstreeks afspraken, factureren elkaar en betalen elkaar. LawRelay houdt geen opdrachtsommen aan, biedt geen derdenrekening en trekt geen percentage van erelonen af."
+      review_notice: "Deze prijs is een producthypothese en geen bindend aanbod. Btw, Peppol-facturatie, betalingsvoorwaarden en deontologische conformiteit moeten vóór de betalende lancering worden bevestigd."
+    privacy:
+      meta_title: "Privacyverklaring — LawRelay"
+      eyebrow: "privacy"
+      title: "Hoe LawRelay persoonsgegevens wil behandelen."
+      introduction: "Dit is een werkconcept voor een geverifieerde advocatenmarktplaats. Identiteit van de uitbater, werkelijke leveranciers en definitieve bewaartermijnen moeten vóór lancering worden aangevuld."
+      sections:
+        controller:
+          heading: "1. Wie verantwoordelijk is"
+          paragraphs:
+            - "De uitbater van LawRelay zal verwerkingsverantwoordelijke zijn voor account-, verificatie-, marktplaats-, support-, beveiligings- en facturatiegegevens. De wettelijke identiteit en contactgegevens staan na configuratie in de wettelijke informatie."
+            - "Privacyvragen en verzoeken tot uitoefening van rechten kunnen naar het privacycontact in die wettelijke informatie worden gestuurd."
+        scope:
+          heading: "2. Welke gegevens we verwerken"
+          bullets:
+            - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
+            - "Professionele verificatiegegevens, zoals balie, balienummer, kantoor, rol en verificatiebewijs of -status."
+            - "Profiel-, opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
+            - "Facturatiekenmerken, btw- en factuurgegevens, abonnementsstatus en referenties van de betalingsprovider; nooit volledige kaart- of bankgegevens."
+            - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
+          paragraphs:
+            - "LawRelay is niet bedoeld voor cliëntnamen, dossierfeiten, conclusies, bewijsstukken, documenten of vertrouwelijke communicatie. Die informatie hoort in systemen onder controle van de betrokken advocaten."
+        purposes:
+          heading: "3. Waarom en op welke grond"
+          bullets:
+            - "Accounts aanmaken en beveiligen, toegang verifiëren, matching aanbieden en abonnementen beheren: uitvoering van de dienstenovereenkomst."
+            - "Correcte facturen uitreiken en bewaren en wettelijke verzoeken beantwoorden: wettelijke verplichtingen."
+            - "Misbruik voorkomen, de dienst beveiligen, gebruikers helpen, betrouwbaarheid verbeteren en rechtsvorderingen instellen of verdedigen: gerechtvaardigde belangen, afgewogen tegen gebruikersrechten."
+            - "Optionele analytics of marketingcommunicatie alleen wanneer geldige toestemming of een andere gedocumenteerde grondslag geldt."
+        sharing:
+          heading: "4. Met wie gegevens worden gedeeld"
+          paragraphs:
+            - "Gegevens worden alleen gedeeld voor de werking van de dienst: met de opdrachtgevende of reagerende advocaat waar de workflow dat vereist, bevoegde LawRelay-medewerkers en contractuele leveranciers van hosting, e-mail, support, beveiliging, betaling, facturatie en back-ups."
+            - "Vóór lancering moeten een actuele subverwerkerslijst en verwerkingsovereenkomsten bestaan. Gegevens worden niet verkocht."
+        transfers:
+          heading: "5. Locatie en doorgiften"
+          paragraphs:
+            - "LawRelay wil productiegegevens binnen de Europese Economische Ruimte bewaren. Als een leverancier persoonsgegevens buiten de EER doorgeeft, documenteert LawRelay vooraf het doorgiftemechanisme en aanvullende waarborgen."
+        retention:
+          heading: "6. Bewaring"
+          paragraphs:
+            - "Gegevens worden alleen bewaard zolang dat nodig is voor account, marktplaatsworkflow, beveiliging, support en wettelijke verplichtingen. Facturatiegegevens kunnen na sluiting van een account langer moeten worden bewaard."
+            - "De exacte bewaarkalender en automatische verwijdering zijn lanceringsblokkeringen en moeten vóór verwerking van echte gegevens hier worden ingevuld."
+        rights:
+          heading: "7. Uw rechten"
+          paragraphs:
+            - "Afhankelijk van grondslag en omstandigheden kunt u inzage, correctie, verwijdering, beperking of overdraagbaarheid vragen of bezwaar maken. Toestemming kan worden ingetrokken zonder gevolgen voor eerdere rechtmatige verwerking."
+            - "U kunt klacht indienen bij de Gegevensbeschermingsautoriteit. LawRelay kan uw identiteit controleren vóór een verzoek wordt uitgevoerd."
+        security:
+          heading: "8. Beveiliging, incidenten en wijzigingen"
+          paragraphs:
+            - "LawRelay gebruikt risicogebaseerde toegangscontrole, versleuteling tijdens transport, veilige authenticatie, beperkte logging, back-ups, monitoring en incidentprocedures. Geen enkele onlinedienst kan absolute veiligheid beloven."
+            - "Belangrijke wijzigingen worden gedateerd en waar passend via de dienst of e-mail meegedeeld."
+    terms:
+      meta_title: "Gebruiksvoorwaarden — LawRelay"
+      eyebrow: "gebruiksvoorwaarden"
+      title: "Afspraken voor het gebruik van LawRelay."
+      introduction: "Deze zakelijke conceptvoorwaarden beschrijven de beoogde dienst. Ze zijn niet definitief en moeten vóór lancering aan Belgisch recht en deontologische regels worden getoetst."
+      sections:
+        agreement:
+          heading: "1. Overeenkomst en uitbater"
+          paragraphs:
+            - "Deze voorwaarden regelen het gebruik van LawRelay door professionele gebruikers. De contracterende uitbater en contactgegevens staan na configuratie in de wettelijke informatie. Een account aanmaken of de dienst gebruiken na aanvaarding van een gepubliceerde versie vormt de dienstenovereenkomst."
+        eligibility:
+          heading: "2. Toegang en verificatie"
+          paragraphs:
+            - "De marktplaats is bedoeld voor geverifieerde advocaten en bevoegde kantoormedewerkers. Gebruikers verstrekken correcte professionele gegevens, houden die actueel, beschermen hun toegang en melden compromittering onmiddellijk. Verificatie is geen aanbeveling of kwaliteitsgarantie."
+        role:
+          heading: "3. Rol van LawRelay"
+          paragraphs:
+            - "LawRelay biedt software om opdrachten te publiceren, reacties te ontvangen en een introductie tussen advocaten te coördineren. Het is geen advocatenkantoor, werkgever, cliënt, agent, betaaldienst of partij bij de samenwerking en verleent geen juridisch advies."
+        professional_duties:
+          heading: "4. Professionele verantwoordelijkheid"
+          bullets:
+            - "Elke advocaat blijft verantwoordelijk voor bevoegdheid tot uitbesteding, belangenconflicten, onafhankelijkheid, bekwaamheid, termijnen, rechtbankregels, beroepsgeheim, verzekering, cliëntcommunicatie en alle balieverplichtingen."
+            - "Een match of verificatiestatus vervangt nooit het eigen onderzoek van de advocaat."
+            - "Gebruikers spreken omvang, ereloon, facturatie en praktische uitvoering rechtstreeks af."
+        content:
+          heading: "5. Opdrachten en verboden inhoud"
+          paragraphs:
+            - "Gebruikers publiceren alleen correcte, noodzakelijke professionele informatie die ze mogen delen. Cliëntidentiteiten, dossierfeiten, documenten, bewijs, vertrouwelijke communicatie, onwettige inhoud, spam, discriminerende vragen en misleidende opdrachten zijn verboden."
+            - "LawRelay kan inhoud verwijderen, beperken of bewaren wanneer dat redelijk nodig is voor veiligheid, naleving, geschillen of wettelijke verplichtingen."
+        workflow:
+          heading: "6. Reacties en matches"
+          paragraphs:
+            - "De opdrachtgever beslist wie hij contacteert of kiest. LawRelay garandeert geen reactie, match, beschikbaarheid, uitkomst, kwaliteit of betaling door een andere gebruiker. Gebruikers bevestigen elke samenwerking en termijn buiten het platform."
+        platform_fees:
+          heading: "7. LawRelay-kosten en facturatie"
+          paragraphs:
+            - "Toegang tijdens de oprichtingsbeta is gratis voor de afgesproken periode. De voorgestelde lanceringsprijs is €49 per maand excl. btw per plaatsend kantoor, maandelijks opzegbaar. Alleen de prijs en voorwaarden bij checkout of in een aanvaarde bestelling zijn bindend."
+            - "Facturen, betalingstermijn, mislukte betalingen, credits en opzegging worden vóór de betalende lancering vastgelegd en moeten voldoen aan de Belgische verplichtingen voor gestructureerde B2B-facturatie."
+        professional_fees:
+          heading: "8. Erelonen"
+          paragraphs:
+            - "Erelonen voor een opdracht worden rechtstreeks tussen advocaten of kantoren afgesproken, gefactureerd en betaald. LawRelay houdt die middelen niet aan, trekt geen commissie af en garandeert geen betaling."
+        moderation:
+          heading: "9. Meldingen, moderatie en schorsing"
+          paragraphs:
+            - "Gebruikers kunnen onwettige, onveilige of regelbrekende inhoud melden. LawRelay kan onderzoeken, informatie vragen, inhoud beperken, toegang schorsen of een account proportioneel beëindigen. Toepasselijke meldings-, klacht- en beroepsprocedures worden vóór lancering gepubliceerd."
+        intellectual_property:
+          heading: "10. Intellectuele eigendom"
+          paragraphs:
+            - "Gebruikers behouden rechten op ingediende inhoud en geven LawRelay een beperkte licentie om die uitsluitend voor werking en beveiliging te hosten, tonen, verzenden en verwerken. LawRelay en licentiegevers behouden rechten op platform, merk en software."
+        availability:
+          heading: "11. Beschikbaarheid en wijzigingen"
+          paragraphs:
+            - "LawRelay kan de dienst onderhouden, bijwerken of wijzigen en belooft geen ononderbroken beschikbaarheid. Belangrijke nadelige wijzigingen aan een betalend plan worden waar haalbaar redelijk vooraf meegedeeld."
+        liability:
+          heading: "12. Aansprakelijkheid, einde en recht"
+          paragraphs:
+            - "Een door advocaat goedgekeurde aansprakelijkheidsregeling, rechtskeuze, bevoegde rechtbank, beëindigingsprocedure, exporttermijn en uitzonderingen voor dwingend recht moeten vóór lancering worden ingevuld. Niets in dit concept sluit aansprakelijkheid uit die wettelijk niet kan worden uitgesloten."
+    cookies:
+      meta_title: "Cookieverklaring — LawRelay"
+      eyebrow: "cookies"
+      title: "Bewust zo weinig mogelijk cookies."
+      introduction: "Het huidige LawRelay-prototype gebruikt alleen technologie die nodig is voor een veilige en werkende dienst."
+      sections:
+        current_use:
+          heading: "1. Wat vandaag wordt gebruikt"
+          paragraphs:
+            - "Een ondertekende sessiecookie beveiligt de browsersessie en kan na invoering van accounts de ingelogde toestand onthouden. Beveiligingstokens voorkomen vervalste verzoeken. Dit is strikt noodzakelijk voor de gevraagde dienst."
+        no_tracking:
+          heading: "2. Geen optionele tracking in de huidige versie"
+          paragraphs:
+            - "LawRelay plaatst momenteel geen advertentie-, profilerings- of optionele analyticscookies. De taal staat in de pagina-URL en niet in een trackingcookie."
+        retention:
+          heading: "3. Duur en controle"
+          paragraphs:
+            - "Sessietechnologie wordt beperkt tot de duur en beveiligingsbehoefte van de dienst. U kunt cookies via de browser wissen, maar blokkeren van noodzakelijke cookies kan login of formulieren verhinderen."
+        future:
+          heading: "4. Als optionele cookies worden toegevoegd"
+          paragraphs:
+            - "LawRelay werkt deze verklaring bij en vraagt voorafgaande, afzonderlijke toestemming vóór een niet-noodzakelijke cookie wordt gebruikt. Weigeren moet even eenvoudig zijn als aanvaarden en toestemming moet intrekbaar blijven."
+        contact:
+          heading: "5. Vragen"
+          paragraphs:
+            - "Vragen over cookies en privacy kunnen naar het privacycontact in de wettelijke informatie."
+    legal_notice:
+      meta_title: "Wettelijke informatie — LawRelay"
+      eyebrow: "informatie over de uitbater"
+      title: "Wie LawRelay uitbaat."
+      introduction: "Belgische identificatiegegevens moeten gemakkelijk, rechtstreeks en permanent toegankelijk zijn. Ontbrekende velden hieronder blokkeren publicatie."
+      fields:
+        legal_name: "Maatschappelijke of handelsnaam"
+        registered_address: "Maatschappelijke zetel"
+        enterprise_number: "Ondernemingsnummer"
+        vat_number: "Btw-nummer of -status"
+        legal_email: "Juridisch contact"
+        privacy_email: "Privacycontact"
+        support_email: "Supportcontact"
+        phone: "Telefoon"
+        professional_body: "Beroepsorganisatie of toezichthouder, indien van toepassing"
+        professional_rules_url: "Beroepsregels, indien van toepassing"
+      sections:
+        service:
+          heading: "Aard van de dienst"
+          paragraphs:
+            - "LawRelay is een zakelijke coördinatie- en matchingdienst voor geverifieerde advocaten. Het is geen advocatenkantoor, verleent geen juridisch advies en vertegenwoordigt geen cliënten."
+        content:
+          heading: "Inhoud van de website"
+          paragraphs:
+            - "Algemene informatie op deze website dient als productinformatie en kan wijzigen. Ze is geen juridisch, fiscaal, boekhoudkundig of deontologisch advies."

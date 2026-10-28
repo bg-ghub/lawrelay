@@ -1,0 +1,71 @@
+<% content_for :title, t("settings.title") %>
+<main class="new-assignment shell settings-page">
+  <div class="new-assignment__intro">
+    <p class="eyebrow"><%= t("settings.eyebrow") %></p>
+    <h1><%= t("settings.heading") %></h1>
+    <p><%= t("settings.lede") %></p>
+  </div>
+
+  <div class="new-assignment__layout">
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form" do |form| %>
+      <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>
+      <% if errors.any? %>
+        <div class="form-error" role="alert">
+          <strong><%= t("settings.errors.heading") %></strong>
+          <ul><% errors.each do |message| %><li><%= message %></li><% end %></ul>
+        </div>
+      <% end %>
+
+      <fieldset class="form-section">
+        <legend><%= t("settings.account.legend") %></legend>
+        <div class="form-row">
+          <div class="field-group"><%= form.label "account[first_name]", t("auth.fields.first_name") %><%= form.text_field "account[first_name]", value: @user.first_name, required: true, autocomplete: "given-name" %></div>
+          <div class="field-group"><%= form.label "account[last_name]", t("auth.fields.last_name") %><%= form.text_field "account[last_name]", value: @user.last_name, required: true, autocomplete: "family-name" %></div>
+        </div>
+        <div class="field-group"><%= form.label "account[email_address]", t("auth.fields.professional_email") %><%= form.email_field "account[email_address]", value: @user.email_address, required: true, autocomplete: "email" %><p class="field-hint"><%= t("settings.account.email_hint") %></p></div>
+        <div class="field-group"><%= form.label "account[locale]", t("settings.account.language") %><%= form.select "account[locale]", [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], { selected: @user.locale }, class: "select-field" %></div>
+      </fieldset>
+
+      <fieldset class="form-section">
+        <legend><%= t("settings.profile.legend") %></legend>
+        <div class="form-row">
+          <div class="field-group"><%= form.label "profile[bar_association]", t("auth.fields.bar_association") %><%= form.text_field "profile[bar_association]", value: @profile.bar_association, required: true %></div>
+          <div class="field-group"><%= form.label "profile[bar_number]", t("auth.fields.bar_number") %><%= form.text_field "profile[bar_number]", value: @profile.bar_number, required: true %></div>
+        </div>
+        <div class="field-group"><%= form.label "profile[bar_admission_year]", t("settings.profile.bar_admission_year") %><%= form.number_field "profile[bar_admission_year]", value: @profile.bar_admission_year, min: 1900, max: Date.current.year, placeholder: t("settings.profile.bar_admission_year_placeholder") %></div>
+        <div class="field-group"><%= form.label "profile[professional_email]", t("auth.fields.professional_email") %><%= form.email_field "profile[professional_email]", value: @profile.professional_email, autocomplete: "email" %><p class="field-hint"><%= t("settings.profile.review_hint") %></p></div>
+        <div class="form-row">
+          <div class="field-group"><%= form.label "profile[spoken_languages][]", t("settings.profile.languages") %><%= form.text_field "profile[spoken_languages][]", value: @profile.spoken_languages.join(", "), name: "profile[spoken_languages][]", placeholder: t("settings.profile.languages_placeholder") %></div>
+          <div class="field-group"><%= form.label "profile[practice_areas][]", t("settings.profile.practice_areas") %><%= form.text_field "profile[practice_areas][]", value: @profile.practice_areas.join(", "), name: "profile[practice_areas][]", placeholder: t("settings.profile.practice_areas_placeholder") %></div>
+        </div>
+        <div class="field-group"><%= form.label "profile[court_preferences][]", t("settings.profile.court_preferences") %><%= form.text_field "profile[court_preferences][]", value: @profile.court_preferences.join(", "), name: "profile[court_preferences][]", placeholder: t("settings.profile.court_preferences_placeholder") %><p class="field-hint"><%= t("settings.profile.court_preferences_hint") %></p></div>
+        <div class="field-group"><%= form.label "profile[availability_note]", t("settings.profile.availability_note") %><%= form.text_area "profile[availability_note]", value: @profile.availability_note, rows: 3, maxlength: 500, placeholder: t("settings.profile.availability_note_placeholder") %></div>
+      </fieldset>
+
+      <% if @can_manage_firm %>
+        <fieldset class="form-section">
+          <legend><%= t("settings.firm.legend") %></legend>
+          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.firm_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization" %></div>
+          <div class="form-row">
+            <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number %></div>
+            <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number %></div>
+          </div>
+          <div class="form-row">
+            <div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div>
+            <div class="field-group"><%= form.label "firm[phone]", t("settings.firm.phone") %><%= form.telephone_field "firm[phone]", value: @firm.phone %></div>
+          </div>
+          <div class="field-group"><%= form.label "firm[address_line_1]", t("settings.firm.address") %><%= form.text_field "firm[address_line_1]", value: @firm.address_line_1, autocomplete: "street-address" %></div>
+          <div class="form-row">
+            <div class="field-group"><%= form.label "firm[postal_code]", t("settings.firm.postal_code") %><%= form.text_field "firm[postal_code]", value: @firm.postal_code, autocomplete: "postal-code" %></div>
+            <div class="field-group"><%= form.label "firm[city]", t("settings.firm.city") %><%= form.text_field "firm[city]", value: @firm.city, autocomplete: "address-level2" %></div>
+          </div>
+          <p class="field-hint"><%= t("settings.firm.review_hint") %></p>
+        </fieldset>
+      <% end %>
+
+      <div class="form-actions"><%= link_to t("trust.privacy_requests.index.heading"), privacy_requests_path, class: "button button--ghost" %><%= form.submit t("settings.save"), class: "button button--dark" %></div>
+    <% end %>
+
+    <aside class="posting-aside"><span class="posting-aside__number">01</span><h2><%= t("settings.aside.title") %></h2><p><%= t("settings.aside.body") %></p></aside>
+  </div>
+</main>

@@ -1,0 +1,51 @@
+nl:
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%d %b"
+      long: "%e %B %Y"
+    day_names: [zondag, maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag]
+    abbr_day_names: [zo, ma, di, wo, do, vr, za]
+    month_names: [~, januari, februari, maart, april, mei, juni, juli, augustus, september, oktober, november, december]
+    abbr_month_names: [~, jan, feb, mrt, apr, mei, jun, jul, aug, sep, okt, nov, dec]
+    order: [day, month, year]
+  time:
+    formats:
+      default: "%A %-d %B %Y · %H:%M"
+      short: "%d %b · %H:%M"
+      long: "%A %-d %B %Y · %H:%M"
+    am: "am"
+    pm: "pm"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "moet ingevuld zijn"
+      invalid: "is ongeldig"
+      inclusion: "is niet opgenomen in de lijst"
+      not_a_number: "is geen getal"
+      not_an_integer: "moet een geheel getal zijn"
+      greater_than: "moet groter zijn dan %{count}"
+      greater_than_or_equal_to: "moet groter dan of gelijk aan %{count} zijn"
+      less_than_or_equal_to: "moet kleiner dan of gelijk aan %{count} zijn"
+  activerecord:
+    models:
+      assignment: "opdracht"
+      proposal: "voorstel"
+    attributes:
+      assignment:
+        kind: "Type"
+        title: "Titel"
+        description: "Omschrijving"
+        court: "Rechtbank"
+        city: "Plaats"
+        starts_at: "Datum en tijd"
+        duration_minutes: "Geschatte duur"
+        practice_area: "Rechtsdomein"
+        fee_cents: "Richttarief"
+        status: "Status"
+        languages: "Taal"
+      proposal:
+        name: "Naam"
+        email: "E-mailadres"
+        rate_cents: "Tarief"
+        message: "Toelichting"

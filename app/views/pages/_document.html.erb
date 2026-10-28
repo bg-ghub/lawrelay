@@ -1,0 +1,34 @@
+<% content_for :title, t("#{scope}.meta_title") %>
+<section class="marketplace-page">
+  <div class="shell">
+    <%= render "pages/navigation" %>
+    <header class="marketplace-hero">
+      <div>
+        <p class="eyebrow"><%= t("#{scope}.eyebrow") %></p>
+        <h1><%= t("#{scope}.title") %></h1>
+        <p class="lede"><%= t("#{scope}.introduction") %></p>
+        <p class="result-meta__note"><%= t("pages.shared.version", date: @legal_version) %></p>
+      </div>
+    </header>
+
+    <%= render "pages/operator_warning" if show_operator_warning %>
+
+    <article class="dashboard-panel">
+      <% t("#{scope}.sections").each_value do |section| %>
+        <section class="detail-section">
+          <h2><%= section[:heading] %></h2>
+          <% Array(section[:paragraphs]).each do |paragraph| %>
+            <p><%= paragraph %></p>
+          <% end %>
+          <% if section[:bullets].present? %>
+            <ul class="trust-list">
+              <% Array(section[:bullets]).each do |item| %>
+                <li><span aria-hidden="true">✓</span><%= item %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </section>
+      <% end %>
+    </article>
+  </div>
+</section>

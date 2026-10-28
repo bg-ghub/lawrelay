@@ -1,0 +1,42 @@
+en:
+  settings:
+    title: "Account settings — LawRelay"
+    eyebrow: "Your account"
+    heading: "Keep your details current."
+    lede: "Use the contact details your colleagues and LawRelay can rely on."
+    save: "Save changes"
+    errors:
+      heading: "Please check:"
+    notices:
+      updated: "Your settings have been updated."
+      email_reverification: "Your email was updated. Please verify the new address before marketplace access can continue."
+      review_required: "Your details were updated. We need to review the changed professional details before marketplace access can continue."
+    account:
+      legend: "Account"
+      language: "Preferred language"
+      email_hint: "Changing this address signs it out of marketplace verification until you verify the new one."
+    profile:
+      legend: "Professional profile"
+      review_hint: "Changing your bar registration or professional email starts a new professional review."
+      languages: "Languages"
+      languages_placeholder: "For example: NL, FR, EN"
+      practice_areas: "Practice areas"
+      practice_areas_placeholder: "For example: commercial law, family law"
+      bar_admission_year: "Admitted to the bar since"
+      bar_admission_year_placeholder: "For example: 2018"
+      court_preferences: "Court coverage"
+      court_preferences_placeholder: "For example: Enterprise Court Brussels, Antwerp"
+      court_preferences_hint: "List courts or cities where you are comfortable covering a hearing."
+      availability_note: "Availability note"
+      availability_note_placeholder: "For example: Available for morning hearings on Tuesdays and Thursdays."
+    firm:
+      legend: "Firm and billing"
+      billing_email: "Billing email"
+      phone: "Phone"
+      address: "Address"
+      postal_code: "Postcode"
+      city: "City"
+      review_hint: "Changing your firm name, enterprise number, or VAT number starts a new firm review."
+    aside:
+      title: "A private directory"
+      body: "These details are used for verification and operational contact. They are not published to other lawyers before a match."

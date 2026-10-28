@@ -1,0 +1,31 @@
+de:
+  mfa:
+    eyebrow: "Administrator-Sicherheit"
+    code_label: "Authentifizierungscode"
+    code_hint: "Geben Sie den aktuellen Code aus Ihrer Authenticator-App ein."
+    notices:
+      required: "Bestätigen Sie Ihren Authenticator-Code, bevor Sie die Administration öffnen."
+      enabled: "Administrator-MFA ist jetzt aktiv."
+      verified: "Administratorzugriff bestätigt."
+      invalid_code: "Dieser Code ist ungültig oder wurde bereits verwendet."
+      rate_limited: "Zu viele Codeversuche. Bitte warten Sie kurz."
+    setup:
+      title: "Administrator-MFA einrichten — LawRelay"
+      heading: "Schützen Sie dieses Administratorkonto."
+      lede: "Fügen Sie LawRelay zu einer Authenticator-App hinzu und bestätigen Sie anschließend einen Code."
+      secret_legend: "Konto hinzufügen"
+      secret_instruction: "Geben Sie diesen Einrichtungsschlüssel in Ihrer Authenticator-App ein. Halten Sie ihn privat."
+      uri_hint: "Die meisten Apps akzeptieren einen manuellen Schlüssel; LawRelay speichert bewusst keinen QR-Code."
+      uri_summary: "Authenticator-Link anzeigen"
+      confirm_legend: "Einrichtung bestätigen"
+      submit: "MFA aktivieren"
+      aside_title: "Für Administration erforderlich"
+      aside_body: "MFA ist für Verifizierung, Moderation und Datenschutzverwaltung erforderlich."
+    challenge:
+      title: "Administratorzugriff bestätigen — LawRelay"
+      heading: "Eine kurze Prüfung."
+      lede: "Geben Sie den aktuellen Code aus Ihrer Authenticator-App ein, um fortzufahren."
+      legend: "Zugriff bestätigen"
+      submit: "Weiter"
+      aside_title: "Zeitlich begrenzter Zugriff"
+      aside_body: "Diese zusätzliche Prüfung läuft nach 12 Stunden oder beim Abmelden ab."
