@@ -9,7 +9,7 @@ All notable changes to LawRelay are documented here. The project follows
 
 ### Fixed
 
-- Preserve executable modes for Rails, audit, deployment, and container binstubs on Linux checkouts.
+- Preserve executable modes and portable Ruby shebangs for Rails, audit, deployment, and container binstubs on Linux checkouts.
 
 ## [0.1.0] - 2026-10-28
 
