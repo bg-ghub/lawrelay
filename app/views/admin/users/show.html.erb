@@ -24,10 +24,9 @@
       <h2 id="user-overview-heading"><%= t("admin.users.show.overview") %></h2>
       <dl class="detail-facts">
         <div><dt><%= t("admin.users.fields.status") %></dt><dd><span class="status-pill <%= "admin-user-status--suspended" if @user.suspended? %>"><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></span></dd></div>
-        <div><dt><%= t("admin.users.fields.role") %></dt><dd><%= t("admin.users.roles.#{@user.system_role}") %></dd></div>
         <div><dt><%= t("admin.users.fields.email_status") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
         <div><dt><%= t("admin.users.fields.marketplace_access") %></dt><dd><%= t("admin.users.marketplace.#{@user.marketplace_verified? ? 'available' : 'unavailable'}") %></dd></div>
-        <div><dt><%= t("admin.users.fields.mfa") %></dt><dd><%= @user.system_admin? ? t("admin.users.mfa.#{@user.admin_mfa_configured? ? 'configured' : 'missing'}") : t("admin.users.mfa.not_required") %></dd></div>
+        <div><dt><%= t("two_factor.heading") %></dt><dd><%= t(@user.two_factor_enabled? ? "two_factor.status_on" : "two_factor.status_off") %></dd></div>
         <div><dt><%= t("admin.users.fields.created_at") %></dt><dd><time datetime="<%= @user.created_at.iso8601 %>"><%= l(@user.created_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></dd></div>
       </dl>
       <% if @user.suspended? %>

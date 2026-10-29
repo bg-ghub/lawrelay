@@ -49,7 +49,7 @@ module Admin
     private
 
     def set_user
-      @user = User.includes(:lawyer_profile, memberships: :firm).find(params[:id])
+      @user = User.where(system_role: "member").includes(:lawyer_profile, memberships: :firm).find(params[:id])
     end
 
     def verification_params

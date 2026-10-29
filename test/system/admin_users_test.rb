@@ -39,6 +39,8 @@ class AdminUsersTest < ApplicationSystemTestCase
     assert_nil @admin.primary_firm
     assert_nil @admin.lawyer_profile
     assert_selector "h1", text: "Users"
+    assert_no_selector ".admin-user-row a[href='#{admin_user_path(@admin, locale: :en)}']"
+    assert_no_selector ".admin-users-filter-form select[name='role']"
 
     fill_in "q", with: @account.user.email_address
     within(".admin-users-filter-form") { click_button "Search" }
@@ -139,7 +141,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     save_screenshot(Rails.root.join("tmp/screenshots/admin-user-mobile.png"))
 
     visit admin_user_path(@admin, locale: :en)
-    assert_text I18n.t("admin.users.show.protected", locale: :en)
+    assert_no_selector ".admin-user-detail-grid"
     assert_no_selector ".admin-user-access-form"
     assert_no_selector "#user_email_address"
   end

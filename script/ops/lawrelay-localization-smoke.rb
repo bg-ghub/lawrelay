@@ -114,8 +114,13 @@ mfa_challenge.post("/nl/admin/mfa/challenge", params: { authenticity_token: csrf
 check(mfa_challenge.response.redirect?, "MFA challenge accepts a current TOTP")
 
 LOCALES.each do |locale|
-  [ "/admin/users", "/admin/users/#{member.id}", "/admin/verifications", "/admin/founding_accesses", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
+  [ "/admin/users", "/admin/users/#{member.id}", "/admin/verifications", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
     visit(mfa_challenge, "/#{locale}#{suffix}")
+  end
+  if ENV["LAWRELAY_RELEASE_MODE"] == "paid"
+    visit(mfa_challenge, "/#{locale}/admin/founding_accesses")
+  else
+    redirected_visit(mfa_challenge, "/#{locale}/admin/founding_accesses", "/#{locale}/admin/users")
   end
 end
 

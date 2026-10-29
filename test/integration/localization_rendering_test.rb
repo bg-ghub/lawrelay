@@ -110,6 +110,9 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
       render_page(billing_path(locale:), locale:)
       assert_includes response.body, "LR-LOCALIZED-001"
     end
+    sign_out
+    sign_in_as(@admin, admin_mfa: true)
+    LOCALES.each { |locale| render_page(admin_founding_accesses_path(locale:), locale:) }
   ensure
     previous_mode.nil? ? ENV.delete("LAWRELAY_RELEASE_MODE") : ENV["LAWRELAY_RELEASE_MODE"] = previous_mode
   end
@@ -118,12 +121,14 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
     sign_in_as(@admin, admin_mfa: true)
     LOCALES.each do |locale|
       [ admin_users_path(locale:), admin_user_path(@member.user, locale:), admin_verifications_path(locale:),
-        admin_reports_path(locale:), admin_privacy_requests_path(locale:), admin_founding_accesses_path(locale:) ].each do |path|
+        admin_reports_path(locale:), admin_privacy_requests_path(locale:) ].each do |path|
         render_page(path, locale:)
         if path == admin_user_path(@member.user, locale:)
           assert_includes response.body, I18n.t("admin.users.audit.actions.account_email_changed", locale:)
         end
       end
+      get admin_founding_accesses_path(locale:)
+      assert_redirected_to admin_users_path(locale:)
     end
 
     sign_out
