@@ -34,6 +34,7 @@
 
   <body class="site-shell">
     <a class="skip-link" href="#main-content" data-turbo="false"><%= t("marketing.layout.skip_to_content") %></a>
+    <%= render "shared/product_bar" %>
     <%= render "shared/header" %>
     <% if flash.any? %>
       <div class="flash-stack" aria-live="polite" aria-atomic="true">

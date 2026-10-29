@@ -40,7 +40,7 @@ fr:
         heading_middle: pour une
         heading_emphasis: audience ?
         lede: "Organisez un remplacement d’audience ou confiez une mission juridique."
-        note: "Bêta gratuite pour les avocats inscrits sur advocaat.be."
+        note: "Bêta gratuite et open source pour les avocats inscrits sur advocaat.be."
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui

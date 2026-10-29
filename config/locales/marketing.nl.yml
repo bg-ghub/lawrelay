@@ -40,7 +40,7 @@ nl:
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
-        note: "Gratis bèta voor advocaten op advocaat.be."
+        note: "Gratis, open-source bèta voor advocaten op advocaat.be."
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
