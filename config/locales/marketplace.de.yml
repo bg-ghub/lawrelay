@@ -49,7 +49,7 @@ de:
       conditions_legend: "Konditionen"
       fee_label: "Richtpreis (optional)"
       content_rules_label: "Dieser Auftrag enthält keine Mandantennamen, Falldetails, Dokumente oder vertraulichen Informationen."
-      content_rules_hint_html: "Tauschen Sie Details nach der Vermittlung direkt und sicher aus. Mehr unter %{privacy_link}."
+      content_rules_hint: "Andere Anwälte können diesen Auftrag lesen. Senden Sie vertrauliche Angaben erst nach Einigung direkt und sicher an den ausgewählten Kollegen."
       urgent_label: "Dringend"
       urgent_hint: "Geben Sie diesem Auftrag zusätzliche Sichtbarkeit."
       cancel: "Abbrechen"
