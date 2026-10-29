@@ -35,7 +35,7 @@ en:
       reset: "Your password has been reset."
       mismatch: "The passwords did not match."
       invalid_password: "Use at least 12 characters and make sure both passwords match."
-      invalid: "This password reset link is invalid or has expired."
+      invalid: "This link is invalid or has expired. Request a new one below."
       rate_limited: "Too many requests. Please try again later."
       new:
         title: "Reset password — LawRelay"

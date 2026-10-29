@@ -35,7 +35,7 @@ nl:
       reset: "Je wachtwoord is gewijzigd."
       mismatch: "De wachtwoorden komen niet overeen."
       invalid_password: "Gebruik minstens 12 tekens en zorg dat beide wachtwoorden overeenkomen."
-      invalid: "Deze herstellink is ongeldig of verlopen."
+      invalid: "Deze link is ongeldig of verlopen. Vraag hieronder een nieuwe aan."
       rate_limited: "Te veel aanvragen. Probeer het later opnieuw."
       new:
         title: "Wachtwoord herstellen — LawRelay"

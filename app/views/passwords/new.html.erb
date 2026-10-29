@@ -8,7 +8,7 @@
     <%= form_with url: passwords_path, class: "assignment-form" do |form| %>
       <fieldset class="form-section" aria-label="<%= t("auth.passwords.new.form_title") %>">
         <div class="field-group">
-          <%= form.label :email_address, t("auth.fields.professional_email") %>
+          <%= form.label :email_address, t("auth.passwords.new.form_title") %>
           <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
         </div>
       </fieldset>

@@ -1,0 +1,209 @@
+require "application_system_test_case"
+
+class BetaJourneyTest < ApplicationSystemTestCase
+  include ActiveJob::TestHelper
+
+  setup do
+    @nonce = SecureRandom.hex(5)
+    @login_emails = []
+    @directory_pages = {}
+    ActionMailer::Base.deliveries.clear
+  end
+
+  teardown do
+    Capybara.reset_sessions!
+    clear_enqueued_jobs
+    clear_performed_jobs
+    ActionMailer::Base.deliveries.clear
+    remove_journey_records
+  end
+
+  # Synthetic directory pages and captured test email exercise the real signup,
+  # confirmation and matching flows without contacting the directory or SMTP.
+  # This regression does not replace a trial with real lawyers and inboxes.
+  test "two lawyers register, confirm both mailboxes and arrange court cover" do
+    assert_equal :test, ActionMailer::Base.delivery_method
+
+    with_local_directory do
+      perform_enqueued_jobs do
+        owner = using_session(:journey_owner) { register_and_confirm("Ada") }
+        candidate = using_session(:journey_candidate) { register_and_confirm("Alex") }
+        title = "Synthetic beta court cover #{@nonce}"
+
+        using_session(:journey_owner) { post_court_cover(title) }
+        assignment = Assignment.find_by!(title:)
+
+        using_session(:journey_candidate) do
+          visit assignment_path(assignment, locale: :en)
+          assert_no_selector ".contact-card"
+          fill_in "proposal_rate_cents", with: "275"
+          fill_in "proposal_message", with: "Available for this hearing; commercial law experience."
+          click_button I18n.t("marketplace.show.submit", locale: :en)
+          assert_selector ".status-pill", text: /#{Regexp.escape(I18n.t("marketplace.status.pending", locale: :en))}/i
+          assert_no_selector ".contact-card"
+        end
+
+        proposal = assignment.proposals.find_by!(user: candidate)
+        assert_equal 27_500, proposal.rate_cents
+        assert_equal "new_proposal", owner.notifications.order(:id).last.kind
+
+        using_session(:journey_owner) do
+          visit assignment_path(assignment, locale: :en)
+          assert_text candidate.full_name
+          assert_no_selector ".contact-card"
+          within(".candidate-proposal") { click_button I18n.t("workflow.ui.accept", locale: :en) }
+          assert_selector ".contact-card a[href='mailto:#{candidate.email_address}']"
+          assert_no_button I18n.t("workflow.ui.accept", locale: :en)
+        end
+
+        assert_equal "matched", assignment.reload.status
+        assert_equal "accepted", proposal.reload.status
+        assert_equal "proposal_accepted", candidate.notifications.order(:id).last.kind
+        assert assignment.audit_events.exists?(action: "assignment.matched")
+
+        using_session(:journey_candidate) do
+          visit assignment_path(assignment, locale: :en)
+          assert_selector ".contact-card a[href='mailto:#{owner.email_address}']"
+          assert_no_selector ".proposal-form"
+          visit assignments_path(locale: :en)
+          assert_no_link title
+        end
+
+        using_session(:journey_anonymous) do
+          visit assignment_path(assignment, locale: :en)
+          assert_current_path new_session_path(locale: :en)
+          assert_no_text title
+          assert_no_selector ".contact-card"
+        end
+
+        assert_captured_mail(owner.email_address, "workflow.mailers.new_proposal.subject", title:)
+        assert_captured_mail(candidate.email_address, "workflow.mailers.proposal_accepted.subject", title:)
+      end
+    end
+  end
+
+  private
+
+  def register_and_confirm(first_name)
+    login_email = "journey-#{first_name.downcase}-#{@nonce}@example.test"
+    listed_email = "listed-#{first_name.downcase}-#{@nonce}@example.test"
+    @login_emails << login_email
+    last_name = "Journey#{@nonce}"
+    source_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
+    @directory_pages[source_url] = <<~HTML
+      <main id="main"><h1>#{first_name} #{last_name}</h1>
+        <a href="mailto:#{listed_email}">#{listed_email}</a>
+      </main>
+    HTML
+
+    visit new_registration_path(locale: :en)
+    fill_in "registration_first_name", with: first_name
+    fill_in "registration_last_name", with: last_name
+    fill_in "registration_email_address", with: login_email
+    fill_in "registration_password", with: "password1234"
+    fill_in "registration_password_confirmation", with: "password1234"
+    fill_in "registration_directory_profile_url", with: source_url
+    fill_in "registration_firm_name", with: "Synthetic #{first_name} practice #{@nonce}"
+    find("#registration_terms_accepted").check
+    find("form.assignment-form input[type='submit']").click
+    assert_current_path verification_status_path(locale: :en)
+
+    user = User.find_by!(email_address: login_email)
+    assert_not user.marketplace_verified?
+    visit new_assignment_path(locale: :en)
+    assert_current_path verification_status_path(locale: :en)
+
+    visit captured_email_path(login_email, "/email-verification/")
+    assert_not user.reload.email_verified?, "Opening an email link must not confirm it"
+    click_button I18n.t("auth.email_verifications.review.submit", locale: :en)
+    assert_current_path verification_status_path(locale: :en)
+    assert_predicate user.reload, :email_verified?
+    assert_not user.marketplace_verified?, "The separate directory mailbox must also be confirmed"
+
+    visit captured_email_path(listed_email, "/directory-verification/")
+    assert_text login_email
+    assert_not user.lawyer_profile.reload.directory_email_verified?
+    click_button I18n.t("directory_mail.page.action", locale: :en)
+    assert_current_path new_session_path(locale: :en)
+    assert_predicate user.reload, :marketplace_verified?
+
+    # Exercise the actual password sign-in rather than relying on signup's session.
+    find(".header-logout").click
+    assert_current_path new_session_path(locale: :en)
+    fill_in "email_address", with: login_email
+    fill_in "password", with: "password1234"
+    find("form.assignment-form input[type='submit']").click
+    assert_current_path dashboard_path(locale: :en)
+    user
+  end
+
+  def post_court_cover(title)
+    visit new_assignment_path(locale: :en)
+    fill_in "assignment_title", with: title
+    fill_in "assignment_description", with: "Court cover request without client or case details."
+    find("#assignment_practice_area").find("option", text: "Commercial law").select_option
+    find("#assignment_court_subtype").find("option[value='hearing']").select_option
+    set_datetime("assignment_response_deadline_at", 2.days.from_now)
+    set_datetime("assignment_hearing_at", 3.days.from_now)
+    fill_in "assignment_duration_minutes", with: "60"
+    fill_in "assignment_court", with: "Synthetic court"
+    fill_in "assignment_city", with: "Brussels"
+    fill_in "assignment_fee_cents", with: "250"
+    find("#assignment_content_rules_accepted").check
+    click_button I18n.t("marketplace.form.submit", locale: :en)
+    assert_selector "h1", text: title
+  end
+
+  def set_datetime(id, time)
+    page.execute_script(<<~JAVASCRIPT, id, time.strftime("%Y-%m-%dT%H:%M"))
+      const input = document.getElementById(arguments[0]);
+      input.value = arguments[1];
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    JAVASCRIPT
+  end
+
+  def captured_email_path(recipient, path)
+    mail = ActionMailer::Base.deliveries.reverse.find do |delivery|
+      delivery.to.include?(recipient) && delivery.html_part.body.decoded.include?(path)
+    end
+    assert mail, "Expected a captured confirmation email for #{recipient}"
+    link = Nokogiri::HTML(mail.html_part.body.decoded).at_css("a[href*='#{path}']")
+    assert link, "Expected a confirmation action in the captured email"
+    URI(link["href"]).request_uri
+  end
+
+  def assert_captured_mail(recipient, subject_key, **attributes)
+    subject = I18n.t(subject_key, locale: :en, **attributes)
+    assert ActionMailer::Base.deliveries.any? { |mail| mail.to.include?(recipient) && mail.subject == subject }
+  end
+
+  def with_local_directory
+    lookup = Directory::AdvocaatBeProfileLookup
+    original_lookup = lookup.method(:call)
+    pages = @directory_pages
+    lookup.define_singleton_method(:call) do |profile_url:, full_name:|
+      original_lookup.call(profile_url:, full_name:, fetcher: ->(uri) { pages.fetch(uri.to_s) })
+    end
+    yield
+  ensure
+    lookup.define_singleton_method(:call, original_lookup) if original_lookup
+  end
+
+  def remove_journey_records
+    users = User.where(email_address: @login_emails)
+    user_ids = users.pluck(:id)
+    firm_ids = Membership.where(user_id: user_ids).pluck(:firm_id)
+    assignment_ids = Assignment.where(firm_id: firm_ids).pluck(:id)
+
+    AuditEvent.where(actor_user_id: user_ids).or(AuditEvent.where(firm_id: firm_ids)).delete_all
+    Notification.where(user_id: user_ids).delete_all
+    Proposal.where(user_id: user_ids).or(Proposal.where(assignment_id: assignment_ids)).delete_all
+    Assignment.where(id: assignment_ids).delete_all
+    Session.where(user_id: user_ids).delete_all
+    LawyerProfile.where(user_id: user_ids).delete_all
+    Membership.where(user_id: user_ids).delete_all
+    users.delete_all
+    Firm.where(id: firm_ids).delete_all
+  end
+end

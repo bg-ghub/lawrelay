@@ -35,7 +35,7 @@ de:
       reset: "Ihr Passwort wurde geändert."
       mismatch: "Die Passwörter stimmen nicht überein."
       invalid_password: "Verwenden Sie mindestens 12 Zeichen und geben Sie beide Male dasselbe Passwort ein."
-      invalid: "Dieser Link zum Zurücksetzen ist ungültig oder abgelaufen."
+      invalid: "Dieser Link ist ungültig oder abgelaufen. Fordern Sie unten einen neuen an."
       rate_limited: "Zu viele Anfragen. Bitte versuchen Sie es später erneut."
       new:
         title: "Passwort zurücksetzen — LawRelay"
