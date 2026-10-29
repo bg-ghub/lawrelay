@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-29
+
+### Added
+
+- Scheduled retention cleanup, time-limited holds and protected member-account erasure.
+- A private deletion ledger that replays reviewed erasures before restored traffic resumes.
+
+### Changed
+
+- Publish retention periods in NL/FR/DE/EN and keep encrypted backups for 30 days.
+- Use “confrater” in the Dutch homepage and simplify the beta note.
+
 ## [0.8.7] - 2026-10-29
 
 ### Fixed
@@ -245,7 +257,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.7...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/bg-ghub/lawrelay/compare/v0.8.7...v0.9.0
 [0.8.7]: https://github.com/bg-ghub/lawrelay/compare/v0.8.6...v0.8.7
 [0.8.6]: https://github.com/bg-ghub/lawrelay/compare/v0.8.5...v0.8.6
 [0.8.5]: https://github.com/bg-ghub/lawrelay/compare/v0.8.4...v0.8.5

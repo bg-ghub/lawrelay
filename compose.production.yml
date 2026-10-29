@@ -15,6 +15,11 @@ services:
       - "3000"
     volumes:
       - lawrelay_storage:/rails/storage
+      # Host-owned deletion ledger. It stays outside the Rails tree and backup
+      # volume so approved erasures can be replayed after a restore.
+      - /var/lib/lawrelay-privacy:/var/lib/lawrelay-privacy
+    environment:
+      LAWRELAY_ERASURE_LEDGER: /var/lib/lawrelay-privacy/erasures.jsonl
     networks:
       - private
     restart: unless-stopped
@@ -28,10 +33,9 @@ services:
     cpus: 1.50
     pids_limit: 256
     logging:
-      driver: local
+      driver: journald
       options:
-        max-size: 10m
-        max-file: "3"
+        tag: lawrelay-app
 
   caddy:
     image: caddy:2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
@@ -54,10 +58,9 @@ services:
     cpus: 0.50
     pids_limit: 128
     logging:
-      driver: local
+      driver: journald
       options:
-        max-size: 10m
-        max-file: "3"
+        tag: lawrelay-caddy
 
 networks:
   private:

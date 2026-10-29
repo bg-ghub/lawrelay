@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+# Prepare only the local privacy-ledger path and journald retention setting.
+# Run as root from a reviewed release checkout before deploying the retention
+# release. Existing ledger content is never removed.
+set -eu
+umask 077
+
+[ "$(id -u)" -eq 0 ] || { printf '%s\n' 'Run as root.' >&2; exit 1; }
+
+root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
+ledger_dir=/var/lib/lawrelay-privacy
+ledger="$ledger_dir/erasures.jsonl"
+ledger_lock="$ledger.lock"
+drop_in=/etc/systemd/journald.conf.d/lawrelay-retention.conf
+
+[ ! -L "$ledger_dir" ] || { printf '%s\n' 'Refusing a symlinked ledger directory.' >&2; exit 1; }
+[ ! -e "$ledger_dir" ] || [ -d "$ledger_dir" ] || { printf '%s\n' 'Ledger path exists but is not a directory.' >&2; exit 1; }
+install -d -o 1000 -g 1000 -m 0700 "$ledger_dir"
+
+prepare_private_file() {
+  path=$1
+  description=$2
+  [ ! -L "$path" ] || { printf '%s\n' "Refusing a symlinked $description." >&2; exit 1; }
+  [ ! -e "$path" ] || [ -f "$path" ] || { printf '%s\n' "$description path exists but is not a regular file." >&2; exit 1; }
+  [ ! -e "$path" ] || [ "$(stat -c %h "$path")" = 1 ] || { printf '%s\n' "$description must not have hard links." >&2; exit 1; }
+  touch "$path"
+  chown 1000:1000 "$path"
+  chmod 0600 "$path"
+}
+
+prepare_private_file "$ledger" 'ledger file'
+prepare_private_file "$ledger_lock" 'ledger lock file'
+
+install -D -m 0644 "$root/script/ops/config/lawrelay-journald-retention.conf" "$drop_in"
+systemctl restart systemd-journald
+printf '%s\n' "Prepared $ledger, $ledger_lock and $drop_in."

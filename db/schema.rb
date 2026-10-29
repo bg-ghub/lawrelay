@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_200000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
     t.datetime "response_deadline_at"
     t.string "scope_indication"
     t.datetime "delivery_due_at"
+    t.datetime "closed_at"
     t.index ["city"], name: "index_assignments_on_city"
     t.index ["creator_user_id"], name: "index_assignments_on_creator_user_id"
     t.index ["firm_id"], name: "index_assignments_on_firm_id"
@@ -41,6 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
     t.index ["practice_area"], name: "index_assignments_on_practice_area"
     t.index ["response_deadline_at"], name: "index_assignments_on_response_deadline_at"
     t.index ["starts_at"], name: "index_assignments_on_starts_at"
+    t.index ["status", "closed_at"], name: "index_assignments_on_status_and_closed_at"
     t.index ["status"], name: "index_assignments_on_status"
   end
 
@@ -255,6 +257,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
     t.index ["status", "created_at"], name: "index_reports_on_status_and_created_at"
   end
 
+  create_table "retention_holds", force: :cascade do |t|
+    t.string "subject_type", null: false
+    t.integer "subject_id", null: false
+    t.integer "actor_id", null: false
+    t.text "reason", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_retention_holds_on_actor_id"
+    t.index ["expires_at"], name: "index_retention_holds_on_expires_at"
+    t.index ["subject_type", "subject_id"], name: "index_retention_holds_on_subject"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
@@ -316,7 +331,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
     t.datetime "two_factor_enabled_at"
     t.datetime "two_factor_last_verified_at"
     t.json "two_factor_recovery_code_digests", default: [], null: false
+    t.datetime "erased_at"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["erased_at"], name: "index_users_on_erased_at"
     t.index ["suspended_at"], name: "index_users_on_suspended_at"
   end
 
@@ -354,6 +371,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
   add_foreign_key "proposals", "users"
   add_foreign_key "reports", "users", column: "reporter_user_id"
   add_foreign_key "reports", "users", column: "reviewed_by_user_id"
+  add_foreign_key "retention_holds", "users", column: "actor_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "subscriptions", "billing_accounts"
 end

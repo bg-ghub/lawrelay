@@ -53,6 +53,8 @@ jobs:
         run: |
           python3 script/ops/test-external-uptime.py
           sh script/ops/test-notify-no-send
+          sh -n script/ops/lawrelay-backup
+          sh -n script/ops/prepare-retention-host
 
   lint:
     runs-on: ubuntu-latest

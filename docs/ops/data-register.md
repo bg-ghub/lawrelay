@@ -13,30 +13,34 @@ Reviewed 29 October 2026. Owner: Gauthier Berth. This records the current implem
 
 The public privacy notice distinguishes Migadu's Swiss company location from its stated French email infrastructure. It does not claim all email-related processing is confined to France. `advocaat.be` is the public verification source, not an outsourced LawRelay hosting service; the app fetches the supplied profile to compare the name and published professional email.
 
-## Retention implemented today
+## Retention schedule
 
 | Data | Current control and limitation |
 | --- | --- |
-| Accounts, official-profile evidence, firms, assignments, proposals, notifications, reports, privacy requests and audit events | No automatic age-based deletion policy is implemented. Protected [review-package helpers](privacy-operations.md) prepare scoped exports and non-mutating erasure inventories; retention/holds and actual deletion remain reviewed manual actions. Relational restrictions can prevent simple account deletion. Closing an admin request does not execute erasure/export. |
+| Unconfirmed registration | Delete an isolated, never-activated signup after 30 days of inactivity. Preserve established accounts awaiting email reconfirmation, recent sessions/corrections, shared firms, work, financial evidence and protected requests. |
+| Active account and professional profile | Keep until closure, not merely based on inactivity. A verified deletion request is reviewed before account/profile data is removed. |
+| Closed assignments, proposals and shared workflow records | Keep for 2 years after closure. Pseudonymise shared work when an account is removed where possible; do not promise anonymisation. |
+| Notifications | Delete terminal notifications and delivery metadata after 90 days. Keep unresolved delivery investigations or held records until the review is finished. |
+| Resolved reports, privacy requests and support correspondence | Keep for 2 years after resolution or last correspondence. Mailbox cleanup is a manual operator task. |
+| Audit and security records | Keep for 1 year. |
+| Deletion ledger | Keep the minimum replay record for 2 years. It contains no email address or credentials and stops erased data returning after a restore. |
 | Authentication sessions | Expire after 30 days; expired sessions are removed on access and by daily cleanup. Optional member two-factor approval lasts for that session; a new sign-in needs another code. Admin MFA authorisation lasts 12 hours. This does not delete account or audit data. |
-| Notifications | Event history and delivery metadata have no automatic age purge. Reading a message does not delete it. The outbox stores event/recipient references and delivery state, not SMTP error text or rendered email bodies. |
 | Optional two-factor credentials | Setup and active authenticator keys are encrypted. Ten recovery codes are shown once and stored as hashes; use removes a code. Turning two-factor off clears these credentials and signs out other sessions. Password resets preserve two-factor protection. |
 | Background jobs | Hourly cleanup removes finished jobs older than the installed Solid Queue default of one day. Failed/pending jobs remain for investigation; they need operational review rather than a claimed one-day deletion guarantee. |
-| Application and proxy logs | Docker's local driver rotates at 10 MB with three files per container. This is a size limit, not a fixed retention period in days. Host-journal retention is not specified in the application source; record the host settings separately. Sensitive token paths are filtered, but logs can still contain account/request metadata. |
-| Support and transactional email | Mailbox deletion and support-record retention are manual. No LawRelay age-based mailbox purge is configured. Migadu's [policy](https://www.migadu.com/privacy/) describes deletion after contract termination, with exceptions; that is not this application's active-account retention policy. |
-| Off-host backups | Restic keeps 7 daily, 4 weekly and 12 monthly snapshots and prunes expired data. S3 lifecycle expires noncurrent object versions after 90 days. Pruning a restic snapshot therefore does not establish immediate physical erasure of all older encrypted copies. Record deletion restrictions and reapply approved deletions after a restore. |
+| Application and proxy logs | Keep for up to 31 days. Sensitive token paths are filtered, but logs can still contain account/request metadata. |
+| Off-host backups | Keep restic snapshots for 30 days. AWS S3 current objects do not expire through lifecycle rules; noncurrent versions expire after 30 days. Deleted data can therefore remain in protected backup storage for about 60 days. Reapply approved deletion after a restore. |
 | Hetzner provider backups | Separate daily disk-backup rotation with seven slots under the provider's [backup policy](https://docs.hetzner.com/cloud/servers/backups-snapshots/overview/). These may include databases, logs and protected configuration files; treat access as production-level access. They are separate from restic retention. |
 | GitHub records | Source/history, issues, CI logs and artifacts follow repository/provider settings. This register does not establish a uniform deletion duration. Keep real user evidence out of this channel. |
 
-Implementation references: `app/models/session.rb`, `app/models/user.rb`, `config/recurring.yml`, `compose.production.yml`, `script/ops/lawrelay-backup` and the protected provider configuration. The queue default comes from the installed Solid Queue version in `Gemfile.lock`; recheck it after dependency changes.
+An unresolved privacy request, security incident, legal obligation or specific recorded dispute hold pauses deletion only for the necessary records. Review each hold at least every 90 days. Implementation references: `app/models/session.rb`, `app/models/user.rb`, `config/recurring.yml`, `compose.production.yml`, `script/ops/lawrelay-backup` and the protected provider configuration.
 
 ## Operator decisions
 
 - Confirm the published legal name, enterprise/VAT details, registered address, platform role and contact ownership against the operating person and current records.
 - Retain the completed Hetzner DPA/appendix, the applicable AWS agreement/DPA version, Migadu's applicable DPA and full mail subprocessor/location information, and the basis for GitHub's limited processing. Mark each evidence item with date and reviewer; availability of a public template is not acceptance evidence.
 - Approve the actual data purposes and eligibility rule: registration currently depends on `advocaat.be`, not a complete combined Belgian bar-directory service. Review the public terms/privacy text in NL/FR/DE/EN with that boundary in mind.
-- Set justified retention periods and holds for accounts, marketplace records, directory evidence, support and audit data. Decide what can be deleted or anonymised, including records involving other lawyers; then implement and test that process.
-- Decide whether 12 monthly backup snapshots plus noncurrent S3 versions and provider disk backups are proportionate. Define erasure handling during backup expiry and restoration without promising instant removal from every copy.
+- Apply the retention schedule above, including the 90-day review of any recorded hold. Shared records are pseudonymised where possible; do not delete or rewrite another lawyer's work without review.
+- Keep deletion restrictions with the private request record and reapply them after a restore. Do not promise immediate removal from protected backups.
 - Validate identity checks, export redaction, deletion execution, complaints/appeals and incident escalation using the [support playbook](support.md). Record decisions separately from evidence that an action was carried out.
 - Review email capacity before increasing traffic: Migadu Micro's [published quota](https://www.migadu.com/pricing/) is 20 outgoing attempts per day across the account. Verification, proposal notifications, alerts and support share it. This infrastructure limit does not cap open registration eligibility. Failed mail jobs trigger the existing health-alert route, but SMTP alert delivery shares the quota; keep smoke tests minimal and inspect the protected journal when delivery fails.
 - Review the published notices and the decisions above. Outside specialist reviews are optional future work, not a paid requirement for this free beta. This register records engineering evidence and introduces no paid-subscription processing.

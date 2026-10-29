@@ -10,7 +10,7 @@ The `lawrelay_storage` Docker volume holds the authoritative SQLite databases an
 - `production_queue.sqlite3`
 - `production_cable.sqlite3`
 
-It runs `PRAGMA integrity_check` on each copy. It deliberately excludes `production_cache.sqlite3`, which Rails can rebuild. It archives the remaining persistent files, excluding live SQLite/WAL files and temporary backup directories. The resulting snapshot is encrypted by restic before it leaves the host.
+It runs `PRAGMA integrity_check` on each copy. It deliberately excludes `production_cache.sqlite3`, which Rails can rebuild. It archives the remaining persistent files, excluding live SQLite/WAL files and temporary backup directories. It also takes a separately locked copy of the protected erasure ledger; it is not placed inside the dated database or storage archive. The resulting snapshot is encrypted by restic before it leaves the host.
 
 ## One-time server installation
 
@@ -25,6 +25,7 @@ sudo install -m 0750 script/ops/lawrelay-restore-drill /usr/local/libexec/lawrel
 sudo install -m 0750 script/ops/lawrelay-health /usr/local/libexec/lawrelay-health
 sudo install -m 0750 script/ops/lawrelay-notify /usr/local/libexec/lawrelay-notify
 sudo install -m 0644 script/ops/systemd/lawrelay-*.service script/ops/systemd/lawrelay-*.timer /etc/systemd/system/
+sudo sh script/ops/prepare-retention-host
 ```
 
 Create `/etc/lawrelay/backup.env` as root, mode `0600`. This is an example shape only; replace all placeholder values without printing the completed file:
@@ -84,7 +85,24 @@ sudo journalctl -u lawrelay-backup.service -n 100 --no-pager
 sudo systemctl start lawrelay-health.service
 ```
 
-The backup script holds an exclusive lock, so a second timer/manual run exits safely. Successful runs update `/var/lib/lawrelay-backup/state/last-success`; failed jobs remain visible in `systemctl` and trigger `lawrelay-failure@.service`. Retention is 7 daily, 4 weekly, and 12 monthly snapshots. Review repository capacity and legal retention requirements separately.
+The backup script holds an exclusive lock, so a second timer/manual run exits safely. Successful runs update `/var/lib/lawrelay-backup/state/last-success`; failed jobs remain visible in `systemctl` and trigger `lawrelay-failure@.service`. Restic keeps recovery snapshots for 30 days. Hetzner's separate seven daily disk backups remain unchanged.
+
+Before installing the 30-day prune on a live repository, run a fresh backup, then review its dry run as root:
+
+```sh
+sudo /usr/local/libexec/lawrelay-backup
+sudo -E restic forget --group-by host,tags --tag lawrelay --keep-within 30d --prune --dry-run
+```
+
+Do not expire current S3 objects: restic manages them. Configure the bucket separately to remove only noncurrent object versions after 30 days.
+
+## Logs and deletion ledger
+
+Docker writes LawRelay logs to journald. The supplied journald drop-in rotates daily and targets 30-day retention for host journal entries; because expiry happens when a file rotates, a record can remain for up to about 31 days. It is a host-wide setting, not a LawRelay-only filter. Check it with `journalctl --disk-usage` and `journalctl --verify` after installation.
+
+`/var/lib/lawrelay-privacy` is mounted into the app solely for the protected deletion ledger. The preparation script preserves any existing ledger content, creates both `erasures.jsonl` and its stable `.lock` file with `0600` mode for the app UID, and rejects symlinks and hard links. Run it before deploying this release; Docker must not create the directory with broader permissions. It is outside the Rails tree and storage volume. The application writes approved erasure entries there; do not edit either file by hand.
+
+Each nightly restic snapshot includes a separately locked ledger copy. This is an asynchronous off-host copy, not a zero-RPO erasure guarantee: an approved erasure after the latest successful backup may need reconciliation after replacement-host recovery.
 
 ## Restore drill
 
@@ -95,7 +113,7 @@ sudo systemctl start lawrelay-restore-drill.service
 sudo journalctl -u lawrelay-restore-drill.service -n 100 --no-pager
 ```
 
-The command restores the latest snapshot tagged `lawrelay` into a newly-created `0700` temporary directory under `/var/lib/lawrelay-restore-drills`, opens the databases read-only for integrity checks, lists the storage archive, then deletes that temporary directory. It never mounts or overwrites `lawrelay_storage`.
+The command restores the latest snapshot tagged `lawrelay` into a newly-created `0700` temporary directory under `/var/lib/lawrelay-restore-drills`, opens the databases read-only for integrity checks, lists the storage archive, then deletes that temporary directory. It never mounts or overwrites `lawrelay_storage`. Before returning a restored copy to service, replay the protected deletion ledger against it while writes and queue workers are still stopped.
 
 Record the snapshot date, duration, result, data-loss window, and any gap in the private incident log.
 
@@ -132,8 +150,9 @@ Do not restore into the sole production volume. For corruption or loss:
 2. Select a known-good restic snapshot and calculate the expected data-loss window.
 3. Restore into a new, isolated directory/volume and run SQLite integrity checks.
 4. Extract the storage archive and point a compatible application release at the new volume.
-5. Smoke-test login, permissions, assignments, attachments, mail and queues; confirm payments remain disabled before switching traffic.
-6. Have the incident commander approve the cutover; retain the prior volume until recovery is accepted.
+5. Recover the ledger from the **latest successful** restic snapshot, even if the selected database snapshot is older. Never overwrite a current/newer host ledger with an older copy. Replay it before starting writes or queue workers.
+6. Smoke-test login, permissions, assignments, attachments, mail and queues; confirm payments remain disabled before switching traffic.
+7. On a replacement host, reconcile deletion requests made since the latest successful backup (up to the backup RPO) before opening traffic. Have the incident commander approve the cutover; retain the prior volume until recovery is accepted.
 
 For a bad application release with intact data, use the deployment rollback procedure first. For failed backup configuration, disable only the affected timer with `sudo systemctl disable --now lawrelay-backup.timer`, preserve logs, fix the root-only environment file, then run a manual backup and restore drill before re-enabling it.
 

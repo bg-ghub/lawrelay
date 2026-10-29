@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.9.0
+
+Retention defaults: abandoned email-unconfirmed registrations 30 days, terminal notifications 90 days, closed work/requests/support 2 years, audit records 1 year, technical logs up to 31 days, encrypted backups 30 days. Recorded holds and unresolved work/requests protect relevant records. Mailbox cleanup remains manual.
+
+Internal checks include shared-firm preservation, erasure authorisation, stale forms, two-year cleanup, bounded holds and commit-safe ledger replay. The local Rails suite passed 463 cases (17 platform-specific skips); the Linux-focused suite passed 36 cases / 167 assertions with one Windows-only skip. Subsequent focused cases also pass. RuboCop and Brakeman report no findings. No real account was erased.
+
+S3 noncurrent-version retention was changed from 90 to 30 days, preserving current objects and the existing incomplete-upload rule. A fresh pre-release backup succeeded; the 30-day restic preview kept all three available snapshots. Protected ledger/lock permissions and local journald retention were prepared on the existing host. Final deployment and hosted CI results are recorded with the release.
+
 ## 29 October 2026 — 0.8.7
 
 Directory-confirmation enqueue failures now preserve the matched profile and retry the handoff up to three times. Pending verification distinguishes mail waiting to be sent from mail accepted by SMTP; this is not proof of inbox arrival.

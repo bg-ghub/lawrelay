@@ -71,8 +71,9 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
-            - "We beoordelen verwijderverzoeken handmatig, ook voor gegevens die nodig blijven voor wettelijke verplichtingen, beveiliging of geschillen. Account-, opdracht-, support- en auditgegevens worden niet automatisch verwijderd."
-            - "Back-ups bewaren 7 dagelijkse, 4 wekelijkse en 12 maandelijkse kopieën. Verwijderde gegevens kunnen aanwezig blijven tot back-ups en oudere opslagversies vervallen."
+            - "Onbevestigde registraties: 30 dagen inactiviteit. Meldingen: 90 dagen vanaf aanmaak. Afgesloten opdrachten, reacties, privacyverzoeken, meldingsdossiers en supportberichten: 2 jaar na afsluiting. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
+            - "Accounts blijven bestaan tot afsluiting. Na beoordeling van een geverifieerd verwijderverzoek verwijderen we gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Lopende opdrachten, verzoeken, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
+            - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."
         rights:
           heading: "7. Uw rechten"
           paragraphs:

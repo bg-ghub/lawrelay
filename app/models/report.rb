@@ -14,6 +14,7 @@ class Report < ApplicationRecord
   validates :details, presence: true, length: { maximum: 2_000 }
   validates :resolution_note, length: { maximum: 2_000 }, allow_blank: true
   validate :reporter_is_not_assignment_owner
+  validate :current_records_exist, on: :create
 
   def reopen!(reviewer:)
     with_lock do
@@ -28,6 +29,11 @@ class Report < ApplicationRecord
   end
 
   private
+
+  def current_records_exist
+    valid = Assignment.exists?(id: reportable_id) && User.where(id: reporter_user_id, erased_at: nil).exists?
+    errors.add(:base, I18n.t("workflow.errors.assignment_not_available")) unless valid
+  end
 
   def reporter_is_not_assignment_owner
     return unless reportable.is_a?(Assignment) && reportable.owned_by?(reporter_user)

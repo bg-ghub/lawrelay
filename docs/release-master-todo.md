@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 29 October 2026. Current release: 0.8.7.
+Reviewed 29 October 2026. Current release: 0.9.0.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -21,7 +21,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 
 - [ ] Complete the [real two-lawyer trial](ops/beta-review-handoff.md) when the second lawyer joins; record actual results and feedback.
 - [ ] Operator: review the published terms/privacy and retain account-specific provider-agreement evidence privately.
-- [ ] Operator: decide retention, erasure and holds before executing a real privacy request. Export/inventory helpers prepare material; they do not delete records.
+- [x] Retention periods and hold review are defined. Privacy requests still need a verified, case-by-case decision; shared records are pseudonymised where possible.
 
 ## Routine operations
 
