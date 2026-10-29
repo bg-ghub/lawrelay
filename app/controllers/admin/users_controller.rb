@@ -26,14 +26,13 @@ module Admin
 
     def update
       result = manager.update!(account_params)
+      delivery_ready = true
       if @user.active?
-        EmailVerificationMailer.verify(@user).deliver_later if result.email_changed
         profile = @user.lawyer_profile
-        if result.identity_changed && profile&.directory_profile_url.present? && !profile.verification_status.in?(%w[rejected suspended])
-          Directory::VerificationJob.perform_later(@user.id)
-        end
+        directory_needed = result.identity_changed && profile&.directory_profile_url.present? && !profile.verification_status.in?(%w[rejected suspended])
+        delivery_ready = Onboarding::Delivery.request(@user, email: result.email_changed, directory: directory_needed)
       end
-      redirect_to admin_user_path(@user), notice: t("admin.users.notices.updated")
+      redirect_to admin_user_path(@user), notice: t("admin.users.notices.updated"), alert: (t("auth.verification_status.queue_unavailable") unless delivery_ready)
     rescue UserManagement::InvalidAction => error
       management_error(error.translation_key)
     rescue ActiveRecord::RecordInvalid

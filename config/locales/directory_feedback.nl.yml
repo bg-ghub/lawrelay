@@ -1,0 +1,12 @@
+nl:
+  directory_feedback:
+    attention_title: "Controleer je profiel"
+    check_name: "Controleer je naam in instellingen"
+    resend_confirmation: "Bevestigingslink opnieuw sturen"
+    failures:
+      invalid_url: "We kunnen je profiellink niet gebruiken. Contacteer support om die te corrigeren."
+      unavailable: "We kunnen je profiel niet laden. Controleer de link of probeer het later opnieuw."
+      malformed: "We kunnen je advocaat.be-profiel niet lezen. Probeer opnieuw of contacteer support als het probleem blijft."
+      name_mismatch: "Je naam komt niet overeen met je advocaat.be-profiel. Controleer je naam in instellingen of contacteer support."
+      email_missing: "Je advocaat.be-profiel bevat geen bruikbaar e-mailadres. Pas de officiële vermelding aan en controleer opnieuw."
+      already_claimed: "We kunnen deze profielcontrole niet afronden. Contacteer support."

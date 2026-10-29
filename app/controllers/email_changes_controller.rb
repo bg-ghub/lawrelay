@@ -22,13 +22,11 @@ class EmailChangesController < ApplicationController
       return render :new, status: :unprocessable_content
     end
 
-    EmailVerificationMailer.verify(result.user).deliver_later
     profile = result.profile
-    if profile&.directory_profile_url.present? && !profile.verification_status.in?(%w[rejected suspended])
-      Directory::VerificationJob.perform_later(result.user.id)
-    end
+    directory_needed = profile&.directory_profile_url.present? && !profile.verification_status.in?(%w[rejected suspended])
+    delivery_ready = Onboarding::Delivery.request(result.user, directory: directory_needed)
     destination = result.user.system_admin? ? admin_users_path(locale: result.user.locale) : verification_status_path(locale: result.user.locale)
-    redirect_to destination, notice: t("email_change.notices.sent")
+    redirect_to destination, notice: t("email_change.notices.updated"), alert: (t("auth.verification_status.queue_unavailable") unless delivery_ready)
   end
 
   private

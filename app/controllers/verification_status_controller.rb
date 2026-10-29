@@ -10,13 +10,20 @@ class VerificationStatusController < ApplicationController
   end
 
   def create
-    EmailVerificationMailer.verify(Current.user).deliver_later unless Current.user.email_verified?
-    redirect_to verification_status_path, notice: t("auth.verification_status.resent")
+    queued = Current.user.email_verified? || Onboarding::Delivery.enqueue { EmailVerificationMailer.verify(Current.user).deliver_later }
+    if queued
+      redirect_to verification_status_path, notice: t("auth.verification_status.resent")
+    else
+      redirect_to verification_status_path, alert: t("auth.verification_status.queue_unavailable")
+    end
   end
 
   def retry_directory
-    Directory::VerificationJob.perform_later(Current.user.id)
-    redirect_to verification_status_path, notice: t("directory_onboarding.status.retry_queued")
+    if Onboarding::Delivery.enqueue { Directory::VerificationJob.perform_later(Current.user.id) }
+      redirect_to verification_status_path, notice: t("directory_onboarding.status.retry_queued")
+    else
+      redirect_to verification_status_path, alert: t("auth.verification_status.queue_unavailable")
+    end
   end
 
   private

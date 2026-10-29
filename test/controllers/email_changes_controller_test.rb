@@ -34,6 +34,22 @@ class EmailChangesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @account.user.email_address, @account.user.reload.email_address
   end
 
+  test "a saved email change survives mail enqueue failure and still requests the directory check" do
+    @account.profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a")
+    original = EmailVerificationMailer.method(:verify)
+    EmailVerificationMailer.define_singleton_method(:verify) { |*| raise ActiveJob::EnqueueError, "private mail failure" }
+    assert_enqueued_jobs 1, only: Directory::VerificationJob do
+      post email_change_path(locale: :en), params: { email_change: { email_address: "retry-change@example.test", current_password: "password1234" } }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal "retry-change@example.test", @account.user.reload.email_address
+    assert_not @account.user.email_verified?
+    assert_equal I18n.t("email_change.notices.updated", locale: :en), flash[:notice]
+    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+  ensure
+    EmailVerificationMailer.define_singleton_method(:verify, original) if original
+  end
+
   test "administrators cannot view or submit an email change regardless of MFA" do
     @account.user.update!(system_role: "admin")
 

@@ -30,8 +30,9 @@ class SettingsController < ApplicationController
       record_changes!(profile_requires_review:, firm_requires_review:)
     end
 
-    Directory::VerificationJob.perform_later(@user.id) if directory_identity_changed && !protected_profile?(@profile)
-    redirect_to settings_path(locale: @user.locale), notice: update_notice(profile_requires_review || directory_identity_changed, firm_requires_review)
+    delivery_ready = Onboarding::Delivery.request(@user, email: false, directory: directory_identity_changed && !protected_profile?(@profile))
+    redirect_to settings_path(locale: @user.locale), notice: update_notice(profile_requires_review || directory_identity_changed, firm_requires_review),
+      alert: (t("auth.verification_status.queue_unavailable") unless delivery_ready)
   rescue ActiveRecord::RecordInvalid
     render :show, status: :unprocessable_content
   end

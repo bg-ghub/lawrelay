@@ -84,5 +84,7 @@ nl:
       privacy_requests:
         title: "Privacyverzoeken — LawRelay-beheer"
         heading: "Privacyverzoeken"
-        lede: "Behandel en sluit verzoeken af."
+        lede: "Leg de afhandeling vast."
+        mark_handled: "Afgehandeld markeren"
+        action_note: "Voer het verzoek uit en antwoord de gebruiker vóór je het als afgehandeld markeert."
         empty: "Er zijn geen privacyverzoeken te beoordelen."

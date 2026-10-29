@@ -84,5 +84,7 @@ de:
       privacy_requests:
         title: "Datenschutzanfragen — LawRelay-Administration"
         heading: "Datenschutzanfragen"
-        lede: "Bearbeiten und schließen Sie Anfragen ab."
+        lede: "Halten Sie die Bearbeitung fest."
+        mark_handled: "Als erledigt markieren"
+        action_note: "Bearbeiten Sie die Anfrage und antworten Sie dem Nutzer, bevor Sie sie als erledigt markieren."
         empty: "Keine Datenschutzanfragen zur Prüfung."

@@ -82,6 +82,22 @@ check(visit(member, "/nl/assignments/#{private_assignment.id}").redirect?, "unre
 check(visit(member, "/nl/admin/verifications").status.in?([ 302, 303, 403 ]), "member cannot use administration")
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
 
+if defined?(EmailVerificationDeliveryJob)
+  verification_user = User.create!(first_name: "Recovery", last_name: "Verification",
+    email_address: "recovery-verification-#{nonce}@example.invalid", password:, locale: "en")
+  verification_job = EmailVerificationMailer.verify(verification_user).deliver_later
+  serialized_job = SolidQueue::Job.find_by(active_job_id: verification_job.job_id)
+  check(verification_job.is_a?(EmailVerificationDeliveryJob) && serialized_job.present?, "verification email uses its serialized delivery job")
+  ActionMailer::Base.perform_deliveries = true
+  ActiveJob::Base.execute(serialized_job.arguments)
+  message = ActionMailer::Base.deliveries.last
+  check(ActionMailer::Base.deliveries.size == 1 && message.to == [ verification_user.email_address ], "verification delivery reaches only its synthetic recipient")
+  check(!verification_user.reload.email_verified? && message.html_part.present? && message.text_part.present?, "verification rendering does not bypass account confirmation")
+  serialized_job.destroy!
+  ActionMailer::Base.deliveries.clear
+  ActionMailer::Base.perform_deliveries = false
+end
+
 # Execute only newly-created synthetic jobs from this disposable queue. Never
 # drain the restored queue: it may contain real recipients from the snapshot.
 if defined?(NotificationEmailDeliveryJob)

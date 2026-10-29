@@ -1,5 +1,8 @@
+require "digest"
+
 class LawyerProfile < ApplicationRecord
   VERIFICATION_STATUSES = %w[pending verified rejected suspended].freeze
+  DIRECTORY_LOOKUP_FAILURES = %w[invalid_url unavailable malformed name_mismatch email_missing already_claimed].freeze
 
   belongs_to :user
 
@@ -33,6 +36,24 @@ class LawyerProfile < ApplicationRecord
 
   def directory_confirmation_required?
     directory_matched? && !directory_email_verified? && !directory_email.to_s.casecmp?(user.email_address.to_s)
+  end
+
+  def directory_lookup_identity_digest(profile_url: directory_profile_url, full_name: user.full_name)
+    Digest::SHA256.hexdigest([ id, profile_url, full_name ].join("\u0000"))
+  end
+
+  def directory_lookup_failure
+    return unless verification_status == "pending"
+
+    attempt = AuditEvent.where(auditable: self,
+      action: %w[verification.directory_lookup_failed verification.directory_matched]).order(id: :desc).first
+    return unless attempt&.action == "verification.directory_lookup_failed"
+
+    metadata = attempt.metadata
+    return unless metadata.is_a?(Hash) && DIRECTORY_LOOKUP_FAILURES.include?(metadata["status"])
+    return unless metadata["identity_digest"] == directory_lookup_identity_digest
+
+    metadata["status"]
   end
 
   private

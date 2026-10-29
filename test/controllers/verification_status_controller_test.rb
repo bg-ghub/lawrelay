@@ -33,4 +33,37 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to verification_status_path(locale: :en)
   end
+
+  test "a failed email resend stays on the retryable status page without exposing the error" do
+    user = users(:one)
+    user.update!(email_verified_at: nil)
+    sign_in_as(user)
+    original = EmailVerificationMailer.method(:verify)
+    EmailVerificationMailer.define_singleton_method(:verify) { |*| raise ActiveJob::EnqueueError, "private SMTP user and token" }
+    post verification_status_path(locale: :nl)
+    assert_redirected_to verification_status_path(locale: :nl)
+    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :nl), flash[:alert]
+    assert_nil flash[:notice]
+    assert_not_includes response.body, "private SMTP"
+    EmailVerificationMailer.define_singleton_method(:verify, original)
+
+    assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
+      post verification_status_path(locale: :nl)
+    end
+    assert_equal I18n.t("auth.verification_status.resent", locale: :nl), flash[:notice]
+  ensure
+    EmailVerificationMailer.define_singleton_method(:verify, original) if original
+  end
+
+  test "a rejected directory retry is reported without a false success notice" do
+    sign_in_as(users(:one))
+    original = Directory::VerificationJob.method(:perform_later)
+    Directory::VerificationJob.define_singleton_method(:perform_later) { |*| false }
+    post retry_directory_verification_status_path(locale: :en)
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+    assert_nil flash[:notice]
+  ensure
+    Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
+  end
 end

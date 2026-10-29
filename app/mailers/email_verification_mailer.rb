@@ -1,4 +1,6 @@
 class EmailVerificationMailer < ApplicationMailer
+  self.delivery_job = EmailVerificationDeliveryJob
+
   def verify(user)
     @user = user
     @verification_url = email_verification_url(
