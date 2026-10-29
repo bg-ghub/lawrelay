@@ -20,10 +20,12 @@
             <dt><%= t("pages.legal_notice.fields.#{field}") %></dt>
             <dd>
               <% value = @operator[field] %>
-              <% if field == :professional_rules_url && value.present? %>
-                <%= link_to value, value, rel: "noopener" %>
+              <% if %i[professional_profile_url professional_rules_url].include?(field) && value.present? %>
+                <%= link_to value, value, target: "_blank", rel: "noopener noreferrer" %>
               <% elsif %i[legal_email privacy_email support_email].include?(field) && value.present? %>
                 <%= mail_to value %>
+              <% elsif field == :phone && value.present? %>
+                <%= link_to value, "tel:#{value.delete(" ")}" %>
               <% else %>
                 <%= value.presence || t("pages.shared.not_configured") %>
               <% end %>

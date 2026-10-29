@@ -46,18 +46,19 @@ fr:
       eyebrow: "vie privée"
       title: "Comment LawRelay traite les données personnelles."
       introduction: "Cette déclaration explique les données personnelles limitées utilisées pour la bêta de LawRelay, destinée aux avocats belges vérifiés."
+      operator_contact_heading: "Contact du responsable du traitement"
       sections:
         controller:
           heading: "1. Qui est responsable du traitement"
           paragraphs:
-            - "Gauthier Berth est responsable du traitement des données de compte, de vérification, de place de marché, d'assistance et de sécurité. Ses coordonnées figurent dans les mentions légales."
-            - "Envoyez les questions de confidentialité et demandes d'exercice de droits à privacy@lawrelay.be."
+            - "L'exploitant identifié ci-dessus est responsable du traitement des données de compte, de vérification, de place de marché, d'assistance et de sécurité. Ses coordonnées figurent ci-dessus et dans les mentions légales."
+            - "Envoyez les questions de confidentialité et demandes d'exercice de droits à privacy@lawrelay.be. Les contrôles d'inscription utilisent l'annuaire public advocaat.be, une comparaison automatisée des informations fournies et, si nécessaire, un examen humain ; contactez support@lawrelay.be si un contrôle nécessite de l'aide."
         scope:
           heading: "2. Données traitées"
           bullets:
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
             - "Données de vérification professionnelle : profil dans l’annuaire officiel, nom et e-mail professionnel publiés, coordonnées du cabinet et statut de vérification."
-            - "Données de profil, mission, candidature, acceptation, annulation et audit."
+            - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
           paragraphs:
             - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."
@@ -96,11 +97,12 @@ fr:
       eyebrow: "conditions d'utilisation"
       title: "Les règles d'utilisation de LawRelay."
       introduction: "Ces conditions régissent la bêta gratuite de LawRelay pour les utilisateurs professionnels."
+      operator_contact_heading: "Contact de l'exploitant"
       sections:
         agreement:
           heading: "1. Contrat et exploitant"
           paragraphs:
-            - "Ces conditions régissent l'utilisation de LawRelay par des professionnels. Gauthier Berth est l'exploitant contractant ; ses coordonnées figurent dans les mentions légales. La création d'un compte ou l'utilisation du service après acceptation d'une version publiée forme le contrat de service."
+            - "Ces conditions régissent l'utilisation de LawRelay par des professionnels. L'exploitant identifié ci-dessus est la partie contractante ; ses coordonnées figurent ci-dessus et dans les mentions légales. La création d'un compte ou l'utilisation du service après acceptation d'une version publiée forme le contrat de service."
         eligibility:
           heading: "2. Accès et vérification"
           paragraphs:
@@ -141,7 +143,7 @@ fr:
         intellectual_property:
           heading: "10. Propriété intellectuelle"
           paragraphs:
-            - "Les utilisateurs conservent les droits sur leur contenu et accordent à LawRelay une licence limitée pour l'héberger, l'afficher, le transmettre et le traiter uniquement afin d'exploiter et sécuriser le service. LawRelay et ses concédants conservent les droits sur la plateforme, la marque et le logiciel."
+            - "Les utilisateurs conservent leurs droits sur leurs données privées et les contenus soumis et accordent à LawRelay une licence limitée pour les héberger, afficher, transmettre et traiter uniquement afin d'exploiter et de sécuriser le service. Le logiciel LawRelay est disponible sur GitHub sous la GNU Affero General Public License, version 3 ou ultérieure ; cette licence ne rend pas publiques les données privées des utilisateurs. LawRelay conserve les droits sur sa marque."
         availability:
           heading: "11. Disponibilité et modifications"
           paragraphs:
@@ -160,7 +162,7 @@ fr:
         current_use:
           heading: "1. Ce qui est utilisé aujourd'hui"
           paragraphs:
-            - "Un cookie de session signé sécurise la session du navigateur et pourra mémoriser l'état connecté lorsque les comptes seront actifs. Des jetons de sécurité empêchent les requêtes falsifiées. Ces fonctions sont strictement nécessaires au service demandé."
+            - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Ces cookies sont strictement nécessaires au service demandé."
         no_tracking:
           heading: "2. Pas de suivi facultatif dans la version actuelle"
           paragraphs:
@@ -177,6 +179,12 @@ fr:
           heading: "5. Questions"
           paragraphs:
             - "Les questions sur les cookies et la vie privée peuvent être envoyées au contact vie privée des mentions légales."
+    operator_contact:
+      natural_person_description: "%{name} exploite LawRelay en tant que personne physique et avocat."
+      legal_notice_link: "Voir les mentions légales"
+      complaint_link: "Introduire une plainte auprès de l’Autorité de protection des données"
+      professional_profile_url_link: "Voir le profil professionnel officiel"
+      professional_rules_url_link: "Voir les règles professionnelles"
     legal_notice:
       meta_title: "Mentions légales — LawRelay"
       eyebrow: "informations sur l'exploitant"
@@ -192,6 +200,7 @@ fr:
         support_email: "Assistance"
         phone: "Téléphone"
         professional_body: "Ordre professionnel ou autorité de contrôle, le cas échéant"
+        professional_profile_url: "Profil professionnel officiel, le cas échéant"
         professional_rules_url: "Règles professionnelles applicables, le cas échéant"
       sections:
         service:

@@ -14,6 +14,10 @@
     <%= render "pages/operator_warning" if show_operator_warning %>
 
     <article class="dashboard-panel">
+      <% if %w[pages.privacy pages.terms].include?(scope) %>
+        <%= render "pages/operator_contact", heading: t("#{scope}.operator_contact_heading"), show_complaint_link: scope == "pages.privacy" %>
+      <% end %>
+
       <% t("#{scope}.sections").each_value do |section| %>
         <section class="detail-section">
           <h2><%= section[:heading] %></h2>
@@ -29,6 +33,7 @@
           <% end %>
         </section>
       <% end %>
+
     </article>
   </div>
 </section>

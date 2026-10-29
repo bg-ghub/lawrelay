@@ -6,7 +6,8 @@ class TranslationsTest < ActiveSupport::TestCase
     expected = translation_leaves(catalogs.fetch("en"))
     %w[nl fr de].each do |locale|
       actual = translation_leaves(catalogs.fetch(locale))
-      assert_equal expected.keys.sort, actual.keys.sort, "Translation keys differ in #{locale}"
+      assert_empty expected.keys - actual.keys, "Missing translation keys in #{locale}"
+      assert_empty actual.keys - expected.keys, "Extra translation keys in #{locale}"
       expected.each do |key, value|
         next unless value.is_a?(String)
 

@@ -9,6 +9,7 @@ class PlatformOperator
     support_email: "LAWRELAY_SUPPORT_EMAIL",
     phone: "LAWRELAY_PHONE",
     professional_body: "LAWRELAY_PROFESSIONAL_BODY",
+    professional_profile_url: "LAWRELAY_PROFESSIONAL_PROFILE_URL",
     professional_rules_url: "LAWRELAY_PROFESSIONAL_RULES_URL"
   }.freeze
   REQUIRED_FIELDS = %i[legal_name registered_address enterprise_number vat_number legal_email privacy_email support_email phone].freeze

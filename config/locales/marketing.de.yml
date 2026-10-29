@@ -26,6 +26,9 @@ de:
       learn_more: Mehr erfahren
       contact: Kontakt
       made_for_belgium: Für Belgien gemacht
+      source_code: Quellcode auf GitHub
+      open_source: Open Source
+      app_version: Version %{version}
       demo_notice: Kostenlose Beta. Die Registrierung steht auf advocaat.be gelisteten Anwälten offen; der Marktplatz-Zugang folgt nach einer Verzeichnisprüfung. Keine Mandantennamen, Sachverhalte oder Dokumente einstellen.
       demo_disclaimer: LawRelay koordiniert Kontakt; es erteilt keine Rechtsberatung.
     home:

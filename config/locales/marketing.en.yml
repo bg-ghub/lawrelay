@@ -26,6 +26,9 @@ en:
       learn_more: Learn more
       contact: Contact
       made_for_belgium: Made for Belgium
+      source_code: Source on GitHub
+      open_source: Open source
+      app_version: Version %{version}
       demo_notice: Free beta. Registration is open to lawyers listed on advocaat.be; marketplace access follows a directory check. Do not include client names, case facts, or documents.
       demo_disclaimer: LawRelay coordinates contact; it does not provide legal advice.
     home:

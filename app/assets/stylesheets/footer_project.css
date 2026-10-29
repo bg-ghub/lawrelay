@@ -1,0 +1,32 @@
+.footer-project {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  margin-top: 1.2rem;
+  font-size: .82rem;
+}
+
+.footer-project__source {
+  color: var(--paper);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.footer-project__source:hover {
+  color: var(--coral);
+}
+
+.footer-project__license {
+  border: 1px solid rgba(246, 241, 232, .3);
+  border-radius: 4px;
+  padding: .1rem .4rem;
+  font-size: .7rem;
+}
+
+.footer-project__version {
+  flex-basis: 100%;
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}

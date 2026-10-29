@@ -46,18 +46,19 @@ en:
       eyebrow: "privacy"
       title: "How LawRelay handles personal data."
       introduction: "This notice explains the limited personal data used to run LawRelay's beta for verified Belgian lawyers."
+      operator_contact_heading: "Controller contact"
       sections:
         controller:
           heading: "1. Who controls your data"
           paragraphs:
-            - "Gauthier Berth is the controller for account, verification, marketplace, support, and security data. Contact details are available in the legal notice."
-            - "Send privacy questions and rights requests to privacy@lawrelay.be."
+            - "The operator identified above is the controller for account, verification, marketplace, support, and security data. Contact details are set out above and in the legal notice."
+            - "Send privacy questions and rights requests to privacy@lawrelay.be. Registration checks use the public advocaat.be directory, automated comparison of the submitted information, and human review where needed; contact support@lawrelay.be if a check needs help."
         scope:
           heading: "2. Data we process"
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records."
             - "Professional-verification data, including your official directory profile, listed name and professional email, firm details, and verification status."
-            - "Profile, assignment, proposal, acceptance, cancellation, and audit-event data."
+            - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
           paragraphs:
             - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
@@ -96,11 +97,12 @@ en:
       eyebrow: "terms of service"
       title: "Rules for using LawRelay."
       introduction: "These terms govern the free LawRelay beta for professional users."
+      operator_contact_heading: "Operator contact"
       sections:
         agreement:
           heading: "1. Agreement and operator"
           paragraphs:
-            - "These terms govern use of LawRelay by professional users. The contracting operator is Gauthier Berth; contact details appear in the legal notice. Creating an account or using the service after accepting a published version forms the service agreement."
+            - "These terms govern use of LawRelay by professional users. The operator identified above is the contracting party; contact details appear above and in the legal notice. Creating an account or using the service after accepting a published version forms the service agreement."
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
@@ -141,7 +143,7 @@ en:
         intellectual_property:
           heading: "10. Intellectual property"
           paragraphs:
-            - "Users retain rights in content they submit and grant LawRelay a limited licence to host, display, transmit, and process it only to operate and secure the service. LawRelay and its licensors retain rights in the platform, brand, and software."
+            - "Users retain rights in private data and content they submit and grant LawRelay a limited licence to host, display, transmit, and process it only to operate and secure the service. The LawRelay software is available on GitHub under the GNU Affero General Public License, version 3 or later; that licence does not make users’ private data public. LawRelay retains rights in its brand."
         availability:
           heading: "11. Availability and changes"
           paragraphs:
@@ -160,7 +162,7 @@ en:
         current_use:
           heading: "1. What is used today"
           paragraphs:
-            - "A signed session cookie keeps the browser session secure and allows the application to remember authenticated state when account features are enabled. Security tokens help prevent forged requests. These functions are strictly necessary for the requested service."
+            - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. These cookies are strictly necessary for the requested service."
         no_tracking:
           heading: "2. No optional tracking in the current release"
           paragraphs:
@@ -177,6 +179,12 @@ en:
           heading: "5. Questions"
           paragraphs:
             - "Cookie and privacy questions can be sent to the privacy contact in the legal notice."
+    operator_contact:
+      natural_person_description: "%{name} operates LawRelay as a natural person and lawyer."
+      legal_notice_link: "View the legal notice"
+      complaint_link: "Lodge a complaint with the Belgian Data Protection Authority"
+      professional_profile_url_link: "View official professional profile"
+      professional_rules_url_link: "View professional rules"
     legal_notice:
       meta_title: "Legal notice — LawRelay"
       eyebrow: "operator information"
@@ -192,6 +200,7 @@ en:
         support_email: "Support contact"
         phone: "Telephone"
         professional_body: "Professional body or supervisory authority, if applicable"
+        professional_profile_url: "Official professional profile, if applicable"
         professional_rules_url: "Applicable professional rules, if applicable"
       sections:
         service:

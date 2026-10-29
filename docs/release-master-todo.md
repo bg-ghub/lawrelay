@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 28 October 2026
+Last audited: 29 October 2026. Current release: 0.4.3.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -12,7 +12,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Open registration for lawyers listed in the official advocaat.be directory; no invitation or cohort limit.
 - [x] Directory profile lookup, professional-email confirmation, account email verification, and suspended-account protections are implemented and tested.
 - [x] Private assignments, proposals, settings, and admin routes require authentication and authorization.
-- [x] Private GitHub repository; source remains unpublished to the public.
+- [x] Public GitHub source under AGPL-3.0-or-later, authorized by the operator after a full-history secret/private-data review. Production credentials and data remain excluded; private vulnerability reporting is enabled.
 - [x] Free-beta deployment on Hetzner with immutable image/version pins; the runtime revision is recorded in the protected `release.env`.
 - [x] Automated regressions, static/security scans, and Chrome/Firefox/Edge system checks. The CI link records the current revision's results.
 - [x] Off-host backups and isolated restore drill pass (`9d55cfca`); nightly backups and five-minute health checks are enabled. Owner SMTP alerting was tested.
@@ -30,7 +30,9 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.
-- [x] SemVer and changelog, AGPL-3.0-or-later license, secret exclusions, and repository secret scans. The beta-readiness patch is `0.2.1`.
+- [x] SemVer, changelog, license, secret exclusions and repository secret scans; the footer displays the source link and running release version.
+- [x] Translation audit across public/member/admin pages and all seven email types, with strict missing-key, catalog parity, validation/date/number and isolated production checks in CI.
+- [x] Operator identity/contact details appear directly on terms and privacy pages and match the verified WetWijzer details; the official professional profile is linked.
 
 ## Beta follow-through completed
 
@@ -40,13 +42,15 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] [Support/moderation/privacy/appeals playbook](ops/support.md), [feedback intake and recording process](ops/beta-feedback.md), and [provider/data/retention register](ops/data-register.md).
 - [x] Isolated encrypted restore and compatible-image rollback boot checks; authentication, private-record boundaries and no-worker/no-network isolation verified. See [operations evidence](ops/beta-ops-checks.md).
 - [x] Host alert message truncation fixed and full-event/dedup behavior tested without sending. Operator confirmed the earlier synthetic alert reached Proton.
-- [x] Hourly secret-free external monitoring implemented for homepage, login, readiness, generic queue health and TLS expiry; private owner incidents and synthetic failure/recovery controls are included.
+- [x] Hourly secret-free external monitoring implemented for homepage, login, readiness, generic queue health and TLS expiry; public incidents contain only sanitized probe results. Synthetic failure/recovery controls are included.
 - [x] Hosted monitoring and synthetic failure/repeat/recovery acceptance passed; the owner GitHub inbox received the incident. The deployed `0.2.1` restore/rollback drill also passed, including generic queue-health 200→503→200 on the isolated copy.
 
 ## Remaining human or live evidence
 
-- [ ] Confirm password/verification email inbox placement and recipient-side SPF/DKIM/DMARC results. Receipt of the operational alert confirms that message only.
-- [ ] Operator completes administrator password setup and authenticator MFA; authenticator/provider recovery material and control-plane access stay private. A fresh setup email was sent after `0.2.1` deployment.
+- [x] Password-email inbox arrival confirmed by the operator's screenshot; the expiry-text translation issue is fixed and covered by regression tests.
+- [ ] Confirm verification-email arrival and recipient-side SPF/DKIM/DMARC results for application mail.
+- [ ] Operator completes administrator password setup and authenticator MFA; recovery material stays private.
+- [ ] Complete a human end-to-end beta trial with verified lawyer accounts, including registration, email confirmation, posting, responding and selecting a colleague.
 - [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.
 - [ ] External independent security review/penetration test; the engineering review is not a substitute.
 - [ ] Manual screen-reader and physical Safari/iOS/Android testing, plus independent accessibility review. Automated browser checks are not WCAG certification.

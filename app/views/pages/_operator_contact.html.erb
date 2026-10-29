@@ -1,0 +1,29 @@
+<section class="detail-section operator-contact" aria-labelledby="operator-contact-heading">
+  <h2 id="operator-contact-heading"><%= heading %></h2>
+  <p><%= t("pages.operator_contact.natural_person_description", name: @operator[:legal_name]) %></p>
+
+  <dl class="detail-facts">
+    <% PagesController::OPERATOR_ENV.each_key do |field| %>
+      <div>
+        <dt><%= t("pages.legal_notice.fields.#{field}") %></dt>
+        <dd>
+          <% value = @operator[field] %>
+          <% if %i[professional_profile_url professional_rules_url].include?(field) && value.present? %>
+            <%= link_to t("pages.operator_contact.#{field}_link"), value, target: "_blank", rel: "noopener noreferrer" %>
+          <% elsif %i[legal_email privacy_email support_email].include?(field) && value.present? %>
+            <%= mail_to value %>
+          <% elsif field == :phone && value.present? %>
+            <%= link_to value, "tel:#{value.delete(" ")}" %>
+          <% else %>
+            <%= value.presence || t("pages.shared.not_configured") %>
+          <% end %>
+        </dd>
+      </div>
+    <% end %>
+  </dl>
+
+  <p><%= link_to t("pages.operator_contact.legal_notice_link"), legal_notice_path(locale: I18n.locale) %></p>
+  <% if show_complaint_link %>
+    <p><%= link_to t("pages.operator_contact.complaint_link"), "https://www.gegevensbeschermingsautoriteit.be/burger/acties/klacht-indienen", target: "_blank", rel: "noopener noreferrer" %></p>
+  <% end %>
+</section>

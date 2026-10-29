@@ -5,6 +5,13 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-10-29
+
+### Added
+
+- A visible GitHub source link, open-source license badge and running release version in the website footer, localized in all four languages.
+- Direct operator and contact details on terms and privacy pages, with the official professional profile and updated directory-verification and source-code disclosures.
+
 ## [0.4.2] - 2026-10-29
 
 ### Fixed
@@ -87,7 +94,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.3...HEAD
+[0.4.3]: https://github.com/bg-ghub/lawrelay/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/bg-ghub/lawrelay/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/bg-ghub/lawrelay/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/bg-ghub/lawrelay/compare/v0.3.0...v0.4.0

@@ -26,6 +26,9 @@ fr:
       learn_more: En savoir plus
       contact: Contact
       made_for_belgium: Pensé pour la Belgique
+      source_code: Code source sur GitHub
+      open_source: Code ouvert
+      app_version: Version %{version}
       demo_notice: Bêta gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
       demo_disclaimer: LawRelay coordonne le contact ; il ne fournit pas de conseil juridique.
     home:
