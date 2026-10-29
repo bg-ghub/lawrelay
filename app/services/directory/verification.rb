@@ -31,9 +31,15 @@ module Directory
       requested_url = @profile.directory_profile_url
       requested_name = @user.full_name
       evidence = @lookup.call(profile_url: requested_url, full_name: requested_name)
-      return Result.new(status: evidence.status, profile: @profile) unless evidence.success?
-      return Result.new(status: :already_claimed, profile: @profile) if LawyerProfile.where.not(id: @profile.id)
-        .where(directory_profile_id: evidence.profile_id).where.not(directory_email_verified_at: nil).exists?
+      unless evidence.success?
+        record_lookup_failure(evidence.status, requested_url:, requested_name:)
+        return Result.new(status: evidence.status, profile: @profile)
+      end
+      if LawyerProfile.where.not(id: @profile.id).where(directory_profile_id: evidence.profile_id)
+        .where.not(directory_email_verified_at: nil).exists?
+        record_lookup_failure(:already_claimed, requested_url:, requested_name:)
+        return Result.new(status: :already_claimed, profile: @profile)
+      end
 
       ApplicationRecord.transaction do
         @user.lock!
@@ -110,6 +116,22 @@ module Directory
     end
 
     private
+
+    def record_lookup_failure(status, requested_url:, requested_name:)
+      code = status.to_s
+      return unless LawyerProfile::DIRECTORY_LOOKUP_FAILURES.include?(code)
+
+      ApplicationRecord.transaction do
+        @user.lock!
+        @profile.lock!
+        next unless @user.active? && @profile.verification_status == "pending"
+        next if @user.primary_firm && protected?(@user.primary_firm)
+        next unless @profile.directory_profile_url == requested_url && @user.full_name == requested_name
+
+        audit!("verification.directory_lookup_failed", status: code,
+          identity_digest: @profile.directory_lookup_identity_digest(full_name: requested_name, profile_url: requested_url))
+      end
+    end
 
     def same_email?(first, second)
       first.to_s.casecmp?(second.to_s)

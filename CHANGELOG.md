@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.8.6] - 2026-10-29
+
+### Fixed
+
+- Keep signup and saved corrections recoverable when verification delivery cannot be queued.
+- Retry temporary verification failures and show actionable directory-check guidance.
+- Clarify manual privacy-request handling and keep paid reviews out of the beta requirements.
+
 ## [0.8.5] - 2026-10-29
 
 ### Fixed
@@ -229,7 +237,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.5...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.6...HEAD
+[0.8.6]: https://github.com/bg-ghub/lawrelay/compare/v0.8.5...v0.8.6
 [0.8.5]: https://github.com/bg-ghub/lawrelay/compare/v0.8.4...v0.8.5
 [0.8.4]: https://github.com/bg-ghub/lawrelay/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/bg-ghub/lawrelay/compare/v0.8.2...v0.8.3

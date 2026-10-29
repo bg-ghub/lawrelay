@@ -80,6 +80,20 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_nil profile.directory_identity_digest
   end
 
+  test "a saved name correction remains recoverable when its directory check cannot be queued" do
+    verified_directory_profile!
+    original = Directory::VerificationJob.method(:perform_later)
+    Directory::VerificationJob.define_singleton_method(:perform_later) { |*| raise SolidQueue::Job::EnqueueError, "private adapter details" }
+    patch settings_path(locale: :en), params: valid_params(account: { first_name: "Corrected" })
+    assert_redirected_to settings_path(locale: :en)
+    assert_equal "Corrected", @account.user.reload.first_name
+    assert_equal "pending", @account.profile.reload.verification_status
+    assert flash[:notice].present?
+    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+  ensure
+    Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
+  end
+
   test "a rejected profile remains rejected when identity details are changed" do
     profile = verified_directory_profile!(verification_status: "rejected")
 

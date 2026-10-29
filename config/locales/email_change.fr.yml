@@ -7,7 +7,7 @@ fr:
     lede: "Modifiez d’abord votre e-mail sur advocaat.be. Nous confirmerons la nouvelle adresse et revérifierons votre profil. Pas encore à jour ? Réessayez plus tard."
     admin_lede: "Nous enverrons un lien de confirmation à la nouvelle adresse."
     notices:
-      sent: "Nous avons envoyé un lien de confirmation à votre nouvelle adresse e-mail."
+      updated: "Adresse e-mail mise à jour."
     errors:
       password: "Votre mot de passe actuel est incorrect."
       unchanged: "Saisissez une adresse différente de votre adresse actuelle."

@@ -21,6 +21,6 @@ Release 0.4.7 fixes issues found during the beta review:
 
 Browser checks cover Chrome and Edge (17 cases each) and Firefox (14 cases). Three viewport checks use Chromium-specific controls. Hosted CI repeats Chrome and the production-image checks; deployment is checked separately.
 
-## Limits
+## Limits at release 0.4.7
 
-Browser signup, directory responses and mail are synthetic. A real two-lawyer trial, recipient-side mail authentication headers, operator MFA enrollment, physical Safari/iOS/Android and screen-reader checks, and independent legal/security/accessibility reviews remain on the [master checklist](../release-master-todo.md).
+Browser signup, directory responses and mail are synthetic. These are historical checks; the [master checklist](../release-master-todo.md) records current evidence, the real-lawyer trial and deferred optional checks.

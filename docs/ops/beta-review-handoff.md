@@ -1,34 +1,31 @@
-# Remaining beta reviews
+# Beta trial handoff
 
-Owner: Gauthier Berth. Reviewed 29 October 2026. Paid access stays disabled.
+Owner: Gauthier Berth. Reviewed 29 October 2026. The second lawyer is joining; paid access stays disabled.
 
-Operator decision on 29 October: skip the recipient-inbox check and do not request external quotes. Those reviews remain unverified.
+## Two-lawyer trial
 
-| Review | What closes it |
+Use the two real member accounts and a clearly labelled test assignment without client or case information.
+
+1. The second lawyer registers with their own official profile and email, confirms the required emails and signs in.
+2. The first lawyer posts a future-dated test assignment, leaving the indicative price blank.
+3. The second lawyer finds it and submits a proposal. Confirm the first lawyer receives the notification and can read the proposal.
+4. The first lawyer selects that proposal. Both check the selected status and contact visibility; confirm the selected lawyer receives the email.
+5. Complete or cancel the test and check the final status/notification. Record what worked, any blockage and one improvement privately using the [feedback guide](beta-feedback.md).
+
+Record the actual language/browser, steps, outcome and email arrival. A queued job is not proof of inbox delivery. Do not publish account details, links or private correspondence in GitHub. Automated tests already cover non-selection notifications; do not invent another verified participant.
+
+## Owner decisions
+
+| Item | Next action |
 | --- | --- |
-| Admin access | Completed: operator password/MFA sign-in and live admin review on 29 October. Credential recovery stays in the protected server procedure. |
-| Real-lawyer trial | Two verified lawyers register, confirm email, post, respond and select. Record actual outcomes privately using the [feedback form](beta-feedback.md). |
-| Mail | Recipient confirms verification delivery and SPF/DKIM/DMARC results. A completed SMTP job or a DKIM signature alone is insufficient. |
-| Language and legal | Native speakers and the operator/counsel review NL/FR/DE/EN signup, workflows, terms, privacy and operator details. |
-| Provider agreements | Retain account-specific Hetzner DPA/appendix, applicable AWS terms/DPA and Migadu acceptance/version evidence privately; review GitHub's limited role. See the [data register](data-register.md). |
-| Retention and rights | Synthetic export/inventory rehearsal passes using [protected helpers](privacy-operations.md). Approve retention/holds, review the response and execute any approved real action separately. Closing a request does not erase records. |
-| Security | An outside reviewer tests auth/recovery/MFA, directory lookup, firm boundaries and administrative actions with authorised test accounts. No real-user data or third-party directory scanning. |
-| Accessibility | Human screen-reader and physical Safari/iOS/Android checks, with independent accessibility findings resolved. |
-| Incident response | Operator rehearses outage, delayed mail and suspected disclosure using the [runbook](incident-response.md). Record decisions and follow-up. |
+| Provider agreements | Retain existing account-specific agreements/version evidence privately; follow the [data register](data-register.md). A public template is not account evidence. |
+| Retention and privacy requests | Decide periods, holds and field actions before real execution. The [protected helpers](privacy-operations.md) prepare scoped exports/inventories; closing a request does not erase data. |
+| Incident response | Technical recovery drills pass. Follow the [runbook](incident-response.md) for actual outages or delayed mail and record the response. |
 
-Existing evidence: [operations and recovery](beta-ops-checks.md), CI, the synthetic two-account browser journey and the internal accessibility/security checks. These support the reviews above; they do not substitute for them.
+Use the [support playbook](support.md) for actual support, moderation and privacy work. Mail capacity, backups and monitoring need routine attention.
 
-Provider references: [Hetzner DPA process](https://docs.hetzner.com/general/company-and-policy/data-protection-at-hetzner/), [Migadu privacy/DPA](https://www.migadu.com/privacy/), [GitHub customer terms](https://github.com/customer-terms). Availability of a public document does not prove account acceptance.
+## Recorded limits
 
-## Reviewer shortlist
+The operator skipped recipient-inbox header inspection and declined external quote requests. Paid reviews are not current beta requirements. Outside reviews and physical-device/screen-reader checks remain unperformed, not completed by the internal tests.
 
-Checked 29 October 2026. Request a small fixed-scope review and one retest where relevant.
-
-| Area | Option | Scope and price |
-| --- | --- | --- |
-| Legal/privacy | [Timelex](https://www.timelex.eu/en/about-us) | Belgian IT/privacy specialists working with start-ups. Terms, directory eligibility, processor agreements and retention. Confirm coverage of lawyers’ professional rules and all four languages. Quote required. |
-| Security | [NVISO](https://www.nviso.eu/en/service/penetration-testing) | Web-app assessment: signup, password recovery, MFA, firm boundaries and assignment/contact privacy. Quote required. |
-| Accessibility | [AnySurfer](https://www.anysurfer.be/en/services/audits) | WCAG 2.2 A/AA sample audit and remediation review. Published initial audits: €1,250 / €2,500 / €4,000 excluding VAT by complexity; obtain the applicable quote. Ask for screen-reader and Safari/iOS/Android coverage. |
-| Accessibility alternative | [Eleven Ways](https://elevenways.be/en/) | Accessibility audits and user tests with people with disabilities. Quote required. |
-
-These are research options, not bookings. Keep real accounts and production data out of any initial quote request.
+Existing evidence: [operations/recovery](beta-ops-checks.md), [QA](beta-thorough-qa.md), CI and the synthetic two-account browser journey. The live trial above supplies the actual participant feedback still missing.

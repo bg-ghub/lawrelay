@@ -219,5 +219,26 @@ ensure
   Directory::ProfileImport.define_singleton_method(:call, original_import)
 end
 
+profile = member.reload.lawyer_profile
+profile.update!(verification_status: "pending", verified_at: nil, directory_profile_id: nil,
+  directory_name: nil, directory_email: nil, directory_checked_at: nil, directory_email_verified_at: nil)
+failed_lookup = Object.new
+failed_lookup.define_singleton_method(:call) do |**|
+  Directory::AdvocaatBeProfileLookup::Result.new(status: :name_mismatch,
+    profile_id: nil, source_url: nil, name: nil, email: nil, checked_at: nil)
+end
+Directory::Verification.request!(user: member, lookup: failed_lookup)
+LOCALES.each do |locale|
+  visit(member_security, "/#{locale}/verification_status")
+  check(member_security.response.body.include?(I18n.t("directory_feedback.failures.name_mismatch", locale:)), "#{locale} directory feedback is localized")
+end
+profile.reload.update!(directory_profile_id: "11111111-1111-4111-8111-111111111111", directory_name: member.full_name,
+  directory_email: "official-#{nonce}@example.invalid", directory_checked_at: Time.current)
+LOCALES.each do |locale|
+  visit(member_security, "/#{locale}/verification_status")
+  label = I18n.t("directory_feedback.resend_confirmation", locale:)
+  check(Nokogiri::HTML(member_security.response.body).css("button").any? { |button| button.text == label }, "#{locale} official-email resend is available")
+end
+
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
 puts "Localized production rendering completed with only disposable synthetic records (invoice #{invoice.id}, request #{privacy_request.id}, report #{report.id})."

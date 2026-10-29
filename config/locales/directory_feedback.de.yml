@@ -1,0 +1,12 @@
+de:
+  directory_feedback:
+    attention_title: "Prüfen Sie Ihr Profil"
+    check_name: "Namen in den Einstellungen prüfen"
+    resend_confirmation: "Bestätigungslink erneut senden"
+    failures:
+      invalid_url: "Wir können Ihren Profillink nicht verwenden. Wenden Sie sich zur Korrektur an den Support."
+      unavailable: "Wir können Ihr Profil nicht laden. Prüfen Sie den Link oder versuchen Sie es später erneut."
+      malformed: "Wir können Ihr advocaat.be-Profil nicht lesen. Versuchen Sie es erneut oder wenden Sie sich an den Support."
+      name_mismatch: "Ihr Name stimmt nicht mit Ihrem advocaat.be-Profil überein. Prüfen Sie ihn in den Einstellungen oder wenden Sie sich an den Support."
+      email_missing: "Ihr advocaat.be-Profil enthält keine nutzbare E-Mail-Adresse. Aktualisieren Sie den offiziellen Eintrag und prüfen Sie erneut."
+      already_claimed: "Wir können diese Profilprüfung nicht abschließen. Wenden Sie sich an den Support."

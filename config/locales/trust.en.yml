@@ -84,5 +84,7 @@ en:
       privacy_requests:
         title: "Privacy requests — LawRelay admin"
         heading: "Privacy requests"
-        lede: "Review and close requests."
+        lede: "Record how each request was handled."
+        mark_handled: "Mark handled"
+        action_note: "Carry out the request and reply to the user before marking it handled."
         empty: "No privacy requests need review."
