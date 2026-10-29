@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.6.2.
+Last audited: 29 October 2026. Current release: 0.7.0.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -23,6 +23,8 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 - [x] NL/FR/DE/EN locale pages, English URL slugs, language switching, metadata, sitemap, and robots rules.
 - [x] Verified-lawyer and firm-scoped marketplace access, closed-assignment authorization, proposal transitions, notifications, reports, and audit events.
+- [x] [Assignment notifications](ops/notifications.md): localized email and in-app history for responses, selection/non-selection, withdrawal, cancellation, completion, deadline closure and expiry; retries and delivery monitoring.
+- [x] Settings can preview supported public details from the linked advocaat.be profile before an explicit Save; account email/password and verification proof are not imported.
 - [x] No client-content fields in the initial assignment flow; posting confirmation warns against client names, facts, and documents.
 - [x] Admin MFA, verification queue, privacy-request queue, and moderation controls.
 - [x] Optional user two-factor authentication: QR setup, password confirmation, single-use recovery codes and sign-in enforcement.
@@ -33,7 +35,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.
 - [x] SemVer, changelog, license, secret exclusions and repository secret scans; the footer displays the source link and running release version.
-- [x] Translation audit across public/member/admin pages and all seven email types, with strict missing-key, catalog parity, validation/date/number and isolated production checks in CI.
+- [x] Translation audit across public/member/admin pages and transactional emails, with strict missing-key, catalog parity, validation/date/number and isolated production checks in CI.
 - [x] Operator identity/contact details appear directly on terms and privacy pages and match the verified WetWijzer details; the official professional profile is linked.
 
 ## Beta follow-through completed

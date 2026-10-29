@@ -22,13 +22,17 @@ fr:
     notifications:
       new_proposal: "Un confrère a répondu à l’une de vos missions."
       proposal_accepted: "L’une de vos propositions a été acceptée."
-      proposal_declined: "L’une de vos propositions a été refusée."
+      proposal_declined: "L’une de vos propositions n’a pas été retenue."
+      proposal_withdrawn: "Un confrère a retiré sa proposition pour votre mission."
+      assignment_matched: "Un confrère a été sélectionné pour l’une de vos missions."
+      assignment_completed: "L’une de vos missions a été marquée comme terminée."
       assignment_cancelled: "Une mission à laquelle vous aviez répondu a été annulée."
-      assignment_expired: "L’une de vos missions a expiré avant qu’une mise en relation soit conclue."
+      assignment_expired: "Une mission a expiré sans attribution."
+      response_deadline_closed: "Le délai de réponse d’une de vos missions est passé."
     notices:
       assignment_cancelled: "La mission a été annulée."
       assignment_completed: "Mission terminée."
-      proposal_accepted: "Proposition acceptée. Les deux avocats seront informés."
+      proposal_accepted: "Proposition acceptée."
       proposal_declined: "La proposition a été refusée."
       proposal_withdrawn: "Votre proposition a été retirée."
       notification_marked_read: "Marquée comme lue."
@@ -65,3 +69,24 @@ fr:
         subject: "Mission annulée : %{title}"
         heading: "La mission a été annulée"
         body: "« %{title} » est annulée. Vous n’avez rien à faire."
+      proposal_withdrawn:
+        subject: "Proposition retirée : %{title}"
+        heading: "Une proposition a été retirée"
+        body: "%{name} a retiré sa proposition pour « %{title} »."
+      assignment_matched:
+        subject: "Confrère sélectionné : %{title}"
+        heading: "Un confrère a été sélectionné"
+        body: "Un confrère a été sélectionné pour « %{title} ». Les coordonnées sont dans LawRelay."
+      assignment_completed:
+        subject: "Mission terminée : %{title}"
+        heading: "Mission terminée"
+        body: "La mission « %{title} » a été marquée comme terminée."
+      assignment_expired:
+        subject: "Mission expirée : %{title}"
+        heading: "Aucun confrère sélectionné"
+        body_owner: "La mission « %{title} » a expiré sans attribution."
+        body_candidate: "La mission « %{title} » a expiré. Aucun candidat n’a été sélectionné."
+      response_deadline_closed:
+        subject: "Réponses closes : %{title}"
+        heading: "Le délai de réponse est passé"
+        body: "Les réponses à « %{title} » sont closes. Vous pouvez encore choisir parmi les propositions reçues."

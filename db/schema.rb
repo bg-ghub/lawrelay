@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_29_110000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_120000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -185,6 +185,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_29_110000) do
     t.datetime "read_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "event_key"
+    t.string "email_status"
+    t.integer "email_attempts", default: 0, null: false
+    t.datetime "email_claimed_at"
+    t.datetime "email_sent_at"
+    t.datetime "email_retry_at"
+    t.string "email_status_reason"
+    t.index ["email_status", "email_retry_at"], name: "index_notifications_on_email_delivery"
+    t.index ["event_key"], name: "index_notifications_on_event_key", unique: true, where: "event_key IS NOT NULL"
     t.index ["subject_type", "subject_id"], name: "index_notifications_on_subject"
     t.index ["user_id", "read_at"], name: "index_notifications_on_user_id_and_read_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"

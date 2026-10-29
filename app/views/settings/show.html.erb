@@ -5,7 +5,9 @@
   </div>
 
   <div class="new-assignment__layout">
-    <%= form_with url: settings_path, method: :patch, class: "assignment-form" do |form| %>
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: @profile_import_preview || false } do |form| %>
+      <%# Enter keeps saving the form even though the import button appears first. %>
+      <%= form.button t("settings.save"), name: "settings_action", value: "save", hidden: true, tabindex: -1 %>
       <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>
       <% if errors.any? %>
         <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors">
@@ -28,6 +30,7 @@
         <legend><%= t("settings.profile.legend") %></legend>
         <% if @profile.directory_profile_url.present? %>
           <div class="field-group"><strong><%= t("directory_onboarding.settings.directory_profile") %></strong><p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><p class="field-hint"><%= t("directory_onboarding.settings.directory_profile_hint") %></p></div>
+          <% unless @user.system_admin? %><%= form.button t("profile_import.button"), name: "settings_action", value: "import_profile", formnovalidate: true, class: "button button--ghost profile-import-button", data: { turbo: false } %><% end %>
         <% end %>
         <div class="field-group"><%= form.label "profile[bar_admission_year]", t("settings.profile.bar_admission_year") %><%= form.number_field "profile[bar_admission_year]", value: @profile.bar_admission_year, min: 1900, max: Date.current.year, placeholder: t("settings.profile.bar_admission_year_placeholder") %></div>
         <p class="field-hint"><%= t("directory_onboarding.settings.identity_hint") %></p>

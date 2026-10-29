@@ -53,6 +53,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+Releases before `0.7.0` cannot process the notification outbox jobs. Use a forward fix or compatible recovery image while those jobs are pending; do not downgrade and silently abandon delivery.
+
 Releases before `0.6.0` do not enforce optional user two-factor authentication. Once any user enables it, use a forward fix or a recovery build that preserves this check; do not restore public traffic on an older image.
 
 From `0.3.0`, account suspensions are enforced by the application. Releases before `0.3.0` ignore this status. Do not restore public traffic on an older release when accounts have been suspended: use a forward fix or a compatible recovery build that preserves suspension enforcement. Booting an older image on an isolated copy is not approval to downgrade production access controls.

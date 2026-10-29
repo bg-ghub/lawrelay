@@ -14,6 +14,7 @@ export default class extends Controller {
 
   hasUnsavedChanges() {
     return Array.from(document.forms).some((form) =>
+      form.dataset.unsavedChanges === "true" ||
       Array.from(form.elements).some((control) => this.controlChanged(control))
     )
   }
