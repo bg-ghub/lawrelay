@@ -31,6 +31,24 @@ namespace :lawrelay do
     confirmation&.clear
   end
 
+  desc "Retry one failed notification email after fixing its delivery problem (NOTIFICATION_ID=123)"
+  task :retry_notification_email, [ :notification_id ] => :environment do |_task, arguments|
+    id = (arguments[:notification_id].presence || ENV["NOTIFICATION_ID"]).to_s
+    abort "Provide the failed notification ID." unless id.match?(/\A[1-9]\d*\z/)
+    notification = Notification.email_outbox.find_by(id: id)
+    abort "No failed notification exists for that ID." unless notification
+
+    notification.with_lock do
+      abort "Only failed notification emails can be retried." unless notification.email_status == "failed"
+
+      notification.update!(email_status: "pending", email_attempts: 0,
+        email_claimed_at: nil, email_retry_at: nil, email_status_reason: nil, email_sent_at: nil)
+      AuditEvent.create!(auditable: notification, action: "notification.email_retried", metadata: { source: "rake" })
+    end
+    NotificationEmailDeliveryJob.perform_later(notification.id)
+    puts "Notification email queued for retry."
+  end
+
   desc "Promote an existing email-verified user to system administrator (EMAIL=admin@example.com)"
   task :promote_admin, [ :email ] => :environment do |_task, arguments|
     email = (arguments[:email].presence || ENV["EMAIL"]).to_s.strip.downcase

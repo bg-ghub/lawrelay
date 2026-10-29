@@ -1,10 +1,14 @@
 class SettingsController < ApplicationController
   before_action :load_records
+  rate_limit to: 3, within: 1.minute, only: :update, if: :profile_import_request?, by: -> { current_user&.id },
+    with: :profile_import_rate_limited
 
   def show
   end
 
   def update
+    return preview_directory_profile if profile_import_request?
+
     profile_requires_review = profile_review_required?
     directory_identity_changed = directory_identity_changed?
     firm_requires_review = firm_review_required?
@@ -33,6 +37,48 @@ class SettingsController < ApplicationController
   end
 
   private
+
+  def profile_import_request?
+    params[:settings_action] == "import_profile"
+  end
+
+  def preview_directory_profile
+    return head :forbidden if @user.system_admin?
+
+    result = Directory::ProfileImport.call(
+      profile_url: @profile.directory_profile_url,
+      full_name: @profile.directory_name.presence || @user.full_name
+    )
+    assign_preview_values
+    imported = result.success? && (result.profile_attributes.any? || (@can_manage_firm && result.firm_attributes.any?))
+    if imported
+      @profile.assign_attributes(result.profile_attributes)
+      @firm.assign_attributes(result.firm_attributes) if @can_manage_firm
+      flash.now[:notice] = t("profile_import.preview")
+    else
+      key = result.status == :missing_profile ? "missing_profile" : "unavailable"
+      flash.now[:alert] = t("profile_import.#{key}")
+    end
+    mark_profile_import_preview
+    render :show, status: imported ? :ok : :unprocessable_content
+  end
+
+  def profile_import_rate_limited
+    assign_preview_values
+    flash.now[:alert] = t("profile_import.rate_limited")
+    mark_profile_import_preview
+    render :show, status: :too_many_requests
+  end
+
+  def mark_profile_import_preview
+    @profile_import_preview = [ @user, @profile, (@firm if @can_manage_firm) ].compact.any?(&:changed?)
+  end
+
+  def assign_preview_values
+    @user.assign_attributes(user_params)
+    @profile.assign_attributes(profile_params)
+    @firm.assign_attributes(firm_params) if @can_manage_firm
+  end
 
   def load_records
     @user = current_user

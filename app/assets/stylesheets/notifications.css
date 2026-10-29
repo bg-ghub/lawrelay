@@ -1,0 +1,120 @@
+.notifications-page h1 {
+  overflow-wrap: anywhere;
+}
+
+.notification-center-toolbar,
+.notification-center-filters,
+.notification-panel-actions,
+.notification-center-pagination {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notification-center-toolbar {
+  justify-content: space-between;
+  margin: 1.75rem 0 1rem;
+}
+
+.notification-center-toolbar form {
+  margin: 0;
+}
+
+.notification-center-filters a {
+  min-height: 32px;
+  padding: .3rem .6rem;
+  border-radius: 6px;
+}
+
+.notification-center-pagination a {
+  min-height: 32px;
+}
+
+.notification-center-filters [aria-current="page"] {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.notification-center-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.notification-center-item + .notification-center-item {
+  border-top: 1px solid var(--line);
+}
+
+.notification-center-item--unread {
+  background: #eff6f0;
+}
+
+.notification-center-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.notification-center-copy {
+  display: grid;
+  gap: .25rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.notification-center-copy > span,
+.notification-center-meta {
+  font-size: .82rem;
+  color: var(--muted);
+}
+
+.notification-center-copy strong {
+  color: var(--ink);
+  font-size: .95rem;
+}
+
+.notification-center-meta {
+  display: grid;
+  gap: .3rem;
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.notification-center-unread {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.notification-center-pagination {
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.notification-panel .panel-heading {
+  flex-wrap: wrap;
+}
+
+.notification-panel-actions {
+  gap: .75rem;
+}
+
+@media (max-width: 600px) {
+  .notification-center-link {
+    display: grid;
+    gap: .65rem;
+  }
+
+  .notification-center-meta {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+    gap: .5rem;
+  }
+}

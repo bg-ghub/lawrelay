@@ -1,0 +1,16 @@
+nl:
+  notification_center:
+    title: "Meldingen — LawRelay"
+    all_notifications: "Alle meldingen"
+    back: "Terug naar overzicht"
+    filter_label: "Meldingen filteren"
+    all: "Alle"
+    unread: "Ongelezen"
+    empty: "Nog geen meldingen"
+    caught_up: "Je bent weer bij"
+    unavailable: "Opdracht niet beschikbaar"
+    updated: "Een opdracht is bijgewerkt."
+    pagination: "Meldingspagina’s"
+    previous: "Vorige"
+    next: "Volgende"
+    page: "Pagina %{current} van %{total}"

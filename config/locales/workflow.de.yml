@@ -22,13 +22,17 @@ de:
     notifications:
       new_proposal: "Ein Kollege hat auf einen Ihrer Aufträge geantwortet."
       proposal_accepted: "Eines Ihrer Angebote wurde angenommen."
-      proposal_declined: "Eines Ihrer Angebote wurde abgelehnt."
+      proposal_declined: "Eines Ihrer Angebote wurde nicht ausgewählt."
+      proposal_withdrawn: "Ein Kollege hat sein Angebot für Ihren Auftrag zurückgezogen."
+      assignment_matched: "Für einen Ihrer Aufträge wurde ein Kollege ausgewählt."
+      assignment_completed: "Einer Ihrer Aufträge wurde als abgeschlossen markiert."
       assignment_cancelled: "Ein Auftrag, auf den Sie geantwortet haben, wurde storniert."
-      assignment_expired: "Einer Ihrer Aufträge ist abgelaufen, bevor eine Vermittlung zustande kam."
+      assignment_expired: "Ein Auftrag ist ohne Vergabe abgelaufen."
+      response_deadline_closed: "Die Antwortfrist für einen Ihrer Aufträge ist abgelaufen."
     notices:
       assignment_cancelled: "Der Auftrag wurde storniert."
       assignment_completed: "Auftrag abgeschlossen."
-      proposal_accepted: "Angebot angenommen. Beide Anwälte werden informiert."
+      proposal_accepted: "Angebot angenommen."
       proposal_declined: "Das Angebot wurde abgelehnt."
       proposal_withdrawn: "Ihr Angebot wurde zurückgezogen."
       notification_marked_read: "Als gelesen markiert."
@@ -65,3 +69,24 @@ de:
         subject: "Auftrag storniert: %{title}"
         heading: "Der Auftrag wurde storniert"
         body: "„%{title}“ wurde storniert. Sie müssen nichts tun."
+      proposal_withdrawn:
+        subject: "Angebot zurückgezogen: %{title}"
+        heading: "Ein Angebot wurde zurückgezogen"
+        body: "%{name} hat das Angebot für „%{title}“ zurückgezogen."
+      assignment_matched:
+        subject: "Kollege ausgewählt: %{title}"
+        heading: "Ein Kollege wurde ausgewählt"
+        body: "Für „%{title}“ wurde ein Kollege ausgewählt. Die Kontaktdaten finden Sie in LawRelay."
+      assignment_completed:
+        subject: "Auftrag abgeschlossen: %{title}"
+        heading: "Auftrag abgeschlossen"
+        body: "„%{title}“ wurde als abgeschlossen markiert."
+      assignment_expired:
+        subject: "Auftrag abgelaufen: %{title}"
+        heading: "Niemand wurde ausgewählt"
+        body_owner: "„%{title}“ ist ohne Vergabe abgelaufen."
+        body_candidate: "„%{title}“ ist abgelaufen. Es wurde niemand ausgewählt."
+      response_deadline_closed:
+        subject: "Antwortfrist abgelaufen: %{title}"
+        heading: "Die Antwortfrist ist abgelaufen"
+        body: "Für „%{title}“ sind keine neuen Antworten mehr möglich. Sie können weiterhin aus den eingegangenen Angeboten wählen."

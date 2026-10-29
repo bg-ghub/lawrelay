@@ -9,6 +9,7 @@ class Proposal < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :firm, optional: true
   has_many :audit_events, as: :auditable, dependent: :destroy
+  after_create :notify_assignment_owner
 
   validates :message, presence: true, length: { maximum: 2_000 }
   validates :name, :email, presence: true, unless: :user
@@ -49,11 +50,33 @@ class Proposal < ApplicationRecord
   private
 
   def transition_from_pending!(next_status, actor:, timestamp:)
-    with_lock do
-      raise InvalidTransition, "only pending proposals can transition" unless status == "pending"
+    # Use the same lock order as selection and assignment cancellation.
+    assignment.with_lock do
+      with_lock do
+        raise InvalidTransition, "only pending proposals can transition" unless status == "pending"
 
-      update!(status: next_status, timestamp => Time.current)
-      audit_events.create!(actor_user: actor, firm: actor.primary_firm, action: "proposal.#{next_status}")
+        update!(status: next_status, timestamp => Time.current)
+        audit_events.create!(actor_user: actor, firm: actor.primary_firm, action: "proposal.#{next_status}")
+        notify_transition(next_status, actor:)
+        self
+      end
     end
+  end
+
+  def notify_assignment_owner
+    Notification.publish!(user: assignment.creator_user, kind: "new_proposal", subject: self,
+      assignment:, actor: user)
+  end
+
+  def notify_transition(next_status, actor:)
+    if next_status == "withdrawn"
+      return unless assignment.status == "open" && assignment.starts_at > Time.current
+
+      recipient = assignment.creator_user
+    else
+      recipient = user
+    end
+
+    Notification.publish!(user: recipient, kind: "proposal_#{next_status}", subject: self, assignment:, actor:)
   end
 end

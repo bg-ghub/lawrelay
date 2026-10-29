@@ -10,7 +10,14 @@
       <% if @assignments.any? %><div class="compact-list"><% @assignments.each do |assignment| %><%= link_to assignment_path(assignment), class: "compact-row" do %><span class="compact-row__date"><strong><%= l assignment.starts_at, format: "%d" %></strong><small><%= l assignment.starts_at, format: "%m" %></small></span><span class="compact-row__copy"><strong><%= assignment.title %></strong><small><%= assignment.court.presence || assignment.city %></small></span><span class="status-pill"><%= t("marketplace.status.#{assignment.status}") %></span><span aria-hidden="true">→</span><% end %><% end %></div><% else %><p class="muted-copy"><%= t("marketplace.dashboard.no_assignments") %></p><% end %>
     </section>
     <section class="dashboard-panel dashboard-panel--warm"><div class="panel-heading"><div><h2><%= t("workflow.ui.recent_responses") %></h2></div></div>
-      <% if @recent_proposals.any? %><div class="proposal-list"><% @recent_proposals.each do |proposal| %><article class="proposal-preview"><span class="avatar-mark"><%= proposal.assignment.title.first %></span><div><strong><%= proposal.assignment.title %></strong><p><%= t("marketplace.dashboard.proposed_rate", rate: euro_amount(proposal.rate_cents)) %> · <%= t("marketplace.status.#{proposal.status}") %></p></div><%= link_to t("marketplace.dashboard.view"), assignment_path(proposal.assignment), class: "text-link" %></article><% end %></div><% else %><p class="muted-copy"><%= t("workflow.ui.no_proposals_yet") %></p><% end %>
+      <% if @recent_proposals.any? %>
+        <div class="proposal-list">
+          <% @recent_proposals.each do |proposal| %>
+            <% status = proposal.status == "pending" && proposal.assignment.status.in?(%w[cancelled expired completed]) ? proposal.assignment.status : proposal.status %>
+            <article class="proposal-preview"><span class="avatar-mark"><%= proposal.assignment.title.first %></span><div><strong><%= proposal.assignment.title %></strong><p><%= t("marketplace.dashboard.proposed_rate", rate: euro_amount(proposal.rate_cents)) %> · <%= t("marketplace.status.#{status}") %></p></div><%= link_to t("marketplace.dashboard.view"), assignment_path(proposal.assignment), class: "text-link" %></article>
+          <% end %>
+        </div>
+      <% else %><p class="muted-copy"><%= t("workflow.ui.no_proposals_yet") %></p><% end %>
     </section>
   </div>
   <% if @suggested_assignments.any? %>
@@ -19,9 +26,10 @@
       <div class="compact-list"><% @suggested_assignments.each do |assignment| %><%= link_to assignment_path(assignment), class: "compact-row" do %><span class="compact-row__date"><strong><%= l assignment.starts_at, format: "%d" %></strong><small><%= l assignment.starts_at, format: "%m" %></small></span><span class="compact-row__copy"><strong><%= assignment.title %></strong><small><%= assignment.court.presence || assignment.city %></small></span><span class="status-pill"><%= t("marketplace.kinds.#{assignment.kind}") %></span><span aria-hidden="true">→</span><% end %><% end %></div>
     </section>
   <% end %>
-  <% if @notifications.any? %>
-    <section class="dashboard-panel notification-panel"><div class="panel-heading"><div><h2><%= t("workflow.ui.recent_notifications") %></h2></div><%= button_to t("workflow.ui.mark_all_read"), mark_all_notifications_path, method: :patch, class: "text-link notification-mark-all" %></div>
+  <section class="dashboard-panel notification-panel">
+    <div class="panel-heading"><div><h2><%= t("workflow.ui.recent_notifications") %></h2></div><div class="notification-panel-actions"><%= link_to t("notification_center.all_notifications"), notifications_path, class: "text-link" %><% if @notifications.any? %><%= button_to t("workflow.ui.mark_all_read"), mark_all_notifications_path, method: :patch, class: "text-link notification-mark-all" %><% end %></div></div>
+    <% if @notifications.any? %>
       <ul class="notification-list"><% @notifications.each do |notification| %><li><%= link_to notification_path(notification), class: "notification-list__item" do %><span><%= t("workflow.notifications.#{notification.kind}") %></span><span aria-hidden="true">→</span><% end %></li><% end %></ul>
-    </section>
-  <% end %>
+    <% else %><p class="muted-copy"><%= t("notification_center.caught_up") %></p><% end %>
+  </section>
 </div>

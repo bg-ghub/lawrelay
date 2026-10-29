@@ -1,0 +1,16 @@
+fr:
+  notification_center:
+    title: "Notifications — LawRelay"
+    all_notifications: "Toutes les notifications"
+    back: "Retour à mon espace"
+    filter_label: "Filtrer les notifications"
+    all: "Toutes"
+    unread: "Non lues"
+    empty: "Aucune notification pour l’instant"
+    caught_up: "Vous êtes à jour"
+    unavailable: "Mission indisponible"
+    updated: "Une mission a été mise à jour."
+    pagination: "Pages de notifications"
+    previous: "Précédent"
+    next: "Suivant"
+    page: "Page %{current} sur %{total}"

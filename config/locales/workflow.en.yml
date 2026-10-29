@@ -22,13 +22,17 @@ en:
     notifications:
       new_proposal: "A colleague responded to one of your assignments."
       proposal_accepted: "One of your proposals was accepted."
-      proposal_declined: "One of your proposals was declined."
+      proposal_declined: "One of your proposals was not selected."
+      proposal_withdrawn: "A colleague withdrew a proposal for your assignment."
+      assignment_matched: "A colleague was selected for one of your assignments."
+      assignment_completed: "One of your assignments was marked complete."
       assignment_cancelled: "An assignment you responded to was cancelled."
-      assignment_expired: "One of your assignments expired before a match was made."
+      assignment_expired: "An assignment expired without a match."
+      response_deadline_closed: "The response deadline for one of your assignments has passed."
     notices:
       assignment_cancelled: "The assignment has been cancelled."
       assignment_completed: "Assignment completed."
-      proposal_accepted: "Proposal accepted. Both lawyers will be notified."
+      proposal_accepted: "Proposal accepted."
       proposal_declined: "The proposal has been declined."
       proposal_withdrawn: "Your proposal has been withdrawn."
       notification_marked_read: "Marked as read."
@@ -65,3 +69,24 @@ en:
         subject: "Assignment cancelled: %{title}"
         heading: "The assignment was cancelled"
         body: "“%{title}” was cancelled. You don’t need to do anything."
+      proposal_withdrawn:
+        subject: "Proposal withdrawn: %{title}"
+        heading: "A proposal was withdrawn"
+        body: "%{name} withdrew their proposal for “%{title}”."
+      assignment_matched:
+        subject: "Colleague selected: %{title}"
+        heading: "A colleague was selected"
+        body: "A colleague was selected for “%{title}”. Contact details are in LawRelay."
+      assignment_completed:
+        subject: "Assignment completed: %{title}"
+        heading: "Assignment completed"
+        body: "“%{title}” has been marked complete."
+      assignment_expired:
+        subject: "Assignment expired: %{title}"
+        heading: "No colleague was selected"
+        body_owner: "“%{title}” expired without a match."
+        body_candidate: "“%{title}” expired before anyone was selected."
+      response_deadline_closed:
+        subject: "Responses closed: %{title}"
+        heading: "Responses have closed"
+        body: "The response deadline for “%{title}” has passed. You can still select from the proposals received."

@@ -1,0 +1,7 @@
+nl:
+  profile_import:
+    button: "Gegevens ophalen van advocaat.be"
+    preview: "Gegevens opgehaald. Kijk ze na en sla op."
+    unavailable: "Je profiel kon niet worden opgehaald. Probeer het later opnieuw."
+    missing_profile: "Er is geen geldig advocaat.be-profiel gekoppeld."
+    rate_limited: "Wacht even voor je de gegevens opnieuw ophaalt."

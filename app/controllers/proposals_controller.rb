@@ -27,7 +27,6 @@ class ProposalsController < ApplicationController
     if @proposal.nil?
       redirect_to @assignment, alert: t("workflow.errors.assignment_not_open")
     elsif saved
-      notify_assignment_owner
       redirect_to @assignment, notice: t("notices.proposal_created")
     else
       @owner_view = false
@@ -40,8 +39,8 @@ class ProposalsController < ApplicationController
   def accept
     return owner_only unless @assignment.manageable_by?(current_user)
 
-    declined_proposals = []
     @assignment.with_lock do
+      @proposal.reload
       unless @assignment.status == "open" && @assignment.starts_at > Time.current && @proposal.status == "pending"
         raise ActiveRecord::RecordInvalid, @assignment
       end
@@ -49,18 +48,12 @@ class ProposalsController < ApplicationController
       @proposal.accept!(actor: current_user)
       @assignment.proposals.where.not(id: @proposal.id).where(status: "pending").find_each do |other_proposal|
         other_proposal.decline!(actor: current_user)
-        declined_proposals << other_proposal
       end
       @assignment.update!(status: "matched")
       @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.matched", metadata: { proposal_id: @proposal.id })
+      @assignment.notify_creator_of_match!(actor: current_user)
     end
 
-    notify_candidate("proposal_accepted")
-    MarketplaceMailer.proposal_accepted(@proposal).deliver_later
-    declined_proposals.each do |declined_proposal|
-      notify_candidate("proposal_declined", proposal: declined_proposal)
-      MarketplaceMailer.proposal_declined(declined_proposal).deliver_later
-    end
     redirect_to @assignment, notice: t("workflow.notices.proposal_accepted")
   rescue ActiveRecord::RecordInvalid, Proposal::InvalidTransition
     redirect_to @assignment, alert: t("workflow.errors.cannot_accept_proposal")
@@ -70,8 +63,6 @@ class ProposalsController < ApplicationController
     return owner_only unless @assignment.manageable_by?(current_user)
 
     @proposal.decline!(actor: current_user)
-    notify_candidate("proposal_declined")
-    MarketplaceMailer.proposal_declined(@proposal).deliver_later
     redirect_to @assignment, notice: t("workflow.notices.proposal_declined")
   rescue Proposal::InvalidTransition
     redirect_to @assignment, alert: t("workflow.errors.cannot_decline_proposal")
@@ -120,18 +111,5 @@ class ProposalsController < ApplicationController
     cents.round.to_i
   rescue ArgumentError, FloatDomainError, RangeError
     value
-  end
-
-  def notify_assignment_owner
-    return unless @assignment.creator_user
-
-    @assignment.creator_user.notifications.create!(kind: "new_proposal", subject: @proposal, data: { assignment_id: @assignment.id })
-    MarketplaceMailer.new_proposal(@proposal).deliver_later
-  end
-
-  def notify_candidate(kind, proposal: @proposal)
-    return unless proposal.user
-
-    proposal.user.notifications.create!(kind: kind, subject: proposal, data: { assignment_id: @assignment.id })
   end
 end

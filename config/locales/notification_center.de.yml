@@ -1,0 +1,16 @@
+de:
+  notification_center:
+    title: "Benachrichtigungen — LawRelay"
+    all_notifications: "Alle Benachrichtigungen"
+    back: "Zurück zur Übersicht"
+    filter_label: "Benachrichtigungen filtern"
+    all: "Alle"
+    unread: "Ungelesen"
+    empty: "Noch keine Benachrichtigungen"
+    caught_up: "Sie sind auf dem neuesten Stand"
+    unavailable: "Auftrag nicht verfügbar"
+    updated: "Ein Auftrag wurde aktualisiert."
+    pagination: "Benachrichtigungsseiten"
+    previous: "Zurück"
+    next: "Weiter"
+    page: "Seite %{current} von %{total}"

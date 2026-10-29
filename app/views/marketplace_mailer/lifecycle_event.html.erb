@@ -1,0 +1,3 @@
+<h1><%= t("workflow.mailers.#{@event_key}.heading") %></h1>
+<p><%= t("workflow.mailers.#{@event_key}.#{@body_key || 'body'}", title: @assignment.title, name: @proposal&.display_name) %></p>
+<p><%= link_to t("workflow.mailers.view_assignment"), assignment_url(@assignment, locale: @recipient.locale) %></p>
