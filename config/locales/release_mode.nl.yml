@@ -2,7 +2,6 @@ nl:
   billing:
     beta:
       title: "LawRelay-bèta"
-      price: "€0 · gratis tijdens de bèta"
       description: "Je krijgt toegang na verificatie van je e-mail en advocaat.be-profiel."
     notices:
       payments_unavailable_during_beta: "Facturatie is nog niet beschikbaar tijdens de bèta."

@@ -75,11 +75,14 @@ class User < ApplicationRecord
   end
 
   def begin_admin_mfa_setup!
-    return admin_mfa_pending_secret if admin_mfa_pending_secret.present?
+    with_lock do
+      raise InvalidAdminMfaCode if admin_mfa_configured?
+      next admin_mfa_pending_secret if admin_mfa_pending_secret.present?
 
-    secret = ROTP::Base32.random_base32
-    update!(admin_mfa_pending_secret_ciphertext: encrypt_admin_mfa_secret(secret))
-    secret
+      secret = ROTP::Base32.random_base32
+      update!(admin_mfa_pending_secret_ciphertext: encrypt_admin_mfa_secret(secret))
+      secret
+    end
   end
 
   def admin_mfa_pending_secret
@@ -94,6 +97,8 @@ class User < ApplicationRecord
 
   def enable_admin_mfa!(code)
     with_lock do
+      raise InvalidAdminMfaCode if admin_mfa_configured?
+
       secret = admin_mfa_pending_secret
       verified_at = verify_admin_mfa_secret(secret, code)
       raise InvalidAdminMfaCode unless verified_at

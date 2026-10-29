@@ -48,7 +48,7 @@
             <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number %></div>
           </div>
           <div class="form-row">
-            <div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div>
+            <% if platform_billing_enabled? %><div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div><% end %>
             <div class="field-group"><%= form.label "firm[phone]", t("settings.firm.phone") %><%= form.telephone_field "firm[phone]", value: @firm.phone %></div>
           </div>
           <div class="field-group"><%= form.label "firm[address_line_1]", t("settings.firm.address") %><%= form.text_field "firm[address_line_1]", value: @firm.address_line_1, autocomplete: "street-address" %></div>

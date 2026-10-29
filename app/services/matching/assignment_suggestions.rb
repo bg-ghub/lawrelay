@@ -32,7 +32,7 @@ module Matching
     private
 
     def candidates
-      Assignment.open.upcoming
+      Assignment.accepting_proposals
         .where.not(firm_id: @user.firm_ids)
         .includes(:firm)
     end

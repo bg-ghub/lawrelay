@@ -36,11 +36,16 @@ class Assignment < ApplicationRecord
   validates :scope_indication, length: { maximum: 250 }, allow_blank: true
   validate :assignment_subtype_matches_kind
   validate :deadline_sequence
+  validate :future_deadlines, on: :create
   validate :content_rules_were_accepted, on: :create
 
   scope :open, -> { where(status: "open") }
   scope :active, -> { where(status: %w[open matched]) }
   scope :upcoming, -> { where(starts_at: Time.current..) }
+  scope :accepting_proposals, -> {
+    now = Time.current
+    open.where("starts_at > :now AND response_deadline_at > :now", now: now)
+  }
   scope :ordered, -> { order(urgent: :desc, starts_at: :asc, created_at: :desc) }
   scope :search, ->(query) do
     next all if query.blank?
@@ -88,6 +93,11 @@ class Assignment < ApplicationRecord
 
   def accepted_proposal
     proposals.find_by(status: "accepted")
+  end
+
+  def accepting_proposals?(now: Time.current)
+    status == "open" && starts_at.present? && starts_at > now &&
+      response_deadline_at.present? && response_deadline_at > now
   end
 
   def cancel!(actor:)
@@ -151,6 +161,14 @@ class Assignment < ApplicationRecord
 
   def content_rules_were_accepted
     errors.add(:base, I18n.t("workflow.errors.content_rules_required")) if content_rules_accepted_at.blank?
+  end
+
+  def future_deadlines
+    now = Time.current
+    %i[starts_at response_deadline_at].each do |attribute|
+      deadline = public_send(attribute)
+      errors.add(attribute, :in_future) if deadline.present? && deadline <= now
+    end
   end
 
   def transition_to!(next_status, actor:)

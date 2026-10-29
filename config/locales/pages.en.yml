@@ -3,7 +3,7 @@ en:
     shared:
       version: "Last updated: %{date}"
       not_configured: "Not available"
-      navigation_label: "Commercial and legal information"
+      navigation_label: "Legal information"
       draft_warning_title: "Operator details are unavailable"
       draft_warning_body: "The operator details could not be loaded. Please contact LawRelay before using the service."
     navigation:
@@ -27,16 +27,6 @@ en:
           - "Directory check before marketplace access"
           - "Post and respond to professional assignments"
           - "Direct feedback to the LawRelay team"
-      launch:
-        kicker: "after the beta"
-        price: "Not available yet"
-        title: "No paid plan during beta"
-        body: "Any future income will mainly cover hosting. Prices and terms for paid plans will be published beforehand."
-        features:
-          - "No payment details requested"
-          - "No automatic renewal"
-          - "Clear notice before any paid offer"
-          - "Professional fees remain direct"
       direct_fees:
         title: "Professional fees"
         body: "Agree your fee and invoice each other directly. LawRelay does not handle payments or take a commission."
@@ -96,7 +86,7 @@ en:
       meta_title: "Terms of service — LawRelay"
       eyebrow: "terms of service"
       title: "Terms"
-      introduction: "For the free LawRelay beta."
+      introduction: "For the LawRelay beta."
       operator_contact_heading: "Operator"
       sections:
         agreement:
@@ -126,11 +116,10 @@ en:
           heading: "6. Responses and matches"
           paragraphs:
             - "The requester decides whom to contact or select. LawRelay does not guarantee a response, match, availability, outcome, quality, or payment by another user. Users must confirm every engagement and deadline outside the platform."
-        platform_fees:
-          heading: "7. LawRelay fees and billing"
+        beta_access:
+          heading: "7. Beta"
           paragraphs:
-            - "Beta access is free. LawRelay does not offer paid subscriptions, collect platform fees, or ask for payment details during this beta."
-            - "If LawRelay later offers paid access, the applicable price and terms will be published before any payment is requested."
+            - "LawRelay is in beta. Features may change."
         professional_fees:
           heading: "8. Professional fees"
           paragraphs:

@@ -134,7 +134,10 @@ nl:
       models:
         assignment:
           attributes:
+            starts_at:
+              in_future: "moet in de toekomst liggen"
             response_deadline_at:
+              in_future: "moet in de toekomst liggen"
               before_start: "moet vóór de start van de opdracht liggen"
             delivery_due_at:
               after_response: "moet na de reactietermijn liggen"

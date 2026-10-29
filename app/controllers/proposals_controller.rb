@@ -11,23 +11,27 @@ class ProposalsController < ApplicationController
       return redirect_to @assignment, alert: t("workflow.errors.cannot_propose_to_own_assignment")
     end
 
-    if @assignment.status != "open"
-      return redirect_to @assignment, alert: t("workflow.errors.assignment_not_open")
+    saved = @assignment.with_lock do
+      next false unless @assignment.accepting_proposals?
+
+      @proposal = @assignment.proposals.build(proposal_params)
+      @proposal.user = current_user
+      @proposal.firm = current_firm
+      @proposal.name = current_user.full_name
+      @proposal.email = current_user.email_address
+      @proposal.save.tap do |created|
+        @proposal.audit_events.create!(actor_user: current_user, firm: current_firm, action: "proposal.created") if created
+      end
     end
 
-    @proposal = @assignment.proposals.build(proposal_params)
-    @proposal.user = current_user
-    @proposal.firm = current_firm
-    @proposal.name = current_user.full_name
-    @proposal.email = current_user.email_address
-
-    if @proposal.save
-      @proposal.audit_events.create!(actor_user: current_user, firm: current_firm, action: "proposal.created")
+    if @proposal.nil?
+      redirect_to @assignment, alert: t("workflow.errors.assignment_not_open")
+    elsif saved
       notify_assignment_owner
       redirect_to @assignment, notice: t("notices.proposal_created")
     else
       @owner_view = false
-      @existing_proposal = @proposal
+      @existing_proposal = nil
       @proposals = Proposal.none
       render "assignments/show", status: :unprocessable_content
     end
@@ -38,7 +42,9 @@ class ProposalsController < ApplicationController
 
     declined_proposals = []
     @assignment.with_lock do
-      raise ActiveRecord::RecordInvalid, @assignment unless @assignment.status == "open" && @proposal.status == "pending"
+      unless @assignment.status == "open" && @assignment.starts_at > Time.current && @proposal.status == "pending"
+        raise ActiveRecord::RecordInvalid, @assignment
+      end
 
       @proposal.accept!(actor: current_user)
       @assignment.proposals.where.not(id: @proposal.id).where(status: "pending").find_each do |other_proposal|
@@ -105,8 +111,14 @@ class ProposalsController < ApplicationController
   def euros_to_cents(value)
     return nil if value.blank?
 
-    (BigDecimal(value.to_s.tr(",", ".")) * 100).round.to_i
-  rescue ArgumentError
+    amount = BigDecimal(value.to_s.tr(",", "."))
+    return value unless amount.finite?
+
+    cents = amount * 100
+    return cents.to_s if !cents.finite? || cents.abs > Proposal::MAX_RATE_CENTS
+
+    cents.round.to_i
+  rescue ArgumentError, FloatDomainError, RangeError
     value
   end
 

@@ -48,7 +48,7 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
 
   test "public, authentication, confirmation, and validation pages render in every locale" do
     LOCALES.each do |locale|
-      [ root_path(locale:), pricing_path(locale:), privacy_path(locale:), terms_path(locale:),
+      [ root_path(locale:), privacy_path(locale:), terms_path(locale:),
         cookies_path(locale:), legal_notice_path(locale:), new_session_path(locale:),
         admin_login_path(locale:), new_registration_path(locale:), new_password_path(locale:) ].each { |path| render_page(path, locale:) }
 
@@ -71,7 +71,7 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
     LOCALES.each do |locale|
       [ root_path(locale:), dashboard_path(locale:), assignments_path(locale:), assignment_path(@court_assignment, locale:),
         assignment_path(@legal_assignment, locale:), new_assignment_path(locale:), settings_path(locale:),
-        email_change_path(locale:), billing_path(locale:), privacy_requests_path(locale:), new_privacy_request_path(locale:),
+        email_change_path(locale:), privacy_requests_path(locale:), new_privacy_request_path(locale:),
         new_assignment_report_path(@candidate_assignment, locale:) ].each { |path| render_page(path, locale:) }
 
       post privacy_requests_path(locale:), params: { privacy_request: { kind: "", details: "" } }

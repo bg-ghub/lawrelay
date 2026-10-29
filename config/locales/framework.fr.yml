@@ -134,7 +134,10 @@ fr:
       models:
         assignment:
           attributes:
+            starts_at:
+              in_future: "doit être dans le futur"
             response_deadline_at:
+              in_future: "doit être dans le futur"
               before_start: "doit précéder le début de la mission"
             delivery_due_at:
               after_response: "doit suivre la date limite de réponse"

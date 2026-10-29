@@ -134,7 +134,10 @@ de:
       models:
         assignment:
           attributes:
+            starts_at:
+              in_future: "muss in der Zukunft liegen"
             response_deadline_at:
+              in_future: "muss in der Zukunft liegen"
               before_start: "muss vor Beginn des Auftrags liegen"
             delivery_due_at:
               after_response: "muss nach der Antwortfrist liegen"

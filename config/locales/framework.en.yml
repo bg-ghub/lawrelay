@@ -134,7 +134,10 @@ en:
       models:
         assignment:
           attributes:
+            starts_at:
+              in_future: "must be in the future"
             response_deadline_at:
+              in_future: "must be in the future"
               before_start: "must be before the assignment starts"
             delivery_due_at:
               after_response: "must be after the response deadline"

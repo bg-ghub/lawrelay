@@ -131,7 +131,8 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     page.driver.browser.execute_cdp("Emulation.setDeviceMetricsOverride", width: 320, height: 900, deviceScaleFactor: 1, mobile: false)
     %i[nl fr de en].each do |locale|
       visit legal_notice_path(locale:)
-      assert_selector ".legal-navigation a", count: 5
+      assert_selector ".legal-navigation a", count: 4
+      assert_no_selector ".legal-navigation a[href$='/pricing']"
       assert_equal 320, page.evaluate_script("window.innerWidth")
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
     end

@@ -29,7 +29,7 @@ nl:
       source_code: Broncode op GitHub
       open_source: Open source
       app_version: Versie %{version}
-      demo_notice: Gratis bèta voor advocaten op advocaat.be. Deel geen cliënt- of dossiergegevens.
+      demo_notice: Bèta voor advocaten op advocaat.be. Deel geen cliënt- of dossiergegevens.
       demo_disclaimer: "LawRelay verleent geen juridisch advies."
     home:
       title: "LawRelay — zittingsvervanging en juridische opdrachten"
@@ -40,7 +40,7 @@ nl:
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
-        note: "Gratis, open-source bèta voor advocaten op advocaat.be."
+        note: "Open-source bèta voor advocaten op advocaat.be."
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
@@ -98,7 +98,7 @@ nl:
         eyebrow: vragen
         heading_before: Goed om
         heading_after: te weten.
-        lede: "Gratis toegang na controle op advocaat.be."
+        lede: "Toegang na controle op advocaat.be."
         items:
           "0":
             question: Voor wie is LawRelay?

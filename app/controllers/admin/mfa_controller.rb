@@ -5,12 +5,13 @@ module Admin
 
     before_action :require_system_admin
     before_action :redirect_verified_session
+    before_action :require_initial_setup, only: %i[setup confirm_setup]
 
     def setup
-      return redirect_to admin_mfa_challenge_path if current_user.admin_mfa_configured?
-
       @secret = current_user.begin_admin_mfa_setup!
       @provisioning_uri = current_user.admin_mfa_provisioning_uri(@secret)
+    rescue User::InvalidAdminMfaCode
+      redirect_to admin_mfa_challenge_path
     end
 
     def confirm_setup
@@ -19,8 +20,11 @@ module Admin
       record_audit_event("admin.mfa_enabled")
       redirect_to after_admin_mfa_url, notice: t("mfa.notices.enabled")
     rescue User::InvalidAdminMfaCode
-      @secret = current_user.admin_mfa_pending_secret || current_user.begin_admin_mfa_setup!
-      @provisioning_uri = current_user.admin_mfa_provisioning_uri(@secret)
+      return redirect_to admin_mfa_challenge_path if current_user.reload.admin_mfa_configured?
+
+      setup
+      return if performed?
+
       flash.now[:alert] = t("mfa.notices.invalid_code")
       render :setup, status: :unprocessable_content
     end
@@ -47,6 +51,10 @@ module Admin
 
     def mfa_code
       params[:mfa_code]
+    end
+
+    def require_initial_setup
+      redirect_to admin_mfa_challenge_path if current_user.admin_mfa_configured?
     end
 
     def redirect_verified_session

@@ -22,7 +22,7 @@
     </div>
     <div class="footer-column">
       <p class="footer-label"><%= t("marketing.footer.learn_more") %></p>
-      <%= link_to t("pages.navigation.pricing"), pricing_path %>
+      <%= link_to t("pages.navigation.pricing"), pricing_path if platform_billing_enabled? %>
       <%= link_to t("pages.navigation.privacy"), privacy_path %>
       <%= link_to t("pages.navigation.terms"), terms_path %>
       <%= link_to t("pages.navigation.cookies"), cookies_path %>

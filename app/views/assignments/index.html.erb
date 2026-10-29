@@ -71,7 +71,7 @@
                 </dl>
               </div>
               <div class="assignment-card__footer">
-                <div class="rate-note"><span><%= t("marketplace.index.guideline_rate") %></span><strong>€ <%= number_with_delimiter(assignment.fee_cents.to_i / 100) %></strong></div>
+                <div class="rate-note"><span><%= t("marketplace.index.guideline_rate") %></span><strong>€ <%= euro_amount(assignment.fee_cents) %></strong></div>
                 <%= link_to assignment_path(assignment), class: "button button--outline button--small" do %><%= t("marketplace.index.view_assignment") %> <span aria-hidden="true">→</span><% end %>
               </div>
             </article>

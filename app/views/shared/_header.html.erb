@@ -9,7 +9,7 @@
       <%= link_to t("marketing.header.how_it_works"), root_path(anchor: "how-it-works"), data: { action: "mobile-nav#close" } %>
       <%= link_to t("marketing.header.for_lawyers"), root_path(anchor: "for-lawyers"), data: { action: "mobile-nav#close" } %>
       <%= link_to t("marketing.header.discover_assignments"), assignments_path, data: { action: "mobile-nav#close" } %>
-      <%= link_to t("pages.navigation.pricing"), pricing_path, data: { action: "mobile-nav#close" } %>
+      <%= link_to t("pages.navigation.pricing"), pricing_path, data: { action: "mobile-nav#close" } if platform_billing_enabled? %>
       <%= link_to t("marketing.header.questions"), root_path(anchor: "questions"), data: { action: "mobile-nav#close" } %>
       <% if authenticated? %>
         <% if current_user.system_admin? %>

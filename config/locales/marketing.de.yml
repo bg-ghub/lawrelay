@@ -29,7 +29,7 @@ de:
       source_code: Quellcode auf GitHub
       open_source: Open Source
       app_version: Version %{version}
-      demo_notice: Kostenlose Beta für auf advocaat.be gelistete Anwälte. Keine Mandanten- oder Falldaten einstellen.
+      demo_notice: Beta für auf advocaat.be gelistete Anwälte. Keine Mandanten- oder Falldaten einstellen.
       demo_disclaimer: "LawRelay erteilt keine Rechtsberatung."
     home:
       title: "LawRelay — Vertretungen und juristische Aufträge"
@@ -40,7 +40,7 @@ de:
         heading_middle: für eine
         heading_emphasis: Verhandlung?
         lede: "Organisieren Sie eine Vertretung oder vergeben Sie einen juristischen Auftrag."
-        note: "Kostenlose Open-Source-Beta für Anwälte auf advocaat.be."
+        note: "Open-Source-Beta für Anwälte auf advocaat.be."
       product:
         aria_label: Beispiel des LawRelay-Arbeitsbereichs
         today: Heute
@@ -98,7 +98,7 @@ de:
         eyebrow: fragen
         heading_before: Gut zu
         heading_after: wissen.
-        lede: "Kostenloser Zugang nach Abgleich mit advocaat.be."
+        lede: "Zugang nach Abgleich mit advocaat.be."
         items:
           "0":
             question: Für wen ist LawRelay?

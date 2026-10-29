@@ -3,7 +3,7 @@ de:
     shared:
       version: "Zuletzt aktualisiert: %{date}"
       not_configured: "Nicht verfügbar"
-      navigation_label: "Geschäftliche und rechtliche Informationen"
+      navigation_label: "Rechtliche Informationen"
       draft_warning_title: "Angaben zum Betreiber sind nicht verfügbar"
       draft_warning_body: "Die Angaben zum Betreiber konnten nicht geladen werden. Bitte kontaktieren Sie LawRelay, bevor Sie den Dienst nutzen."
     navigation:
@@ -27,16 +27,6 @@ de:
           - "Verzeichnisprüfung vor Marktplatz-Zugang"
           - "Berufliche Aufträge einstellen und beantworten"
           - "Direktes Feedback an das LawRelay-Team"
-      launch:
-        kicker: "nach der Beta"
-        price: "Noch nicht verfügbar"
-        title: "Kein kostenpflichtiger Tarif während der Beta"
-        body: "Mögliche Einnahmen sollen vor allem das Hosting finanzieren. Preise und Bedingungen kostenpflichtiger Tarife veröffentlichen wir vorher."
-        features:
-          - "Keine Zahlungsdaten erforderlich"
-          - "Keine automatische Verlängerung"
-          - "Klare Mitteilung vor einem kostenpflichtigen Angebot"
-          - "Honorare bleiben direkt"
       direct_fees:
         title: "Honorare"
         body: "Vereinbaren Sie das Honorar und rechnen Sie direkt miteinander ab. LawRelay wickelt keine Zahlungen ab und erhält keine Provision."
@@ -96,7 +86,7 @@ de:
       meta_title: "Nutzungsbedingungen — LawRelay"
       eyebrow: "Nutzungsbedingungen"
       title: "Bedingungen"
-      introduction: "Für die kostenlose Beta von LawRelay."
+      introduction: "Für die LawRelay-Beta."
       operator_contact_heading: "Betreiber"
       sections:
         agreement:
@@ -126,11 +116,10 @@ de:
           heading: "6. Antworten und Vermittlungen"
           paragraphs:
             - "Der Auftraggeber entscheidet, wen er kontaktiert oder auswählt. LawRelay garantiert keine Antwort, Vermittlung, Verfügbarkeit, Ergebnis, Qualität oder Zahlung durch andere Nutzer. Jede Beauftragung und Frist ist außerhalb der Plattform zu bestätigen."
-        platform_fees:
-          heading: "7. LawRelay-Entgelt und Abrechnung"
+        beta_access:
+          heading: "7. Beta"
           paragraphs:
-            - "Der Zugang zur Beta ist kostenlos. LawRelay bietet während dieser Beta keine kostenpflichtigen Abonnements an, erhebt keine Plattformgebühren und verlangt keine Zahlungsdaten."
-            - "Falls LawRelay später kostenpflichtigen Zugang anbietet, werden der geltende Preis und die Bedingungen vor einer Zahlungsaufforderung veröffentlicht."
+            - "LawRelay ist in der Beta. Funktionen können sich ändern."
         professional_fees:
           heading: "8. Anwaltshonorare"
           paragraphs:
