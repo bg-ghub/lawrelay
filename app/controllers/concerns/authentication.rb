@@ -18,7 +18,18 @@ module Authentication
     end
 
     def require_authentication
-      resume_session || request_authentication
+      return request_authentication unless resume_session
+
+      require_two_factor_authentication
+    end
+
+    def require_two_factor_authentication
+      return if current_user.system_admin? || !current_user.two_factor_enabled? || Current.session.two_factor_verified?
+      return if controller_path == "two_factor_authentications" && action_name.in?(%w[challenge verify])
+      return if controller_path == "sessions" && action_name == "destroy"
+
+      session[:return_to_after_two_factor] = request.fullpath if request.get? || request.head?
+      redirect_to challenge_two_factor_authentication_path, alert: t("two_factor.notices.required")
     end
 
     def resume_session

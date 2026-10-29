@@ -1,0 +1,35 @@
+.mfa-page h1 {
+  overflow-wrap: anywhere;
+}
+
+.mfa-page .form-actions {
+  flex-wrap: wrap;
+}
+
+.mfa-page .form-actions .button {
+  white-space: normal;
+  text-align: center;
+}
+
+.two-factor-settings {
+  margin-top: 2rem;
+  max-width: 49rem;
+}
+
+.two-factor-settings h2 {
+  margin-top: 0;
+  font-family: var(--sans);
+  font-size: 1.1rem;
+}
+
+.recovery-codes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: .65rem 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.recovery-codes code {
+  overflow-wrap: anywhere;
+}

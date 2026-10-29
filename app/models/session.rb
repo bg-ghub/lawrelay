@@ -27,6 +27,15 @@ class Session < ApplicationRecord
     update_columns(admin_mfa_verified_at: at, admin_mfa_challenged_at: at, updated_at: at)
   end
 
+  def two_factor_verified?
+    two_factor_verified_at.present? &&
+      (!user.two_factor_enabled? || two_factor_verified_at >= user.two_factor_enabled_at)
+  end
+
+  def mark_two_factor_verified!(at: Time.current)
+    update_columns(two_factor_verified_at: at, updated_at: at)
+  end
+
   private
 
   def set_expiry

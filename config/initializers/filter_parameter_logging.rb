@@ -17,6 +17,7 @@ Rails.application.config.filter_parameters += [
   :title,
   :scope_indication,
   :mfa_code,
+  :recovery_code,
   :message,
   :q,
   :secret,

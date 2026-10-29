@@ -124,6 +124,9 @@ fr:
           account_updated: Données du compte modifiées
           admin_bootstrapped: Compte administrateur créé
           account_email_changed: Adresse e-mail modifiée
+          account_two_factor_enabled: Double authentification activée
+          account_two_factor_verified: Double authentification confirmée
+          account_two_factor_disabled: Double authentification désactivée
           account_provisioned_for_testing: Compte de test créé
           admin_contact_updated: Adresse de contact administrateur modifiée
           admin_promoted: Droits administrateur accordés

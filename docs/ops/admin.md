@@ -11,3 +11,5 @@ The admin session is separate from the main website session. Cookies stay on the
 For MFA recovery, use the protected SSH procedure in [secrets and access](secrets-and-access.md). Keep passwords, setup keys and recovery material private.
 
 Release 0.5.0 validation: 294 Rails tests and 24 Chrome browser cases pass. A browser case confirms separate member/admin cookies and password/MFA sign-in. The network-isolated production image checks all four admin languages and recovery-email destinations.
+
+Members can enable optional two-factor authentication in account settings. They scan a QR code, confirm an authenticator code, and save ten recovery codes. Recovery codes work once. Password resets keep two-factor enabled; disabling it requires the password and a valid second factor. Administrator MFA remains mandatory.

@@ -1,0 +1,18 @@
+<% content_for :title, t("two_factor.title") %>
+<%= render "head" %>
+<div class="new-assignment shell mfa-page">
+  <div class="new-assignment__intro">
+    <h1><%= t("two_factor.recovery.heading") %></h1>
+    <p><%= t("two_factor.recovery.instruction") %></p>
+  </div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <div class="assignment-form">
+      <section class="form-section" aria-label="<%= t("two_factor.recovery.heading") %>">
+        <ul class="recovery-codes"><% @recovery_codes.each do |code| %><li><code><%= code %></code></li><% end %></ul>
+        <p class="field-hint"><%= t("two_factor.recovery.once") %></p>
+      </section>
+      <div class="form-actions"><%= link_to t("two_factor.recovery.done"), settings_path, class: "button button--dark" %></div>
+    </div>
+  </div>
+</div>

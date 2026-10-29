@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_28_213000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_110000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -256,6 +256,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_213000) do
     t.datetime "last_seen_at"
     t.datetime "admin_mfa_verified_at"
     t.datetime "admin_mfa_challenged_at"
+    t.datetime "two_factor_verified_at"
     t.index ["expires_at"], name: "index_sessions_on_expires_at"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
@@ -301,6 +302,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_213000) do
     t.datetime "admin_mfa_last_verified_at"
     t.datetime "suspended_at"
     t.text "suspension_reason"
+    t.string "two_factor_secret_ciphertext"
+    t.string "two_factor_pending_secret_ciphertext"
+    t.datetime "two_factor_enabled_at"
+    t.datetime "two_factor_last_verified_at"
+    t.json "two_factor_recovery_code_digests", default: [], null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["suspended_at"], name: "index_users_on_suspended_at"
   end

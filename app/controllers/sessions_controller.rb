@@ -9,7 +9,12 @@ class SessionsController < ApplicationController
     user = User.authenticate_by(params.permit(:email_address, :password))
     if user&.active?
       start_new_session_for user
-      redirect_to after_authentication_url
+      if !user.system_admin? && user.two_factor_enabled?
+        session[:return_to_after_two_factor] = after_authentication_url
+        redirect_to challenge_two_factor_authentication_path
+      else
+        redirect_to after_authentication_url
+      end
     else
       redirect_to new_session_path, alert: t("auth.sessions.invalid")
     end

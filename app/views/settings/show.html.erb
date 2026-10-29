@@ -65,4 +65,12 @@
 
     <aside class="posting-aside"><span class="posting-aside__number">01</span><h2><%= t("settings.aside.title") %></h2><p><%= t("settings.aside.body") %></p></aside>
   </div>
+
+  <% unless @user.system_admin? %>
+    <section class="form-section two-factor-settings" aria-labelledby="account-security-heading">
+      <h2 id="account-security-heading"><%= t("two_factor.settings.heading") %></h2>
+      <p><%= t(@user.two_factor_enabled? ? "two_factor.settings.status_on" : "two_factor.settings.status_off") %></p>
+      <%= link_to t("two_factor.settings.manage"), two_factor_authentication_path, class: "text-link" %>
+    </section>
+  <% end %>
 </div>
