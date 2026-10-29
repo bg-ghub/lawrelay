@@ -34,8 +34,7 @@ class TwoFactorAuthenticationsController < ApplicationController
   def enable
     current_user.with_lock do
       @recovery_codes = current_user.enable_two_factor!(params[:mfa_code])
-      current_user.sessions.where.not(id: Current.session.id).destroy_all
-      Current.session.mark_two_factor_verified!
+      rotate_session!(revoke_all: true, verified: true)
       record_audit_event("account.two_factor_enabled")
     end
     session.delete(:two_factor_setup)
@@ -60,7 +59,7 @@ class TwoFactorAuthenticationsController < ApplicationController
 
     current_user.with_lock do
       current_user.verify_two_factor_code!(code: params[:mfa_code], recovery_code: params[:recovery_code])
-      Current.session.mark_two_factor_verified!
+      rotate_session!(revoke_all: false, verified: true)
       record_audit_event("account.two_factor_verified")
     end
     redirect_to after_two_factor_url, notice: t("two_factor.notices.verified")
@@ -72,7 +71,7 @@ class TwoFactorAuthenticationsController < ApplicationController
   def destroy
     current_user.with_lock do
       current_user.disable_two_factor!(password: params[:current_password], code: params[:mfa_code], recovery_code: params[:recovery_code])
-      current_user.sessions.where.not(id: Current.session.id).destroy_all
+      rotate_session!(revoke_all: true, verified: false)
       record_audit_event("account.two_factor_disabled")
     end
     session.delete(:two_factor_setup)
@@ -87,6 +86,13 @@ class TwoFactorAuthenticationsController < ApplicationController
 
   def require_member
     redirect_to settings_path if current_user.system_admin?
+  end
+
+  def rotate_session!(revoke_all:, verified:)
+    user = current_user
+    revoke_all ? user.sessions.destroy_all : Current.session.destroy!
+    start_new_session_for(user)
+    Current.session.mark_two_factor_verified! if verified
   end
 
   def require_setup_authorization

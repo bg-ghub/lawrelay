@@ -38,6 +38,7 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "enabling confirms the code revokes other sessions and shows recovery codes once" do
+    old_cookie = cookies[:session_id]
     other_session = @user.sessions.create!
     begin_setup
     post enable_two_factor_authentication_path(locale: :en), params: { mfa_code: "invalid" }
@@ -51,11 +52,14 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_predicate @user.reload, :two_factor_enabled?
     assert_not Session.exists?(other_session.id)
-    assert Session.find(@session_id).two_factor_verified?
+    assert_not Session.exists?(@session_id)
+    assert_not_equal old_cookie, cookies[:session_id]
+    assert @user.sessions.sole.two_factor_verified?
     assert_select ".recovery-codes code", count: 10
     get two_factor_authentication_path(locale: :en)
     assert_response :success
     assert_select ".recovery-codes code", count: 0
+    assert_old_cookie_rejected(old_cookie)
   end
 
   test "password sign in must complete a second factor before any private route" do
@@ -63,6 +67,8 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     sign_out
     post session_path(locale: :en), params: { email_address: @user.email_address, password: "password1234" }
     assert_redirected_to challenge_two_factor_authentication_path(locale: :en)
+    pending_session_id = @user.sessions.sole.id
+    pending_cookie = cookies[:session_id]
 
     get settings_path(locale: :en)
     assert_redirected_to challenge_two_factor_authentication_path(locale: :en)
@@ -78,6 +84,30 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     get settings_path(locale: :en)
     assert_response :success
     assert_equal 9, @user.reload.two_factor_recovery_codes_remaining
+    assert_not Session.exists?(pending_session_id)
+    assert_not_equal pending_cookie, cookies[:session_id]
+    assert @user.sessions.sole.two_factor_verified?
+    assert_old_cookie_rejected(pending_cookie)
+  end
+
+  test "TOTP verification rotates only the pending session" do
+    secret, = enable_directly
+    pending_cookie = cookies[:session_id]
+    other_session = @user.sessions.create!
+    other_session.mark_two_factor_verified!
+
+    travel 31.seconds do
+      code = ROTP::TOTP.new(secret, issuer: "LawRelay").now
+      post verify_two_factor_authentication_path(locale: :en), params: { mfa_code: code }
+    end
+
+    assert_redirected_to dashboard_path(locale: :en)
+    assert_not Session.exists?(@session_id)
+    assert Session.exists?(other_session.id)
+    assert_not_equal pending_cookie, cookies[:session_id]
+    get settings_path(locale: :en)
+    assert_response :success
+    assert_old_cookie_rejected(pending_cookie)
   end
 
   test "invalid second factors do not grant access and logout remains available" do
@@ -95,6 +125,7 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
   test "disabling needs password plus second factor and revokes other sessions" do
     _, codes = enable_directly
     Current.session.mark_two_factor_verified!
+    old_cookie = cookies[:session_id]
     other_session = @user.sessions.create!
 
     delete two_factor_authentication_path(locale: :en), params: { current_password: "wrong", recovery_code: codes.first }
@@ -104,7 +135,12 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to two_factor_authentication_path(locale: :en)
     assert_not_predicate @user.reload, :two_factor_enabled?
     assert_not Session.exists?(other_session.id)
-    assert Session.exists?(@session_id)
+    assert_not Session.exists?(@session_id)
+    assert_not_equal old_cookie, cookies[:session_id]
+    assert_not_predicate @user.sessions.sole, :two_factor_verified?
+    get two_factor_authentication_path(locale: :en)
+    assert_response :success
+    assert_old_cookie_rejected(old_cookie)
   end
 
   test "password reset revokes sessions without bypassing the enabled second factor" do
@@ -127,6 +163,14 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   private
+
+  def assert_old_cookie_rejected(cookie)
+    open_session do |copied_session|
+      copied_session.cookies["session_id"] = cookie
+      copied_session.get "/en/settings"
+      assert_equal "http://www.example.com/en/session/new", copied_session.response.location
+    end
+  end
 
   def begin_setup
     post begin_setup_two_factor_authentication_path(locale: :en), params: { current_password: "password1234" }
