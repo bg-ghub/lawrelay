@@ -201,11 +201,13 @@ Directory::ProfileImport.define_singleton_method(:call) do |**|
 end
 begin
   LOCALES.each do |locale|
+    # Independent render cases must not share the account's import rate limit.
+    Rails.cache.clear
     visit(member_security, "/#{locale}/settings")
     check(Nokogiri::HTML(member_security.response.body).at_css("button[value='import_profile']"), "#{locale} linked profile import button renders")
     member_security.patch("/#{locale}/settings", params: { authenticity_token: csrf(member_security),
       settings_action: "import_profile", profile: { availability_note: "Synthetic unsaved note" } })
-    check(member_security.response.status == 200, "#{locale} profile import preview renders")
+    check(member_security.response.status == 200, "#{locale} profile import preview renders (got #{member_security.response.status})")
     check(member.lawyer_profile.reload.availability_note != "Synthetic unsaved note" && member.primary_firm.phone.nil?, "#{locale} profile import did not save changes")
   end
 ensure

@@ -41,6 +41,14 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_field "Phone", with: "+3225550101"
     assert_field "Languages", with: "NL, FR"
 
+    find(".language-menu summary").click
+    dismiss_confirm I18n.t("marketing.language_switch_warning", locale: :en) do
+      find(".language-menu a[hreflang='fr']").click
+    end
+    assert_current_path settings_path(locale: :en)
+    assert_field "Availability", with: "Keep my unsaved availability"
+    assert_field "Phone", with: "+3225550101"
+
     click_button "Save"
     assert_text "Changes saved."
     assert_equal "+3225550101", @account.firm.reload.phone
@@ -48,6 +56,10 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_equal %w[NL FR], @account.profile.spoken_languages
     assert_predicate @account.profile, :verified?
     assert_predicate @account.user.reload, :email_verified?
+
+    find(".language-menu summary").click
+    find(".language-menu a[hreflang='fr']").click
+    assert_current_path settings_path(locale: :fr)
   end
 
   test "Enter keeps the ordinary Save action instead of importing" do

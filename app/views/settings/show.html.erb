@@ -5,7 +5,7 @@
   </div>
 
   <div class="new-assignment__layout">
-    <%= form_with url: settings_path, method: :patch, class: "assignment-form" do |form| %>
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: @profile_import_preview || false } do |form| %>
       <%# Enter keeps saving the form even though the import button appears first. %>
       <%= form.button t("settings.save"), name: "settings_action", value: "save", hidden: true, tabindex: -1 %>
       <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>

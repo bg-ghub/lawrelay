@@ -59,13 +59,19 @@ class SettingsController < ApplicationController
       key = result.status == :missing_profile ? "missing_profile" : "unavailable"
       flash.now[:alert] = t("profile_import.#{key}")
     end
+    mark_profile_import_preview
     render :show, status: imported ? :ok : :unprocessable_content
   end
 
   def profile_import_rate_limited
     assign_preview_values
     flash.now[:alert] = t("profile_import.rate_limited")
+    mark_profile_import_preview
     render :show, status: :too_many_requests
+  end
+
+  def mark_profile_import_preview
+    @profile_import_preview = [ @user, @profile, (@firm if @can_manage_firm) ].compact.any?(&:changed?)
   end
 
   def assign_preview_values
