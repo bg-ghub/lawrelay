@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.8.7
+
+Directory-confirmation enqueue failures now preserve the matched profile and retry the handoff up to three times. Pending verification distinguishes mail waiting to be sent from mail accepted by SMTP; this is not proof of inbox arrival.
+
+Validation: 431 Rails cases pass locally with eight POSIX-only skips. Eight focused delivery/status cases pass with 344 assertions, including retry recovery/exhaustion, sanitized errors and both mail states in all four languages. RuboCop and the nine no-send uptime tests pass.
+
+Read-only production checks found healthy HTTPS/readiness/operations, database integrity, backup/health timers and notification delivery. No failed jobs; disk usage was 11%. The existing Migadu admin session was expired, so support/privacy/security alias routing remains unconfirmed. No new provider was added and no test email was sent.
+
 ## 29 October 2026 — 0.8.6
 
 Signup and saved corrections now recover from partial/failed enqueue attempts with retry guidance. Verification mail and temporary directory failures retry up to three times. Missing profile pages are permanent failures; safe directory reasons explain how to recover. Privacy-admin completion records a manual outcome without implying automatic data actions.

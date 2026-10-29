@@ -23,6 +23,7 @@ fr:
       pending_body: "Nous vérifions votre inscription sur advocaat.be. Cela peut prendre un instant."
       confirmation_title: "Confirmez l’e-mail publié"
       confirmation_body: "Un lien a été envoyé à %{email}, l’adresse sur votre profil advocaat.be."
+      confirmation_not_sent_body: "L’e-mail de confirmation vers %{email} n’a pas encore été envoyé. Vous pouvez réessayer ci-dessous."
       ready_title: "Profil confirmé"
       ready_body: "Profil vérifié. L’accès s’ouvre une fois tous les contrôles terminés."
       retry: "Vérifier à nouveau"

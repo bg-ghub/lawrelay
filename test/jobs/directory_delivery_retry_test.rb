@@ -66,4 +66,72 @@ class DirectoryDeliveryRetryTest < ActiveJob::TestCase
     Mail::SMTP.define_method(:deliver!, original_smtp) if original_smtp
     DirectoryVerificationMailer.define_singleton_method(:confirm, original_mailer) if original_mailer
   end
+
+  test "a confirmation queue failure retries the directory job after preserving the match" do
+    original = Directory::ConfirmationJob.method(:perform_later)
+    original_lookup = Directory::AdvocaatBeProfileLookup.method(:call)
+    attempts = 0
+    profile_id = @profile.id
+    Directory::ConfirmationJob.define_singleton_method(:perform_later) do |*|
+      attempts += 1
+      attempts > 1 ? original.call(profile_id) : false
+    end
+    lookup_result = confirmation_lookup_result
+    @profile.update!(directory_profile_id: nil, directory_name: nil, directory_email: nil,
+      directory_checked_at: nil, directory_identity_digest: nil)
+    Directory::AdvocaatBeProfileLookup.define_singleton_method(:call) { |**| lookup_result }
+    job = Directory::VerificationJob.new(@user.id)
+
+    freeze_time do
+      retry_window = ->(scheduled_at) { (1.minute.from_now..70.seconds.from_now).cover?(scheduled_at) }
+      assert_enqueued_with(job: Directory::VerificationJob, args: [ @user.id ], at: retry_window) do
+        job.perform_now
+      end
+    end
+    clear_enqueued_jobs
+    assert_equal lookup_result.profile_id, @profile.reload.directory_profile_id
+    assert @profile.directory_matched?
+    assert_not @profile.verified?
+    assert_nil @profile.directory_email_verified_at
+
+    assert_enqueued_jobs(1, only: Directory::ConfirmationJob) do
+      job.perform_now
+    end
+    assert_equal 2, attempts
+  ensure
+    Directory::ConfirmationJob.define_singleton_method(:perform_later, original) if original
+    Directory::AdvocaatBeProfileLookup.define_singleton_method(:call, original_lookup) if original_lookup
+  end
+
+  test "a confirmation queue failure exhausts with a sanitized retryable error" do
+    original = Directory::ConfirmationJob.method(:perform_later)
+    original_lookup = Directory::AdvocaatBeProfileLookup.method(:call)
+    Directory::ConfirmationJob.define_singleton_method(:perform_later) do |*|
+      raise ActiveJob::EnqueueError, "private queue adapter details"
+    end
+    lookup_result = confirmation_lookup_result
+    Directory::AdvocaatBeProfileLookup.define_singleton_method(:call) { |**| lookup_result }
+    job = Directory::VerificationJob.new(@user.id)
+
+    2.times do
+      assert_enqueued_jobs(1, only: Directory::VerificationJob) { job.perform_now }
+      clear_enqueued_jobs
+    end
+    error = assert_raises(Directory::Verification::ConfirmationUnavailable) { job.perform_now }
+    assert_equal "Directory confirmation delivery unavailable", error.message
+    assert_nil error.cause
+    assert_enqueued_jobs 0
+  ensure
+    Directory::ConfirmationJob.define_singleton_method(:perform_later, original) if original
+    Directory::AdvocaatBeProfileLookup.define_singleton_method(:call, original_lookup) if original_lookup
+  end
+
+  private
+
+  def confirmation_lookup_result
+    Directory::AdvocaatBeProfileLookup::Result.new(
+      status: :ok, profile_id: @profile.directory_profile_id, source_url: @profile.directory_profile_url,
+      name: @user.full_name, email: @profile.directory_email, checked_at: Time.current
+    )
+  end
 end
