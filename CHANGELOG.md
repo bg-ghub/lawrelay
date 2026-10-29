@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.8.5] - 2026-10-29
+
+### Fixed
+
+- Clarify that confidential details are shared only with the chosen colleague after agreement.
+
 ## [0.8.4] - 2026-10-29
 
 ### Fixed
@@ -223,7 +229,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.4...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.5...HEAD
+[0.8.5]: https://github.com/bg-ghub/lawrelay/compare/v0.8.4...v0.8.5
 [0.8.4]: https://github.com/bg-ghub/lawrelay/compare/v0.8.3...v0.8.4
 [0.8.3]: https://github.com/bg-ghub/lawrelay/compare/v0.8.2...v0.8.3
 [0.8.2]: https://github.com/bg-ghub/lawrelay/compare/v0.8.1...v0.8.2
