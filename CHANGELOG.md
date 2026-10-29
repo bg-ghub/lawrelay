@@ -9,7 +9,7 @@ All notable changes to LawRelay are documented here. The project follows
 
 ### Fixed
 
-- Remove the extra detail-sharing hint from assignment posting.
+- Explain assignment visibility and sharing confidential details with the chosen colleague after agreement.
 
 ## [0.8.3] - 2026-10-29
 

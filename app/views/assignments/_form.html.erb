@@ -56,9 +56,10 @@
   <fieldset class="form-section"><legend><%= t("marketplace.form.conditions_legend") %></legend>
     <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 0.01, value: euro_amount(assignment.fee_cents, field: true) %></div>
     <label class="form-check">
-      <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true %>
+      <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true, aria: { describedby: "assignment-content-hint" } %>
       <span><%= t("marketplace.form.content_rules_label") %></span>
     </label>
+    <p class="field-hint" id="assignment-content-hint"><%= t("marketplace.form.content_rules_hint") %></p>
   </fieldset>
   <div class="form-actions"><%= link_to t("marketplace.form.cancel"), assignments_path, class: "button button--ghost" %><%= form.submit t("marketplace.form.submit"), class: "button button--dark" %></div>
 <% end %>
