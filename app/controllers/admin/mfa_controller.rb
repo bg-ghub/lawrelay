@@ -1,5 +1,6 @@
 module Admin
   class MfaController < ApplicationController
+    before_action -> { response.headers["Cache-Control"] = "no-store" }
     rate_limit to: 5, within: 3.minutes, only: %i[confirm_setup verify], by: -> { current_user&.id },
       with: -> { redirect_to admin_mfa_challenge_path, alert: t("mfa.notices.rate_limited") }
 
@@ -10,6 +11,8 @@ module Admin
     def setup
       @secret = current_user.begin_admin_mfa_setup!
       @provisioning_uri = current_user.admin_mfa_provisioning_uri(@secret)
+      @qr_code = RQRCode::QRCode.new(@provisioning_uri, level: :m)
+        .as_png(module_px_size: 6, border_modules: 4).to_data_url
     rescue User::InvalidAdminMfaCode
       redirect_to admin_mfa_challenge_path
     end
