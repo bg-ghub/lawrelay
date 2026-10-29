@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline safety tests for mailbox-retention.py.  Never contacts IMAP."""
 import argparse, contextlib, importlib.util, io, json, os, sys, tempfile, unittest
+from unittest.mock import MagicMock, patch
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -47,6 +48,18 @@ class FakeIMAP:
     def close(self): raise AssertionError("global CLOSE must never be used")
 
 class RetentionTests(unittest.TestCase):
+    def test_tls_is_verified_and_authenticated_capabilities_are_refreshed(self):
+        client = MagicMock()
+        client.capabilities = (b"IMAP4rev1",)
+        client.login.return_value = ("OK", [b""])
+        client.capability.return_value = ("OK", [b"IMAP4rev1 UIDPLUS CONDSTORE"])
+        with patch.object(retention.imaplib, "IMAP4_SSL", return_value=client) as constructor:
+            self.assertIs(client, retention.connect("synthetic-user", "synthetic-password", 20))
+        context = constructor.call_args.kwargs["ssl_context"]
+        self.assertTrue(context.check_hostname)
+        self.assertEqual(retention.ssl.CERT_REQUIRED, context.verify_mode)
+        self.assertIn("UIDPLUS", retention.capabilities(client))
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(); os.chmod(self.tmp.name,0o700); self.root=Path(self.tmp.name)
         self.env=self.root/"env"; self.env.write_text("SMTP_USERNAME=admin@lawrelay.be\nSMTP_PASSWORD=secret-password\n"); os.chmod(self.env,0o600)

@@ -417,6 +417,8 @@ def connect(username: str, password: str, timeout: int):
     client = imaplib.IMAP4_SSL(HOST, PORT, ssl_context=context, timeout=timeout)
     client.sock.settimeout(timeout)
     ok(client.login(username, password))
+    # Migadu can advertise additional capabilities only after authentication.
+    client.capabilities = tuple(b" ".join(ok(client.capability())).split())
     return client
 
 
