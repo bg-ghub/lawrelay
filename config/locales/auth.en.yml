@@ -63,6 +63,7 @@ en:
       verification_hint: "We check your official profile. Leave out client and case details."
       agree_heading: "I accept the platform rules"
       agree_before: "I accept the"
+      agreement_html: "I accept the %{terms} and have read the %{privacy}."
       terms: "terms"
       and: "and"
       privacy: "privacy notice"
@@ -78,7 +79,7 @@ en:
       aside_three_body: "Only verified professionals can access marketplace details."
       errors:
         rate_limited: "Too many registration attempts. Please try again later."
-        accept_terms: "You must accept the terms and privacy notice."
+        accept_terms: "You must accept the terms and confirm that you have read the privacy notice."
         already_registered: "These account, firm, or bar details are already registered."
     email_verifications:
       review:

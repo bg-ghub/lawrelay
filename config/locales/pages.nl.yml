@@ -42,13 +42,13 @@ nl:
           heading: "1. Wie verantwoordelijk is"
           paragraphs:
             - "De hierboven vermelde uitbater van LawRelay is verwerkingsverantwoordelijke."
-            - "Stuur privacyvragen en verzoeken over uw rechten naar privacy@lawrelay.be. Registratiecontroles gebruiken de openbare lijst van advocaat.be, een automatische vergelijking van de opgegeven gegevens en waar nodig een menselijke beoordeling; neem contact op met support@lawrelay.be als een controle hulp nodig heeft."
+            - "Privacyvragen en verzoeken over uw rechten: privacy@lawrelay.be. We vergelijken uw naam en uw professionele e-mailadres met uw openbare profiel op advocaat.be. Controle van uw profiel en e-mailadres is nodig voor toegang tot de marktplaats. Vraag support@lawrelay.be om een mislukte controle te bekijken."
         scope:
           heading: "2. Welke gegevens we verwerken"
           bullets:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
-            - "Als je tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
-            - "Professionele verificatiegegevens, waaronder je officiële profiel, de vermelde naam en het professionele e-mailadres, kantoorgegevens en verificatiestatus."
+            - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
+            - "Professionele verificatiegegevens, waaronder uw officiële profiel, de vermelde naam en het professionele e-mailadres, kantoorgegevens en verificatiestatus."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
           paragraphs:
@@ -62,27 +62,28 @@ nl:
         sharing:
           heading: "4. Met wie gegevens worden gedeeld"
           paragraphs:
-            - "Gegevens worden alleen gedeeld voor de werking van de dienst: met de opdrachtgevende of reagerende advocaat waar de workflow dat vereist, bevoegde LawRelay-medewerkers en contractuele leveranciers van hosting, transactionele e-mail, beveiliging en back-ups."
-            - "Gegevens worden niet verkocht."
+            - "Open opdrachten zijn zichtbaar voor geverifieerde leden. Reacties zijn zichtbaar voor de reagerende advocaat en het kantoor van de opdrachtgever. Na aanvaarding ontvangen de opdrachtgever en de gekozen advocaat elkaars e-mailadres."
+            - "De uitbater en de hieronder vermelde hosting-, e-mail- en back-upleveranciers verwerken gegevens voor de werking van de dienst. Gegevens worden niet verkocht."
         transfers:
           heading: "5. Locatie en doorgiften"
           paragraphs:
             - "Hetzner host de toepassing in Duitsland. Versleutelde back-ups staan in AWS S3 Frankfurt. Migadu, een Zwitserse e-mailprovider, vermeldt dat zijn e-mailservers in Frankrijk staan."
+            - "Leveranciers kunnen account- en supportgegevens ook buiten de EER verwerken. Voor Zwitserland geldt een adequaatheidsbesluit van de EU; de verwerkersovereenkomst van AWS bevat waar nodig standaardcontractbepalingen. Vraag privacy@lawrelay.be om meer informatie of een kopie van de waarborgen."
         retention:
           heading: "6. Bewaring"
           paragraphs:
-            - "Onbevestigde registraties: 30 dagen inactiviteit. Meldingen: 90 dagen vanaf aanmaak. Afgesloten opdrachten, reacties, privacyverzoeken, meldingsdossiers en supportberichten: 2 jaar na afsluiting. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
+            - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
             - "Accounts blijven bestaan tot afsluiting. Na beoordeling van een geverifieerd verwijderverzoek verwijderen we gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Lopende opdrachten, verzoeken, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
             - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."
         rights:
           heading: "7. Uw rechten"
           paragraphs:
-            - "Afhankelijk van grondslag en omstandigheden kunt u inzage, correctie, verwijdering, beperking of overdraagbaarheid vragen of bezwaar maken. Toestemming kan worden ingetrokken zonder gevolgen voor eerdere rechtmatige verwerking."
+            - "Afhankelijk van grondslag en omstandigheden kunt u inzage, correctie, verwijdering, beperking of overdraagbaarheid vragen of bezwaar maken. Schrijf naar privacy@lawrelay.be. We antwoorden normaal binnen één maand. Als een wettelijke verlenging nodig is, melden we dat binnen die maand."
             - "U kunt klacht indienen bij de Gegevensbeschermingsautoriteit. LawRelay kan uw identiteit controleren vóór een verzoek wordt uitgevoerd."
         security:
           heading: "8. Beveiliging, incidenten en wijzigingen"
           paragraphs:
-            - "LawRelay gebruikt risicogebaseerde toegangscontrole, versleuteling tijdens transport, veilige authenticatie, beperkte logging, back-ups, monitoring en incidentprocedures. Geen enkele onlinedienst kan absolute veiligheid beloven."
+            - "LawRelay gebruikt toegangscontrole, versleuteling tijdens transport, veilige authenticatie, beperkte logging, back-ups, monitoring en incidentprocedures. Geen enkele onlinedienst kan absolute veiligheid beloven."
             - "Belangrijke wijzigingen worden gedateerd en waar passend via de dienst of e-mail meegedeeld."
     terms:
       meta_title: "Gebruiksvoorwaarden — LawRelay"
@@ -102,7 +103,7 @@ nl:
         role:
           heading: "3. Rol van LawRelay"
           paragraphs:
-            - "LawRelay biedt software om opdrachten te publiceren, reacties te ontvangen en een introductie tussen advocaten te coördineren. Het is geen advocatenkantoor, werkgever, cliënt, agent, betaaldienst of partij bij de samenwerking en verleent geen juridisch advies."
+            - "Met LawRelay kunt u opdrachten publiceren en uit de reacties kiezen. De samenwerking is tussen de advocaten; LawRelay is daarbij geen partij."
         professional_duties:
           heading: "4. Professionele verantwoordelijkheid"
           bullets:
@@ -130,7 +131,7 @@ nl:
           heading: "9. Meldingen, moderatie en schorsing"
           paragraphs:
             - "Gebruikers kunnen onwettige, onveilige of regelbrekende inhoud melden via support@lawrelay.be. LawRelay kan onderzoeken, informatie vragen, inhoud beperken, toegang schorsen of een account proportioneel beëindigen."
-            - "Wie het niet eens is met een moderatiebeslissing kan antwoorden op de beslissingsmail of schrijven naar support@lawrelay.be met het relevante account- en opdrachtnummer. LawRelay bekijkt het verzoek en antwoordt binnen een redelijke termijn."
+            - "U kunt een moderatiebeslissing betwisten via support@lawrelay.be, met het account- of opdrachtnummer. LawRelay beoordeelt dit en antwoordt binnen een redelijke termijn."
         intellectual_property:
           heading: "10. Intellectuele eigendom"
           paragraphs:

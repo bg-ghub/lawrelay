@@ -42,7 +42,7 @@ fr:
           heading: "1. Qui est responsable du traitement"
           paragraphs:
             - "L'exploitant de LawRelay indiqué ci-dessus est responsable du traitement."
-            - "Envoyez les questions de confidentialité et demandes d'exercice de droits à privacy@lawrelay.be. Les contrôles d'inscription utilisent l'annuaire public advocaat.be, une comparaison automatisée des informations fournies et, si nécessaire, un examen humain ; contactez support@lawrelay.be si un contrôle nécessite de l'aide."
+            - "Questions de confidentialité et demandes d’exercice de droits : privacy@lawrelay.be. Nous comparons votre nom et votre e-mail professionnel à votre profil public sur advocaat.be. La vérification du profil et de l’e-mail est nécessaire pour accéder aux missions. Demandez à support@lawrelay.be de réexaminer un contrôle qui a échoué."
         scope:
           heading: "2. Données traitées"
           bullets:
@@ -62,27 +62,28 @@ fr:
         sharing:
           heading: "4. Destinataires"
           paragraphs:
-            - "Les données ne sont partagées que pour exploiter le service : avec l'avocat demandeur ou répondant lorsque le parcours l'exige, le personnel LawRelay autorisé et les prestataires contractuels d'hébergement, d'e-mail transactionnel, de sécurité et de sauvegarde."
-            - "Les données ne sont pas vendues."
+            - "Les missions ouvertes sont visibles par les membres vérifiés. Les propositions sont visibles par l’avocat qui les soumet et le cabinet du donneur d’ordre. Après acceptation, le donneur d’ordre et l’avocat choisi reçoivent leurs adresses e-mail respectives."
+            - "L’exploitant et les prestataires d’hébergement, d’e-mail et de sauvegarde ci-dessous traitent les données nécessaires au fonctionnement du service. Les données ne sont pas vendues."
         transfers:
           heading: "5. Lieu et transferts"
           paragraphs:
             - "Hetzner héberge l’application en Allemagne. Les sauvegardes chiffrées sont stockées dans AWS S3 à Francfort. Migadu, fournisseur suisse d’e-mail, indique que ses serveurs de messagerie sont situés en France."
+            - "Les prestataires peuvent aussi traiter des données de compte et de support hors de l’EEE. La Suisse bénéficie d’une décision d’adéquation de l’UE ; l’accord de traitement des données d’AWS prévoit des clauses contractuelles types si nécessaire. Écrivez à privacy@lawrelay.be pour obtenir des précisions ou une copie des garanties."
         retention:
           heading: "6. Conservation"
           paragraphs:
-            - "Inscriptions non confirmées : 30 jours d’inactivité. Notifications : 90 jours après leur création. Missions, propositions, demandes de confidentialité, signalements et échanges de support clôturés : 2 ans après clôture. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
+            - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
             - "Les comptes restent jusqu’à leur clôture. Après examen d’une demande de suppression vérifiée, nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions, demandes, enquêtes, litiges en cours ou obligations légales peuvent justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
           heading: "7. Vos droits"
           paragraphs:
-            - "Selon la base juridique et les circonstances, vous pouvez demander l'accès, la rectification, l'effacement, la limitation ou la portabilité, ou vous opposer au traitement. Vous pouvez retirer un consentement sans affecter le traitement licite antérieur."
+            - "Selon la base juridique et les circonstances, vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité, ou vous opposer au traitement. Écrivez à privacy@lawrelay.be. Nous répondons normalement dans un mois ; si une prolongation légale est nécessaire, nous vous en informons dans ce même délai."
             - "Vous pouvez introduire une plainte auprès de l'Autorité de protection des données. LawRelay peut vérifier votre identité avant d'exécuter une demande."
         security:
           heading: "8. Sécurité, incidents et modifications"
           paragraphs:
-            - "LawRelay appliquera des contrôles d'accès, le chiffrement en transit, une authentification sûre, une journalisation limitée, des sauvegardes, une surveillance et des procédures d'incident adaptées au risque. Aucun service en ligne ne peut promettre une sécurité absolue."
+            - "LawRelay utilise des contrôles d’accès, le chiffrement en transit, une authentification sûre, une journalisation limitée, des sauvegardes, une surveillance et des procédures d’incident. Aucun service en ligne ne peut promettre une sécurité absolue."
             - "Les modifications importantes seront datées et, le cas échéant, communiquées via le service ou par e-mail."
     terms:
       meta_title: "Conditions d'utilisation — LawRelay"
@@ -102,7 +103,7 @@ fr:
         role:
           heading: "3. Rôle de LawRelay"
           paragraphs:
-            - "LawRelay fournit un logiciel pour publier des missions, recevoir des réponses et coordonner une mise en relation entre avocats. Il n'est ni cabinet d'avocats, employeur, client, mandataire, service de séquestre ni partie à la collaboration, et ne donne pas de conseil juridique."
+            - "LawRelay permet de publier des missions et de choisir parmi les réponses. Les avocats concluent leur collaboration entre eux ; LawRelay n’y est pas partie."
         professional_duties:
           heading: "4. Responsabilité professionnelle"
           bullets:
@@ -130,7 +131,7 @@ fr:
           heading: "9. Signalement, modération et suspension"
           paragraphs:
             - "Les utilisateurs peuvent signaler un contenu illicite, dangereux ou contraire aux règles à support@lawrelay.be. LawRelay peut enquêter, demander des informations, restreindre un contenu, suspendre l'accès ou fermer un compte de manière proportionnée."
-            - "En cas de désaccord avec une décision de modération, répondez à l'e-mail de décision ou écrivez à support@lawrelay.be en indiquant le compte et la mission concernés. LawRelay examinera la demande et répondra dans un délai raisonnable."
+            - "Pour contester une décision de modération, écrivez à support@lawrelay.be en indiquant la référence du compte ou de la mission. LawRelay l’examinera et répondra dans un délai raisonnable."
         intellectual_property:
           heading: "10. Propriété intellectuelle"
           paragraphs:

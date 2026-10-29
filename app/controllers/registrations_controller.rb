@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  TERMS_VERSION = "2026-10-29"
-  PRIVACY_VERSION = "2026-10-29-retention"
+  TERMS_VERSION = "2026-10-29-review"
+  PRIVACY_VERSION = "2026-10-29-review"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -17,6 +17,7 @@ class RegistrationsController < ApplicationController
 
     @user.accepted_terms_at = Time.current if @terms_accepted
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
+    # Record receipt of the privacy notice, not consent as a processing basis.
     @user.accepted_privacy_version = PRIVACY_VERSION if @terms_accepted
     models_valid = @user.valid? & @firm.valid? & @lawyer_profile.valid?
     unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])

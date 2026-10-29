@@ -42,7 +42,7 @@ en:
           heading: "1. Who controls your data"
           paragraphs:
             - "LawRelay's operator named above is the controller."
-            - "Send privacy questions and rights requests to privacy@lawrelay.be. Registration checks use the public advocaat.be directory, automated comparison of the submitted information, and human review where needed; contact support@lawrelay.be if a check needs help."
+            - "Privacy questions and rights requests: privacy@lawrelay.be. We compare your name and professional email with your public advocaat.be profile. Directory and email verification are required for marketplace access. Ask support@lawrelay.be to review a failed check."
         scope:
           heading: "2. Data we process"
           bullets:
@@ -62,27 +62,28 @@ en:
         sharing:
           heading: "4. Who receives data"
           paragraphs:
-            - "Data is shared only as required to operate the service: with the requesting or responding lawyer as the workflow requires, authorised LawRelay staff, and contracted hosting, transactional-email, security, and backup providers."
-            - "Data is not sold."
+            - "Open assignments are visible to verified members. Proposals are visible to the submitting lawyer and the requester's firm. The requester and selected lawyer receive each other's email address after acceptance."
+            - "The operator and the hosting, email and backup providers below process data as needed to run the service. Data is not sold."
         transfers:
           heading: "5. Location and transfers"
           paragraphs:
             - "Hetzner hosts the application in Germany. Encrypted backups are stored in AWS S3 Frankfurt. Migadu, a Swiss email provider, states that its email servers are located in France."
+            - "Providers may also process account and support data outside the EEA. Switzerland has an EU adequacy decision; AWS's data-processing agreement includes standard contractual clauses where needed. Ask privacy@lawrelay.be for details or a copy of the safeguards."
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "Unconfirmed registrations: 30 days of inactivity. Notifications: 90 days from creation. Closed assignments, proposals, privacy requests, reports and support messages: 2 years after closure. Audit logs: 1 year. Technical logs: up to 31 days."
+            - "Unused, unconfirmed registrations: 30 days of inactivity. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
             - "Accounts remain until closure. After reviewing a verified deletion request, we remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Ongoing assignments, requests, investigations, disputes or legal duties may require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
           heading: "7. Your rights"
           paragraphs:
-            - "Depending on the legal basis and circumstances, you may request access, correction, deletion, restriction, portability, or object to processing. You may withdraw consent without affecting earlier lawful processing."
+            - "Depending on the legal basis and circumstances, you may request access, correction, deletion, restriction or portability, or object to processing. Write to privacy@lawrelay.be. We normally reply within one month; if a lawful extension is needed, we tell you within that month."
             - "You may lodge a complaint with the Belgian Data Protection Authority. LawRelay may need to verify your identity before fulfilling a request."
         security:
           heading: "8. Security, incidents, and changes"
           paragraphs:
-            - "LawRelay will use access controls, encryption in transit, secure authentication, logging controls, backups, monitoring, and incident procedures appropriate to the risk. No online service can promise absolute security."
+            - "LawRelay uses access controls, encryption in transit, secure authentication, logging controls, backups, monitoring and incident procedures. No online service can promise absolute security."
             - "Material changes will be dated and communicated through the service or by email where appropriate."
     terms:
       meta_title: "Terms of service — LawRelay"
@@ -102,7 +103,7 @@ en:
         role:
           heading: "3. LawRelay's role"
           paragraphs:
-            - "LawRelay provides software for publishing assignments, receiving responses, and coordinating an introduction between lawyers. It is not a law firm, employer, client, agent, escrow service, or party to the lawyer-to-lawyer engagement, and it does not provide legal advice."
+            - "LawRelay lets you publish assignments and choose from the responses. The engagement is between the lawyers; LawRelay is not a party to it."
         professional_duties:
           heading: "4. Professional responsibility"
           bullets:
@@ -130,7 +131,7 @@ en:
           heading: "9. Reports, moderation, and suspension"
           paragraphs:
             - "Users may report unlawful, unsafe, or rule-breaking content to support@lawrelay.be. LawRelay may investigate, request information, restrict content, suspend access, or terminate an account proportionately."
-            - "If you disagree with a moderation decision, reply to the decision email or write to support@lawrelay.be with the relevant account and assignment reference. LawRelay will review the request and reply within a reasonable time."
+            - "To contest a moderation decision, write to support@lawrelay.be with the account or assignment reference. LawRelay will review it and reply within a reasonable time."
         intellectual_property:
           heading: "10. Intellectual property"
           paragraphs:
