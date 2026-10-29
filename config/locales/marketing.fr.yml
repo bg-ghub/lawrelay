@@ -2,6 +2,7 @@ fr:
   marketing:
     locale_name: Français
     language_switcher: Choisir la langue
+    language_switch_warning: "Vos modifications seront perdues. Changer de langue ?"
     actions:
       post_assignment: Publier une mission
       browse_assignments: Voir les missions

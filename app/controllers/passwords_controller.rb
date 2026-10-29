@@ -11,7 +11,7 @@ class PasswordsController < ApplicationController
       PasswordsMailer.reset(user).deliver_later
     end
 
-    redirect_to new_session_path, notice: t("auth.passwords.sent")
+    redirect_to authentication_login_path, notice: t("auth.passwords.sent")
   end
 
   def edit
@@ -29,8 +29,14 @@ class PasswordsController < ApplicationController
     end
 
     if updated
-      destination = @user.system_admin? ? admin_login_path : new_session_path
-      redirect_to destination, notice: t("auth.passwords.reset")
+      destination = if @user.system_admin?
+        admin_login_path
+      elsif admin_host?
+        SiteHosts.main_url(new_session_path)
+      else
+        new_session_path
+      end
+      redirect_to destination, allow_other_host: admin_host? && !@user.system_admin?, notice: t("auth.passwords.reset")
     else
       redirect_to edit_password_path(token: params[:token]), alert: t("auth.passwords.invalid_password")
     end

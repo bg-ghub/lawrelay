@@ -1,0 +1,14 @@
+<header class="site-header admin-site-header">
+  <div class="shell header-inner">
+    <%= link_to admin_users_path, class: "brand", aria: { label: t("admin.navigation.label") } do %>
+      <span>Law<span>Relay</span></span>
+    <% end %>
+    <div class="header-actions">
+      <%= render "shared/language_menu" %>
+      <%= link_to t("admin.navigation.site"), main_site_url, class: "header-login" %>
+      <% if authenticated? %>
+        <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "header-logout header-login" %>
+      <% end %>
+    </div>
+  </div>
+</header>

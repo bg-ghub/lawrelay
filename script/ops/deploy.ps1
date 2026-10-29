@@ -46,7 +46,7 @@ foreach ($path in @($composePath, $caddyPath, $versionPath)) {
 }
 
 $requiredEnv = @(
-  'APP_HOST', 'APP_PROTOCOL', 'ADDITIONAL_HOSTS', 'RAILS_ENV', 'RAILS_MASTER_KEY', 'SECRET_KEY_BASE',
+  'APP_HOST', 'ADMIN_HOST', 'APP_PROTOCOL', 'ADDITIONAL_HOSTS', 'RAILS_ENV', 'RAILS_MASTER_KEY', 'SECRET_KEY_BASE',
   'SMTP_ADDRESS', 'SMTP_PORT', 'SMTP_DOMAIN', 'SMTP_USERNAME', 'SMTP_PASSWORD', 'SMTP_AUTHENTICATION',
   'SMTP_SSL', 'SMTP_STARTTLS', 'MAIL_FROM', 'SOLID_QUEUE_IN_PUMA', 'ACTIVE_STORAGE_SERVICE',
   'ASSUME_SSL', 'FORCE_SSL', 'LAWRELAY_BILLING_ENFORCED', 'LAWRELAY_RELEASE_MODE'
@@ -55,7 +55,7 @@ $environment = Get-EnvNames -Path (Resolve-Path -LiteralPath $ProductionEnvPath)
 $missing = @($requiredEnv | Where-Object { -not $environment.Names.Contains($_) -or [string]::IsNullOrWhiteSpace($environment.Values[$_]) })
 if ($missing.Count -gt 0) { throw "Production environment is incomplete: $($missing -join ', '). Values were not displayed." }
 
-if ($environment.Values['APP_HOST'] -ne 'lawrelay.be' -or $environment.Values['LAWRELAY_RELEASE_MODE'] -ne 'beta' -or $environment.Values['LAWRELAY_BILLING_ENFORCED'] -ne 'true') {
+if ($environment.Values['APP_HOST'] -ne 'lawrelay.be' -or $environment.Values['ADMIN_HOST'] -ne 'admin.lawrelay.be' -or $environment.Values['LAWRELAY_RELEASE_MODE'] -ne 'beta' -or $environment.Values['LAWRELAY_BILLING_ENFORCED'] -ne 'true') {
   throw 'Production environment must target lawrelay.be and enforce the free founding beta release mode.'
 }
 
@@ -111,6 +111,7 @@ for attempt in `$(seq 1 24); do
   sleep 5
 done
 [ "`$status" = healthy ]
+docker compose --env-file release.env -f compose.production.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
 rm -f '$remoteArchive'
 "@
     $encodedRemoteCommand = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($remoteCommand))

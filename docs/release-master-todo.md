@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.4.7.
+Last audited: 29 October 2026. Current release: 0.5.0.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -27,6 +27,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Admin MFA, verification queue, privacy-request queue, and moderation controls.
 - [x] MFA-protected user management: search/filter accounts, inspect verification and sessions, edit basic details, suspend/restore accounts and revoke sessions with audit records. Administrator accounts are protected from edits in this console.
 - [x] Dedicated administrator password/MFA sign-in and password-confirmed self-service email changes with new-address confirmation, a fresh directory check and revocation of other sessions.
+- [x] Separate [admin portal](ops/admin.md) with host-only sessions, localized password recovery and password/MFA browser coverage.
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.

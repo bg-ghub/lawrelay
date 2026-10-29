@@ -30,6 +30,7 @@ env:
     - SMTP_PASSWORD
   clear:
     APP_HOST: <%= ENV.fetch("APP_HOST", "lawrelay.be") %>
+    ADMIN_HOST: <%= ENV.fetch("ADMIN_HOST", "admin.lawrelay.be") %>
     APP_PROTOCOL: https
     ADDITIONAL_HOSTS: <%= ENV.fetch("ADDITIONAL_HOSTS", "www.lawrelay.be") %>
     ASSUME_SSL: true

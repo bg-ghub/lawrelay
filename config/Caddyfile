@@ -17,7 +17,7 @@ www.lawrelay.be {
 	redir https://lawrelay.be{uri} permanent
 }
 
-lawrelay.be {
+lawrelay.be, admin.lawrelay.be {
 	encode zstd gzip
 
 	header {
