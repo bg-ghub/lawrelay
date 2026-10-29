@@ -1,6 +1,6 @@
 # External availability checks
 
-The `Uptime` GitHub Actions workflow checks the public site from a GitHub-hosted runner outside Hetzner. It needs no application, SMTP, SSH or AWS credentials. The workflow token can read this private repository and manage its incident issues.
+The `Uptime` GitHub Actions workflow checks the public site from a GitHub-hosted runner outside Hetzner. It needs no application, SMTP, SSH or AWS credentials. The workflow token can read this repository and manage its incident issues.
 
 At minute 17 of every hour it checks:
 
@@ -16,7 +16,7 @@ The five-minute host check remains in place for queue failures/age, backups, dis
 
 ## Alert and recovery
 
-A failed run opens one private incident assigned to `bg-ghub`. Repeated identical failures leave that issue open without repeated comments. A changed set of failing checks updates it. A healthy run adds one recovery comment and closes the incident. The workflow itself is red while its probes fail.
+A failed run opens one public incident assigned to `bg-ghub`. Incident content is limited to sanitized public-endpoint probe results; keep customer records, private contacts and server logs out of issues. Repeated identical failures leave that issue open without repeated comments. A changed set of failing checks updates it. A healthy run adds one recovery comment and closes the incident. The workflow itself is red while its probes fail.
 
 Assignment and a failed workflow do not prove email delivery. Verify the operator's GitHub Actions/issue notification settings and actual inbox arrival separately. GitHub documents that scheduled-workflow notifications follow the workflow's actor and their preferences: [workflow notifications](https://docs.github.com/en/actions/concepts/workflows-and-actions/notifications-for-workflow-runs), [notification settings](https://docs.github.com/en/subscriptions-and-notifications/how-tos/managing-github-actions-notifications).
 
@@ -34,7 +34,7 @@ Exercise the failure and recovery route without contacting or changing productio
 
 ```sh
 gh workflow run uptime.yml --repo bg-ghub/lawrelay --ref main -f self_test=failure
-# Verify one synthetic private issue, assigned to the operator. The run is intentionally red.
+# Verify one synthetic issue, assigned to the operator. The run is intentionally red.
 gh workflow run uptime.yml --repo bg-ghub/lawrelay --ref main -f self_test=failure
 # Verify the same issue is reused without a duplicate comment or issue.
 gh workflow run uptime.yml --repo bg-ghub/lawrelay --ref main -f self_test=recovery

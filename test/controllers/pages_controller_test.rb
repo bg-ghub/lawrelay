@@ -34,4 +34,20 @@ class PagesControllerTest < ActionController::TestCase
       assert_select ".footer-label", text: I18n.t("marketing.footer.contact", locale: locale)
     end
   end
+
+  test "renders GitHub source, open-source status, and application version in every footer locale" do
+    source_url = "https://github.com/bg-ghub/lawrelay"
+
+    I18n.available_locales.each do |locale|
+      get :pricing, params: { locale: locale }
+
+      assert_response :success
+      assert_select ".footer-project a.footer-project__source[href='#{source_url}']",
+        text: /#{Regexp.escape(I18n.t("marketing.footer.source_code", locale: locale))}/
+      assert_select ".footer-project .footer-project__license",
+        text: "#{I18n.t('marketing.footer.open_source', locale: locale)} · AGPL-3.0+"
+      assert_select ".footer-project .footer-project__version",
+        text: I18n.t("marketing.footer.app_version", locale: locale, version: LawRelay::VERSION)
+    end
+  end
 end

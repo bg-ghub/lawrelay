@@ -26,7 +26,10 @@ nl:
       learn_more: Meer weten
       contact: Contact
       made_for_belgium: Gemaakt voor België
-      demo_notice: Gratis bèta. Registratie staat open voor advocaten op advocaat.be; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
+      source_code: Broncode op GitHub
+      open_source: Open source
+      app_version: Versie %{version}
+      demo_notice: Gratis bèta voor advocaten op advocaat.be. Deel geen cliënt- of dossiergegevens.
       demo_disclaimer: LawRelay coördineert contact; het verleent geen juridisch advies.
     home:
       title: "LawRelay — collega’s vinden voor je praktijk"
