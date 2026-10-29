@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.8.1
+
+Indicative assignment rates are optional in all four languages. Blank values remain distinct from zero and display "To be agreed" (localized). Posting without a rate passes in Chrome, Edge and Firefox; 27 focused integration cases / 263 assertions pass.
+
+A bounded Edge check of eight board/detail pages at actual 320px passes 169 assertions. The German unspecified-rate label now wraps with spacing instead of touching its heading.
+
+Additional engine checks: Edge 156 passes the full 32-case suite / 1,446 assertions. Firefox 159 passes 19 cases / 354 assertions covering registration, both confirmations, matching, recovery, email changes, language guards, private-assignment boundaries and admin MFA/actions. Chromium-specific viewport cases are excluded from Firefox. Each engine also passes the latest blank-rate posting case separately (5 assertions). All data/mail are synthetic and use isolated databases; physical Safari/iOS/Android and screen-reader evidence remain open.
+
 ## 29 October 2026 — 0.8.0
 
 | Check | Result |

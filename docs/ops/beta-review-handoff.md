@@ -2,6 +2,8 @@
 
 Owner: Gauthier Berth. Reviewed 29 October 2026. Paid access stays disabled.
 
+Operator decision on 29 October: skip the recipient-inbox check and do not request external quotes. Those reviews remain unverified.
+
 | Review | What closes it |
 | --- | --- |
 | Admin access | Completed: operator password/MFA sign-in and live admin review on 29 October. Credential recovery stays in the protected server procedure. |

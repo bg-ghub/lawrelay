@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.8.0.
+Last audited: 29 October 2026. Current release: 0.8.1.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -41,6 +41,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 ## Beta follow-through completed
 
+- [x] Current browser checks also pass in Edge (32 cases) and Firefox (19 supported cases). Posting without an indicative fee passes in Chrome, Edge and Firefox; physical-device/screen-reader review stays open.
 - [x] Release 0.8.0 review: MFA/session and notification-recipient fixes, authenticated keyboard/responsive checks, scoped privacy rehearsal and fresh isolated recovery. See [dated evidence](ops/beta-ops-checks.md).
 - [x] [Thorough beta checks](ops/beta-thorough-qa.md): verification/MFA, deadlines, failed forms, amount precision, assignment history and browser fixes; pricing archived.
 - [x] Two-account browser journey covers registration, both mailbox confirmations, password sign-in, posting, responding, selection and contact privacy. Directory responses and mail are synthetic; the real-lawyer trial remains below.
