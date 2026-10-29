@@ -4,6 +4,7 @@ nl:
       court_replacement: "Vervanging"
       legal_task: "Juridische opdracht"
     urgent: "Dringend"
+    fee_unspecified: "In overleg"
     practice_areas:
       employment: "Arbeidsrecht"
       family: "Familie- en jeugdrecht"
@@ -46,7 +47,7 @@ nl:
       city_label: "Plaats"
       city_placeholder: "Antwerpen"
       conditions_legend: "Voorwaarden"
-      fee_label: "Richttarief (€)"
+      fee_label: "Richttarief (€, optioneel)"
       fee_hint: "Kandidaten kunnen een eigen voorstel doen."
       content_rules_label: "Deze opdracht bevat geen cliëntnamen, dossierfeiten, documenten of vertrouwelijke informatie."
       content_rules_hint_html: "Deel details na een match rechtstreeks en veilig. Meer over %{privacy_link}."

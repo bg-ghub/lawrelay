@@ -4,6 +4,7 @@ en:
       court_replacement: "Court cover"
       legal_task: "Legal task"
     urgent: "Urgent"
+    fee_unspecified: "To be agreed"
     practice_areas:
       employment: "Employment law"
       family: "Family and youth law"
@@ -46,7 +47,7 @@ en:
       city_label: "Location"
       city_placeholder: "Antwerp"
       conditions_legend: "Terms"
-      fee_label: "Guideline fee (€)"
+      fee_label: "Guideline fee (€, optional)"
       fee_hint: "Candidates can make their own proposal."
       content_rules_label: "This post contains no client names, case facts, documents or confidential information."
       content_rules_hint_html: "After a match, share details directly and securely. See %{privacy_link}."

@@ -4,6 +4,7 @@ fr:
       court_replacement: "Remplacement à l'audience"
       legal_task: "Mission juridique"
     urgent: "Urgent"
+    fee_unspecified: "À convenir"
     practice_areas:
       employment: "Droit du travail"
       family: "Droit de la famille et de la jeunesse"
@@ -46,7 +47,7 @@ fr:
       city_label: "Lieu"
       city_placeholder: "Anvers"
       conditions_legend: "Conditions"
-      fee_label: "Honoraires indicatifs (€)"
+      fee_label: "Honoraires indicatifs (€, facultatif)"
       fee_hint: "Les candidats peuvent faire leur propre proposition."
       content_rules_label: "Cette mission ne contient aucun nom de client, fait de dossier, document ou information confidentielle."
       content_rules_hint_html: "Après accord, échangez les détails directement et de manière sécurisée. Voir %{privacy_link}."
