@@ -23,6 +23,7 @@ fr:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      password_too_long: "est trop long ; choisissez un mot de passe plus court"
       accepted: "doit être accepté"
       blank: "doit être renseigné"
       confirmation: "ne correspond pas à %{attribute}"

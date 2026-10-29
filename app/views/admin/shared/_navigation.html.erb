@@ -5,6 +5,5 @@
        [t("admin.navigation.privacy_requests"), admin_privacy_requests_path, "admin/privacy_requests"] ].each do |label, path, section| %>
     <%= link_to label, path, aria: { current: ("page" if controller_path == section) } %>
   <% end %>
-  <%= link_to t("email_change.link"), email_change_path %>
   <% unless admin_host? %><%= link_to t("admin.navigation.site"), root_path %><% end %>
 </nav>

@@ -27,9 +27,10 @@ module AdminHostRouting
   def route_admin_host
     return unless admin_host?
     return if controller_path.start_with?("admin/")
-    return if controller_path.in?(%w[passwords email_verifications])
+    return redirect_to admin_login_path, status: :see_other if controller_path == "passwords"
+    return redirect_to admin_users_path, status: :see_other if controller_path == "email_changes"
+    return if controller_path == "email_verifications"
     return if controller_path == "sessions" && action_name == "destroy"
-    return if controller_path == "email_changes" && resume_session&.user&.system_admin?
 
     if controller_path == "home" && action_name == "index"
       redirect_to admin_users_path

@@ -1,6 +1,17 @@
 require "test_helper"
 
 class PasswordsMailerTest < ActionMailer::TestCase
+  test "administrator reset mail is suppressed even for a stale object" do
+    user = users(:one)
+    stale_user = User.find(user.id)
+    user.update!(system_role: "admin")
+
+    assert_no_emails do
+      PasswordsMailer.reset(stale_user).deliver_now
+    end
+    assert_nil PasswordsMailer.reset(user).to
+  end
+
   test "sends a localized reset link with the locale and token in the right segments" do
     user = users(:one)
     user.update!(locale: "fr")

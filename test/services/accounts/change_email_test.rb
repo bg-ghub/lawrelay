@@ -77,4 +77,26 @@ class Accounts::ChangeEmailTest < ActiveSupport::TestCase
     assert_equal "63fee2a5-637a-4839-a5a6-c833482f1e3a", @profile.reload.directory_profile_id
     assert_equal [ @current_session.id, @other_session.id ].sort, @account.user.sessions.pluck(:id).sort
   end
+
+  test "administrator email remains immutable through the service including a stale member object" do
+    stale_user = User.find(@account.user.id)
+    @account.user.update!(system_role: "admin")
+    original_user = @account.user.attributes
+    original_profile = @profile.attributes
+    session_ids = @account.user.sessions.pluck(:id).sort
+
+    [ @account.user, stale_user ].each do |user|
+      assert_no_difference "AuditEvent.count" do
+        result = Accounts::ChangeEmail.call(
+          user: user, current_session: @current_session,
+          password: "password1234", email_address: "new-admin@example.test"
+        )
+        assert_not_predicate result, :success?
+        assert_includes result.errors, I18n.t("email_change.errors.unavailable")
+      end
+      assert_equal original_user, @account.user.reload.attributes
+      assert_equal original_profile, @profile.reload.attributes
+      assert_equal session_ids, @account.user.sessions.pluck(:id).sort
+    end
+  end
 end

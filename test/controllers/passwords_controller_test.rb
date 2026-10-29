@@ -60,20 +60,44 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "at least 12 characters"
   end
 
-  test "an administrator returns to password-only sign-in after a reset without bypassing MFA" do
+  test "administrator reset requests remain generic without sending email" do
     @user.update!(system_role: "admin")
     @user.sessions.create!
+    original_password = @user.password_digest
+    session_ids = @user.sessions.pluck(:id).sort
 
-    put password_path(token: @user.password_reset_token, locale: :en), params: {
-      password: "new-long-password", password_confirmation: "new-long-password"
-    }
+    assert_no_enqueued_emails do
+      post passwords_path(locale: :en), params: { email_address: @user.email_address }
+    end
 
-    assert_redirected_to admin_login_path(locale: :en)
-    assert_empty @user.reload.sessions
-    post admin_login_path(locale: :en), params: { password: "new-long-password" }
-    assert_redirected_to admin_users_path(locale: :en)
+    assert_redirected_to new_session_path(locale: :en)
     follow_redirect!
-    assert_redirected_to admin_mfa_setup_path(locale: :en)
+    assert_notice I18n.t("auth.passwords.sent", locale: :en)
+    assert_equal original_password, @user.reload.password_digest
+    assert_equal session_ids, @user.sessions.pluck(:id).sort
+  end
+
+  test "pre-existing administrator reset tokens cannot display or change credentials" do
+    token = @user.password_reset_token
+    @user.update!(system_role: "admin")
+    @user.sessions.create!
+    original_user = @user.attributes
+    session_ids = @user.sessions.pluck(:id).sort
+
+    assert_no_enqueued_emails do
+      get edit_password_path(token: token, locale: :en)
+      assert_response :forbidden
+      assert_select "form", count: 0
+
+      [ :patch, :put ].each do |method|
+        public_send(method, password_path(token: token, locale: :en), params: {
+          password: "new-long-password", password_confirmation: "new-long-password"
+        })
+        assert_response :forbidden
+      end
+    end
+    assert_equal original_user, @user.reload.attributes
+    assert_equal session_ids, @user.sessions.pluck(:id).sort
   end
 
   test "short or missing passwords do not reset credentials or revoke sessions" do

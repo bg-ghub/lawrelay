@@ -1,4 +1,36 @@
 namespace :lawrelay do
+  desc "Set a named administrator password through a protected interactive terminal"
+  task :set_admin_password, [ :email ] => :environment do |_task, arguments|
+    require "io/console"
+
+    email = (arguments[:email].presence || ENV["EMAIL"]).to_s.strip.downcase
+    abort "Provide EMAIL=admin@example.com or lawrelay:set_admin_password[email]." if email.blank?
+    user = User.find_by(email_address: email)
+    abort "No active administrator exists for that address." unless user&.system_admin? && user.active?
+    abort "Use a protected interactive terminal for administrator password recovery." unless STDIN.tty?
+
+    password = STDIN.getpass("New administrator password: ")
+    confirmation = STDIN.getpass("Confirm administrator password: ")
+    abort "Passwords do not match." unless password == confirmation
+    abort "Use a password of at least 12 characters." if password.blank? || password.length < 12
+    abort "Password is too long (maximum 72 bytes)." if password.bytesize > 72
+
+    user.with_lock do
+      abort "No active administrator exists for that address." unless user.system_admin? && user.active?
+
+      user.update!(password:, password_confirmation: confirmation)
+      user.sessions.destroy_all
+      AuditEvent.create!(auditable: user, firm: user.primary_firm,
+        action: "admin.password_changed", metadata: { source: "rake" })
+    end
+    puts "Administrator password updated; sessions signed out. MFA is unchanged."
+  rescue ActiveRecord::RecordInvalid
+    abort "The administrator password could not be updated. No changes were saved."
+  ensure
+    password&.clear
+    confirmation&.clear
+  end
+
   desc "Promote an existing email-verified user to system administrator (EMAIL=admin@example.com)"
   task :promote_admin, [ :email ] => :environment do |_task, arguments|
     email = (arguments[:email].presence || ENV["EMAIL"]).to_s.strip.downcase

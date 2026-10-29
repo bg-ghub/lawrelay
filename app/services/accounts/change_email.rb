@@ -19,7 +19,7 @@ module Accounts
 
       ApplicationRecord.transaction do
         changed_user = User.lock.find(@user.id)
-        return failure(changed_user, nil, :unavailable) unless changed_user.active?
+        return failure(changed_user, nil, :unavailable) unless changed_user.active? && !changed_user.system_admin?
         current_session = changed_user.sessions.lock.find_by(id: @current_session&.id)
         return failure(changed_user, nil, :unavailable) unless current_session && !current_session.expired?
         return failure(changed_user, nil, :password) unless changed_user.authenticate(@password.to_s)

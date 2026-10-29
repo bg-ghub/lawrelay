@@ -49,6 +49,7 @@ class AdminHostTest < ApplicationSystemTestCase
     visit "#{@admin_origin}/en"
     assert_current_path admin_login_path(locale: :en)
     assert_no_selector "input[type='email']"
+    assert_no_selector "a[href*='/passwords']"
     assert_no_selector ".product-bar"
     fill_in "password", with: "admin-password1234"
     find("form.assignment-form input[type='submit']").click
@@ -57,6 +58,7 @@ class AdminHostTest < ApplicationSystemTestCase
     click_button "Continue"
     assert_current_path admin_users_path(locale: :en)
     assert_selector ".admin-navigation"
+    assert_no_selector ".admin-navigation a[href*='/settings/email']"
     assert_selector ".admin-site-footer .footer-project__version", text: LawRelay::VERSION
     assert_equal "admin.localhost", URI.parse(page.current_url).host
 

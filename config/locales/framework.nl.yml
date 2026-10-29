@@ -23,6 +23,7 @@ nl:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      password_too_long: "is te lang; kies een korter wachtwoord"
       accepted: "moet geaccepteerd worden"
       blank: "moet ingevuld zijn"
       confirmation: "komt niet overeen met %{attribute}"

@@ -15,7 +15,6 @@
         </div>
       </fieldset>
       <div class="form-actions">
-        <%= link_to t("admin.login.forgot_password"), new_password_path(email_address: @password_reset_email), class: "button button--ghost" %>
         <%= form.submit t("admin.login.submit"), class: "button button--dark" %>
       </div>
     <% end %>
