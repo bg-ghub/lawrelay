@@ -56,7 +56,7 @@
                 <div><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.status}") %></span></div>
                 <p><%= proposal.message %></p>
                 <p><strong>€ <%= euro_amount(proposal.rate_cents) %></strong> · <%= proposal.rate_kind_label %></p>
-                <% if proposal.status == "accepted" %>
+                  <% if proposal.status == "accepted" && proposal.contact_email.present? %>
                   <p class="contact-card"><%= mail_to proposal.contact_email %></p>
                 <% elsif proposal.status == "pending" && @assignment.status == "open" && @assignment.starts_at > Time.current %>
                   <div class="proposal-actions">
@@ -75,7 +75,7 @@
         <p><span class="status-pill"><%= t("marketplace.status.#{@existing_proposal.status}") %></span></p>
         <p><%= @existing_proposal.message %></p>
         <% if @existing_proposal.status == "accepted" %>
-          <p class="contact-card"><%= mail_to @assignment.creator_user.email_address if @assignment.creator_user %></p>
+          <p class="contact-card"><%= mail_to @assignment.creator_user.email_address if @assignment.creator_user&.active? %></p>
         <% elsif @existing_proposal.status == "pending" %>
           <%= button_to t("workflow.ui.withdraw"), withdraw_assignment_proposal_path(@assignment, @existing_proposal), method: :patch, class: "button button--ghost button--full" %>
         <% end %>

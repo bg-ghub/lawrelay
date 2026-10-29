@@ -7,6 +7,9 @@ rm -f /rails/tmp/pids/server.pid
 # the persistent /rails/storage volume. Prepare all schemas before Puma starts.
 if [ "${1:-}" = "./bin/thrust" ]; then
   bundle exec rails db:prepare
+  if [ -n "${LAWRELAY_ERASURE_LEDGER:-}" ]; then
+    bundle exec rails privacy:reapply_erasures
+  fi
 fi
 
 exec "$@"

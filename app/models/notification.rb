@@ -21,6 +21,7 @@ class Notification < ApplicationRecord
 
   def self.publish!(user:, kind:, subject:, assignment:, actor: nil)
     return unless user && user.id != actor&.id
+    return unless User.where(id: user.id, erased_at: nil).exists?
 
     event_key = [ kind, subject.class.base_class.name, subject.id, user.id ].join(":")
     create_or_find_by!(event_key:) do |notification|

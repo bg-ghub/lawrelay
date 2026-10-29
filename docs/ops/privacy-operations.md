@@ -13,7 +13,37 @@ The arguments are the request ID and the administrator ID. Export requires an `a
 
 The export contains allowlisted account/profile fields, the member's own authored assignments/proposals/reports, request history, notification status, sessions and account audit timestamps/actions. Authentication secrets, audit metadata, admin resolution notes, other users' proposals and shared firm/billing records are excluded. Review authored free text before releasing it. Assess excluded and externally held personal data separately: this is not a complete automatic access-response service.
 
-The erasure inventory counts direct references and shared firms without changing them. It always records the hold decision as **not assessed**. Check indirect references, other participants, retention, complaints/holds, support mail, logs and backups before deciding what may be deleted or anonymised. Keep an approved erasure record privately so it can be reapplied after a restore.
+The erasure inventory counts direct references and shared firms without changing them. Check indirect references, other participants, the retention schedule, support mail, logs and backups before deciding what may be deleted or pseudonymised. A recorded legal, security or dispute hold pauses deletion only for the necessary records; review it every 90 days. Keep the decision privately so it can be reapplied after a restore.
+
+## Retention and erasure
+
+Preview scheduled cleanup first; it changes nothing:
+
+```sh
+bin/rails retention:cleanup
+```
+
+Run it only after reviewing the preview:
+
+```sh
+APPLY=true bin/rails retention:cleanup
+```
+
+Create a 90-day hold before an investigation or dispute. `TYPE` is the protected subject type, `ID` its ID, and `ACTOR_ID` the active MFA administrator:
+
+```sh
+TYPE=User ID=123 ACTOR_ID=1 REASON='Active dispute' bin/rails retention:hold
+```
+
+After identity, scope and response are reviewed, erase an assigned deletion request with:
+
+```sh
+CONFIRM=ERASE bin/rails 'privacy:erase[123,1]'
+```
+
+This requires an active MFA administrator and an assigned `in_review` member deletion request. It refuses ongoing work, holds and billing records. It removes profile, authentication and authored personal text where allowed, while retaining other lawyers’ work and minimal pseudonymous shared records for two years. It also completes the reviewed request. It is not a bulk account-delete tool.
+
+The protected deletion ledger is replayed before restored traffic or workers resume and is pruned daily after two years. A pending or incomplete ledger operation stops automatic erasure until it is resolved.
 
 Review and transfer the response through the verified private channel. Keep working files outside GitHub and delete them according to the approved handling policy. Record actual execution separately before closing the request.
 

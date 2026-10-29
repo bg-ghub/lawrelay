@@ -71,8 +71,9 @@ en:
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "We review deletion requests manually, including any records needed for legal obligations, security or disputes. Account, assignment, support and audit records have no automatic deletion schedule."
-            - "Backups keep 7 daily, 4 weekly and 12 monthly snapshots. Deleted data may remain until backups and older storage versions expire."
+            - "Unconfirmed registrations: 30 days of inactivity. Notifications: 90 days from creation. Closed assignments, proposals, privacy requests, reports and support messages: 2 years after closure. Audit logs: 1 year. Technical logs: up to 31 days."
+            - "Accounts remain until closure. After reviewing a verified deletion request, we remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Ongoing assignments, requests, investigations, disputes or legal duties may require longer retention."
+            - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
           heading: "7. Your rights"
           paragraphs:

@@ -18,12 +18,15 @@ class Proposal < ApplicationRecord
   validates :rate_kind, inclusion: { in: RATE_KINDS }
   validates :status, inclusion: { in: STATUSES }
   validates :user_id, uniqueness: { scope: :assignment_id }, allow_nil: true
+  validate :author_account_still_active, on: :create
 
   def display_name
     user&.full_name.presence || name
   end
 
   def contact_email
+    return if user&.erased_at
+
     user&.email_address.presence || email
   end
 
@@ -48,6 +51,13 @@ class Proposal < ApplicationRecord
   end
 
   private
+
+  def author_account_still_active
+    return unless user_id
+    return if User.where(id: user_id, erased_at: nil, suspended_at: nil).exists?
+
+    errors.add(:base, I18n.t("workflow.errors.assignment_not_available"))
+  end
 
   def transition_from_pending!(next_status, actor:, timestamp:)
     # Use the same lock order as selection and assignment cancellation.

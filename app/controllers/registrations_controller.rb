@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-10-29"
-  PRIVACY_VERSION = "2026-10-29"
+  PRIVACY_VERSION = "2026-10-29-retention"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,

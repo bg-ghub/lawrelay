@@ -14,6 +14,8 @@ docker compose version
 
 The `deploy` user must be in the `docker` group. Docker Compose v2.30 or newer is required because the production environment is loaded in `raw` format, preserving literal characters in SMTP passwords. The deployment creates the externally named `lawrelay_storage` volume once; it contains SQLite databases and uploaded files. Never remove it as part of a deployment.
 
+Before the retention release, run the idempotent host-preparation script in [backup-restore.md](backup-restore.md). It preserves the deletion ledger, sets its permissions and installs the 30-day journald configuration. Do not rely on Docker creating this directory because its permissions matter.
+
 Before DNS is pointed at the server, confirm the firewall permits TCP 80 and 443. Create only an `A` record for `lawrelay.be` and `www.lawrelay.be` to `178.105.52.108`; do not publish an AAAA record unless IPv6 has been deliberately configured and tested. Caddy obtains and renews TLS certificates after public DNS resolves.
 
 ## Production environment
@@ -48,10 +50,13 @@ After deployment and DNS propagation:
 - A transactional test email is delivered from the configured Migadu identity.
 - `cd /home/deploy/lawrelay && docker compose --env-file release.env -f compose.production.yml ps` shows `lawrelay-app` healthy.
 - The backup job and restore drill in [backup-restore.md](backup-restore.md) have passed before inviting real users.
+- The protected deletion ledger is present, and the restore procedure replays it before any recovered copy accepts writes.
 
 ## Rollback
 
 Application rollback does not automatically roll back database schema or data.
+
+Releases before `0.9.0` cannot run retention jobs or replay the deletion ledger. Use a compatible forward recovery build after retention is enabled; never expose an older restored database before replaying the latest reviewed erasures.
 
 Releases before `0.8.6` cannot run the new verification-email jobs. Use a forward fix or a compatible recovery image while those jobs are pending.
 

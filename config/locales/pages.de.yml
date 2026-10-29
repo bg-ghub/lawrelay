@@ -71,8 +71,9 @@ de:
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
-            - "Wir prüfen Löschanfragen manuell, einschließlich Daten für gesetzliche Pflichten, Sicherheit oder Streitfälle. Konto-, Auftrags-, Support- und Auditdaten werden nicht automatisch gelöscht."
-            - "Backups umfassen 7 tägliche, 4 wöchentliche und 12 monatliche Sicherungen. Gelöschte Daten können bis zum Ablauf der Backups und älterer Speicherversionen erhalten bleiben."
+            - "Unbestätigte Registrierungen: 30 Tage Inaktivität. Benachrichtigungen: 90 Tage ab Erstellung. Abgeschlossene Aufträge, Angebote, Datenschutzanfragen, Meldungen und Supportnachrichten: 2 Jahre ab Abschluss. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
+            - "Konten bleiben bis zur Schließung bestehen. Nach Prüfung eines bestätigten Löschantrags entfernen wir nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Laufende Aufträge, Anfragen, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
+            - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
           heading: "7. Ihre Rechte"
           paragraphs:
