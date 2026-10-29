@@ -38,7 +38,7 @@ en:
         kind_prompt: "Choose a request"
         details: "What should we know?"
         details_placeholder: "Briefly explain the data or account concerned."
-        retention_note: "Records required by law, including invoices and audit logs, are kept."
+        retention_note: "Some records may need to be kept for legal obligations or disputes."
         submit: "Submit request"
     reports:
       eyebrow: "Report a concern"

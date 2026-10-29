@@ -35,6 +35,7 @@ class NotificationEmailDeliveryJob < ApplicationJob
     return "inactive_recipient" unless recipient.active?
     return "administrator_recipient" if recipient.system_admin?
     return "unverified_recipient" unless recipient.email_verified?
+    return "unverified_marketplace_recipient" unless recipient.marketplace_verified?
     return "unsupported_event" unless notification.kind.in?(Notification::EMAIL_KINDS)
 
     subject = notification.subject

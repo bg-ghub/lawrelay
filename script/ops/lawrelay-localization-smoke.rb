@@ -71,7 +71,12 @@ billing_account = BillingAccount.create!(firm:, billing_email: member.email_addr
 invoice = Invoice.create!(billing_account:, status: "issued", subtotal_cents: 10_000, vat_rate_basis_points: 2100, issued_on: Date.current, due_on: 30.days.from_now)
 assignment = Assignment.create!(kind: "court_replacement", assignment_subtype: "hearing", title: "Localization hearing #{nonce}", description: "Synthetic localization rendering record.", practice_area: "Civil", starts_at: 2.days.from_now, city: "Gent", court: "Smoke court", duration_minutes: 60, fee_cents: 25_000, status: "open", content_rules_accepted_at: Time.current, firm:, creator_user: member)
 candidate = User.create!(first_name: "Candidate", last_name: "Locale", email_address: "candidate-#{nonce}@example.invalid", password:, email_verified_at: Time.current, locale: "nl")
-proposal = Proposal.create!(assignment:, user: candidate, firm:, rate_cents: 20_000, rate_kind: "fixed", message: "Synthetic proposal")
+candidate_firm = Firm.create!(name: "Localization candidate #{nonce}", verification_status: "verified", verified_at: Time.current)
+Membership.create!(user: candidate, firm: candidate_firm, role: "owner")
+LawyerProfile.create!(user: candidate, bar_association: "OVB", bar_number: "SMOKE-CANDIDATE-#{nonce}",
+  professional_email: candidate.email_address, verification_status: "verified", verified_at: Time.current)
+check(candidate.marketplace_verified?, "synthetic mail recipient has current professional verification")
+proposal = Proposal.create!(assignment:, user: candidate, firm: candidate_firm, rate_cents: 20_000, rate_kind: "fixed", message: "Synthetic proposal")
 privacy_request = PrivacyRequest.create!(user: member, kind: "access_export", details: "Synthetic privacy request")
 report = Report.create!(reporter_user: candidate, reportable: assignment, category: "other", details: "Synthetic report")
 admin = User.create!(first_name: "Locale", last_name: "Administrator", email_address: "admin-#{nonce}@example.invalid", password:, email_verified_at: Time.current, locale: "nl", system_role: "admin")

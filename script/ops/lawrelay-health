@@ -28,6 +28,8 @@ for command in awk curl docker df find grep sqlite3; do command -v "$command" >/
 curl --fail --silent --show-error --max-time 15 "$base_url/up" >/dev/null || fail "HTTPS endpoint unavailable: /up"
 response=$(curl --fail --silent --show-error --max-time 15 "$base_url/ready") || fail "HTTPS endpoint unavailable: /ready"
 printf '%s' "$response" | grep -q '"status":"ok"' || fail "endpoint unhealthy: /ready"
+response=$(curl --fail --silent --show-error --max-time 15 "$base_url/health/operations") || fail "notification or queue operations unavailable"
+printf '%s' "$response" | grep -q '"status":"ok"' || fail "notification or queue operations unhealthy"
 
 mountpoint=$(docker volume inspect --format '{{ .Mountpoint }}' "$volume" 2>/dev/null) || fail "Docker volume not found: $volume"
 [ -d "$mountpoint" ] || fail "volume mountpoint is unavailable"

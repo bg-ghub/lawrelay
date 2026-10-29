@@ -71,8 +71,8 @@ de:
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
-            - "Konto- und Marktplatzdaten werden aufbewahrt, solange Ihr Konto aktiv ist, und danach auf Anfrage gelöscht, sofern keine berufsrechtlichen, vertraglichen, Sicherheits- oder gesetzlichen Pflichten eine Aufbewahrung erfordern."
-            - "Backups folgen einem Schema von 7 täglichen, 4 wöchentlichen und 12 monatlichen Sicherungen. Betroffenenanträge werden manuell bearbeitet."
+            - "Wir prüfen Löschanfragen manuell, einschließlich Daten für gesetzliche Pflichten, Sicherheit oder Streitfälle. Konto-, Auftrags-, Support- und Auditdaten werden nicht automatisch gelöscht."
+            - "Backups umfassen 7 tägliche, 4 wöchentliche und 12 monatliche Sicherungen. Gelöschte Daten können bis zum Ablauf der Backups und älterer Speicherversionen erhalten bleiben."
         rights:
           heading: "7. Ihre Rechte"
           paragraphs:

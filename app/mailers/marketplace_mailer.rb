@@ -83,7 +83,7 @@ class MarketplaceMailer < ApplicationMailer
   end
 
   def deliverable_recipient?(recipient)
-    recipient&.reload&.then { |user| user.active? && user.email_verified? && !user.system_admin? }
+    recipient&.reload&.marketplace_verified?
   rescue ActiveRecord::RecordNotFound
     false
   end

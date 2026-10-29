@@ -26,12 +26,9 @@ de:
       platform: Plattform
       learn_more: Mehr erfahren
       contact: Kontakt
-      made_for_belgium: Für Belgien gemacht
       source_code: Quellcode auf GitHub
       open_source: Open Source
       app_version: Version %{version}
-      demo_notice: Beta für auf advocaat.be gelistete Anwälte. Keine Mandanten- oder Falldaten einstellen.
-      demo_disclaimer: "LawRelay erteilt keine Rechtsberatung."
     home:
       title: "LawRelay — Vertretungen und juristische Aufträge"
       og_description: "Finden Sie eine Vertretung oder Unterstützung bei juristischer Arbeit."

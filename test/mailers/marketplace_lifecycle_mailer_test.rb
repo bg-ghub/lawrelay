@@ -69,6 +69,24 @@ class MarketplaceLifecycleMailerTest < ActionMailer::TestCase
     assert_no_emails { MarketplaceMailer.assignment_cancelled(@assignment, recipient: nil).deliver_now }
   end
 
+  test "current professional verification gates all individual and legacy event mail" do
+    [ @candidate.profile, @candidate.firm ].each do |record|
+      %w[pending rejected suspended].each do |status|
+        stale_recipient = User.includes(:lawyer_profile, memberships: :firm).find(@candidate.user.id)
+        assert_predicate stale_recipient, :marketplace_verified?
+        record.update!(verification_status: status)
+
+        events.each do |event, subject, _recipient|
+          assert_no_emails do
+            MarketplaceMailer.public_send(event, subject, recipient: stale_recipient).deliver_now
+          end
+        end
+        assert_no_emails { MarketplaceMailer.assignment_cancelled(@assignment, locale: :en).deliver_now }
+        record.update!(verification_status: "verified")
+      end
+    end
+  end
+
   private
 
   def events

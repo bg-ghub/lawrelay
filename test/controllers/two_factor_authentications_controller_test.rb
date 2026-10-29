@@ -162,7 +162,102 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert_nil @user.reload.two_factor_pending_secret_ciphertext
   end
 
+  test "a session revoked after authentication cannot start enrollment or read its setup key" do
+    with_authenticated_session_change(-> { Current.session.delete }) do
+      post begin_setup_two_factor_authentication_path(locale: :en), params: { current_password: "password1234" }
+    end
+    assert_revoked_session_rejected
+    assert_nil @user.reload.two_factor_pending_secret_ciphertext
+
+    sign_in_as(@user)
+    begin_setup
+    with_authenticated_session_change(-> { Current.session.delete }) do
+      get setup_two_factor_authentication_path(locale: :en)
+    end
+    assert_revoked_session_rejected
+    assert_select "img.mfa-qr", count: 0
+  end
+
+  test "a revoked session cannot enable a previously authorized factor" do
+    begin_setup
+    pending_secret = @user.two_factor_pending_secret_ciphertext
+    code = ROTP::TOTP.new(@user.two_factor_pending_secret, issuer: "LawRelay").now
+
+    assert_no_difference("AuditEvent.where(action: 'account.two_factor_enabled').count") do
+      with_authenticated_session_change(-> { Current.session.delete }) do
+        post enable_two_factor_authentication_path(locale: :en), params: { mfa_code: code }
+      end
+    end
+    assert_revoked_session_rejected
+    assert_not_predicate @user.reload, :two_factor_enabled?
+    assert_equal pending_secret, @user.two_factor_pending_secret_ciphertext
+  end
+
+  test "a revoked pending session cannot consume a recovery code or recreate an approved session" do
+    _, codes = enable_directly
+
+    assert_no_difference("AuditEvent.where(action: 'account.two_factor_verified').count") do
+      with_authenticated_session_change(-> { Current.session.delete }) do
+        post verify_two_factor_authentication_path(locale: :en), params: { recovery_code: codes.first }
+      end
+    end
+    assert_revoked_session_rejected
+    assert_equal 10, @user.reload.two_factor_recovery_codes_remaining
+  end
+
+  test "a revoked approved session cannot disable two factor authentication" do
+    _, codes = enable_directly
+    Current.session.mark_two_factor_verified!
+
+    with_authenticated_session_change(-> { Current.session.delete }) do
+      delete two_factor_authentication_path(locale: :en), params: { current_password: "password1234", recovery_code: codes.first }
+    end
+    assert_revoked_session_rejected
+    assert_predicate @user.reload, :two_factor_enabled?
+    assert_equal 10, @user.two_factor_recovery_codes_remaining
+  end
+
+  test "sessions expiring or members suspended during a challenge cannot gain factor approval" do
+    _, codes = enable_directly
+    changes = [
+      -> { Current.session.update_columns(expires_at: 1.second.ago) },
+      -> { User.where(id: @user.id).update_all(suspended_at: Time.current) },
+      -> { User.where(id: @user.id).update_all(system_role: "admin") }
+    ]
+
+    changes.each do |change|
+      @user.update!(suspended_at: nil, system_role: "member")
+      sign_in_as(@user)
+      with_authenticated_session_change(change) do
+        post verify_two_factor_authentication_path(locale: :en), params: { recovery_code: codes.first }
+      end
+      assert_redirected_to new_session_path(locale: :en)
+      assert_predicate cookies[:session_id], :blank?
+      assert_equal 10, @user.reload.two_factor_recovery_codes_remaining
+      assert_not @user.sessions.any?(&:two_factor_verified?)
+    end
+  end
+
   private
+
+  def with_authenticated_session_change(change, &request)
+    original = TwoFactorAuthenticationsController.instance_method(:require_member)
+    TwoFactorAuthenticationsController.define_method(:require_member) do
+      original.bind_call(self)
+      change.call unless performed?
+    end
+    TwoFactorAuthenticationsController.send(:private, :require_member)
+    request.call
+  ensure
+    TwoFactorAuthenticationsController.define_method(:require_member, original)
+    TwoFactorAuthenticationsController.send(:private, :require_member)
+  end
+
+  def assert_revoked_session_rejected
+    assert_redirected_to new_session_path(locale: :en)
+    assert_predicate cookies[:session_id], :blank?
+    assert_empty @user.sessions.reload
+  end
 
   def assert_old_cookie_rejected(cookie)
     open_session do |copied_session|
