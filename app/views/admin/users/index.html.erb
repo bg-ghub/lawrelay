@@ -21,10 +21,6 @@
         <%= form.label :verification, t("admin.users.filters.verification") %>
         <%= form.select :verification, [[t("admin.users.filters.all"), ""], *%w[pending verified rejected suspended].map { |status| [t("admin.users.verification.#{status}"), status] }], selected: @verification_filter %>
       </div>
-      <div class="field-group">
-        <%= form.label :role, t("admin.users.fields.role") %>
-        <%= form.select :role, [[t("admin.users.filters.all"), ""], [t("admin.users.roles.member"), "member"], [t("admin.users.roles.admin"), "admin"]], selected: @role_filter %>
-      </div>
       <div class="admin-users-filter-actions">
         <%= form.submit t("admin.users.filters.apply"), class: "button button--dark" %>
         <%= link_to t("admin.users.filters.clear"), admin_users_path, class: "text-link" %>
@@ -41,7 +37,6 @@
           <div class="admin-user-identity">
             <h2><%= link_to user.full_name, admin_user_path(user), class: "text-link" %></h2>
             <p><%= user.email_address %></p>
-            <small><%= t("admin.users.roles.#{user.system_role}") %><% if user.id == current_user.id %> · <%= t("admin.users.you") %><% end %></small>
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.fields.firm") %></span>
@@ -53,7 +48,7 @@
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.filters.verification") %></span>
-            <strong><%= user.system_admin? ? t("admin.users.verification.not_required") : t("admin.users.verification.#{profile&.verification_status || 'pending'}") %></strong>
+            <strong><%= t("admin.users.verification.#{profile&.verification_status || 'pending'}") %></strong>
           </div>
           <%= link_to admin_user_path(user), class: "button button--ghost admin-user-manage" do %>
             <%= t("admin.users.actions.manage") %><span class="admin-users-sr-only"> <%= user.full_name %></span>
@@ -63,7 +58,7 @@
     </ul>
 
     <% if @total_pages > 1 %>
-      <% page_filters = { q: @query, status: @status_filter, verification: @verification_filter, role: @role_filter, per_page: @per_page } %>
+      <% page_filters = { q: @query, status: @status_filter, verification: @verification_filter, per_page: @per_page } %>
       <nav class="admin-users-pagination" aria-label="<%= t("admin.users.pagination.label") %>">
         <% if @page > 1 %><%= link_to t("admin.users.pagination.previous"), admin_users_path(**page_filters, page: @page - 1), class: "button button--ghost" %><% end %>
         <span aria-current="page"><%= t("admin.users.pagination.page", current: @page, total: @total_pages) %></span>

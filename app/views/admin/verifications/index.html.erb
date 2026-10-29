@@ -1,3 +1,4 @@
+<% content_for :title, t("admin.verifications.title") %>
 <div class="dashboard-page shell">
   <div class="dashboard-heading">
     <div>
@@ -5,8 +6,8 @@
       <p><%= t("admin.verifications.intro") %></p>
     </div>
     <div class="form-actions">
-      <%= link_to t("admin.founding_accesses.link"), admin_founding_accesses_path, class: "button button--ghost" %>
-      <%= link_to t("admin.verifications.back"), dashboard_path, class: "button button--ghost" %>
+      <% if platform_billing_enabled? %><%= link_to t("admin.founding_accesses.link"), admin_founding_accesses_path, class: "button button--ghost" %><% end %>
+      <%= link_to t("admin.users.actions.back"), admin_users_path, class: "button button--ghost" %>
     </div>
   </div>
 

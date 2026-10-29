@@ -2,6 +2,8 @@ require "test_helper"
 
 class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @previous_release_mode = ENV["LAWRELAY_RELEASE_MODE"]
+    ENV["LAWRELAY_RELEASE_MODE"] = "paid"
     @admin = create_user(email: "admin-founding-access@example.test", system_role: "admin")
     configure_admin_mfa(@admin)
     @owner = create_user(email: "owner-founding-access@example.test")
@@ -12,6 +14,38 @@ class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
       verified_at: Time.current
     )
     @owner.memberships.create!(firm: @firm, role: "owner")
+  end
+
+  teardown do
+    @previous_release_mode ? ENV["LAWRELAY_RELEASE_MODE"] = @previous_release_mode : ENV.delete("LAWRELAY_RELEASE_MODE")
+  end
+
+  test "beta redirects archived access controls without changing billing or audit records" do
+    ENV["LAWRELAY_RELEASE_MODE"] = "beta"
+    account = BillingAccount.create!(firm: @firm, status: "active", complimentary_access_until: 20.days.from_now)
+    original_account = account.attributes
+    sign_in_as(@admin, admin_mfa: true)
+
+    assert_no_difference([ "BillingAccount.count", "Subscription.count", "Invoice.count", "BillingPayment.count", "AuditEvent.count" ]) do
+      request_access_controls { assert_redirected_to "/en/admin/users" }
+      post "/en/admin/founding_accesses", params: { firm_id: "missing" }
+      assert_redirected_to "/en/admin/users"
+      delete "/en/admin/founding_accesses/missing"
+      assert_redirected_to "/en/admin/users"
+    end
+    assert_equal original_account, account.reload.attributes
+  end
+
+  test "archived beta controls still require an administrator and fresh MFA" do
+    ENV["LAWRELAY_RELEASE_MODE"] = "beta"
+
+    assert_no_difference([ "BillingAccount.count", "Subscription.count", "Invoice.count", "BillingPayment.count", "AuditEvent.count" ]) do
+      request_access_controls { assert_redirected_to "/en/admin/login" }
+      sign_in_as(@owner)
+      request_access_controls { assert_redirected_to "/en" }
+      sign_in_as(@admin)
+      request_access_controls { assert_redirected_to "/en/admin/mfa/challenge" }
+    end
   end
 
   test "MFA-verified system admin can view verified firms" do
@@ -121,6 +155,17 @@ class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
   end
 
   private
+
+  def request_access_controls
+    get "/en/admin/founding_accesses"
+    yield
+    post "/en/admin/founding_accesses", params: {
+      firm_id: @firm.id, founding_access: { expires_on: 30.days.from_now.to_date.iso8601 }
+    }
+    yield
+    delete "/en/admin/founding_accesses/#{@firm.id}"
+    yield
+  end
 
   def create_user(email:, system_role: "member")
     User.create!(

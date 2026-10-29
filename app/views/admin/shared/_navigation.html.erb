@@ -6,5 +6,5 @@
     <%= link_to label, path, aria: { current: ("page" if controller_path == section) } %>
   <% end %>
   <%= link_to t("email_change.link"), email_change_path %>
-  <%= link_to t("admin.navigation.site"), (admin_host? ? main_site_url : root_path) %>
+  <% unless admin_host? %><%= link_to t("admin.navigation.site"), root_path %><% end %>
 </nav>

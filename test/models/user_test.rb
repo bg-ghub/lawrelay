@@ -1,6 +1,19 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  test "an administrator is not a marketplace participant even with a professional profile" do
+    user = users(:one)
+    firm = Firm.create!(name: "Synthetic office", verification_status: "verified", verified_at: Time.current)
+    user.memberships.create!(firm: firm, role: "owner")
+    user.create_lawyer_profile!(verification_status: "verified", verified_at: Time.current,
+      professional_email: user.email_address, bar_association: "OVB", bar_number: "ADMIN-SEPARATION")
+    user.update!(email_verified_at: Time.current)
+    assert_predicate user, :marketplace_verified?
+
+    user.update!(system_role: "admin")
+    assert_not_predicate user, :marketplace_verified?
+  end
+
   test "downcases and strips email_address" do
     user = User.new(email_address: " DOWNCASED@EXAMPLE.COM ")
     assert_equal("downcased@example.com", user.email_address)
