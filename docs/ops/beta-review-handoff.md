@@ -17,3 +17,16 @@ Owner: Gauthier Berth. Reviewed 29 October 2026. Paid access stays disabled.
 Existing evidence: [operations and recovery](beta-ops-checks.md), CI, the synthetic two-account browser journey and the internal accessibility/security checks. These support the reviews above; they do not substitute for them.
 
 Provider references: [Hetzner DPA process](https://docs.hetzner.com/general/company-and-policy/data-protection-at-hetzner/), [Migadu privacy/DPA](https://www.migadu.com/privacy/), [GitHub customer terms](https://github.com/customer-terms). Availability of a public document does not prove account acceptance.
+
+## Reviewer shortlist
+
+Checked 29 October 2026. Request a small fixed-scope review and one retest where relevant.
+
+| Area | Option | Scope and price |
+| --- | --- | --- |
+| Legal/privacy | [Timelex](https://www.timelex.eu/en/about-us) | Belgian IT/privacy specialists working with start-ups. Terms, directory eligibility, processor agreements and retention. Confirm coverage of lawyers’ professional rules and all four languages. Quote required. |
+| Security | [NVISO](https://www.nviso.eu/en/service/penetration-testing) | Web-app assessment: signup, password recovery, MFA, firm boundaries and assignment/contact privacy. Quote required. |
+| Accessibility | [AnySurfer](https://www.anysurfer.be/en/services/audits) | WCAG 2.2 A/AA sample audit and remediation review. Published initial audits: €1,250 / €2,500 / €4,000 excluding VAT by complexity; obtain the applicable quote. Ask for screen-reader and Safari/iOS/Android coverage. |
+| Accessibility alternative | [Eleven Ways](https://elevenways.be/en/) | Accessibility audits and user tests with people with disabilities. Quote required. |
+
+These are research options, not bookings. Keep real accounts and production data out of any initial quote request.

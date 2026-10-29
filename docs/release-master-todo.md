@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.4.5.
+Last audited: 29 October 2026. Current release: 0.4.6.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -51,7 +51,8 @@ This is an engineering and product checklist, not legal advice. A checked item i
 ## Remaining human or live evidence
 
 - [x] Password-email inbox arrival confirmed by the operator's screenshot; the expiry-text translation issue is fixed and covered by regression tests.
-- [ ] Confirm verification-email arrival and recipient-side SPF/DKIM/DMARC results for application mail.
+- [x] Professional-account verification email arrival and confirmation checked with the operator; sign-in and verified marketplace access confirmed.
+- [ ] Confirm recipient-side SPF/DKIM/DMARC results for application mail.
 - [ ] Operator completes administrator password setup and authenticator MFA; recovery material stays private.
 - [ ] Complete a human end-to-end beta trial with verified lawyer accounts, including registration, email confirmation, posting, responding and selecting a colleague.
 - [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.
