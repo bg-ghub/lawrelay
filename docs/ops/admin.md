@@ -1,6 +1,6 @@
 # Administration
 
-Sign in at [admin.lawrelay.be](https://admin.lawrelay.be) with the administrator password and authenticator. The first sign-in asks you to set up the authenticator.
+Sign in at [admin.lawrelay.be](https://admin.lawrelay.be) with the administrator password and authenticator. On first sign-in, scan the QR code with your authenticator app and enter its code.
 
 Forgotten passwords can be reset from that sign-in page. The email goes to the existing administrator account. Resetting a password does not remove MFA.
 
