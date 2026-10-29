@@ -1,0 +1,23 @@
+.mfa-page h1 {
+  overflow-wrap: anywhere;
+}
+
+.mfa-qr {
+  display: block;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  background: white;
+  image-rendering: pixelated;
+}
+
+.mfa-manual summary {
+  cursor: pointer;
+  padding: .5rem 0;
+}
+
+.mfa-secret,
+.mfa-uri {
+  overflow-wrap: anywhere;
+}
