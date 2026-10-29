@@ -24,20 +24,19 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_equal "manual_required", Invoice.last.peppol_status
   end
 
-  test "beta release mode does not create manual billing records" do
-    get billing_url(locale: "en")
-
-    assert_response :success
-    assert_select "h2", "LawRelay beta"
-    assert_select "body", text: /€49/, count: 0
-    assert_select "input[value='Request manual invoice']", count: 0
-
-    assert_no_difference([ "Invoice.count", "Subscription.count", "BillingPayment.count" ]) do
-      post billing_checkout_url(locale: "en")
+  test "beta billing URLs return to the product without creating billing records" do
+    with_release_mode("beta") do
+      assert_no_difference([ "BillingAccount.count", "Invoice.count", "Subscription.count", "BillingPayment.count" ]) do
+        get billing_url(locale: "en")
+        assert_redirected_to dashboard_url(locale: "en")
+        post billing_checkout_url(locale: "en")
+        assert_redirected_to dashboard_url(locale: "en")
+        post billing_cancel_url(locale: "en")
+        assert_redirected_to dashboard_url(locale: "en")
+        get billing_return_url(locale: "en")
+        assert_redirected_to dashboard_url(locale: "en")
+      end
     end
-
-    assert_redirected_to billing_url(locale: "en")
-    assert_equal "Billing is not available during the beta.", flash[:alert]
   end
 
   test "firm member cannot request an invoice" do
@@ -47,7 +46,7 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     sign_out
     sign_in_as member
 
-    post billing_checkout_url(locale: "en")
+    with_release_mode("paid") { post billing_checkout_url(locale: "en") }
 
     assert_redirected_to billing_url(locale: "en")
     assert_empty Invoice.all

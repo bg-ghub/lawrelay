@@ -7,7 +7,9 @@ class PagesController < ApplicationController
 
   before_action :set_page_context
 
-  def pricing; end
+  def pricing
+    redirect_to root_path unless ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
+  end
 
   def privacy; end
 

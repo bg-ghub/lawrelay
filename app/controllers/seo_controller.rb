@@ -1,7 +1,6 @@
 class SeoController < ActionController::Base
   PUBLIC_PATHS = [
     :root,
-    :pricing,
     :privacy,
     :terms,
     :cookies,
@@ -22,8 +21,10 @@ class SeoController < ActionController::Base
   end
 
   def sitemap
+    paths = PUBLIC_PATHS
+    paths += [ :pricing ] if ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
     @urls = I18n.available_locales.flat_map do |locale|
-      PUBLIC_PATHS.map { |path| public_url(path, locale) }
+      paths.map { |path| public_url(path, locale) }
     end
 
     render formats: :xml

@@ -18,20 +18,20 @@ class SeoControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_equal "application/xml; charset=utf-8", response.content_type
-    assert_includes response.body, "http://lawrelay.example/nl/pricing"
+    assert_not_includes response.body, "/pricing"
     assert_includes response.body, "http://lawrelay.example/fr/legal-notice"
     assert_includes response.body, "http://lawrelay.example/en/terms"
     assert_not_includes response.body, "/assignments"
   end
 
   test "public pages have canonical and alternate language links" do
-    get "/fr/pricing"
+    get "/fr/privacy"
 
     assert_response :success
     assert_select "meta[name='robots'][content='index,follow']"
-    assert_select "link[rel='canonical'][href$='/fr/pricing']"
-    assert_select "link[rel='alternate'][hreflang='nl'][href$='/nl/pricing']"
-    assert_select "link[rel='alternate'][hreflang='x-default'][href$='/en/pricing']"
+    assert_select "link[rel='canonical'][href$='/fr/privacy']"
+    assert_select "link[rel='alternate'][hreflang='nl'][href$='/nl/privacy']"
+    assert_select "link[rel='alternate'][hreflang='x-default'][href$='/en/privacy']"
   end
 
   test "application pages remain noindex" do

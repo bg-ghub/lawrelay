@@ -9,13 +9,13 @@ class AssignmentsController < ApplicationController
   before_action :require_assignment_manager, only: %i[cancel complete]
 
   def index
-    @assignments = Assignment.open.upcoming.includes(:firm, :proposals).ordered
+    @assignments = Assignment.accepting_proposals.includes(:firm, :proposals).ordered
     @assignments = @assignments.search(params[:q])
     @assignments = @assignments.where(kind: params[:kind]) if Assignment::KINDS.value?(params[:kind])
     @assignments = @assignments.where(city: params[:city]) if params[:city].present?
     @assignments = @assignments.where(practice_area: params[:practice_area]) if params[:practice_area].present?
-    @cities = Assignment.open.upcoming.distinct.order(:city).pluck(:city)
-    @practice_areas = Assignment.open.upcoming.distinct.order(:practice_area).pluck(:practice_area)
+    @cities = Assignment.accepting_proposals.distinct.order(:city).pluck(:city)
+    @practice_areas = Assignment.accepting_proposals.distinct.order(:practice_area).pluck(:practice_area)
   end
 
   def show
@@ -119,8 +119,14 @@ class AssignmentsController < ApplicationController
   def euros_to_cents(value)
     return nil if value.blank?
 
-    (BigDecimal(value.to_s.tr(",", ".")) * 100).round.to_i
-  rescue ArgumentError
+    amount = BigDecimal(value.to_s.tr(",", "."))
+    return value unless amount.finite?
+
+    cents = amount * 100
+    return cents.to_s if !cents.finite? || cents.abs > (2**63) - 1
+
+    cents.round.to_i
+  rescue ArgumentError, FloatDomainError, RangeError
     value
   end
 end

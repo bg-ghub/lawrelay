@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.4.6.
+Last audited: 29 October 2026. Current release: 0.4.7.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -36,6 +36,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 ## Beta follow-through completed
 
+- [x] [Thorough beta checks](ops/beta-thorough-qa.md): verification/MFA, deadlines, failed forms, amount precision, assignment history and browser fixes; pricing archived.
 - [x] Two-account browser journey covers registration, both mailbox confirmations, password sign-in, posting, responding, selection and contact privacy. Directory responses and mail are synthetic; the real-lawyer trial remains below.
 - [x] Automated accessibility review of 80 public/auth page, locale and viewport combinations; pointer-target and named-group fixes, plus four-language keyboard checks. Physical devices, screen readers and independent review remain below.
 - [x] Fresh backup/health/monitor checks and isolated 0.4.4/0.4.3 restore/rollback pass. See [dated evidence](ops/beta-ops-checks.md). No production traffic or data was switched.
@@ -63,14 +64,9 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 The [review handoff](ops/beta-review-handoff.md) lists the remaining owner and external-review evidence. Public contracts and automated tests do not close those items.
 
-## Paid launch — later, not enabled
+## Archived pricing idea
 
-- [ ] Belgian counsel approves the subscription/listing-fee model and professional-conduct position.
-- [ ] Accountant confirms VAT treatment, invoice content, and accounting ownership.
-- [ ] Peppol-capable invoicing and payment reconciliation are live and tested.
-- [ ] Paid checkout, signed/idempotent webhooks, failed-payment handling, cancellation, refunds/credits, retention, and support workflows are tested.
-- [ ] Pricing, billing terms, cancellation/refund policy, and product behavior match exactly before enabling paid mode.
-- [ ] Confirm no lawyer-to-lawyer assignment funds pass through LawRelay.
+The [former subscription proposal](archive/pricing.md) is reference material, not a beta requirement or a planned paid launch. LawRelay stays free; links to the operator's other products may help support hosting. Professional fees stay between lawyers.
 
 ## Public/mature launch — later
 
@@ -82,5 +78,5 @@ The [review handoff](ops/beta-review-handoff.md) lists the remaining owner and e
 - [Deployment](ops/deployment.md)
 - [Backup and restore](ops/backup-restore.md)
 - [Incident response](ops/incident-response.md)
-- [Billing](ops/billing.md)
+- [Archived pricing](archive/pricing.md)
 - [Security and access](ops/secrets-and-access.md)

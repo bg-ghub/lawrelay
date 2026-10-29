@@ -1,14 +1,12 @@
-Draft for OVB. Product-announcement eligibility is unconfirmed; no messages sent or recipient list collected.
+Template for the bar to circulate; no messages sent.
 
 ## Cover email (NL)
-
-To: info@ordevanvlaamsebalies.be
 
 Subject: LawRelay delen via jullie nieuwsbrief?
 
 Beste,
 
-Ik heb LawRelay gebouwd, een open-sourceplatform voor zittingsvervangingen en juridische opdrachten. Zouden jullie de gratis bèta onder de aandacht van advocaten willen brengen, bijvoorbeeld via jullie nieuwsbrief? Hieronder staat een korte aankondiging; feedback is welkom.
+Ik heb LawRelay gebouwd, een open-sourceplatform voor zittingsvervangingen en juridische opdrachten. Zouden jullie de bèta willen delen via jullie nieuwsbrief? Hieronder staat een korte aankondiging; feedback is welkom.
 
 Gauthier Berth — info@lawrelay.be
 
@@ -16,56 +14,52 @@ Editor note: choose the relevant language below. The bar controls distribution a
 
 ## NL
 
-Subject: LawRelay: probeer de gratis bèta
+Subject: LawRelay: probeer de bèta
 
-Beste collega,
+Waarde confrater,
 
-Ik bouw LawRelay, een open-source alternatief voor LegalTribe voor zittingsvervangingen en juridische opdrachten. De bèta is gratis en nog in ontwikkeling. Zin om het eens te proberen? Feedback is heel welkom.
-
-Eventuele toekomstige inkomsten gaan in de eerste plaats naar hosting.
+Ik bouw LawRelay, een open-source alternatief voor LegalTribe voor zittingsvervangingen en juridische opdrachten. De bèta is nog in ontwikkeling. Zin om het eens te proberen? Feedback is heel welkom.
 
 https://lawrelay.be/nl
 
+Met confraternele groeten,
 Gauthier Berth — info@lawrelay.be
 
 ## FR
 
-Subject: LawRelay : essayez la bêta gratuite
+Subject: LawRelay : essayez la bêta
 
-Bonjour,
+Cher Confrère, chère Consœur,
 
-Je développe LawRelay, une alternative open source à LegalTribe pour les remplacements à l’audience et les missions juridiques. La bêta est gratuite et encore en développement. Envie de l’essayer ? Vos retours sont les bienvenus.
-
-Les éventuels revenus futurs serviront avant tout à financer l’hébergement.
+Je développe LawRelay, une alternative open source à LegalTribe pour les remplacements à l’audience et les missions juridiques. La bêta est encore en développement. Envie de l’essayer ? Vos retours sont les bienvenus.
 
 https://lawrelay.be/fr
 
+Bien confraternellement,
 Gauthier Berth — info@lawrelay.be
 
 ## DE
 
-Subject: LawRelay: kostenlose Beta testen
+Subject: LawRelay: Beta testen
 
-Guten Tag,
+Werte Kollegin, werter Kollege,
 
-ich entwickle LawRelay, eine Open-Source-Alternative zu LegalTribe für Terminsvertretungen und juristische Aufträge. Die Beta ist kostenlos und noch in Entwicklung. Möchten Sie es ausprobieren? Ich freue mich über Ihre Rückmeldungen.
-
-Mögliche künftige Einnahmen sollen vor allem die Hostingkosten decken.
+ich entwickle LawRelay, eine Open-Source-Alternative zu LegalTribe für Terminsvertretungen und juristische Aufträge. Die Beta ist noch in Entwicklung. Möchten Sie es ausprobieren? Ich freue mich über Ihre Rückmeldungen.
 
 https://lawrelay.be/de
 
+Mit kollegialen Grüßen,
 Gauthier Berth — info@lawrelay.be
 
 ## EN
 
-Subject: LawRelay: try the free beta
+Subject: LawRelay: try the beta
 
-Hello,
+Dear colleague,
 
-I'm building LawRelay, an open-source alternative to LegalTribe for court cover and legal assignments. The beta is free and still a work in progress. Give it a try. I'd love to hear what you think.
-
-Any future income will go primarily towards hosting costs.
+I'm building LawRelay, an open-source alternative to LegalTribe for court cover and legal assignments. The beta is still a work in progress. Give it a try. I'd love to hear what you think.
 
 https://lawrelay.be/en
 
+With collegial regards,
 Gauthier Berth — info@lawrelay.be

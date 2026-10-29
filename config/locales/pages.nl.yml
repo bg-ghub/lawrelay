@@ -3,7 +3,7 @@ nl:
     shared:
       version: "Laatst bijgewerkt: %{date}"
       not_configured: "Niet beschikbaar"
-      navigation_label: "Commerciële en juridische informatie"
+      navigation_label: "Juridische informatie"
       draft_warning_title: "Gegevens van de uitbater zijn niet beschikbaar"
       draft_warning_body: "De gegevens van de uitbater konden niet worden geladen. Neem contact op met LawRelay voordat u de dienst gebruikt."
     navigation:
@@ -27,16 +27,6 @@ nl:
           - "Lijstcontrole vóór toegang tot de marktplaats"
           - "Professionele opdrachten plaatsen en beantwoorden"
           - "Rechtstreekse feedback aan het LawRelay-team"
-      launch:
-        kicker: "na de bèta"
-        price: "Nog niet beschikbaar"
-        title: "Geen betalend plan tijdens de bèta"
-        body: "Eventuele inkomsten gaan vooral naar hosting. Prijzen en voorwaarden van betaalde plannen publiceren we vooraf."
-        features:
-          - "Geen betaalgegevens gevraagd"
-          - "Geen automatische verlenging"
-          - "Duidelijke kennisgeving vóór een betalend aanbod"
-          - "Erelonen blijven rechtstreeks"
       direct_fees:
         title: "Erelonen"
         body: "Spreek het ereloon af en factureer elkaar rechtstreeks. LawRelay verwerkt geen betalingen en houdt geen commissie in."
@@ -96,7 +86,7 @@ nl:
       meta_title: "Gebruiksvoorwaarden — LawRelay"
       eyebrow: "gebruiksvoorwaarden"
       title: "Voorwaarden"
-      introduction: "Voor de gratis bèta van LawRelay."
+      introduction: "Voor de LawRelay-bèta."
       operator_contact_heading: "Uitbater"
       sections:
         agreement:
@@ -126,11 +116,10 @@ nl:
           heading: "6. Reacties en matches"
           paragraphs:
             - "De opdrachtgever beslist wie hij contacteert of kiest. LawRelay garandeert geen reactie, match, beschikbaarheid, uitkomst, kwaliteit of betaling door een andere gebruiker. Gebruikers bevestigen elke samenwerking en termijn buiten het platform."
-        platform_fees:
-          heading: "7. LawRelay-kosten en facturatie"
+        beta_access:
+          heading: "7. Bèta"
           paragraphs:
-            - "Toegang tot de bèta is gratis. LawRelay biedt tijdens deze bèta geen betalende abonnementen aan, int geen platformkosten en vraagt geen betaalgegevens."
-            - "Als LawRelay later betalende toegang aanbiedt, worden de toepasselijke prijs en voorwaarden gepubliceerd voordat een betaling wordt gevraagd."
+            - "LawRelay is in bèta. Functies kunnen veranderen."
         professional_fees:
           heading: "8. Erelonen"
           paragraphs:

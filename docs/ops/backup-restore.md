@@ -132,7 +132,7 @@ Do not restore into the sole production volume. For corruption or loss:
 2. Select a known-good restic snapshot and calculate the expected data-loss window.
 3. Restore into a new, isolated directory/volume and run SQLite integrity checks.
 4. Extract the storage archive and point a compatible application release at the new volume.
-5. Smoke-test login, permissions, assignments, attachments, mail, queues, and billing before switching traffic.
+5. Smoke-test login, permissions, assignments, attachments, mail and queues; confirm payments remain disabled before switching traffic.
 6. Have the incident commander approve the cutover; retain the prior volume until recovery is accepted.
 
 For a bad application release with intact data, use the deployment rollback procedure first. For failed backup configuration, disable only the affected timer with `sudo systemctl disable --now lawrelay-backup.timer`, preserve logs, fix the root-only environment file, then run a manual backup and restore drill before re-enabling it.

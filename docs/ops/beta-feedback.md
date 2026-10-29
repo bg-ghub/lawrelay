@@ -36,4 +36,4 @@ Review the records weekly while the beta is active. Prioritise failures to regis
 
 Track actual counts for registration, verified access, first assignment, first response, accepted proposal, and completed assignment. Record the observation period and denominator. Report user feedback and product events separately; do not treat an accepted proposal as a completed professional engagement or infer satisfaction from silence.
 
-After a fix, test the affected flow, ask the reporting user whether it helped when contact is appropriate, and record the result. Real usage and repeat use remain unproven until actual users supply evidence. Paid conversion and willingness-to-pay work are deferred.
+After a fix, test the affected flow, ask the reporting user whether it helped when contact is appropriate, and record the result. Real usage and repeat use remain unproven until actual users supply evidence. Platform pricing is [archived](../archive/pricing.md); focus on whether the service is useful.

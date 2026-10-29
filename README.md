@@ -1,12 +1,12 @@
 # LawRelay
 
 [![CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-0.4.6-orange.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.7-orange.svg)](CHANGELOG.md)
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 
 LawRelay is a multilingual, lawyer-only marketplace for court cover and bounded legal assignments in Belgium.
 
-Live beta: [lawrelay.be](https://lawrelay.be)
+Free beta: [lawrelay.be](https://lawrelay.be)
 
 The source is public under AGPL-3.0-or-later. Marketplace access is limited to verified Belgian lawyers. Keep client names, case facts, documents, and privileged material outside LawRelay.
 
@@ -16,7 +16,7 @@ The source is public under AGPL-3.0-or-later. Marketplace access is limited to v
 - Verified lawyer and firm accounts
 - Proposals, matching, notifications, and audited workflows
 - NL/FR/DE/EN interface with English URL slugs
-- Privacy requests, content reporting, admin MFA, and billing foundations
+- Privacy requests, content reporting, and admin MFA
 
 ## Run locally
 
@@ -49,7 +49,7 @@ bin/rails zeitwerk:check
 - [Release checklist](docs/release-master-todo.md)
 - [LegalTribe product analysis](docs/legaltribe-product-brief.md)
 - [Deployment](docs/ops/deployment.md)
-- [Billing](docs/ops/billing.md)
+- [Archived pricing idea](docs/archive/pricing.md)
 - [Migadu email](docs/ops/migadu-email.md)
 - [Security and access](docs/ops/secrets-and-access.md)
 

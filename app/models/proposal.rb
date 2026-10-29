@@ -3,6 +3,7 @@ class Proposal < ApplicationRecord
 
   STATUSES = %w[pending accepted declined withdrawn].freeze
   RATE_KINDS = %w[fixed hourly].freeze
+  MAX_RATE_CENTS = (2**63) - 1 # SQLite stores integer amounts in a signed 64-bit column.
 
   belongs_to :assignment
   belongs_to :user, optional: true
@@ -12,7 +13,7 @@ class Proposal < ApplicationRecord
   validates :message, presence: true, length: { maximum: 2_000 }
   validates :name, :email, presence: true, unless: :user
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
-  validates :rate_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :rate_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: MAX_RATE_CENTS }
   validates :rate_kind, inclusion: { in: RATE_KINDS }
   validates :status, inclusion: { in: STATUSES }
   validates :user_id, uniqueness: { scope: :assignment_id }, allow_nil: true

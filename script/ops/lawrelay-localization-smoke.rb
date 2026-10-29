@@ -31,6 +31,14 @@ def visit(session, path)
   check(Nokogiri::HTML(session.response.body).at_css("html")&.[]("lang") == path.split("/")[1], "#{path} uses the requested language")
 end
 
+def redirected_visit(session, path, destination)
+  session.get(path)
+  check(session.response.redirect?, "#{path} redirects")
+  check(URI.parse(session.response.location).path == destination, "#{path} redirects to #{destination}")
+  session.follow_redirect!
+  check(session.response.status == 200, "#{destination} renders after redirect")
+end
+
 def csrf(session)
   token = Nokogiri::HTML(session.response.body).at_css('meta[name="csrf-token"]')&.[]("content")
   check(token.present?, "CSRF token is present")
@@ -70,17 +78,19 @@ admin = User.create!(first_name: "Locale", last_name: "Administrator", email_add
 
 anonymous = browser
 LOCALES.each do |locale|
-  [ "", "/pricing", "/privacy", "/terms", "/cookies", "/legal-notice", "/session/new", "/registration/new", "/passwords/new" ].each do |suffix|
+  [ "", "/privacy", "/terms", "/cookies", "/legal-notice", "/session/new", "/registration/new", "/passwords/new" ].each do |suffix|
     visit(anonymous, "/#{locale}#{suffix}")
   end
+  redirected_visit(anonymous, "/#{locale}/pricing", "/#{locale}")
 end
 
 LOCALES.each do |locale|
   session = browser
   sign_in(session, locale, member, password)
-  [ "", "/dashboard", "/assignments", "/assignments/#{assignment.id}", "/assignments/new", "/settings", "/settings/email", "/privacy_requests", "/privacy_requests/new", "/billing" ].each do |suffix|
+  [ "", "/dashboard", "/assignments", "/assignments/#{assignment.id}", "/assignments/new", "/settings", "/settings/email", "/privacy_requests", "/privacy_requests/new" ].each do |suffix|
     visit(session, "/#{locale}#{suffix}")
   end
+  redirected_visit(session, "/#{locale}/billing", "/#{locale}/dashboard")
 end
 
 # First MFA screen: it provisions a synthetic secret through the normal
