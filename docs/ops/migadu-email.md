@@ -6,8 +6,10 @@ Migadu is LawRelay's existing transactional mail provider. Route 53 remains auth
 
 - `admin@lawrelay.be` authenticates to SMTP.
 - `no-reply@lawrelay.be` is the application sending identity.
-- `info@lawrelay.be` is the confirmed general contact inbox.
-- `support@`, `privacy@` and `security@lawrelay.be` are intended contact identities; their current routing has not been independently rechecked.
+- `info@lawrelay.be` is the general contact address. It opens the existing `admin@lawrelay.be` mailbox.
+- `support@`, `privacy@` and `security@lawrelay.be` are active receive-only identities on that same mailbox. `info@` can also send and log in.
+
+Checked 29 October 2026: one test message to each of the three contact identities arrived in the shared INBOX. No routing changes were needed; the existing invitation draft was untouched.
 
 Production uses Migadu on port 587 with required STARTTLS. The protected deployment environment contains the credentials; never put them in Git, screenshots, tickets or messages.
 
@@ -32,12 +34,10 @@ Recipient-side SPF, DKIM and DMARC header inspection was skipped for this beta a
 
 ## Remaining operator checks
 
-The beta is live. When mailbox access is available:
+The beta is live:
 
-1. Confirm replies to `info@lawrelay.be` reach the monitored inbox.
-2. Check the intended support, privacy and security routing.
-3. Keep provider agreement/data-processing evidence private.
-4. For bounces or complaints, follow the handling note in [support.md](support.md).
+1. Keep provider agreement/data-processing evidence private.
+2. For bounces or complaints, follow the handling note in [support.md](support.md).
 
 Do not send a delivery campaign or add another provider for these checks.
 

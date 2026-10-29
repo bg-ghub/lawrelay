@@ -2,6 +2,8 @@
 
 ## 29 October 2026 — 0.10.0
 
+Migadu admin checks confirmed that support/privacy/security are active receive-only identities of the existing shared mailbox used by info@lawrelay.be. Three individual delivery tests arrived in INBOX. The one invitation draft was untouched. No mail configuration or provider changes were needed.
+
 Resolved support-mail cleanup uses the existing Migadu IMAP account and host timer. It reads headers only, starts a two-year closure clock, protects open/held/flagged/draft mail, and uses exact UID deletion only for eligible resolved threads and linked Sent copies. Failures or a missed daily run use the existing health-alert path. Closure metadata joins the encrypted backup.
 
 Thirteen offline mailbox cases and four host-health cases pass on Linux without network access. Checks cover scope, malformed headers/state, fresh replies, changes before deletion, failure recovery and secret-free output. A live read-only preview succeeded across nine folders with zero eligible messages. New support folders were empty; no existing mail was moved or deleted and the invitation draft was preserved. Final installation and release checks are recorded with the release.

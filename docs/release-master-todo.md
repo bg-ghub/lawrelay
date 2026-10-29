@@ -17,6 +17,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Operator contact details, terms/privacy, [support playbook](ops/support.md), [data register](ops/data-register.md) and protected [privacy review packages](ops/privacy-operations.md).
 - [x] Professional verification and password emails reached the operator; member sign-in and admin MFA were checked live.
 - [x] Daily cleanup of resolved support conversations through existing Migadu, with hold/draft safeguards and missed-run alerts.
+- [x] Migadu support/privacy/security identities receive into the same inbox as `info@lawrelay.be`; individual delivery tests passed.
 
 ## Finish during the beta
 
@@ -27,8 +28,6 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 ## Routine operations
 
 Review support/moderation/privacy intake, mail capacity and failed deliveries, backup results, logs, queues and TLS. Use the [support](ops/support.md), [feedback](ops/beta-feedback.md), [monitoring](ops/external-monitoring.md) and [incident](ops/incident-response.md) guides. Technical recovery drills pass; actual incidents still need the operator to respond. Keep real user evidence outside public GitHub issues.
-
-The existing Migadu admin session has expired; support/privacy/security alias routing still needs a check when account access is available. Use `info@lawrelay.be` for the confirmed contact inbox. No new mail provider is configured.
 
 ## Deferred or optional
 
