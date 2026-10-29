@@ -5,6 +5,17 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-29
+
+### Added
+
+- Preview details from your linked advocaat.be profile before saving settings.
+- Complete assignment notifications, with individual localized emails, delivery retries and an in-app history.
+
+### Fixed
+
+- Suppress outdated event emails and exclude withdrawn or declined candidates from cancellation notices.
+
 ## [0.6.2] - 2026-10-29
 
 ### Fixed
@@ -175,7 +186,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/bg-ghub/lawrelay/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/bg-ghub/lawrelay/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/bg-ghub/lawrelay/compare/v0.5.1...v0.6.0

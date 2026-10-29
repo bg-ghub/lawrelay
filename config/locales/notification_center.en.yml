@@ -1,0 +1,16 @@
+en:
+  notification_center:
+    title: "Notifications — LawRelay"
+    all_notifications: "All notifications"
+    back: "Back to dashboard"
+    filter_label: "Filter notifications"
+    all: "All"
+    unread: "Unread"
+    empty: "No notifications yet"
+    caught_up: "You’re up to date"
+    unavailable: "Assignment unavailable"
+    updated: "An assignment was updated."
+    pagination: "Notification pages"
+    previous: "Previous"
+    next: "Next"
+    page: "Page %{current} of %{total}"

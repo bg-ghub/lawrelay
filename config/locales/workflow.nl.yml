@@ -22,13 +22,17 @@ nl:
     notifications:
       new_proposal: "Een confrater reageerde op een van je opdrachten."
       proposal_accepted: "Een van je voorstellen is aanvaard."
-      proposal_declined: "Een van je voorstellen is geweigerd."
+      proposal_declined: "Een van je voorstellen werd niet gekozen."
+      proposal_withdrawn: "Een confrater trok een voorstel voor je opdracht in."
+      assignment_matched: "Een confrater werd gekozen voor een van je opdrachten."
+      assignment_completed: "Een van je opdrachten is als afgerond gemarkeerd."
       assignment_cancelled: "Een opdracht waarop je reageerde is geannuleerd."
-      assignment_expired: "Een van je opdrachten is verlopen voordat er een match was."
+      assignment_expired: "Een opdracht is verlopen zonder toewijzing."
+      response_deadline_closed: "De reactietermijn voor een van je opdrachten is voorbij."
     notices:
       assignment_cancelled: "De opdracht is geannuleerd."
       assignment_completed: "Opdracht afgerond."
-      proposal_accepted: "Voorstel aanvaard. Beide advocaten krijgen bericht."
+      proposal_accepted: "Voorstel aanvaard."
       proposal_declined: "Het voorstel is geweigerd."
       proposal_withdrawn: "Je voorstel is ingetrokken."
       notification_marked_read: "Gemarkeerd als gelezen."
@@ -65,3 +69,24 @@ nl:
         subject: "Opdracht geannuleerd: %{title}"
         heading: "De opdracht is geannuleerd"
         body: "‘%{title}’ is geannuleerd. Je hoeft niets te doen."
+      proposal_withdrawn:
+        subject: "Voorstel ingetrokken: %{title}"
+        heading: "Een voorstel is ingetrokken"
+        body: "%{name} trok het voorstel voor ‘%{title}’ in."
+      assignment_matched:
+        subject: "Confrater gekozen: %{title}"
+        heading: "Er is een confrater gekozen"
+        body: "Er is een confrater gekozen voor ‘%{title}’. Je vindt de contactgegevens in LawRelay."
+      assignment_completed:
+        subject: "Opdracht afgerond: %{title}"
+        heading: "Opdracht afgerond"
+        body: "‘%{title}’ is als afgerond gemarkeerd."
+      assignment_expired:
+        subject: "Opdracht verlopen: %{title}"
+        heading: "Geen confrater gekozen"
+        body_owner: "‘%{title}’ is verlopen zonder toewijzing."
+        body_candidate: "‘%{title}’ is verlopen. Er werd niemand gekozen."
+      response_deadline_closed:
+        subject: "Reactietermijn voorbij: %{title}"
+        heading: "De reactietermijn is voorbij"
+        body: "Er komen geen nieuwe reacties meer op ‘%{title}’. Je kunt nog kiezen uit de ontvangen voorstellen."

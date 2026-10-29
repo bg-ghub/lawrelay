@@ -87,7 +87,7 @@ end
 LOCALES.each do |locale|
   session = browser
   sign_in(session, locale, member, password)
-  [ "", "/dashboard", "/assignments", "/assignments/#{assignment.id}", "/assignments/new", "/settings", "/settings/email", "/privacy_requests", "/privacy_requests/new" ].each do |suffix|
+    [ "", "/dashboard", "/assignments", "/assignments/#{assignment.id}", "/assignments/new", "/settings", "/settings/email", "/notifications", "/privacy_requests", "/privacy_requests/new" ].each do |suffix|
     visit(session, "/#{locale}#{suffix}")
   end
   redirected_visit(session, "/#{locale}/billing", "/#{locale}/dashboard")
@@ -149,6 +149,12 @@ mailers = {
   "new proposal" => -> { MarketplaceMailer.new_proposal(proposal) },
   "proposal accepted" => -> { MarketplaceMailer.proposal_accepted(proposal) },
   "proposal declined" => -> { MarketplaceMailer.proposal_declined(proposal) },
+  "proposal withdrawn" => -> { MarketplaceMailer.proposal_withdrawn(proposal) },
+  "assignment matched" => -> { MarketplaceMailer.assignment_matched(assignment, recipient: member) },
+  "assignment completed" => -> { MarketplaceMailer.assignment_completed(assignment, recipient: candidate) },
+  "assignment expired owner" => -> { MarketplaceMailer.assignment_expired(assignment, recipient: member) },
+  "assignment expired candidate" => -> { MarketplaceMailer.assignment_expired(assignment, recipient: candidate) },
+  "response deadline closed" => -> { MarketplaceMailer.response_deadline_closed(assignment, recipient: member) },
   "assignment cancelled" => -> { MarketplaceMailer.assignment_cancelled(assignment, locale: member.locale) }
 }
 
@@ -186,6 +192,25 @@ LOCALES.each { |locale| visit(member_security, "/#{locale}/settings/two-factor/c
 member_security.post("/en/settings/two-factor/verify", params: { authenticity_token: csrf(member_security), recovery_code: recovery_codes.first })
 check(member_security.response.redirect?, "member recovery code verifies sign-in")
 check(member.reload.two_factor_recovery_codes_remaining == 9, "member recovery code is consumed")
+
+member.lawyer_profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111", directory_name: member.full_name)
+original_import = Directory::ProfileImport.method(:call)
+Directory::ProfileImport.define_singleton_method(:call) do |**|
+  Directory::ProfileImport::Result.new(status: :ok, profile_attributes: { spoken_languages: %w[NL FR] },
+    firm_attributes: { phone: "+3225550101" })
+end
+begin
+  LOCALES.each do |locale|
+    visit(member_security, "/#{locale}/settings")
+    check(Nokogiri::HTML(member_security.response.body).at_css("button[value='import_profile']"), "#{locale} linked profile import button renders")
+    member_security.patch("/#{locale}/settings", params: { authenticity_token: csrf(member_security),
+      settings_action: "import_profile", profile: { availability_note: "Synthetic unsaved note" } })
+    check(member_security.response.status == 200, "#{locale} profile import preview renders")
+    check(member.lawyer_profile.reload.availability_note != "Synthetic unsaved note" && member.primary_firm.phone.nil?, "#{locale} profile import did not save changes")
+  end
+ensure
+  Directory::ProfileImport.define_singleton_method(:call, original_import)
+end
 
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
 puts "Localized production rendering completed with only disposable synthetic records (invoice #{invoice.id}, request #{privacy_request.id}, report #{report.id})."

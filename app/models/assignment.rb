@@ -108,19 +108,28 @@ class Assignment < ApplicationRecord
     transition_to!("completed", actor: actor)
   end
 
-  # An unattended transition has no human actor. Keep its audit record and the
-  # owner's in-app notification in the same database transaction.
+  def notify_creator_of_match!(actor:)
+    Notification.publish!(user: creator_user, kind: "assignment_matched", subject: self, assignment: self, actor:)
+  end
+
+  def notify_response_deadline_if_due!(now: Time.current)
+    with_lock do
+      next false unless status == "open" && starts_at > now && response_deadline_at.present? && response_deadline_at <= now
+
+      notification = Notification.publish!(user: creator_user, kind: "response_deadline_closed", subject: self, assignment: self)
+      notification&.previously_new_record? || false
+    end
+  end
+
+  # An unattended transition has no human actor. Events and their email outbox
+  # are committed with the state change, before any external mail delivery.
   def expire_if_stale!(now: Time.current)
     with_lock do
-      next false unless status == "open" && starts_at < now
+      next false unless status == "open" && starts_at <= now
 
       update!(status: "expired")
       audit_events.create!(actor_user: nil, firm: firm, action: "assignment.expired")
-      creator_user&.notifications&.create!(
-        kind: "assignment_expired",
-        subject: self,
-        data: { assignment_id: id }
-      )
+      notify_transition("expired", actor: nil)
       true
     end
   end
@@ -184,6 +193,24 @@ class Assignment < ApplicationRecord
 
       update!(status: next_status)
       audit_events.create!(actor_user: actor, firm: actor&.primary_firm || firm, action: "assignment.#{next_status}")
+      notify_transition(next_status, actor:)
+      self
+    end
+  end
+
+  def notify_transition(next_status, actor:)
+    recipients = case next_status
+    when "cancelled"
+      proposals.where(status: %w[pending accepted]).includes(:user).filter_map(&:user) + [ creator_user ]
+    when "completed"
+      [ accepted_proposal&.user, creator_user ]
+    when "expired"
+      proposals.where(status: "pending").includes(:user).filter_map(&:user) + [ creator_user ]
+    else
+      []
+    end
+    recipients.compact.uniq(&:id).each do |recipient|
+      Notification.publish!(user: recipient, kind: "assignment_#{next_status}", subject: self, assignment: self, actor:)
     end
   end
 end

@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     get "billing/return", to: "billing#return", as: :billing_return
 
     get "dashboard", to: "dashboard#index", as: :dashboard
-    resources :notifications, only: %i[show update] do
+    resources :notifications, only: %i[index show update] do
       collection do
         patch :mark_all
       end

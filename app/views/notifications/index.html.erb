@@ -1,0 +1,45 @@
+<% content_for :title, t("notification_center.title") %>
+<div class="dashboard-page shell notifications-page">
+  <div class="dashboard-heading">
+    <h1><%= t("workflow.ui.notifications") %></h1>
+    <%= link_to t("notification_center.back"), dashboard_path, class: "text-link" %>
+  </div>
+
+  <div class="notification-center-toolbar">
+    <nav class="notification-center-filters" aria-label="<%= t("notification_center.filter_label") %>">
+      <%= link_to t("notification_center.all"), notifications_path, aria: { current: ("page" unless @filter) } %>
+      <%= link_to t("notification_center.unread"), notifications_path(filter: "unread"), aria: { current: ("page" if @filter == "unread") } %>
+    </nav>
+    <% if @unread_count.positive? %>
+      <%= button_to t("workflow.ui.mark_all_read"), mark_all_notifications_path(from: "notifications", filter: @filter), method: :patch, class: "text-link notification-mark-all" %>
+    <% end %>
+  </div>
+
+  <% if @notifications.any? %>
+    <ul class="notification-center-list" aria-label="<%= t("workflow.ui.notifications") %>">
+      <% @notifications.each do |notification| %>
+        <li class="notification-center-item <%= "notification-center-item--unread" unless notification.read_at %>">
+          <%= link_to notification_path(notification), class: "notification-center-link" do %>
+            <span class="notification-center-copy">
+              <span><%= t("workflow.notifications.#{notification.kind}", default: t("notification_center.updated")) %></span>
+              <strong><%= @notification_assignments[notification.id]&.title || t("notification_center.unavailable") %></strong>
+            </span>
+            <span class="notification-center-meta">
+              <% unless notification.read_at %><span class="notification-center-unread"><%= t("notification_center.unread") %></span><% end %>
+              <time datetime="<%= notification.created_at.iso8601 %>"><%= l(notification.created_at.in_time_zone("Europe/Brussels"), format: :short) %></time>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <% if @total_pages > 1 %>
+      <nav class="notification-center-pagination" aria-label="<%= t("notification_center.pagination") %>">
+        <% if @page > 1 %><%= link_to t("notification_center.previous"), notifications_path(filter: @filter, page: @page - 1), class: "text-link" %><% end %>
+        <span><%= t("notification_center.page", current: @page, total: @total_pages) %></span>
+        <% if @page < @total_pages %><%= link_to t("notification_center.next"), notifications_path(filter: @filter, page: @page + 1), class: "text-link" %><% end %>
+      </nav>
+    <% end %>
+  <% else %>
+    <section class="empty-state"><h2><%= t(@filter == "unread" ? "notification_center.caught_up" : "notification_center.empty") %></h2></section>
+  <% end %>
+</div>
