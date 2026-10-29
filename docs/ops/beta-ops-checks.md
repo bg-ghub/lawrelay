@@ -1,4 +1,21 @@
-# Beta operations checks — 28 October 2026
+# Beta operations checks
+
+## 29 October 2026
+
+Non-disruptive checks against release 0.4.4:
+
+| Check | Result |
+| --- | --- |
+| Application and public endpoints | Healthy image; homepage, login, readiness, operations and TLS probes passed. No failed queue jobs. |
+| Host timers | Nightly backup and five-minute health timers active. Latest backup completed at 07:51 Europe/Brussels; host health passed at 08:04. |
+| Storage and logs | Storage filesystem 10% used. Journals used 16 MiB; config files contained no explicit retention-age or size overrides. A reviewed retention policy is still needed. |
+| External monitor | Latest five scheduled runs passed, including [run 40829650435](https://github.com/bg-ghub/lawrelay/actions/runs/40829650435). No incident was open. |
+| Alert logic | Nine no-network monitor tests passed. The no-send Linux alert test preserved full events, suppressed duplicates and separated failures for different units. No alert was sent. |
+| Fresh recovery and rollback | At 08:13 Europe/Brussels, the latest encrypted backup was restored into a disposable copy. Release 0.4.4 and compatible 0.4.3 both passed readiness, four-locale, authentication and authorization checks in 46 seconds. Containers had no network, queue workers or mail configuration; production identity/start time stayed unchanged and the disposable data was removed. |
+
+Automated runbook review: for an outage, use external probes and the latest successful backup; for delayed email, inspect the queue and SMTP failure before retrying; for suspected disclosure, preserve private evidence and contain affected access; for a bad release, validate a compatible image on a restored copy before switching traffic. No outage, real access restriction or traffic switch was performed. Human response time, provider escalation and legal/customer communications remain untested.
+
+## 28 October 2026
 
 ## Exercised
 
@@ -15,7 +32,7 @@
 | Production preservation | Container ID, image, running state and start time were identical before and after. Disposable containers and restored data were removed; production remained healthy and existing timers remained active. |
 | Final host/public health | At 21:03 Europe/Brussels, the host health script passed via a transient unit without alert configuration or failure hooks. `/ready` and `/health/operations` both returned 200 with `{"status":"ok"}`. Backup and restore services reported success; nightly backup and five-minute health timers remained active. No SMTP send was invoked by this acceptance run. |
 | GitHub-hosted real monitor | [Initial run 40759509569](https://github.com/bg-ghub/lawrelay/actions/runs/40759509569) and [final run 40760034630](https://github.com/bg-ghub/lawrelay/actions/runs/40760034630) passed homepage, sign-in, readiness, operations and certificate checks on deployed `0.2.1`. The hourly workflow is enabled on `main`. |
-| Synthetic owner incident | [Failure run 40759779831](https://github.com/bg-ghub/lawrelay/actions/runs/40759779831) intentionally failed its probes and created one private [incident 11](https://github.com/bg-ghub/lawrelay/issues/11), assigned to the operator. The incident notification step succeeded. |
+| Synthetic owner incident | [Failure run 40759779831](https://github.com/bg-ghub/lawrelay/actions/runs/40759779831) intentionally failed its probes and created [incident 11](https://github.com/bg-ghub/lawrelay/issues/11), assigned to the operator. The incident notification step succeeded. This sanitized issue is public following repository publication. |
 | Duplicate suppression and recovery | [Repeated failure 40759896235](https://github.com/bg-ghub/lawrelay/actions/runs/40759896235) intentionally remained red, reused incident 11 and added no comments. [Recovery 40759957722](https://github.com/bg-ghub/lawrelay/actions/runs/40759957722) passed, added exactly one recovery comment and closed the synthetic incident. Real incidents use a separate marker. |
 | Owner inbox delivery | The repository-notification API, filtered only to synthetic incident 11, returned `reason: assign` and `unread: true`. The notification was not marked read. This proves GitHub web-inbox delivery, not GitHub email delivery. The operator separately confirmed receipt of an earlier SMTP operational alert in Proton. |
 | Application and browser regression | 172 Rails tests / 1005 assertions pass. Chrome, Firefox and Edge each pass 8 system tests / 175 assertions, covering four locales and 320/800/1280px. All six [merged-release CI jobs](https://github.com/bg-ghub/lawrelay/actions/runs/40759229378) pass. Public desktop pricing and French mobile signup were visually checked in a fresh guest session without submissions. |

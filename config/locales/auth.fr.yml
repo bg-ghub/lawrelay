@@ -35,7 +35,7 @@ fr:
       reset: "Votre mot de passe a été modifié."
       mismatch: "Les mots de passe ne correspondent pas."
       invalid_password: "Utilisez au moins 12 caractères et saisissez deux fois le même mot de passe."
-      invalid: "Ce lien de réinitialisation est invalide ou a expiré."
+      invalid: "Ce lien est invalide ou a expiré. Demandez-en un nouveau ci-dessous."
       rate_limited: "Trop de demandes. Réessayez plus tard."
       new:
         title: "Réinitialiser le mot de passe — LawRelay"
