@@ -5,6 +5,17 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-29
+
+### Added
+
+- Dedicated administration at admin.lawrelay.be with password/MFA login and a separate browser session.
+
+### Fixed
+
+- Warn before a language switch discards unfinished form entries.
+- Clear old closure details when reports or privacy requests are reopened, with an atomic audit record.
+
 ## [0.4.7] - 2026-10-29
 
 ### Fixed
@@ -137,7 +148,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.7...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/bg-ghub/lawrelay/compare/v0.4.7...v0.5.0
 [0.4.7]: https://github.com/bg-ghub/lawrelay/compare/v0.4.6...v0.4.7
 [0.4.6]: https://github.com/bg-ghub/lawrelay/compare/v0.4.5...v0.4.6
 [0.4.5]: https://github.com/bg-ghub/lawrelay/compare/v0.4.4...v0.4.5

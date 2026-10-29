@@ -55,7 +55,7 @@ if (-not $BackupOnly) {
     throw 'Fill SMTP_PASSWORD in the ignored .env.production.local file before deployment. Backup recovery credentials are saved securely.'
   }
   $appLines = @(
-    'RAILS_ENV=production', 'APP_HOST=lawrelay.be', 'APP_PROTOCOL=https', 'ADDITIONAL_HOSTS=www.lawrelay.be',
+    'RAILS_ENV=production', 'APP_HOST=lawrelay.be', 'ADMIN_HOST=admin.lawrelay.be', 'APP_PROTOCOL=https', 'ADDITIONAL_HOSTS=www.lawrelay.be',
     'ASSUME_SSL=true', 'FORCE_SSL=true', 'ACTIVE_STORAGE_SERVICE=local',
     'SOLID_QUEUE_IN_PUMA=true', 'LAWRELAY_BILLING_ENFORCED=true', 'LAWRELAY_RELEASE_MODE=beta',
     'SMTP_ADDRESS=smtp.migadu.com', 'SMTP_PORT=587', 'SMTP_DOMAIN=lawrelay.be',

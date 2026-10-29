@@ -15,6 +15,12 @@ class Report < ApplicationRecord
   validates :resolution_note, length: { maximum: 2_000 }, allow_blank: true
   validate :reporter_is_not_assignment_owner
 
+  def reopen!(reviewer:)
+    with_lock do
+      update!(status: "in_review", reviewed_by_user: reviewer, resolution_note: nil, resolved_at: nil)
+    end
+  end
+
   def close!(status:, reviewer:, note:)
     raise ArgumentError, "invalid terminal status" unless status.in?(%w[resolved dismissed])
 

@@ -13,7 +13,7 @@
         </div>
       </fieldset>
       <div class="form-actions">
-        <%= link_to t("auth.actions.back_to_sign_in"), new_session_path, class: "button button--ghost" %>
+        <%= link_to t("auth.actions.back_to_sign_in"), authentication_login_path, class: "button button--ghost" %>
         <%= form.submit t("auth.passwords.new.submit"), class: "button button--dark" %>
       </div>
     <% end %>

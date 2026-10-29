@@ -2,6 +2,7 @@ en:
   marketing:
     locale_name: English
     language_switcher: Choose language
+    language_switch_warning: "Your changes will be lost. Switch language?"
     actions:
       post_assignment: Post an assignment
       browse_assignments: Browse assignments

@@ -119,6 +119,23 @@ LOCALES.each do |locale|
   end
 end
 
+admin_portal = browser
+admin_portal.host! SiteHosts.admin_host
+LOCALES.each do |locale|
+  admin_portal.get("/#{locale}")
+  check(URI.parse(admin_portal.response.location).path == "/#{locale}/admin/users", "#{locale} admin host opens administration")
+  admin_portal.get("/#{locale}/admin/users")
+  check(URI.parse(admin_portal.response.location).path == "/#{locale}/admin/login", "#{locale} admin host requires sign-in")
+  visit(admin_portal, "/#{locale}/admin/login")
+  check(admin_portal.response.body.include?("admin-site-header"), "#{locale} admin host uses the admin layout")
+  admin.update!(locale:)
+  [ PasswordsMailer.reset(admin), EmailVerificationMailer.verify(admin) ].each do |mail|
+    [ mail.message.html_part, mail.message.text_part ].each do |part|
+      check(part.decoded.include?("https://#{SiteHosts.admin_host}/#{locale}/"), "#{locale} admin account email uses the admin host")
+    end
+  end
+end
+
 mailers = {
   "email verification" => -> { EmailVerificationMailer.verify(member) },
   "password reset" => -> { PasswordsMailer.reset(member) },

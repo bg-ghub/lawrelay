@@ -22,6 +22,8 @@ Before DNS is pointed at the server, confirm the firewall permits TCP 80 and 443
 
 The generated environment fixes the launch to `lawrelay.be`, Migadu with required STARTTLS on port 587, and the free founding beta (`LAWRELAY_RELEASE_MODE=beta`, `LAWRELAY_BILLING_ENFORCED=true`). Hetzner blocks outbound port 465 on this host. The environment contains `RAILS_MASTER_KEY` and `SECRET_KEY_BASE`; the deployment script accepts it as an input and never prints their values.
 
+`ADMIN_HOST=admin.lawrelay.be` enables the separate [admin portal](admin.md). Its DNS A record uses the same server. Caddy serves both hosts and is reloaded after a healthy deployment.
+
 ## Deploy
 
 Run from a clean, committed checkout in PowerShell:

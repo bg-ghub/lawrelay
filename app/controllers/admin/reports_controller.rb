@@ -12,13 +12,15 @@ module Admin
       return invalid_decision unless decision.in?(%w[review resolve dismiss])
       return missing_note if decision.in?(%w[resolve dismiss]) && note.blank?
 
-      if decision == "review"
-        @report.update!(status: "in_review", reviewed_by_user: current_user)
-      else
-        status = decision == "resolve" ? "resolved" : "dismissed"
-        @report.close!(status: status, reviewer: current_user, note: note)
+      ApplicationRecord.transaction do
+        if decision == "review"
+          @report.reopen!(reviewer: current_user)
+        else
+          status = decision == "resolve" ? "resolved" : "dismissed"
+          @report.close!(status: status, reviewer: current_user, note: note)
+        end
+        record_audit(decision, note)
       end
-      record_audit(decision, note)
       redirect_to admin_reports_path, notice: t("trust.admin.notices.updated")
     end
 

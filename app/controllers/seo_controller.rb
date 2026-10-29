@@ -12,6 +12,10 @@ class SeoController < ActionController::Base
   ].freeze
 
   def robots
+    if SiteHosts.admin?(request.host)
+      return render plain: "User-agent: *\nDisallow: /\n", content_type: "text/plain"
+    end
+
     disallowed_paths = PRIVATE_PATHS + I18n.available_locales.flat_map do |locale|
       PRIVATE_PATHS.map { |path| "#{locale}/#{path}" }
     end
@@ -21,6 +25,10 @@ class SeoController < ActionController::Base
   end
 
   def sitemap
+    if SiteHosts.admin?(request.host)
+      return redirect_to SiteHosts.main_url("/sitemap.xml"), allow_other_host: true
+    end
+
     paths = PUBLIC_PATHS
     paths += [ :pricing ] if ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
     @urls = I18n.available_locales.flat_map do |locale|

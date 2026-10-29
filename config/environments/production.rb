@@ -3,6 +3,7 @@ require_relative "../../lib/sensitive_log_formatter"
 
 Rails.application.configure do
   app_host = ENV.fetch("APP_HOST", "lawrelay.be")
+  admin_host = ENV.fetch("ADMIN_HOST", "admin.#{app_host}")
   app_protocol = ENV.fetch("APP_PROTOCOL", "https")
   smtp_address = ENV["SMTP_ADDRESS"].presence
   smtp_port = ENV.fetch("SMTP_PORT", 587).to_i
@@ -72,7 +73,7 @@ Rails.application.configure do
   # Restrict Host headers to the canonical domain and explicitly configured
   # aliases. Health checks are exempt because Kamal may address the container
   # by its internal hostname.
-  configured_hosts = [ app_host, *ENV.fetch("ADDITIONAL_HOSTS", "").split(",") ]
+  configured_hosts = [ app_host, admin_host, *ENV.fetch("ADDITIONAL_HOSTS", "").split(",") ]
     .map(&:strip)
     .reject(&:blank?)
     .uniq

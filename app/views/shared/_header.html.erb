@@ -25,34 +25,7 @@
     </nav>
 
     <div class="header-actions">
-      <nav class="language-nav" aria-label="<%= t("marketing.language_switcher") %>">
-        <details class="language-menu" data-controller="language-menu" data-action="keydown.esc@window->language-menu#close click@window->language-menu#closeOutside focusout->language-menu#closeOnFocusOut turbo:before-cache@document->language-menu#close">
-          <summary aria-label="<%= t("marketing.language_switcher") %>">
-            <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="12" r="9"></circle>
-              <path d="M3 12h18M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3Z"></path>
-            </svg>
-            <span><%= I18n.locale.to_s.upcase %></span>
-            <span class="language-menu__chevron" aria-hidden="true">⌄</span>
-          </summary>
-          <div class="language-menu__panel">
-            <% locale_names = { nl: "Nederlands", fr: "Français", de: "Deutsch", en: "English" } %>
-            <% %i[nl fr de en].each do |locale| %>
-              <% item_class = ["language-menu__item", ("is-current" if I18n.locale == locale)].compact.join(" ") %>
-              <% if I18n.locale == locale %>
-                <span class="<%= item_class %>" lang="<%= locale %>" aria-current="page">
-                  <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span aria-hidden="true">✓</span>
-                </span>
-              <% else %>
-                <% language_destination = controller_path == "admin/users" && @user.present? ? admin_user_path(@user, locale: locale) : url_for(locale: locale) %>
-                <%= link_to language_destination, class: item_class, lang: locale, hreflang: locale do %>
-                  <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span></span>
-                <% end %>
-              <% end %>
-            <% end %>
-          </div>
-        </details>
-      </nav>
+      <%= render "shared/language_menu" %>
       <% if authenticated? %>
         <%= link_to current_user.full_name, (current_user.system_admin? ? admin_users_path : settings_path), class: "header-login" %>
         <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "header-logout header-login" %>
