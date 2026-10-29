@@ -71,8 +71,8 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
-            - "Account- en marktplaatsgegevens blijven bewaard zolang uw account actief is en worden daarna op verzoek verwijderd, tenzij beroeps-, contractuele, beveiligings- of wettelijke verplichtingen een bewaarplicht rechtvaardigen."
-            - "Back-ups volgen een schema van 7 dagelijkse, 4 wekelijkse en 12 maandelijkse kopieën. Verzoeken over rechten worden handmatig behandeld."
+            - "We beoordelen verwijderverzoeken handmatig, ook voor gegevens die nodig blijven voor wettelijke verplichtingen, beveiliging of geschillen. Account-, opdracht-, support- en auditgegevens worden niet automatisch verwijderd."
+            - "Back-ups bewaren 7 dagelijkse, 4 wekelijkse en 12 maandelijkse kopieën. Verwijderde gegevens kunnen aanwezig blijven tot back-ups en oudere opslagversies vervallen."
         rights:
           heading: "7. Uw rechten"
           paragraphs:

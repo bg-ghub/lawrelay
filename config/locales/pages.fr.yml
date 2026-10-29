@@ -71,8 +71,8 @@ fr:
         retention:
           heading: "6. Conservation"
           paragraphs:
-            - "Les données de compte et de place de marché sont conservées tant que votre compte est actif, puis supprimées sur demande, sauf obligation professionnelle, contractuelle, de sécurité ou légale imposant une conservation."
-            - "Les sauvegardes suivent un calendrier de 7 quotidiennes, 4 hebdomadaires et 12 mensuelles. Les demandes relatives aux droits sont traitées manuellement."
+            - "Nous examinons les demandes de suppression manuellement, y compris les données nécessaires aux obligations légales, à la sécurité ou aux litiges. Les données de compte, de mission, d’assistance et d’audit ne sont pas supprimées automatiquement."
+            - "Les sauvegardes conservent 7 copies quotidiennes, 4 hebdomadaires et 12 mensuelles. Les données supprimées peuvent subsister jusqu’à l’expiration des sauvegardes et des anciennes versions de stockage."
         rights:
           heading: "7. Vos droits"
           paragraphs:

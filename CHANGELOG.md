@@ -5,6 +5,19 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-29
+
+### Added
+
+- Protected privacy export review packages and non-mutating erasure inventories.
+
+### Fixed
+
+- Require completed MFA for personalized homepage content and preserve session revocation during two-factor actions.
+- Recheck professional verification before sending assignment notifications.
+- Include notification delivery health in the five-minute host check.
+- Simplify the footer, clarify privacy retention and enlarge the notification read button.
+
 ## [0.7.0] - 2026-10-29
 
 ### Added
@@ -186,7 +199,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/bg-ghub/lawrelay/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/bg-ghub/lawrelay/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/bg-ghub/lawrelay/compare/v0.6.0...v0.6.1

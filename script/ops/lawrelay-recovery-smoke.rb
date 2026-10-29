@@ -81,4 +81,79 @@ check(visit(member, "/nl/assignments/#{own_assignment.id}").status == 200, "own 
 check(visit(member, "/nl/assignments/#{private_assignment.id}").redirect?, "unrelated private assignment is denied")
 check(visit(member, "/nl/admin/verifications").status.in?([ 302, 303, 403 ]), "member cannot use administration")
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
+
+# Execute only newly-created synthetic jobs from this disposable queue. Never
+# drain the restored queue: it may contain real recipients from the snapshot.
+if defined?(NotificationEmailDeliveryJob)
+  candidates = %w[selected declined].map.with_index do |label, index|
+    candidate = User.create!(first_name: "Recovery", last_name: label.capitalize,
+      email_address: "recovery-#{label}-#{nonce}@example.invalid", password:,
+      email_verified_at: Time.current, locale: %w[fr de][index])
+    candidate_firm = Firm.create!(name: "Recovery #{label} #{nonce}", verification_status: "verified", verified_at: Time.current)
+    Membership.create!(user: candidate, firm: candidate_firm, role: "owner")
+    LawyerProfile.create!(user: candidate, bar_association: "Recovery drill", bar_number: "DRILL-#{label}-#{nonce}",
+      verification_status: "verified", verified_at: Time.current)
+    candidate
+  end
+  own_assignment.update!(status: "open")
+  proposals = candidates.map do |candidate|
+    own_assignment.proposals.create!(user: candidate, firm: candidate.primary_firm, message: "Synthetic recovery response.", rate_cents: 0, rate_kind: "fixed")
+  end
+  pending = Notification.where(subject: proposals, kind: "new_proposal").to_a
+  check(pending.size == 2 && pending.all? { |notice| notice.user_id == user.id }, "synthetic response notifications persisted")
+
+  deliver_synthetic = lambda do |notice|
+    job = SolidQueue::Job.where(class_name: "NotificationEmailDeliveryJob").order(id: :desc).find do |entry|
+      entry.arguments.fetch("arguments", []) == [ notice.id ]
+    end
+    check(job.present?, "synthetic notification has a serialized queue job")
+    prior_count = ActionMailer::Base.deliveries.size
+    ActionMailer::Base.perform_deliveries = true
+    ActiveJob::Base.execute(job.arguments)
+    message = ActionMailer::Base.deliveries.last
+    check(notice.reload.email_status == "sent" && ActionMailer::Base.deliveries.size == prior_count + 1,
+      "serialized notification job completes through the test mail adapter")
+    check(message.to == [ notice.user.email_address ] && message.bcc.blank?, "notification has one intended synthetic recipient")
+    job.destroy!
+  end
+  pending.each(&deliver_synthetic)
+  own_assignment.with_lock do
+    proposals.first.accept!(actor: user)
+    proposals.last.decline!(actor: user)
+    own_assignment.update!(status: "matched")
+  end
+  decisions = Notification.where(subject: proposals, kind: %w[proposal_accepted proposal_declined]).to_a
+  check(decisions.size == 2, "selection and non-selection notifications persisted")
+  decisions.each(&deliver_synthetic)
+  ActionMailer::Base.deliveries.clear
+  ActionMailer::Base.perform_deliveries = false
+  check(ActionMailer::Base.delivery_method == :test && ActionMailer::Base.deliveries.empty?, "mail stayed local and the capture was cleared")
+end
+
+if defined?(Privacy::AccountExport)
+  require "tmpdir"
+  operator = User.create!(first_name: "Recovery", last_name: "Operator", system_role: "admin",
+    email_address: "recovery-operator-#{nonce}@example.invalid", password:, email_verified_at: Time.current)
+  setup_secret = operator.begin_admin_mfa_setup!
+  operator.enable_admin_mfa!(ROTP::TOTP.new(setup_secret, issuer: "LawRelay").now)
+  access_request = user.privacy_requests.create!(kind: "access_export", status: "in_review", handled_by_user: operator,
+    details: "Synthetic recovery access request.")
+  deletion_request = user.privacy_requests.create!(kind: "deletion", status: "in_review", handled_by_user: operator,
+    details: "Synthetic recovery deletion inventory.")
+  Dir.mktmpdir("lawrelay-private-recovery-") do |directory|
+    access_path = File.join(directory, "access.json")
+    inventory_path = File.join(directory, "inventory.json")
+    Privacy::AccountExport.new(request: access_request, actor: operator).call(output_path: access_path)
+    package = JSON.parse(File.read(access_path))
+    check(package.dig("account", "id") == user.id && package.fetch("authored_proposals").empty?, "privacy export stays scoped to its synthetic account")
+    check(!package.fetch("account").key?("password_digest") && (File.stat(access_path).mode & 0o777) == 0o600,
+      "privacy export excludes password material and uses private permissions")
+    before_inventory = [ User.count, Session.count, Assignment.count, Proposal.count ]
+    Privacy::ErasureInventory.new(request: deletion_request, actor: operator).call(output_path: inventory_path)
+    inventory = JSON.parse(File.read(inventory_path))
+    check(inventory["deletion_performed"] == false && inventory["hold_decision"] == "not_assessed" &&
+      before_inventory == [ User.count, Session.count, Assignment.count, Proposal.count ], "erasure inventory neither deletes records nor decides a hold")
+    check(access_request.reload.status == "in_review" && deletion_request.reload.status == "in_review", "privacy preparation leaves requests open for review")
+  end
+end
 puts "Isolated synthetic records stay in the disposable restore copy."

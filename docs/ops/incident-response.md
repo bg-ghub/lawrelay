@@ -31,7 +31,7 @@ The operating person must assign these roles for every incident; a single-person
 
 ## Monitoring response
 
-The health job checks public HTTPS `/up` and `/ready`, local volume disk usage, backup age, queue database integrity, failed executions, and ready/due scheduled jobs waiting over 15 minutes every five minutes. It logs success/failure to journald; optional private alerts are configured outside git.
+The health job checks public HTTPS `/up`, `/ready` and `/health/operations`, notification delivery health, local disk usage, backup age, queue database integrity, failed executions and overdue jobs every five minutes. It logs success/failure to journald; optional private alerts are configured outside git.
 
 The [external monitor](external-monitoring.md) checks homepage, sign-in, readiness, operational queue health and TLS hourly from GitHub-hosted infrastructure. It opens one public, owner-assigned incident per outage and closes it on recovery. Issues contain only sanitized probe results; private evidence stays in the operator's incident record. Operational queue status also catches failed mail jobs when the same SMTP provider cannot send an email alert. Verify the actual GitHub notification route: issue assignment alone is not proof of email delivery. Host failures use the separately tested SMTP owner alert route.
 

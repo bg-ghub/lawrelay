@@ -38,7 +38,7 @@ nl:
         kind_prompt: "Kies een verzoek"
         details: "Wat moeten we weten?"
         details_placeholder: "Omschrijf kort over welke gegevens of welk account het gaat."
-        retention_note: "Wettelijk verplichte facturen en auditgegevens blijven bewaard."
+        retention_note: "Sommige gegevens kunnen nodig blijven voor wettelijke verplichtingen of geschillen."
         submit: "Verzoek indienen"
     reports:
       eyebrow: "Meld een probleem"

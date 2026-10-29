@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.7.0.
+Last audited: 29 October 2026. Current release: 0.8.0.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -30,16 +30,18 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Optional user two-factor authentication: QR setup, password confirmation, single-use recovery codes and sign-in enforcement.
 - [x] MFA-protected user management: search/filter members, inspect verification, two-factor status and sessions, edit basic details, suspend/restore accounts and revoke sessions with audit records. Administrator identities stay out of managed users.
 - [x] Dedicated administrator password/MFA sign-in with administrator email/password changes restricted to protected server operations. Members retain password-confirmed email changes with new-address confirmation, a fresh directory check and revocation of other sessions.
-- [x] Separate [admin portal](ops/admin.md) with host-only sessions, localized password recovery and password/MFA browser coverage.
+- [x] Separate [admin portal](ops/admin.md) with host-only sessions, protected credential recovery and password/MFA browser coverage.
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
 - [x] Migadu identities and DNS records configured; SMTP authentication, application sender, and contact inbox tested. External recipient-side header alignment remains a monitoring item.
 - [x] Production readiness endpoint, container health checks, Caddy HTTPS, canonical `www` redirect, backups, restore drill, health checks, and owner alert route.
 - [x] SemVer, changelog, license, secret exclusions and repository secret scans; the footer displays the source link and running release version.
 - [x] Translation audit across public/member/admin pages and transactional emails, with strict missing-key, catalog parity, validation/date/number and isolated production checks in CI.
 - [x] Operator identity/contact details appear directly on terms and privacy pages and match the verified WetWijzer details; the official professional profile is linked.
+- [x] Protected [privacy review packages](ops/privacy-operations.md): scoped export, private files and non-mutating erasure inventory. Preparation does not execute deletion or close requests.
 
 ## Beta follow-through completed
 
+- [x] Release 0.8.0 review: MFA/session and notification-recipient fixes, authenticated keyboard/responsive checks, scoped privacy rehearsal and fresh isolated recovery. See [dated evidence](ops/beta-ops-checks.md).
 - [x] [Thorough beta checks](ops/beta-thorough-qa.md): verification/MFA, deadlines, failed forms, amount precision, assignment history and browser fixes; pricing archived.
 - [x] Two-account browser journey covers registration, both mailbox confirmations, password sign-in, posting, responding, selection and contact privacy. Directory responses and mail are synthetic; the real-lawyer trial remains below.
 - [x] Automated accessibility review of 80 public/auth page, locale and viewport combinations; pointer-target and named-group fixes, plus four-language keyboard checks. Physical devices, screen readers and independent review remain below.
@@ -57,7 +59,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 - [x] Password-email inbox arrival confirmed by the operator's screenshot; the expiry-text translation issue is fixed and covered by regression tests.
 - [x] Professional-account verification email arrival and confirmation checked with the operator; sign-in and verified marketplace access confirmed.
-- [ ] Confirm recipient-side SPF/DKIM/DMARC results for application mail.
+- [ ] Confirm recipient-side SPF/DKIM/DMARC results for application mail. Public DNS checks pass; the internal mailbox loop does not prove external alignment.
 - [x] Operator completed administrator password setup and authenticator MFA; signed-in admin screens were reviewed on 29 October.
 - [ ] Complete a human end-to-end beta trial with verified lawyer accounts, including registration, email confirmation, posting, responding and selecting a colleague.
 - [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.

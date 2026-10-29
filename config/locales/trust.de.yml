@@ -38,7 +38,7 @@ de:
         kind_prompt: "Anfrage auswählen"
         details: "Was sollten wir wissen?"
         details_placeholder: "Beschreiben Sie kurz die betreffenden Daten oder das Konto."
-        retention_note: "Gesetzlich erforderliche Rechnungen und Prüfprotokolle bleiben gespeichert."
+        retention_note: "Einige Daten können für gesetzliche Pflichten oder Streitfälle weiter benötigt werden."
         submit: "Anfrage senden"
     reports:
       eyebrow: "Problem melden"

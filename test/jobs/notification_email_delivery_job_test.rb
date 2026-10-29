@@ -101,6 +101,23 @@ class NotificationEmailDeliveryJobTest < ActiveJob::TestCase
     assert_equal "missing_subject", @event.email_status_reason
   end
 
+  test "queued mail is skipped when current lawyer or firm verification is lost" do
+    [ @candidate.profile, @candidate.firm ].each do |record|
+      %w[pending rejected suspended].each do |status|
+        record.update!(verification_status: status)
+        @event.update!(email_status: "pending", email_attempts: 0)
+
+        assert_no_difference(-> { ActionMailer::Base.deliveries.length }) do
+          NotificationEmailDeliveryJob.perform_now(@event.id)
+        end
+        assert_equal "skipped", @event.reload.email_status
+        assert_equal "unverified_marketplace_recipient", @event.email_status_reason
+        assert_nil @event.email_sent_at
+      end
+      record.update!(verification_status: "verified")
+    end
+  end
+
   test "an award queued before cancellation is skipped instead of sending an outdated acceptance" do
     @assignment.cancel!(actor: @owner.user)
 

@@ -38,7 +38,7 @@ fr:
         kind_prompt: "Choisissez une demande"
         details: "Que devons-nous savoir ?"
         details_placeholder: "Expliquez brièvement les données ou le compte concernés."
-        retention_note: "Les factures et traces d’audit imposées par la loi restent conservées."
+        retention_note: "Certaines données peuvent rester nécessaires pour des obligations légales ou des litiges."
         submit: "Envoyer la demande"
     reports:
       eyebrow: "Signaler un problème"

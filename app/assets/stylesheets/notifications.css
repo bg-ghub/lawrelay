@@ -21,6 +21,10 @@
   margin: 0;
 }
 
+.notification-mark-all {
+  min-height: 32px;
+}
+
 .notification-center-filters a {
   min-height: 32px;
   padding: .3rem .6rem;

@@ -9,7 +9,7 @@ Owner: Gauthier Berth. Reviewed 29 October 2026. Paid access stays disabled.
 | Mail | Recipient confirms verification delivery and SPF/DKIM/DMARC results. A completed SMTP job or a DKIM signature alone is insufficient. |
 | Language and legal | Native speakers and the operator/counsel review NL/FR/DE/EN signup, workflows, terms, privacy and operator details. |
 | Provider agreements | Retain account-specific Hetzner DPA/appendix, applicable AWS terms/DPA and Migadu acceptance/version evidence privately; review GitHub's limited role. See the [data register](data-register.md). |
-| Retention and rights | Approve account, audit, mailbox and host-journal retention; rehearse an export and reviewed erasure/hold process. Closing a privacy request does not erase records. |
+| Retention and rights | Synthetic export/inventory rehearsal passes using [protected helpers](privacy-operations.md). Approve retention/holds, review the response and execute any approved real action separately. Closing a request does not erase records. |
 | Security | An outside reviewer tests auth/recovery/MFA, directory lookup, firm boundaries and administrative actions with authorised test accounts. No real-user data or third-party directory scanning. |
 | Accessibility | Human screen-reader and physical Safari/iOS/Android checks, with independent accessibility findings resolved. |
 | Incident response | Operator rehearses outage, delayed mail and suspected disclosure using the [runbook](incident-response.md). Record decisions and follow-up. |
