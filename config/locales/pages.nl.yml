@@ -11,7 +11,7 @@ nl:
       privacy: "Privacy"
       terms: "Voorwaarden"
       cookies: "Cookies"
-      legal_notice: "Wettelijke informatie"
+      legal_notice: "Colofon"
     pricing:
       meta_title: "Prijzen — LawRelay"
       eyebrow: "bèta"
@@ -44,20 +44,21 @@ nl:
     privacy:
       meta_title: "Privacyverklaring — LawRelay"
       eyebrow: "privacy"
-      title: "Hoe LawRelay persoonsgegevens behandelt."
-      introduction: "Deze verklaring legt uit welke beperkte persoonsgegevens LawRelay gebruikt voor de bèta voor geverifieerde Belgische advocaten."
+      title: "Privacy"
+      introduction: "Welke gegevens we gebruiken en waarom."
+      operator_contact_heading: "Contact"
       sections:
         controller:
           heading: "1. Wie verantwoordelijk is"
           paragraphs:
-            - "Gauthier Berth is verwerkingsverantwoordelijke voor account-, verificatie-, marktplaats-, support- en beveiligingsgegevens. Contactgegevens staan in de wettelijke informatie."
-            - "Stuur privacyvragen en verzoeken over uw rechten naar privacy@lawrelay.be."
+            - "De hierboven vermelde uitbater van LawRelay is verwerkingsverantwoordelijke."
+            - "Stuur privacyvragen en verzoeken over uw rechten naar privacy@lawrelay.be. Registratiecontroles gebruiken de openbare lijst van advocaat.be, een automatische vergelijking van de opgegeven gegevens en waar nodig een menselijke beoordeling; neem contact op met support@lawrelay.be als een controle hulp nodig heeft."
         scope:
           heading: "2. Welke gegevens we verwerken"
           bullets:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
             - "Professionele verificatiegegevens, waaronder je officiële profiel, de vermelde naam en het professionele e-mailadres, kantoorgegevens en verificatiestatus."
-            - "Profiel-, opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
+            - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
           paragraphs:
             - "LawRelay is niet bedoeld voor cliëntnamen, dossierfeiten, conclusies, bewijsstukken, documenten of vertrouwelijke communicatie. Die informatie hoort in systemen onder controle van de betrokken advocaten."
@@ -94,13 +95,14 @@ nl:
     terms:
       meta_title: "Gebruiksvoorwaarden — LawRelay"
       eyebrow: "gebruiksvoorwaarden"
-      title: "Afspraken voor het gebruik van LawRelay."
-      introduction: "Deze voorwaarden regelen de gratis bèta van LawRelay voor professionele gebruikers."
+      title: "Voorwaarden"
+      introduction: "Voor de gratis bèta van LawRelay."
+      operator_contact_heading: "Uitbater"
       sections:
         agreement:
           heading: "1. Overeenkomst en uitbater"
           paragraphs:
-            - "Deze voorwaarden regelen het gebruik van LawRelay door professionele gebruikers. Gauthier Berth is de contracterende uitbater; contactgegevens staan in de wettelijke informatie. Een account aanmaken of de dienst gebruiken na aanvaarding van een gepubliceerde versie vormt de dienstenovereenkomst."
+            - "De hierboven vermelde uitbater is de contractspartij. Bij registratie aanvaardt u deze voorwaarden."
         eligibility:
           heading: "2. Toegang en verificatie"
           paragraphs:
@@ -141,7 +143,7 @@ nl:
         intellectual_property:
           heading: "10. Intellectuele eigendom"
           paragraphs:
-            - "Gebruikers behouden rechten op ingediende inhoud en geven LawRelay een beperkte licentie om die uitsluitend voor werking en beveiliging te hosten, tonen, verzenden en verwerken. LawRelay en licentiegevers behouden rechten op platform, merk en software."
+            - "Gebruikers behouden rechten op privégegevens en ingediende inhoud en geven LawRelay een beperkte licentie om die uitsluitend voor werking en beveiliging te hosten, tonen, verzenden en verwerken. De LawRelay-software is beschikbaar op GitHub onder de GNU Affero General Public License, versie 3 of later; die licentie maakt privégegevens van gebruikers niet openbaar. LawRelay behoudt rechten op zijn merk."
         availability:
           heading: "11. Beschikbaarheid en wijzigingen"
           paragraphs:
@@ -154,13 +156,13 @@ nl:
     cookies:
       meta_title: "Cookieverklaring — LawRelay"
       eyebrow: "cookies"
-      title: "Bewust zo weinig mogelijk cookies."
-      introduction: "LawRelay gebruikt alleen technologie die nodig is voor een veilige en werkende dienst."
+      title: "Cookies"
+      introduction: "Alleen noodzakelijke cookies."
       sections:
         current_use:
           heading: "1. Wat vandaag wordt gebruikt"
           paragraphs:
-            - "Een ondertekende sessiecookie beveiligt de browsersessie en kan na invoering van accounts de ingelogde toestand onthouden. Beveiligingstokens voorkomen vervalste verzoeken. Dit is strikt noodzakelijk voor de gevraagde dienst."
+            - "Noodzakelijke ondertekende sessie- en formulierbeveiligingscookies houden u aangemeld en beschermen formulieren tegen vervalste verzoeken. Een sessie duurt maximaal 30 dagen en eindigt eerder bij afmelding, wachtwoordreset of intrekking van de sessie. Deze cookies zijn strikt noodzakelijk voor de gevraagde dienst."
         no_tracking:
           heading: "2. Geen optionele tracking in de huidige versie"
           paragraphs:
@@ -176,29 +178,27 @@ nl:
         contact:
           heading: "5. Vragen"
           paragraphs:
-            - "Vragen over cookies en privacy kunnen naar het privacycontact in de wettelijke informatie."
+            - "Vragen over cookies en privacy kunnen naar het privacycontact in het colofon."
+    operator_contact:
+      natural_person_description: "%{name}, advocaat."
+      legal_notice_link: "Bekijk het colofon"
+      complaint_link: "Dien een klacht in bij de Gegevensbeschermingsautoriteit"
+      professional_profile_url_link: "Bekijk het officiële beroepsprofiel"
+      professional_rules_url_link: "Bekijk de beroepsregels"
     legal_notice:
-      meta_title: "Wettelijke informatie — LawRelay"
+      meta_title: "Colofon — LawRelay"
       eyebrow: "informatie over de uitbater"
-      title: "Wie LawRelay uitbaat."
-      introduction: "Belgische identificatiegegevens staan hier gemakkelijk, rechtstreeks en permanent toegankelijk."
+      title: "Colofon"
+      introduction: ""
       fields:
-        legal_name: "Maatschappelijke of handelsnaam"
-        registered_address: "Maatschappelijke zetel"
+        legal_name: "Naam"
+        registered_address: "Adres"
         enterprise_number: "Ondernemingsnummer"
-        vat_number: "Btw-nummer of -status"
-        legal_email: "Juridisch contact"
-        privacy_email: "Privacycontact"
-        support_email: "Supportcontact"
+        vat_number: "Btw-nummer"
+        legal_email: "E-mail"
+        privacy_email: "Privacy"
+        support_email: "Support"
         phone: "Telefoon"
-        professional_body: "Beroepsorganisatie of toezichthouder, indien van toepassing"
-        professional_rules_url: "Beroepsregels, indien van toepassing"
-      sections:
-        service:
-          heading: "Aard van de dienst"
-          paragraphs:
-            - "LawRelay is een zakelijke coördinatie- en matchingdienst voor geverifieerde advocaten. Het is geen advocatenkantoor, verleent geen juridisch advies en vertegenwoordigt geen cliënten."
-        content:
-          heading: "Inhoud van de website"
-          paragraphs:
-            - "Algemene informatie op deze website dient als productinformatie en kan wijzigen. Ze is geen juridisch, fiscaal, boekhoudkundig of deontologisch advies."
+        professional_body: "Beroepsorganisatie"
+        professional_profile_url: "Beroepsprofiel"
+        professional_rules_url: "Beroepsregels"

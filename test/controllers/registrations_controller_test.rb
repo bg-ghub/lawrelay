@@ -21,6 +21,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal valid_registration[:directory_profile_url], user.lawyer_profile.directory_profile_url
     assert_not_nil user.accepted_terms_at
     assert_equal RegistrationsController::TERMS_VERSION, user.accepted_terms_version
+    assert_equal RegistrationsController::PRIVACY_VERSION, user.accepted_privacy_version
     assert cookies[:session_id]
   end
 

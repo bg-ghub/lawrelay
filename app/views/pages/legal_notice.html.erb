@@ -4,9 +4,7 @@
     <%= render "pages/navigation" %>
     <header class="marketplace-hero">
       <div>
-        <p class="eyebrow"><%= t("pages.legal_notice.eyebrow") %></p>
         <h1><%= t("pages.legal_notice.title") %></h1>
-        <p class="lede"><%= t("pages.legal_notice.introduction") %></p>
         <p class="result-meta__note"><%= t("pages.shared.version", date: @legal_version) %></p>
       </div>
     </header>
@@ -20,10 +18,12 @@
             <dt><%= t("pages.legal_notice.fields.#{field}") %></dt>
             <dd>
               <% value = @operator[field] %>
-              <% if field == :professional_rules_url && value.present? %>
-                <%= link_to value, value, rel: "noopener" %>
+              <% if %i[professional_profile_url professional_rules_url].include?(field) && value.present? %>
+                <%= link_to t("pages.operator_contact.#{field}_link"), value, target: "_blank", rel: "noopener noreferrer" %>
               <% elsif %i[legal_email privacy_email support_email].include?(field) && value.present? %>
                 <%= mail_to value %>
+              <% elsif field == :phone && value.present? %>
+                <%= link_to value, "tel:#{value.delete(" ")}" %>
               <% else %>
                 <%= value.presence || t("pages.shared.not_configured") %>
               <% end %>
@@ -32,12 +32,6 @@
         <% end %>
       </dl>
 
-      <% t("pages.legal_notice.sections").each_value do |section| %>
-        <section class="detail-section">
-          <h2><%= section[:heading] %></h2>
-          <% Array(section[:paragraphs]).each do |paragraph| %><p><%= paragraph %></p><% end %>
-        </section>
-      <% end %>
     </article>
   </div>
 </section>
