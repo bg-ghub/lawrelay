@@ -19,7 +19,7 @@ Release 0.4.7 fixes issues found during the beta review:
 | Static/dependency checks | RuboCop and Brakeman pass; Ruby/import-map dependency audits report no vulnerabilities. |
 | Live operations | Healthy image, TLS and readiness; SQLite integrity passes, queues empty, backup/health timers successful. Fresh backup passed before deployment. |
 
-Browser and final deployment results are recorded in the release CI checks.
+Browser checks cover Chrome and Edge (17 cases each) and Firefox (14 cases). Three viewport checks use Chromium-specific controls. Hosted CI repeats Chrome and the production-image checks; deployment is checked separately.
 
 ## Limits
 
