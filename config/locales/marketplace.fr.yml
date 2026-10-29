@@ -49,7 +49,6 @@ fr:
       conditions_legend: "Conditions"
       fee_label: "Prix indicatif (facultatif)"
       content_rules_label: "Cette mission ne contient aucun nom de client, fait de dossier, document ou information confidentielle."
-      content_rules_hint_html: "Après accord, échangez les détails directement et de manière sécurisée. Voir %{privacy_link}."
       urgent_label: "Urgent"
       urgent_hint: "Donnez davantage de visibilité à cette mission."
       cancel: "Annuler"

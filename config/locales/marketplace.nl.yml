@@ -49,7 +49,6 @@ nl:
       conditions_legend: "Voorwaarden"
       fee_label: "Richtprijs (optioneel)"
       content_rules_label: "Deze opdracht bevat geen cliëntnamen, dossierfeiten, documenten of vertrouwelijke informatie."
-      content_rules_hint_html: "Deel details na een match rechtstreeks en veilig. Meer over %{privacy_link}."
       urgent_label: "Dringend"
       urgent_hint: "Geef deze opdracht extra zichtbaarheid."
       cancel: "Annuleren"
