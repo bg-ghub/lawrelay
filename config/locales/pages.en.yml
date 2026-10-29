@@ -102,7 +102,7 @@ en:
         agreement:
           heading: "1. Agreement and operator"
           paragraphs:
-            - "The operator named above is the contracting party. Creating an account or using the service accepts these terms and forms the service agreement."
+            - "The operator named above is your contracting party. You accept these terms when registering."
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
@@ -195,9 +195,9 @@ en:
         registered_address: "Address"
         enterprise_number: "Enterprise number"
         vat_number: "VAT number"
-        legal_email: "Legal email"
-        privacy_email: "Privacy email"
-        support_email: "Support email"
+        legal_email: "Email"
+        privacy_email: "Privacy"
+        support_email: "Support"
         phone: "Phone"
         professional_body: "Professional body"
         professional_profile_url: "Professional profile"
