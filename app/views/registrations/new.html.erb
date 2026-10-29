@@ -48,7 +48,7 @@
         <label class="toggle-row">
           <%= form.check_box :terms_accepted, { required: true, checked: @terms_accepted }, "1", "0" %>
           <span>
-            <%= t("auth.registration.agree_before") %> <%= link_to t("auth.registration.terms"), terms_path, class: "text-link" %> <%= t("auth.registration.and") %> <%= link_to t("auth.registration.privacy"), privacy_path, class: "text-link" %>.
+            <%= t("auth.registration.agreement_html", terms: link_to(t("auth.registration.terms"), terms_path, class: "text-link"), privacy: link_to(t("auth.registration.privacy"), privacy_path, class: "text-link")) %>
           </span>
         </label>
       </fieldset>

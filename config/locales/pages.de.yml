@@ -42,7 +42,7 @@ de:
           heading: "1. Wer verantwortlich ist"
           paragraphs:
             - "Der oben genannte Betreiber von LawRelay ist Verantwortlicher."
-            - "Senden Sie Datenschutzfragen und Betroffenenanträge an privacy@lawrelay.be. Bei Registrierungsprüfungen werden das öffentliche Verzeichnis von advocaat.be, ein automatischer Abgleich der angegebenen Informationen und bei Bedarf eine menschliche Prüfung verwendet; bei Unterstützungsbedarf schreiben Sie an support@lawrelay.be."
+            - "Datenschutzfragen und Betroffenenanträge: privacy@lawrelay.be. Wir gleichen Ihren Namen und Ihre berufliche E-Mail-Adresse mit Ihrem öffentlichen Profil auf advocaat.be ab. Profil- und E-Mail-Prüfung sind für den Marktplatz-Zugang erforderlich. Bitten Sie support@lawrelay.be um Überprüfung einer fehlgeschlagenen Kontrolle."
         scope:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
@@ -62,27 +62,28 @@ de:
         sharing:
           heading: "4. Empfänger"
           paragraphs:
-            - "Daten werden nur für den Betrieb geteilt: mit dem anfragenden oder antwortenden Anwalt, soweit der Ablauf dies erfordert, befugten LawRelay-Mitarbeitern und vertraglichen Anbietern für Hosting, transaktionale E-Mail, Sicherheit und Sicherung."
-            - "Daten werden nicht verkauft."
+            - "Offene Aufträge sind für verifizierte Mitglieder sichtbar. Angebote sind für den einreichenden Anwalt und die Kanzlei des Auftraggebers sichtbar. Nach Annahme erhalten der Auftraggeber und der ausgewählte Anwalt die E-Mail-Adresse des jeweils anderen."
+            - "Der Betreiber und die unten genannten Hosting-, E-Mail- und Backup-Anbieter verarbeiten die für den Betrieb nötigen Daten. Daten werden nicht verkauft."
         transfers:
           heading: "5. Ort und Übermittlungen"
           paragraphs:
             - "Hetzner hostet die Anwendung in Deutschland. Verschlüsselte Backups liegen in AWS S3 in Frankfurt. Migadu, ein Schweizer E-Mail-Anbieter, gibt an, dass sich seine E-Mail-Server in Frankreich befinden."
+            - "Anbieter können Konto- und Supportdaten auch außerhalb des EWR verarbeiten. Für die Schweiz gilt ein Angemessenheitsbeschluss der EU; der Datenverarbeitungsvertrag von AWS enthält bei Bedarf Standardvertragsklauseln. Weitere Informationen oder eine Kopie der Garantien erhalten Sie unter privacy@lawrelay.be."
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
-            - "Unbestätigte Registrierungen: 30 Tage Inaktivität. Benachrichtigungen: 90 Tage ab Erstellung. Abgeschlossene Aufträge, Angebote, Datenschutzanfragen, Meldungen und Supportnachrichten: 2 Jahre ab Abschluss. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
+            - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
             - "Konten bleiben bis zur Schließung bestehen. Nach Prüfung eines bestätigten Löschantrags entfernen wir nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Laufende Aufträge, Anfragen, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
           heading: "7. Ihre Rechte"
           paragraphs:
-            - "Je nach Rechtsgrundlage und Umständen können Sie Auskunft, Berichtigung, Löschung, Einschränkung oder Übertragbarkeit verlangen oder widersprechen. Eine Einwilligung kann ohne Auswirkung auf die vorherige rechtmäßige Verarbeitung widerrufen werden."
+            - "Je nach Rechtsgrundlage und Umständen können Sie Auskunft, Berichtigung, Löschung, Einschränkung oder Übertragbarkeit verlangen oder der Verarbeitung widersprechen. Schreiben Sie an privacy@lawrelay.be. Wir antworten in der Regel innerhalb eines Monats. Ist eine zulässige Verlängerung nötig, informieren wir Sie innerhalb dieses Monats."
             - "Sie können sich bei der belgischen Datenschutzbehörde beschweren. LawRelay darf Ihre Identität vor Bearbeitung eines Antrags prüfen."
         security:
           heading: "8. Sicherheit, Vorfälle und Änderungen"
           paragraphs:
-            - "LawRelay setzt risikogerechte Zugriffskontrollen, Transportverschlüsselung, sichere Authentifizierung, begrenzte Protokollierung, Backups, Überwachung und Vorfallverfahren ein. Kein Onlinedienst kann absolute Sicherheit versprechen."
+            - "LawRelay nutzt Zugriffskontrollen, Transportverschlüsselung, sichere Authentifizierung, begrenzte Protokollierung, Backups, Überwachung und Vorfallverfahren. Kein Onlinedienst kann absolute Sicherheit versprechen."
             - "Wesentliche Änderungen werden datiert und, soweit angemessen, im Dienst oder per E-Mail mitgeteilt."
     terms:
       meta_title: "Nutzungsbedingungen — LawRelay"
@@ -102,7 +103,7 @@ de:
         role:
           heading: "3. Rolle von LawRelay"
           paragraphs:
-            - "LawRelay stellt Software bereit, um Aufträge zu veröffentlichen, Antworten zu erhalten und eine Vermittlung zwischen Anwälten zu koordinieren. Es ist keine Kanzlei, kein Arbeitgeber, Mandant, Vertreter, Treuhanddienst und keine Partei der Zusammenarbeit und erteilt keine Rechtsberatung."
+            - "Mit LawRelay können Sie Aufträge veröffentlichen und aus den Antworten auswählen. Die Beauftragung erfolgt zwischen den Anwälten; LawRelay ist dabei keine Vertragspartei."
         professional_duties:
           heading: "4. Berufliche Verantwortung"
           bullets:
@@ -130,7 +131,7 @@ de:
           heading: "9. Meldung, Moderation und Sperrung"
           paragraphs:
             - "Nutzer können rechtswidrige, unsichere oder regelwidrige Inhalte an support@lawrelay.be melden. LawRelay darf prüfen, Informationen anfordern, Inhalte beschränken, Zugänge sperren oder Konten verhältnismäßig beenden."
-            - "Wenn Sie mit einer Moderationsentscheidung nicht einverstanden sind, antworten Sie auf die Entscheidungs-E-Mail oder schreiben Sie mit Bezug auf Konto und Auftrag an support@lawrelay.be. LawRelay prüft die Anfrage und antwortet innerhalb einer angemessenen Frist."
+            - "Um eine Moderationsentscheidung anzufechten, schreiben Sie mit der Konto- oder Auftragsreferenz an support@lawrelay.be. LawRelay prüft dies und antwortet innerhalb einer angemessenen Frist."
         intellectual_property:
           heading: "10. Geistiges Eigentum"
           paragraphs:

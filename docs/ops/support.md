@@ -41,7 +41,7 @@ Inbox, Drafts, Open, Hold, flagged mail and unrelated mail are left alone. A fla
 
 ## Privacy requests
 
-1. Acknowledge receipt and record the request, scope, identity check, applicable deadline, and any necessary hold. Escalate uncertain scope or competing obligations for legal review.
+1. Acknowledge receipt and record the request, scope, identity check, applicable deadline, and any necessary hold. Reply without undue delay, normally within one month of receipt. If a lawful extension is needed, explain it within that first month. Escalate uncertain scope or competing obligations for review.
 2. Use the signed-in request queue or a verified contact channel. Request only the identity evidence needed; avoid collecting identity documents by default.
 3. Identify the relevant account, marketplace, support, audit, and backup data. Use the protected [review-package helpers](privacy-operations.md) for a scoped export or non-mutating erasure inventory. Keep other users' data out of exports and replies.
 4. The admin request screen records progress; **marking a request completed does not export, correct, or delete data**. Carry out the reviewed action, verify its result, and record the action reference before completion.

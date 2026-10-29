@@ -63,6 +63,7 @@ de:
       verification_hint: "Wir prüfen Ihr offizielles Profil. Keine Mandanten- oder Falldaten eintragen."
       agree_heading: "Ich akzeptiere die Plattformregeln"
       agree_before: "Ich akzeptiere die"
+      agreement_html: "Ich akzeptiere die %{terms} und habe die %{privacy} gelesen."
       terms: "Nutzungsbedingungen"
       and: "und die"
       privacy: "Datenschutzerklärung"
@@ -78,7 +79,7 @@ de:
       aside_three_body: "Nur geprüfte Berufsträger sehen die Aufträge."
       errors:
         rate_limited: "Zu viele Registrierungsversuche. Bitte versuchen Sie es später erneut."
-        accept_terms: "Sie müssen den Bedingungen und der Datenschutzerklärung zustimmen."
+        accept_terms: "Sie müssen die Nutzungsbedingungen akzeptieren und bestätigen, dass Sie die Datenschutzerklärung gelesen haben."
         already_registered: "Diese Konto-, Kanzlei- oder Kammerdaten sind bereits registriert."
     email_verifications:
       review:

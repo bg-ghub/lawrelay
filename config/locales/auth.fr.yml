@@ -63,6 +63,7 @@ fr:
       verification_hint: "Nous vérifions votre profil officiel. Aucune donnée de client ou de dossier ici."
       agree_heading: "J’accepte les règles de la plateforme"
       agree_before: "J’accepte les"
+      agreement_html: "J’accepte les %{terms} et j’ai lu la %{privacy}."
       terms: "conditions"
       and: "et la"
       privacy: "déclaration de confidentialité"
@@ -78,7 +79,7 @@ fr:
       aside_three_body: "Seuls les professionnels vérifiés accèdent aux missions."
       errors:
         rate_limited: "Trop de tentatives d’inscription. Réessayez plus tard."
-        accept_terms: "Vous devez accepter les conditions et la déclaration de confidentialité."
+        accept_terms: "Vous devez accepter les conditions et confirmer avoir lu la déclaration de confidentialité."
         already_registered: "Ces données de compte, cabinet ou barreau sont déjà enregistrées."
     email_verifications:
       review:

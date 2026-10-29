@@ -63,6 +63,7 @@ nl:
       verification_hint: "We controleren je officiële profiel. Deel geen cliënt- of dossiergegevens."
       agree_heading: "Ik ga akkoord met de platformregels"
       agree_before: "Ik aanvaard de"
+      agreement_html: "Ik aanvaard de %{terms} en heb de %{privacy} gelezen."
       terms: "voorwaarden"
       and: "en"
       privacy: "privacyverklaring"
@@ -78,7 +79,7 @@ nl:
       aside_three_body: "Alleen geverifieerde professionals zien de marktplaats."
       errors:
         rate_limited: "Te veel registratiepogingen. Probeer het later opnieuw."
-        accept_terms: "Je moet akkoord gaan met de voorwaarden en privacyverklaring."
+        accept_terms: "Je moet de voorwaarden aanvaarden en bevestigen dat je de privacyverklaring hebt gelezen."
         already_registered: "Deze account-, kantoor- of baliegegevens zijn al geregistreerd."
     email_verifications:
       review:
