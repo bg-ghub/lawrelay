@@ -1,8 +1,10 @@
 # Beta support and moderation
 
-Owner: Gauthier Berth. Intake: `support@lawrelay.be`; privacy: `privacy@lawrelay.be`; security: `security@lawrelay.be`. These identities route to the monitored operator mailbox. There is no published response-time SLA.
+Owner: Gauthier Berth. `info@lawrelay.be` is the confirmed general contact inbox. `support@lawrelay.be`, `privacy@lawrelay.be` and `security@lawrelay.be` are intended routing addresses; their current mailbox routing is not independently confirmed. There is no published response-time SLA.
 
 Migadu Micro permits [20 outgoing attempts per day across the account](https://www.migadu.com/pricing/). Verification, proposal notifications, support replies and owner alerts share that budget. This infrastructure quota does not limit registration eligibility or create an invitation cap. Failed mail jobs trigger the existing owner health-alert route; if the Migadu quota is exhausted, SMTP alerts can also fail, so inspect the protected health journal. Check the failure before retrying; keep delivery smoke tests minimal.
+
+For a bounce or complaint, inspect the delivery failure and the affected account privately. Do not blindly retry an invalid or complained-about address. If the professional address has changed, ask the lawyer to update the official directory and use LawRelay's verified email-change flow; do not replace it manually from an unverified message. Keep the provider response and decision in the private support record.
 
 ## Daily triage
 

@@ -40,4 +40,24 @@ class DirectoryFeedbackTest < ActionDispatch::IntegrationTest
       assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 1
     end
   end
+
+  test "official-email confirmation only claims sent after delivery is recorded" do
+    @profile.update!(directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_name: @user.full_name, directory_email: "professional@example.test", directory_checked_at: Time.current)
+
+    %w[nl fr de en].each do |locale|
+      get verification_status_path(locale:)
+      assert_response :success
+      assert_select "p", text: I18n.t("directory_onboarding.status.confirmation_not_sent_body", locale:, email: @profile.directory_email)
+      assert_not_includes response.body, I18n.t("directory_onboarding.status.confirmation_body", locale:, email: @profile.directory_email)
+    end
+
+    @profile.update!(directory_confirmation_requested_at: Time.current)
+    %w[nl fr de en].each do |locale|
+      get verification_status_path(locale:)
+      assert_response :success
+      assert_select "p", text: I18n.t("directory_onboarding.status.confirmation_body", locale:, email: @profile.directory_email)
+      assert_not_includes response.body, I18n.t("directory_onboarding.status.confirmation_not_sent_body", locale:, email: @profile.directory_email)
+    end
+  end
 end

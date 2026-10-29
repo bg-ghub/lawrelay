@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 29 October 2026. Current release: 0.8.6.
+Reviewed 29 October 2026. Current release: 0.8.7.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -9,7 +9,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Live HTTPS site in NL/FR/DE/EN, English URL slugs and language switching.
 - [x] Public AGPL source, SemVer releases and source/version links in the footer.
 - [x] Signup, directory/email verification, firm boundaries, private-record access and suspended-account protections.
-- [x] Recoverable verification-delivery failures, bounded retries and useful directory-check feedback.
+- [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.
 - [x] Assignment/proposal flows, optional indicative rates, profile-import preview and [localized notifications with retries/history](ops/notifications.md).
 - [x] Internal security fixes, translation checks, keyboard/responsive/axe checks and Chrome/Edge/Firefox journeys. See [QA](ops/beta-thorough-qa.md), [dated evidence](ops/beta-ops-checks.md) and [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml).
@@ -26,6 +26,8 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 ## Routine operations
 
 Review support/moderation/privacy intake, mail capacity and failed deliveries, backup results, logs, queues and TLS. Use the [support](ops/support.md), [feedback](ops/beta-feedback.md), [monitoring](ops/external-monitoring.md) and [incident](ops/incident-response.md) guides. Technical recovery drills pass; actual incidents still need the operator to respond. Keep real user evidence outside public GitHub issues.
+
+The existing Migadu admin session has expired; support/privacy/security alias routing still needs a check when account access is available. Use `info@lawrelay.be` for the confirmed contact inbox. No new mail provider is configured.
 
 ## Deferred or optional
 
