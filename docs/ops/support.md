@@ -14,6 +14,12 @@ For a bounce or complaint, inspect the delivery failure and the affected account
 4. Reply in the user's language when possible. Ask for the affected page, approximate time, browser, and a record reference; never ask for passwords, MFA codes, client names, case facts, or documents.
 5. Record the outcome and tell the user what changed. Check that the issue is resolved before closing it.
 
+## Closing support mail
+
+Create `Support/Resolved` empty, then move the complete closed conversation there. Do not use it for open cases or bulk imports. The job never creates folders or moves mail. The local daily retention job keeps resolved threads for two years from the later of their move or last activity; it may remove linked `Sent` copies then.
+
+Inbox, Drafts, Open, Hold, flagged mail and unrelated mail are left alone. A flag or move to Hold protects the thread again. It reads headers only, never sends mail and logs no mail content. Review its preview before enabling it; the existing invitation draft remains in Drafts.
+
 ## Verification and access
 
 - Find the account by name, email or firm in user management. Check account access, email proof, professional verification and the primary firm separately; they are different controls.

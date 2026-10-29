@@ -1,5 +1,11 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.10.0
+
+Resolved support-mail cleanup uses the existing Migadu IMAP account and host timer. It reads headers only, starts a two-year closure clock, protects open/held/flagged/draft mail, and uses exact UID deletion only for eligible resolved threads and linked Sent copies. Failures or a missed daily run use the existing health-alert path. Closure metadata joins the encrypted backup.
+
+Thirteen offline mailbox cases and four host-health cases pass on Linux without network access. Checks cover scope, malformed headers/state, fresh replies, changes before deletion, failure recovery and secret-free output. A live read-only preview succeeded across nine folders with zero eligible messages. New support folders were empty; no existing mail was moved or deleted and the invitation draft was preserved. Final installation and release checks are recorded with the release.
+
 ## 29 October 2026 — 0.9.0
 
 Retention defaults: abandoned email-unconfirmed registrations 30 days, terminal notifications 90 days, closed work/requests/support 2 years, audit records 1 year, technical logs up to 31 days, encrypted backups 30 days. Recorded holds and unresolved work/requests protect relevant records. Mailbox cleanup remains manual.

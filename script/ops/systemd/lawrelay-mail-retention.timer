@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily LawRelay resolved support mailbox retention
+
+[Timer]
+OnCalendar=*-*-* 04:10:00 Europe/Brussels
+Persistent=true
+RandomizedDelaySec=10m
+Unit=lawrelay-mail-retention.service
+
+[Install]
+WantedBy=timers.target

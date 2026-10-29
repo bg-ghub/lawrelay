@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+__pycache__/
+*.py[cod]
+
 # Ignore all environment files.
 /.env*
 

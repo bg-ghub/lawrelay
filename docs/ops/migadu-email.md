@@ -40,3 +40,11 @@ The beta is live. When mailbox access is available:
 4. For bounces or complaints, follow the handling note in [support.md](support.md).
 
 Do not send a delivery campaign or add another provider for these checks.
+
+## Resolved support retention
+
+The existing Migadu IMAP mailbox can be cleaned locally once a conversation is closed. Create `Support/Resolved` empty, then move the whole closed conversation there; do not move existing mail there in bulk. The job never creates folders or moves mail. It keeps resolved threads for two years from the later of their first move there or their last thread activity. A linked copy in `Sent` may expire at the same time.
+
+Inbox, Drafts, Open, Hold, flagged messages and unrelated mail are preserved. Moving a conversation to Hold or flagging it protects it again. The job reads headers only, never sends mail and logs counts, not message content. The existing invitation draft stays in Drafts.
+
+Install the reviewed worker with `sudo script/ops/install-mail-retention`, run the printed preview, then enable the timer only after reviewing that preview.

@@ -21,7 +21,7 @@ The public privacy notice distinguishes Migadu's Swiss company location from its
 | Active account and professional profile | Keep until closure, not merely based on inactivity. A verified deletion request is reviewed before account/profile data is removed. |
 | Closed assignments, proposals and shared workflow records | Keep for 2 years after closure. Pseudonymise shared work when an account is removed where possible; do not promise anonymisation. |
 | Notifications | Delete terminal notifications and delivery metadata after 90 days. Keep unresolved delivery investigations or held records until the review is finished. |
-| Resolved reports, privacy requests and support correspondence | Keep for 2 years after resolution or last correspondence. Mailbox cleanup is a manual operator task. |
+| Resolved reports, privacy requests and support correspondence | Keep for 2 years after resolution or last correspondence. The daily Migadu IMAP cleanup removes eligible `Support/Resolved` conversations and linked Sent copies; open, held, flagged, draft and unrelated mail stays protected. Closure timestamps are private metadata included in encrypted backups. |
 | Audit and security records | Keep for 1 year. |
 | Deletion ledger | Keep the minimum replay record for 2 years. It contains no email address or credentials and stops erased data returning after a restore. |
 | Authentication sessions | Expire after 30 days; expired sessions are removed on access and by daily cleanup. Optional member two-factor approval lasts for that session; a new sign-in needs another code. Admin MFA authorisation lasts 12 hours. This does not delete account or audit data. |

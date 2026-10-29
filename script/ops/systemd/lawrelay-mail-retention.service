@@ -1,0 +1,23 @@
+[Unit]
+Description=LawRelay resolved support mailbox retention
+Wants=network-online.target
+After=network-online.target
+OnFailure=lawrelay-failure@%n.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+StateDirectory=lawrelay-mail-retention
+StateDirectoryMode=0700
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/local/libexec/lawrelay-mail-retention.py --env-file /home/deploy/lawrelay/production.env --folder Support/Resolved --sent-folder Sent --state-file /var/lib/lawrelay-mail-retention/state.json --success-file /var/lib/lawrelay-mail-retention/last-success --apply
+TimeoutStartSec=5min
+MemoryMax=128M
+TasksMax=16
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/lawrelay-mail-retention

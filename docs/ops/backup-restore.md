@@ -1,5 +1,7 @@
 # Backup and restore
 
+When mailbox cleanup is configured, snapshots also include `mail-retention-state.json` (closure timestamps and UIDs only). Restore its latest copy to the protected root-owned mail-retention directory before resuming that timer; preserve any newer live state. Losing the state restarts the two-year clock and never makes messages eligible early. Message bodies and mailbox credentials are not copied by this helper.
+
 This runbook is for the initial single Linux/Docker host. It does not create a cloud bucket, credentials, or DNS record; the operator supplies those separately. Keep recovery keys and provider credentials in the password manager and root-only server files, never in this repository.
 
 ## What is protected

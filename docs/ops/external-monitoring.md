@@ -12,7 +12,7 @@ At minute 17 of every hour it checks:
 
 HTTP redirects, malformed responses, invalid TLS, unavailable endpoints and oversized bodies fail the check. Endpoint checks retry once before reporting failure. Probe logs contain fixed check names and pass/fail only, never response bodies or private application data.
 
-The five-minute host check remains in place for queue failures/age, backups, disk and readiness. An hourly external check complements it: a dead host or an exhausted SMTP allowance cannot send its own email alert. The operations endpoint reveals only generic healthy/unavailable status, never job details or user data. Deploy the application version providing this endpoint before accepting or enabling the new monitor.
+The five-minute host check covers queues, backups, disk, readiness and, when configured, a mailbox-cleanup success marker no older than 50 hours. Cleanup failures use the existing systemd failure alert. An hourly external check complements it: a dead host or an exhausted SMTP allowance cannot send its own email alert. The operations endpoint reveals only generic healthy/unavailable status, never job details or user data. Deploy the application version providing this endpoint before accepting or enabling the new monitor.
 
 Checked 29 October 2026: a homepage probe failure opened [incident 29](https://github.com/bg-ghub/lawrelay/issues/29). The workstation checks and [fresh hosted run 40875197943](https://github.com/bg-ghub/lawrelay/actions/runs/40875197943) then passed all five checks on 0.7.0; recovery closed the incident. The cause of the brief failure was not established. This is dated evidence, not an availability guarantee.
 
