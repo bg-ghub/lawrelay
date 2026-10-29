@@ -1,6 +1,19 @@
 # Beta operations checks
 
-## 29 October 2026
+## 29 October 2026 — 0.8.0
+
+| Check | Result |
+| --- | --- |
+| Security review | Fixed pre-MFA homepage assignment visibility, session-revocation races during MFA, and notification delivery after professional verification changes. Focused regressions pass; this is an internal review. |
+| Application/browser checks | 397 Rails cases / 13,820 assertions pass; 8 POSIX-only cases skip on Windows. All 14 privacy cases / 118 assertions pass in isolated Linux. Chrome: 32 cases / 1,446 assertions, no skips. RuboCop and Brakeman pass. |
+| Authenticated accessibility | Settings/import and notification history checked in NL/FR/DE/EN at 320/1440px: keyboard, labels, targets, overflow and 18 local axe scans pass. The known logotype exemption is excluded. Read-button height increased to 32px. Physical devices and screen readers remain untested. |
+| Fresh recovery | Snapshot `1020783f`, taken at 13:47 Europe/Brussels, restored and booted in 53 seconds. Candidate 0.8.0 and preceding 0.7.0 passed readiness, locale and authorization checks. Production identity/start time stayed unchanged; temporary data was removed. Older-image compatibility does not authorize a public rollback that loses security fixes. |
+| Queued mail/privacy rehearsal | Only newly created synthetic notification jobs were executed, including selection/non-selection, through the test mail adapter. Scoped export/private-file and non-mutating erasure-inventory checks passed. No restored real-recipient job was executed, no external mail sent, no real deletion performed. |
+| Mail/monitoring | Public SPF/DMARC and DKIM delegation are present. The internal mailbox loop is received but does not prove external authentication alignment. Hosted monitor recovery [40875197943](https://github.com/bg-ghub/lawrelay/actions/runs/40875197943) passed and closed incident 29. Backup/health timers are active. |
+
+This closes the engineering rehearsal, not operator/counsel approval, a real-lawyer trial, independent reviews or human incident response. The [master checklist](../release-master-todo.md) retains those gaps.
+
+## 29 October 2026 — 0.4.4
 
 Non-disruptive checks against release 0.4.4:
 

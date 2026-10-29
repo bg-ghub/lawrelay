@@ -14,7 +14,7 @@ HTTP redirects, malformed responses, invalid TLS, unavailable endpoints and over
 
 The five-minute host check remains in place for queue failures/age, backups, disk and readiness. An hourly external check complements it: a dead host or an exhausted SMTP allowance cannot send its own email alert. The operations endpoint reveals only generic healthy/unavailable status, never job details or user data. Deploy the application version providing this endpoint before accepting or enabling the new monitor.
 
-Checked 29 October 2026: the latest five scheduled runs succeeded, most recently [run 40829650435](https://github.com/bg-ghub/lawrelay/actions/runs/40829650435). The workstation probe also passed all five checks against release 0.4.4. No incident was open. This is dated evidence, not a continuing availability guarantee.
+Checked 29 October 2026: a homepage probe failure opened [incident 29](https://github.com/bg-ghub/lawrelay/issues/29). The workstation checks and [fresh hosted run 40875197943](https://github.com/bg-ghub/lawrelay/actions/runs/40875197943) then passed all five checks on 0.7.0; recovery closed the incident. The cause of the brief failure was not established. This is dated evidence, not an availability guarantee.
 
 ## Alert and recovery
 

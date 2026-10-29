@@ -26,12 +26,9 @@ fr:
       platform: Plateforme
       learn_more: En savoir plus
       contact: Contact
-      made_for_belgium: Pensé pour la Belgique
       source_code: Code source sur GitHub
       open_source: Code ouvert
       app_version: Version %{version}
-      demo_notice: Bêta pour les avocats inscrits sur advocaat.be. N'ajoutez pas de données de clients ou de dossiers.
-      demo_disclaimer: "LawRelay ne fournit pas de conseil juridique."
     home:
       title: "LawRelay — remplacements et missions juridiques"
       og_description: "Trouvez un confrère pour une audience ou une mission juridique."

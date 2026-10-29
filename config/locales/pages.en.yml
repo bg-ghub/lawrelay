@@ -71,8 +71,8 @@ en:
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "Account and marketplace data are kept while your account is active, then deleted on request unless professional, contractual, security, or legal obligations require a hold."
-            - "Backups follow a 7 daily / 4 weekly / 12 monthly schedule. Rights requests are handled through a manual queue."
+            - "We review deletion requests manually, including any records needed for legal obligations, security or disputes. Account, assignment, support and audit records have no automatic deletion schedule."
+            - "Backups keep 7 daily, 4 weekly and 12 monthly snapshots. Deleted data may remain until backups and older storage versions expire."
         rights:
           heading: "7. Your rights"
           paragraphs:

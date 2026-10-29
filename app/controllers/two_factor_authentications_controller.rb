@@ -1,9 +1,11 @@
 class TwoFactorAuthenticationsController < ApplicationController
   SETUP_LIFETIME = 10.minutes
+  class RevokedSession < StandardError; end
+
+  rescue_from RevokedSession, with: :reject_revoked_session
 
   before_action -> { response.headers["Cache-Control"] = "no-store" }
   before_action :require_member
-  before_action :require_setup_authorization, only: %i[setup enable]
 
   rate_limit to: 5, within: 3.minutes, name: "account", by: -> { current_user.id },
     only: %i[begin_setup enable verify destroy], with: :rate_limited
@@ -14,11 +16,13 @@ class TwoFactorAuthenticationsController < ApplicationController
   end
 
   def begin_setup
-    current_user.begin_two_factor_setup!(password: params[:current_password])
-    session[:two_factor_setup] = {
-      "user_id" => current_user.id, "session_id" => Current.session.id,
-      "authorized_at" => Time.current.to_i
-    }
+    with_current_member_session do
+      current_user.begin_two_factor_setup!(password: params[:current_password])
+      session[:two_factor_setup] = {
+        "user_id" => current_user.id, "session_id" => Current.session.id,
+        "authorized_at" => Time.current.to_i
+      }
+    end
     redirect_to setup_two_factor_authentication_path
   rescue User::InvalidTwoFactorPassword
     flash.now[:alert] = t("two_factor.notices.invalid_password")
@@ -28,15 +32,23 @@ class TwoFactorAuthenticationsController < ApplicationController
   end
 
   def setup
-    load_setup
+    with_current_member_session do
+      require_setup_authorization
+      load_setup unless performed?
+    end
   end
 
   def enable
-    current_user.with_lock do
+    with_current_member_session do
+      require_setup_authorization
+      next if performed?
+
       @recovery_codes = current_user.enable_two_factor!(params[:mfa_code])
       rotate_session!(revoke_all: true, verified: true)
       record_audit_event("account.two_factor_enabled")
     end
+    return if performed?
+
     session.delete(:two_factor_setup)
     flash.now[:notice] = t("two_factor.notices.enabled")
     render :recovery_codes
@@ -57,7 +69,7 @@ class TwoFactorAuthenticationsController < ApplicationController
   def verify
     return redirect_to two_factor_authentication_path unless current_user.two_factor_enabled?
 
-    current_user.with_lock do
+    with_current_member_session do
       current_user.verify_two_factor_code!(code: params[:mfa_code], recovery_code: params[:recovery_code])
       rotate_session!(revoke_all: false, verified: true)
       record_audit_event("account.two_factor_verified")
@@ -69,7 +81,7 @@ class TwoFactorAuthenticationsController < ApplicationController
   end
 
   def destroy
-    current_user.with_lock do
+    with_current_member_session do
       current_user.disable_two_factor!(password: params[:current_password], code: params[:mfa_code], recovery_code: params[:recovery_code])
       rotate_session!(revoke_all: true, verified: false)
       record_audit_event("account.two_factor_disabled")
@@ -86,6 +98,27 @@ class TwoFactorAuthenticationsController < ApplicationController
 
   def require_member
     redirect_to settings_path if current_user.system_admin?
+  end
+
+  def with_current_member_session
+    user = current_user
+    session_id = Current.session.id
+    user.with_lock do
+      active_session = user.sessions.lock.find_by(id: session_id)
+      raise RevokedSession unless user.active? && !user.system_admin? && active_session && !active_session.expired?
+
+      active_session.user = user
+      Current.session = active_session
+      yield
+    end
+  end
+
+  def reject_revoked_session
+    session.delete(:two_factor_setup)
+    Current.session = nil
+    cookies.delete(:session_id)
+    locale = params[:locale].presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
+    I18n.with_locale(locale) { request_authentication }
   end
 
   def rotate_session!(revoke_all:, verified:)

@@ -26,12 +26,9 @@ nl:
       platform: Platform
       learn_more: Meer weten
       contact: Contact
-      made_for_belgium: Gemaakt voor België
       source_code: Broncode op GitHub
       open_source: Open source
       app_version: Versie %{version}
-      demo_notice: Bèta voor advocaten op advocaat.be. Deel geen cliënt- of dossiergegevens.
-      demo_disclaimer: "LawRelay verleent geen juridisch advies."
     home:
       title: "LawRelay — zittingsvervanging en juridische opdrachten"
       og_description: "Vind een confrater voor een zitting of juridische opdracht."
