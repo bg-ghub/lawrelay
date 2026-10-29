@@ -4,7 +4,7 @@ de:
       link: "Gründerzugang"
       eyebrow: "Beta"
       title: "Kostenloser Zugang"
-      intro: "Gewähren Sie einer verifizierten Kanzlei einen kurzen, protokollierten Beta-Zeitraum. Dadurch entsteht keine Zahlung und kein kostenpflichtiger Tarif wird ersetzt."
+      intro: "Gewähren Sie einer verifizierten Kanzlei kostenlosen Zugang bis zum gewählten Datum. Es entsteht keine Zahlung."
       back: "Zurück zur Prüfung"
       verified_firm: "Verifizierte Kanzlei"
       active_until: "Aktiv bis %{date}"

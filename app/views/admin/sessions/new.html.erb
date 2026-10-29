@@ -1,12 +1,11 @@
 <% content_for :title, t("admin.login.title") %>
 <div class="new-assignment shell">
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("admin.login.eyebrow") %></p>
     <h1><%= t("admin.login.heading") %></h1>
     <p><%= t("admin.login.lede") %></p>
   </div>
 
-  <div class="new-assignment__layout">
+  <div class="new-assignment__layout auth-form-layout">
     <%= form_with url: admin_login_path, class: "assignment-form" do |form| %>
       <fieldset class="form-section">
         <legend><%= t("admin.login.form_title") %></legend>

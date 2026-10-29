@@ -21,24 +21,24 @@ de:
         restriction: "Verarbeitung einschränken"
         objection: "Der Verarbeitung widersprechen"
       notices:
-        created: "Ihre Datenschutzanfrage wurde erfasst."
+        created: "Ihre Anfrage ist eingegangen."
         rate_limited: "Bitte warten Sie, bevor Sie eine weitere Anfrage senden."
       index:
         title: "Datenschutzanfragen — LawRelay"
         heading: "Ihre Datenschutzanfragen"
-        lede: "Verfolgen Sie Anfragen zu den personenbezogenen Daten, die LawRelay über Sie speichert."
+        lede: "Verfolgen Sie hier Ihre Anfragen."
         new: "Neue Anfrage"
-        empty: "Sie haben noch keine Datenschutzanfrage gestellt."
+        empty: "Noch keine Datenschutzanfragen."
       new:
         title: "Neue Datenschutzanfrage — LawRelay"
-        heading: "Sagen Sie uns, was Sie benötigen."
-        lede: "Wir dokumentieren Anfrage und Bearbeitung, damit nichts verloren geht."
+        heading: "Neue Datenschutzanfrage"
+        lede: "Beantragen Sie Auskunft, Berichtigung oder Löschung Ihrer Daten."
         legend: "Anfrage"
         kind: "Art der Anfrage"
         kind_prompt: "Anfrage auswählen"
         details: "Was sollten wir wissen?"
         details_placeholder: "Beschreiben Sie kurz die betreffenden Daten oder das Konto."
-        retention_note: "Eine Kontolöschung entfernt keine Rechnungen oder Prüfprotokolle, die LawRelay gesetzlich aufbewahren muss."
+        retention_note: "Gesetzlich erforderliche Rechnungen und Prüfprotokolle bleiben gespeichert."
         submit: "Anfrage senden"
     reports:
       eyebrow: "Problem melden"
@@ -51,18 +51,18 @@ de:
       errors:
         own_assignment: "Sie können keinen Auftrag Ihrer eigenen Kanzlei melden."
       notices:
-        created: "Danke. Die Meldung wurde zur Prüfung erfasst."
+        created: "Meldung eingegangen. Wir prüfen sie."
         rate_limited: "Sie haben das Meldelimit erreicht. Versuchen Sie es später erneut."
       new:
         title: "Auftrag melden — LawRelay"
         heading: "Diesen Auftrag melden"
-        lede: "Beschreiben Sie, was bei „%{title}“ geprüft werden sollte."
+        lede: "Was stimmt bei „%{title}“ nicht?"
         legend: "Problem"
         category: "Grund"
         category_prompt: "Grund auswählen"
         details: "Kurze Erläuterung"
-        details_placeholder: "Beschreiben Sie das Problem ohne Mandanten- oder Falldaten."
-        safety_note: "Fügen Sie keine Berufsgeheimnisse, Mandantennamen oder Dokumente ein."
+        details_placeholder: "Beschreiben Sie das Problem."
+        safety_note: "Keine Mandantennamen, Falldaten, Dokumente oder vertraulichen Informationen."
         submit: "Meldung senden"
     admin:
       eyebrow: "Vertrauen und Sicherheit"
@@ -73,7 +73,7 @@ de:
       complete: "Abschließen"
       reject: "Ablehnen"
       notices:
-        updated: "Der Vorgang wurde aktualisiert."
+        updated: "Gespeichert."
         invalid_decision: "Wählen Sie eine gültige Aktion."
         note_required: "Fügen Sie vor dem Abschluss einen Bearbeitungsvermerk hinzu."
       reports:
@@ -84,5 +84,5 @@ de:
       privacy_requests:
         title: "Datenschutzanfragen — LawRelay-Administration"
         heading: "Datenschutzanfragen"
-        lede: "Verfolgen Sie jede Anfrage bis zu einem dokumentierten Ergebnis."
+        lede: "Bearbeiten und schließen Sie Anfragen ab."
         empty: "Keine Datenschutzanfragen zur Prüfung."

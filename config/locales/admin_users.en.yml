@@ -13,7 +13,7 @@ en:
       eyebrow: Administration
       you: You
       not_recorded: Not recorded
-      timezone: Times are shown in Europe/Brussels.
+      timezone: 'Time zone: Europe/Brussels.'
       index:
         title: Users — LawRelay admin
         heading: Users
@@ -86,8 +86,8 @@ en:
         professional: Professional details
         account: Account details
         access: Access controls
-        protected: Administrator accounts are read-only here.
-        identity_hint: Name or email changes sign out existing sessions and require a new professional check. A changed email must be confirmed.
+        protected: You can view administrator accounts here, but cannot edit them.
+        identity_hint: Changing a name or email signs out all sessions and triggers a new professional check. A new email needs confirmation.
       access:
         suspend:
           heading: Suspend account
@@ -95,11 +95,11 @@ en:
           submit: Suspend account
         restore:
           heading: Restore access
-          body: Allows sign-in again. Marketplace access still needs the normal verification checks.
+          body: Allows sign-in again. Verification is still required for assignment access.
           submit: Restore access
         revoke_sessions:
           heading: Sign out all sessions
-          body: Signs out this user's sessions. They can sign in again.
+          body: Signs out this user on every device. They can sign in again.
           submit: Sign out all sessions
       sessions:
         heading: Active sessions
@@ -144,12 +144,12 @@ en:
       errors:
         heading: Check this change
         protected_account: Administrator accounts cannot be changed here.
-        reason_required: Add a reason for this action.
+        reason_required: Add a reason.
         reason_too_long: Keep the reason under 2,000 characters.
         invalid_action: Choose a valid account action.
-        invalid_details: Check the account details and try again.
+        invalid_details: Check the account details.
       notices:
         updated: Account details saved.
-        suspended: The account is suspended and its sessions are signed out.
+        suspended: Account suspended. All sessions signed out.
         restored: Account access restored.
-        sessions_revoked: All sessions for this account are signed out.
+        sessions_revoked: All sessions signed out.

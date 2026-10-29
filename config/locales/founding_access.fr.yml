@@ -4,7 +4,7 @@ fr:
       link: "Accès fondateur"
       eyebrow: "Bêta"
       title: "Accès gratuit"
-      intro: "Accordez à un cabinet vérifié une courte période bêta consignée. Cela ne crée jamais de paiement et ne remplace pas une offre payante."
+      intro: "Accordez un accès gratuit à un cabinet vérifié jusqu'à la date choisie. Aucun paiement n'est créé."
       back: "Retour aux vérifications"
       verified_firm: "Cabinet vérifié"
       active_until: "Actif jusqu’au %{date}"

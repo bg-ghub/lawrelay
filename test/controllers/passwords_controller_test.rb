@@ -14,7 +14,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path(locale: :en)
 
     follow_redirect!
-    assert_notice "Password reset instructions have been sent"
+    assert_notice I18n.t("auth.passwords.sent", locale: :en)
   end
 
   test "create for an unknown user redirects but sends no mail" do
@@ -23,7 +23,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path(locale: :en)
 
     follow_redirect!
-    assert_notice "Password reset instructions have been sent"
+    assert_notice I18n.t("auth.passwords.sent", locale: :en)
   end
 
   test "edit" do

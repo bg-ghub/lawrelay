@@ -1,9 +1,7 @@
 <% content_for :title, t("mfa.challenge.title") %>
 <div class="new-assignment shell">
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("mfa.eyebrow") %></p>
     <h1><%= t("mfa.challenge.heading") %></h1>
-    <p><%= t("mfa.challenge.lede") %></p>
   </div>
 
   <div class="new-assignment__layout">
@@ -14,6 +12,6 @@
       </fieldset>
       <div class="form-actions"><%= form.submit t("mfa.challenge.submit"), class: "button button--dark" %></div>
     <% end %>
-    <aside class="posting-aside"><span class="posting-aside__number">01</span><h2><%= t("mfa.challenge.aside_title") %></h2><p><%= t("mfa.challenge.aside_body") %></p></aside>
+    <aside class="posting-aside"><h2><%= t("mfa.challenge.aside_title") %></h2><p><%= t("mfa.challenge.aside_body") %></p></aside>
   </div>
 </div>

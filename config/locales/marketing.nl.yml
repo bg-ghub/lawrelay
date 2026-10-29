@@ -7,7 +7,7 @@ nl:
       browse_assignments: Bekijk opdrachten
       view: Bekijk
     layout:
-      title: "LawRelay — collega’s vinden voor je praktijk"
+      title: "LawRelay — zittingsvervanging en juridische opdrachten"
       description: LawRelay brengt Belgische advocaten samen voor zittingsvervangingen en juridische opdrachten.
       skip_to_content: Naar inhoud
       dismiss_notice: Melding sluiten
@@ -16,12 +16,12 @@ nl:
       primary_navigation: Hoofdnavigatie
       how_it_works: Zo werkt het
       for_lawyers: Voor advocaten
-      discover_assignments: Ontdek opdrachten
+      discover_assignments: "Opdrachten"
       questions: Vragen
-      dashboard: Mijn overzicht
+      dashboard: "Overzicht"
       open_menu: Menu openen
     footer:
-      intro: Een plek voor advocaten om vervanging te regelen en opdrachten uit te besteden.
+      intro: "Zittingsvervanging regelen en opdrachten uitbesteden."
       platform: Platform
       learn_more: Meer weten
       contact: Contact
@@ -30,21 +30,21 @@ nl:
       open_source: Open source
       app_version: Versie %{version}
       demo_notice: Gratis bèta voor advocaten op advocaat.be. Deel geen cliënt- of dossiergegevens.
-      demo_disclaimer: LawRelay coördineert contact; het verleent geen juridisch advies.
+      demo_disclaimer: "LawRelay verleent geen juridisch advies."
     home:
-      title: "LawRelay — collega’s vinden voor je praktijk"
-      og_description: Plaats een zittingsvervanging of juridische opdracht en vind een confrater.
+      title: "LawRelay — zittingsvervanging en juridische opdrachten"
+      og_description: "Vind een confrater voor een zitting of juridische opdracht."
       hero:
         eyebrow: voor advocaten
         heading_before: Een collega nodig
         heading_middle: voor een
         heading_emphasis: zitting?
-        lede: Plaats je vraag, ontvang reacties en kies de confrater die past bij je dossier.
-        note: Gratis bèta. Registratie staat open voor advocaten op advocaat.be.
+        lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
+        note: "Gratis bèta voor advocaten op advocaat.be."
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
-        response_received: Een reactie ontvangen
+        response_received: "Nieuwe reactie"
         court_replacement: Zittingsvervanging
         court_example: Familierechtbank Antwerpen
         city: Antwerpen
@@ -55,63 +55,63 @@ nl:
         choose: Kies
         at_your_pace: op je eigen tempo
       pathways:
-        eyebrow: voor beide kanten van de balie
+        eyebrow: "Voor advocaten"
         heading_before: Waarmee kunnen
         heading_after: we je helpen?
-        lede: "Een vervanger zoeken of zelf een opdracht opnemen: je regelt het hier op één plek."
+        lede: "Vind een vervanger of neem zelf een opdracht op."
         requester:
           kicker: Ik zoek hulp
-          heading_before: Vind een confrater
-          heading_after: voor je opdracht.
-          body: Deel datum, locatie en wat je zoekt. Daarna vergelijk je de reacties.
+          heading_before: "Een opdracht"
+          heading_after: "uitbesteden."
+          body: "Geef aan wat je nodig hebt, waar en wanneer."
         responder:
           kicker: Ik heb ruimte
-          heading_before: Neem werk op
-          heading_after: dat bij je past.
-          body: Bekijk zittingsvervangingen en juridische opdrachten in jouw regio of vakgebied.
+          heading_before: "Een opdracht"
+          heading_after: "opnemen."
+          body: "Vind zittingsvervangingen en juridische opdrachten."
       opportunities:
-        eyebrow: open opdrachten
+        eyebrow: "Open opdrachten"
         heading_before: Wat speelt er
         heading_emphasis: vandaag?
         all: Alle opdrachten
         by_arrangement: Op afspraak
         belgium: België
-        empty_heading: Nog geen opdrachten.
-        empty_body: Plaats de eerste en maak je vraag zichtbaar voor confraters.
-        demo_caption: Opdrachten zijn alleen zichtbaar voor geverifieerde leden.
+        empty_heading: "Nog geen opdrachten"
+        empty_body: "Een collega nodig? Plaats een opdracht."
+        demo_caption: "Alleen geverifieerde advocaten kunnen opdrachten bekijken."
       how:
         eyebrow: zo werkt het
         heading_before: Van vraag
         heading_after: naar afspraak.
-        lede: Je plaatst je opdracht, ontvangt reacties en maakt zelf je keuze.
+        lede: "Plaats een opdracht en kies uit de reacties."
         steps:
           "0":
-            heading: Plaats je opdracht
-            body: Vul type opdracht, datum, locatie en eventuele voorkeuren in.
+            heading: "Plaats een opdracht"
+            body: "Vul het werk, de datum en de locatie in."
           "1":
             heading: Bekijk de reacties
-            body: Confraters reageren met hun beschikbaarheid en tarief.
+            body: "Vergelijk beschikbaarheid en tarief."
           "2":
             heading: Maak je keuze
-            body: Kies wie je wilt contacteren en regel de praktische details samen.
+            body: "Kies een confrater en spreek de details af."
       faq:
         eyebrow: vragen
         heading_before: Goed om
         heading_after: te weten.
-        lede: Een gratis bèta met open registratie voor advocaten op advocaat.be.
+        lede: "Gratis toegang na controle op advocaat.be."
         items:
           "0":
             question: Voor wie is LawRelay?
-            answer: Voor advocaten die een zitting willen laten waarnemen, werk willen uitbesteden of een opdracht willen opnemen.
+            answer: "Voor advocaten die vervanging zoeken, werk uitbesteden of opdrachten opnemen."
           "1":
             question: Hoe kies ik een confrater?
-            answer: Je vergelijkt ervaring, beschikbaarheid en tarief. Jij maakt de keuze.
+            answer: "Vergelijk ervaring, beschikbaarheid en tarief."
           "2":
             question: Kan ik een eigen tarief voorstellen?
-            answer: Ja. Je kunt een richttarief meegeven of zelf een voorstel doen.
+            answer: "Ja. Vermeld een richttarief of doe een voorstel."
           "3":
-            question: Is dit al live?
-            answer: Ja. Advocaten op advocaat.be kunnen zich registreren; toegang tot de marktplaats volgt na een lijstcontrole. Deel geen cliëntnamen, dossierfeiten of documenten.
+            question: "Hoe krijg ik toegang?"
+            answer: "Registreer je met je profiel op advocaat.be. Na controle krijg je toegang. Deel geen cliëntnamen, dossierfeiten of documenten."
       cta:
         eyebrow: klaar om te beginnen?
         heading_before: Plaats je opdracht.

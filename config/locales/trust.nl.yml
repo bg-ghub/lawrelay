@@ -21,24 +21,24 @@ nl:
         restriction: "De verwerking beperken"
         objection: "Bezwaar maken tegen verwerking"
       notices:
-        created: "Je privacyverzoek is geregistreerd."
+        created: "Je verzoek is ontvangen."
         rate_limited: "Wacht even voordat je een nieuw privacyverzoek indient."
       index:
         title: "Privacyverzoeken — LawRelay"
         heading: "Je privacyverzoeken"
-        lede: "Volg verzoeken over de persoonsgegevens die LawRelay over je bewaart."
+        lede: "Volg hier je verzoeken."
         new: "Nieuw verzoek"
-        empty: "Je hebt nog geen privacyverzoek ingediend."
+        empty: "Nog geen privacyverzoeken."
       new:
         title: "Nieuw privacyverzoek — LawRelay"
-        heading: "Vertel ons wat je nodig hebt."
-        lede: "We registreren het verzoek en de afhandeling, zodat niets verloren gaat."
+        heading: "Nieuw privacyverzoek"
+        lede: "Vraag om inzage, correctie of verwijdering van je gegevens."
         legend: "Verzoek"
         kind: "Type verzoek"
         kind_prompt: "Kies een verzoek"
         details: "Wat moeten we weten?"
         details_placeholder: "Omschrijf kort over welke gegevens of welk account het gaat."
-        retention_note: "Een accountverwijdering wist geen facturen of auditgegevens die LawRelay wettelijk moet bewaren."
+        retention_note: "Wettelijk verplichte facturen en auditgegevens blijven bewaard."
         submit: "Verzoek indienen"
     reports:
       eyebrow: "Meld een probleem"
@@ -51,18 +51,18 @@ nl:
       errors:
         own_assignment: "Je kunt een opdracht van je eigen kantoor niet melden."
       notices:
-        created: "Bedankt. De melding is geregistreerd voor controle."
+        created: "Melding ontvangen. We kijken het na."
         rate_limited: "Je hebt de meldingslimiet bereikt. Probeer het later opnieuw."
       new:
         title: "Opdracht melden — LawRelay"
         heading: "Meld deze opdracht"
-        lede: "Vertel wat we moeten controleren in ‘%{title}’."
+        lede: "Wat is er mis met ‘%{title}’?"
         legend: "Probleem"
         category: "Reden"
         category_prompt: "Kies een reden"
         details: "Korte toelichting"
-        details_placeholder: "Omschrijf het probleem zonder cliënt- of dossiergegevens toe te voegen."
-        safety_note: "Vermeld geen beroepsgeheim, cliëntnamen of documenten."
+        details_placeholder: "Omschrijf het probleem."
+        safety_note: "Geen cliëntnamen, dossiergegevens, documenten of vertrouwelijke informatie."
         submit: "Melding verzenden"
     admin:
       eyebrow: "Vertrouwen en veiligheid"
@@ -73,7 +73,7 @@ nl:
       complete: "Afronden"
       reject: "Afwijzen"
       notices:
-        updated: "Het dossier is bijgewerkt."
+        updated: "Opgeslagen."
         invalid_decision: "Kies een geldige actie."
         note_required: "Voeg een afhandelingsnota toe voordat je dit dossier sluit."
       reports:
@@ -84,5 +84,5 @@ nl:
       privacy_requests:
         title: "Privacyverzoeken — LawRelay-beheer"
         heading: "Privacyverzoeken"
-        lede: "Volg elk verzoek tot een gedocumenteerde uitkomst."
+        lede: "Behandel en sluit verzoeken af."
         empty: "Er zijn geen privacyverzoeken te beoordelen."

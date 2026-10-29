@@ -1,19 +1,19 @@
 de:
   directory_mail:
     confirm:
-      subject: "Bestätigen Sie Ihre berufliche LawRelay-E-Mail-Adresse"
+      subject: "Berufliche E-Mail bestätigen — LawRelay"
       greeting: "Hallo %{name},"
-      body: "Ein LawRelay-Konto wurde mit Ihrem öffentlichen advocaat.be-Profil und der Anmeldeadresse %{login_email} erstellt. Bestätigen Sie nur, wenn Sie genau dieses Konto erstellt haben und diese berufliche E-Mail-Adresse kontrollieren:"
-      body_html: "Ein LawRelay-Konto wurde mit Ihrem öffentlichen advocaat.be-Profil und der Anmeldeadresse <strong>%{login_email}</strong> erstellt. Bestätigen Sie nur, wenn Sie genau dieses Konto erstellt haben und diese berufliche E-Mail-Adresse kontrollieren."
-      action: "Berufliche E-Mail-Adresse bestätigen"
-      ignore: "Wenn Sie das nicht waren, ignorieren Sie diese E-Mail. Der Link läuft nach 48 Stunden ab."
+      body: "Ihr advocaat.be-Profil wurde für das LawRelay-Konto %{login_email} verwendet. Bestätigen Sie nur, wenn Sie dieses Konto selbst erstellt haben und Zugriff auf diese berufliche E-Mail-Adresse haben."
+      body_html: "Ihr advocaat.be-Profil wurde für das LawRelay-Konto <strong>%{login_email}</strong> verwendet. Bestätigen Sie nur, wenn Sie dieses Konto selbst erstellt haben und Zugriff auf diese berufliche E-Mail-Adresse haben."
+      action: "Berufliche E-Mail bestätigen"
+      ignore: "Ignorieren Sie diese E-Mail, wenn Sie das nicht waren. Der Link läuft nach 48 Stunden ab."
     notices:
       confirmed: "Ihre berufliche E-Mail-Adresse wurde bestätigt. Melden Sie sich an, um fortzufahren."
       invalid: "Dieser Bestätigungslink ist ungültig oder abgelaufen."
-      already_claimed: "Dieses Verzeichnisprofil ist bereits für ein anderes Konto bestätigt. Wenden Sie sich an den Support, wenn Sie Hilfe benötigen."
+      already_claimed: "Dieses Profil gehört bereits zu einem anderen bestätigten Konto. Kontaktieren Sie den Support."
     page:
       eyebrow: "Bestätigung der beruflichen E-Mail-Adresse"
       heading: "Dieses LawRelay-Konto bestätigen"
-      body: "Sie bestätigen das LawRelay-Konto von %{name} mit der Anmeldeadresse %{login_email}."
-      notice: "Fahren Sie nur fort, wenn Sie genau dieses Konto erstellt haben."
+      body: "Konto: %{name}, Anmeldeadresse %{login_email}."
+      notice: "Fahren Sie nur fort, wenn Sie dieses Konto erstellt haben."
       action: "Dieses Konto bestätigen"

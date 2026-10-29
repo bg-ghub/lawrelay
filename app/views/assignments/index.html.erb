@@ -1,7 +1,6 @@
 <div class="marketplace-page">
   <section class="marketplace-hero shell">
     <div>
-      <p class="eyebrow"><%= t("marketplace.index.eyebrow") %></p>
       <h1><%= t("marketplace.index.title") %></h1>
       <p class="lede"><%= t("marketplace.index.lede") %></p>
     </div>
@@ -50,7 +49,6 @@
     <div class="assignment-results">
       <div class="result-meta">
         <p><strong><%= @assignments.size %></strong> <%= t("marketplace.index.results", count: @assignments.size) %></p>
-        <span class="result-meta__note"><%= t("marketplace.index.demo") %></span>
       </div>
 
       <% if @assignments.any? %>

@@ -1,14 +1,14 @@
 fr:
   billing:
     eyebrow: Facturation
-    title: Votre formule LawRelay
-    lede: Gardez votre cabinet prêt à publier des missions. Les confrères continuent à répondre gratuitement.
+    title: Votre accès
+    lede: Publiez des missions et répondez aux offres.
     plan:
       title: LawRelay Office
       price: 49 € / mois
       tax_note: hors TVA
-      description: Un tarif mensuel clair pour votre cabinet.
-      direct_settlement: LawRelay ne gère jamais les honoraires convenus entre avocats ; vous les réglez directement.
+      description: Un accès mensuel pour votre cabinet.
+      direct_settlement: Convenez des honoraires et réglez-les directement entre confrères.
       active: Votre formule est active.
       contact_administrator: Demandez à un administrateur du cabinet de gérer la facturation.
     actions:
@@ -28,7 +28,7 @@ fr:
     notices:
       posting_plan_required: Votre cabinet a besoin d’une formule active pour publier des missions.
       rate_limited: Veuillez patienter avant de demander une autre facture.
-      invoice_requested: "La facture %{number} est en attente du traitement comptable manuel. Votre formule sera activée une fois le paiement enregistré."
+      invoice_requested: "La facture %{number} est en attente de traitement. Votre formule débute une fois le paiement enregistré."
       subscription_cancelled: Votre formule a été résiliée.
       payment_confirmation_pending: Nous activerons votre formule seulement après confirmation du paiement.
       no_firm: Vous avez besoin d'un cabinet pour gérer la facturation.

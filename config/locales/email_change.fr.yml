@@ -4,8 +4,8 @@ fr:
     title: "Modifier l’e-mail — LawRelay"
     eyebrow: "Sécurité du compte"
     heading: "Modifier votre e-mail de connexion"
-    lede: "Mettez d’abord votre adresse à jour sur advocaat.be. Nous enverrons une confirmation à la nouvelle adresse et vérifierons à nouveau l’inscription officielle. Si elle n’est pas encore mise à jour, réessayez plus tard."
-    admin_lede: "Nous enverrons un lien de confirmation à votre nouvelle adresse e-mail de connexion."
+    lede: "Modifiez d’abord votre e-mail sur advocaat.be. Nous confirmerons la nouvelle adresse et revérifierons votre profil. Pas encore à jour ? Réessayez plus tard."
+    admin_lede: "Nous enverrons un lien de confirmation à la nouvelle adresse."
     notices:
       sent: "Nous avons envoyé un lien de confirmation à votre nouvelle adresse e-mail."
     errors:
@@ -18,7 +18,7 @@ fr:
       current: "Adresse e-mail actuelle"
       new_email: "Nouvelle adresse e-mail"
       password: "Mot de passe actuel"
-      hint: "Nous vérifierons à nouveau les preuves de l’annuaire. Votre cabinet et vos collègues ne changent pas."
-      admin_hint: "Votre session actuelle reste ouverte ; les autres sessions seront fermées."
+      hint: "Votre profil advocaat.be sera vérifié à nouveau."
+      admin_hint: "Les autres appareils seront déconnectés. Cette session reste ouverte."
       submit: "Modifier l’e-mail"
       cancel: "Annuler"

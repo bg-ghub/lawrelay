@@ -1,19 +1,19 @@
 en:
   directory_mail:
     confirm:
-      subject: "Confirm your LawRelay professional email"
+      subject: "Confirm your professional email — LawRelay"
       greeting: "Hello %{name},"
-      body: "A LawRelay account was created using your public advocaat.be profile, with the login address %{login_email}. Confirm only if you initiated that exact account and control this professional email address:"
-      body_html: "A LawRelay account was created using your public advocaat.be profile, with the login address <strong>%{login_email}</strong>. Confirm only if you initiated that exact account and control this professional email address."
+      body: "Your advocaat.be profile was used for the LawRelay account %{login_email}. Confirm only if you created this account and control this professional email."
+      body_html: "Your advocaat.be profile was used for the LawRelay account <strong>%{login_email}</strong>. Confirm only if you created this account and control this professional email."
       action: "Confirm professional email"
-      ignore: "If this was not you, simply ignore this email. This link expires in 48 hours."
+      ignore: "Ignore this email if this wasn’t you. The link expires in 48 hours."
     notices:
       confirmed: "Your professional email address has been confirmed. Sign in to continue."
       invalid: "This confirmation link is invalid or has expired."
-      already_claimed: "This directory profile is already verified for another account. Contact support if you need help."
+      already_claimed: "This profile is linked to another verified account. Contact support for help."
     page:
       eyebrow: "Professional email confirmation"
       heading: "Confirm this LawRelay account"
-      body: "You are confirming the LawRelay account for %{name}, with login address %{login_email}."
-      notice: "Only continue if you created this exact account."
+      body: "Account: %{name}, sign-in email %{login_email}."
+      notice: "Only continue if you created this account."
       action: "Confirm this account"
