@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.7] - 2026-10-29
+
+### Fixed
+
+- Prevent MFA setup from replacing an existing authenticator; handle expired directory links safely.
+- Enforce assignment deadlines, reject invalid amounts, preserve cents and failed-form values, and retain dashboard history.
+- Allow Turbo's progress-bar styling through the existing CSP nonce.
+
+### Changed
+
+- Remove platform pricing and billing navigation from the free beta; archive the former subscription idea without committing to paid plans.
+
 ## [0.4.6] - 2026-10-29
 
 ### Changed
@@ -125,7 +137,11 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.3...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.7...HEAD
+[0.4.7]: https://github.com/bg-ghub/lawrelay/compare/v0.4.6...v0.4.7
+[0.4.6]: https://github.com/bg-ghub/lawrelay/compare/v0.4.5...v0.4.6
+[0.4.5]: https://github.com/bg-ghub/lawrelay/compare/v0.4.4...v0.4.5
+[0.4.4]: https://github.com/bg-ghub/lawrelay/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/bg-ghub/lawrelay/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/bg-ghub/lawrelay/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/bg-ghub/lawrelay/compare/v0.4.0...v0.4.1

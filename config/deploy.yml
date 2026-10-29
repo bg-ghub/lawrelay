@@ -51,7 +51,7 @@ env:
     LAWRELAY_SUPPORT_EMAIL: <%= ENV.fetch("LAWRELAY_SUPPORT_EMAIL", "support@lawrelay.be") %>
     LAWRELAY_PHONE: <%= ENV.fetch("LAWRELAY_PHONE", "+32 474 78 09 57") %>
     LAWRELAY_PROFESSIONAL_BODY: <%= ENV.fetch("LAWRELAY_PROFESSIONAL_BODY", "Balie Brussel (Nederlandse Orde)") %>
-    LAWRELAY_PROFESSIONAL_RULES_URL: <%= ENV.fetch("LAWRELAY_PROFESSIONAL_RULES_URL", "https://www.ordevanvlaamsebalies.be/nl/deontologie") %>
+    LAWRELAY_PROFESSIONAL_RULES_URL: <%= ENV.fetch("LAWRELAY_PROFESSIONAL_RULES_URL", "https://www.ordevanvlaamsebalies.be/nl/kennisbank/deontologie/codex-deontologie-voor-advocaten") %>
     LAWRELAY_BILLING_ENFORCED: <%= ENV.fetch("LAWRELAY_BILLING_ENFORCED", "true") %>
     LAWRELAY_RELEASE_MODE: <%= ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") %>
     RAILS_LOG_LEVEL: info

@@ -45,7 +45,7 @@
     </article>
 
     <aside class="proposal-panel" id="respond">
-      <div class="proposal-panel__price"><span><%= t("marketplace.show.guideline_rate") %></span><strong>€ <%= number_with_delimiter(@assignment.fee_cents.to_i / 100) %></strong></div>
+      <div class="proposal-panel__price"><span><%= t("marketplace.show.guideline_rate") %></span><strong>€ <%= euro_amount(@assignment.fee_cents) %></strong></div>
 
       <% if @owner_view %>
         <h2><%= t("workflow.ui.candidates") %></h2>
@@ -55,10 +55,10 @@
               <article class="candidate-proposal">
                 <div><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.status}") %></span></div>
                 <p><%= proposal.message %></p>
-                <p><strong>€ <%= number_with_delimiter(proposal.rate_cents.to_i / 100) %></strong> · <%= proposal.rate_kind_label %></p>
+                <p><strong>€ <%= euro_amount(proposal.rate_cents) %></strong> · <%= proposal.rate_kind_label %></p>
                 <% if proposal.status == "accepted" %>
                   <p class="contact-card"><%= mail_to proposal.contact_email %></p>
-                <% elsif proposal.status == "pending" && @assignment.status == "open" %>
+                <% elsif proposal.status == "pending" && @assignment.status == "open" && @assignment.starts_at > Time.current %>
                   <div class="proposal-actions">
                     <%= button_to t("workflow.ui.accept"), accept_assignment_proposal_path(@assignment, proposal), method: :patch, class: "button button--coral button--small" %>
                     <%= button_to t("workflow.ui.decline"), decline_assignment_proposal_path(@assignment, proposal), method: :patch, class: "button button--ghost button--small" %>
@@ -79,12 +79,12 @@
         <% elsif @existing_proposal.status == "pending" %>
           <%= button_to t("workflow.ui.withdraw"), withdraw_assignment_proposal_path(@assignment, @existing_proposal), method: :patch, class: "button button--ghost button--full" %>
         <% end %>
-      <% elsif @assignment.status == "open" %>
+      <% elsif @assignment.accepting_proposals? %>
         <h2><%= t("marketplace.show.interested_title") %></h2>
         <p><%= t("marketplace.show.interested_body") %></p>
         <%= form_with model: [@assignment, @proposal], class: "proposal-form" do |form| %>
           <% if @proposal.errors.any? %><div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><strong><%= t("marketplace.show.proposal_error_heading") %></strong><ul><% @proposal.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
-          <div class="form-row"><div class="field-group"><%= form.label :rate_kind, t("marketplace.show.rate_kind_label") %><%= form.select :rate_kind, Proposal::RATE_KINDS.map { |kind| [ t("marketplace.rate_kinds.#{kind}"), kind ] }, {}, class: "select-field" %></div><div class="field-group"><%= form.label :rate_cents, t("marketplace.show.rate_label") %><%= form.number_field :rate_cents, min: 0, step: 5, value: (@proposal.rate_cents.presence || @assignment.fee_cents).to_i / 100, required: true %><p class="field-hint"><%= t("marketplace.show.rate_hint") %></p></div></div>
+          <div class="form-row"><div class="field-group"><%= form.label :rate_kind, t("marketplace.show.rate_kind_label") %><%= form.select :rate_kind, Proposal::RATE_KINDS.map { |kind| [ t("marketplace.rate_kinds.#{kind}"), kind ] }, {}, class: "select-field" %></div><div class="field-group"><%= form.label :rate_cents, t("marketplace.show.rate_label") %><%= form.number_field :rate_cents, min: 0, step: 0.01, value: euro_amount(@proposal.rate_cents || @assignment.fee_cents, field: true), required: true %><p class="field-hint"><%= t("marketplace.show.rate_hint") %></p></div></div>
           <div class="field-group"><%= form.label :message, t("marketplace.show.message_label") %><%= form.text_area :message, rows: 4, required: true, maxlength: 2000, placeholder: t("marketplace.show.message_placeholder") %></div>
           <%= form.submit t("marketplace.show.submit"), class: "button button--coral button--full" %>
         <% end %>

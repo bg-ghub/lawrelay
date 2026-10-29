@@ -1,6 +1,19 @@
 require "application_system_test_case"
 
 class AccessibilityBetaTest < ApplicationSystemTestCase
+  test "Turbo progress styles are permitted by the content security policy" do
+    visit root_path(locale: :en)
+    assert_selector "header"
+
+    assert page.evaluate_script(<<~JS)
+      Array.from(document.querySelectorAll("style")).some(style =>
+        style.textContent.includes(".turbo-progress-bar") &&
+        style.nonce === document.querySelector('meta[name="csp-nonce"]').content &&
+        style.sheet !== null
+      )
+    JS
+  end
+
   test "sign-in sidebar links have usable pointer targets in every language" do
     %w[nl fr de en].each do |locale|
       [ 390, 1440 ].each do |width|

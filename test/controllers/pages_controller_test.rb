@@ -3,7 +3,7 @@ require "test_helper"
 class PagesControllerTest < ActionController::TestCase
   tests PagesController
 
-  %i[pricing privacy terms cookie_policy legal_notice].each do |page|
+  %i[privacy terms cookie_policy legal_notice].each do |page|
     test "renders #{page} in every supported locale" do
       I18n.available_locales.each do |locale|
         get page, params: { locale: locale }
@@ -11,6 +11,28 @@ class PagesControllerTest < ActionController::TestCase
         assert_response :success
         assert_select "html[lang='#{locale}']"
         assert_not_includes response.body, "Translation missing"
+      end
+    end
+  end
+
+  test "beta pricing URLs redirect to the localized home page" do
+    with_release_mode("beta") do
+      I18n.available_locales.each do |locale|
+        get :pricing, params: { locale: locale }
+
+        assert_redirected_to root_path(locale: locale)
+      end
+    end
+  end
+
+  test "the archived pricing page remains available only in paid mode" do
+    with_release_mode("paid") do
+      I18n.available_locales.each do |locale|
+        get :pricing, params: { locale: locale }
+
+        assert_response :success
+        assert_select "html[lang='#{locale}']"
+        assert_select "h1", text: I18n.t("pages.pricing.title", locale: locale)
       end
     end
   end
@@ -27,7 +49,7 @@ class PagesControllerTest < ActionController::TestCase
 
   test "renders the general contact address in the footer for every supported locale" do
     I18n.available_locales.each do |locale|
-      get :pricing, params: { locale: locale }
+      get :privacy, params: { locale: locale }
 
       assert_response :success
       assert_select "a[href='mailto:info@lawrelay.be']", text: "info@lawrelay.be"
@@ -39,7 +61,7 @@ class PagesControllerTest < ActionController::TestCase
     source_url = "https://github.com/bg-ghub/lawrelay"
 
     I18n.available_locales.each do |locale|
-      get :pricing, params: { locale: locale }
+      get :privacy, params: { locale: locale }
 
       assert_response :success
       assert_select ".footer-project a.footer-project__source[href='#{source_url}']",
@@ -49,5 +71,15 @@ class PagesControllerTest < ActionController::TestCase
       assert_select ".footer-project .footer-project__version",
         text: I18n.t("marketing.footer.app_version", locale: locale, version: LawRelay::VERSION)
     end
+  end
+
+  private
+
+  def with_release_mode(mode)
+    original = ENV["LAWRELAY_RELEASE_MODE"]
+    ENV["LAWRELAY_RELEASE_MODE"] = mode
+    yield
+  ensure
+    original.nil? ? ENV.delete("LAWRELAY_RELEASE_MODE") : ENV["LAWRELAY_RELEASE_MODE"] = original
   end
 end

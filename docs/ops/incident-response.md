@@ -61,7 +61,7 @@ Provider status and escalation starting points: [Hetzner status](https://status.
 1. Check provider status and recent deployment/migration history.
 2. Stop writes if continuing could worsen corruption.
 3. Follow the recovery and rollback section in [backup-restore.md](backup-restore.md); restore into a new volume, not the only production volume.
-4. Validate authentication, authorization, assignment/proposal integrity, mail, jobs, and billing before reopening.
+4. Validate authentication, authorization, assignment/proposal integrity, mail and jobs; confirm payments remain disabled before reopening.
 5. Communicate verified impact, mitigation, and next update time. Avoid speculation or legal conclusions.
 
 ## Closure

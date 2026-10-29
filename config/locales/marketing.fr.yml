@@ -29,7 +29,7 @@ fr:
       source_code: Code source sur GitHub
       open_source: Code ouvert
       app_version: Version %{version}
-      demo_notice: Bêta gratuite pour les avocats inscrits sur advocaat.be. N'ajoutez pas de données de clients ou de dossiers.
+      demo_notice: Bêta pour les avocats inscrits sur advocaat.be. N'ajoutez pas de données de clients ou de dossiers.
       demo_disclaimer: "LawRelay ne fournit pas de conseil juridique."
     home:
       title: "LawRelay — remplacements et missions juridiques"
@@ -40,7 +40,7 @@ fr:
         heading_middle: pour une
         heading_emphasis: audience ?
         lede: "Organisez un remplacement d’audience ou confiez une mission juridique."
-        note: "Bêta gratuite et open source pour les avocats inscrits sur advocaat.be."
+        note: "Bêta open source pour les avocats inscrits sur advocaat.be."
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui
@@ -98,7 +98,7 @@ fr:
         eyebrow: questions
         heading_before: Bon à
         heading_after: savoir.
-        lede: "Accès gratuit après vérification sur advocaat.be."
+        lede: "Accès après vérification sur advocaat.be."
         items:
           "0":
             question: À qui s'adresse LawRelay ?

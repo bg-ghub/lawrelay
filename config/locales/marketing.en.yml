@@ -29,7 +29,7 @@ en:
       source_code: Source on GitHub
       open_source: Open source
       app_version: Version %{version}
-      demo_notice: Free beta for lawyers listed on advocaat.be. Keep client and case details off the platform.
+      demo_notice: Beta for lawyers listed on advocaat.be. Keep client and case details off the platform.
       demo_disclaimer: "LawRelay does not provide legal advice."
     home:
       title: "LawRelay — court cover and legal work"
@@ -40,7 +40,7 @@ en:
         heading_middle: for a
         heading_emphasis: hearing?
         lede: "Arrange court cover or delegate legal work."
-        note: "Free, open-source beta for lawyers listed on advocaat.be."
+        note: "Open-source beta for lawyers listed on advocaat.be."
       product:
         aria_label: Example of the LawRelay workspace
         today: Today
@@ -98,7 +98,7 @@ en:
         eyebrow: questions
         heading_before: Good to
         heading_after: know.
-        lede: "Free access after a check against advocaat.be."
+        lede: "Access after a check against advocaat.be."
         items:
           "0":
             question: Who is LawRelay for?

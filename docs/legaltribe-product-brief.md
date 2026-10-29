@@ -55,8 +55,10 @@ LawRelay keeps the strong marketplace loop while giving it its own brand and int
 - complete NL/FR/DE/EN interface foundations using neutral English URL slugs;
 - no invented customer claims, testimonials, or adoption metrics;
 - seeded sample content is visibly labelled as demo content;
-- verified accounts, firm-scoped authorization, audited state transitions, notifications, and payment/invoice foundations;
+- verified accounts, firm-scoped authorization, audited state transitions, and notifications;
 - no file transfer or private matter messaging in the initial release; those require a separate threat model.
+
+LawRelay is free. The [former subscription idea](archive/pricing.md) is archived; links to the operator's other products may help support hosting.
 
 ## Next product increments
 
@@ -65,4 +67,4 @@ LawRelay keeps the strong marketplace loop while giving it its own brand and int
 3. approve and automate privacy-retention/export/deletion operations after policy review;
 4. add team invitations and multi-office controls only after the single-firm pilot works;
 5. add calendar sync after the core assignment lifecycle is stable;
-6. complete independent legal, accounting, accessibility, and security review before public or paid use.
+6. complete the remaining independent legal, accessibility, and security reviews.

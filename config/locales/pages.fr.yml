@@ -3,7 +3,7 @@ fr:
     shared:
       version: "Dernière mise à jour : %{date}"
       not_configured: "Indisponible"
-      navigation_label: "Informations commerciales et juridiques"
+      navigation_label: "Informations juridiques"
       draft_warning_title: "Les données de l'exploitant sont indisponibles"
       draft_warning_body: "Les données de l'exploitant n'ont pas pu être chargées. Contactez LawRelay avant d'utiliser le service."
     navigation:
@@ -27,16 +27,6 @@ fr:
           - "Vérification de l'annuaire avant l'accès à la plateforme"
           - "Publier et répondre à des missions professionnelles"
           - "Retour direct à l'équipe LawRelay"
-      launch:
-        kicker: "après la bêta"
-        price: "Pas encore disponible"
-        title: "Aucune formule payante pendant la bêta"
-        body: "Les éventuels revenus serviront surtout à financer l’hébergement. Les prix et conditions des formules payantes seront publiés à l’avance."
-        features:
-          - "Aucune donnée de paiement demandée"
-          - "Aucun renouvellement automatique"
-          - "Information claire avant toute offre payante"
-          - "Les honoraires restent directs"
       direct_fees:
         title: "Honoraires"
         body: "Convenez des honoraires et facturez-vous directement. LawRelay ne gère pas les paiements et ne prend aucune commission."
@@ -96,7 +86,7 @@ fr:
       meta_title: "Conditions d'utilisation — LawRelay"
       eyebrow: "conditions d'utilisation"
       title: "Conditions"
-      introduction: "Pour la bêta gratuite de LawRelay."
+      introduction: "Pour la bêta de LawRelay."
       operator_contact_heading: "Exploitant"
       sections:
         agreement:
@@ -126,11 +116,10 @@ fr:
           heading: "6. Réponses et mises en relation"
           paragraphs:
             - "Le donneur d'ordre choisit qui contacter ou sélectionner. LawRelay ne garantit ni réponse, ni mise en relation, disponibilité, résultat, qualité ou paiement par un autre utilisateur. Les utilisateurs confirment chaque engagement et délai hors plateforme."
-        platform_fees:
-          heading: "7. Prix LawRelay et facturation"
+        beta_access:
+          heading: "7. Bêta"
           paragraphs:
-            - "L'accès à la bêta est gratuit. LawRelay ne propose aucun abonnement payant, n'encaisse aucun frais de plateforme et ne demande aucune donnée de paiement pendant cette bêta."
-            - "Si LawRelay propose ultérieurement un accès payant, le prix et les conditions applicables seront publiés avant toute demande de paiement."
+            - "LawRelay est en bêta. Les fonctionnalités peuvent évoluer."
         professional_fees:
           heading: "8. Honoraires professionnels"
           paragraphs:

@@ -14,6 +14,8 @@ module Directory
 
     def self.find_profile!(token)
       payload = encryptor.decrypt_and_verify(token)
+      raise ActiveSupport::MessageVerifier::InvalidSignature unless payload.is_a?(Hash)
+
       profile = LawyerProfile.find(payload.fetch("profile_id"))
       user = profile.user
       raise ActiveSupport::MessageVerifier::InvalidSignature unless user.active? && profile.user_id == payload.fetch("user_id") &&

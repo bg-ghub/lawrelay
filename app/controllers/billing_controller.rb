@@ -5,6 +5,7 @@ class BillingController < ApplicationController
     with: -> { redirect_to billing_path, alert: t("billing.notices.rate_limited") }
 
   before_action :require_verified_lawyer
+  before_action :require_paid_release
   before_action :set_firm_and_account
   before_action :require_firm_administrator, only: %i[checkout cancel]
 
@@ -37,6 +38,10 @@ class BillingController < ApplicationController
   end
 
   private
+
+  def require_paid_release
+    redirect_to dashboard_path unless billing_checkout_available?
+  end
 
   def set_firm_and_account
     @firm = Current.user&.primary_firm
