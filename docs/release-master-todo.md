@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 29 October 2026. Current release: 0.10.0.
+Reviewed 29 October 2026. Current release: 0.10.1.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -18,11 +18,12 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Professional verification and password emails reached the operator; member sign-in and admin MFA were checked live.
 - [x] Daily cleanup of resolved support conversations through existing Migadu, with hold/draft safeguards and missed-run alerts.
 - [x] Migadu support/privacy/security identities receive into the same inbox as `info@lawrelay.be`; individual delivery tests passed.
+- [x] Terms/privacy read-through against current behavior; clarify sharing, retention, transfers and signup acknowledgement in NL/FR/DE/EN.
 
 ## Finish during the beta
 
 - [ ] Complete the [real two-lawyer trial](ops/beta-review-handoff.md) when the second lawyer joins; record actual results and feedback.
-- [ ] Operator: review the published terms/privacy and retain account-specific provider-agreement evidence privately.
+- [ ] Retain account-specific provider-agreement evidence privately; the public pages do not establish which account agreements were accepted.
 - [x] Retention periods and hold review are defined. Privacy requests still need a verified, case-by-case decision; shared records are pseudonymised where possible.
 
 ## Routine operations

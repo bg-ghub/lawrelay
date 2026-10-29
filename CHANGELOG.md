@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-10-29
+
+### Fixed
+
+- Clarify who sees assignment data, retention exceptions, provider transfers and privacy-request handling in all four languages.
+- Distinguish accepting the terms from reading the privacy notice at signup.
+- Shorten the platform-role and moderation wording.
+
 ## [0.10.0] - 2026-10-29
 
 ### Added

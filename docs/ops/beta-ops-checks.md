@@ -1,5 +1,11 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.10.1
+
+Terms/privacy read-through checked operator contacts and the implemented verification, visibility, retention and moderation flows. All four notices now clarify recipients, retention exceptions, provider transfers and rights requests. Signup distinguishes accepting terms from reading the notice; both versions are recorded. The platform-role wording is shorter. Account-specific provider-agreement evidence remains separate.
+
+The registration, operator-contact and localized-page checks passed: 17 cases, 1,089 assertions. Hosted CI and live release checks are recorded with the release.
+
 ## 29 October 2026 — 0.10.0
 
 Migadu admin checks confirmed that support/privacy/security are active receive-only identities of the existing shared mailbox used by info@lawrelay.be. Three individual delivery tests arrived in INBOX. The one invitation draft was untouched. No mail configuration or provider changes were needed.
