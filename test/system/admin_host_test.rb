@@ -24,6 +24,8 @@ class AdminHostTest < ApplicationSystemTestCase
   end
 
   teardown do
+    page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
+    page.current_window.resize_to(1400, 1400)
     Capybara.reset_sessions!
     %w[APP_HOST ADMIN_HOST APP_PROTOCOL LAWRELAY_ADMIN_USER_ID].each do |key|
       @previous_environment.key?(key) ? ENV[key] = @previous_environment[key] : ENV.delete(key)
@@ -58,6 +60,8 @@ class AdminHostTest < ApplicationSystemTestCase
     assert_selector ".admin-site-footer .footer-project__version", text: LawRelay::VERSION
     assert_equal "admin.localhost", URI.parse(page.current_url).host
 
+    assert_admin_header_fits_on_mobile
+
     visit "#{@main_origin}/en/dashboard"
     assert_current_path dashboard_path(locale: :en)
     assert_selector ".header-login", text: @member.user.full_name
@@ -70,5 +74,37 @@ class AdminHostTest < ApplicationSystemTestCase
     visit "#{@main_origin}/en/dashboard"
     assert_current_path dashboard_path(locale: :en)
     assert_selector ".header-login", text: @member.user.full_name
+  end
+
+  private
+
+  def assert_admin_header_fits_on_mobile
+    page.current_window.resize_to(320, 900)
+    page.driver.browser.execute_cdp("Emulation.setDeviceMetricsOverride", width: 320, height: 900, deviceScaleFactor: 1, mobile: false)
+
+    %i[nl fr de en].each do |locale|
+      visit "#{@admin_origin}/#{locale}/admin/users"
+      assert_selector ".admin-navigation"
+      assert_equal 320, page.evaluate_script("window.innerWidth"), "The viewport must actually be 320px"
+      assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320, "Admin layout overflows in #{locale} at 320px"
+      assert_selector ".admin-site-header a[href='#{@main_origin}/#{locale}']", text: I18n.t("admin.navigation.site", locale: locale)
+      assert_selector ".admin-site-header button", text: I18n.t("auth.sessions.sign_out", locale: locale)
+
+      targets = page.evaluate_script(<<~JS)
+        Array.from(document.querySelectorAll('.admin-site-header .header-actions > a, .admin-site-header .header-actions button, .admin-site-header summary')).map(element => {
+          const rect = element.getBoundingClientRect();
+          return { label: element.innerText.trim(), width: rect.width, height: rect.height };
+        })
+      JS
+      assert_equal 3, targets.length
+      targets.each do |target|
+        assert_operator target.fetch("width"), :>=, 24, "#{locale} #{target.fetch('label')} needs a 24px target width"
+        assert_operator target.fetch("height"), :>=, 24, "#{locale} #{target.fetch('label')} needs a 24px target height"
+      end
+      page.save_screenshot(Rails.root.join("tmp/screenshots/admin-host-fr-320.png")) if locale == :fr
+    end
+  ensure
+    page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
+    page.current_window.resize_to(1400, 1400)
   end
 end
