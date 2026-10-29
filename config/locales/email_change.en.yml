@@ -7,7 +7,7 @@ en:
     lede: "Update your email on advocaat.be first. We’ll confirm the new address and check your listing again. If it’s not updated yet, retry later."
     admin_lede: "We’ll send a confirmation link to your new address."
     notices:
-      sent: "We sent a confirmation link to your new email address."
+      updated: "Email address updated."
     errors:
       password: "Your current password is incorrect."
       unchanged: "Enter an email address different from your current one."

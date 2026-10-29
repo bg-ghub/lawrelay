@@ -28,9 +28,11 @@ class RegistrationsController < ApplicationController
     if @terms_accepted && models_valid
       persist_registration!
       start_new_session_for(@user)
-      EmailVerificationMailer.verify(@user).deliver_later
-      Directory::VerificationJob.perform_later(@user.id)
-      redirect_to verification_status_path, notice: t("auth.registration.created")
+      if Onboarding::Delivery.request(@user)
+        redirect_to verification_status_path, notice: t("auth.registration.created")
+      else
+        redirect_to verification_status_path, alert: t("auth.registration.delivery_delayed")
+      end
     else
       collect_errors
       render :new, status: :unprocessable_content

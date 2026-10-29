@@ -1,5 +1,15 @@
 # Beta operations checks
 
+## 29 October 2026 — 0.8.6
+
+Signup and saved corrections now recover from partial/failed enqueue attempts with retry guidance. Verification mail and temporary directory failures retry up to three times. Missing profile pages are permanent failures; safe directory reasons explain how to recover. Privacy-admin completion records a manual outcome without implying automatic data actions.
+
+Validation: 428 Rails cases / 14,497 assertions pass on Windows (8 POSIX-only skips); 32 Chrome cases / 1,448 assertions pass. RuboCop and Brakeman pass. The isolated production-language check covers pending/error/resend screens and mail in all four languages without external delivery.
+
+Fresh backup `472a6292` at 19:16 Europe/Brussels restored and booted in 58 seconds. Candidate 0.8.6 exercised its serialized verification-email job, assignment notifications and privacy helpers with the test adapter and no network. The 0.8.5 compatibility boot also passed after the synthetic new job was consumed; it cannot handle pending new verification jobs. Production identity/start time stayed unchanged, and temporary data was removed.
+
+Live pre-release checks passed public HTTPS, official profile lookup, database integrity, queues, backup/health timers and disk capacity. The checklist now focuses on the real two-lawyer trial and owner decisions; paid outside reviews are optional future work.
+
 ## 29 October 2026 — 0.8.1
 
 Indicative assignment rates are optional in all four languages. Blank values remain distinct from zero and display "To be agreed" (localized). Posting without a rate passes in Chrome, Edge and Firefox; 27 focused integration cases / 263 assertions pass.
@@ -19,7 +29,7 @@ Additional engine checks: Edge 156 passes the full 32-case suite / 1,446 asserti
 | Queued mail/privacy rehearsal | Only newly created synthetic notification jobs were executed, including selection/non-selection, through the test mail adapter. Scoped export/private-file and non-mutating erasure-inventory checks passed. No restored real-recipient job was executed, no external mail sent, no real deletion performed. |
 | Mail/monitoring | Public SPF/DMARC and DKIM delegation are present. The internal mailbox loop is received but does not prove external authentication alignment. Hosted monitor recovery [40875197943](https://github.com/bg-ghub/lawrelay/actions/runs/40875197943) passed and closed incident 29. Backup/health timers are active. |
 
-This closes the engineering rehearsal, not operator/counsel approval, a real-lawyer trial, independent reviews or human incident response. The [master checklist](../release-master-todo.md) retains those gaps.
+This records technical engineering evidence. The [master checklist](../release-master-todo.md) records current remaining steps and optional future checks.
 
 ## 29 October 2026 — 0.4.4
 

@@ -3,6 +3,9 @@ require "nokogiri"
 
 module Directory
   class AdvocaatBeProfileLookup
+    class ProfileNotFound < StandardError; end
+    private_constant :ProfileNotFound
+
     Result = Data.define(:status, :profile_id, :source_url, :name, :email, :checked_at) do
       def success? = status == :ok
     end
@@ -64,6 +67,8 @@ module Directory
       return failure(:email_missing) unless email
 
       Result.new(status: :ok, profile_id:, source_url: uri.to_s, name:, email:, checked_at: Time.current)
+    rescue ProfileNotFound
+      failure(:invalid_url)
     rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, IOError, SystemCallError, OpenSSL::SSL::SSLError
       failure(:unavailable)
     rescue Nokogiri::XML::SyntaxError
@@ -89,6 +94,8 @@ module Directory
       http.start do |client|
         body = nil
         client.request(request) do |response|
+          raise ProfileNotFound if response.is_a?(Net::HTTPNotFound) || response.is_a?(Net::HTTPGone)
+
           next unless response.is_a?(Net::HTTPSuccess)
           next unless response["content-type"].to_s.downcase.include?("text/html")
 

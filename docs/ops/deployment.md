@@ -53,6 +53,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+Releases before `0.8.6` cannot run the new verification-email jobs. Use a forward fix or a compatible recovery image while those jobs are pending.
+
 Releases before `0.8.0` lack the latest MFA/session-revocation and notification-recipient checks. Test older images only in isolation; use a forward fix or a compatible recovery build that retains these protections for public traffic.
 
 Releases before `0.7.0` cannot process the notification outbox jobs. Use a forward fix or compatible recovery image while those jobs are pending; do not downgrade and silently abandon delivery.

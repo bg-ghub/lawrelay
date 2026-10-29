@@ -1,0 +1,12 @@
+en:
+  directory_feedback:
+    attention_title: "Check your profile"
+    check_name: "Check your name in settings"
+    resend_confirmation: "Resend confirmation link"
+    failures:
+      invalid_url: "We could not use your profile link. Contact support to correct it."
+      unavailable: "We could not load your profile. Check the link or try again later."
+      malformed: "We could not read your advocaat.be profile. Check again, or contact support if this continues."
+      name_mismatch: "Your name does not match your advocaat.be profile. Check your name in settings or contact support."
+      email_missing: "Your advocaat.be profile has no usable email address. Update the official listing, then check again."
+      already_claimed: "We could not finish this profile check. Contact support."

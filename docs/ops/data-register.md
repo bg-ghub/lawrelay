@@ -30,7 +30,7 @@ The public privacy notice distinguishes Migadu's Swiss company location from its
 
 Implementation references: `app/models/session.rb`, `app/models/user.rb`, `config/recurring.yml`, `compose.production.yml`, `script/ops/lawrelay-backup` and the protected provider configuration. The queue default comes from the installed Solid Queue version in `Gemfile.lock`; recheck it after dependency changes.
 
-## Operator and counsel acceptance
+## Operator decisions
 
 - Confirm the published legal name, enterprise/VAT details, registered address, platform role and contact ownership against the operating person and current records.
 - Retain the completed Hetzner DPA/appendix, the applicable AWS agreement/DPA version, Migadu's applicable DPA and full mail subprocessor/location information, and the basis for GitHub's limited processing. Mark each evidence item with date and reviewer; availability of a public template is not acceptance evidence.
@@ -39,4 +39,4 @@ Implementation references: `app/models/session.rb`, `app/models/user.rb`, `confi
 - Decide whether 12 monthly backup snapshots plus noncurrent S3 versions and provider disk backups are proportionate. Define erasure handling during backup expiry and restoration without promising instant removal from every copy.
 - Validate identity checks, export redaction, deletion execution, complaints/appeals and incident escalation using the [support playbook](support.md). Record decisions separately from evidence that an action was carried out.
 - Review email capacity before increasing traffic: Migadu Micro's [published quota](https://www.migadu.com/pricing/) is 20 outgoing attempts per day across the account. Verification, proposal notifications, alerts and support share it. This infrastructure limit does not cap open registration eligibility. Failed mail jobs trigger the existing health-alert route, but SMTP alert delivery shares the quota; keep smoke tests minimal and inspect the protected journal when delivery fails.
-- Obtain native-language/legal review and the external security review. This engineering register fulfils neither review and introduces no paid-subscription processing.
+- Review the published notices and the decisions above. Outside specialist reviews are optional future work, not a paid requirement for this free beta. This register records engineering evidence and introduces no paid-subscription processing.

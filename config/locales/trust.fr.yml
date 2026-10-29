@@ -84,5 +84,7 @@ fr:
       privacy_requests:
         title: "Demandes de confidentialité — Administration LawRelay"
         heading: "Demandes de confidentialité"
-        lede: "Traitez et clôturez les demandes."
+        lede: "Consignez le traitement des demandes."
+        mark_handled: "Marquer comme traité"
+        action_note: "Traitez la demande et répondez à l’utilisateur avant de la marquer comme traitée."
         empty: "Aucune demande à examiner."

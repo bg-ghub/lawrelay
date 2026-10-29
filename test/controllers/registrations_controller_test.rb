@@ -36,6 +36,60 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "must accept"
   end
 
+  test "email enqueue failure preserves the account and independently queues the directory check" do
+    with_failed_verification_email do
+      assert_enqueued_jobs 1, only: Directory::VerificationJob do
+        assert_difference([ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ], 1) do
+          post registration_path(locale: :en), params: { registration: valid_registration }
+        end
+      end
+    end
+
+    user = User.order(:id).last
+    assert_redirected_to verification_status_path(locale: :en)
+    assert cookies[:session_id]
+    assert_not user.email_verified?
+    follow_redirect!
+    assert_response :success
+    assert_includes response.body, I18n.t("auth.registration.delivery_delayed", locale: :en)
+    assert_not_includes response.body, "private adapter details"
+    assert_no_difference "User.count" do
+      assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
+        post verification_status_path(locale: :en)
+      end
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+  end
+
+  test "directory enqueue failure keeps the already queued mail and can be retried" do
+    original = Directory::VerificationJob.method(:perform_later)
+    Directory::VerificationJob.define_singleton_method(:perform_later) { |*| raise SolidQueue::Job::EnqueueError, "private adapter details" }
+    assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
+      post registration_path(locale: :en), params: { registration: valid_registration }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal I18n.t("auth.registration.delivery_delayed", locale: :en), flash[:alert]
+    Directory::VerificationJob.define_singleton_method(:perform_later, original)
+
+    assert_no_difference "User.count" do
+      assert_enqueued_jobs 1, only: Directory::VerificationJob do
+        post retry_directory_verification_status_path(locale: :en)
+      end
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+  ensure
+    Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
+  end
+
+  test "a rejected enqueue result does not announce a successfully started confirmation" do
+    with_failed_verification_email(result: false) do
+      post registration_path(locale: :fr), params: { registration: valid_registration }
+    end
+    assert_redirected_to verification_status_path(locale: :fr)
+    assert_equal I18n.t("auth.registration.delivery_delayed", locale: :fr), flash[:alert]
+    assert_nil flash[:notice]
+  end
+
   test "rejects a short password submitted without browser validation" do
     assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
       post registration_path(locale: :en), params: { registration: valid_registration.merge(password: "short", password_confirmation: "short") }
@@ -85,6 +139,20 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   private
+
+  def with_failed_verification_email(result: nil)
+    original = EmailVerificationMailer.method(:verify)
+    delivery = Object.new
+    delivery.define_singleton_method(:deliver_later) do
+      raise ActiveJob::EnqueueError, "private adapter details" unless result == false
+
+      false
+    end
+    EmailVerificationMailer.define_singleton_method(:verify) { |*| delivery }
+    yield
+  ensure
+    EmailVerificationMailer.define_singleton_method(:verify, original) if original
+  end
 
   def valid_registration
     {

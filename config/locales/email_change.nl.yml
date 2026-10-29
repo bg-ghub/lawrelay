@@ -7,7 +7,7 @@ nl:
     lede: "Wijzig je e-mailadres eerst op advocaat.be. We bevestigen het nieuwe adres en controleren je profiel opnieuw. Nog niet bijgewerkt? Probeer later opnieuw."
     admin_lede: "We sturen een bevestigingslink naar je nieuwe adres."
     notices:
-      sent: "We hebben een bevestigingslink naar je nieuwe e-mailadres gestuurd."
+      updated: "E-mailadres bijgewerkt."
     errors:
       password: "Je huidige wachtwoord is onjuist."
       unchanged: "Voer een ander e-mailadres in dan je huidige adres."

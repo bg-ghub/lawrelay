@@ -7,7 +7,7 @@ de:
     lede: "Ändern Sie Ihre E-Mail zuerst auf advocaat.be. Wir bestätigen die neue Adresse und prüfen Ihr Profil erneut. Noch nicht aktualisiert? Versuchen Sie es später erneut."
     admin_lede: "Wir senden einen Bestätigungslink an die neue Adresse."
     notices:
-      sent: "Wir haben einen Bestätigungslink an Ihre neue E-Mail-Adresse gesendet."
+      updated: "E-Mail-Adresse aktualisiert."
     errors:
       password: "Ihr aktuelles Passwort ist nicht korrekt."
       unchanged: "Geben Sie eine andere E-Mail-Adresse als Ihre aktuelle ein."

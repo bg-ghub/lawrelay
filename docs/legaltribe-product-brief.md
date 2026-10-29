@@ -67,4 +67,4 @@ LawRelay is free. The [former subscription idea](archive/pricing.md) is archived
 3. approve and automate privacy-retention/export/deletion operations after policy review;
 4. add team invitations and multi-office controls only after the single-firm pilot works;
 5. add calendar sync after the core assignment lifecycle is stable;
-6. complete the remaining independent legal, accessibility, and security reviews.
+6. continue internal checks and real-user feedback; specialist outside reviews are optional future work, not beta gates.

@@ -149,6 +149,19 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, AuditEvent.where(auditable: @user).count
   end
 
+  test "a managed email correction remains saved when verification mail cannot be queued" do
+    original = EmailVerificationMailer.method(:verify)
+    EmailVerificationMailer.define_singleton_method(:verify) { |*| raise ActiveJob::EnqueueError, "private mail failure" }
+    patch admin_user_path(@user, locale: :en), params: { user: { email_address: "admin-corrected@example.test" } }
+    assert_redirected_to admin_user_path(@user, locale: :en)
+    assert_equal "admin-corrected@example.test", @user.reload.email_address
+    assert_not @user.email_verified?
+    assert_equal I18n.t("admin.users.notices.updated", locale: :en), flash[:notice]
+    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+  ensure
+    EmailVerificationMailer.define_singleton_method(:verify, original) if original
+  end
+
   test "missing reasons return validation errors" do
     patch "/en/admin/users/#{@user.id}/suspend", params: { user_management: { reason: " " } }
     assert_response :unprocessable_content
