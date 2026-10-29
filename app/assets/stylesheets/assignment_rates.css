@@ -1,0 +1,4 @@
+.proposal-panel__price {
+  flex-wrap: wrap;
+  gap: .4rem 1rem;
+}
