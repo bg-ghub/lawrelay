@@ -1,0 +1,141 @@
+fr:
+  number:
+    format:
+      separator: ","
+      delimiter: " "
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%e %b"
+      long: "%e %B %Y"
+    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
+    abbr_day_names: [dim., lun., mar., mer., jeu., ven., sam.]
+    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
+    abbr_month_names: [~, janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.]
+    order: [day, month, year]
+  time:
+    formats:
+      default: "%A %e %B %Y · %H:%M"
+      short: "%e %b · %H:%M"
+      long: "%A %e %B %Y · %H:%M"
+    am: "am"
+    pm: "pm"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: "doit être accepté"
+      blank: "doit être renseigné"
+      confirmation: "ne correspond pas à %{attribute}"
+      empty: "ne peut pas être vide"
+      equal_to: "doit être égal à %{count}"
+      even: "doit être pair"
+      exclusion: "est réservé"
+      greater_than: "doit être supérieur à %{count}"
+      greater_than_or_equal_to: "doit être supérieur ou égal à %{count}"
+      inclusion: "n’est pas inclus dans la liste"
+      invalid: "n’est pas valide"
+      less_than: "doit être inférieur à %{count}"
+      less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
+      model_invalid: "Échec de validation : %{errors}"
+      record_invalid: "Échec de validation : %{errors}"
+      not_a_number: "n’est pas un nombre"
+      not_an_integer: "doit être un nombre entier"
+      odd: "doit être impair"
+      other_than: "doit être différent de %{count}"
+      present: "doit être vide"
+      required: "doit exister"
+      taken: "est déjà utilisé"
+      too_long:
+        one: "est trop long (1 caractère maximum)"
+        other: "est trop long (%{count} caractères maximum)"
+      too_short:
+        one: "est trop court (1 caractère minimum)"
+        other: "est trop court (%{count} caractères minimum)"
+      wrong_length:
+        one: "n’a pas la bonne longueur (doit compter 1 caractère)"
+        other: "n’a pas la bonne longueur (doit compter %{count} caractères)"
+  activerecord:
+    models:
+      user: "Utilisateur"
+      firm: "Cabinet"
+      lawyer_profile: "Profil d’avocat"
+      assignment: "Mission"
+      proposal: "Proposition"
+      privacy_request: "Demande de confidentialité"
+      report: "Signalement"
+    attributes:
+      user:
+        first_name: "Prénom"
+        last_name: "Nom"
+        email_address: "E-mail professionnel"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        locale: "Langue"
+        system_role: "Rôle système"
+        suspension_reason: "Motif de suspension"
+      firm:
+        name: "Nom du cabinet"
+        enterprise_number: "Numéro d’entreprise"
+        vat_number: "Numéro de TVA"
+        billing_email: "E-mail de facturation"
+        phone: "Téléphone"
+        address_line_1: "Adresse"
+        postal_code: "Code postal"
+        city: "Ville"
+        country_code: "Pays"
+        verification_status: "État de vérification"
+      lawyer_profile:
+        bar_association: "Barreau"
+        bar_number: "Numéro de barreau"
+        bar_admission_year: "Année d’inscription"
+        spoken_languages: "Langues parlées"
+        practice_areas: "Domaines de pratique"
+        court_preferences: "Préférences de juridiction"
+        availability_note: "Note de disponibilité"
+        professional_email: "E-mail professionnel"
+        directory_profile_url: "URL du profil d’annuaire"
+        verification_status: "État de vérification"
+      assignment:
+        kind: "Type"
+        title: "Titre"
+        description: "Description"
+        practice_area: "Domaine de pratique"
+        starts_at: "Date et heure"
+        city: "Ville"
+        court: "Juridiction"
+        duration_minutes: "Durée estimée"
+        fee_cents: "Honoraires indicatifs"
+        languages: "Langues"
+        status: "Statut"
+        assignment_subtype: "Sous-type de mission"
+        response_deadline_at: "Date limite de réponse"
+        delivery_due_at: "Échéance de remise"
+        scope_indication: "Indication de l’ampleur"
+      proposal:
+        name: "Nom"
+        email: "Adresse e-mail"
+        message: "Message"
+        rate_cents: "Tarif"
+        rate_kind: "Type de tarif"
+        status: "Statut"
+        user_id: "Utilisateur"
+      privacy_request:
+        kind: "Type de demande"
+        details: "Détails"
+        resolution_note: "Note de résolution"
+        status: "Statut"
+      report:
+        category: "Catégorie"
+        details: "Détails"
+        resolution_note: "Note de résolution"
+        status: "Statut"
+        reportable_type: "Type d’élément signalé"
+    errors:
+      models:
+        assignment:
+          attributes:
+            response_deadline_at:
+              before_start: "doit précéder le début de la mission"
+            delivery_due_at:
+              after_response: "doit suivre la date limite de réponse"
+              before_execution: "doit précéder le début de la mission"

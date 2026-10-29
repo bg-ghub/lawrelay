@@ -27,6 +27,7 @@ module Admin
       end
 
       status = decision == "approve" ? "verified" : "rejected"
+      outcome = decision == "approve" ? "approved" : "rejected"
       verified_at = status == "verified" ? Time.current : nil
       note = verification_params[:note].to_s.strip.presence
 
@@ -37,12 +38,12 @@ module Admin
           verified_at: verified_at,
           verification_note: note
         )
-        record_audit_event(firm, decision, note)
-        record_audit_event(profile, decision, note)
+        record_audit_event(firm, outcome, note)
+        record_audit_event(profile, outcome, note)
       end
 
       redirect_to admin_verifications_path,
-        notice: t("admin.verifications.notices.#{decision}d", name: @user.full_name)
+        notice: t("admin.verifications.notices.#{outcome}", name: @user.full_name)
     end
 
     private
@@ -55,12 +56,12 @@ module Admin
       params.fetch(:verification, {}).permit(:note)
     end
 
-    def record_audit_event(subject, decision, note)
+    def record_audit_event(subject, outcome, note)
       AuditEvent.create!(
         auditable: subject,
         actor_user: current_user,
         firm: subject.is_a?(Firm) ? subject : subject.user.primary_firm,
-        action: "verification.#{decision}d",
+        action: "verification.#{outcome}",
         metadata: {
           reviewed_user_id: @user.id,
           note: note

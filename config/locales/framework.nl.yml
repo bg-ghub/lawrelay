@@ -1,0 +1,141 @@
+nl:
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%d %b"
+      long: "%e %B %Y"
+    day_names: [zondag, maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag]
+    abbr_day_names: [zo, ma, di, wo, do, vr, za]
+    month_names: [~, januari, februari, maart, april, mei, juni, juli, augustus, september, oktober, november, december]
+    abbr_month_names: [~, jan, feb, mrt, apr, mei, jun, jul, aug, sep, okt, nov, dec]
+    order: [day, month, year]
+  time:
+    formats:
+      default: "%A %-d %B %Y · %H:%M"
+      short: "%d %b · %H:%M"
+      long: "%A %-d %B %Y · %H:%M"
+    am: "am"
+    pm: "pm"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: "moet geaccepteerd worden"
+      blank: "moet ingevuld zijn"
+      confirmation: "komt niet overeen met %{attribute}"
+      empty: "mag niet leeg zijn"
+      equal_to: "moet gelijk zijn aan %{count}"
+      even: "moet even zijn"
+      exclusion: "is gereserveerd"
+      greater_than: "moet groter zijn dan %{count}"
+      greater_than_or_equal_to: "moet groter dan of gelijk aan %{count} zijn"
+      inclusion: "is niet opgenomen in de lijst"
+      invalid: "is ongeldig"
+      less_than: "moet kleiner zijn dan %{count}"
+      less_than_or_equal_to: "moet kleiner dan of gelijk aan %{count} zijn"
+      model_invalid: "Validatie mislukt: %{errors}"
+      record_invalid: "Validatie mislukt: %{errors}"
+      not_a_number: "is geen getal"
+      not_an_integer: "moet een geheel getal zijn"
+      odd: "moet oneven zijn"
+      other_than: "moet verschillen van %{count}"
+      present: "moet leeg zijn"
+      required: "moet bestaan"
+      taken: "is al in gebruik"
+      too_long:
+        one: "is te lang (maximaal 1 teken)"
+        other: "is te lang (maximaal %{count} tekens)"
+      too_short:
+        one: "is te kort (minimaal 1 teken)"
+        other: "is te kort (minimaal %{count} tekens)"
+      wrong_length:
+        one: "heeft niet de juiste lengte (moet 1 teken zijn)"
+        other: "heeft niet de juiste lengte (moet %{count} tekens zijn)"
+  activerecord:
+    models:
+      user: "Gebruiker"
+      firm: "Kantoor"
+      lawyer_profile: "Advocatenprofiel"
+      assignment: "Opdracht"
+      proposal: "Voorstel"
+      privacy_request: "Privacyverzoek"
+      report: "Melding"
+    attributes:
+      user:
+        first_name: "Voornaam"
+        last_name: "Achternaam"
+        email_address: "Professionele e-mail"
+        password: "Wachtwoord"
+        password_confirmation: "Wachtwoordbevestiging"
+        locale: "Taal"
+        system_role: "Systeemrol"
+        suspension_reason: "Reden van schorsing"
+      firm:
+        name: "Kantoornaam"
+        enterprise_number: "Ondernemingsnummer"
+        vat_number: "Btw-nummer"
+        billing_email: "Facturatie-e-mail"
+        phone: "Telefoonnummer"
+        address_line_1: "Adres"
+        postal_code: "Postcode"
+        city: "Plaats"
+        country_code: "Land"
+        verification_status: "Verificatiestatus"
+      lawyer_profile:
+        bar_association: "Balie"
+        bar_number: "Balienummer"
+        bar_admission_year: "Jaar van inschrijving"
+        spoken_languages: "Gesproken talen"
+        practice_areas: "Rechtsdomeinen"
+        court_preferences: "Voorkeursrechtbanken"
+        availability_note: "Beschikbaarheidsnotitie"
+        professional_email: "Professionele e-mail"
+        directory_profile_url: "URL van het profiel in de directory"
+        verification_status: "Verificatiestatus"
+      assignment:
+        kind: "Type"
+        title: "Titel"
+        description: "Omschrijving"
+        practice_area: "Rechtsdomein"
+        starts_at: "Datum en tijd"
+        city: "Plaats"
+        court: "Rechtbank"
+        duration_minutes: "Geschatte duur"
+        fee_cents: "Richttarief"
+        languages: "Talen"
+        status: "Status"
+        assignment_subtype: "Subtype opdracht"
+        response_deadline_at: "Reactietermijn"
+        delivery_due_at: "Opleverdeadline"
+        scope_indication: "Omvangsindicatie"
+      proposal:
+        name: "Naam"
+        email: "E-mailadres"
+        message: "Toelichting"
+        rate_cents: "Tarief"
+        rate_kind: "Tariefsoort"
+        status: "Status"
+        user_id: "Gebruiker"
+      privacy_request:
+        kind: "Soort verzoek"
+        details: "Details"
+        resolution_note: "Notitie over afhandeling"
+        status: "Status"
+      report:
+        category: "Categorie"
+        details: "Details"
+        resolution_note: "Notitie over afhandeling"
+        status: "Status"
+        reportable_type: "Type gemeld item"
+    errors:
+      models:
+        assignment:
+          attributes:
+            response_deadline_at:
+              before_start: "moet vóór de start van de opdracht liggen"
+            delivery_due_at:
+              after_response: "moet na de reactietermijn liggen"
+              before_execution: "moet vóór de start van de opdracht liggen"

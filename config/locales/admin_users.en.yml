@@ -123,11 +123,19 @@ en:
           admin_user_sessions_revoked: Sessions signed out
           account_updated: Account details updated
           admin_bootstrapped: Administrator account created
+          account_email_changed: Email address changed
+          account_provisioned_for_testing: Test account created
+          admin_contact_updated: Administrator contact address changed
+          admin_promoted: Administrator access granted
+          admin_mfa_enabled: Two-factor authentication set up
+          admin_mfa_challenged: Two-factor authentication confirmed
+          admin_mfa_reset: Two-factor authentication reset
           verification_directory_matched: Directory profile matched
           verification_directory_email_confirmed: Listed email confirmed
           verification_directory_activated: Professional access verified
           verification_approved: Professional verification approved
           verification_rejected: Professional verification rejected
+          verification_rejectd: Professional verification rejected
       pagination:
         label: User pages
         previous: Previous
