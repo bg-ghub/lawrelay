@@ -19,11 +19,12 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Daily cleanup of resolved support conversations through existing Migadu, with hold/draft safeguards and missed-run alerts.
 - [x] Migadu support/privacy/security identities receive into the same inbox as `info@lawrelay.be`; individual delivery tests passed.
 - [x] Terms/privacy read-through against current behavior; clarify sharing, retention, transfers and signup acknowledgement in NL/FR/DE/EN.
+- [x] Save current provider terms/DPAs and available account context in a restricted private archive outside Git, with sources and checksums.
 
 ## Finish during the beta
 
 - [ ] Complete the [real two-lawyer trial](ops/beta-review-handoff.md) when the second lawyer joins; record actual results and feedback.
-- [ ] Retain account-specific provider-agreement evidence privately; the public pages do not establish which account agreements were accepted.
+- [ ] Retrieve the existing Hetzner DPA/Appendix 1 and current Migadu account record after account sign-in. Published references and available context are already archived privately.
 - [x] Retention periods and hold review are defined. Privacy requests still need a verified, case-by-case decision; shared records are pseudonymised where possible.
 
 ## Routine operations
