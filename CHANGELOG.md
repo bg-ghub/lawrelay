@@ -15,6 +15,7 @@ All notable changes to LawRelay are documented here. The project follows
 
 - Require completed MFA for personalized homepage content and preserve session revocation during two-factor actions.
 - Recheck professional verification before sending assignment notifications.
+- Include notification delivery health in the five-minute host check.
 - Simplify the footer, clarify privacy retention and enlarge the notification read button.
 
 ## [0.7.0] - 2026-10-29
