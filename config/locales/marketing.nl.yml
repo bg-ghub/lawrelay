@@ -33,12 +33,11 @@ nl:
       title: "LawRelay — zittingsvervanging en juridische opdrachten"
       og_description: "Vind een confrater voor een zitting of juridische opdracht."
       hero:
-        eyebrow: voor advocaten
         heading_before: Een confrater nodig
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
-        note: "Open-source bèta voor advocaten."
+        note: "Open-source bèta."
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag

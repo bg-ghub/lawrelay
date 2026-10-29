@@ -5,6 +5,13 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-29
+
+### Added
+
+- Daily cleanup of resolved support conversations and linked Sent copies through the existing Migadu mailbox.
+- Private closure timestamps, cleanup health checks and encrypted state backups.
+
 ## [0.9.0] - 2026-10-29
 
 ### Added
@@ -257,7 +264,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/bg-ghub/lawrelay/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/bg-ghub/lawrelay/compare/v0.8.7...v0.9.0
 [0.8.7]: https://github.com/bg-ghub/lawrelay/compare/v0.8.6...v0.8.7
 [0.8.6]: https://github.com/bg-ghub/lawrelay/compare/v0.8.5...v0.8.6
