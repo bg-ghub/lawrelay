@@ -48,7 +48,7 @@ en:
       city_placeholder: "Antwerp"
       conditions_legend: "Terms"
       fee_label: "Guideline fee (€, optional)"
-      fee_hint: "Candidates can make their own proposal."
+      fee_hint: "Leave empty to receive bids."
       content_rules_label: "This post contains no client names, case facts, documents or confidential information."
       content_rules_hint_html: "After a match, share details directly and securely. See %{privacy_link}."
       urgent_label: "Urgent"
