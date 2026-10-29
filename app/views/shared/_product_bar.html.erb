@@ -1,0 +1,9 @@
+<nav class="product-bar" aria-label="<%= t("products.navigation_label") %>">
+  <div class="shell product-bar__inner">
+    <span class="product-bar__label"><%= t("products.label") %></span>
+    <div class="product-bar__links">
+      <%= link_to t("products.research_name"), t("products.research_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale %>
+      <%= link_to "Praxis", t("products.praxis_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale %>
+    </div>
+  </div>
+</nav>

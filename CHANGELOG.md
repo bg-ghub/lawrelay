@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.6] - 2026-10-29
+
+### Changed
+
+- Added a compact product bar linking to the matching WetWijzer language edition and Praxis.
+- Highlighted the free open-source beta and clarified that future income will primarily cover hosting.
+- Prepared short bar-newsletter invitations in four languages and recorded external reviewer options.
+
 ## [0.4.5] - 2026-10-29
 
 ### Fixed
