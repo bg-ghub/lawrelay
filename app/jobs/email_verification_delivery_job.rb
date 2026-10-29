@@ -1,4 +1,5 @@
 class EmailVerificationDeliveryJob < ActionMailer::MailDeliveryJob
+  discard_on ActiveJob::DeserializationError
   retry_on Onboarding::MailTransport::TemporaryFailure, wait: 1.minute, attempts: 3
 
   def perform(mailer, mail_method, delivery_method, args:, kwargs: nil, params: nil)

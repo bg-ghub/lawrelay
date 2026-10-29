@@ -8,7 +8,7 @@ class PasswordsController < ApplicationController
 
   def create
     user = User.find_by(email_address: params[:email_address])
-    if user && !user.system_admin?
+    if user && !user.system_admin? && user.erased_at.nil?
       PasswordsMailer.reset(user).deliver_later
     end
 

@@ -17,6 +17,7 @@ class Assignment < ApplicationRecord
   belongs_to :firm, optional: true
 
   before_validation :normalize_structured_fields
+  before_save :record_closed_at, if: :will_save_change_to_status?
 
   validates :kind, inclusion: { in: KINDS.values }
   validates :status, inclusion: { in: STATUSES }
@@ -38,6 +39,7 @@ class Assignment < ApplicationRecord
   validate :deadline_sequence
   validate :future_deadlines, on: :create
   validate :content_rules_were_accepted, on: :create
+  validate :creator_account_still_active, on: :create
 
   scope :open, -> { where(status: "open") }
   scope :active, -> { where(status: %w[open matched]) }
@@ -212,5 +214,21 @@ class Assignment < ApplicationRecord
     recipients.compact.uniq(&:id).each do |recipient|
       Notification.publish!(user: recipient, kind: "assignment_#{next_status}", subject: self, assignment: self, actor:)
     end
+  end
+
+  def record_closed_at
+    unless status.in?(%w[completed cancelled expired])
+      self.closed_at = nil
+      return
+    end
+
+    self.closed_at ||= Time.current
+  end
+
+  def creator_account_still_active
+    return unless creator_user_id
+    return if User.where(id: creator_user_id, erased_at: nil, suspended_at: nil).exists?
+
+    errors.add(:base, I18n.t("workflow.errors.assignment_not_available"))
   end
 end

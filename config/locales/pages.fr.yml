@@ -71,8 +71,9 @@ fr:
         retention:
           heading: "6. Conservation"
           paragraphs:
-            - "Nous examinons les demandes de suppression manuellement, y compris les données nécessaires aux obligations légales, à la sécurité ou aux litiges. Les données de compte, de mission, d’assistance et d’audit ne sont pas supprimées automatiquement."
-            - "Les sauvegardes conservent 7 copies quotidiennes, 4 hebdomadaires et 12 mensuelles. Les données supprimées peuvent subsister jusqu’à l’expiration des sauvegardes et des anciennes versions de stockage."
+            - "Inscriptions non confirmées : 30 jours d’inactivité. Notifications : 90 jours après leur création. Missions, propositions, demandes de confidentialité, signalements et échanges de support clôturés : 2 ans après clôture. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
+            - "Les comptes restent jusqu’à leur clôture. Après examen d’une demande de suppression vérifiée, nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions, demandes, enquêtes, litiges en cours ou obligations légales peuvent justifier une conservation plus longue."
+            - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
           heading: "7. Vos droits"
           paragraphs:

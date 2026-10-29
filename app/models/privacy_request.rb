@@ -10,6 +10,13 @@ class PrivacyRequest < ApplicationRecord
   validates :status, inclusion: { in: STATUSES }
   validates :details, presence: true, length: { maximum: 2_000 }
   validates :resolution_note, length: { maximum: 2_000 }, allow_blank: true
+  validate :requester_not_erased, on: :create
+
+  def requester_not_erased
+    return if User.where(id: user_id, erased_at: nil).exists?
+
+    errors.add(:base, I18n.t("workflow.errors.assignment_not_available"))
+  end
 
   def reopen!(reviewer:)
     with_lock do

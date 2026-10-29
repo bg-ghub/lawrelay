@@ -34,11 +34,11 @@ nl:
       og_description: "Vind een confrater voor een zitting of juridische opdracht."
       hero:
         eyebrow: voor advocaten
-        heading_before: Een collega nodig
+        heading_before: Een confrater nodig
         heading_middle: voor een
         heading_emphasis: zitting?
         lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
-        note: "Open-source bèta voor advocaten op advocaat.be."
+        note: "Open-source bèta voor advocaten."
       product:
         aria_label: Voorbeeld van de LawRelay werkruimte
         today: Vandaag
@@ -75,7 +75,7 @@ nl:
         by_arrangement: Op afspraak
         belgium: België
         empty_heading: "Nog geen opdrachten"
-        empty_body: "Een collega nodig? Plaats een opdracht."
+        empty_body: "Een confrater nodig? Plaats een opdracht."
         demo_caption: "Alleen geverifieerde advocaten kunnen opdrachten bekijken."
       how:
         eyebrow: zo werkt het

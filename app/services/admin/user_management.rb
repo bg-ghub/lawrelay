@@ -86,7 +86,7 @@ module Admin
       raise InvalidAction, :protected_account unless @actor&.system_admin? && @actor.active?
 
       @user.with_lock do
-        raise InvalidAction, :protected_account if @user.system_admin? || @user.id == @actor.id
+        raise InvalidAction, :protected_account if @user.system_admin? || @user.erased_at || @user.id == @actor.id
 
         yield
       end

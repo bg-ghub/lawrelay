@@ -31,6 +31,16 @@ class EmailVerificationDeliveryJobTest < ActiveJob::TestCase
     end
   end
 
+  test "verification queued for a registration removed by retention is discarded" do
+    job = EmailVerificationDeliveryJob.new("EmailVerificationMailer", "verify", "deliver_now", args: [ @user ]).serialize
+    @user.destroy!
+
+    assert_no_emails do
+      assert_nothing_raised { ActiveJob::Base.execute(job) }
+    end
+    assert_no_enqueued_jobs
+  end
+
   test "a queued delivery reloads the current address and generates an address-bound link" do
     stale_user = User.find(@user.id)
     previous_token = stale_user.email_verification_token

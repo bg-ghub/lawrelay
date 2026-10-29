@@ -7,6 +7,9 @@ volume=${LAWRELAY_STORAGE_VOLUME:-lawrelay_storage}
 work_root=${LAWRELAY_BACKUP_WORK_ROOT:-/var/lib/lawrelay-backup}
 state_dir=${LAWRELAY_BACKUP_STATE_DIR:-$work_root/state}
 lock_file=${LAWRELAY_BACKUP_LOCK_FILE:-$work_root/backup.lock}
+ledger_dir=${LAWRELAY_ERASURE_LEDGER_DIR:-/var/lib/lawrelay-privacy}
+ledger=${LAWRELAY_ERASURE_LEDGER:-$ledger_dir/erasures.jsonl}
+ledger_lock=${LAWRELAY_ERASURE_LEDGER_LOCK:-$ledger.lock}
 notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
 notify_direct=${LAWRELAY_NOTIFY_DIRECT:-false}
 tag=${LAWRELAY_LOG_TAG:-lawrelay-backup}
@@ -22,7 +25,7 @@ fail() {
   exit 1
 }
 
-for command in docker flock sqlite3 restic tar; do command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"; done
+for command in docker flock sqlite3 restic tar cp stat; do command -v "$command" >/dev/null 2>&1 || fail "missing required command: $command"; done
 [ -n "${RESTIC_REPOSITORY:-}" ] || fail "RESTIC_REPOSITORY is not configured"
 [ -n "${RESTIC_PASSWORD_FILE:-}" ] || fail "RESTIC_PASSWORD_FILE is not configured"
 [ -r "$RESTIC_PASSWORD_FILE" ] || fail "RESTIC_PASSWORD_FILE is not readable"
@@ -34,6 +37,16 @@ flock -n 9 || { log "backup already running; skipping"; exit 0; }
 
 mountpoint=$(docker volume inspect --format '{{ .Mountpoint }}' "$volume" 2>/dev/null) || fail "Docker volume not found: $volume"
 [ -d "$mountpoint" ] || fail "volume mountpoint is unavailable"
+
+# The erasure ledger deliberately lives outside the volume. Take the same lock
+# as the app and snapshot it as a separate artifact, so recovery can use the
+# newest successful ledger even when the chosen database snapshot is older.
+[ ! -L "$ledger_dir" ] && [ -d "$ledger_dir" ] || fail "erasure ledger directory is unsafe"
+[ "$(stat -c '%u:%g:%a' "$ledger_dir")" = '1000:1000:700' ] || fail "erasure ledger directory permissions are unsafe"
+[ ! -L "$ledger" ] && [ -f "$ledger" ] || fail "erasure ledger file is unsafe"
+[ ! -L "$ledger_lock" ] && [ -f "$ledger_lock" ] || fail "erasure ledger lock is unsafe"
+[ "$(stat -c '%u:%g:%a:%h' "$ledger")" = '1000:1000:600:1' ] || fail "erasure ledger file permissions are unsafe"
+[ "$(stat -c '%u:%g:%a:%h' "$ledger_lock")" = '1000:1000:600:1' ] || fail "erasure ledger lock permissions are unsafe"
 
 stage=$(mktemp -d "$work_root/stage.XXXXXX") || fail "could not create staging directory"
 cleanup() { rm -rf "$stage"; }
@@ -54,6 +67,13 @@ backup_db production.sqlite3
 backup_db production_queue.sqlite3
 backup_db production_cable.sqlite3
 
+# Copy after the database snapshots so their committed erasures are included.
+exec 8<"$ledger_lock"
+flock -s 8 || fail "could not lock erasure ledger"
+cp -- "$ledger" "$stage/erasures.jsonl" || fail "erasure ledger copy failed"
+chmod 600 "$stage/erasures.jsonl"
+flock -u 8
+
 # Cache is intentionally omitted: Rails can recreate it. Archive uploaded files
 # and any other persistent storage while excluding live SQLite/WAL files.
 tar -C "$mountpoint" \
@@ -64,10 +84,13 @@ tar -C "$mountpoint" \
 printf '%s\n' "created_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >"$stage/manifest"
 printf '%s\n' "volume=$volume" >>"$stage/manifest"
 printf '%s\n' "databases=production.sqlite3,production_queue.sqlite3,production_cable.sqlite3" >>"$stage/manifest"
+printf '%s\n' "erasure_ledger=erasures.jsonl" >>"$stage/manifest"
 
-(cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" databases storage.tar manifest) || fail "restic backup failed"
+(cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" databases storage.tar erasures.jsonl manifest) || fail "restic backup failed"
 restic snapshots --tag lawrelay --latest 1 --json >/dev/null || fail "could not verify LawRelay restic snapshot"
-restic forget --group-by host,tags --tag lawrelay --keep-daily 7 --keep-weekly 4 --keep-monthly 12 --prune || fail "restic retention failed"
+# Keep recovery copies for 30 days. The fresh snapshot above must succeed before
+# pruning starts, so a retention run cannot remove the only recent backup.
+restic forget --group-by host,tags --tag lawrelay --keep-within 30d --prune || fail "restic retention failed"
 
 date -u +%Y-%m-%dT%H:%M:%SZ >"$state_dir/last-success"
 chmod 600 "$state_dir/last-success"

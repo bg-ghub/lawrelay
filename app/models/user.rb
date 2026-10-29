@@ -41,10 +41,12 @@ class User < ApplicationRecord
   end
 
   def active?
-    !suspended?
+    !suspended? && erased_at.nil?
   end
 
   def full_name
+    return I18n.t("retention.deleted_account") if erased_at
+
     [ first_name, last_name ].compact_blank.join(" ")
   end
 
