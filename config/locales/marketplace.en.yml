@@ -49,7 +49,7 @@ en:
       conditions_legend: "Terms"
       fee_label: "Indicative price (optional)"
       content_rules_label: "This post contains no client names, case facts, documents or confidential information."
-      content_rules_hint_html: "After a match, share details directly and securely. See %{privacy_link}."
+      content_rules_hint: "Other lawyers can read this post. After agreeing, send confidential details directly and securely to your chosen colleague."
       urgent_label: "Urgent"
       urgent_hint: "Give this assignment extra visibility."
       cancel: "Cancel"
