@@ -34,8 +34,12 @@
 
   <body class="site-shell">
     <a class="skip-link" href="#main-content" data-turbo="false"><%= t("marketing.layout.skip_to_content") %></a>
-    <%= render "shared/product_bar" %>
-    <%= render "shared/header" %>
+    <% if admin_host? %>
+      <%= render "admin/shared/header" %>
+    <% else %>
+      <%= render "shared/product_bar" %>
+      <%= render "shared/header" %>
+    <% end %>
     <% if flash.any? %>
       <div class="flash-stack" aria-live="polite" aria-atomic="true">
         <% flash.each do |type, message| %>
@@ -52,6 +56,6 @@
       <% end %>
       <%= yield %>
     </main>
-    <%= render "shared/footer" %>
+    <%= render(admin_host? ? "admin/shared/footer" : "shared/footer") %>
   </body>
 </html>

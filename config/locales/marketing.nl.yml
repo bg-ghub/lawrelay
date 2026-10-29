@@ -2,6 +2,7 @@ nl:
   marketing:
     locale_name: Nederlands
     language_switcher: Taal kiezen
+    language_switch_warning: "Je wijzigingen gaan verloren. Van taal wisselen?"
     actions:
       post_assignment: Plaats een opdracht
       browse_assignments: Bekijk opdrachten

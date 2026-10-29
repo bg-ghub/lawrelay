@@ -12,13 +12,15 @@ module Admin
       return invalid_decision unless decision.in?(%w[review complete reject])
       return missing_note if decision.in?(%w[complete reject]) && note.blank?
 
-      if decision == "review"
-        @privacy_request.update!(status: "in_review", handled_by_user: current_user)
-      else
-        status = decision == "complete" ? "completed" : "rejected"
-        @privacy_request.close!(status: status, reviewer: current_user, note: note)
+      ApplicationRecord.transaction do
+        if decision == "review"
+          @privacy_request.reopen!(reviewer: current_user)
+        else
+          status = decision == "complete" ? "completed" : "rejected"
+          @privacy_request.close!(status: status, reviewer: current_user, note: note)
+        end
+        record_audit(decision, note)
       end
-      record_audit(decision, note)
       redirect_to admin_privacy_requests_path, notice: t("trust.admin.notices.updated")
     end
 

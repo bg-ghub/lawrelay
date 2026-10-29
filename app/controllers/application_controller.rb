@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  include AdminHostRouting
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -45,7 +46,7 @@ class ApplicationController < ActionController::Base
   def require_system_admin
     return if current_user&.system_admin?
 
-    redirect_to root_path, alert: t("auth.authorization.admin_required")
+    redirect_to(admin_host? ? admin_login_path : root_path, alert: t("auth.authorization.admin_required"))
   end
 
   def switch_locale(&)

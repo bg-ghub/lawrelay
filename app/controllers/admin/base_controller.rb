@@ -6,7 +6,7 @@ module Admin
     private
 
     def request_authentication
-      session[:return_to_after_authenticating] = request.url
+      session[:return_to_after_authenticating] = request.fullpath
       redirect_to admin_login_path
     end
 

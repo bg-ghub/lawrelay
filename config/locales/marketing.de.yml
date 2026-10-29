@@ -2,6 +2,7 @@ de:
   marketing:
     locale_name: Deutsch
     language_switcher: Sprache wählen
+    language_switch_warning: "Ihre Änderungen gehen verloren. Sprache wechseln?"
     actions:
       post_assignment: Auftrag einstellen
       browse_assignments: Aufträge ansehen

@@ -1,0 +1,33 @@
+.admin-site-header .header-inner {
+  flex-wrap: wrap;
+  gap: .75rem;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+}
+
+.admin-site-header .header-login {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.admin-site-footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  background: var(--ink-deep);
+  color: var(--paper);
+}
+
+.admin-site-footer .footer-project {
+  margin-top: 0;
+}
+
+.admin-site-footer .footer-project__version {
+  flex-basis: auto;
+}
+
+.admin-site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
