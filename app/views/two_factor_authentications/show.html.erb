@@ -1,0 +1,30 @@
+<% content_for :title, t("two_factor.title") %>
+<%= render "head" %>
+<div class="new-assignment shell mfa-page">
+  <div class="new-assignment__intro">
+    <h1><%= t("two_factor.heading") %></h1>
+    <p><%= t(current_user.two_factor_enabled? ? "two_factor.status_on" : "two_factor.status_off") %></p>
+  </div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <% if current_user.two_factor_enabled? %>
+      <%= form_with url: two_factor_authentication_path, method: :delete, class: "assignment-form", data: { turbo: false } do |form| %>
+        <fieldset class="form-section">
+          <legend><%= t("two_factor.disable") %></legend>
+          <div class="field-group"><%= form.label :current_password, t("two_factor.password_label") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
+          <%= render "code_fields", form: form %>
+        </fieldset>
+        <div class="form-actions"><%= link_to t("two_factor.back"), settings_path, class: "button button--ghost" %><%= form.submit t("two_factor.disable"), class: "button button--dark" %></div>
+      <% end %>
+    <% else %>
+      <%= form_with url: begin_setup_two_factor_authentication_path, method: :post, class: "assignment-form", data: { turbo: false } do |form| %>
+        <fieldset class="form-section">
+          <legend><%= t("two_factor.enable") %></legend>
+          <p><%= t("two_factor.enable_hint") %></p>
+          <div class="field-group"><%= form.label :current_password, t("two_factor.password_label") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
+        </fieldset>
+        <div class="form-actions"><%= link_to t("two_factor.back"), settings_path, class: "button button--ghost" %><%= form.submit t("two_factor.continue"), class: "button button--dark" %></div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

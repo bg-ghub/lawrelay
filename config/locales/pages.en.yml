@@ -47,6 +47,7 @@ en:
           heading: "2. Data we process"
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records."
+            - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
             - "Professional-verification data, including your official directory profile, listed name and professional email, firm details, and verification status."
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."

@@ -1,0 +1,27 @@
+<% content_for :title, t("two_factor.title") %>
+<%= render "head" %>
+<div class="new-assignment shell mfa-page">
+  <div class="new-assignment__intro">
+    <h1><%= t("two_factor.setup.heading") %></h1>
+    <p><%= t("two_factor.setup.instruction") %></p>
+  </div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <%= form_with url: enable_two_factor_authentication_path, method: :post, class: "assignment-form", data: { turbo: false } do |form| %>
+      <fieldset class="form-section">
+        <legend><%= t("two_factor.setup.account") %></legend>
+        <%= image_tag @qr_code, alt: t("two_factor.setup.qr_alt"), class: "mfa-qr", width: 280, height: 280 %>
+        <details class="mfa-manual">
+          <summary><%= t("two_factor.setup.manual_summary") %></summary>
+          <code class="mfa-secret"><%= @secret %></code>
+          <details><summary><%= t("two_factor.setup.uri_summary") %></summary><code class="mfa-uri"><%= @provisioning_uri %></code></details>
+        </details>
+      </fieldset>
+      <fieldset class="form-section">
+        <legend><%= t("two_factor.setup.confirm") %></legend>
+        <div class="field-group"><%= form.label :mfa_code, t("two_factor.code_label") %><%= form.text_field :mfa_code, inputmode: "numeric", autocomplete: "one-time-code", maxlength: 6, pattern: "[0-9]{6}", required: true %></div>
+      </fieldset>
+      <div class="form-actions"><%= link_to t("two_factor.back"), settings_path, class: "button button--ghost" %><%= form.submit t("two_factor.enable"), class: "button button--dark" %></div>
+    <% end %>
+  </div>
+</div>

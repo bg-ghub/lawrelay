@@ -1,0 +1,18 @@
+<% content_for :title, t("two_factor.title") %>
+<%= render "head" %>
+<div class="new-assignment shell mfa-page">
+  <div class="new-assignment__intro"><h1><%= t("two_factor.challenge.heading") %></h1></div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <div class="assignment-form">
+      <%= form_with url: verify_two_factor_authentication_path, method: :post, class: "assignment-form", data: { turbo: false } do |form| %>
+        <fieldset class="form-section">
+          <legend><%= t("two_factor.continue") %></legend>
+          <%= render "code_fields", form: form, autofocus: true %>
+        </fieldset>
+        <div class="form-actions"><%= form.submit t("two_factor.continue"), class: "button button--dark" %></div>
+      <% end %>
+      <%= button_to t("two_factor.challenge.sign_out"), session_path, method: :delete, class: "text-link", data: { turbo: false } %>
+    </div>
+  </div>
+</div>

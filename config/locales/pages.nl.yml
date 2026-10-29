@@ -47,6 +47,7 @@ nl:
           heading: "2. Welke gegevens we verwerken"
           bullets:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
+            - "Als je tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Professionele verificatiegegevens, waaronder je officiële profiel, de vermelde naam en het professionele e-mailadres, kantoorgegevens en verificatiestatus."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."

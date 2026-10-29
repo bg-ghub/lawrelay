@@ -26,6 +26,13 @@ Rails.application.routes.draw do
       post :retry_directory
     end
     resource :settings, only: %i[show update]
+    resource :two_factor_authentication, path: "settings/two-factor", only: %i[show destroy] do
+      post :begin_setup, path: "begin-setup"
+      get :setup
+      post :enable
+      get :challenge
+      post :verify
+    end
     get "settings/email", to: "email_changes#new", as: :email_change
     post "settings/email", to: "email_changes#create"
     resources :privacy_requests, only: %i[index new create]
