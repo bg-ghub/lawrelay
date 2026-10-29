@@ -40,6 +40,7 @@ class AdminHostRoutingTest < ActionDispatch::IntegrationTest
       assert_select ".footer-project__version", text: /#{Regexp.escape(LawRelay::VERSION)}/
       assert_select ".footer-project__source[href='https://github.com/bg-ghub/lawrelay']"
       assert_select ".admin-site-header a[href='https://lawrelay.example/#{locale}']"
+      assert_select "a[href*='/passwords']", count: 0
 
       get new_session_path(locale: locale)
       assert_redirected_to admin_login_path(locale: locale)
@@ -112,40 +113,48 @@ class AdminHostRoutingTest < ActionDispatch::IntegrationTest
     assert_not @member.user.reload.system_admin?
   end
 
-  test "administrator recovery stays on the admin host and keeps MFA after a password reset" do
+  test "all administrator-host password recovery routes return to sign-in without mutation" do
     configure_mfa
-    @admin.sessions.create!
-    get new_password_path(locale: :en, email_address: @admin.email_address)
-    assert_response :success
-    assert_select "a[href='#{admin_login_path(locale: :en)}']"
-    assert_select "input[type='email'][value='#{@admin.email_address}']"
-
-    post passwords_path(locale: :en), params: { email_address: @admin.email_address }
-    assert_enqueued_email_with PasswordsMailer, :reset, args: [ @admin ]
-    assert_redirected_to admin_login_path(locale: :en)
-
+    sign_in_as(@admin, admin_mfa: true)
+    original_admin = @admin.reload.attributes
+    original_sessions = @admin.sessions.order(:id).map(&:attributes)
+    original_cookie = cookies["session_id"]
     token = @admin.password_reset_token
-    get edit_password_path(token: token, locale: :en)
-    assert_response :success
-    put password_path(token: token, locale: :en), params: {
-      password: "replacement-password1234", password_confirmation: "replacement-password1234"
-    }
-    assert_redirected_to admin_login_path(locale: :en)
-    assert_empty @admin.reload.sessions
-    assert_predicate @admin, :admin_mfa_configured?
 
-    post admin_login_path(locale: :en), params: { password: "replacement-password1234" }
-    follow_redirect!
-    assert_redirected_to admin_mfa_challenge_path(locale: :en)
+    assert_no_difference [ "AuditEvent.count", "Session.count" ] do
+      assert_no_enqueued_jobs do
+        [ :get, :head ].each do |method|
+          public_send(method, new_password_path(locale: :en, email_address: @admin.email_address))
+          assert_response :see_other
+          assert_redirected_to admin_login_path(locale: :en)
+          public_send(method, edit_password_path(token: token, locale: :en))
+          assert_response :see_other
+          assert_redirected_to admin_login_path(locale: :en)
+        end
+        post passwords_path(locale: :en), params: { email_address: @admin.email_address }
+        assert_response :see_other
+        assert_redirected_to admin_login_path(locale: :en)
+        [ :put, :patch ].each do |method|
+          public_send(method, password_path(token: token, locale: :en), params: {
+            password: "replacement-password1234", password_confirmation: "replacement-password1234"
+          })
+          assert_response :see_other
+          assert_redirected_to admin_login_path(locale: :en)
+        end
+      end
+    end
+    assert_equal original_admin, @admin.reload.attributes
+    assert_equal original_sessions, @admin.sessions.order(:id).map(&:attributes)
+    assert_equal original_cookie, cookies["session_id"]
   end
 
   test "account security emails use their configured host and preserve the locale" do
     I18n.available_locales.each do |locale|
       @admin.update!(locale: locale)
       @member.user.update!(locale: locale)
-      [ PasswordsMailer.reset(@admin), EmailVerificationMailer.verify(@admin) ].each do |message|
-        assert_includes message.text_part.body.decoded, "https://admin.lawrelay.example/#{locale}/"
-      end
+      assert_nil PasswordsMailer.reset(@admin).to
+      message = EmailVerificationMailer.verify(@admin)
+      assert_includes message.text_part.body.decoded, "https://admin.lawrelay.example/#{locale}/"
       [ PasswordsMailer.reset(@member.user), EmailVerificationMailer.verify(@member.user) ].each do |message|
         assert_includes message.text_part.body.decoded, "https://lawrelay.example/#{locale}/"
         assert_not_includes message.text_part.body.decoded, "admin.lawrelay.example"
@@ -153,25 +162,81 @@ class AdminHostRoutingTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "administrator email change and confirmation remain usable on the admin host" do
+  test "administrator-host email routes return to administration without mutation" do
     sign_in_as(@admin, admin_mfa: true)
-    get email_change_path(locale: :en)
-    assert_response :success
+    original_admin = @admin.reload.attributes
+    original_profile = @admin.lawyer_profile.attributes
+    original_sessions = @admin.sessions.order(:id).map(&:attributes)
+    original_cookie = cookies["session_id"]
 
-    post email_change_path(locale: :en), params: {
-      email_change: { email_address: "changed-host-admin@example.test", current_password: "admin-password1234" }
-    }
-    assert_redirected_to admin_users_path(locale: :en)
-    @admin.reload
-    assert_equal "changed-host-admin@example.test", @admin.email_address
-    assert_not @admin.email_verified?
+    assert_no_difference [ "AuditEvent.count", "Session.count" ] do
+      assert_no_enqueued_jobs do
+        [ :get, :head ].each do |method|
+          public_send(method, email_change_path(locale: :en))
+          assert_response :see_other
+          assert_redirected_to admin_users_path(locale: :en)
+        end
+        post email_change_path(locale: :en), params: {
+          email_change: { email_address: "changed-host-admin@example.test", current_password: "admin-password1234" }
+        }
+        assert_response :see_other
+        assert_redirected_to admin_users_path(locale: :en)
+      end
+    end
+    assert_equal original_admin, @admin.reload.attributes
+    assert_equal original_profile, @admin.lawyer_profile.reload.attributes
+    assert_equal original_sessions, @admin.sessions.order(:id).map(&:attributes)
+    assert_equal original_cookie, cookies["session_id"]
+  end
 
-    token = @admin.email_verification_token
-    get email_verification_path(token: token, locale: :en)
-    assert_response :success
-    post confirm_email_verification_path(token: token, locale: :en)
-    assert_redirected_to admin_users_path(locale: :en)
-    assert_predicate @admin.reload, :email_verified?
+  test "main-host administrator credential endpoints remain blocked" do
+    host! "lawrelay.example"
+    sign_in_as(@admin, admin_mfa: true)
+    token = @admin.password_reset_token
+    original_admin = @admin.reload.attributes
+    session_ids = @admin.sessions.pluck(:id).sort
+
+    assert_no_difference "AuditEvent.count" do
+      assert_no_enqueued_jobs do
+        get email_change_path(locale: :en)
+        assert_response :forbidden
+        post email_change_path(locale: :en), params: {
+          email_change: { email_address: "changed-host-admin@example.test", current_password: "admin-password1234" }
+        }
+        assert_response :forbidden
+        get edit_password_path(token: token, locale: :en)
+        assert_response :forbidden
+        patch password_path(token: token, locale: :en), params: {
+          password: "replacement-password1234", password_confirmation: "replacement-password1234"
+        }
+        assert_response :forbidden
+      end
+    end
+    assert_equal original_admin, @admin.reload.attributes
+    assert_equal session_ids, @admin.sessions.pluck(:id).sort
+  end
+
+  test "legacy admin credential URLs never open a member credential form" do
+    get email_change_path(locale: :fr)
+    assert_response :see_other
+    assert_redirected_to admin_users_path(locale: :fr)
+    get new_password_path(locale: :fr)
+    assert_response :see_other
+    assert_redirected_to admin_login_path(locale: :fr)
+
+    sign_in_as(@member.user)
+    original_member = @member.user.reload.attributes
+    assert_no_enqueued_jobs do
+      get email_change_path(locale: :fr)
+      assert_redirected_to admin_users_path(locale: :fr)
+      post email_change_path(locale: :fr), params: {
+        email_change: { email_address: "changed-member@example.test", current_password: "password1234" }
+      }
+      assert_redirected_to admin_users_path(locale: :fr)
+      get edit_password_path(token: @member.user.password_reset_token, locale: :fr)
+      assert_redirected_to admin_login_path(locale: :fr)
+    end
+    assert_equal original_member, @member.user.reload.attributes
   end
 
   test "member verification on the admin host returns to the main confirmation page without confirming" do

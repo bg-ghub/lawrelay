@@ -13,7 +13,15 @@
 
 Use `/:locale/admin/login` for password-only administrator sign-in, followed by authenticator verification. It resolves the sole administrator, or the administrator identified by `LAWRELAY_ADMIN_USER_ID` when configured. An invalid configured ID or ambiguous accounts fail closed; additional administrators can use the ordinary email/password login.
 
-Members change their sign-in address through Settings → Change email. The current password, confirmation at the new address and a fresh advocaat.be check are required for marketplace access. Other sessions are revoked. Administrators can change their own address from the admin navigation after MFA; their password and authenticator remain unchanged.
+Members change their sign-in address through Settings → Change email. The current password, confirmation at the new address and a fresh advocaat.be check are required for marketplace access. Other sessions are revoked. Administrator email/password self-service is disabled, including previously issued reset links.
+
+Administrator password recovery requires the named operator to open a protected interactive SSH terminal and run:
+
+```sh
+docker exec -it lawrelay-app bin/rails 'lawrelay:set_admin_password[admin@lawrelay.be]'
+```
+
+The task prompts privately twice, signs out existing sessions and records an audit event. It preserves the email address and authenticator. Never put a password in command arguments, environment variables or chat. Administrator email changes require a deliberate protected-console operation; the website provides no route for them.
 
 ## Secret inventory
 

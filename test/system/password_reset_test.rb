@@ -1,14 +1,15 @@
 require "application_system_test_case"
+require_relative "../support/marketplace_test_factory"
 
 class PasswordResetTest < ApplicationSystemTestCase
   include ActiveJob::TestHelper
+  include MarketplaceTestFactory
 
   setup do
-    @admin = User.create!(
-      first_name: "Reset", last_name: "Test", email_address: "reset-admin-#{SecureRandom.hex(6)}@example.test",
-      password: "original-password1234", system_role: "admin", email_verified_at: Time.current, locale: "en"
-    )
-    @admin.sessions.create!
+    @account = create_marketplace_account(prefix: "resetmember")
+    @member = @account.user
+    @member.update!(password: "original-password1234")
+    @member.sessions.create!
     ActionMailer::Base.deliveries.clear
   end
 
@@ -17,13 +18,14 @@ class PasswordResetTest < ApplicationSystemTestCase
     clear_enqueued_jobs
     clear_performed_jobs
     ActionMailer::Base.deliveries.clear
-    AuditEvent.where(actor_user_id: @admin.id).delete_all
-    @admin.destroy!
+    AuditEvent.where(actor_user_id: @member.id).delete_all
+    @member.destroy!
+    @account.firm.destroy!
   end
 
-  test "an administrator recovers from an expired link and signs in with a fresh password" do
+  test "a member recovers from an expired link and signs in with a fresh password" do
     assert_equal :test, ActionMailer::Base.delivery_method
-    expired_token = @admin.password_reset_token
+    expired_token = @member.password_reset_token
 
     travel 16.minutes do
       visit edit_password_path(token: expired_token, locale: :en)
@@ -32,12 +34,12 @@ class PasswordResetTest < ApplicationSystemTestCase
       assert_selector "label", text: I18n.t("auth.passwords.new.form_title", locale: :en)
 
       perform_enqueued_jobs do
-        fill_in "email_address", with: "  #{@admin.email_address.upcase}  "
+        fill_in "email_address", with: "  #{@member.email_address.upcase}  "
         click_button I18n.t("auth.passwords.new.submit", locale: :en)
         assert_current_path new_session_path(locale: :en)
       end
 
-      mail = ActionMailer::Base.deliveries.find { |message| message.to == [ @admin.email_address ] }
+      mail = ActionMailer::Base.deliveries.find { |message| message.to == [ @member.email_address ] }
       assert mail, "The reset request must deliver a captured email"
       reset_url = mail.text_part.body.decoded[%r{https?://[^\s]+/en/passwords/[^\s]+/edit}]
       assert reset_url, "The reset email must contain a working link"
@@ -47,16 +49,16 @@ class PasswordResetTest < ApplicationSystemTestCase
       fill_in "password_confirmation", with: "replacement-password1234"
       click_button I18n.t("auth.passwords.edit.submit", locale: :en)
 
-      assert_current_path admin_login_path(locale: :en)
-      assert_empty @admin.reload.sessions
-      assert_not @admin.authenticate("original-password1234")
-      assert @admin.authenticate("replacement-password1234")
+      assert_current_path new_session_path(locale: :en)
+      assert_empty @member.reload.sessions
+      assert_not @member.authenticate("original-password1234")
+      assert @member.authenticate("replacement-password1234")
       assert_nil User.find_by_password_reset_token(expired_token)
 
+      fill_in "email_address", with: @member.email_address
       fill_in "password", with: "replacement-password1234"
-      click_button I18n.t("admin.login.submit", locale: :en)
-      assert_current_path admin_mfa_setup_path(locale: :en)
-      assert_selector "h1", text: I18n.t("mfa.setup.heading", locale: :en)
+      click_button I18n.t("auth.sessions.submit", locale: :en)
+      assert_current_path dashboard_path(locale: :en)
     end
   end
 end

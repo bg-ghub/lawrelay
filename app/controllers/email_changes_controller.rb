@@ -2,7 +2,7 @@ class EmailChangesController < ApplicationController
   rate_limit to: 3, within: 1.hour, only: :create, by: -> { current_user&.id },
     with: -> { redirect_to email_change_path, alert: t("email_change.errors.rate_limited") }
 
-  before_action :require_admin_mfa_for_change, only: :create
+  before_action :require_member_account
 
   def new
     @email_address = current_user.email_address
@@ -33,11 +33,7 @@ class EmailChangesController < ApplicationController
 
   private
 
-  def require_admin_mfa_for_change
-    return unless current_user.system_admin? && !Current.session&.admin_mfa_verified?
-
-    session[:return_to_after_admin_mfa] = email_change_path(locale: I18n.locale)
-    destination = current_user.admin_mfa_configured? ? admin_mfa_challenge_path : admin_mfa_setup_path
-    redirect_to destination, alert: t("mfa.notices.required")
+  def require_member_account
+    head :forbidden if current_user.system_admin?
   end
 end

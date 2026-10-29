@@ -1,5 +1,7 @@
 class PasswordsMailer < ApplicationMailer
   def reset(user)
+    return if user.reload.system_admin?
+
     @user = user
     @reset_url = edit_password_url(token: user.password_reset_token, locale: user.locale, **SiteHosts.account_url_options(user))
     @reset_expiry_minutes = (user.password_reset_token_expires_in / 1.minute).ceil

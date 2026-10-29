@@ -29,7 +29,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "input[type='password'][name='password']"
     assert_select "input[type='email']", count: 0
-    assert_select "a[href='#{new_password_path(locale: :en, email_address: @admin.email_address)}']"
+    assert_select "a[href*='/passwords']", count: 0
   end
 
   test "correct password starts an admin session without bypassing MFA" do

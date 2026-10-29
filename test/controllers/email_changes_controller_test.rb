@@ -34,16 +34,31 @@ class EmailChangesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @account.user.email_address, @account.user.reload.email_address
   end
 
-  test "admin requires an MFA-confirmed current session" do
+  test "administrators cannot view or submit an email change regardless of MFA" do
     @account.user.update!(system_role: "admin")
 
-    post email_change_path(locale: :en), params: { email_change: { email_address: "changed@example.test", current_password: "password1234" } }
+    [ false, true ].each do |mfa_verified|
+      sign_in_as(@account.user, admin_mfa: mfa_verified)
+      original_user = @account.user.reload.attributes
+      original_profile = @account.profile.reload.attributes
+      session_ids = @account.user.sessions.pluck(:id).sort
 
-    assert_redirected_to admin_mfa_setup_path(locale: :en)
-    assert_equal @account.user.email_address, @account.user.reload.email_address
+      assert_no_difference "AuditEvent.count" do
+        assert_no_enqueued_jobs do
+          get email_change_path(locale: :en)
+          assert_response :forbidden
+          assert_select "form", count: 0
+          post email_change_path(locale: :en), params: { email_change: { email_address: "changed@example.test", current_password: "password1234" } }
+          assert_response :forbidden
+        end
+      end
+      assert_equal original_user, @account.user.reload.attributes
+      assert_equal original_profile, @account.profile.reload.attributes
+      assert_equal session_ids, @account.user.sessions.pluck(:id).sort
+    end
   end
 
-  test "MFA-confirmed admin changes email without a professional profile or firm" do
+  test "administrator without a professional profile cannot change credentials" do
     user = User.create!(
       email_address: "operator-no-profile@example.test", password: "password1234",
       first_name: "Operator", last_name: "Admin", locale: "en", system_role: "admin",
@@ -51,13 +66,17 @@ class EmailChangesControllerTest < ActionDispatch::IntegrationTest
     )
     sign_in_as(user, admin_mfa: true)
 
-    assert_enqueued_emails 1 do
+    original_user = user.attributes
+    session_ids = user.sessions.pluck(:id)
+    assert_no_enqueued_emails do
+      get email_change_path(locale: :en)
+      assert_response :forbidden
       post email_change_path(locale: :en), params: { email_change: { email_address: "operator-new@example.test", current_password: "password1234" } }
     end
 
-    assert_redirected_to admin_users_path(locale: :en)
-    assert_equal "operator-new@example.test", user.reload.email_address
-    assert_nil user.email_verified_at
+    assert_response :forbidden
+    assert_equal original_user, user.reload.attributes
+    assert_equal session_ids, user.sessions.pluck(:id)
     assert_nil user.lawyer_profile
   end
 end

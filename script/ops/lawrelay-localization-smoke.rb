@@ -134,7 +134,8 @@ LOCALES.each do |locale|
   visit(admin_portal, "/#{locale}/admin/login")
   check(admin_portal.response.body.include?("admin-site-header"), "#{locale} admin host uses the admin layout")
   admin.update!(locale:)
-  [ PasswordsMailer.reset(admin), EmailVerificationMailer.verify(admin) ].each do |mail|
+  check(PasswordsMailer.reset(admin).to.nil?, "#{locale} administrator password reset mail is suppressed")
+  [ EmailVerificationMailer.verify(admin) ].each do |mail|
     [ mail.message.html_part, mail.message.text_part ].each do |part|
       check(part.decoded.include?("https://#{SiteHosts.admin_host}/#{locale}/"), "#{locale} admin account email uses the admin host")
     end

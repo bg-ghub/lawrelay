@@ -4,7 +4,7 @@ Owner: Gauthier Berth. Reviewed 29 October 2026. Paid access stays disabled.
 
 | Review | What closes it |
 | --- | --- |
-| Admin access | Operator sets a password, enrols their own authenticator and confirms successful access. Keep recovery material private. |
+| Admin access | Completed: operator password/MFA sign-in and live admin review on 29 October. Credential recovery stays in the protected server procedure. |
 | Real-lawyer trial | Two verified lawyers register, confirm email, post, respond and select. Record actual outcomes privately using the [feedback form](beta-feedback.md). |
 | Mail | Recipient confirms verification delivery and SPF/DKIM/DMARC results. A completed SMTP job or a DKIM signature alone is insufficient. |
 | Language and legal | Native speakers and the operator/counsel review NL/FR/DE/EN signup, workflows, terms, privacy and operator details. |

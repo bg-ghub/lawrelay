@@ -7,7 +7,8 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    if user = User.find_by(email_address: params[:email_address])
+    user = User.find_by(email_address: params[:email_address])
+    if user && !user.system_admin?
       PasswordsMailer.reset(user).deliver_later
     end
 
@@ -20,6 +21,8 @@ class PasswordsController < ApplicationController
   def update
     updated = @user.with_lock do
       User.find_by_password_reset_token!(params[:token])
+      return head :forbidden if @user.system_admin?
+
       if params[:password].present? && @user.update(params.permit(:password, :password_confirmation))
         @user.sessions.destroy_all
         true
@@ -47,6 +50,7 @@ class PasswordsController < ApplicationController
   private
     def set_user_by_token
       @user = User.find_by_password_reset_token!(params[:token])
+      head :forbidden if @user.system_admin?
     rescue ActiveSupport::MessageVerifier::InvalidSignature, ActiveRecord::RecordNotFound
       redirect_to new_password_path, alert: t("auth.passwords.invalid")
     end

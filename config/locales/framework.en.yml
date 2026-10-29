@@ -23,6 +23,7 @@ en:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      password_too_long: "is too long; choose a shorter password"
       accepted: "must be accepted"
       blank: "can't be blank"
       confirmation: "doesn't match %{attribute}"
