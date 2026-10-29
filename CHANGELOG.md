@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-10-29
+
+### Fixed
+
+- Complete NL/FR/DE/EN dates, numbers, validation messages, assignment deadline errors and admin activity/status labels.
+- Send assignment cancellation emails in each recipient's language.
+- Preserve the same production language fallback policy as the application.
+
+### Added
+
+- Strict translation checks, catalog parity/duplicate detection, and populated page/email rendering coverage in all four languages, including an isolated production check in CI.
+
 ## [0.4.1] - 2026-10-28
 
 ### Fixed
@@ -75,7 +87,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/bg-ghub/lawrelay/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/bg-ghub/lawrelay/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/bg-ghub/lawrelay/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/bg-ghub/lawrelay/compare/v0.2.1...v0.3.0

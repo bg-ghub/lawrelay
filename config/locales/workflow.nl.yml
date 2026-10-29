@@ -24,7 +24,6 @@ nl:
       proposal_accepted: "Een van je voorstellen is aanvaard."
       proposal_declined: "Een kantoor koos een ander voorstel."
       assignment_cancelled: "Een opdracht waarop je reageerde is geannuleerd."
-      assignment_expired: "Een van je opdrachten is verlopen."
       assignment_expired: "Een van je opdrachten is verlopen voordat er een match was."
     notices:
       assignment_cancelled: "De opdracht is geannuleerd."

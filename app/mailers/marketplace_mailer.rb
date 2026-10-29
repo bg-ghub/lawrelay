@@ -20,12 +20,15 @@ class MarketplaceMailer < ApplicationMailer
     localized_mail(@recipient, "proposal_declined")
   end
 
-  def assignment_cancelled(assignment)
+  # locale remains optional so jobs queued before locale-specific delivery was
+  # introduced retain their previous behaviour.
+  def assignment_cancelled(assignment, locale: nil)
     @assignment = assignment
     recipients = assignment.proposals.includes(:user).filter_map(&:user).uniq
+    recipients.select! { |recipient| recipient.locale == locale.to_s } if locale.present?
     return if recipients.empty?
 
-    I18n.with_locale(assignment.creator_user&.locale || I18n.default_locale) do
+    I18n.with_locale(locale.presence || assignment.creator_user&.locale || I18n.default_locale) do
       mail(
         to: ENV.fetch("MAILER_FROM", "no-reply@lawrelay.be"),
         bcc: recipients.map(&:email_address),
