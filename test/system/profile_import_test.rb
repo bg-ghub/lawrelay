@@ -33,6 +33,8 @@ class ProfileImportTest < ApplicationSystemTestCase
     visit settings_path(locale: :en)
     fill_in "Availability", with: "Keep my unsaved availability"
     click_button "Get details from advocaat.be"
+    assert_selector "form[data-unsaved-changes='true']", visible: :all
+    wait_for_language_menu
     assert_text "Details loaded. Review them, then save."
     assert_equal 1, @import_calls.length
     assert_nil @account.firm.reload.phone
@@ -50,6 +52,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_field "Phone", with: "+3225550101"
 
     click_button "Save"
+    assert_selector "form[data-unsaved-changes='false']", visible: :all
     assert_text "Changes saved."
     assert_equal "+3225550101", @account.firm.reload.phone
     assert_equal "Keep my unsaved availability", @account.profile.reload.availability_note
@@ -57,6 +60,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_predicate @account.profile, :verified?
     assert_predicate @account.user.reload, :email_verified?
 
+    wait_for_language_menu
     find(".language-menu summary").click
     find(".language-menu a[hreflang='fr']").click
     assert_current_path settings_path(locale: :fr)
@@ -87,6 +91,12 @@ class ProfileImportTest < ApplicationSystemTestCase
   end
 
   private
+
+  def wait_for_language_menu
+    Selenium::WebDriver::Wait.new(timeout: Capybara.default_max_wait_time).until do
+      page.evaluate_script("!!window.Stimulus?.getControllerForElementAndIdentifier(document.querySelector('.language-menu'), 'language-menu')")
+    end
+  end
 
   def sign_in
     visit new_session_path(locale: :en)
