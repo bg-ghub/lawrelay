@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-10-29
+
+### Fixed
+
+- Separate administrator accounts from managed users and marketplace access.
+- Show each user's two-factor status and clean up admin navigation.
+- Keep archived beta-access controls out of the beta interface.
+
 ## [0.6.0] - 2026-10-29
 
 ### Added
@@ -160,7 +168,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/bg-ghub/lawrelay/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/bg-ghub/lawrelay/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/bg-ghub/lawrelay/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/bg-ghub/lawrelay/compare/v0.4.7...v0.5.0

@@ -3,7 +3,7 @@
 .admin-users-page .dashboard-heading p,.admin-user-identity p,.admin-user-row-fact strong,.admin-user-suspension p,.admin-user-audit-list p{overflow-wrap:anywhere}
 .admin-users-total{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:var(--white);padding:.5rem .85rem;color:var(--ink);font-size:.85rem;font-weight:700}
 .admin-users-filters{margin:2rem 0 1rem}
-.admin-users-filter-form{display:grid;grid-template-columns:minmax(200px,2fr) repeat(3,minmax(120px,1fr)) auto;align-items:end;gap:1rem}
+.admin-users-filter-form{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(120px,1fr)) auto;align-items:end;gap:1rem}
 .admin-users-filter-actions{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
 .admin-users-filter-actions input[type="submit"]{width:auto}
 .admin-user-list{display:grid;gap:.75rem;padding:0;list-style:none;margin:1rem 0}

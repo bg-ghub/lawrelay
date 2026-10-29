@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.6.0.
+Last audited: 29 October 2026. Current release: 0.6.1.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -26,7 +26,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] No client-content fields in the initial assignment flow; posting confirmation warns against client names, facts, and documents.
 - [x] Admin MFA, verification queue, privacy-request queue, and moderation controls.
 - [x] Optional user two-factor authentication: QR setup, password confirmation, single-use recovery codes and sign-in enforcement.
-- [x] MFA-protected user management: search/filter accounts, inspect verification and sessions, edit basic details, suspend/restore accounts and revoke sessions with audit records. Administrator accounts are protected from edits in this console.
+- [x] MFA-protected user management: search/filter members, inspect verification, two-factor status and sessions, edit basic details, suspend/restore accounts and revoke sessions with audit records. Administrator identities stay out of managed users.
 - [x] Dedicated administrator password/MFA sign-in and password-confirmed self-service email changes with new-address confirmation, a fresh directory check and revocation of other sessions.
 - [x] Separate [admin portal](ops/admin.md) with host-only sessions, localized password recovery and password/MFA browser coverage.
 - [x] Free-beta billing guard: no checkout or payment request in beta; posting entitlement fails closed when billing is enforced.
@@ -56,7 +56,7 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [x] Password-email inbox arrival confirmed by the operator's screenshot; the expiry-text translation issue is fixed and covered by regression tests.
 - [x] Professional-account verification email arrival and confirmation checked with the operator; sign-in and verified marketplace access confirmed.
 - [ ] Confirm recipient-side SPF/DKIM/DMARC results for application mail.
-- [ ] Operator completes administrator password setup and authenticator MFA; recovery material stays private.
+- [x] Operator completed administrator password setup and authenticator MFA; signed-in admin screens were reviewed on 29 October.
 - [ ] Complete a human end-to-end beta trial with verified lawyer accounts, including registration, email confirmation, posting, responding and selecting a colleague.
 - [ ] Native-speaker and operator/legal sign-off on NL/FR/DE/EN terms/privacy and workflows, including operator details, retention/erasure/holds and applicable processor agreements. Public provider templates do not prove acceptance.
 - [ ] External independent security review/penetration test; the engineering review is not a substitute.

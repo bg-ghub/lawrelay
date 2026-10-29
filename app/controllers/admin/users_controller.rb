@@ -6,14 +6,12 @@ module Admin
       @query = params[:q].to_s.strip.first(100)
       @status_filter = params[:status].presence_in(%w[active suspended]).to_s
       @verification_filter = params[:verification].presence_in(LawyerProfile::VERIFICATION_STATUSES).to_s
-      @role_filter = params[:role].presence_in(User::SYSTEM_ROLES).to_s
       @per_page = params[:per_page].to_i == 50 ? 50 : 25
 
-      scope = User.left_joins(:lawyer_profile, memberships: :firm)
+      scope = managed_users.left_joins(:lawyer_profile, memberships: :firm)
       scope = apply_search(scope)
       scope = scope.where(suspended_at: nil) if @status_filter == "active"
       scope = scope.where.not(suspended_at: nil) if @status_filter == "suspended"
-      scope = scope.where(system_role: @role_filter) if @role_filter.present?
       scope = apply_verification_filter(scope)
       @total_count = scope.distinct.count
       @total_pages = [ (@total_count.to_f / @per_page).ceil, 1 ].max
@@ -66,7 +64,11 @@ module Admin
     private
 
     def set_user
-      @user = User.includes(:lawyer_profile, memberships: :firm).find(params[:id])
+      @user = managed_users.includes(:lawyer_profile, memberships: :firm).find(params[:id])
+    end
+
+    def managed_users
+      User.where(system_role: "member")
     end
 
     def manager

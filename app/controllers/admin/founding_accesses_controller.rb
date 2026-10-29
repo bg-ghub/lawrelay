@@ -1,5 +1,6 @@
 module Admin
   class FoundingAccessesController < BaseController
+    before_action :require_paid_release
     before_action :set_firm, only: %i[create destroy]
 
     def index
@@ -34,6 +35,10 @@ module Admin
     end
 
     private
+
+    def require_paid_release
+      redirect_to admin_users_path unless ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
+    end
 
     def set_firm
       @firm = Firm.find(params[:firm_id])

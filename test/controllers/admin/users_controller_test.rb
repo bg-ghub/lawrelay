@@ -39,6 +39,47 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='/en/admin/users/#{@user.id}']", count: 0
   end
 
+  test "administrator accounts are excluded from managed users and legacy role filters" do
+    other_admin = User.create!(first_name: "Managed", last_name: "Administrator",
+      email_address: "managed-administrator@example.test", password: "password1234", system_role: "admin")
+    other_admin.memberships.create!(firm: @account.firm, role: "owner")
+
+    [ {}, { role: "admin" }, { role: "member" } ].each do |filters|
+      get "/en/admin/users", params: filters
+      assert_response :success
+      assert_select ".admin-users-total", text: I18n.t("admin.users.index.total", count: User.where(system_role: "member").count, locale: :en)
+      assert_select ".admin-user-row a[href='/en/admin/users/#{@user.id}']", minimum: 1
+      [ @admin, other_admin ].each do |administrator|
+        assert_select ".admin-user-row a[href='/en/admin/users/#{administrator.id}']", count: 0
+        assert_select ".admin-user-row .admin-user-identity p", text: administrator.email_address, count: 0
+      end
+      assert_select "select[name='role']", count: 0
+    end
+
+    get "/en/admin/users", params: { q: other_admin.email_address, role: "admin" }
+    assert_response :success
+    assert_select ".admin-user-row", count: 0
+    assert_select ".admin-users-total", text: I18n.t("admin.users.index.total", count: 0, locale: :en)
+  end
+
+  test "administrator accounts have no managed user detail or mutation routes" do
+    original_account = @admin.attributes.slice("first_name", "email_address", "password_digest", "admin_mfa_secret_ciphertext", "admin_mfa_enabled_at", "suspended_at")
+    original_sessions = @admin.sessions.pluck(:id)
+
+    get "/en/admin/users/#{@admin.id}"
+    assert_response :not_found
+    assert_no_difference "AuditEvent.count" do
+      patch "/en/admin/users/#{@admin.id}", params: { user: { first_name: "Changed", email_address: "changed-admin@example.test" } }
+      assert_response :not_found
+      %w[suspend restore revoke-sessions].each do |action|
+        patch "/en/admin/users/#{@admin.id}/#{action}", params: { user_management: { reason: "Not a managed account" } }
+        assert_response :not_found
+      end
+    end
+    assert_equal original_account, @admin.reload.attributes.slice(*original_account.keys)
+    assert_equal original_sessions, @admin.sessions.pluck(:id)
+  end
+
   test "filters distinguish suspended accounts from verified lawyer profiles" do
     @user.update!(suspended_at: Time.current)
     get "/en/admin/users", params: { status: "suspended", verification: "verified", role: "member" }
@@ -58,9 +99,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     26.times do |index|
       User.create!(first_name: "Paginated", last_name: "Lawyer #{index}", email_address: "paginated-#{index}@example.test", password: "password1234")
     end
-    get "/en/admin/users", params: { q: "Paginated", page: 1 }
+    User.create!(first_name: "Paginated", last_name: "Administrator", email_address: "paginated-admin@example.test", password: "password1234", system_role: "admin")
+    get "/en/admin/users", params: { q: "Paginated", page: 1, role: "admin" }
     assert_response :success
     assert_select ".admin-user-row", count: 25
+    assert_select ".admin-users-pagination a[href*='role=']", count: 0
     get "/en/admin/users", params: { q: "Paginated", page: 2 }
     assert_select ".admin-user-row", count: 1
     get "/en/admin/users", params: { q: "Paginated", page: 2, per_page: 50 }
@@ -106,14 +149,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, AuditEvent.where(auditable: @user).count
   end
 
-  test "missing reasons and protected operator updates return validation errors" do
+  test "missing reasons return validation errors" do
     patch "/en/admin/users/#{@user.id}/suspend", params: { user_management: { reason: " " } }
     assert_response :unprocessable_content
     assert_select "a[hreflang='fr'][href='/fr/admin/users/#{@user.id}']", count: 1
     assert @user.reload.active?
-    patch "/en/admin/users/#{@admin.id}", params: { user: { email_address: "changed-admin@example.test" } }
-    assert_response :unprocessable_content
-    assert_not_equal "changed-admin@example.test", @admin.reload.email_address
   end
 
   test "invalid user fields are shown without partially updating identity" do

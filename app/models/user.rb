@@ -65,7 +65,7 @@ class User < ApplicationRecord
   end
 
   def marketplace_verified?
-    active? && email_verified? && lawyer_profile&.verified? && primary_firm&.verified?
+    !system_admin? && active? && email_verified? && lawyer_profile&.verified? && primary_firm&.verified?
   end
 
   def system_admin?
