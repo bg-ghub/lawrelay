@@ -2,7 +2,7 @@
 
 Sign in at [admin.lawrelay.be](https://admin.lawrelay.be) with the administrator password and authenticator. On first sign-in, scan the QR code with your authenticator app and enter its code.
 
-Forgotten passwords can be reset from that sign-in page. The email goes to the existing administrator account. Resetting a password does not remove MFA.
+Administrator email and password cannot be changed through the website, including password-reset links. Recovery uses the protected server procedure below and retains MFA.
 
 The admin session is separate from the main website session. Cookies stay on their own host. The existing `/admin` URLs on the main website still work.
 

@@ -4,6 +4,66 @@ require "rake"
 Rails.application.load_tasks
 
 class LawrelayTasksTest < ActiveSupport::TestCase
+  test "protected password recovery revokes sessions and preserves administrator email and MFA" do
+    user = recovery_admin
+    secret = user.begin_admin_mfa_setup!
+    user.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+    original_mfa = user.admin_mfa_secret_ciphertext
+    original_email = user.email_address
+    user.sessions.create!
+
+    with_password_input("replacement-password1234", "replacement-password1234") do
+      assert_difference("AuditEvent.where(action: 'admin.password_changed').count", 1) do
+        capture_io { invoke_task("lawrelay:set_admin_password", user.email_address) }
+      end
+    end
+
+    assert user.reload.authenticate("replacement-password1234")
+    assert_not user.authenticate("password1234")
+    assert_empty user.sessions
+    assert_equal original_email, user.email_address
+    assert_equal original_mfa, user.admin_mfa_secret_ciphertext
+    assert_predicate user, :admin_mfa_configured?
+    event = AuditEvent.where(auditable: user).last
+    assert_equal "rake", event.metadata["source"]
+    assert_nil event.actor_user
+    assert_not_includes event.metadata.to_json, "replacement-password1234"
+  end
+
+  test "protected password recovery rejects members inactive administrators and noninteractive input" do
+    member = users(:one)
+    inactive = recovery_admin
+    inactive.update!(suspended_at: Time.current)
+    [ member, inactive ].each do |user|
+      assert_no_difference "AuditEvent.count" do
+        capture_io { assert_raises(SystemExit) { invoke_task("lawrelay:set_admin_password", user.email_address) } }
+      end
+      assert user.reload.authenticate("password") if user == member
+    end
+
+    active = recovery_admin(email: "interactive-recovery@example.test")
+    with_password_input("unused-password1234", "unused-password1234", tty: false) do
+      capture_io { assert_raises(SystemExit) { invoke_task("lawrelay:set_admin_password", active.email_address) } }
+    end
+    assert active.reload.authenticate("password1234")
+  end
+
+  test "protected password recovery rejects mismatched short and invalid passwords without changes" do
+    user = recovery_admin
+    session = user.sessions.create!
+    original_digest = user.password_digest
+    [ [ "replacement-password1234", "different-password1234" ], [ "short", "short" ], [ "", "" ],
+      [ "x" * 73, "x" * 73 ], [ "€" * 25, "€" * 25 ] ].each do |values|
+      with_password_input(*values) do
+        assert_no_difference "AuditEvent.count" do
+          capture_io { assert_raises(SystemExit) { invoke_task("lawrelay:set_admin_password", user.email_address) } }
+        end
+      end
+      assert_equal original_digest, user.reload.password_digest
+      assert Session.exists?(session.id)
+    end
+  end
+
   test "promote_admin promotes an email-verified user and records an audit event" do
     user = User.create!(
       email_address: "bootstrap-admin@example.test",
@@ -71,10 +131,29 @@ class LawrelayTasksTest < ActiveSupport::TestCase
 
   private
 
-  def invoke_task(name = "lawrelay:promote_admin")
+  def invoke_task(name = "lawrelay:promote_admin", *arguments)
     task = Rake::Task[name]
     task.reenable
-    task.invoke
+    task.invoke(*arguments)
+  end
+
+  def recovery_admin(email: "password-recovery-admin@example.test")
+    User.create!(email_address: email, password: "password1234", first_name: "Recovery", last_name: "Admin",
+      locale: "en", system_role: "admin", email_verified_at: Time.current)
+  end
+
+  def with_password_input(*values, tty: true)
+    require "io/console"
+    original_getpass = STDIN.method(:getpass)
+    original_tty = STDIN.method(:tty?)
+    # Copies keep the task's secret cleanup from changing test inputs.
+    inputs = values.map(&:dup)
+    STDIN.define_singleton_method(:getpass) { |_prompt| inputs.shift }
+    STDIN.define_singleton_method(:tty?) { tty }
+    yield
+  ensure
+    STDIN.define_singleton_method(:getpass, original_getpass) if original_getpass
+    STDIN.define_singleton_method(:tty?, original_tty) if original_tty
   end
 
   def with_env(values)

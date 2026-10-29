@@ -1,6 +1,17 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  test "long password errors are translated in all interface languages" do
+    user = users(:one)
+    %i[nl fr de en].each do |locale|
+      I18n.with_locale(locale) do
+        assert_not user.update(password: "x" * 80)
+        assert user.errors.of_kind?(:password, :password_too_long)
+        assert_not user.errors.full_messages.join.match?(/translation missing/i)
+      end
+    end
+  end
+
   test "an administrator is not a marketplace participant even with a professional profile" do
     user = users(:one)
     firm = Firm.create!(name: "Synthetic office", verification_status: "verified", verified_at: Time.current)

@@ -1,5 +1,5 @@
 # Run with bin/rails runner after the production hostname and email are live.
-# The initial operator chooses their password using the emailed reset link.
+# Set the initial password through the protected set_admin_password task.
 abort "Operator bootstrap is for production only." unless Rails.env.production?
 
 email = ENV.fetch("OPERATOR_EMAIL").strip.downcase
@@ -24,6 +24,5 @@ else
       metadata: { source: "production_operator_setup" }
     )
   end
-  PasswordsMailer.reset(user).deliver_later
-  puts "Operator administrator created; password setup queued to the operator mailbox. MFA is required before administration."
+  puts "Operator administrator created. Set its password with lawrelay:set_admin_password[email] in a protected interactive terminal. MFA is required before administration."
 end

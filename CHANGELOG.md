@@ -5,6 +5,13 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-10-29
+
+### Fixed
+
+- Lock administrator email and password against self-service changes, including old reset links. Recovery uses a protected server terminal.
+- Translate long-password validation errors in all four languages.
+
 ## [0.6.1] - 2026-10-29
 
 ### Fixed
@@ -168,7 +175,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.6.2...HEAD
+[0.6.2]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/bg-ghub/lawrelay/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/bg-ghub/lawrelay/compare/v0.5.1...v0.6.0
 [0.5.1]: https://github.com/bg-ghub/lawrelay/compare/v0.5.0...v0.5.1
