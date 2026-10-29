@@ -3,7 +3,7 @@ fr:
     verifications:
       eyebrow: "Administration"
       title: "Vérification des avocats"
-      intro: "Contrôlez les données professionnelles et du cabinet avant d’autoriser l’accès à la plateforme."
+      intro: "Vérifiez l’avocat et le cabinet avant d’autoriser l’accès."
       back: "Retour au tableau de bord"
       account: "Compte"
       email: "E-mail"
@@ -16,11 +16,11 @@ fr:
       lawyer_status: "Statut de l’avocat"
       missing: "Manquant"
       note: "Note interne de vérification"
-      note_placeholder: "Indiquez ce qui a été contrôlé et le motif de la décision."
+      note_placeholder: "Qu’avez-vous vérifié et pourquoi cette décision ?"
       approve: "Approuver"
       reject: "Refuser"
       empty_title: "Rien à vérifier"
-      empty_body: "Aucune vérification d’avocat ou de cabinet n’est en attente."
+      empty_body: "Aucune vérification en attente."
       notices:
         approved: "%{name} a été approuvé."
         rejected: "%{name} a été refusé."

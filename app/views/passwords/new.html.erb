@@ -1,14 +1,12 @@
 <% content_for :title, t("auth.passwords.new.title") %>
 <div class="new-assignment shell">
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("auth.passwords.eyebrow") %></p>
     <h1><%= t("auth.passwords.new.heading") %></h1>
     <p><%= t("auth.passwords.new.lede") %></p>
   </div>
-  <div class="new-assignment__layout">
+  <div class="new-assignment__layout auth-form-layout">
     <%= form_with url: passwords_path, class: "assignment-form" do |form| %>
-      <fieldset class="form-section">
-        <legend><%= t("auth.passwords.new.form_title") %></legend>
+      <fieldset class="form-section" aria-label="<%= t("auth.passwords.new.form_title") %>">
         <div class="field-group">
           <%= form.label :email_address, t("auth.fields.professional_email") %>
           <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>

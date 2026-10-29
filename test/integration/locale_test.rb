@@ -34,7 +34,7 @@ class LocaleTest < ActionDispatch::IntegrationTest
     assignment = Assignment.order(:id).last
 
     assert_redirected_to "/fr/assignments/#{assignment.id}"
-    assert_equal "Votre mission a été publiée. Des confrères peuvent maintenant y répondre.", flash[:notice]
+    assert_equal I18n.t("notices.assignment_created", locale: :fr), flash[:notice]
     assert_nil assignment.languages
   end
 end

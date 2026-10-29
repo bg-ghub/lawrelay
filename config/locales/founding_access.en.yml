@@ -4,7 +4,7 @@ en:
       link: "Founding access"
       eyebrow: "Founding beta"
       title: "Complimentary access"
-      intro: "Grant a verified firm a short, recorded founding-beta period. This never creates a payment or replaces a paid plan."
+      intro: "Give a verified firm free access until the chosen date. No payment is created."
       back: "Back to verification"
       verified_firm: "Verified firm"
       active_until: "Active until %{date}"

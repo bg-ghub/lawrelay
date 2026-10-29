@@ -13,7 +13,7 @@ nl:
       eyebrow: Beheer
       you: Jij
       not_recorded: Niet ingevuld
-      timezone: Tijden worden weergegeven in Europe/Brussels.
+      timezone: 'Tijdzone: Europe/Brussels.'
       index:
         title: Gebruikers — LawRelay-beheer
         heading: Gebruikers
@@ -23,7 +23,7 @@ nl:
           other: "%{count} gebruikers"
         list_label: Gebruikersaccounts
         empty_title: Geen gebruikers gevonden
-        empty_body: Probeer een andere naam, een ander e-mailadres of een ander filter.
+        empty_body: Probeer een andere naam, e-mail of filter.
       filters:
         label: Gebruikers zoeken
         search: Zoeken
@@ -86,8 +86,8 @@ nl:
         professional: Professionele gegevens
         account: Accountgegevens
         access: Toegang beheren
-        protected: Beheerdersaccounts kunnen hier alleen worden bekeken.
-        identity_hint: Een wijziging van naam of e-mailadres meldt bestaande sessies af en vereist een nieuwe professionele controle. Een gewijzigd e-mailadres moet worden bevestigd.
+        protected: Je kunt beheerdersaccounts hier bekijken, maar niet wijzigen.
+        identity_hint: Een nieuwe naam of e-mail meldt alle sessies af en start een nieuwe beroepscontrole. Een nieuw e-mailadres moet worden bevestigd.
       access:
         suspend:
           heading: Account schorsen
@@ -95,11 +95,11 @@ nl:
           submit: Account schorsen
         restore:
           heading: Toegang herstellen
-          body: Aanmelden kan weer. Voor toegang tot opdrachten blijven de gebruikelijke controles nodig.
+          body: Aanmelden kan weer. Toegang tot opdrachten vereist nog steeds verificatie.
           submit: Toegang herstellen
         revoke_sessions:
           heading: Alle sessies afmelden
-          body: Meldt alle sessies van deze gebruiker af. Opnieuw aanmelden blijft mogelijk.
+          body: Meldt deze gebruiker op elk toestel af. Opnieuw aanmelden blijft mogelijk.
           submit: Alle sessies afmelden
       sessions:
         heading: Actieve sessies
@@ -143,13 +143,13 @@ nl:
         page: Pagina %{current} van %{total}
       errors:
         heading: Controleer deze wijziging
-        protected_account: Beheerdersaccounts kunnen hier niet worden gewijzigd.
-        reason_required: Voeg een reden toe voor deze actie.
+        protected_account: Je kunt beheerdersaccounts hier niet wijzigen.
+        reason_required: Voeg een reden toe.
         reason_too_long: Gebruik minder dan 2.000 tekens voor de reden.
         invalid_action: Kies een geldige accountactie.
-        invalid_details: Controleer de accountgegevens en probeer opnieuw.
+        invalid_details: Controleer de accountgegevens.
       notices:
         updated: Accountgegevens opgeslagen.
-        suspended: Het account is geschorst en alle sessies zijn afgemeld.
+        suspended: Account geschorst. Alle sessies afgemeld.
         restored: Accounttoegang hersteld.
-        sessions_revoked: Alle sessies van dit account zijn afgemeld.
+        sessions_revoked: Alle sessies afgemeld.

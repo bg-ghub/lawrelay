@@ -21,24 +21,24 @@ fr:
         restriction: "Limiter le traitement"
         objection: "M’opposer au traitement"
       notices:
-        created: "Votre demande a été enregistrée."
+        created: "Votre demande a été reçue."
         rate_limited: "Veuillez patienter avant d’envoyer une nouvelle demande."
       index:
         title: "Demandes de confidentialité — LawRelay"
         heading: "Vos demandes de confidentialité"
-        lede: "Suivez vos demandes concernant les données personnelles détenues par LawRelay."
+        lede: "Suivez vos demandes ici."
         new: "Nouvelle demande"
-        empty: "Vous n’avez encore envoyé aucune demande."
+        empty: "Aucune demande pour l’instant."
       new:
         title: "Nouvelle demande — LawRelay"
-        heading: "Dites-nous ce dont vous avez besoin."
-        lede: "Nous enregistrons la demande et son traitement afin que rien ne se perde."
+        heading: "Nouvelle demande de confidentialité"
+        lede: "Demandez l’accès, la correction ou la suppression de vos données."
         legend: "Demande"
         kind: "Type de demande"
         kind_prompt: "Choisissez une demande"
         details: "Que devons-nous savoir ?"
         details_placeholder: "Expliquez brièvement les données ou le compte concernés."
-        retention_note: "La suppression du compte n’efface pas les factures ou traces d’audit que LawRelay doit légalement conserver."
+        retention_note: "Les factures et traces d’audit imposées par la loi restent conservées."
         submit: "Envoyer la demande"
     reports:
       eyebrow: "Signaler un problème"
@@ -51,18 +51,18 @@ fr:
       errors:
         own_assignment: "Vous ne pouvez pas signaler une mission de votre propre cabinet."
       notices:
-        created: "Merci. Le signalement a été enregistré pour examen."
+        created: "Signalement reçu. Nous allons l’examiner."
         rate_limited: "Vous avez atteint la limite de signalements. Réessayez plus tard."
       new:
         title: "Signaler une mission — LawRelay"
         heading: "Signaler cette mission"
-        lede: "Indiquez ce qui doit être examiné dans « %{title} »."
+        lede: "Quel est le problème avec « %{title} » ?"
         legend: "Problème"
         category: "Motif"
         category_prompt: "Choisissez un motif"
         details: "Courte explication"
-        details_placeholder: "Décrivez le problème sans ajouter de données de client ou de dossier."
-        safety_note: "N’incluez aucun secret professionnel, nom de client ou document."
+        details_placeholder: "Décrivez le problème."
+        safety_note: "Aucun nom de client, donnée de dossier, document ou information confidentielle."
         submit: "Envoyer le signalement"
     admin:
       eyebrow: "Confiance et sécurité"
@@ -73,7 +73,7 @@ fr:
       complete: "Terminer"
       reject: "Refuser"
       notices:
-        updated: "Le dossier a été mis à jour."
+        updated: "Enregistré."
         invalid_decision: "Choisissez une action valable."
         note_required: "Ajoutez une note avant de clôturer ce dossier."
       reports:
@@ -84,5 +84,5 @@ fr:
       privacy_requests:
         title: "Demandes de confidentialité — Administration LawRelay"
         heading: "Demandes de confidentialité"
-        lede: "Suivez chaque demande jusqu’à une issue documentée."
+        lede: "Traitez et clôturez les demandes."
         empty: "Aucune demande à examiner."

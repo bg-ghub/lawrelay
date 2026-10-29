@@ -13,7 +13,7 @@ fr:
       eyebrow: Administration
       you: Vous
       not_recorded: Non renseigné
-      timezone: Les heures sont affichées dans le fuseau Europe/Brussels.
+      timezone: 'Fuseau horaire : Europe/Brussels.'
       index:
         title: Utilisateurs — Administration LawRelay
         heading: Utilisateurs
@@ -23,7 +23,7 @@ fr:
           other: "%{count} utilisateurs"
         list_label: Comptes utilisateurs
         empty_title: Aucun utilisateur trouvé
-        empty_body: Essayez un autre nom, une autre adresse e-mail ou un autre filtre.
+        empty_body: Essayez un autre nom, e-mail ou filtre.
       filters:
         label: Rechercher des utilisateurs
         search: Rechercher
@@ -86,8 +86,8 @@ fr:
         professional: Données professionnelles
         account: Données du compte
         access: Gestion de l'accès
-        protected: Les comptes administrateurs sont consultables uniquement ici.
-        identity_hint: Une modification du nom ou de l'e-mail déconnecte les sessions et entraîne une nouvelle vérification professionnelle. Une nouvelle adresse e-mail doit être confirmée.
+        protected: Vous pouvez consulter les comptes administrateurs ici, mais pas les modifier.
+        identity_hint: Changer le nom ou l'e-mail déconnecte toutes les sessions et relance la vérification professionnelle. Un nouvel e-mail doit être confirmé.
       access:
         suspend:
           heading: Suspendre le compte
@@ -95,11 +95,11 @@ fr:
           submit: Suspendre le compte
         restore:
           heading: Rétablir l'accès
-          body: Autorise à nouveau la connexion. L'accès aux missions reste soumis aux vérifications habituelles.
+          body: Autorise à nouveau la connexion. L'accès aux missions exige toujours une vérification.
           submit: Rétablir l'accès
         revoke_sessions:
           heading: Déconnecter toutes les sessions
-          body: Déconnecte les sessions de cet utilisateur. Il pourra se reconnecter.
+          body: Déconnecte cet utilisateur sur tous ses appareils. Il pourra se reconnecter.
           submit: Déconnecter les sessions
       sessions:
         heading: Sessions actives
@@ -144,12 +144,12 @@ fr:
       errors:
         heading: Vérifiez cette modification
         protected_account: Les comptes administrateurs ne peuvent pas être modifiés ici.
-        reason_required: Ajoutez un motif pour cette action.
+        reason_required: Ajoutez un motif.
         reason_too_long: Limitez le motif à 2 000 caractères.
         invalid_action: Choisissez une action valide.
-        invalid_details: Vérifiez les données du compte et réessayez.
+        invalid_details: Vérifiez les données du compte.
       notices:
         updated: Données du compte enregistrées.
-        suspended: Le compte est suspendu et ses sessions sont déconnectées.
+        suspended: Compte suspendu. Toutes les sessions sont déconnectées.
         restored: Accès au compte rétabli.
-        sessions_revoked: Toutes les sessions de ce compte sont déconnectées.
+        sessions_revoked: Toutes les sessions sont déconnectées.

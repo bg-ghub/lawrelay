@@ -15,13 +15,13 @@ en:
     pricing:
       meta_title: "Pricing — LawRelay"
       eyebrow: "beta"
-      title: "Free during the beta."
-      introduction: "LawRelay is free during the beta. There is no checkout, subscription, or payment request. Lawyers always agree and settle professional fees directly with each other."
+      title: "Pricing"
+      introduction: "For lawyers listed on advocaat.be, after verification."
       beta:
         kicker: "beta"
         price: "€0"
-        title: "Open registration for listed lawyers"
-        body: "Any lawyer listed on advocaat.be can register. Marketplace access follows a check against the official directory; beta access is free."
+        title: "Free during the beta"
+        body: "Post and respond to assignments. No payment details needed."
         features:
           - "Registration open to lawyers listed on advocaat.be"
           - "Directory check before marketplace access"
@@ -31,15 +31,15 @@ en:
         kicker: "after the beta"
         price: "Not available yet"
         title: "No paid plan during beta"
-        body: "Paid subscriptions are not offered or collected during the beta. If that changes, the terms and pricing will be published before it takes effect."
+        body: "Paid plans will come later. We will publish prices and terms beforehand."
         features:
           - "No payment details requested"
           - "No automatic renewal"
           - "Clear notice before any paid offer"
           - "Professional fees remain direct"
       direct_fees:
-        title: "Lawyer-to-lawyer fees stay outside LawRelay"
-        body: "The requester and the selected lawyer agree, invoice, and pay each other directly. LawRelay does not hold assignment funds, operate escrow, or deduct a percentage of professional fees."
+        title: "Professional fees"
+        body: "Agree your fee and invoice each other directly. LawRelay does not handle payments or take a commission."
       review_notice: "Beta access is free. LawRelay does not collect platform fees during this beta."
     privacy:
       meta_title: "Privacy notice — LawRelay"

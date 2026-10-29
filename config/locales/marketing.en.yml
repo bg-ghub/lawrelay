@@ -7,7 +7,7 @@ en:
       browse_assignments: Browse assignments
       view: View
     layout:
-      title: "LawRelay — find the right colleague for your practice"
+      title: "LawRelay — court cover and legal work"
       description: LawRelay connects Belgian lawyers for court cover and legal assignments.
       skip_to_content: Skip to content
       dismiss_notice: Dismiss notice
@@ -16,12 +16,12 @@ en:
       primary_navigation: Primary navigation
       how_it_works: How it works
       for_lawyers: For lawyers
-      discover_assignments: Discover assignments
+      discover_assignments: "Assignments"
       questions: Questions
-      dashboard: My overview
+      dashboard: "Dashboard"
       open_menu: Open menu
     footer:
-      intro: A place for lawyers to arrange cover and share assignments.
+      intro: "Court cover and legal work between lawyers."
       platform: Platform
       learn_more: Learn more
       contact: Contact
@@ -30,21 +30,21 @@ en:
       open_source: Open source
       app_version: Version %{version}
       demo_notice: Free beta for lawyers listed on advocaat.be. Keep client and case details off the platform.
-      demo_disclaimer: LawRelay coordinates contact; it does not provide legal advice.
+      demo_disclaimer: "LawRelay does not provide legal advice."
     home:
-      title: "LawRelay — find the right colleague for your practice"
-      og_description: Post a court cover request or legal assignment and find a colleague.
+      title: "LawRelay — court cover and legal work"
+      og_description: "Find a colleague for court cover or legal work."
       hero:
         eyebrow: for lawyers
         heading_before: Need a colleague
         heading_middle: for a
         heading_emphasis: hearing?
-        lede: Post your request, receive responses, and choose the colleague who fits your matter.
-        note: Free beta. Registration is open to lawyers listed on advocaat.be.
+        lede: "Arrange court cover or delegate legal work."
+        note: "Free beta for lawyers listed on advocaat.be."
       product:
         aria_label: Example of the LawRelay workspace
         today: Today
-        response_received: A response received
+        response_received: "New response"
         court_replacement: Court cover
         court_example: Antwerp Family Court
         city: Antwerp
@@ -55,63 +55,63 @@ en:
         choose: Choose
         at_your_pace: at your own pace
       pathways:
-        eyebrow: for both sides of the bar
+        eyebrow: "For lawyers"
         heading_before: How can we
         heading_after: help you?
-        lede: Find cover or take on an assignment yourself. Keep it all in one place.
+        lede: "Find cover or take on an assignment."
         requester:
           kicker: I need help
-          heading_before: Find a colleague
-          heading_after: for your assignment.
-          body: Share the date, place, and what you need. Then compare the responses.
+          heading_before: "Need a"
+          heading_after: "colleague?"
+          body: "Say what you need, where and when."
         responder:
           kicker: I have capacity
-          heading_before: Take on work
-          heading_after: that suits you.
-          body: Browse court cover and legal assignments in your area or field.
+          heading_before: "Have time"
+          heading_after: "for an assignment?"
+          body: "Browse court cover and legal work."
       opportunities:
-        eyebrow: open assignments
+        eyebrow: "Open assignments"
         heading_before: What is happening
         heading_emphasis: today?
         all: All assignments
         by_arrangement: By arrangement
         belgium: Belgium
-        empty_heading: No assignments yet.
-        empty_body: Post the first one and make your request visible to colleagues.
-        demo_caption: Assignments are visible only to verified members.
+        empty_heading: "No assignments yet"
+        empty_body: "Need a colleague? Post an assignment."
+        demo_caption: "Only verified lawyers can view assignments."
       how:
         eyebrow: how it works
         heading_before: From request
         heading_after: to arrangement.
-        lede: Post your assignment, receive responses, and make the call yourself.
+        lede: "Post an assignment and choose from the responses."
         steps:
           "0":
-            heading: Post your assignment
-            body: Add the type of work, date, place, and any preferences.
+            heading: "Post an assignment"
+            body: "Add the work, date and location."
           "1":
             heading: Review responses
-            body: Colleagues respond with their availability and rate.
+            body: "Compare availability and rates."
           "2":
             heading: Make your choice
-            body: Choose who to contact and arrange the practical details together.
+            body: "Choose a colleague and agree the details."
       faq:
         eyebrow: questions
         heading_before: Good to
         heading_after: know.
-        lede: A free beta with open registration for lawyers listed on advocaat.be.
+        lede: "Free access after a check against advocaat.be."
         items:
           "0":
             question: Who is LawRelay for?
-            answer: Lawyers who need court cover, want to outsource work, or want to take on an assignment.
+            answer: "Lawyers looking for court cover, delegating work or taking on assignments."
           "1":
             question: How do I choose a colleague?
-            answer: Compare experience, availability, and rate. The choice is yours.
+            answer: "Compare experience, availability and rates."
           "2":
             question: Can I propose my own rate?
-            answer: Yes. You can add an indicative rate or make a proposal yourself.
+            answer: "Yes. Suggest a rate or make a proposal."
           "3":
-            question: Is this live already?
-            answer: Yes. Lawyers listed on advocaat.be can register; marketplace access follows a directory check. Do not share client names, case facts, or documents.
+            question: "How do I get access?"
+            answer: "Register with your advocaat.be profile. Access opens after verification. Keep client names, case facts and documents off the platform."
       cta:
         eyebrow: ready to begin?
         heading_before: Post your assignment.

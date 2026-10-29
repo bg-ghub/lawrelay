@@ -5,6 +5,13 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.4] - 2026-10-29
+
+### Changed
+
+- Shorter, plainer copy across the website and all seven emails in NL, FR, DE and EN.
+- Removed repeated introductions, sidebars and tutorials; simplified pricing and form layouts.
+
 ## [0.4.3] - 2026-10-29
 
 ### Added

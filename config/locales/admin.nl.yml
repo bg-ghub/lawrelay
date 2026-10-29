@@ -3,7 +3,7 @@ nl:
     verifications:
       eyebrow: "Beheer"
       title: "Advocaten verifiëren"
-      intro: "Controleer de beroeps- en kantoorgegevens voordat je toegang tot de marktplaats geeft."
+      intro: "Controleer de advocaat en het kantoor voor je toegang geeft."
       back: "Terug naar overzicht"
       account: "Account"
       email: "E-mail"
@@ -16,11 +16,11 @@ nl:
       lawyer_status: "Status advocaat"
       missing: "Ontbreekt"
       note: "Interne controlenotitie"
-      note_placeholder: "Noteer wat je controleerde en waarom je deze beslissing nam."
+      note_placeholder: "Wat heb je gecontroleerd en waarom deze beslissing?"
       approve: "Goedkeuren"
       reject: "Afwijzen"
       empty_title: "Niets te controleren"
-      empty_body: "Er wachten geen verificaties van advocaten of kantoren."
+      empty_body: "Geen controles in afwachting."
       notices:
         approved: "%{name} is goedgekeurd."
         rejected: "%{name} is afgewezen."

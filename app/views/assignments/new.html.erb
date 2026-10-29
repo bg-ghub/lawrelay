@@ -1,16 +1,12 @@
 <div class="new-assignment shell">
   <nav class="breadcrumbs" aria-label="<%= t("marketplace.new.breadcrumb_aria") %>"><%= link_to t("marketplace.new.assignments"), assignments_path %><span aria-hidden="true">/</span><span><%= t("marketplace.new.current") %></span></nav>
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("marketplace.new.eyebrow") %></p>
     <h1><%= t("marketplace.new.title") %></h1>
-    <p><%= t("marketplace.new.lede") %></p>
   </div>
   <div class="new-assignment__layout">
     <%= render "form", assignment: @assignment %>
     <aside class="posting-aside">
-      <span class="posting-aside__number">01</span><h2><%= t("marketplace.new.tip_one_title") %></h2><p><%= t("marketplace.new.tip_one_body") %></p>
-      <span class="posting-aside__number">02</span><h2><%= t("marketplace.new.tip_two_title") %></h2><p><%= t("marketplace.new.tip_two_body") %></p>
-      <span class="posting-aside__number">03</span><h2><%= t("marketplace.new.tip_three_title") %></h2><p><%= t("marketplace.new.tip_three_body") %></p>
+      <span class="posting-aside__number">01</span><h2><%= t("marketplace.new.tip_three_title") %></h2><p><%= t("marketplace.new.tip_three_body") %></p>
     </aside>
   </div>
 </div>

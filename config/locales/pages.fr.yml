@@ -15,13 +15,13 @@ fr:
     pricing:
       meta_title: "Tarifs — LawRelay"
       eyebrow: "bêta"
-      title: "Gratuit pendant la bêta."
-      introduction: "LawRelay est gratuit pendant la bêta. Il n'y a ni paiement, ni abonnement, ni demande de paiement. Les avocats conviennent toujours directement entre eux de leurs honoraires."
+      title: "Tarifs"
+      introduction: "Pour les avocats inscrits sur advocaat.be, après vérification."
       beta:
         kicker: "bêta"
         price: "0 €"
-        title: "Inscription ouverte aux avocats inscrits"
-        body: "Tout avocat inscrit sur advocaat.be peut créer un compte. L'accès à la plateforme suit une vérification dans l'annuaire officiel ; l'accès bêta est gratuit."
+        title: "Gratuit pendant la bêta"
+        body: "Publiez des missions et répondez aux offres. Aucune donnée de paiement nécessaire."
         features:
           - "Inscription ouverte aux avocats inscrits sur advocaat.be"
           - "Vérification de l'annuaire avant l'accès à la plateforme"
@@ -31,15 +31,15 @@ fr:
         kicker: "après la bêta"
         price: "Pas encore disponible"
         title: "Aucune formule payante pendant la bêta"
-        body: "Aucun abonnement payant n'est proposé ni encaissé pendant la bêta. Si cela change, les conditions et le prix seront publiés avant toute prise d'effet."
+        body: "Les formules payantes viendront plus tard. Les prix et conditions seront publiés à l'avance."
         features:
           - "Aucune donnée de paiement demandée"
           - "Aucun renouvellement automatique"
           - "Information claire avant toute offre payante"
           - "Les honoraires restent directs"
       direct_fees:
-        title: "Les honoraires entre avocats restent hors de LawRelay"
-        body: "Le donneur d'ordre et l'avocat choisi conviennent directement des modalités, se facturent et se paient. LawRelay ne détient pas les fonds, ne fournit pas de séquestre et ne prélève aucun pourcentage sur les honoraires."
+        title: "Honoraires"
+        body: "Convenez des honoraires et facturez-vous directement. LawRelay ne gère pas les paiements et ne prend aucune commission."
       review_notice: "L'accès à la bêta est gratuit. LawRelay n'encaisse aucun frais de plateforme pendant cette bêta."
     privacy:
       meta_title: "Déclaration de confidentialité — LawRelay"

@@ -1,7 +1,7 @@
 en:
   notices:
-    assignment_created: "Your assignment has been posted. Suitable colleagues can now respond."
-    proposal_created: "Your proposal has been sent. The requester will be notified."
+    assignment_created: "Assignment posted."
+    proposal_created: "Proposal sent."
   assignments:
     kinds:
       court_replacement: "Court replacement"

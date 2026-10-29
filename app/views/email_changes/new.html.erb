@@ -1,18 +1,16 @@
 <% content_for :title, t("email_change.title") %>
 <div class="new-assignment shell settings-page">
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("email_change.eyebrow") %></p>
     <h1><%= t("email_change.heading") %></h1>
     <p><%= t(current_user.system_admin? ? "email_change.admin_lede" : "email_change.lede") %></p>
   </div>
 
-  <div class="new-assignment__layout">
+  <div class="new-assignment__layout auth-form-layout">
     <%= form_with url: email_change_path, method: :post, class: "assignment-form" do |form| %>
       <% if @errors.present? %>
         <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><ul><% @errors.each do |message| %><li><%= message %></li><% end %></ul></div>
       <% end %>
-      <fieldset class="form-section">
-        <legend><%= t("email_change.form.legend") %></legend>
+      <fieldset class="form-section" aria-label="<%= t("email_change.form.legend") %>">
         <div class="field-group"><strong><%= t("email_change.form.current") %></strong><p><%= current_user.email_address %></p></div>
         <div class="field-group"><%= form.label "email_change[email_address]", t("email_change.form.new_email") %><%= form.email_field "email_change[email_address]", value: @email_address, required: true, autocomplete: "email" %></div>
         <div class="field-group"><%= form.label "email_change[current_password]", t("email_change.form.password") %><%= form.password_field "email_change[current_password]", required: true, autocomplete: "current-password" %></div>

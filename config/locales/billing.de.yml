@@ -1,14 +1,14 @@
 de:
   billing:
     eyebrow: Abrechnung
-    title: Ihr LawRelay-Tarif
-    lede: Halten Sie Ihre Kanzlei bereit, Aufträge einzustellen. Kolleginnen und Kollegen können weiterhin kostenlos reagieren.
+    title: Ihr Zugang
+    lede: Aufträge einstellen und beantworten.
     plan:
       title: LawRelay Office
       price: 49 € / Monat
       tax_note: zuzüglich MwSt.
-      description: Eine klare monatliche Plattformgebühr für Ihre Kanzlei.
-      direct_settlement: LawRelay verwaltet nie das zwischen Anwältinnen und Anwälten vereinbarte Honorar; Sie rechnen direkt ab.
+      description: Monatlicher Zugang für Ihre Kanzlei.
+      direct_settlement: Vereinbaren Sie das Honorar und rechnen Sie direkt miteinander ab.
       active: Ihr Tarif ist aktiv.
       contact_administrator: Bitten Sie eine Kanzlei-Administration, die Abrechnung zu verwalten.
     actions:
@@ -28,7 +28,7 @@ de:
     notices:
       posting_plan_required: Ihre Kanzlei benötigt einen aktiven Tarif, um Aufträge einzustellen.
       rate_limited: Bitte warten Sie, bevor Sie eine weitere Rechnung anfordern.
-      invoice_requested: "Rechnung %{number} wartet auf die manuelle Übergabe an die Buchhaltung. Ihr Tarif wird nach Verbuchung der Zahlung aktiviert."
+      invoice_requested: "Rechnung %{number} wartet auf Bearbeitung. Ihr Tarif beginnt nach Verbuchung der Zahlung."
       subscription_cancelled: Ihr Tarif wurde gekündigt.
       payment_confirmation_pending: Wir aktivieren Ihren Tarif erst nach Zahlungsbestätigung.
       no_firm: Sie benötigen eine Kanzlei, um die Abrechnung zu verwalten.

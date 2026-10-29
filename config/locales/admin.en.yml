@@ -3,7 +3,7 @@ en:
     verifications:
       eyebrow: "Administration"
       title: "Lawyer verification"
-      intro: "Review the professional and firm details before granting marketplace access."
+      intro: "Check the lawyer and firm before approving access."
       back: "Back to dashboard"
       account: "Account"
       email: "Email"
@@ -16,11 +16,11 @@ en:
       lawyer_status: "Lawyer status"
       missing: "Missing"
       note: "Internal review note"
-      note_placeholder: "Record what was checked and why this decision was made."
+      note_placeholder: "What did you check, and why this decision?"
       approve: "Approve"
       reject: "Reject"
       empty_title: "Nothing to review"
-      empty_body: "There are no pending lawyer or firm verifications."
+      empty_body: "No checks pending."
       notices:
         approved: "%{name} was approved."
         rejected: "%{name} was rejected."

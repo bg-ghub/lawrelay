@@ -1,19 +1,19 @@
 fr:
   directory_mail:
     confirm:
-      subject: "Confirmez votre adresse e-mail professionnelle LawRelay"
+      subject: "Confirmez votre e-mail professionnel — LawRelay"
       greeting: "Bonjour %{name},"
-      body: "Un compte LawRelay a été créé avec votre profil public advocaat.be et l’adresse de connexion %{login_email}. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle :"
-      body_html: "Un compte LawRelay a été créé avec votre profil public advocaat.be et l’adresse de connexion <strong>%{login_email}</strong>. Confirmez uniquement si vous avez créé ce compte précis et contrôlez cette adresse e-mail professionnelle."
-      action: "Confirmer l’adresse e-mail professionnelle"
-      ignore: "Si ce n’est pas vous, ignorez cet e-mail. Le lien expire dans 48 heures."
+      body: "Votre profil advocaat.be a été utilisé pour le compte LawRelay %{login_email}. Confirmez uniquement si vous avez créé ce compte et avez accès à cette adresse professionnelle."
+      body_html: "Votre profil advocaat.be a été utilisé pour le compte LawRelay <strong>%{login_email}</strong>. Confirmez uniquement si vous avez créé ce compte et avez accès à cette adresse professionnelle."
+      action: "Confirmer l’e-mail professionnel"
+      ignore: "Ignorez cet e-mail si ce n’était pas vous. Le lien expire dans 48 heures."
     notices:
       confirmed: "Votre adresse e-mail professionnelle est confirmée. Connectez-vous pour continuer."
       invalid: "Ce lien de confirmation est invalide ou a expiré."
-      already_claimed: "Ce profil est déjà confirmé pour un autre compte. Contactez le support si vous avez besoin d’aide."
+      already_claimed: "Ce profil est déjà lié à un autre compte vérifié. Contactez le support."
     page:
       eyebrow: "Confirmation de l’adresse e-mail professionnelle"
       heading: "Confirmer ce compte LawRelay"
-      body: "Vous confirmez le compte LawRelay de %{name}, avec l’adresse de connexion %{login_email}."
-      notice: "Continuez uniquement si vous avez créé ce compte précis."
+      body: "Compte : %{name}, e-mail de connexion %{login_email}."
+      notice: "Continuez uniquement si vous avez créé ce compte."
       action: "Confirmer ce compte"
