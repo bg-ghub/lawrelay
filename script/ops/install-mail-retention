@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+# Install the reviewed retention worker and units. It never starts a cleanup.
+set -eu
+umask 077
+
+[ "$(id -u)" -eq 0 ] || { printf '%s\n' 'Run as root.' >&2; exit 1; }
+
+root=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
+source_script="$root/script/ops/mailbox-retention.py"
+source_service="$root/script/ops/systemd/lawrelay-mail-retention.service"
+source_timer="$root/script/ops/systemd/lawrelay-mail-retention.timer"
+target_script=/usr/local/libexec/lawrelay-mail-retention.py
+target_service=/etc/systemd/system/lawrelay-mail-retention.service
+target_timer=/etc/systemd/system/lawrelay-mail-retention.timer
+state_dir=/var/lib/lawrelay-mail-retention
+
+require_source() {
+  [ -f "$1" ] && [ ! -L "$1" ] || {
+    printf '%s\n' "Refusing missing or symlinked source: $1" >&2
+    exit 1
+  }
+}
+
+guard_target() {
+  path=$1
+  description=$2
+  [ ! -L "$path" ] || { printf '%s\n' "Refusing a symlinked $description." >&2; exit 1; }
+  [ ! -e "$path" ] || [ -f "$path" ] || { printf '%s\n' "$description exists but is not a regular file." >&2; exit 1; }
+  [ ! -e "$path" ] || [ "$(stat -c %h "$path")" = 1 ] || { printf '%s\n' "$description must not have hard links." >&2; exit 1; }
+}
+
+require_source "$source_script"
+require_source "$source_service"
+require_source "$source_timer"
+guard_target "$target_script" 'installed worker'
+guard_target "$target_service" 'installed service unit'
+guard_target "$target_timer" 'installed timer unit'
+
+[ ! -L "$state_dir" ] || { printf '%s\n' 'Refusing a symlinked state directory.' >&2; exit 1; }
+[ ! -e "$state_dir" ] || [ -d "$state_dir" ] || { printf '%s\n' 'State path exists but is not a directory.' >&2; exit 1; }
+install -d -o root -g root -m 0700 "$state_dir"
+
+# Existing state, lock and success-marker files are deliberately untouched.
+for private_file in "$state_dir/state.json" "$state_dir/state.json.lock" "$state_dir/last-success"; do
+  [ ! -L "$private_file" ] || { printf '%s\n' "Refusing a symlinked state file: $private_file" >&2; exit 1; }
+  [ ! -e "$private_file" ] || [ -f "$private_file" ] || { printf '%s\n' "State path is not a regular file: $private_file" >&2; exit 1; }
+  [ ! -e "$private_file" ] || [ "$(stat -c %h "$private_file")" = 1 ] || { printf '%s\n' "State file must not have hard links: $private_file" >&2; exit 1; }
+done
+
+install -D -o root -g root -m 0750 "$source_script" "$target_script"
+install -D -o root -g root -m 0644 "$source_service" "$target_service"
+install -D -o root -g root -m 0644 "$source_timer" "$target_timer"
+systemctl daemon-reload
+
+printf '%s\n' 'Installed the retention worker and units; nothing was started or enabled.'
+printf '%s\n' 'Preview first:'
+printf '%s\n' '  /usr/local/libexec/lawrelay-mail-retention.py --env-file /home/deploy/lawrelay/production.env --folder Support/Resolved --sent-folder Sent --state-file /var/lib/lawrelay-mail-retention/state.json'
+printf '%s\n' 'After reviewing the preview, enable the timer with: systemctl enable --now lawrelay-mail-retention.timer'

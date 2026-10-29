@@ -52,9 +52,12 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: |
           python3 script/ops/test-external-uptime.py
+          python3 script/ops/test-mailbox-retention.py
+          python3 script/ops/test-health-mail-retention.py
           sh script/ops/test-notify-no-send
           sh -n script/ops/lawrelay-backup
           sh -n script/ops/prepare-retention-host
+          sh -n script/ops/install-mail-retention
 
   lint:
     runs-on: ubuntu-latest

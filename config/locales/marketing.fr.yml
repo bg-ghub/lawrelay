@@ -33,12 +33,11 @@ fr:
       title: "LawRelay — remplacements et missions juridiques"
       og_description: "Trouvez un confrère pour une audience ou une mission juridique."
       hero:
-        eyebrow: pour les avocats
         heading_before: Besoin d'un confrère
         heading_middle: pour une
         heading_emphasis: audience ?
         lede: "Organisez un remplacement d’audience ou confiez une mission juridique."
-        note: "Bêta open source pour les avocats."
+        note: "Bêta open source."
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui

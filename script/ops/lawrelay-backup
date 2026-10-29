@@ -10,6 +10,7 @@ lock_file=${LAWRELAY_BACKUP_LOCK_FILE:-$work_root/backup.lock}
 ledger_dir=${LAWRELAY_ERASURE_LEDGER_DIR:-/var/lib/lawrelay-privacy}
 ledger=${LAWRELAY_ERASURE_LEDGER:-$ledger_dir/erasures.jsonl}
 ledger_lock=${LAWRELAY_ERASURE_LEDGER_LOCK:-$ledger.lock}
+mail_state_dir=${LAWRELAY_MAIL_RETENTION_STATE_DIR:-/var/lib/lawrelay-mail-retention}
 notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
 notify_direct=${LAWRELAY_NOTIFY_DIRECT:-false}
 tag=${LAWRELAY_LOG_TAG:-lawrelay-backup}
@@ -74,6 +75,21 @@ cp -- "$ledger" "$stage/erasures.jsonl" || fail "erasure ledger copy failed"
 chmod 600 "$stage/erasures.jsonl"
 flock -u 8
 
+# Persist closure timestamps without copying message bodies or credentials.
+if [ -e "$mail_state_dir/state.json" ]; then
+  [ ! -L "$mail_state_dir" ] && [ -d "$mail_state_dir" ] || fail "mail retention state directory is unsafe"
+  [ "$(stat -c '%u:%g:%a' "$mail_state_dir")" = '0:0:700' ] || fail "mail retention state directory permissions are unsafe"
+  for mail_file in "$mail_state_dir/state.json" "$mail_state_dir/state.json.lock"; do
+    [ ! -L "$mail_file" ] && [ -f "$mail_file" ] || fail "mail retention state file is unsafe"
+    [ "$(stat -c '%u:%g:%a:%h' "$mail_file")" = '0:0:600:1' ] || fail "mail retention state permissions are unsafe"
+  done
+  exec 7<"$mail_state_dir/state.json.lock"
+  flock -s 7 || fail "could not lock mail retention state"
+  cp -- "$mail_state_dir/state.json" "$stage/mail-retention-state.json" || fail "mail retention state copy failed"
+  chmod 600 "$stage/mail-retention-state.json"
+  flock -u 7
+fi
+
 # Cache is intentionally omitted: Rails can recreate it. Archive uploaded files
 # and any other persistent storage while excluding live SQLite/WAL files.
 tar -C "$mountpoint" \
@@ -86,7 +102,9 @@ printf '%s\n' "volume=$volume" >>"$stage/manifest"
 printf '%s\n' "databases=production.sqlite3,production_queue.sqlite3,production_cable.sqlite3" >>"$stage/manifest"
 printf '%s\n' "erasure_ledger=erasures.jsonl" >>"$stage/manifest"
 
-(cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" databases storage.tar erasures.jsonl manifest) || fail "restic backup failed"
+set -- databases storage.tar erasures.jsonl manifest
+[ ! -f "$stage/mail-retention-state.json" ] || set -- "$@" mail-retention-state.json
+(cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" "$@") || fail "restic backup failed"
 restic snapshots --tag lawrelay --latest 1 --json >/dev/null || fail "could not verify LawRelay restic snapshot"
 # Keep recovery copies for 30 days. The fresh snapshot above must succeed before
 # pruning starts, so a retention run cannot remove the only recent backup.

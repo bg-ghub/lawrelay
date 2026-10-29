@@ -33,12 +33,11 @@ de:
       title: "LawRelay — Vertretungen und juristische Aufträge"
       og_description: "Finden Sie eine Vertretung oder Unterstützung bei juristischer Arbeit."
       hero:
-        eyebrow: für die Anwaltschaft
         heading_before: Vertretung gesucht
         heading_middle: für eine
         heading_emphasis: Verhandlung?
         lede: "Organisieren Sie eine Vertretung oder vergeben Sie einen juristischen Auftrag."
-        note: "Open-Source-Beta für Anwälte."
+        note: "Open-Source-Beta."
       product:
         aria_label: Beispiel des LawRelay-Arbeitsbereichs
         today: Heute

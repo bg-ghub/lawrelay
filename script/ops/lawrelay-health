@@ -7,6 +7,8 @@ base_url=${LAWRELAY_BASE_URL:-https://lawrelay.be}
 volume=${LAWRELAY_STORAGE_VOLUME:-lawrelay_storage}
 state_dir=${LAWRELAY_BACKUP_STATE_DIR:-/var/lib/lawrelay-backup/state}
 max_backup_age_hours=${LAWRELAY_BACKUP_MAX_AGE_HOURS:-26}
+mail_state_dir=${LAWRELAY_MAIL_RETENTION_STATE_DIR:-}
+max_mail_age_hours=${LAWRELAY_MAIL_RETENTION_MAX_AGE_HOURS:-50}
 disk_warn_percent=${LAWRELAY_DISK_WARN_PERCENT:-85}
 container=${LAWRELAY_DOCKER_CONTAINER:-}
 notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
@@ -41,6 +43,13 @@ last_success="$state_dir/last-success"
 [ -f "$last_success" ] || fail "backup success marker is missing"
 max_age_minutes=$((max_backup_age_hours * 60))
 find "$last_success" -mmin "+$max_age_minutes" -print -quit | grep -q . && fail "latest backup is older than ${max_backup_age_hours}h"
+
+if [ -n "$mail_state_dir" ]; then
+  mail_success="$mail_state_dir/last-success"
+  [ -f "$mail_success" ] || fail "mailbox cleanup success marker is missing"
+  max_mail_age_minutes=$((max_mail_age_hours * 60))
+  find "$mail_success" -mmin "+$max_mail_age_minutes" -print -quit | grep -q . && fail "mailbox cleanup is older than ${max_mail_age_hours}h"
+fi
 
 queue_db="$mountpoint/production_queue.sqlite3"
 [ -f "$queue_db" ] || fail "queue database is missing"

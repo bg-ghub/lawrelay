@@ -33,12 +33,11 @@ en:
       title: "LawRelay — court cover and legal work"
       og_description: "Find a colleague for court cover or legal work."
       hero:
-        eyebrow: for lawyers
         heading_before: Need a colleague
         heading_middle: for a
         heading_emphasis: hearing?
         lede: "Arrange court cover or delegate legal work."
-        note: "Open-source beta for lawyers."
+        note: "Open-source beta."
       product:
         aria_label: Example of the LawRelay workspace
         today: Today
