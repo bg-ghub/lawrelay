@@ -1,6 +1,6 @@
 # LawRelay release checklist
 
-Last audited: 29 October 2026. Current release: 0.4.4.
+Last audited: 29 October 2026. Current release: 0.4.5.
 
 Current scope: an open, free founding beta for lawyers listed on advocaat.be. Registration is not invitation-only and has no cohort cap. Directory and email verification are required before marketplace access. Paid subscriptions remain disabled. Do not enter client names, case facts, pleadings, documents, or privileged material.
 
@@ -36,6 +36,9 @@ This is an engineering and product checklist, not legal advice. A checked item i
 
 ## Beta follow-through completed
 
+- [x] Two-account browser journey covers registration, both mailbox confirmations, password sign-in, posting, responding, selection and contact privacy. Directory responses and mail are synthetic; the real-lawyer trial remains below.
+- [x] Automated accessibility review of 80 public/auth page, locale and viewport combinations; pointer-target and named-group fixes, plus four-language keyboard checks. Physical devices, screen readers and independent review remain below.
+- [x] Fresh backup/health/monitor checks and isolated 0.4.4/0.4.3 restore/rollback pass. See [dated evidence](ops/beta-ops-checks.md). No production traffic or data was switched.
 - [x] Engineering security review and fixes: address-bound email/recovery links, explicit email-confirmation POST, server password minimum, current firm-membership authorization and MFA/free-text log filtering.
 - [x] Keyboard/focus/labels/landmarks/contrast/mobile fixes; all four signup locales checked at 320/800/1280px in Chrome, Firefox and Edge.
 - [x] Multilingual editorial review, corrected `advocaat.be` references, and accurate Migadu Swiss-company/French-email-server disclosure.
@@ -56,6 +59,8 @@ This is an engineering and product checklist, not legal advice. A checked item i
 - [ ] Manual screen-reader and physical Safari/iOS/Android testing, plus independent accessibility review. Automated browser checks are not WCAG certification.
 - [ ] Collect actual user feedback and outcomes using the prepared process; no users or feedback are fabricated.
 - [ ] Ongoing operator work: triage, moderation/privacy execution, mail quota/capacity review, backup/log/queue/TLS checks and human incident rehearsal. Migadu Micro allows 20 outgoing attempts/day across the account; no plan was changed.
+
+The [review handoff](ops/beta-review-handoff.md) lists the remaining owner and external-review evidence. Public contracts and automated tests do not close those items.
 
 ## Paid launch — later, not enabled
 

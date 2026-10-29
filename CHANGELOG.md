@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.4.5] - 2026-10-29
+
+### Fixed
+
+- Clearer recovery from expired password links; links for deleted accounts return to the reset form.
+- Larger sign-in sidebar link targets and an accessible label for the homepage example.
+
+### Added
+
+- Browser coverage for two-account signup, both email confirmations, posting, responding, selection and password recovery.
+- Updated operations and isolated restore/rollback evidence; a short handoff for the remaining outside reviews.
+
 ## [0.4.4] - 2026-10-29
 
 ### Changed

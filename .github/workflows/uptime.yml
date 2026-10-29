@@ -33,7 +33,7 @@ jobs:
           UPTIME_SELF_TEST: ${{ inputs.self_test || 'off' }}
           UPTIME_RESULT_PATH: ${{ runner.temp }}/lawrelay-uptime.json
         run: python3 script/ops/external-uptime.py probe
-      - name: Open one private owner incident or close it after recovery
+      - name: Open one sanitized public incident or close it after recovery
         if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}

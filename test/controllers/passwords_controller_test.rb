@@ -36,7 +36,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_password_path(locale: :en)
 
     follow_redirect!
-    assert_notice "password reset link is invalid"
+    assert_notice I18n.t("auth.passwords.invalid", locale: :en)
   end
 
   test "update" do
@@ -97,6 +97,35 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_no_changes -> { @user.reload.password_digest } do
       put password_path(token:, locale: :en), params: { password: "new-long-password", password_confirmation: "new-long-password" }
     end
+    assert_redirected_to new_password_path(locale: :en)
+  end
+
+  test "request lookup accepts mixed case and surrounding whitespace" do
+    post passwords_path(locale: :en), params: { email_address: "  #{@user.email_address.upcase}  " }
+
+    assert_enqueued_email_with PasswordsMailer, :reset, args: [ @user ]
+    assert_redirected_to new_session_path(locale: :en)
+  end
+
+  test "expired links return to the request form with a recovery instruction" do
+    token = @user.password_reset_token
+
+    travel 16.minutes do
+      get edit_password_path(token:, locale: :en)
+    end
+
+    assert_redirected_to new_password_path(locale: :en)
+    follow_redirect!
+    assert_notice I18n.t("auth.passwords.invalid", locale: :en)
+    assert_select "form[action='#{passwords_path(locale: :en)}'] input[type='email']"
+  end
+
+  test "a link for a deleted account returns to the request form" do
+    token = @user.password_reset_token
+    @user.destroy!
+
+    get edit_password_path(token:, locale: :en)
+
     assert_redirected_to new_password_path(locale: :en)
   end
 
