@@ -159,5 +159,27 @@ LOCALES.each do |locale|
   end
 end
 
+member_security = browser
+sign_in(member_security, "en", member, password)
+LOCALES.each { |locale| visit(member_security, "/#{locale}/settings/two-factor") }
+member_security.post("/en/settings/two-factor/begin-setup", params: { authenticity_token: csrf(member_security), current_password: password })
+check(member_security.response.redirect?, "member two-factor setup requires password confirmation")
+LOCALES.each do |locale|
+  visit(member_security, "/#{locale}/settings/two-factor/setup")
+  check(Nokogiri::HTML(member_security.response.body).at_css("img.mfa-qr")&.[]("src")&.start_with?("data:image/png;base64,"), "#{locale} member QR is local")
+end
+member.reload
+member_security.post("/en/settings/two-factor/enable", params: { authenticity_token: csrf(member_security), mfa_code: ROTP::TOTP.new(member.two_factor_pending_secret, issuer: "LawRelay").now })
+check(member_security.response.status == 200, "member two-factor enrollment succeeds")
+recovery_codes = Nokogiri::HTML(member_security.response.body).css(".recovery-codes code").map(&:text)
+check(recovery_codes.length == 10, "member sees ten one-time recovery codes")
+LOCALES.each { |locale| visit(member_security, "/#{locale}/settings/two-factor") }
+member_security.delete("/en/session", params: { authenticity_token: csrf(member_security) })
+sign_in(member_security, "en", member, password)
+LOCALES.each { |locale| visit(member_security, "/#{locale}/settings/two-factor/challenge") }
+member_security.post("/en/settings/two-factor/verify", params: { authenticity_token: csrf(member_security), recovery_code: recovery_codes.first })
+check(member_security.response.redirect?, "member recovery code verifies sign-in")
+check(member.reload.two_factor_recovery_codes_remaining == 9, "member recovery code is consumed")
+
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
 puts "Localized production rendering completed with only disposable synthetic records (invoice #{invoice.id}, request #{privacy_request.id}, report #{report.id})."

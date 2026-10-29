@@ -47,6 +47,7 @@ fr:
           heading: "2. Données traitées"
           bullets:
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
+            - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
             - "Données de vérification professionnelle : profil dans l’annuaire officiel, nom et e-mail professionnel publiés, coordonnées du cabinet et statut de vérification."
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."

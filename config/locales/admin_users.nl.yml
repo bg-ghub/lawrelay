@@ -124,6 +124,9 @@ nl:
           account_updated: Accountgegevens gewijzigd
           admin_bootstrapped: Beheerdersaccount aangemaakt
           account_email_changed: E-mailadres gewijzigd
+          account_two_factor_enabled: Tweestapsverificatie ingeschakeld
+          account_two_factor_verified: Tweestapsverificatie bevestigd
+          account_two_factor_disabled: Tweestapsverificatie uitgeschakeld
           account_provisioned_for_testing: Testaccount aangemaakt
           admin_contact_updated: Contactadres beheerder gewijzigd
           admin_promoted: Beheerrechten toegekend

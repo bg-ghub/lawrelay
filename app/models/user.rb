@@ -1,6 +1,8 @@
 require "digest"
 
 class User < ApplicationRecord
+  include TwoFactorAuthenticatable
+
   class InvalidAdminMfaCode < StandardError; end
 
   SYSTEM_ROLES = %w[member admin].freeze

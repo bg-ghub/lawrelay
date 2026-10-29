@@ -47,6 +47,7 @@ de:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
             - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten."
+            - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
             - "Daten zur beruflichen Verifizierung: Ihr offizielles Verzeichnisprofil, der veröffentlichte Name und die berufliche E-Mail-Adresse, Kanzleiangaben und Prüfstatus."
             - "Daten zum beruflichen Profil und zu Vermittlungspräferenzen, einschließlich Rechtsgebieten, Gerichtspräferenzen und—soweit für juristische Aufgaben relevant—gesprochenen Sprachen; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
