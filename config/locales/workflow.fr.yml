@@ -24,7 +24,6 @@ fr:
       proposal_accepted: "L’une de vos propositions a été acceptée."
       proposal_declined: "Un cabinet a choisi une autre proposition."
       assignment_cancelled: "Une mission à laquelle vous aviez répondu a été annulée."
-      assignment_expired: "L’une de vos missions a expiré."
       assignment_expired: "L’une de vos missions a expiré avant qu’une mise en relation soit conclue."
     notices:
       assignment_cancelled: "La mission a été annulée."

@@ -52,13 +52,15 @@ class Admin::VerificationsControllerTest < ActionDispatch::IntegrationTest
 
   test "system admin can reject a verification" do
     sign_in_as(@admin, admin_mfa: true)
-
-    patch "/en/admin/verifications/#{@review_user.id}", params: {
-      decision: "reject",
-      verification: { note: "Bar number could not be confirmed." }
-    }
-
-    assert_redirected_to "/en/admin/verifications"
+    %w[nl fr de en].each do |locale|
+      patch "/#{locale}/admin/verifications/#{@review_user.id}", params: {
+        decision: "reject",
+        verification: { note: "Bar number could not be confirmed." }
+      }
+      assert_redirected_to "/#{locale}/admin/verifications"
+      assert_equal I18n.t("admin.verifications.notices.rejected", locale:, name: @review_user.full_name), flash[:notice]
+    end
+    assert_equal [ "verification.rejected" ], AuditEvent.where(actor_user: @admin).distinct.pluck(:action)
     assert_equal "rejected", @review_firm.reload.verification_status
     assert_nil @review_firm.verified_at
     assert_equal "rejected", @review_profile.reload.verification_status

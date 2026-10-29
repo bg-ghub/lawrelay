@@ -123,11 +123,19 @@ de:
           admin_user_sessions_revoked: Sitzungen abgemeldet
           account_updated: Kontodaten geändert
           admin_bootstrapped: Administratorkonto erstellt
+          account_email_changed: E-Mail-Adresse geändert
+          account_provisioned_for_testing: Testkonto erstellt
+          admin_contact_updated: Kontaktadresse des Administrators geändert
+          admin_promoted: Administratorrechte erteilt
+          admin_mfa_enabled: Zwei-Faktor-Authentifizierung eingerichtet
+          admin_mfa_challenged: Zwei-Faktor-Authentifizierung bestätigt
+          admin_mfa_reset: Zwei-Faktor-Authentifizierung zurückgesetzt
           verification_directory_matched: Verzeichnisprofil abgeglichen
           verification_directory_email_confirmed: Eingetragene E-Mail bestätigt
           verification_directory_activated: Beruflicher Zugang geprüft
           verification_approved: Berufliche Prüfung genehmigt
           verification_rejected: Berufliche Prüfung abgelehnt
+          verification_rejectd: Berufliche Prüfung abgelehnt
       pagination:
         label: Benutzerseiten
         previous: Zurück

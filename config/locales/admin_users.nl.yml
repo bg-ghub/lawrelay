@@ -123,11 +123,19 @@ nl:
           admin_user_sessions_revoked: Sessies afgemeld
           account_updated: Accountgegevens gewijzigd
           admin_bootstrapped: Beheerdersaccount aangemaakt
+          account_email_changed: E-mailadres gewijzigd
+          account_provisioned_for_testing: Testaccount aangemaakt
+          admin_contact_updated: Contactadres beheerder gewijzigd
+          admin_promoted: Beheerrechten toegekend
+          admin_mfa_enabled: Tweestapsverificatie ingesteld
+          admin_mfa_challenged: Tweestapsverificatie bevestigd
+          admin_mfa_reset: Tweestapsverificatie opnieuw ingesteld
           verification_directory_matched: Profiel in de lijst gevonden
           verification_directory_email_confirmed: Vermeld e-mailadres bevestigd
           verification_directory_activated: Professionele toegang geverifieerd
           verification_approved: Professionele verificatie goedgekeurd
           verification_rejected: Professionele verificatie afgewezen
+          verification_rejectd: Professionele verificatie afgewezen
       pagination:
         label: Gebruikerspagina's
         previous: Vorige

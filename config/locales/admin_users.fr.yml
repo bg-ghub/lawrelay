@@ -123,11 +123,19 @@ fr:
           admin_user_sessions_revoked: Sessions déconnectées
           account_updated: Données du compte modifiées
           admin_bootstrapped: Compte administrateur créé
+          account_email_changed: Adresse e-mail modifiée
+          account_provisioned_for_testing: Compte de test créé
+          admin_contact_updated: Adresse de contact administrateur modifiée
+          admin_promoted: Droits administrateur accordés
+          admin_mfa_enabled: Double authentification configurée
+          admin_mfa_challenged: Double authentification confirmée
+          admin_mfa_reset: Double authentification réinitialisée
           verification_directory_matched: Profil correspondant dans l'annuaire
           verification_directory_email_confirmed: E-mail répertorié confirmé
           verification_directory_activated: Accès professionnel vérifié
           verification_approved: Vérification professionnelle approuvée
           verification_rejected: Vérification professionnelle refusée
+          verification_rejectd: Vérification professionnelle refusée
       pagination:
         label: Pages d'utilisateurs
         previous: Précédente

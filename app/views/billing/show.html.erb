@@ -38,9 +38,9 @@
         <div class="compact-list">
           <% @invoices.each do |invoice| %>
             <div class="compact-row">
-              <span class="compact-row__copy"><strong><%= invoice.number || t("billing.invoices.draft") %></strong><small><%= t("billing.invoices.due", date: invoice.due_on || "—") %></small></span>
+              <span class="compact-row__copy"><strong><%= invoice.number || t("billing.invoices.draft") %></strong><small><%= t("billing.invoices.due", date: invoice.due_on ? l(invoice.due_on) : "—") %></small></span>
               <span class="status-pill"><%= t("billing.statuses.#{invoice.status}") %></span>
-              <strong>€ <%= number_with_delimiter(invoice.total_cents / 100.0, separator: ",") %></strong>
+              <strong>€ <%= number_with_delimiter(invoice.total_cents / 100.0) %></strong>
             </div>
           <% end %>
         </div>

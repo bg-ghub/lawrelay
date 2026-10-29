@@ -49,8 +49,11 @@ class AssignmentsController < ApplicationController
 
   def cancel
     @assignment.cancel!(actor: current_user)
-    notify_candidates_of_cancellation
-    MarketplaceMailer.assignment_cancelled(@assignment).deliver_later
+    candidates = cancellation_candidates
+    notify_candidates_of_cancellation(candidates)
+    candidates.map(&:locale).uniq.each do |locale|
+      MarketplaceMailer.assignment_cancelled(@assignment, locale: locale).deliver_later
+    end
     redirect_to dashboard_path, notice: t("workflow.notices.assignment_cancelled")
   rescue Assignment::InvalidTransition
     redirect_to @assignment, alert: t("workflow.errors.cannot_cancel_assignment")
@@ -85,8 +88,12 @@ class AssignmentsController < ApplicationController
     redirect_to assignments_path, alert: t("workflow.errors.assignment_not_available")
   end
 
-  def notify_candidates_of_cancellation
-    @assignment.proposals.includes(:user).filter_map(&:user).uniq.each do |candidate|
+  def cancellation_candidates
+    @assignment.proposals.includes(:user).filter_map(&:user).uniq
+  end
+
+  def notify_candidates_of_cancellation(candidates)
+    candidates.each do |candidate|
       candidate.notifications.create!(
         kind: "assignment_cancelled",
         subject: @assignment,

@@ -24,7 +24,6 @@ de:
       proposal_accepted: "Eines Ihrer Angebote wurde angenommen."
       proposal_declined: "Eine Kanzlei hat ein anderes Angebot gewählt."
       assignment_cancelled: "Ein Auftrag, auf den Sie geantwortet haben, wurde storniert."
-      assignment_expired: "Einer Ihrer Aufträge ist abgelaufen."
       assignment_expired: "Einer Ihrer Aufträge ist abgelaufen, bevor eine Vermittlung zustande kam."
     notices:
       assignment_cancelled: "Der Auftrag wurde storniert."

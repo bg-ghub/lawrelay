@@ -1,0 +1,141 @@
+de:
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%e. %b"
+      long: "%e. %B %Y"
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
+    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+    order: [day, month, year]
+  time:
+    formats:
+      default: "%A, %e. %B %Y · %H:%M"
+      short: "%e. %b · %H:%M"
+      long: "%A, %e. %B %Y · %H:%M"
+    am: "vorm."
+    pm: "nachm."
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: "muss akzeptiert werden"
+      blank: "muss ausgefüllt werden"
+      confirmation: "stimmt nicht mit %{attribute} überein"
+      empty: "darf nicht leer sein"
+      equal_to: "muss gleich %{count} sein"
+      even: "muss gerade sein"
+      exclusion: "ist reserviert"
+      greater_than: "muss größer als %{count} sein"
+      greater_than_or_equal_to: "muss größer oder gleich %{count} sein"
+      inclusion: "ist nicht in der Liste enthalten"
+      invalid: "ist ungültig"
+      less_than: "muss kleiner als %{count} sein"
+      less_than_or_equal_to: "muss kleiner oder gleich %{count} sein"
+      model_invalid: "Validierung fehlgeschlagen: %{errors}"
+      record_invalid: "Validierung fehlgeschlagen: %{errors}"
+      not_a_number: "ist keine Zahl"
+      not_an_integer: "muss eine ganze Zahl sein"
+      odd: "muss ungerade sein"
+      other_than: "muss von %{count} abweichen"
+      present: "muss leer sein"
+      required: "muss vorhanden sein"
+      taken: "ist bereits vergeben"
+      too_long:
+        one: "ist zu lang (maximal 1 Zeichen)"
+        other: "ist zu lang (maximal %{count} Zeichen)"
+      too_short:
+        one: "ist zu kurz (mindestens 1 Zeichen)"
+        other: "ist zu kurz (mindestens %{count} Zeichen)"
+      wrong_length:
+        one: "hat nicht die richtige Länge (muss 1 Zeichen lang sein)"
+        other: "hat nicht die richtige Länge (muss %{count} Zeichen lang sein)"
+  activerecord:
+    models:
+      user: "Benutzer"
+      firm: "Kanzlei"
+      lawyer_profile: "Anwaltsprofil"
+      assignment: "Auftrag"
+      proposal: "Vorschlag"
+      privacy_request: "Datenschutzanfrage"
+      report: "Meldung"
+    attributes:
+      user:
+        first_name: "Vorname"
+        last_name: "Nachname"
+        email_address: "Berufliche E-Mail"
+        password: "Passwort"
+        password_confirmation: "Passwortbestätigung"
+        locale: "Sprache"
+        system_role: "Systemrolle"
+        suspension_reason: "Sperrgrund"
+      firm:
+        name: "Kanzleiname"
+        enterprise_number: "Unternehmensnummer"
+        vat_number: "USt-IdNr."
+        billing_email: "Rechnungs-E-Mail"
+        phone: "Telefon"
+        address_line_1: "Adresse"
+        postal_code: "Postleitzahl"
+        city: "Ort"
+        country_code: "Land"
+        verification_status: "Prüfstatus"
+      lawyer_profile:
+        bar_association: "Rechtsanwaltskammer"
+        bar_number: "Kammernummer"
+        bar_admission_year: "Zulassungsjahr"
+        spoken_languages: "Gesprochene Sprachen"
+        practice_areas: "Rechtsgebiete"
+        court_preferences: "Gerichtspräferenzen"
+        availability_note: "Verfügbarkeitsnotiz"
+        professional_email: "Berufliche E-Mail"
+        directory_profile_url: "URL des Verzeichnisprofils"
+        verification_status: "Prüfstatus"
+      assignment:
+        kind: "Typ"
+        title: "Titel"
+        description: "Beschreibung"
+        practice_area: "Rechtsgebiet"
+        starts_at: "Datum und Uhrzeit"
+        city: "Ort"
+        court: "Gericht"
+        duration_minutes: "Geschätzte Dauer"
+        fee_cents: "Richtvergütung"
+        languages: "Sprachen"
+        status: "Status"
+        assignment_subtype: "Auftragsuntertyp"
+        response_deadline_at: "Antwortfrist"
+        delivery_due_at: "Abgabetermin"
+        scope_indication: "Umfangsangabe"
+      proposal:
+        name: "Name"
+        email: "E-Mail-Adresse"
+        message: "Nachricht"
+        rate_cents: "Vergütung"
+        rate_kind: "Vergütungsart"
+        status: "Status"
+        user_id: "Benutzer"
+      privacy_request:
+        kind: "Anfrageart"
+        details: "Details"
+        resolution_note: "Bearbeitungsvermerk"
+        status: "Status"
+      report:
+        category: "Kategorie"
+        details: "Details"
+        resolution_note: "Bearbeitungsvermerk"
+        status: "Status"
+        reportable_type: "Typ des gemeldeten Elements"
+    errors:
+      models:
+        assignment:
+          attributes:
+            response_deadline_at:
+              before_start: "muss vor Beginn des Auftrags liegen"
+            delivery_due_at:
+              after_response: "muss nach der Antwortfrist liegen"
+              before_execution: "muss vor Beginn des Auftrags liegen"

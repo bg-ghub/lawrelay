@@ -24,7 +24,6 @@ en:
       proposal_accepted: "One of your proposals was accepted."
       proposal_declined: "A firm selected another proposal."
       assignment_cancelled: "An assignment you responded to was cancelled."
-      assignment_expired: "One of your assignments expired."
       assignment_expired: "One of your assignments expired before a match was made."
     notices:
       assignment_cancelled: "The assignment has been cancelled."
