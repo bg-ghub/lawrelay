@@ -23,6 +23,7 @@ nl:
       pending_body: "We controleren je vermelding op advocaat.be. Dit kan even duren."
       confirmation_title: "Bevestig je vermelde e-mailadres"
       confirmation_body: "We stuurden een link naar %{email}, het adres op je advocaat.be-profiel."
+      confirmation_not_sent_body: "De bevestigingsmail naar %{email} is nog niet verstuurd. Je kunt hieronder opnieuw proberen."
       ready_title: "Profiel bevestigd"
       ready_body: "De profielcontrole is klaar. Je krijgt toegang zodra alle controles rond zijn."
       retry: "Opnieuw controleren"

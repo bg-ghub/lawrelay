@@ -23,6 +23,7 @@ en:
       pending_body: "We’re checking your advocaat.be listing. This may take a moment."
       confirmation_title: "Confirm your listed email"
       confirmation_body: "We sent a link to %{email}, the address on your advocaat.be profile."
+      confirmation_not_sent_body: "The confirmation email to %{email} has not been sent yet. You can try again below."
       ready_title: "Profile confirmed"
       ready_body: "Directory check done. Access opens once all checks are complete."
       retry: "Check again"

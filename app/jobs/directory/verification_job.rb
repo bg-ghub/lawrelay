@@ -6,6 +6,7 @@ module Directory
 
     queue_as :default
     retry_on TemporarilyUnavailable, wait: 1.minute, attempts: 3
+    retry_on Verification::ConfirmationUnavailable, wait: 1.minute, attempts: 3
 
     def perform(user_id)
       user = User.find_by(id: user_id)

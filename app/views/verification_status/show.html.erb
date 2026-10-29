@@ -21,7 +21,7 @@
     <section class="form-section">
       <% if @lawyer_profile&.directory_confirmation_required? %>
         <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
-        <p><%= t("directory_onboarding.status.confirmation_body", email: @lawyer_profile.directory_email) %></p>
+        <p><%= t(@lawyer_profile.directory_confirmation_requested_at.present? ? "directory_onboarding.status.confirmation_body" : "directory_onboarding.status.confirmation_not_sent_body", email: @lawyer_profile.directory_email) %></p>
         <%= button_to t("directory_feedback.resend_confirmation"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
       <% elsif @lawyer_profile&.directory_email_verified? %>
         <h2><%= t("directory_onboarding.status.ready_title") %></h2>

@@ -2,6 +2,8 @@ require "digest"
 
 module Directory
   class Verification
+    class ConfirmationUnavailable < StandardError; end
+
     Result = Data.define(:status, :profile) do
       def success? = status == :matched || status == :activated
     end
@@ -56,7 +58,10 @@ module Directory
         )
         audit!("verification.directory_matched", profile_id: @profile.id, directory_profile_id: evidence.profile_id)
       end
-      ConfirmationJob.perform_later(@profile.id) if @profile.directory_confirmation_required?
+      if @profile.directory_confirmation_required?
+        queued = Onboarding::Delivery.enqueue { ConfirmationJob.perform_later(@profile.id) }
+        raise ConfirmationUnavailable, "Directory confirmation delivery unavailable" unless queued
+      end
       activate_if_ready!
       Result.new(status: :matched, profile: @profile)
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => error

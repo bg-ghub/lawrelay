@@ -23,6 +23,7 @@ de:
       pending_body: "Wir prüfen Ihren Eintrag auf advocaat.be. Das kann einen Moment dauern."
       confirmation_title: "Bestätigen Sie die angegebene E-Mail"
       confirmation_body: "Ein Link wurde an %{email} gesendet, die Adresse in Ihrem advocaat.be-Profil."
+      confirmation_not_sent_body: "Die Bestätigungs-E-Mail an %{email} wurde noch nicht gesendet. Sie können es unten erneut versuchen."
       ready_title: "Profil bestätigt"
       ready_body: "Verzeichnisprüfung erledigt. Der Zugang öffnet sich nach Abschluss aller Prüfungen."
       retry: "Erneut prüfen"
