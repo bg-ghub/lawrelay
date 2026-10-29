@@ -4,6 +4,7 @@
 
   <dl class="detail-facts">
     <% PagesController::OPERATOR_ENV.each_key do |field| %>
+      <% next if field == :legal_name %>
       <div>
         <dt><%= t("pages.legal_notice.fields.#{field}") %></dt>
         <dd>

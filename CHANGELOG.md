@@ -12,6 +12,10 @@ All notable changes to LawRelay are documented here. The project follows
 - A visible GitHub source link, open-source license badge and running release version in the website footer, localized in all four languages.
 - Direct operator and contact details on terms and privacy pages, with the official professional profile and updated directory-verification and source-code disclosures.
 
+### Changed
+
+- Shorter legal headings, field labels and footer copy; removed repetitive introductions and boilerplate.
+
 ## [0.4.2] - 2026-10-29
 
 ### Fixed

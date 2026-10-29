@@ -4,9 +4,8 @@
     <%= render "pages/navigation" %>
     <header class="marketplace-hero">
       <div>
-        <p class="eyebrow"><%= t("#{scope}.eyebrow") %></p>
         <h1><%= t("#{scope}.title") %></h1>
-        <p class="lede"><%= t("#{scope}.introduction") %></p>
+        <% if t("#{scope}.introduction").present? %><p class="lede"><%= t("#{scope}.introduction") %></p><% end %>
         <p class="result-meta__note"><%= t("pages.shared.version", date: @legal_version) %></p>
       </div>
     </header>

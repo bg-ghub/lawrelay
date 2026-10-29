@@ -29,7 +29,7 @@ en:
       source_code: Source on GitHub
       open_source: Open source
       app_version: Version %{version}
-      demo_notice: Free beta. Registration is open to lawyers listed on advocaat.be; marketplace access follows a directory check. Do not include client names, case facts, or documents.
+      demo_notice: Free beta for lawyers listed on advocaat.be. Keep client and case details off the platform.
       demo_disclaimer: LawRelay coordinates contact; it does not provide legal advice.
     home:
       title: "LawRelay — find the right colleague for your practice"

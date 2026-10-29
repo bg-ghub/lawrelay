@@ -44,14 +44,14 @@ fr:
     privacy:
       meta_title: "Déclaration de confidentialité — LawRelay"
       eyebrow: "vie privée"
-      title: "Comment LawRelay traite les données personnelles."
-      introduction: "Cette déclaration explique les données personnelles limitées utilisées pour la bêta de LawRelay, destinée aux avocats belges vérifiés."
-      operator_contact_heading: "Contact du responsable du traitement"
+      title: "Confidentialité"
+      introduction: "Quelles données nous utilisons et pourquoi."
+      operator_contact_heading: "Contact"
       sections:
         controller:
           heading: "1. Qui est responsable du traitement"
           paragraphs:
-            - "L'exploitant identifié ci-dessus est responsable du traitement des données de compte, de vérification, de place de marché, d'assistance et de sécurité. Ses coordonnées figurent ci-dessus et dans les mentions légales."
+            - "L'exploitant de LawRelay indiqué ci-dessus est responsable du traitement."
             - "Envoyez les questions de confidentialité et demandes d'exercice de droits à privacy@lawrelay.be. Les contrôles d'inscription utilisent l'annuaire public advocaat.be, une comparaison automatisée des informations fournies et, si nécessaire, un examen humain ; contactez support@lawrelay.be si un contrôle nécessite de l'aide."
         scope:
           heading: "2. Données traitées"
@@ -95,14 +95,14 @@ fr:
     terms:
       meta_title: "Conditions d'utilisation — LawRelay"
       eyebrow: "conditions d'utilisation"
-      title: "Les règles d'utilisation de LawRelay."
-      introduction: "Ces conditions régissent la bêta gratuite de LawRelay pour les utilisateurs professionnels."
-      operator_contact_heading: "Contact de l'exploitant"
+      title: "Conditions"
+      introduction: "Pour la bêta gratuite de LawRelay."
+      operator_contact_heading: "Exploitant"
       sections:
         agreement:
           heading: "1. Contrat et exploitant"
           paragraphs:
-            - "Ces conditions régissent l'utilisation de LawRelay par des professionnels. L'exploitant identifié ci-dessus est la partie contractante ; ses coordonnées figurent ci-dessus et dans les mentions légales. La création d'un compte ou l'utilisation du service après acceptation d'une version publiée forme le contrat de service."
+            - "L'exploitant indiqué ci-dessus est la partie contractante. La création d'un compte ou l'utilisation du service vaut acceptation de ces conditions et forme le contrat de service."
         eligibility:
           heading: "2. Accès et vérification"
           paragraphs:
@@ -156,8 +156,8 @@ fr:
     cookies:
       meta_title: "Déclaration relative aux cookies — LawRelay"
       eyebrow: "cookies"
-      title: "Une utilisation volontairement minimale des cookies."
-      introduction: "LawRelay utilise uniquement la technologie nécessaire à un service sûr et fonctionnel."
+      title: "Cookies"
+      introduction: "Uniquement les cookies nécessaires."
       sections:
         current_use:
           heading: "1. Ce qui est utilisé aujourd'hui"
@@ -180,7 +180,7 @@ fr:
           paragraphs:
             - "Les questions sur les cookies et la vie privée peuvent être envoyées au contact vie privée des mentions légales."
     operator_contact:
-      natural_person_description: "%{name} exploite LawRelay en tant que personne physique et avocat."
+      natural_person_description: "%{name}, avocat."
       legal_notice_link: "Voir les mentions légales"
       complaint_link: "Introduire une plainte auprès de l’Autorité de protection des données"
       professional_profile_url_link: "Voir le profil professionnel officiel"
@@ -188,26 +188,17 @@ fr:
     legal_notice:
       meta_title: "Mentions légales — LawRelay"
       eyebrow: "informations sur l'exploitant"
-      title: "Qui exploite LawRelay."
-      introduction: "Les données d'identification requises en Belgique sont fournies ici de façon facile, directe et durablement accessible."
+      title: "Mentions légales"
+      introduction: ""
       fields:
-        legal_name: "Dénomination sociale ou commerciale"
-        registered_address: "Siège social"
+        legal_name: "Nom"
+        registered_address: "Adresse"
         enterprise_number: "Numéro d'entreprise"
-        vat_number: "Numéro ou statut TVA"
-        legal_email: "Contact juridique"
-        privacy_email: "Contact vie privée"
+        vat_number: "Numéro TVA"
+        legal_email: "E-mail juridique"
+        privacy_email: "E-mail vie privée"
         support_email: "Assistance"
         phone: "Téléphone"
-        professional_body: "Ordre professionnel ou autorité de contrôle, le cas échéant"
-        professional_profile_url: "Profil professionnel officiel, le cas échéant"
-        professional_rules_url: "Règles professionnelles applicables, le cas échéant"
-      sections:
-        service:
-          heading: "Nature du service"
-          paragraphs:
-            - "LawRelay est une plateforme B2B de coordination et de mise en relation pour avocats vérifiés. Ce n'est pas un cabinet d'avocats, il ne donne pas de conseil juridique et ne représente aucun client."
-        content:
-          heading: "Contenu du site"
-          paragraphs:
-            - "Les informations générales du site sont fournies à titre de présentation du produit et peuvent évoluer. Elles ne constituent pas un conseil juridique, fiscal, comptable ou déontologique."
+        professional_body: "Ordre professionnel"
+        professional_profile_url: "Profil professionnel"
+        professional_rules_url: "Règles professionnelles"

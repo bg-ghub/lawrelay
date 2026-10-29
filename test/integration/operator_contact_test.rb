@@ -21,7 +21,7 @@ class OperatorContactTest < ActionDispatch::IntegrationTest
 
         assert_response :success
         assert_select ".operator-contact", count: 1
-        assert_select ".operator-contact dt", count: PlatformOperator::ENVIRONMENT_FIELDS.size
+        assert_select ".operator-contact dt", count: PlatformOperator::ENVIRONMENT_FIELDS.size - 1
         %i[legal_name registered_address enterprise_number vat_number professional_body].each do |field|
           assert_includes response.body, operator.fetch(field)
         end

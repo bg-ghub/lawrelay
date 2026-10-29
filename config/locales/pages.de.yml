@@ -11,7 +11,7 @@ de:
       privacy: "Datenschutz"
       terms: "Bedingungen"
       cookies: "Cookies"
-      legal_notice: "Anbieterangaben"
+      legal_notice: "Impressum"
     pricing:
       meta_title: "Preise — LawRelay"
       eyebrow: "Beta"
@@ -44,14 +44,14 @@ de:
     privacy:
       meta_title: "Datenschutzhinweise — LawRelay"
       eyebrow: "Datenschutz"
-      title: "Wie LawRelay personenbezogene Daten verarbeitet."
-      introduction: "Diese Hinweise erklären die begrenzten personenbezogenen Daten, die LawRelay für die Beta für verifizierte belgische Anwälte verwendet."
-      operator_contact_heading: "Kontakt des Verantwortlichen"
+      title: "Datenschutz"
+      introduction: "Welche Daten wir nutzen und warum."
+      operator_contact_heading: "Kontakt"
       sections:
         controller:
           heading: "1. Wer verantwortlich ist"
           paragraphs:
-            - "Der oben genannte Betreiber ist Verantwortlicher für Konto-, Verifizierungs-, Marktplatz-, Support- und Sicherheitsdaten. Kontaktdaten stehen oben und in den Anbieterangaben."
+            - "Der oben genannte Betreiber von LawRelay ist Verantwortlicher."
             - "Senden Sie Datenschutzfragen und Betroffenenanträge an privacy@lawrelay.be. Bei Registrierungsprüfungen werden das öffentliche Verzeichnis von advocaat.be, ein automatischer Abgleich der angegebenen Informationen und bei Bedarf eine menschliche Prüfung verwendet; bei Unterstützungsbedarf schreiben Sie an support@lawrelay.be."
         scope:
           heading: "2. Welche Daten wir verarbeiten"
@@ -95,14 +95,14 @@ de:
     terms:
       meta_title: "Nutzungsbedingungen — LawRelay"
       eyebrow: "Nutzungsbedingungen"
-      title: "Regeln für die Nutzung von LawRelay."
-      introduction: "Diese Bedingungen regeln die kostenlose LawRelay-Beta für berufliche Nutzer."
-      operator_contact_heading: "Kontakt des Betreibers"
+      title: "Bedingungen"
+      introduction: "Für die kostenlose Beta von LawRelay."
+      operator_contact_heading: "Betreiber"
       sections:
         agreement:
           heading: "1. Vertrag und Betreiber"
           paragraphs:
-            - "Diese Bedingungen regeln die Nutzung von LawRelay durch berufliche Nutzer. Der oben genannte Betreiber ist Vertragspartner; Kontaktdaten stehen oben und in den Anbieterangaben. Kontoerstellung oder Nutzung nach Zustimmung zu einer veröffentlichten Fassung begründet den Dienstleistungsvertrag."
+            - "Der oben genannte Betreiber ist Vertragspartner. Mit Kontoerstellung oder Nutzung des Dienstes akzeptieren Sie diese Bedingungen und schließen den Dienstleistungsvertrag."
         eligibility:
           heading: "2. Zugang und Verifizierung"
           paragraphs:
@@ -156,8 +156,8 @@ de:
     cookies:
       meta_title: "Cookie-Hinweise — LawRelay"
       eyebrow: "Cookies"
-      title: "Bewusst wenige Cookies."
-      introduction: "LawRelay nutzt nur Technik, die für einen sicheren und funktionierenden Dienst erforderlich ist."
+      title: "Cookies"
+      introduction: "Nur notwendige Cookies."
       sections:
         current_use:
           heading: "1. Was derzeit verwendet wird"
@@ -178,36 +178,27 @@ de:
         contact:
           heading: "5. Fragen"
           paragraphs:
-            - "Fragen zu Cookies und Datenschutz können an den Datenschutzkontakt in den Anbieterangaben gerichtet werden."
+            - "Fragen zu Cookies und Datenschutz können an den Datenschutzkontakt im Impressum gerichtet werden."
     operator_contact:
-      natural_person_description: "%{name} betreibt LawRelay als natürliche Person und Rechtsanwalt."
-      legal_notice_link: "Anbieterangaben anzeigen"
+      natural_person_description: "%{name}, Rechtsanwalt."
+      legal_notice_link: "Impressum anzeigen"
       complaint_link: "Beschwerde bei der belgischen Datenschutzbehörde einreichen"
       professional_profile_url_link: "Offizielles Berufsprofil anzeigen"
       professional_rules_url_link: "Berufsregeln anzeigen"
     legal_notice:
-      meta_title: "Anbieterangaben — LawRelay"
+      meta_title: "Impressum — LawRelay"
       eyebrow: "Informationen zum Betreiber"
-      title: "Wer LawRelay betreibt."
-      introduction: "Die belgischen Pflichtangaben werden hier leicht, unmittelbar und dauerhaft zugänglich bereitgestellt."
+      title: "Impressum"
+      introduction: ""
       fields:
-        legal_name: "Gesellschafts- oder Handelsname"
-        registered_address: "Sitzanschrift"
+        legal_name: "Name"
+        registered_address: "Adresse"
         enterprise_number: "Unternehmensnummer"
-        vat_number: "Mehrwertsteuernummer oder -status"
-        legal_email: "Rechtlicher Kontakt"
-        privacy_email: "Datenschutzkontakt"
-        support_email: "Supportkontakt"
+        vat_number: "Umsatzsteuer-ID"
+        legal_email: "Rechtliche E-Mail"
+        privacy_email: "Datenschutz-E-Mail"
+        support_email: "Support-E-Mail"
         phone: "Telefon"
-        professional_body: "Berufsorganisation oder Aufsichtsbehörde, falls anwendbar"
-        professional_profile_url: "Offizielles Berufsprofil, falls anwendbar"
-        professional_rules_url: "Anwendbare Berufsregeln, falls anwendbar"
-      sections:
-        service:
-          heading: "Art des Dienstes"
-          paragraphs:
-            - "LawRelay ist eine B2B-Koordinations- und Vermittlungsplattform für verifizierte Anwälte. Es ist keine Kanzlei, erteilt keine Rechtsberatung und vertritt keine Mandanten."
-        content:
-          heading: "Inhalt der Website"
-          paragraphs:
-            - "Allgemeine Websiteinformationen dienen der Produktinformation und können sich ändern. Sie sind keine Rechts-, Steuer-, Buchhaltungs- oder Berufsrechtsberatung."
+        professional_body: "Berufsorganisation"
+        professional_profile_url: "Berufsprofil"
+        professional_rules_url: "Berufsregeln"

@@ -44,14 +44,14 @@ en:
     privacy:
       meta_title: "Privacy notice — LawRelay"
       eyebrow: "privacy"
-      title: "How LawRelay handles personal data."
-      introduction: "This notice explains the limited personal data used to run LawRelay's beta for verified Belgian lawyers."
-      operator_contact_heading: "Controller contact"
+      title: "Privacy"
+      introduction: "What data we use and why."
+      operator_contact_heading: "Contact"
       sections:
         controller:
           heading: "1. Who controls your data"
           paragraphs:
-            - "The operator identified above is the controller for account, verification, marketplace, support, and security data. Contact details are set out above and in the legal notice."
+            - "LawRelay's operator named above is the controller."
             - "Send privacy questions and rights requests to privacy@lawrelay.be. Registration checks use the public advocaat.be directory, automated comparison of the submitted information, and human review where needed; contact support@lawrelay.be if a check needs help."
         scope:
           heading: "2. Data we process"
@@ -95,14 +95,14 @@ en:
     terms:
       meta_title: "Terms of service — LawRelay"
       eyebrow: "terms of service"
-      title: "Rules for using LawRelay."
-      introduction: "These terms govern the free LawRelay beta for professional users."
-      operator_contact_heading: "Operator contact"
+      title: "Terms"
+      introduction: "For the free LawRelay beta."
+      operator_contact_heading: "Operator"
       sections:
         agreement:
           heading: "1. Agreement and operator"
           paragraphs:
-            - "These terms govern use of LawRelay by professional users. The operator identified above is the contracting party; contact details appear above and in the legal notice. Creating an account or using the service after accepting a published version forms the service agreement."
+            - "The operator named above is the contracting party. Creating an account or using the service accepts these terms and forms the service agreement."
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
@@ -156,8 +156,8 @@ en:
     cookies:
       meta_title: "Cookie notice — LawRelay"
       eyebrow: "cookies"
-      title: "A deliberately small cookie footprint."
-      introduction: "LawRelay uses only technology needed to keep the service secure and functioning."
+      title: "Cookies"
+      introduction: "Only necessary cookies."
       sections:
         current_use:
           heading: "1. What is used today"
@@ -180,7 +180,7 @@ en:
           paragraphs:
             - "Cookie and privacy questions can be sent to the privacy contact in the legal notice."
     operator_contact:
-      natural_person_description: "%{name} operates LawRelay as a natural person and lawyer."
+      natural_person_description: "%{name}, lawyer."
       legal_notice_link: "View the legal notice"
       complaint_link: "Lodge a complaint with the Belgian Data Protection Authority"
       professional_profile_url_link: "View official professional profile"
@@ -188,26 +188,17 @@ en:
     legal_notice:
       meta_title: "Legal notice — LawRelay"
       eyebrow: "operator information"
-      title: "Who operates LawRelay."
-      introduction: "Belgian business-identification details are provided here in a direct and permanent form."
+      title: "Legal notice"
+      introduction: ""
       fields:
-        legal_name: "Legal or trading name"
-        registered_address: "Registered address"
+        legal_name: "Name"
+        registered_address: "Address"
         enterprise_number: "Enterprise number"
-        vat_number: "VAT number or status"
-        legal_email: "Legal contact email"
-        privacy_email: "Privacy contact"
-        support_email: "Support contact"
-        phone: "Telephone"
-        professional_body: "Professional body or supervisory authority, if applicable"
-        professional_profile_url: "Official professional profile, if applicable"
-        professional_rules_url: "Applicable professional rules, if applicable"
-      sections:
-        service:
-          heading: "Nature of the service"
-          paragraphs:
-            - "LawRelay is a B2B coordination and matching platform for verified lawyers. It is not a law firm and does not provide legal advice or represent clients."
-        content:
-          heading: "Website content"
-          paragraphs:
-            - "General information on this website is provided for product information and may change. It is not legal, tax, accounting, or professional-conduct advice."
+        vat_number: "VAT number"
+        legal_email: "Legal email"
+        privacy_email: "Privacy email"
+        support_email: "Support email"
+        phone: "Phone"
+        professional_body: "Professional body"
+        professional_profile_url: "Professional profile"
+        professional_rules_url: "Professional rules"
