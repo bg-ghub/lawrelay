@@ -1,14 +1,14 @@
 nl:
   billing:
     eyebrow: Facturatie
-    title: Je LawRelay-plan
-    lede: Houd je kantoor klaar om opdrachten te plaatsen. Confraters blijven gratis reageren.
+    title: Je toegang
+    lede: Plaats opdrachten en reageer.
     plan:
       title: LawRelay Office
       price: €49 / maand
       tax_note: exclusief btw
-      description: Eén helder maandelijks platformtarief voor je kantoor.
-      direct_settlement: LawRelay behandelt nooit het tarief tussen advocaten; jullie regelen dat rechtstreeks.
+      description: Maandelijkse toegang voor je kantoor.
+      direct_settlement: Spreek erelonen af en reken rechtstreeks af met je collega.
       active: Je plan is actief.
       contact_administrator: Vraag een kantoorbeheerder om de facturatie te regelen.
     actions:
@@ -28,7 +28,7 @@ nl:
     notices:
       posting_plan_required: Je kantoor heeft een actief plan nodig om opdrachten te plaatsen.
       rate_limited: Wacht even voordat je nog een factuur aanvraagt.
-      invoice_requested: "Factuur %{number} staat in de wachtrij voor manuele boekhoudkundige verwerking. Je plan wordt actief zodra de betaling is geregistreerd."
+      invoice_requested: "Factuur %{number} wacht op verwerking. Je plan start zodra de betaling is geregistreerd."
       subscription_cancelled: Je plan is stopgezet.
       payment_confirmation_pending: We activeren je plan pas na betalingsbevestiging.
       no_firm: Je hebt een kantoor nodig om facturatie te beheren.

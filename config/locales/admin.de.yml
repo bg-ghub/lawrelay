@@ -3,7 +3,7 @@ de:
     verifications:
       eyebrow: "Verwaltung"
       title: "Anwaltsprüfung"
-      intro: "Prüfen Sie Berufs- und Kanzleidaten, bevor Sie den Zugang zum Marktplatz freigeben."
+      intro: "Prüfen Sie Anwalt und Kanzlei, bevor Sie den Zugang freigeben."
       back: "Zurück zur Übersicht"
       account: "Konto"
       email: "E-Mail"
@@ -16,11 +16,11 @@ de:
       lawyer_status: "Anwaltsstatus"
       missing: "Fehlt"
       note: "Interner Prüfvermerk"
-      note_placeholder: "Notieren Sie, was geprüft wurde und warum diese Entscheidung getroffen wurde."
+      note_placeholder: "Was wurde geprüft und warum diese Entscheidung?"
       approve: "Genehmigen"
       reject: "Ablehnen"
       empty_title: "Nichts zu prüfen"
-      empty_body: "Es stehen keine Prüfungen von Anwälten oder Kanzleien aus."
+      empty_body: "Keine Prüfungen ausstehend."
       notices:
         approved: "%{name} wurde genehmigt."
         rejected: "%{name} wurde abgelehnt."

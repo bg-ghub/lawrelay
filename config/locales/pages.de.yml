@@ -15,13 +15,13 @@ de:
     pricing:
       meta_title: "Preise — LawRelay"
       eyebrow: "Beta"
-      title: "Kostenlos während der Beta."
-      introduction: "LawRelay ist während der Beta kostenlos. Es gibt weder Checkout noch Abonnement oder Zahlungsaufforderung. Anwälte vereinbaren ihre Honorare immer direkt miteinander."
+      title: "Preise"
+      introduction: "Für Anwälte auf advocaat.be, nach Verifizierung."
       beta:
         kicker: "Beta"
         price: "0 €"
-        title: "Offene Registrierung für eingetragene Anwälte"
-        body: "Jeder auf advocaat.be gelistete Anwalt kann sich registrieren. Der Marktplatz-Zugang folgt nach einer Prüfung im offiziellen Verzeichnis; der Beta-Zugang ist kostenlos."
+        title: "Kostenlos während der Beta"
+        body: "Aufträge einstellen und beantworten. Keine Zahlungsdaten nötig."
         features:
           - "Registrierung offen für auf advocaat.be gelistete Anwälte"
           - "Verzeichnisprüfung vor Marktplatz-Zugang"
@@ -31,15 +31,15 @@ de:
         kicker: "nach der Beta"
         price: "Noch nicht verfügbar"
         title: "Kein kostenpflichtiger Tarif während der Beta"
-        body: "Während der Beta werden keine kostenpflichtigen Abonnements angeboten oder abgerechnet. Falls sich das ändert, werden Bedingungen und Preis vorher veröffentlicht."
+        body: "Kostenpflichtige Tarife kommen später. Preise und Bedingungen veröffentlichen wir vorher."
         features:
           - "Keine Zahlungsdaten erforderlich"
           - "Keine automatische Verlängerung"
           - "Klare Mitteilung vor einem kostenpflichtigen Angebot"
           - "Honorare bleiben direkt"
       direct_fees:
-        title: "Anwaltshonorare bleiben außerhalb von LawRelay"
-        body: "Auftraggeber und ausgewählter Anwalt vereinbaren, fakturieren und bezahlen direkt miteinander. LawRelay verwahrt keine Auftragsgelder, bietet kein Treuhandkonto an und zieht keinen Anteil vom Honorar ab."
+        title: "Honorare"
+        body: "Vereinbaren Sie das Honorar und rechnen Sie direkt miteinander ab. LawRelay wickelt keine Zahlungen ab und erhält keine Provision."
       review_notice: "Der Zugang zur Beta ist kostenlos. LawRelay erhebt während dieser Beta keine Plattformgebühren."
     privacy:
       meta_title: "Datenschutzhinweise — LawRelay"

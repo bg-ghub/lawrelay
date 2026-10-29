@@ -17,7 +17,7 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
     get verification_status_path(locale: :en)
 
     assert_response :success
-    assert_includes response.body, "Checking your official profile"
+    assert_select "h2", text: I18n.t("directory_onboarding.status.pending_title", locale: :en)
   end
 
   test "queues a directory retry without looking up the provider in the request" do

@@ -21,24 +21,24 @@ en:
         restriction: "Restrict processing"
         objection: "Object to processing"
       notices:
-        created: "Your privacy request has been recorded."
+        created: "Request received."
         rate_limited: "Please wait before submitting another privacy request."
       index:
         title: "Privacy requests — LawRelay"
         heading: "Your privacy requests"
-        lede: "Track requests about the personal data LawRelay holds about you."
+        lede: "Track your requests here."
         new: "New request"
-        empty: "You have not submitted a privacy request."
+        empty: "No privacy requests yet."
       new:
         title: "New privacy request — LawRelay"
-        heading: "Tell us what you need."
-        lede: "We record the request and its handling so nothing gets lost."
+        heading: "New privacy request"
+        lede: "Ask to access, correct or delete your data."
         legend: "Request details"
         kind: "Request type"
         kind_prompt: "Choose a request"
         details: "What should we know?"
         details_placeholder: "Briefly explain the data or account concerned."
-        retention_note: "Account deletion does not erase invoices or audit records that LawRelay must retain by law."
+        retention_note: "Records required by law, including invoices and audit logs, are kept."
         submit: "Submit request"
     reports:
       eyebrow: "Report a concern"
@@ -51,18 +51,18 @@ en:
       errors:
         own_assignment: "You cannot report your own firm's assignment."
       notices:
-        created: "Thanks. The report has been recorded for review."
+        created: "Report received. We’ll review it."
         rate_limited: "You have reached the report limit. Please try again later."
       new:
         title: "Report assignment — LawRelay"
         heading: "Report this assignment"
-        lede: "Tell us what needs review in “%{title}”."
+        lede: "What’s wrong with “%{title}”?"
         legend: "Concern"
         category: "Reason"
         category_prompt: "Choose a reason"
         details: "Short explanation"
-        details_placeholder: "Describe the issue without adding client or case details."
-        safety_note: "Do not include privileged information, client names or documents."
+        details_placeholder: "Describe the issue."
+        safety_note: "No client names, case details, documents or confidential information."
         submit: "Send report"
     admin:
       eyebrow: "Trust operations"
@@ -73,7 +73,7 @@ en:
       complete: "Complete"
       reject: "Reject"
       notices:
-        updated: "The trust record has been updated."
+        updated: "Saved."
         invalid_decision: "Choose a valid review action."
         note_required: "Add a resolution note before closing this record."
       reports:
@@ -84,5 +84,5 @@ en:
       privacy_requests:
         title: "Privacy requests — LawRelay admin"
         heading: "Privacy requests"
-        lede: "Track each request to a documented outcome."
+        lede: "Review and close requests."
         empty: "No privacy requests need review."

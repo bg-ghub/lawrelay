@@ -4,8 +4,8 @@ nl:
     title: "E-mailadres wijzigen — LawRelay"
     eyebrow: "Accountbeveiliging"
     heading: "Wijzig je inlogadres"
-    lede: "Werk je adres eerst bij op advocaat.be. We sturen een bevestiging naar het nieuwe adres en controleren daarna de officiële vermelding opnieuw. Is die nog niet aangepast, probeer dan later opnieuw."
-    admin_lede: "We sturen een bevestigingslink naar je nieuwe inlogadres."
+    lede: "Wijzig je e-mailadres eerst op advocaat.be. We bevestigen het nieuwe adres en controleren je profiel opnieuw. Nog niet bijgewerkt? Probeer later opnieuw."
+    admin_lede: "We sturen een bevestigingslink naar je nieuwe adres."
     notices:
       sent: "We hebben een bevestigingslink naar je nieuwe e-mailadres gestuurd."
     errors:
@@ -18,7 +18,7 @@ nl:
       current: "Huidig e-mailadres"
       new_email: "Nieuw e-mailadres"
       password: "Huidig wachtwoord"
-      hint: "We controleren je bestaande directorygegevens opnieuw. Je kantoor en collega’s blijven ongewijzigd."
-      admin_hint: "Je huidige sessie blijft actief; andere sessies worden afgemeld."
+      hint: "We controleren je advocaat.be-profiel opnieuw."
+      admin_hint: "Andere apparaten worden afgemeld. Deze sessie blijft open."
       submit: "E-mailadres wijzigen"
       cancel: "Annuleren"

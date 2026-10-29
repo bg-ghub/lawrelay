@@ -1,0 +1,15 @@
+.pathways-section .pathway-card h2 {
+  max-width: 24rem;
+  margin: 1.4rem 0 .85rem;
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 2.6vw, 2.45rem);
+  font-weight: 500;
+}
+
+.pathways-section .pathway-card-paper h2 {
+  color: var(--ink);
+}
+
+.pathways-section .pathway-card-ink h2 {
+  color: var(--paper);
+}

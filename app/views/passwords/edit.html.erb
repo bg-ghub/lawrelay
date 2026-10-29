@@ -1,14 +1,12 @@
 <% content_for :title, t("auth.passwords.edit.title") %>
 <div class="new-assignment shell">
   <div class="new-assignment__intro">
-    <p class="eyebrow"><%= t("auth.passwords.eyebrow") %></p>
     <h1><%= t("auth.passwords.edit.heading") %></h1>
     <p><%= t("auth.passwords.edit.lede") %></p>
   </div>
-  <div class="new-assignment__layout">
+  <div class="new-assignment__layout auth-form-layout">
     <%= form_with url: password_path(token: params[:token]), method: :put, class: "assignment-form" do |form| %>
-      <fieldset class="form-section">
-        <legend><%= t("auth.passwords.edit.form_title") %></legend>
+      <fieldset class="form-section" aria-label="<%= t("auth.passwords.edit.form_title") %>">
         <div class="field-group">
           <%= form.label :password, t("auth.fields.new_password") %>
           <%= form.password_field :password, required: true, autofocus: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %>

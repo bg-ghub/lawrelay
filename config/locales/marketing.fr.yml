@@ -7,7 +7,7 @@ fr:
       browse_assignments: Voir les missions
       view: Voir
     layout:
-      title: "LawRelay — trouvez le bon confrère pour votre cabinet"
+      title: "LawRelay — remplacements et missions juridiques"
       description: LawRelay met en relation les avocats belges pour des remplacements d'audience et des missions juridiques.
       skip_to_content: Aller au contenu
       dismiss_notice: Fermer la notification
@@ -16,12 +16,12 @@ fr:
       primary_navigation: Navigation principale
       how_it_works: Comment ça marche
       for_lawyers: Pour les avocats
-      discover_assignments: Découvrir les missions
+      discover_assignments: "Missions"
       questions: Questions
-      dashboard: Mon aperçu
+      dashboard: "Tableau de bord"
       open_menu: Ouvrir le menu
     footer:
-      intro: Un espace pour les avocats qui organisent un remplacement ou partagent des missions.
+      intro: "Des remplacements et des missions entre avocats."
       platform: Plateforme
       learn_more: En savoir plus
       contact: Contact
@@ -30,21 +30,21 @@ fr:
       open_source: Code ouvert
       app_version: Version %{version}
       demo_notice: Bêta gratuite pour les avocats inscrits sur advocaat.be. N'ajoutez pas de données de clients ou de dossiers.
-      demo_disclaimer: LawRelay coordonne le contact ; il ne fournit pas de conseil juridique.
+      demo_disclaimer: "LawRelay ne fournit pas de conseil juridique."
     home:
-      title: "LawRelay — trouvez le bon confrère pour votre cabinet"
-      og_description: Publiez un remplacement d'audience ou une mission juridique et trouvez un confrère.
+      title: "LawRelay — remplacements et missions juridiques"
+      og_description: "Trouvez un confrère pour une audience ou une mission juridique."
       hero:
         eyebrow: pour les avocats
         heading_before: Besoin d'un confrère
         heading_middle: pour une
         heading_emphasis: audience ?
-        lede: Publiez votre demande, recevez des réponses et choisissez le confrère adapté à votre dossier.
-        note: Bêta gratuite. L'inscription est ouverte aux avocats inscrits sur advocaat.be.
+        lede: "Organisez un remplacement d’audience ou confiez une mission juridique."
+        note: "Bêta gratuite pour les avocats inscrits sur advocaat.be."
       product:
         aria_label: Exemple de l'espace de travail LawRelay
         today: Aujourd'hui
-        response_received: Une réponse reçue
+        response_received: "Nouvelle réponse"
         court_replacement: Remplacement d'audience
         court_example: Tribunal de la famille d'Anvers
         city: Anvers
@@ -55,63 +55,63 @@ fr:
         choose: Choisir
         at_your_pace: à votre rythme
       pathways:
-        eyebrow: pour les deux côtés du barreau
+        eyebrow: "Pour les avocats"
         heading_before: Comment pouvons-nous
         heading_after: vous aider ?
-        lede: "Trouver un remplaçant ou prendre une mission : tout se règle au même endroit."
+        lede: "Trouvez un remplaçant ou acceptez une mission."
         requester:
           kicker: Je cherche de l'aide
-          heading_before: Trouvez un confrère
-          heading_after: pour votre mission.
-          body: Indiquez la date, le lieu et ce dont vous avez besoin. Comparez ensuite les réponses.
+          heading_before: "Une mission"
+          heading_after: "à confier."
+          body: "Précisez le travail, le lieu et la date."
         responder:
           kicker: J'ai de la disponibilité
-          heading_before: Prenez des missions
-          heading_after: qui vous conviennent.
-          body: Consultez des remplacements d'audience et des missions juridiques dans votre région ou domaine.
+          heading_before: "Une mission"
+          heading_after: "à accepter."
+          body: "Consultez les remplacements et missions juridiques."
       opportunities:
-        eyebrow: missions ouvertes
+        eyebrow: "Missions disponibles"
         heading_before: Que se passe-t-il
         heading_emphasis: aujourd'hui ?
         all: Toutes les missions
         by_arrangement: À convenir
         belgium: Belgique
-        empty_heading: Pas encore de mission.
-        empty_body: Publiez la première et rendez votre demande visible pour vos confrères.
-        demo_caption: Les missions sont visibles uniquement par les membres vérifiés.
+        empty_heading: "Pas encore de mission"
+        empty_body: "Besoin d’un confrère ? Publiez une mission."
+        demo_caption: "Les missions sont réservées aux avocats vérifiés."
       how:
         eyebrow: comment ça marche
         heading_before: De la demande
         heading_after: à l'accord.
-        lede: Publiez votre mission, recevez des réponses et gardez la main sur votre choix.
+        lede: "Publiez une mission et choisissez parmi les réponses."
         steps:
           "0":
-            heading: Publiez votre mission
-            body: Ajoutez le type de mission, la date, le lieu et vos éventuelles préférences.
+            heading: "Publiez une mission"
+            body: "Indiquez le travail, la date et le lieu."
           "1":
             heading: Consultez les réponses
-            body: Les confrères répondent avec leur disponibilité et leur tarif.
+            body: "Comparez les disponibilités et les tarifs."
           "2":
             heading: Faites votre choix
-            body: Choisissez qui contacter et réglez ensemble les détails pratiques.
+            body: "Choisissez un confrère et convenez des détails."
       faq:
         eyebrow: questions
         heading_before: Bon à
         heading_after: savoir.
-        lede: Une bêta gratuite avec inscription ouverte aux avocats inscrits sur advocaat.be.
+        lede: "Accès gratuit après vérification sur advocaat.be."
         items:
           "0":
             question: À qui s'adresse LawRelay ?
-            answer: Aux avocats qui cherchent un remplacement d'audience, veulent confier un travail ou souhaitent accepter une mission.
+            answer: "Aux avocats qui cherchent un remplaçant, confient du travail ou acceptent des missions."
           "1":
             question: Comment choisir un confrère ?
-            answer: Comparez l'expérience, la disponibilité et le tarif. Vous gardez le choix.
+            answer: "Comparez l’expérience, les disponibilités et le tarif."
           "2":
             question: Puis-je proposer mon propre tarif ?
-            answer: Oui. Vous pouvez indiquer un tarif de référence ou faire votre propre proposition.
+            answer: "Oui. Indiquez un tarif ou faites une proposition."
           "3":
-            question: Est-ce déjà en ligne ?
-            answer: Oui. Les avocats inscrits sur advocaat.be peuvent créer un compte ; l'accès à la plateforme suit une vérification de l'annuaire. N'ajoutez ni nom de client, ni fait du dossier, ni document.
+            question: "Comment accéder aux missions ?"
+            answer: "Inscrivez-vous avec votre profil advocaat.be. L’accès s’ouvre après vérification. Ne partagez ni nom de client, ni faits du dossier, ni documents."
       cta:
         eyebrow: prêt à commencer ?
         heading_before: Publiez votre mission.

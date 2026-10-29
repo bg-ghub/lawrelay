@@ -15,13 +15,13 @@ nl:
     pricing:
       meta_title: "Prijzen — LawRelay"
       eyebrow: "bèta"
-      title: "Gratis tijdens de bèta."
-      introduction: "LawRelay is gratis tijdens de bèta. Er is geen checkout, abonnement of betaalverzoek. Advocaten spreken erelonen altijd rechtstreeks met elkaar af."
+      title: "Prijzen"
+      introduction: "Voor advocaten op advocaat.be, na verificatie."
       beta:
         kicker: "bèta"
         price: "€0"
-        title: "Open registratie voor advocaten in de lijst"
-        body: "Elke advocaat die op advocaat.be staat, kan zich registreren. Toegang tot de marktplaats volgt na een controle in de officiële lijst; toegang tijdens de bèta is gratis."
+        title: "Gratis tijdens de bèta"
+        body: "Plaats opdrachten en reageer. Geen betaalgegevens nodig."
         features:
           - "Registratie open voor advocaten op advocaat.be"
           - "Lijstcontrole vóór toegang tot de marktplaats"
@@ -31,15 +31,15 @@ nl:
         kicker: "na de bèta"
         price: "Nog niet beschikbaar"
         title: "Geen betalend plan tijdens de bèta"
-        body: "Tijdens de bèta worden geen betalende abonnementen aangeboden of geïnd. Als dat verandert, publiceren we de voorwaarden en prijs vooraf."
+        body: "Betaalde plannen komen later. We publiceren de prijzen en voorwaarden vooraf."
         features:
           - "Geen betaalgegevens gevraagd"
           - "Geen automatische verlenging"
           - "Duidelijke kennisgeving vóór een betalend aanbod"
           - "Erelonen blijven rechtstreeks"
       direct_fees:
-        title: "Erelonen tussen advocaten blijven buiten LawRelay"
-        body: "De opdrachtgever en de gekozen advocaat maken rechtstreeks afspraken, factureren elkaar en betalen elkaar. LawRelay houdt geen opdrachtsommen aan, biedt geen derdenrekening en trekt geen percentage van erelonen af."
+        title: "Erelonen"
+        body: "Spreek het ereloon af en factureer elkaar rechtstreeks. LawRelay verwerkt geen betalingen en houdt geen commissie in."
       review_notice: "Toegang tot de bèta is gratis. LawRelay int tijdens deze bèta geen platformkosten."
     privacy:
       meta_title: "Privacyverklaring — LawRelay"

@@ -14,7 +14,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get settings_path(locale: :en)
 
     assert_response :success
-    assert_includes response.body, "Keep your details current"
+    assert_select "h1", text: I18n.t("settings.heading", locale: :en)
   end
 
   test "updates account profile and owner-managed firm details with an audit trail" do

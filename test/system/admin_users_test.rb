@@ -78,7 +78,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     visit admin_user_path(@account.user, locale: :en)
 
     submit_access_action(:suspend, "Synthetic access review", "Suspend account")
-    assert_text "The account is suspended"
+    assert_text I18n.t("admin.users.notices.suspended", locale: :en)
     assert @account.user.reload.suspended?
     assert @account.profile.reload.verified?
     assert @account.firm.reload.verified?
@@ -98,7 +98,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     assert_operator @account.user.sessions.count, :>, 0
 
     submit_access_action(:revoke_sessions, "Synthetic session reset", "Sign out all sessions")
-    assert_text "All sessions for this account are signed out."
+    assert_text I18n.t("admin.users.notices.sessions_revoked", locale: :en)
     assert @account.user.reload.active?
     assert @account.profile.reload.verified?
     assert_empty @account.user.sessions
@@ -139,7 +139,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     save_screenshot(Rails.root.join("tmp/screenshots/admin-user-mobile.png"))
 
     visit admin_user_path(@admin, locale: :en)
-    assert_text "Administrator accounts are read-only here."
+    assert_text I18n.t("admin.users.show.protected", locale: :en)
     assert_no_selector ".admin-user-access-form"
     assert_no_selector "#user_email_address"
   end

@@ -4,7 +4,7 @@ nl:
       link: "Toegang voor starters"
       eyebrow: "Startbèta"
       title: "Gratis toegang"
-      intro: "Geef een geverifieerd kantoor een korte, geregistreerde startperiode. Dit maakt nooit een betaling aan en vervangt geen betaald plan."
+      intro: "Geef een geverifieerd kantoor gratis toegang tot de gekozen datum. Er wordt geen betaling aangemaakt."
       back: "Terug naar verificatie"
       verified_firm: "Geverifieerd kantoor"
       active_until: "Actief tot %{date}"

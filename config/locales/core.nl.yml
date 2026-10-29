@@ -1,7 +1,7 @@
 nl:
   notices:
-    assignment_created: "Je opdracht is geplaatst. Geschikte confraters kunnen nu reageren."
-    proposal_created: "Je kandidatuur is verstuurd. De opdrachtgever krijgt meteen een seintje."
+    assignment_created: "Je opdracht is geplaatst."
+    proposal_created: "Je voorstel is verzonden."
   assignments:
     kinds:
       court_replacement: "Zittingsvervanging"

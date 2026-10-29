@@ -34,7 +34,7 @@
             </article>
             <div class="product-mini-grid">
               <article class="product-mini-card"><span class="mini-icon">↗</span><strong><%= t("marketing.home.product.compare") %></strong><small><%= t("marketing.home.product.profile_rate") %></small></article>
-              <article class="product-mini-card product-mini-card-mint"><span class="mini-icon">✓</span><strong><%= t("marketing.home.product.choose") %></strong><small><%= t("marketing.home.product.at_your_pace") %></small></article>
+              <article class="product-mini-card product-mini-card-mint"><span class="mini-icon">✓</span><strong><%= t("marketing.home.product.choose") %></strong></article>
             </div>
           </div>
         </div>
@@ -45,19 +45,15 @@
 
 <section class="pathways-section" id="for-lawyers">
   <div class="shell">
-    <div class="section-heading split-heading">
-      <div><p class="eyebrow"><%= t("marketing.home.pathways.eyebrow") %></p><h2><%= t("marketing.home.pathways.heading_before") %><br><%= t("marketing.home.pathways.heading_after") %></h2></div>
-      <p><%= t("marketing.home.pathways.lede") %></p>
-    </div>
     <div class="pathway-grid">
       <article class="pathway-card pathway-card-paper">
         <div class="pathway-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 13h6M9 17h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-        <p class="pathway-kicker"><%= t("marketing.home.pathways.requester.kicker") %></p><h3><%= t("marketing.home.pathways.requester.heading_before") %><br><%= t("marketing.home.pathways.requester.heading_after") %></h3><p><%= t("marketing.home.pathways.requester.body") %></p>
+        <h2><%= t("marketing.home.pathways.requester.heading_before") %><br><%= t("marketing.home.pathways.requester.heading_after") %></h2><p><%= t("marketing.home.pathways.requester.body") %></p>
         <%= link_to new_assignment_path, class: "card-link" do %><span><%= t("marketing.actions.post_assignment") %></span><span>→</span><% end %>
       </article>
       <article class="pathway-card pathway-card-ink">
         <div class="pathway-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7M4 6h5M4 18h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <p class="pathway-kicker"><%= t("marketing.home.pathways.responder.kicker") %></p><h3><%= t("marketing.home.pathways.responder.heading_before") %><br><%= t("marketing.home.pathways.responder.heading_after") %></h3><p><%= t("marketing.home.pathways.responder.body") %></p>
+        <h2><%= t("marketing.home.pathways.responder.heading_before") %><br><%= t("marketing.home.pathways.responder.heading_after") %></h2><p><%= t("marketing.home.pathways.responder.body") %></p>
         <%= link_to assignments_path, class: "card-link" do %><span><%= t("marketing.actions.browse_assignments") %></span><span>→</span><% end %>
       </article>
     </div>
@@ -66,7 +62,7 @@
 
 <section class="opportunities-section" id="assignments">
   <div class="shell">
-    <div class="section-heading opportunities-heading"><div><p class="eyebrow eyebrow-mint"><%= t("marketing.home.opportunities.eyebrow") %></p><h2><%= t("marketing.home.opportunities.heading_before") %><br><em><%= t("marketing.home.opportunities.heading_emphasis") %></em></h2></div><%= link_to assignments_path, class: "text-link text-link-dark" do %><span><%= t("marketing.home.opportunities.all") %></span><span aria-hidden="true">↗</span><% end %></div>
+    <div class="section-heading opportunities-heading"><h2><%= t("marketing.home.opportunities.eyebrow") %></h2><%= link_to assignments_path, class: "text-link text-link-dark" do %><span><%= t("marketing.home.opportunities.all") %></span><span aria-hidden="true">↗</span><% end %></div>
     <div class="opportunity-grid">
       <% if @featured_assignments.present? %>
         <% @featured_assignments.each do |assignment| %>
@@ -85,7 +81,7 @@
 
 <section class="how-section" id="how-it-works">
   <div class="shell how-grid">
-    <div class="how-intro"><p class="eyebrow"><%= t("marketing.home.how.eyebrow") %></p><h2><%= t("marketing.home.how.heading_before") %><br><%= t("marketing.home.how.heading_after") %></h2><p><%= t("marketing.home.how.lede") %></p></div>
+    <div class="how-intro"><h2><%= t("marketing.header.how_it_works") %></h2></div>
     <ol class="steps-list">
       <% 3.times do |index| %>
         <li><span class="step-number"><%= format("%02d", index + 1) %></span><div><h3><%= t("marketing.home.how.steps.#{index}.heading") %></h3><p><%= t("marketing.home.how.steps.#{index}.body") %></p></div></li>
@@ -96,15 +92,11 @@
 
 <section class="faq-section" id="questions">
   <div class="shell faq-grid">
-    <div><p class="eyebrow"><%= t("marketing.home.faq.eyebrow") %></p><h2><%= t("marketing.home.faq.heading_before") %><br><%= t("marketing.home.faq.heading_after") %></h2><p><%= t("marketing.home.faq.lede") %></p></div>
+    <div><h2><%= t("marketing.header.questions") %></h2></div>
     <div class="faq-list">
       <% 4.times do |index| %>
         <details <%= "open" if index.zero? %>><summary><%= t("marketing.home.faq.items.#{index}.question") %><span aria-hidden="true">+</span></summary><p><%= t("marketing.home.faq.items.#{index}.answer") %></p></details>
       <% end %>
     </div>
   </div>
-</section>
-
-<section class="final-cta-section">
-  <div class="shell final-cta"><p class="eyebrow eyebrow-light"><%= t("marketing.home.cta.eyebrow") %></p><h2><%= t("marketing.home.cta.heading_before") %><br><%= t("marketing.home.cta.heading_after") %></h2><%= link_to new_assignment_path, class: "button button-coral" do %><span><%= t("marketing.actions.post_assignment") %></span><span aria-hidden="true">→</span><% end %></div>
 </section>

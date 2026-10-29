@@ -1,14 +1,14 @@
 en:
   billing:
     eyebrow: Billing
-    title: Your LawRelay plan
-    lede: Keep your office ready to post assignments. Colleagues can continue to respond free of charge.
+    title: Your access
+    lede: Post and respond to assignments.
     plan:
       title: LawRelay Office
       price: €49 / month
       tax_note: excluding VAT
-      description: One clear monthly platform fee for your office.
-      direct_settlement: LawRelay never handles the fee agreed between lawyers; you settle that directly.
+      description: Monthly access for your firm.
+      direct_settlement: Agree and settle professional fees directly with your colleague.
       active: Your plan is active.
       contact_administrator: Ask a firm administrator to manage billing.
     actions:
@@ -28,7 +28,7 @@ en:
     notices:
       posting_plan_required: An active office plan is required to post assignments.
       rate_limited: Please wait before requesting another invoice.
-      invoice_requested: "Invoice %{number} is queued for manual accounting handoff. Your plan activates after payment is recorded."
+      invoice_requested: "Invoice %{number} is awaiting processing. Your plan starts once payment is recorded."
       subscription_cancelled: Your plan has been cancelled.
       payment_confirmation_pending: We will activate your plan only after payment confirmation.
       no_firm: You need a firm to manage billing.

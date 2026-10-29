@@ -13,7 +13,7 @@ de:
       eyebrow: Verwaltung
       you: Sie
       not_recorded: Nicht angegeben
-      timezone: Die Zeiten werden in der Zeitzone Europe/Brussels angezeigt.
+      timezone: 'Zeitzone: Europe/Brussels.'
       index:
         title: Benutzer — LawRelay-Verwaltung
         heading: Benutzer
@@ -23,7 +23,7 @@ de:
           other: "%{count} Benutzer"
         list_label: Benutzerkonten
         empty_title: Keine Benutzer gefunden
-        empty_body: Versuchen Sie einen anderen Namen, eine andere E-Mail-Adresse oder einen anderen Filter.
+        empty_body: Versuchen Sie einen anderen Namen, eine andere E-Mail oder einen anderen Filter.
       filters:
         label: Benutzer suchen
         search: Suchen
@@ -86,8 +86,8 @@ de:
         professional: Berufliche Angaben
         account: Kontodaten
         access: Zugang verwalten
-        protected: Administratorkonten können hier nur eingesehen werden.
-        identity_hint: Änderungen am Namen oder an der E-Mail-Adresse melden bestehende Sitzungen ab und erfordern eine neue berufliche Prüfung. Eine geänderte E-Mail-Adresse muss bestätigt werden.
+        protected: Sie können Administratorkonten hier ansehen, aber nicht ändern.
+        identity_hint: Ein neuer Name oder eine neue E-Mail meldet alle Sitzungen ab und startet eine neue berufliche Prüfung. Eine neue E-Mail muss bestätigt werden.
       access:
         suspend:
           heading: Konto sperren
@@ -95,11 +95,11 @@ de:
           submit: Konto sperren
         restore:
           heading: Zugang wiederherstellen
-          body: Erlaubt die erneute Anmeldung. Für Aufträge gelten weiterhin die üblichen Prüfungen.
+          body: Erlaubt die erneute Anmeldung. Der Zugang zu Aufträgen erfordert weiterhin eine Prüfung.
           submit: Zugang wiederherstellen
         revoke_sessions:
           heading: Alle Sitzungen abmelden
-          body: Meldet die Sitzungen dieses Benutzers ab. Eine erneute Anmeldung ist möglich.
+          body: Meldet diesen Benutzer auf allen Geräten ab. Er kann sich wieder anmelden.
           submit: Alle Sitzungen abmelden
       sessions:
         heading: Aktive Sitzungen
@@ -143,13 +143,13 @@ de:
         page: Seite %{current} von %{total}
       errors:
         heading: Änderung prüfen
-        protected_account: Administratorkonten können hier nicht geändert werden.
-        reason_required: Geben Sie einen Grund für diese Aktion an.
+        protected_account: Sie können Administratorkonten hier nicht ändern.
+        reason_required: Geben Sie einen Grund an.
         reason_too_long: Der Grund darf höchstens 2.000 Zeichen enthalten.
         invalid_action: Wählen Sie eine gültige Kontoaktion.
-        invalid_details: Prüfen Sie die Kontodaten und versuchen Sie es erneut.
+        invalid_details: Prüfen Sie die Kontodaten.
       notices:
         updated: Kontodaten gespeichert.
-        suspended: Das Konto ist gesperrt und seine Sitzungen sind abgemeldet.
+        suspended: Konto gesperrt. Alle Sitzungen abgemeldet.
         restored: Kontozugang wiederhergestellt.
-        sessions_revoked: Alle Sitzungen dieses Kontos sind abgemeldet.
+        sessions_revoked: Alle Sitzungen abgemeldet.

@@ -31,15 +31,6 @@
         </dl>
       </section>
 
-      <section class="detail-section detail-section--soft">
-        <div class="section-heading-row"><h2><%= t("marketplace.show.respond_title") %></h2><span class="step-count">01 — 03</span></div>
-        <ol class="micro-steps">
-          <li><strong><%= t("marketplace.show.step_one_title") %></strong><span><%= t("marketplace.show.step_one_body") %></span></li>
-          <li><strong><%= t("marketplace.show.step_two_title") %></strong><span><%= t("marketplace.show.step_two_body") %></span></li>
-          <li><strong><%= t("marketplace.show.step_three_title") %></strong><span><%= t("marketplace.show.step_three_body") %></span></li>
-        </ol>
-      </section>
-
       <% if @owner_view && @assignment.status.in?(%w[open matched]) %>
         <div class="detail-actions">
           <% if @assignment.status == "matched" %>
