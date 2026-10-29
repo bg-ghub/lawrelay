@@ -45,7 +45,7 @@
     </article>
 
     <aside class="proposal-panel" id="respond">
-      <div class="proposal-panel__price"><span><%= t("marketplace.show.guideline_rate") %></span><strong>€ <%= euro_amount(@assignment.fee_cents) %></strong></div>
+      <div class="proposal-panel__price"><span><%= t("marketplace.show.guideline_rate") %></span><strong><%= @assignment.fee_cents.nil? ? t("marketplace.fee_unspecified") : "€ #{euro_amount(@assignment.fee_cents)}" %></strong></div>
 
       <% if @owner_view %>
         <h2><%= t("workflow.ui.candidates") %></h2>

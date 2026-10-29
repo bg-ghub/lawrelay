@@ -4,6 +4,7 @@ de:
       court_replacement: "Gerichtsvertretung"
       legal_task: "Juristischer Auftrag"
     urgent: "Dringend"
+    fee_unspecified: "Nach Vereinbarung"
     practice_areas:
       employment: "Arbeitsrecht"
       family: "Familien- und Jugendrecht"
@@ -46,7 +47,7 @@ de:
       city_label: "Ort"
       city_placeholder: "Antwerpen"
       conditions_legend: "Konditionen"
-      fee_label: "Richtvergütung (€)"
+      fee_label: "Richtvergütung (€, optional)"
       fee_hint: "Kandidaten können ein eigenes Angebot machen."
       content_rules_label: "Dieser Auftrag enthält keine Mandantennamen, Falldetails, Dokumente oder vertraulichen Informationen."
       content_rules_hint_html: "Tauschen Sie Details nach der Vermittlung direkt und sicher aus. Mehr unter %{privacy_link}."

@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-10-29
+
+### Fixed
+
+- Make assignment guideline rates optional and show a localized "To be agreed" when no amount is entered.
+
 ## [0.8.0] - 2026-10-29
 
 ### Added
@@ -199,7 +205,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.8.1...HEAD
+[0.8.1]: https://github.com/bg-ghub/lawrelay/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/bg-ghub/lawrelay/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/bg-ghub/lawrelay/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/bg-ghub/lawrelay/compare/v0.6.1...v0.6.2

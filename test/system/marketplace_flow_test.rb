@@ -47,13 +47,14 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     fill_in "assignment_duration_minutes", with: "60"
     fill_in "assignment_court", with: "Enterprise Court"
     fill_in "assignment_city", with: "Brussels"
-    fill_in "assignment_fee_cents", with: "250"
     find("#assignment_content_rules_accepted").check
 
     click_button "Post assignment"
 
     assert_text "System-test court cover"
     assert_equal 1, Assignment.where(title: "System-test court cover").count
+    assert_nil Assignment.find_by!(title: "System-test court cover").fee_cents
+    assert_selector ".proposal-panel__price strong", text: "To be agreed"
   end
 
   test "an unrelated lawyer is sent back to the board for a closed assignment" do
