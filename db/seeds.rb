@@ -6,7 +6,7 @@ end
 demo_password = ENV.fetch("LAWRELAY_DEMO_PASSWORD", "LawRelayDemo!2026")
 
 def verified_firm!(name:, enterprise_number:, email:)
-  Firm.find_or_initialize_by(enterprise_number: enterprise_number).tap do |firm|
+  Firm.find_or_initialize_by(name: name, enterprise_number: enterprise_number).tap do |firm|
     firm.assign_attributes(
       name: name,
       billing_email: email,

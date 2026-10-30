@@ -30,13 +30,13 @@ fr:
       availability_note: "Disponibilités"
       availability_note_placeholder: "Ex. : mardi et jeudi matin."
     firm:
-      legend: "Cabinet et facturation"
+      legend: "Coordonnées de facturation"
       billing_email: "E-mail de facturation"
       phone: "Téléphone"
       address: "Adresse"
       postal_code: "Code postal"
       city: "Ville"
-      review_hint: "Les changements de nom, de numéro d’entreprise ou de TVA seront vérifiés."
+      assignment_hint: "Vos coordonnées de facturation par défaut. Vous pouvez les adapter pour chaque mission."
     aside:
       title: "Vos coordonnées"
       body: "Pour la vérification et le contact. Vos coordonnées sont partagées après accord."

@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-10-30-contact"
-  PRIVACY_VERSION = "2026-10-30-contact"
+  PRIVACY_VERSION = "2026-10-30-company"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -19,7 +19,7 @@ class RegistrationsController < ApplicationController
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
     # Record receipt of the privacy notice, not consent as a processing basis.
     @user.accepted_privacy_version = PRIVACY_VERSION if @terms_accepted
-    models_valid = @user.valid? & @firm.valid? & @lawyer_profile.valid?
+    models_valid = @user.valid? & @firm.valid?(:company_details) & @lawyer_profile.valid?
     unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])
       @lawyer_profile.errors.add(:directory_profile_url, t("directory_onboarding.registration.invalid_profile_url"))
       models_valid = false
@@ -61,7 +61,6 @@ class RegistrationsController < ApplicationController
     @firm = Firm.new(
       name: attributes[:firm_name],
       enterprise_number: attributes[:enterprise_number],
-      vat_number: attributes[:vat_number],
       billing_email: email
     )
     @lawyer_profile = @user.build_lawyer_profile(
@@ -95,7 +94,7 @@ class RegistrationsController < ApplicationController
   def registration_params
     params.require(:registration).permit(
       :first_name, :last_name, :email_address, :password, :password_confirmation,
-      :firm_name, :enterprise_number, :vat_number, :directory_profile_url,
+      :firm_name, :enterprise_number, :directory_profile_url,
       :locale, :terms_accepted
     )
   end

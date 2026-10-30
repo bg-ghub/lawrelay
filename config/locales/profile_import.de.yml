@@ -2,6 +2,8 @@ de:
   profile_import:
     button: "Daten von advocaat.be abrufen"
     preview: "Daten abgerufen. Prüfen und speichern Sie sie."
+    scope: "Importiert Sprachen und Tätigkeitsbereiche. Rechnungsdaten bleiben getrennt."
+    empty: "Ihr Profil enthält keine Sprachen oder Tätigkeitsbereiche zum Importieren."
     unavailable: "Ihr Profil konnte nicht abgerufen werden. Versuchen Sie es später erneut."
     missing_profile: "Es ist kein gültiges advocaat.be-Profil verknüpft."
     rate_limited: "Warten Sie kurz, bevor Sie die Daten erneut abrufen."

@@ -27,8 +27,10 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = current_firm.assignments.build(
-      creator_user: current_user,
-      kind: Assignment::KINDS[:court_replacement]
+      Assignment.default_invoice_recipient(firm: current_firm, user: current_user).merge(
+        creator_user: current_user,
+        kind: Assignment::KINDS[:court_replacement]
+      )
     )
   end
 
@@ -39,7 +41,7 @@ class AssignmentsController < ApplicationController
     @assignment.urgent = false
     @assignment.content_rules_accepted_at = Time.current if content_rules_accepted?
 
-    if @assignment.save
+    if @assignment.save(context: [ :create, :invoice_details ])
       @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.created")
       redirect_to @assignment, notice: t("notices.assignment_created")
     else
@@ -87,7 +89,9 @@ class AssignmentsController < ApplicationController
     attributes = params.require(:assignment).permit(
       :kind, :title, :description, :court, :city, :starts_at,
       :duration_minutes, :practice_area, :fee_cents, :languages,
-      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at
+      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at,
+      :invoice_name, :invoice_enterprise_number, :invoice_email,
+      :invoice_address_line_1, :invoice_postal_code, :invoice_city
     )
     attributes[:fee_cents] = euros_to_cents(attributes[:fee_cents])
     attributes

@@ -11,7 +11,6 @@ class SettingsController < ApplicationController
 
     profile_requires_review = profile_review_required?
     directory_identity_changed = directory_identity_changed?
-    firm_requires_review = firm_review_required?
 
     ApplicationRecord.transaction do
       @user.assign_attributes(user_params)
@@ -21,18 +20,19 @@ class SettingsController < ApplicationController
 
       if @can_manage_firm
         @firm.assign_attributes(firm_params)
-        reset_firm_verification! if firm_requires_review
+        raise ActiveRecord::RecordInvalid, @firm unless @firm.valid?(:company_details)
       end
 
       @user.save!
       @profile.save!
       @firm.save! if @can_manage_firm
-      record_changes!(profile_requires_review:, firm_requires_review:)
+      record_changes!(profile_requires_review:)
     end
 
     delivery_ready = Onboarding::Delivery.request(@user, email: false, directory: directory_identity_changed && !protected_profile?(@profile))
-    redirect_to settings_path(locale: @user.locale), notice: update_notice(profile_requires_review || directory_identity_changed, firm_requires_review),
-      alert: (t("auth.verification_status.queue_unavailable") unless delivery_ready)
+    destination_locale = @user.locale
+    redirect_to settings_path(locale: destination_locale), notice: update_notice(profile_requires_review || directory_identity_changed, locale: destination_locale),
+      alert: (I18n.t("auth.verification_status.queue_unavailable", locale: destination_locale) unless delivery_ready)
   rescue ActiveRecord::RecordInvalid
     render :show, status: :unprocessable_content
   end
@@ -51,13 +51,12 @@ class SettingsController < ApplicationController
       full_name: @profile.directory_name.presence || @user.full_name
     )
     assign_preview_values
-    imported = result.success? && (result.profile_attributes.any? || (@can_manage_firm && result.firm_attributes.any?))
+    imported = result.success? && result.profile_attributes.any?
     if imported
       @profile.assign_attributes(result.profile_attributes)
-      @firm.assign_attributes(result.firm_attributes) if @can_manage_firm
       flash.now[:notice] = t("profile_import.preview")
     else
-      key = result.status == :missing_profile ? "missing_profile" : "unavailable"
+      key = result.status.in?(%i[missing_profile empty]) ? result.status : :unavailable
       flash.now[:alert] = t("profile_import.#{key}")
     end
     mark_profile_import_preview
@@ -105,7 +104,7 @@ class SettingsController < ApplicationController
 
   def firm_params
     params.fetch(:firm, {}).permit(
-      :name, :enterprise_number, :vat_number, :billing_email, :phone,
+      :name, :enterprise_number, :billing_email, :phone,
       :address_line_1, :postal_code, :city
     )
   end
@@ -123,14 +122,6 @@ class SettingsController < ApplicationController
 
     user_params.to_h.slice("first_name", "last_name").any? do |attribute, value|
       @user.public_send(attribute).to_s != value.to_s.strip
-    end
-  end
-
-  def firm_review_required?
-    return false unless @can_manage_firm
-
-    firm_params.to_h.slice("name", "enterprise_number", "vat_number").any? do |attribute, value|
-      @firm.public_send(attribute).to_s != value.to_s.strip
     end
   end
 
@@ -156,13 +147,7 @@ class SettingsController < ApplicationController
     profile.verification_status.in?(%w[rejected suspended])
   end
 
-  def reset_firm_verification!
-    return if @firm.verification_status.in?(%w[rejected suspended])
-
-    @firm.assign_attributes(verification_status: "pending", verified_at: nil)
-  end
-
-  def record_changes!(profile_requires_review:, firm_requires_review:)
+  def record_changes!(profile_requires_review:)
     changed_models = [ @user, @profile, (@firm if @can_manage_firm) ].compact.select(&:saved_changes?)
     changed_models.each do |record|
       AuditEvent.create!(
@@ -170,15 +155,15 @@ class SettingsController < ApplicationController
         actor_user: @user,
         firm: @firm,
         action: "account.updated",
-        metadata: { changed_fields: record.saved_changes.keys, profile_requires_review:, firm_requires_review: }
+        metadata: { changed_fields: record.saved_changes.keys, profile_requires_review: }
       )
     end
   end
 
-  def update_notice(profile_requires_review, firm_requires_review)
-    return t("settings.notices.review_required") if profile_requires_review || firm_requires_review
+  def update_notice(profile_requires_review, locale: I18n.locale)
+    return I18n.t("settings.notices.review_required", locale:) if profile_requires_review
 
-    t("settings.notices.updated")
+    I18n.t("settings.notices.updated", locale:)
   end
 
   def list_values(values)

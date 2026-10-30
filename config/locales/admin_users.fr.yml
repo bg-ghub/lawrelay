@@ -35,14 +35,14 @@ fr:
         clear: Effacer
       fields:
         role: Rôle
-        firm: Cabinet
+        firm: Entreprise
         status: Accès au compte
         email_status: Adresse e-mail
         marketplace_access: Accès aux missions
         mfa: MFA administrateur
         created_at: Inscription
         suspension_reason: Motif de suspension
-        firm_status: Vérification du cabinet
+        firm_status: Vérification de l’entreprise
         lawyer_status: Vérification de l'avocat
         directory_name: Nom dans l'annuaire
         directory_email: E-mail répertorié

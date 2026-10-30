@@ -48,8 +48,9 @@ de:
           bullets:
             - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten."
             - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
-            - "Daten zur beruflichen Verifizierung: Ihr offizielles Verzeichnisprofil, der veröffentlichte Name und die berufliche E-Mail-Adresse, Kanzleiangaben und Prüfstatus."
+            - "Berufs- und Rechnungsdaten: offizielles Verzeichnisprofil, veröffentlichter Name und E-Mail-Adresse, Unternehmensname, Unternehmens-/USt-Nummer, Kontaktdaten und beruflicher Prüfstatus."
             - "Daten zum beruflichen Profil und zu Vermittlungspräferenzen, einschließlich Rechtsgebieten, Gerichtspräferenzen und—soweit für juristische Aufgaben relevant—gesprochenen Sprachen; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
+            - "Rechnungsdaten je Auftrag, einschließlich beruflichem Namen und Unternehmens-/USt-Nummer. Verifizierte Mitglieder mit Zugriff auf den Auftrag sehen Name und Nummer; die Kanzlei des Auftraggebers und der ausgewählte Kollege sehen die vollständige Rechnungsadresse und E-Mail-Adresse."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
           paragraphs:
             - "LawRelay ist nicht für Mandantennamen, Sachverhalte, Schriftsätze, Beweismittel, Dokumente oder vertrauliche Kommunikation bestimmt. Diese Informationen müssen in Systemen unter Kontrolle der beteiligten Anwälte bleiben."

@@ -16,6 +16,10 @@ class Assignment < ApplicationRecord
   belongs_to :creator_user, class_name: "User", inverse_of: :created_assignments, optional: true
   belongs_to :firm, optional: true
 
+  normalizes :invoice_name, :invoice_address_line_1, :invoice_postal_code, :invoice_city,
+    with: ->(value) { value.to_s.strip.presence }
+  normalizes :invoice_email, with: ->(value) { value.to_s.strip.downcase.presence }
+
   before_validation :normalize_structured_fields
   before_save :record_closed_at, if: :will_save_change_to_status?
 
@@ -35,6 +39,14 @@ class Assignment < ApplicationRecord
   validates :fee_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10_000_000 }, allow_nil: true
   validates :assignment_subtype, presence: true
   validates :scope_indication, length: { maximum: 250 }, allow_blank: true
+  validates :invoice_name, :invoice_enterprise_number, :invoice_email, :invoice_address_line_1,
+    :invoice_postal_code, :invoice_city, presence: true, on: :invoice_details
+  validates :invoice_name, length: { maximum: 160 }, allow_blank: true
+  validates :invoice_email, length: { maximum: 254 }, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+  validates :invoice_address_line_1, length: { maximum: 200 }, allow_blank: true
+  validates :invoice_postal_code, length: { maximum: 12 }, allow_blank: true
+  validates :invoice_city, length: { maximum: 100 }, allow_blank: true
+  validate :invoice_enterprise_number_is_valid
   validate :assignment_subtype_matches_kind
   validate :deadline_sequence
   validate :future_deadlines, on: :create
@@ -97,6 +109,29 @@ class Assignment < ApplicationRecord
     proposals.find_by(status: "accepted")
   end
 
+  def invoice_enterprise_number=(value)
+    super(Firm.normalize_enterprise_number(value))
+  end
+
+  def invoice_vat_number
+    Firm.vat_number_for(invoice_enterprise_number)
+  end
+
+  def invoice_details_visible_to?(user)
+    user.present? && (owned_by?(user) || proposals.exists?(user_id: user.id, status: "accepted"))
+  end
+
+  def self.default_invoice_recipient(firm:, user:)
+    {
+      invoice_name: firm&.name,
+      invoice_enterprise_number: firm&.enterprise_number,
+      invoice_email: firm&.billing_email.presence || user.email_address,
+      invoice_address_line_1: firm&.address_line_1,
+      invoice_postal_code: firm&.postal_code,
+      invoice_city: firm&.city
+    }
+  end
+
   def accepting_proposals?(now: Time.current)
     status == "open" && starts_at.present? && starts_at > now &&
       response_deadline_at.present? && response_deadline_at > now
@@ -141,6 +176,14 @@ class Assignment < ApplicationRecord
   end
 
   private
+
+  def invoice_enterprise_number_is_valid
+    return if invoice_enterprise_number.blank?
+
+    unless Firm.valid_enterprise_number?(invoice_enterprise_number)
+      errors.add(:invoice_enterprise_number, :invalid)
+    end
+  end
 
   def normalize_structured_fields
     self.assignment_subtype ||= court_replacement? ? "hearing" : "advice"

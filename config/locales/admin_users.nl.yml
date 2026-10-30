@@ -35,14 +35,14 @@ nl:
         clear: Wissen
       fields:
         role: Rol
-        firm: Kantoor
+        firm: Onderneming
         status: Accounttoegang
         email_status: E-mailadres
         marketplace_access: Toegang tot opdrachten
         mfa: MFA voor beheerders
         created_at: Geregistreerd
         suspension_reason: Reden van schorsing
-        firm_status: Kantoorcontrole
+        firm_status: Controle onderneming
         lawyer_status: Advocatencontrole
         directory_name: Naam in de lijst
         directory_email: Vermeld e-mailadres

@@ -69,7 +69,7 @@ class PagesControllerTest < ActionController::TestCase
       assert_select ".footer-project .footer-project__license",
         text: "#{I18n.t('marketing.footer.open_source', locale: locale)} · AGPL-3.0+"
       assert_select ".footer-project .footer-project__version",
-        text: I18n.t("marketing.footer.app_version", locale: locale, version: LawRelay::VERSION)
+        text: I18n.t("marketing.footer.beta_version", locale: locale, version: LawRelay::VERSION)
     end
   end
 

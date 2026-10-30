@@ -29,9 +29,12 @@ nl:
       source_code: Broncode op GitHub
       open_source: Open source
       app_version: Versie %{version}
+      beta_version: Versie %{version} · Bèta
     home:
       title: "LawRelay — zittingsvervanging en juridische opdrachten"
       og_description: "Vind een confrater voor een zitting of juridische opdracht."
+      social_preview:
+        alt: "LawRelay — zittingsvervanging en juridische opdrachten"
       hero:
         heading_before: Een confrater nodig
         heading_middle: voor een
@@ -39,18 +42,13 @@ nl:
         lede: "Regel een zittingsvervanging of besteed juridisch werk uit."
         note: "Open-source bèta."
       product:
-        aria_label: Voorbeeld van de LawRelay werkruimte
-        today: Vandaag
-        response_received: "Nieuwe reactie"
-        court_replacement: Zittingsvervanging
-        court_example: Familierechtbank Antwerpen
+        aria_label: Voorbeeldopdracht op LawRelay
+        example_label: Voorbeeldopdracht
+        title: Zittingsvervanging bij de Familierechtbank Antwerpen
+        description: "Gezocht: een confrater voor een korte zitting in familierecht."
+        court: Familierechtbank Antwerpen
         city: Antwerpen
-        tomorrow: morgen, 10:00
-        responses: 3 reacties
-        compare: Vergelijk
-        profile_rate: profiel & tarief
-        choose: Kies
-        at_your_pace: op je eigen tempo
+        practice_area: Familierecht
       pathways:
         eyebrow: "Voor advocaten"
         heading_before: Waarmee kunnen

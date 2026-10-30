@@ -58,7 +58,7 @@ fr:
   activerecord:
     models:
       user: "Utilisateur"
-      firm: "Cabinet"
+      firm: "Entreprise"
       lawyer_profile: "Profil d’avocat"
       assignment: "Mission"
       proposal: "Proposition"
@@ -75,7 +75,7 @@ fr:
         system_role: "Rôle système"
         suspension_reason: "Motif de suspension"
       firm:
-        name: "Nom du cabinet"
+        name: "Nom de l’entreprise"
         enterprise_number: "Numéro d’entreprise"
         vat_number: "Numéro de TVA"
         billing_email: "E-mail de facturation"

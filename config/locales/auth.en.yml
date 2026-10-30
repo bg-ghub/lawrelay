@@ -10,9 +10,10 @@ en:
       password: "Password"
       new_password: "New password"
       password_confirmation: "Confirm password"
-      firm_name: "Firm name"
-      enterprise_number: "Enterprise number (optional)"
-      vat_number: "VAT number (optional)"
+      company_name: "Company name"
+      company_name_hint: "Invoice recipient: your own name as a sole trader, or your company’s legal name."
+      enterprise_number: "Enterprise number"
+      vat_number: "VAT number"
       bar_association: "Bar association"
       bar_number: "Bar number"
     sessions:
@@ -56,7 +57,7 @@ en:
       lede: "For lawyers listed on advocaat.be."
       identity: "Your account"
       professional_details: "Professional details"
-      firm_details: "Your firm"
+      firm_details: "Billing details"
       agreement: "Agreement"
       email_hint: "Use your professional email."
       bar_placeholder: "For example: Brussels Bar"
@@ -141,7 +142,7 @@ en:
         email_address: "Professional email"
         password: "Password"
       firm:
-        name: "Firm name"
+        name: "Company name"
         enterprise_number: "Enterprise number"
         vat_number: "VAT number"
       lawyer_profile:
