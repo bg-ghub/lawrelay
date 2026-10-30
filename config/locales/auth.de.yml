@@ -10,9 +10,10 @@ de:
       password: "Passwort"
       new_password: "Neues Passwort"
       password_confirmation: "Passwort bestätigen"
-      firm_name: "Name der Kanzlei"
-      enterprise_number: "Unternehmensnummer (optional)"
-      vat_number: "USt-IdNr. (optional)"
+      company_name: "Unternehmensname"
+      company_name_hint: "Rechnungsempfänger: Ihr eigener Name als Selbstständiger oder der Firmenname Ihrer Gesellschaft."
+      enterprise_number: "Unternehmensnummer"
+      vat_number: "USt-IdNr."
       bar_association: "Rechtsanwaltskammer"
       bar_number: "Kammernummer"
     sessions:
@@ -56,7 +57,7 @@ de:
       lede: "Für Anwälte im Verzeichnis advocaat.be."
       identity: "Ihr Konto"
       professional_details: "Berufliche Angaben"
-      firm_details: "Ihre Kanzlei"
+      firm_details: "Rechnungsdaten"
       agreement: "Zustimmung"
       email_hint: "Nutzen Sie Ihre berufliche E-Mail-Adresse."
       bar_placeholder: "Zum Beispiel: Rechtsanwaltskammer Eupen"
@@ -141,7 +142,7 @@ de:
         email_address: "Berufliche E-Mail"
         password: "Passwort"
       firm:
-        name: "Kanzleiname"
+        name: "Unternehmensname"
         enterprise_number: "Unternehmensnummer"
         vat_number: "USt-IdNr."
       lawyer_profile:

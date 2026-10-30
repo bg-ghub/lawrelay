@@ -181,6 +181,6 @@ class ThoroughBetaRegressionTest < ActionDispatch::IntegrationTest
       practice_area: "Commercial law",
       fee_cents: "250",
       content_rules_accepted: "1"
-    }
+    }.merge(invoice_recipient_attributes)
   end
 end

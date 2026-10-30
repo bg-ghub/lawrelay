@@ -35,14 +35,14 @@ de:
         clear: Zurücksetzen
       fields:
         role: Rolle
-        firm: Kanzlei
+        firm: Unternehmen
         status: Kontozugang
         email_status: E-Mail-Adresse
         marketplace_access: Zugang zu Aufträgen
         mfa: Administrator-MFA
         created_at: Registriert
         suspension_reason: Grund der Sperrung
-        firm_status: Kanzleiprüfung
+        firm_status: Unternehmensprüfung
         lawyer_status: Anwaltsprüfung
         directory_name: Name im Verzeichnis
         directory_email: Eingetragene E-Mail

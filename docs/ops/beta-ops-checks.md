@@ -1,5 +1,11 @@
 # Beta operations checks
 
+## 30 October 2026 — 0.11.0 billing and profile checks
+
+Each assignment stores its own invoice recipient; tests cover independent accounts sharing an enterprise number, immutable snapshots, restricted invoice contacts and export/erasure. Billing edits preserve professional verification. Directory import now keeps billing separate. KBO opens an official record and adds no integration account or background collection.
+
+Rails: 500 tests / 15,256 assertions pass, with 17 environment-specific skips. All 11 affected Chrome cases pass after old form expectations were updated. The isolated live-browser workflow and all 32 new locale/viewport checks pass. Production-image localization and security/dependency checks pass; CI repeats the complete suite. No outreach was sent or new production test accounts created.
+
 ## 30 October 2026 — 0.10.2 browser audit
 
 Completed 876 page/viewport checks and 31 interactive actions in NL/FR/DE/EN, using a separate local test copy and read-only production pages. Fixed clipped admin badges, long German privacy headings and untranslated error pages. All 296 final-build rechecks and all actions passed. Public operator contacts now omit professional credentials.

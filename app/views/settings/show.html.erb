@@ -5,7 +5,7 @@
   </div>
 
   <div class="new-assignment__layout">
-    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: @profile_import_preview || false } do |form| %>
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { controller: "company-number", company_number_locale_value: I18n.locale, unsaved_changes: @profile_import_preview || false } do |form| %>
       <%# Enter keeps saving the form even though the import button appears first. %>
       <%= form.button t("settings.save"), name: "settings_action", value: "save", hidden: true, tabindex: -1 %>
       <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>
@@ -30,7 +30,7 @@
         <legend><%= t("settings.profile.legend") %></legend>
         <% if @profile.directory_profile_url.present? %>
           <div class="field-group"><strong><%= t("directory_onboarding.settings.directory_profile") %></strong><p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><p class="field-hint"><%= t("directory_onboarding.settings.directory_profile_hint") %></p></div>
-          <% unless @user.system_admin? %><%= form.button t("profile_import.button"), name: "settings_action", value: "import_profile", formnovalidate: true, class: "button button--ghost profile-import-button", data: { turbo: false } %><% end %>
+          <% unless @user.system_admin? %><%= form.button t("profile_import.button"), name: "settings_action", value: "import_profile", formnovalidate: true, class: "button button--ghost profile-import-button", data: { turbo: false } %><p class="field-hint"><%= t("profile_import.scope") %></p><% end %>
         <% end %>
         <div class="field-group"><%= form.label "profile[bar_admission_year]", t("settings.profile.bar_admission_year") %><%= form.number_field "profile[bar_admission_year]", value: @profile.bar_admission_year, min: 1900, max: Date.current.year, placeholder: t("settings.profile.bar_admission_year_placeholder") %></div>
         <p class="field-hint"><%= t("directory_onboarding.settings.identity_hint") %></p>
@@ -45,13 +45,14 @@
       <% if @can_manage_firm %>
         <fieldset class="form-section">
           <legend><%= t("settings.firm.legend") %></legend>
-          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.firm_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization" %></div>
+          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.company_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization", aria: { describedby: "company-name-hint" } %><p class="field-hint" id="company-name-hint"><%= t("auth.fields.company_name_hint") %></p></div>
           <div class="form-row">
-            <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number %></div>
-            <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number %></div>
+            <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number, required: true, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", action: "input->company-number#sync" } %></div>
+            <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number, name: nil, readonly: true, autocomplete: "off", class: "company-vat-preview", data: { company_number_target: "vat" } %></div>
           </div>
+          <p><%= render "shared/company_lookup", enterprise_number: @firm.enterprise_number %></p>
           <div class="form-row">
-            <% if platform_billing_enabled? %><div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div><% end %>
+            <div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div>
             <div class="field-group"><%= form.label "firm[phone]", t("settings.firm.phone") %><%= form.telephone_field "firm[phone]", value: @firm.phone %></div>
           </div>
           <div class="field-group"><%= form.label "firm[address_line_1]", t("settings.firm.address") %><%= form.text_field "firm[address_line_1]", value: @firm.address_line_1, autocomplete: "street-address" %></div>
@@ -59,7 +60,7 @@
             <div class="field-group"><%= form.label "firm[postal_code]", t("settings.firm.postal_code") %><%= form.text_field "firm[postal_code]", value: @firm.postal_code, autocomplete: "postal-code" %></div>
             <div class="field-group"><%= form.label "firm[city]", t("settings.firm.city") %><%= form.text_field "firm[city]", value: @firm.city, autocomplete: "address-level2" %></div>
           </div>
-          <p class="field-hint"><%= t("settings.firm.review_hint") %></p>
+          <p class="field-hint"><%= t("settings.firm.assignment_hint") %></p>
         </fieldset>
       <% end %>
 

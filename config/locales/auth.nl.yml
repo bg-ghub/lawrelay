@@ -10,9 +10,10 @@ nl:
       password: "Wachtwoord"
       new_password: "Nieuw wachtwoord"
       password_confirmation: "Bevestig wachtwoord"
-      firm_name: "Naam van het kantoor"
-      enterprise_number: "Ondernemingsnummer (optioneel)"
-      vat_number: "Btw-nummer (optioneel)"
+      company_name: "Naam onderneming"
+      company_name_hint: "De naam die op de factuur moet staan: jij als zelfstandige of je vennootschap."
+      enterprise_number: "Ondernemingsnummer"
+      vat_number: "Btw-nummer"
       bar_association: "Balie"
       bar_number: "Balienummer"
     sessions:
@@ -56,7 +57,7 @@ nl:
       lede: "Voor advocaten op advocaat.be."
       identity: "Je account"
       professional_details: "Beroepsgegevens"
-      firm_details: "Je kantoor"
+      firm_details: "Facturatiegegevens"
       agreement: "Akkoord"
       email_hint: "Gebruik je professionele e-mailadres."
       bar_placeholder: "Bijvoorbeeld: Balie Brussel"
@@ -141,7 +142,7 @@ nl:
         email_address: "Professionele e-mail"
         password: "Wachtwoord"
       firm:
-        name: "Kantoornaam"
+        name: "Naam onderneming"
         enterprise_number: "Ondernemingsnummer"
         vat_number: "Btw-nummer"
       lawyer_profile:

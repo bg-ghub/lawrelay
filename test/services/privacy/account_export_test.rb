@@ -26,7 +26,10 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
   test "package is allowlisted and scoped to authored records, never secrets or counterpart details" do
     skip "POSIX file permissions are required" if Gem.win_platform?
     own_assignment = create_assignment_for(@member)
+    own_assignment.update_columns(invoice_name: "Own invoice firm", invoice_enterprise_number: "BE0123456789",
+      invoice_email: "own-invoice@example.test", invoice_address_line_1: "Own street 1", invoice_postal_code: "9000", invoice_city: "Gent")
     other_assignment = create_assignment_for(@other, title: "excluded-other-assignment")
+    other_assignment.update_columns(invoice_name: "Other invoice firm", invoice_email: "other-invoice@example.test")
     create_proposal_for(own_assignment, @other, message: "excluded-counterpart-message")
     own_proposal = create_proposal_for(other_assignment, @member, message: "My own proposal")
     @member.user.update!(two_factor_secret_ciphertext: "excluded-two-factor-secret", two_factor_recovery_code_digests: [ "excluded-recovery-digest" ])
@@ -49,6 +52,9 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     package = JSON.parse(raw)
     assert_equal @member.user.email_address, package.dig("account", "email_address")
     assert_equal [ own_assignment.id ], package.fetch("authored_assignments").pluck("id")
+    exported_assignment = package.fetch("authored_assignments").sole
+    assert_equal "Own invoice firm", exported_assignment.fetch("invoice_name")
+    assert_equal "own-invoice@example.test", exported_assignment.fetch("invoice_email")
     assert_equal [ own_proposal.id ], package.fetch("authored_proposals").pluck("id")
     assert_equal @member.user.notifications.order(:id).pluck(:id), package.fetch("notifications").pluck("id")
     assert_equal "192.0.2.10", package.fetch("sessions").sole.fetch("ip_address")
@@ -57,6 +63,8 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     assert_equal "in_review", @request.reload.status
     assert_nil @request.resolved_at
     refute_includes raw, "excluded-"
+    refute_includes raw, "Other invoice firm"
+    refute_includes raw, "other-invoice@example.test"
     refute_includes raw, @member.user.password_digest
     refute_includes raw, @other.user.email_address
     refute_includes raw, "password_digest"

@@ -159,6 +159,8 @@ class BetaJourneyTest < ApplicationSystemTestCase
     fill_in "registration_password_confirmation", with: "password1234"
     fill_in "registration_directory_profile_url", with: source_url
     fill_in "registration_firm_name", with: "Synthetic #{first_name} practice #{@nonce}"
+    enterprise_base = 10_000_000 + first_name.bytes.sum
+    fill_in "registration_enterprise_number", with: format("%08d%02d", enterprise_base, 97 - (enterprise_base % 97))
     find("#registration_terms_accepted").check
     find("form.assignment-form input[type='submit']").click
     assert_current_path verification_status_path(locale: :en)
@@ -203,6 +205,9 @@ class BetaJourneyTest < ApplicationSystemTestCase
     fill_in "assignment_duration_minutes", with: "60"
     fill_in "assignment_court", with: "Synthetic court"
     fill_in "assignment_city", with: "Brussels"
+    fill_in "assignment_invoice_address_line_1", with: "Test Street 1"
+    fill_in "assignment_invoice_postal_code", with: "1000"
+    fill_in "assignment_invoice_city", with: "Brussels"
     assert_field "assignment_fee_cents", with: ""
     find("#assignment_content_rules_accepted").check
     click_button I18n.t("marketplace.form.submit", locale: :en)

@@ -2,6 +2,8 @@ fr:
   profile_import:
     button: "Importer les données d’advocaat.be"
     preview: "Données importées. Vérifiez-les puis enregistrez."
+    scope: "Importe les langues et domaines de pratique. Les données de facturation restent distinctes."
+    empty: "Votre profil ne contient aucune langue ni domaine de pratique à importer."
     unavailable: "Impossible de récupérer votre profil. Réessayez plus tard."
     missing_profile: "Aucun profil advocaat.be valide n’est lié."
     rate_limited: "Patientez avant de réimporter les données."

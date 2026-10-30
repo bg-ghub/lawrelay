@@ -5,6 +5,27 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-30
+
+### Added
+
+- Branded social-preview images and sharing metadata in all four languages.
+- One required Belgian enterprise number with a derived, read-only VAT preview.
+- An official KBO/CBE lookup link by enterprise number.
+- Invoice recipient details saved separately for each assignment, with full contact details shared after selection.
+
+### Changed
+
+- Keep default billing details separate from the professional profile; allow a different invoice recipient per assignment.
+- Allow separate lawyer accounts to use the same enterprise number without sharing records or access.
+- Show “mr.” in the member header and beta status beside the version.
+- Replace the illustrative dashboard with the marketplace's actual assignment card.
+
+### Fixed
+
+- Translate settings-save notices in the destination language.
+- Preserve billing fields during directory imports and professional verification during billing-only updates.
+
 ## [0.10.2] - 2026-10-30
 
 ### Fixed

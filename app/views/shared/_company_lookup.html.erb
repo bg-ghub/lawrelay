@@ -1,0 +1,2 @@
+<% lookup_url = BusinessRegistry::KboLookup.url_for(enterprise_number: enterprise_number) %>
+<%= tag.a t("company_lookup.button"), href: lookup_url, target: "_blank", rel: "noopener noreferrer", class: "text-link company-lookup", aria: { disabled: lookup_url.nil? }, data: { company_number_target: "lookup" } %>

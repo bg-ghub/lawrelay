@@ -30,13 +30,13 @@ de:
       availability_note: "Verfügbarkeit"
       availability_note_placeholder: "Z. B. dienstags und donnerstags vormittags."
     firm:
-      legend: "Kanzlei und Abrechnung"
+      legend: "Rechnungsdaten"
       billing_email: "E-Mail für Rechnungen"
       phone: "Telefon"
       address: "Adresse"
       postal_code: "Postleitzahl"
       city: "Ort"
-      review_hint: "Änderungen an Kanzleiname, Unternehmens- oder USt-Nummer werden erneut geprüft."
+      assignment_hint: "Ihre Standard-Rechnungsdaten. Sie können sie für jeden Auftrag anpassen."
     aside:
       title: "Ihre Angaben"
       body: "Für Prüfung und Kontakt. Andere Anwälte sehen Ihre Kontaktdaten erst nach einer Vermittlung."

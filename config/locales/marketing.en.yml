@@ -29,9 +29,12 @@ en:
       source_code: Source on GitHub
       open_source: Open source
       app_version: Version %{version}
+      beta_version: Version %{version} · Beta
     home:
       title: "LawRelay — court cover and legal work"
       og_description: "Find a colleague for court cover or legal work."
+      social_preview:
+        alt: "LawRelay — court cover and legal work"
       hero:
         heading_before: Need a colleague
         heading_middle: for a
@@ -39,18 +42,13 @@ en:
         lede: "Arrange court cover or delegate legal work."
         note: "Open-source beta."
       product:
-        aria_label: Example of the LawRelay workspace
-        today: Today
-        response_received: "New response"
-        court_replacement: Court cover
-        court_example: Antwerp Family Court
+        aria_label: Example assignment on LawRelay
+        example_label: Example assignment
+        title: Court cover at the Antwerp Family Court
+        description: Looking for a confrater to cover a short family-law hearing.
+        court: Antwerp Family Court
         city: Antwerp
-        tomorrow: tomorrow, 10:00
-        responses: 3 responses
-        compare: Compare
-        profile_rate: profile & rate
-        choose: Choose
-        at_your_pace: at your own pace
+        practice_area: Family law
       pathways:
         eyebrow: "For lawyers"
         heading_before: How can we

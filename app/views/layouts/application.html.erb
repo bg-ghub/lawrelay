@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
-    <title><%= content_for(:title) || t("marketing.layout.title") %></title>
-    <meta name="description" content="<%= t("marketing.layout.description") %>">
+    <title><%= page_title %></title>
+    <meta name="description" content="<%= page_description %>">
     <meta name="robots" content="<%= public_marketing_page? ? "index,follow" : "noindex,nofollow" %>">
     <% if public_marketing_page? %>
       <link rel="canonical" href="<%= localized_canonical_url(I18n.locale) %>">
@@ -10,6 +10,26 @@
         <link rel="alternate" hreflang="<%= locale %>" href="<%= localized_canonical_url(locale) %>">
       <% end %>
       <link rel="alternate" hreflang="x-default" href="<%= localized_canonical_url(:en) %>">
+      <meta property="og:type" content="website">
+      <meta property="og:site_name" content="LawRelay">
+      <meta property="og:locale" content="<%= social_preview_locale %>">
+      <% I18n.available_locales.excluding(I18n.locale).each do |locale| %>
+        <meta property="og:locale:alternate" content="<%= social_preview_locale(locale) %>">
+      <% end %>
+      <meta property="og:title" content="<%= page_title %>">
+      <meta property="og:description" content="<%= page_description %>">
+      <meta property="og:url" content="<%= localized_canonical_url(I18n.locale) %>">
+      <meta property="og:image" content="<%= social_preview_image_url %>">
+      <meta property="og:image:secure_url" content="<%= social_preview_image_url %>">
+      <meta property="og:image:type" content="image/png">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:height" content="630">
+      <meta property="og:image:alt" content="<%= t("marketing.home.social_preview.alt") %>">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="<%= page_title %>">
+      <meta name="twitter:description" content="<%= page_description %>">
+      <meta name="twitter:image" content="<%= social_preview_image_url %>">
+      <meta name="twitter:image:alt" content="<%= t("marketing.home.social_preview.alt") %>">
     <% end %>
     <meta name="theme-color" content="#173f3b">
     <meta name="viewport" content="width=device-width,initial-scale=1">

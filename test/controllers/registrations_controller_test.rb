@@ -36,6 +36,13 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "must accept"
   end
 
+  test "shows a read-only VAT preview that is not submitted" do
+    get new_registration_path(locale: :en)
+
+    assert_select "input#registration_vat_number[readonly]"
+    assert_select "input#registration_vat_number[name]", count: 0
+  end
+
   test "email enqueue failure preserves the account and independently queues the directory check" do
     with_failed_verification_email do
       assert_enqueued_jobs 1, only: Directory::VerificationJob do
@@ -124,7 +131,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     first = valid_registration
     second = valid_registration.merge(
       first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example", firm_name: "Hopper Legal",
-      enterprise_number: "9876543210", vat_number: "BE9876543210"
+      enterprise_number: "2345678942", vat_number: "BE2345678942"
     )
 
     assert_difference "LawyerProfile.count", 2 do
@@ -136,6 +143,44 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal [ first[:directory_profile_url] ], profiles.pluck(:directory_profile_url).uniq
     assert_not_equal profiles.first.bar_number, profiles.second.bar_number
     assert profiles.all? { |profile| profile.bar_number.start_with?("PENDING-") }
+  end
+
+  test "allows separate accounts with the same company number" do
+    first = valid_registration
+    second = valid_registration.merge(
+      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example", firm_name: "Hopper Legal"
+    )
+
+    assert_difference [ "User.count", "Firm.count", "Membership.count" ], 2 do
+      post registration_path(locale: :en), params: { registration: first }
+      post registration_path(locale: :en), params: { registration: second }
+    end
+
+    first_user = User.find_by!(email_address: first[:email_address])
+    second_user = User.find_by!(email_address: second[:email_address])
+    assert_equal "1234567894", first_user.primary_firm.enterprise_number
+    assert_equal first_user.primary_firm.enterprise_number, second_user.primary_firm.enterprise_number
+    assert_not_equal first_user.primary_firm.id, second_user.primary_firm.id
+    assert_equal [ first_user.id ], first_user.primary_firm.user_ids
+    assert_equal [ second_user.id ], second_user.primary_firm.user_ids
+  end
+
+  test "normalizes the enterprise number and derives VAT instead of trusting a submitted VAT number" do
+    post registration_path(locale: :en), params: {
+      registration: valid_registration.merge(enterprise_number: "BE 1234.567.894", vat_number: "BE0000000000")
+    }
+
+    firm = User.order(:id).last.primary_firm
+    assert_equal "1234567894", firm.enterprise_number
+    assert_equal "BE1234567894", firm.vat_number
+  end
+
+  test "rejects an enterprise number with an invalid checksum" do
+    assert_no_difference "Firm.count" do
+      post registration_path(locale: :en), params: { registration: valid_registration.merge(enterprise_number: "1234567890") }
+    end
+
+    assert_response :unprocessable_content
   end
 
   private
@@ -162,8 +207,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       password: "correct-horse-battery-staple",
       password_confirmation: "correct-horse-battery-staple",
       firm_name: "Lovelace Legal",
-      enterprise_number: "0123456789",
-      vat_number: "BE0123456789",
+      enterprise_number: "1234567894",
       directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
       locale: "en",
       terms_accepted: "1"

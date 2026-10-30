@@ -4,7 +4,7 @@ require "nokogiri"
 module Directory
   class ProfileImport
     class ResponseTooLarge < StandardError; end
-    Result = Data.define(:status, :profile_attributes, :firm_attributes) do
+    Result = Data.define(:status, :profile_attributes) do
       def success? = status == :ok
     end
 
@@ -37,10 +37,9 @@ module Directory
       profile[:spoken_languages] = languages if languages.any?
       areas = labelled_values(main, PRACTICE_LABELS)
       profile[:practice_areas] = areas if areas.any?
-      firm = contact_attributes(main)
-      return failure(:empty) if profile.empty? && firm.empty?
+      return failure(:empty) if profile.empty?
 
-      Result.new(status: :ok, profile_attributes: profile, firm_attributes: firm)
+      Result.new(status: :ok, profile_attributes: profile)
     rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, IOError, SystemCallError,
       OpenSSL::SSL::SSLError, Net::HTTPBadResponse, Net::ProtocolError, Nokogiri::XML::SyntaxError, ResponseTooLarge
       failure(:unavailable)
@@ -55,26 +54,6 @@ module Directory
 
       values = content.name == "p" ? content.text.split(/[,;\n]/) : content.css("li").map(&:text)
       values.map { |value| value.squish.first(100) }.reject(&:blank?).uniq.first(20)
-    end
-
-    def contact_attributes(main)
-      heading = main.css("h2, h3").find { |element| element.text.squish.casecmp?("Contact") }
-      contact = heading&.parent
-      return {} unless contact
-
-      attributes = {}
-      phone = contact.at_css('a[href^="tel:"]')&.[]("href")&.delete_prefix("tel:")&.squish
-      attributes[:phone] = phone if phone&.match?(/\A\+?[\d ()\-.]{3,39}\z/) && phone.match?(/\d/)
-      address = contact.at_css("address")
-      return attributes unless address
-
-      lines = Nokogiri::HTML.fragment(address.inner_html.gsub(/<br\s*\/?\s*>/i, "\n")).text.lines.map(&:squish).reject(&:blank?)
-      locality = /\A(?<postal_code>\d{4})\s+(?<city>.+)\z/.match(lines.last.to_s)
-      return attributes unless locality && lines.length > 1
-
-      street = lines[0...-1].join(", ").sub(/,\s*\z/, "").strip
-      attributes.merge!(address_line_1: street.first(255), postal_code: locality[:postal_code], city: locality[:city].first(100)) if street.present?
-      attributes
     end
 
     def fetch_html(uri)
@@ -104,7 +83,7 @@ module Directory
     end
 
     def failure(status)
-      Result.new(status:, profile_attributes: {}, firm_attributes: {})
+      Result.new(status:, profile_attributes: {})
     end
   end
 end

@@ -150,6 +150,28 @@ class MarketplaceAccessControlTest < ActionDispatch::IntegrationTest
     assert_not_includes response.body, assignment.description
   end
 
+  test "the same company number does not share memberships or closed assignment details" do
+    owner = create_marketplace_account(prefix: "same-company-owner")
+    outsider = create_marketplace_account(prefix: "same-company-outsider")
+    owner.firm.update!(enterprise_number: "1234567894")
+    outsider.firm.update!(enterprise_number: "1234567894")
+    assignment = create_assignment_for(owner, title: "Closed separate-company assignment", status: "completed")
+    candidate = create_marketplace_account(prefix: "same-company-candidate")
+    create_proposal_for(assignment, candidate, message: "Private closed proposal")
+
+    assert_equal owner.firm.enterprise_number, outsider.firm.enterprise_number
+    assert_equal [ owner.user.id ], owner.firm.user_ids
+    assert_equal [ outsider.user.id ], outsider.firm.user_ids
+    assert_not_equal owner.firm.id, outsider.firm.id
+
+    sign_in_as(outsider.user)
+    get "/en/assignments/#{assignment.id}"
+
+    assert_redirected_to "/en/assignments"
+    assert_not_includes response.body, assignment.description
+    assert_not_includes response.body, "Private closed proposal"
+  end
+
   test "a proposer cannot see another candidate's identity or message" do
     owner = create_marketplace_account(prefix: "privacyowner")
     first_candidate = create_marketplace_account(prefix: "firstcandidate")

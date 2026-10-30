@@ -53,6 +53,8 @@
     </div>
   </fieldset>
 
+  <%= render "invoice_fields", form: form, assignment: assignment %>
+
   <fieldset class="form-section"><legend><%= t("marketplace.form.conditions_legend") %></legend>
     <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 0.01, value: euro_amount(assignment.fee_cents, field: true) %></div>
     <label class="form-check">

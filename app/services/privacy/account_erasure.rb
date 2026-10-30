@@ -88,7 +88,9 @@ module Privacy
       user.notifications.destroy_all
       user.lawyer_profile&.destroy!
       user.proposals.update_all(name: nil, email: nil, message: removed)
-      user.created_assignments.update_all(title: removed, description: removed, scope_indication: nil)
+      user.created_assignments.update_all(title: removed, description: removed, scope_indication: nil,
+        invoice_name: nil, invoice_enterprise_number: nil, invoice_email: nil, invoice_address_line_1: nil,
+        invoice_postal_code: nil, invoice_city: nil)
       user.created_assignments.where(status: %w[draft open matched]).update_all(status: "cancelled", closed_at: erased_at)
       user.proposals.joins(:assignment).where(assignments: { status: %w[draft open matched] })
         .update_all(status: "withdrawn", withdrawn_at: erased_at)

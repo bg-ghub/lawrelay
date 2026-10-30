@@ -1,0 +1,23 @@
+de:
+  assignment_billing:
+    heading: Rechnung für diesen Auftrag
+    form_hint: An wen soll Ihr Kollege die Rechnung stellen? Passen Sie die Angaben an, wenn die Rechnung an die Kanzlei geht.
+    name: Rechnungsempfänger
+    enterprise_number: Unternehmensnummer
+    vat_number: Umsatzsteuer-ID
+    email: E-Mail für Rechnungen
+    address: Rechnungsanschrift
+    postal_code: Postleitzahl
+    city: Ort
+    details: Rechnungsdaten
+    after_agreement: E-Mail und Anschrift sieht nur der ausgewählte Kollege.
+    legacy: Vereinbaren Sie die Rechnungsdaten mit dem Auftraggeber.
+  activerecord:
+    attributes:
+      assignment:
+        invoice_name: Rechnungsempfänger
+        invoice_enterprise_number: Unternehmensnummer
+        invoice_email: E-Mail für Rechnungen
+        invoice_address_line_1: Rechnungsanschrift
+        invoice_postal_code: Postleitzahl
+        invoice_city: Ort
