@@ -5,7 +5,7 @@ class ErrorsController < ActionController::Base
       @status = params[:status].to_i
       @message = @status == 404 ? "404" : (@status >= 500 ? "500" : "422")
       response.headers["X-Robots-Tag"] = "noindex, nofollow"
-      render :show, status: @status, layout: false
+      render :show, formats: [ :html ], content_type: "text/html", status: @status, layout: false
     end
   end
 

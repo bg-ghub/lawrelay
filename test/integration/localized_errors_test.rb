@@ -50,10 +50,20 @@ class LocalizedErrorsTest < ActionDispatch::IntegrationTest
     assert_localized_page(response.fetch(:body), locale: :de, heading: "Bitte erneut versuchen")
   end
 
+  test "non HTML accepts still receive the safe localized HTML error page" do
+    [ "application/json", "image/png" ].each do |accept|
+      response = render_error(404, "/fr/missing", accept:)
+
+      assert_equal 404, response.fetch(:status)
+      assert_match(%r{\Atext/html}, response.fetch(:headers)["content-type"])
+      assert_localized_page(response.fetch(:body), locale: :fr, heading: "Page introuvable")
+    end
+  end
+
   private
 
-  def render_error(status, original_path)
-    env = Rack::MockRequest.env_for("/#{status}")
+  def render_error(status, original_path, accept: "text/html")
+    env = Rack::MockRequest.env_for("/#{status}", "HTTP_ACCEPT" => accept)
     env["action_dispatch.original_path"] = original_path
     response_status, headers, body = Rails.application.routes.call(env)
     { status: response_status, headers:, body: body.each.to_a.join }

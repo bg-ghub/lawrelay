@@ -4,7 +4,7 @@
 
 Completed 876 page/viewport checks and 31 interactive actions in NL/FR/DE/EN, using a separate local test copy and read-only production pages. Fixed clipped admin badges, long German privacy headings and untranslated error pages. All 296 final-build rechecks and all actions passed. Public operator contacts now omit professional credentials.
 
-Rails: 468 tests / 14,824 assertions, no failures/errors, 17 environment-specific skips. Chrome: 40 system cases / 2,791 assertions, no failures/errors/skips. Production-image rendering checks 13 mail templates in four languages, HTML and text, without delivery. Captured local verification/reset links also opened correctly. [Detailed scope](beta-thorough-qa.md).
+Rails: 469 tests / 14,838 assertions, no failures/errors, 17 environment-specific skips. Chrome: 40 system cases / 2,791 assertions, no failures/errors/skips. Production-image rendering checks 13 mail templates in four languages, HTML and text, without delivery. Captured local verification/reset links also opened correctly. [Detailed scope](beta-thorough-qa.md).
 
 No real administrator credentials/MFA, production users or outreach drafts were changed. Real second-lawyer feedback and recipient-side email evidence remain separate.
 

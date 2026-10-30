@@ -6,7 +6,7 @@ Release 0.10.2. Browser mutations used an isolated local copy with fictitious ac
 
 | Check | Result |
 | --- | --- |
-| Rails | 468 tests, 14,824 assertions; no failures/errors; 17 environment-specific skips |
+| Rails | 469 tests, 14,838 assertions; no failures/errors; 17 environment-specific skips |
 | Chrome system tests | 40 cases, 2,791 assertions; no failures/errors/skips |
 | Interactive browser audit | 876 page/viewport checks and 31 action checks across NL/FR/DE/EN; all 296 final-build page checks and all actions pass |
 | Responsive coverage | Public pages at 320/390/768/1440px; member/admin states at 320/1440px |
@@ -23,7 +23,7 @@ The system suite also covers signup validation, expired links, password/email ch
 
 - Scoped a marketing icon rule that clipped admin status badges.
 - Wrapped long German privacy headings on small screens.
-- Added short localized error pages with headings, recovery links and no exception details.
+- Added short localized error pages with headings, recovery links and no exception details; non-HTML requests preserve the error status too.
 - Removed professional credentials from public operator contacts in all four languages.
 
 Initial findings remain in ignored local evidence at `tmp/full-browser-audit/browser-matrix.json`; affected pages passed the final-build rechecks. CI repeats the system suite and production-image rendering.
