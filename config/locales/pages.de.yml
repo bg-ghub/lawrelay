@@ -172,7 +172,7 @@ de:
           paragraphs:
             - "Fragen zu Cookies und Datenschutz können an den Datenschutzkontakt im Impressum gerichtet werden."
     operator_contact:
-      natural_person_description: "%{name}, Rechtsanwalt."
+      natural_person_description: "%{name}"
       legal_notice_link: "Impressum anzeigen"
       complaint_link: "Beschwerde bei der belgischen Datenschutzbehörde einreichen"
       professional_profile_url_link: "Offizielles Berufsprofil anzeigen"

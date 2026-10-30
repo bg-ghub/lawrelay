@@ -172,7 +172,7 @@ fr:
           paragraphs:
             - "Les questions sur les cookies et la vie privée peuvent être envoyées au contact vie privée des mentions légales."
     operator_contact:
-      natural_person_description: "%{name}, avocat."
+      natural_person_description: "%{name}"
       legal_notice_link: "Voir les mentions légales"
       complaint_link: "Introduire une plainte auprès de l’Autorité de protection des données"
       professional_profile_url_link: "Voir le profil professionnel officiel"

@@ -172,7 +172,7 @@ nl:
           paragraphs:
             - "Vragen over cookies en privacy kunnen naar het privacycontact in het colofon."
     operator_contact:
-      natural_person_description: "%{name}, advocaat."
+      natural_person_description: "%{name}"
       legal_notice_link: "Bekijk het colofon"
       complaint_link: "Dien een klacht in bij de Gegevensbeschermingsautoriteit"
       professional_profile_url_link: "Bekijk het officiële beroepsprofiel"

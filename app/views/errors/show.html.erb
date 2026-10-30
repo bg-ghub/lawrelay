@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <title><%= t("errors.#{@message}.title") %> — LawRelay</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+  </head>
+  <body>
+    <main id="main-content">
+      <h1><%= t("errors.#{@message}.heading") %></h1>
+      <p><%= t("errors.#{@message}.body") %></p>
+      <%= link_to t("errors.home"), "/#{I18n.locale}" %>
+    </main>
+  </body>
+</html>

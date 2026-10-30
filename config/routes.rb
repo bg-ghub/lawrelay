@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  match "/:status", to: "errors#show", via: :all, constraints: { status: /[45]\d\d/ }
+
   get "up" => "rails/health#show", as: :rails_health_check
   get "ready", to: "readiness#show", as: :readiness
   get "health/operations", to: "operational_health#show"
