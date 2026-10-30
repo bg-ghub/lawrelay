@@ -186,7 +186,9 @@ class AdminTrustWorkflowTest < ApplicationSystemTestCase
     path = record.is_a?(Report) ? admin_report_path(record, locale:) : admin_privacy_request_path(record, locale:)
     within("form[action='#{path}']") do
       fill_in I18n.t("trust.admin.resolution_note", locale:), with: note unless note.nil?
-      find("button[name='decision'][value='#{decision}']").click
+      # Native keyboard activation is more reliable than a pointer click here: the
+      # rows can be below the viewport after several Turbo updates.
+      find("button[name='decision'][value='#{decision}']").send_keys(:enter)
     end
     return if note == ""
 
