@@ -1,0 +1,13 @@
+<section class="analytics-preference" data-analytics-preference-panel data-analytics-privacy-signal-message="<%= t("marketing.analytics.privacy_signal") %>" aria-labelledby="analytics-preference-title" hidden>
+  <div class="shell analytics-preference__inner">
+    <div>
+      <p class="analytics-preference__title" id="analytics-preference-title"><%= t("marketing.analytics.title") %></p>
+      <p class="analytics-preference__copy"><%= t("marketing.analytics.copy") %></p>
+      <p class="analytics-preference__status" data-analytics-preference-status hidden></p>
+    </div>
+    <div class="analytics-preference__actions">
+      <button class="button button--small button--outline" type="button" data-analytics-preference="deny"><%= t("marketing.analytics.decline") %></button>
+      <button class="button button--small button--outline" type="button" data-analytics-preference="allow"><%= t("marketing.analytics.allow") %></button>
+    </div>
+  </div>
+</section>

@@ -35,6 +35,7 @@ Rails.application.config.filter_parameters += [
   :salt,
   :certificate,
   :otp,
+  :altcha,
   :ssn,
   :iban,
   :card_number,

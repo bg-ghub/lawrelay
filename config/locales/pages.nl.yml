@@ -52,6 +52,8 @@ nl:
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Facturatiegegevens per opdracht, zoals professionele naam en ondernemings-/btw-nummer. Geverifieerde kijkers van de opdracht zien naam en nummer; het kantoor van de opdrachtgever en de gekozen confrater zien het volledige facturatieadres en e-mailadres."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
+            - "Voor openbare pagina's alleen: cookieless Umami-statistieken met paginapad, verwijzend domein en gewone browser- en aanvraaggegevens. We sturen geen accountgegevens, formulieren, queries of opdrachtdetails door."
+            - "Voor anonieme bezoekers buiten België gebruikt een lokale beveiligingscontrole het IP-adres om het land te bepalen en bewaart zij kort een verificatierecord."
           paragraphs:
             - "LawRelay is niet bedoeld voor cliëntnamen, dossierfeiten, conclusies, bewijsstukken, documenten of vertrouwelijke communicatie. Die informatie hoort in systemen onder controle van de betrokken advocaten."
         purposes:
@@ -59,7 +61,7 @@ nl:
           bullets:
             - "Accounts aanmaken en beveiligen, toegang verifiëren en matching aanbieden: uitvoering van de dienstenovereenkomst."
             - "Misbruik voorkomen, de dienst beveiligen, gebruikers helpen, betrouwbaarheid verbeteren en rechtsvorderingen instellen of verdedigen: gerechtvaardigde belangen, afgewogen tegen gebruikersrechten."
-            - "LawRelay gebruikt geen optionele analytics."
+            - "Om het gebruik van openbare pagina's te begrijpen en de dienst te verbeteren: beperkte cookieless, geaggregeerde analytics, alleen na uw toestemming. Do Not Track en Global Privacy Control overschrijven een eerdere keuze om dit toe te laten."
         sharing:
           heading: "4. Met wie gegevens worden gedeeld"
           paragraphs:
@@ -73,7 +75,7 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
-            - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
+            - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Analytics van openbare pagina's: 90 dagen. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
             - "Accounts blijven bestaan tot afsluiting. Na beoordeling van een geverifieerd verwijderverzoek verwijderen we gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Lopende opdrachten, verzoeken, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
             - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."
         rights:
@@ -155,11 +157,11 @@ nl:
         current_use:
           heading: "1. Wat vandaag wordt gebruikt"
           paragraphs:
-            - "Noodzakelijke ondertekende sessie- en formulierbeveiligingscookies houden u aangemeld en beschermen formulieren tegen vervalste verzoeken. Een sessie duurt maximaal 30 dagen en eindigt eerder bij afmelding, wachtwoordreset of intrekking van de sessie. Deze cookies zijn strikt noodzakelijk voor de gevraagde dienst."
+            - "Noodzakelijke ondertekende sessie- en formulierbeveiligingscookies houden u aangemeld en beschermen formulieren tegen vervalste verzoeken. Een sessie duurt maximaal 30 dagen en eindigt eerder bij afmelding, wachtwoordreset of intrekking van de sessie. Voor een anonieme bezoeker buiten België gebruikt de beveiligingscontrole een ondertekende verificatiecookie gedurende 24 uur en een return-path-cookie gedurende maximaal 10 minuten. Statistieken aanpassen onthoudt Toestaan of Nee, bedankt gedurende 180 dagen."
         no_tracking:
-          heading: "2. Geen optionele tracking in de huidige versie"
+          heading: "2. Analytics op openbare pagina's"
           paragraphs:
-            - "LawRelay plaatst momenteel geen advertentie-, profilerings- of optionele analyticscookies. De taal staat in de pagina-URL en niet in een trackingcookie."
+            - "LawRelay vraagt toestemming vóór self-hosted Umami cookieless, geaggregeerde statistieken op openbare pagina's laadt. Het volgt geen advertenties, maakt geen profielen en registreert geen accountpagina's, formulieren, paginaqueries of opdrachtdetails. Via Statistieken kunt u uw keuze altijd wijzigen of intrekken. Do Not Track en Global Privacy Control blokkeren statistieken."
         retention:
           heading: "3. Duur en controle"
           paragraphs:

@@ -1,0 +1,9 @@
+fr:
+  marketing:
+    analytics:
+      title: "Statistiques anonymes"
+      copy: "Aidez-nous à comprendre quelles pages publiques sont utiles."
+      allow: "Autoriser"
+      decline: "Non merci"
+      change_preference: "Modifier les statistiques"
+      privacy_signal: "Le réglage de confidentialité de votre navigateur garde les statistiques désactivées."

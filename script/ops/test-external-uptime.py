@@ -54,6 +54,35 @@ class ExternalUptimeTest(unittest.TestCase):
         self.assertFalse(monitor.valid_body("operations", b'{"status":"unavailable"}', "application/json"))
         self.assertFalse(monitor.valid_body("operations", b'{"status":"ok","queue_errors":[]}', "application/json"))
 
+    def test_geo_check_requires_the_actual_widget_and_form(self):
+        challenge = b'<html lang="nl"><title>LawRelay</title><form><altcha-widget></altcha-widget></form></html>'
+        response = mock.MagicMock()
+        response.status = 200
+        response.headers = {"content-type": "text/html"}
+        response.read.return_value = challenge
+        response.__enter__.return_value = response
+        opener = mock.Mock()
+        opener.open.return_value = response
+        self.assertTrue(monitor.check_geo_challenge(opener)["ok"])
+        response.read.return_value = challenge.replace(b"altcha-widget", b"div")
+        self.assertFalse(monitor.check_geo_challenge(opener)["ok"])
+
+    def test_only_the_expected_geo_redirect_is_allowed(self):
+        opener = mock.Mock()
+        opener.open.side_effect = monitor.urllib.error.HTTPError(
+            monitor.BASE_URL + "/nl", 303, "See Other", {"Location": "/nl/geo-challenge"}, None,
+        )
+        with mock.patch.object(monitor.urllib.request, "build_opener", return_value=opener), mock.patch.object(
+            monitor, "check_geo_challenge", return_value={"check": "homepage", "ok": True},
+        ) as check:
+            self.assertTrue(monitor.check_endpoint("homepage", "/nl")["ok"])
+            check.assert_called_once_with(opener)
+        opener.open.side_effect = monitor.urllib.error.HTTPError(
+            monitor.BASE_URL + "/nl", 303, "See Other", {"Location": "https://foreign.example/nl/geo-challenge"}, None,
+        )
+        with mock.patch.object(monitor.urllib.request, "build_opener", return_value=opener), mock.patch.object(monitor.time, "sleep"):
+            self.assertFalse(monitor.check_endpoint("homepage", "/nl")["ok"])
+
     def test_synthetic_failure_does_not_probe_production(self):
         with mock.patch.dict(os.environ, {"UPTIME_SELF_TEST": "failure"}), mock.patch.object(monitor, "check_endpoint") as endpoint, mock.patch.object(monitor, "check_certificate") as certificate:
             self.assertEqual(monitor.probe(), 1)

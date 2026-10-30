@@ -52,6 +52,8 @@ fr:
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
             - "Données du destinataire de facturation par mission, notamment le nom professionnel et le numéro d’entreprise/TVA. Les membres vérifiés qui consultent la mission voient le nom et le numéro ; le cabinet du donneur d’ordre et le confrère choisi voient l’adresse et l’e-mail complets."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
+            - "Pour les pages publiques uniquement : statistiques Umami sans cookies, comprenant le chemin de page, le domaine référent et des métadonnées ordinaires du navigateur et de la requête. Nous n’envoyons ni données de compte, ni formulaires, ni requêtes, ni données de mission."
+            - "Pour les visiteurs anonymes hors de Belgique, un contrôle de sécurité local utilise l’adresse IP pour déterminer le pays et conserve brièvement une preuve de vérification."
           paragraphs:
             - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."
         purposes:
@@ -59,7 +61,7 @@ fr:
           bullets:
             - "Créer et sécuriser les comptes, vérifier l'accès et fournir la mise en relation : exécution du contrat de service."
             - "Prévenir les abus, sécuriser le service, assister les utilisateurs, améliorer la fiabilité et établir ou défendre des droits : intérêts légitimes mis en balance avec les droits des utilisateurs."
-            - "LawRelay n'utilise aucune analyse facultative."
+            - "Pour comprendre l’usage des pages publiques et améliorer le service : analyses limitées, agrégées et sans cookies, seulement avec votre consentement. Do Not Track et Global Privacy Control prévalent sur un choix antérieur de les autoriser."
         sharing:
           heading: "4. Destinataires"
           paragraphs:
@@ -73,7 +75,7 @@ fr:
         retention:
           heading: "6. Conservation"
           paragraphs:
-            - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
+            - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
             - "Les comptes restent jusqu’à leur clôture. Après examen d’une demande de suppression vérifiée, nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions, demandes, enquêtes, litiges en cours ou obligations légales peuvent justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
@@ -155,11 +157,11 @@ fr:
         current_use:
           heading: "1. Ce qui est utilisé aujourd'hui"
           paragraphs:
-            - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Ces cookies sont strictement nécessaires au service demandé."
+            - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Pour un visiteur anonyme hors de Belgique, le contrôle de sécurité utilise un cookie de vérification signé pendant 24 heures et un cookie de retour pendant 10 minutes au plus. Modifier les statistiques conserve Autoriser ou Non merci pendant 180 jours."
         no_tracking:
-          heading: "2. Pas de suivi facultatif dans la version actuelle"
+          heading: "2. Analyses des pages publiques"
           paragraphs:
-            - "LawRelay ne place actuellement aucun cookie publicitaire, de profilage comportemental ou d'analyse facultative. La langue figure dans l'URL de la page, pas dans un cookie de suivi."
+            - "LawRelay demande votre accord avant de charger Umami auto-hébergé pour des statistiques agrégées sans cookies, uniquement sur les pages publiques. Il ne suit pas la publicité, ne crée pas de profils et n’enregistre pas les pages de compte, formulaires, requêtes de page ou données de mission. Statistiques permet de modifier ou retirer ce choix à tout moment. Do Not Track et Global Privacy Control bloquent les statistiques."
         retention:
           heading: "3. Durée et contrôle"
           paragraphs:

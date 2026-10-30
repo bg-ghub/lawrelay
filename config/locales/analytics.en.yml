@@ -1,0 +1,9 @@
+en:
+  marketing:
+    analytics:
+      title: "Anonymous statistics"
+      copy: "Help us understand which public pages are useful."
+      allow: "Allow"
+      decline: "No thanks"
+      change_preference: "Statistics preference"
+      privacy_signal: "Your browser privacy setting keeps statistics off."
