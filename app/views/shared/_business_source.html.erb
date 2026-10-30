@@ -1,0 +1,2 @@
+<% source_label = business_lookup_source_label(snapshot_date: metadata["snapshot_date"], fields: local_assigns.fetch(:fields, metadata.fetch("fields", []))) %>
+<% if source_label.present? %><p class="field-hint business-lookup__source"><%= source_label %></p><% end %>

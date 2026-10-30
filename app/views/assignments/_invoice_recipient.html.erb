@@ -11,6 +11,7 @@
         <div><dt><%= t("assignment_billing.details") %></dt><dd><%= t("assignment_billing.after_agreement") %></dd></div>
       <% end %>
     </dl>
+    <%= render "shared/business_source", metadata: assignment.invoice_kbo_details, fields: (assignment.invoice_details_visible_to?(current_user) ? assignment.invoice_kbo_details.fetch("fields", []) : assignment.invoice_kbo_details.fetch("fields", []) & %w[name enterprise_number]) %>
   <% else %>
     <p><%= t("assignment_billing.legacy") %></p>
   <% end %>

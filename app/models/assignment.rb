@@ -128,7 +128,8 @@ class Assignment < ApplicationRecord
       invoice_email: firm&.billing_email.presence || user.email_address,
       invoice_address_line_1: firm&.address_line_1,
       invoice_postal_code: firm&.postal_code,
-      invoice_city: firm&.city
+      invoice_city: firm&.city,
+      invoice_kbo_details: firm&.kbo_details&.deep_dup || {}
     }
   end
 

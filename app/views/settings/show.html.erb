@@ -5,7 +5,7 @@
   </div>
 
   <div class="new-assignment__layout">
-    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { controller: "company-number", company_number_locale_value: I18n.locale, unsaved_changes: @profile_import_preview || false } do |form| %>
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: @profile_import_preview || false } do |form| %>
       <%# Enter keeps saving the form even though the import button appears first. %>
       <%= form.button t("settings.save"), name: "settings_action", value: "save", hidden: true, tabindex: -1 %>
       <% errors = [@user, @profile, @firm].compact.flat_map { |record| record.errors.full_messages }.uniq %>
@@ -43,22 +43,28 @@
       </fieldset>
 
       <% if @can_manage_firm %>
-        <fieldset class="form-section">
+        <fieldset class="form-section" data-controller="company-number business-lookup" data-company-number-locale-value="<%= I18n.locale %>"
+          data-business-lookup-url-value="<%= company_lookup_path %>"
+          data-business-lookup-loading-value="<%= t("business_lookup.loading") %>"
+          data-business-lookup-loaded-value="<%= t("business_lookup.loaded") %>"
+          data-business-lookup-unavailable-value="<%= t("business_lookup.unavailable") %>"
+          data-business-lookup-invalid-value="<%= t("business_lookup.invalid") %>"
+          data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
           <legend><%= t("settings.firm.legend") %></legend>
-          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.company_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization", aria: { describedby: "company-name-hint" } %><p class="field-hint" id="company-name-hint"><%= t("auth.fields.company_name_hint") %></p></div>
+          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.company_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization", aria: { describedby: "company-name-hint" }, data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %><p class="field-hint" id="company-name-hint"><%= t("auth.fields.company_name_hint") %></p></div>
           <div class="form-row">
-            <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number, required: true, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", action: "input->company-number#sync" } %></div>
+            <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number, required: true, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", business_lookup_target: "number", action: "input->company-number#sync input->business-lookup#edited" } %></div>
             <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number, name: nil, readonly: true, autocomplete: "off", class: "company-vat-preview", data: { company_number_target: "vat" } %></div>
           </div>
-          <p><%= render "shared/company_lookup", enterprise_number: @firm.enterprise_number %></p>
+          <%= render "shared/business_lookup", scope: "firm", enterprise_number: @firm.enterprise_number, token: params.dig(:firm, :kbo_lookup_token), kbo_snapshot_date: @firm.kbo_details["snapshot_date"], kbo_fields: @firm.kbo_details.fetch("fields", []) %>
           <div class="form-row">
             <div class="field-group"><%= form.label "firm[billing_email]", t("settings.firm.billing_email") %><%= form.email_field "firm[billing_email]", value: @firm.billing_email %></div>
             <div class="field-group"><%= form.label "firm[phone]", t("settings.firm.phone") %><%= form.telephone_field "firm[phone]", value: @firm.phone %></div>
           </div>
-          <div class="field-group"><%= form.label "firm[address_line_1]", t("settings.firm.address") %><%= form.text_field "firm[address_line_1]", value: @firm.address_line_1, autocomplete: "street-address" %></div>
+          <div class="field-group"><%= form.label "firm[address_line_1]", t("settings.firm.address") %><%= form.text_field "firm[address_line_1]", value: @firm.address_line_1, autocomplete: "street-address", data: { business_lookup_target: "address", action: "input->business-lookup#edited" } %></div>
           <div class="form-row">
-            <div class="field-group"><%= form.label "firm[postal_code]", t("settings.firm.postal_code") %><%= form.text_field "firm[postal_code]", value: @firm.postal_code, autocomplete: "postal-code" %></div>
-            <div class="field-group"><%= form.label "firm[city]", t("settings.firm.city") %><%= form.text_field "firm[city]", value: @firm.city, autocomplete: "address-level2" %></div>
+            <div class="field-group"><%= form.label "firm[postal_code]", t("settings.firm.postal_code") %><%= form.text_field "firm[postal_code]", value: @firm.postal_code, autocomplete: "postal-code", data: { business_lookup_target: "postalCode", action: "input->business-lookup#edited" } %></div>
+            <div class="field-group"><%= form.label "firm[city]", t("settings.firm.city") %><%= form.text_field "firm[city]", value: @firm.city, autocomplete: "address-level2", data: { business_lookup_target: "city", action: "input->business-lookup#edited" } %></div>
           </div>
           <p class="field-hint"><%= t("settings.firm.assignment_hint") %></p>
         </fieldset>

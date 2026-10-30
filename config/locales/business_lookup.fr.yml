@@ -1,0 +1,19 @@
+fr:
+  business_lookup:
+    rate_limited: "Trop de recherches. Réessayez dans une minute."
+    limit_reached: "Limite de recherches atteinte. Saisissez les données vous-même."
+    button: "Charger les données BCE"
+    loading: "Chargement…"
+    loaded: "Données chargées. Vérifiez-les avant d’enregistrer."
+    invalid: "Saisissez un numéro d’entreprise valide."
+    not_found: "Aucune entreprise trouvée. Saisissez les données vous-même."
+    unavailable: "La BCE est indisponible. Réessayez plus tard ou saisissez les données vous-même."
+    not_configured: "Saisissez les données vous-même."
+    stale: "Vos données ont changé. Relancez la recherche."
+    source: "BCE · %{date}"
+    fields:
+      name: "nom"
+      enterprise_number: "numéro d’entreprise"
+      address_line_1: "adresse"
+      postal_code: "code postal"
+      city: "commune"

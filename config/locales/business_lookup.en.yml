@@ -1,0 +1,19 @@
+en:
+  business_lookup:
+    button: "Get CBE details"
+    loading: "Loading…"
+    loaded: "Details loaded. Check them before saving."
+    invalid: "Enter a valid enterprise number."
+    rate_limited: "Too many lookups. Try again in a minute."
+    limit_reached: "Lookup limit reached. Enter the details yourself."
+    not_found: "No business found. Enter the details yourself."
+    unavailable: "CBE is unavailable. Try later or enter the details yourself."
+    not_configured: "Enter the details yourself."
+    stale: "Your details changed. Look up the number again."
+    source: "CBE · %{date}"
+    fields:
+      name: "name"
+      enterprise_number: "enterprise number"
+      address_line_1: "address"
+      postal_code: "postcode"
+      city: "city"

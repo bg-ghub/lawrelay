@@ -1,0 +1,6 @@
+.business-lookup{display:grid;justify-items:start;gap:.4rem;margin-top:.75rem;min-width:0}
+.business-lookup__button{min-height:42px;max-width:100%;padding:.6rem .9rem;white-space:normal;text-align:left}
+.business-lookup__button:disabled{cursor:wait;opacity:.7}
+.business-lookup__status--error{color:#74321e}
+.business-lookup__source{overflow-wrap:anywhere}
+.business-lookup__source[hidden]{display:none}

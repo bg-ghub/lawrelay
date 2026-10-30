@@ -136,4 +136,19 @@ class AssignmentTest < ActiveSupport::TestCase
       I18n.with_locale(locale) { assert_equal label, assignment.kind_label }
     end
   end
+
+  test "invoice defaults copy KBO attribution without sharing the firm hash" do
+    details = {
+      "snapshot_date" => "2026-10-15",
+      "fields" => [ "name", "enterprise_number", "address_line_1" ]
+    }
+    firm = Firm.new(name: "KBO recipient", enterprise_number: "1234567894", kbo_details: details)
+    user = User.new(email_address: "invoice-default@example.test")
+
+    defaults = Assignment.default_invoice_recipient(firm:, user:)
+    defaults.fetch(:invoice_kbo_details).fetch("fields") << "city"
+
+    assert_equal "2026-10-15", defaults.dig(:invoice_kbo_details, "snapshot_date")
+    assert_equal [ "name", "enterprise_number", "address_line_1" ], firm.kbo_details.fetch("fields")
+  end
 end

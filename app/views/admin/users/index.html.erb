@@ -41,6 +41,7 @@
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.fields.firm") %></span>
             <strong><%= firm&.name || t("admin.users.not_recorded") %></strong>
+            <%= render "shared/business_source", metadata: firm.kbo_details, fields: firm.kbo_details.fetch("fields", []) & %w[name] if firm %>
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.fields.status") %></span>

@@ -18,6 +18,7 @@
             <div>
               <p class="eyebrow"><%= t("admin.founding_accesses.verified_firm") %></p>
               <h2><%= firm.name %></h2>
+              <%= render "shared/business_source", metadata: firm.kbo_details, fields: firm.kbo_details.fetch("fields", []) & %w[name enterprise_number] %>
             </div>
             <span class="status-pill"><%= grant_active ? t("admin.founding_accesses.active_until", date: l(account.complimentary_access_until.to_date)) : t("admin.founding_accesses.no_access") %></span>
           </div>

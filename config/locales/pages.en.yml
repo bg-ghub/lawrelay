@@ -48,7 +48,7 @@ en:
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records."
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
-            - "Professional and billing data: your official directory profile, listed name and email, company name, enterprise/VAT number, contact details and professional-verification status."
+            - "Professional and billing data: your official directory profile, listed name and email, company name, enterprise/VAT number, contact details and professional-verification status. If you use the official KBO public search to look up an enterprise number, we store the returned billing fields (name, number and, where available, registered-office address) and KBO source snapshot date."
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Per-assignment invoice recipient data, including professional name and enterprise/VAT number. Verified assignment viewers can see the recipient name and number; the requester’s firm and the selected confrater can see the full invoice address and email."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."

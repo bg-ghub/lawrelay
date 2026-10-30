@@ -97,11 +97,12 @@ class ProfileImportTest < ApplicationSystemTestCase
       assert_field I18n.t("auth.fields.enterprise_number", locale: locale), with: "1234567894"
       assert_field I18n.t("auth.fields.vat_number", locale: locale), with: "BE 1234567894"
       assert_selector "input[data-company-number-target='vat'][readonly]:not([name])"
-      assert_selector "a.company-lookup[href='https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer=1234567894&lang=#{locale}'][target='_blank'][rel='noopener noreferrer']"
+      assert_button I18n.t("business_lookup.button", locale: locale)
+      assert_selector "fieldset[data-business-lookup-url-value='/#{locale}/company-lookup']"
 
       fill_in I18n.t("auth.fields.enterprise_number", locale: locale), with: "12345678941"
       assert_field I18n.t("auth.fields.vat_number", locale: locale), with: ""
-      assert_selector "a.company-lookup[aria-disabled='true']:not([href])"
+      assert_no_selector ".business-lookup__status--error"
     end
 
     fill_in "Enterprise number", with: "1234567890"
