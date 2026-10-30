@@ -1,8 +1,10 @@
 # Statistics and visitor check
 
-LawRelay reuses WetWijzer's Umami 3.2 instance in Germany. The dashboard at
-[analytics.lawrelay.be](https://analytics.lawrelay.be) requires the existing Umami login.
-LawRelay has its own website record; it does not share WetWijzer's statistics.
+LawRelay runs its own self-hosted Umami 3.4 instance on the LawRelay Hetzner
+server in Germany. The dashboard at
+[analytics.lawrelay.be](https://analytics.lawrelay.be) has its own login,
+database volume and credentials. It does not share a dataset, database or admin
+account with WetWijzer.
 
 Only anonymous public pages send cookieless pageviews, without an opt-in gate.
 Queries, fragments, account details and form values are excluded. Referrers contain
@@ -14,13 +16,20 @@ separately for 180 days and never enables or disables statistics. It is not cons
 
 The production environment sets `UMAMI_WEBSITE_ID`. The exact analytics origin is
 allowed in CSP; automatic Umami tracking, replay and custom events are disabled.
-The existing Nginx host proxies the subdomain and renews its own certificate. No
-public dashboard share was created.
+Caddy proxies the subdomain to the private Umami container and obtains its ACME
+certificate. No public dashboard share was created.
 
-`lawrelay-analytics-retention.timer` runs on the Umami host daily. Its script
+`lawrelay-analytics-retention.timer` runs on the LawRelay host daily. Its script
 defaults to a dry run; `--apply` removes only this LawRelay website's records older
 than 90 days in a transaction. A site/domain check prevents accidental use against
-another website. Inspect the service journal after changing the shared Umami schema.
+another website. Inspect the service journal after changing the Umami schema.
+
+Deployment reads protected `umami.env` and `umami-db.env` beside `production.env`.
+They are copied with mode `0600` and contain the Umami application/database
+credentials, respectively; do not put those values in `production.env` or Git.
+The external `lawrelay_umami_db` volume is part of LawRelay's own backup and
+restore scope. GeoIP remains a separate local file refreshed from WetWijzer as
+described below.
 
 ## GeoCaptcha
 

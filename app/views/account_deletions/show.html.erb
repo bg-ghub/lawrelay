@@ -1,0 +1,16 @@
+<% content_for :title, t("account_deletion.title") %>
+<div class="new-assignment shell settings-page">
+  <div class="new-assignment__intro"><h1><%= t("account_deletion.heading") %></h1></div>
+  <div class="new-assignment__layout">
+    <%= form_with url: account_deletion_path, method: :delete, class: "assignment-form", data: { turbo: false } do |form| %>
+      <fieldset class="form-section">
+        <legend><%= t("account_deletion.form.legend") %></legend>
+        <p><%= t("account_deletion.warning") %></p>
+        <div class="field-group"><%= form.label :current_password, t("account_deletion.form.password") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
+        <div class="field-group"><label><%= form.check_box :confirm_delete_account, required: true %> <%= t("account_deletion.form.confirm") %></label></div>
+      </fieldset>
+      <div class="form-actions"><%= link_to t("account_deletion.form.cancel"), settings_path, class: "button button--ghost" %><%= form.submit t("account_deletion.form.submit"), class: "button button--dark" %></div>
+    <% end %>
+    <aside class="posting-aside"><span class="posting-aside__number">!</span><h2><%= t("account_deletion.aside.title") %></h2><p><%= t("account_deletion.aside.body") %></p></aside>
+  </div>
+</div>

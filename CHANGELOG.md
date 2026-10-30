@@ -5,6 +5,22 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-10-30
+
+### Added
+
+- Delete a member account from the profile, with password confirmation and the existing erasure/retention safeguards.
+
+### Changed
+
+- Give LawRelay its own Umami instance, database and administrator login on the LawRelay server.
+- Include analytics in the existing encrypted backups, retention and health checks.
+
+### Fixed
+
+- Keep the footer at the bottom of short pages, including the legal notice.
+- Remove the invoice-name helper and make both homepage action cards clickable with hover and keyboard focus feedback.
+
 ## [0.13.1] - 2026-10-30
 
 ### Fixed

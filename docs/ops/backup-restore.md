@@ -40,6 +40,12 @@ AWS_SECRET_ACCESS_KEY=...
 AWS_DEFAULT_REGION=...
 LAWRELAY_STORAGE_VOLUME=lawrelay_storage
 LAWRELAY_BACKUP_WORK_ROOT=/var/lib/lawrelay-backup
+# Optional, after the dedicated analytics instance is deployed. Both names are
+# required together; leaving both unset keeps analytics out of this backup.
+LAWRELAY_UMAMI_DB_CONTAINER=lawrelay-umami-db
+LAWRELAY_UMAMI_APP_CONTAINER=lawrelay-umami
+# Defaults to /home/deploy/lawrelay
+# LAWRELAY_UMAMI_CONFIG_DIR=/home/deploy/lawrelay
 ```
 
 Use a distinct, encrypted, access-restricted off-host repository, ideally in an EEA failure domain separate from the application host. Put the restic passphrase in `/etc/lawrelay/restic-password` with mode `0600`; it must not appear in `backup.env`, a command line, logs, or this repo. For an S3-compatible provider, use the documented restic endpoint/credential variables for that provider. Restrict the backup identity to the backup bucket/prefix and test recovery before relying on it.
@@ -54,6 +60,9 @@ LAWRELAY_BACKUP_MAX_AGE_HOURS=26
 LAWRELAY_DISK_WARN_PERCENT=85
 # Optional: exact Docker container name for an additional running-state check.
 # LAWRELAY_DOCKER_CONTAINER=lawrelay-web-...
+# Optional dedicated Umami checks. Configure both or neither.
+# LAWRELAY_UMAMI_DB_CONTAINER=lawrelay-umami-db
+# LAWRELAY_UMAMI_APP_CONTAINER=lawrelay-umami
 ```
 
 Optional private alerts use `/etc/lawrelay/alert.env`, mode `0600`:
@@ -88,6 +97,14 @@ sudo systemctl start lawrelay-health.service
 ```
 
 The backup script holds an exclusive lock, so a second timer/manual run exits safely. Successful runs update `/var/lib/lawrelay-backup/state/last-success`; failed jobs remain visible in `systemctl` and trigger `lawrelay-failure@.service`. Restic keeps recovery snapshots for 30 days. Hetzner's separate seven daily disk backups remain unchanged.
+
+### Optional dedicated Umami backup
+
+When both Umami container variables are set, the same encrypted restic snapshot also contains `analytics/database.dump` (a checked PostgreSQL logical dump) and protected copies of `umami.env` and `umami-db.env`. Those runtime files must be regular, non-linked `deploy:deploy` files with mode `0600`. The backup fails if either analytics container is missing or unhealthy; no database password is written to logs.
+
+To recover analytics, use the same compatible Umami and PostgreSQL major versions, restore the custom dump into an empty analytics database, restore the two protected env files to `/home/deploy/lawrelay` with owner `deploy` and mode `0600`, then start the stack and verify `/api/heartbeat`. Reapply the 90-day analytics cleanup policy after recovery. The existing SQLite restore drill deliberately ignores the optional `analytics/` directory; run a separate PostgreSQL restore drill after enabling this backup.
+
+Verification (2026-10-30): a fresh snapshot passed backup and health checks. Its dump restored into an isolated PostgreSQL 15 container with `--network none` and no published ports, confirming one LawRelay site and six `website_event` records. The disposable container, volume, dump and staging directory were removed afterwards.
 
 Before installing the 30-day prune on a live repository, run a fresh backup, then review its dry run as root:
 

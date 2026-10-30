@@ -76,7 +76,7 @@ nl:
           heading: "6. Bewaring"
           paragraphs:
             - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Analytics van openbare pagina's: 90 dagen. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
-            - "Accounts blijven bestaan tot afsluiting. Na beoordeling van een geverifieerd verwijderverzoek verwijderen we gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Lopende opdrachten, verzoeken, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
+            - "Accounts blijven bestaan tot afsluiting. Je kunt je account in Profiel verwijderen na bevestiging van je wachtwoord. We verwijderen gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Open opdrachten, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
             - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."
         rights:
           heading: "7. Uw rechten"
@@ -146,7 +146,7 @@ nl:
         liability:
           heading: "12. Aansprakelijkheid, einde en recht"
           paragraphs:
-            - "U kunt stoppen met de bèta en accountverwijdering vragen via support@lawrelay.be. LawRelay kan toegang tot de bèta beëindigen met een redelijke kennisgeving of onmiddellijk wanneer dat nodig is voor beveiliging, wet of deze voorwaarden."
+            - "Je kunt de bèta op elk moment niet meer gebruiken en je account in Profiel verwijderen na bevestiging van je wachtwoord. LawRelay kan toegang tot de bèta beëindigen met een redelijke kennisgeving of onmiddellijk wanneer dat nodig is voor beveiliging, wet of deze voorwaarden."
             - "Belgisch recht is van toepassing op deze voorwaarden. Dwingende rechten die op u van toepassing zijn, blijven onverlet. Niets in deze voorwaarden sluit aansprakelijkheid uit die wettelijk niet kan worden uitgesloten."
     cookies:
       meta_title: "Cookieverklaring — LawRelay"

@@ -30,3 +30,18 @@ lawrelay.be, admin.lawrelay.be {
 
 	reverse_proxy app:3000
 }
+
+analytics.lawrelay.be {
+	encode zstd gzip
+
+	header {
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "DENY"
+		-Server
+	}
+
+	# reverse_proxy preserves Caddy's trusted client forwarding headers for
+	# Umami while keeping the analytics container off the host network.
+	reverse_proxy umami:3000
+}

@@ -26,16 +26,16 @@
 <section class="pathways-section" id="for-lawyers">
   <div class="shell">
     <div class="pathway-grid">
-      <article class="pathway-card pathway-card-paper">
+      <%= link_to new_assignment_path, class: "pathway-card pathway-card-paper" do %>
         <div class="pathway-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h5M9 13h6M9 17h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
         <h2><%= t("marketing.home.pathways.requester.heading_before") %><br><%= t("marketing.home.pathways.requester.heading_after") %></h2><p><%= t("marketing.home.pathways.requester.body") %></p>
-        <%= link_to new_assignment_path, class: "card-link" do %><span><%= t("marketing.actions.post_assignment") %></span><span>→</span><% end %>
-      </article>
-      <article class="pathway-card pathway-card-ink">
+        <span class="card-link"><span><%= t("marketing.actions.post_assignment") %></span><span aria-hidden="true">→</span></span>
+      <% end %>
+      <%= link_to assignments_path, class: "pathway-card pathway-card-ink" do %>
         <div class="pathway-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7M4 6h5M4 18h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h2><%= t("marketing.home.pathways.responder.heading_before") %><br><%= t("marketing.home.pathways.responder.heading_after") %></h2><p><%= t("marketing.home.pathways.responder.body") %></p>
-        <%= link_to assignments_path, class: "card-link" do %><span><%= t("marketing.actions.browse_assignments") %></span><span>→</span><% end %>
-      </article>
+        <span class="card-link"><span><%= t("marketing.actions.browse_assignments") %></span><span aria-hidden="true">→</span></span>
+      <% end %>
     </div>
   </div>
 </section>

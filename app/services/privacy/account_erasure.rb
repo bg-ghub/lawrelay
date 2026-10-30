@@ -4,11 +4,12 @@ module Privacy
   class AccountErasure
     class ProtectedAccount < StandardError; end
 
-    def initialize(request:, actor:, ledger: ErasureLedger.new)
+    def initialize(request:, actor:, ledger: ErasureLedger.new, self_service: false)
       @request = request
       @actor = actor
       @ledger = ledger
-      @context = RequestContext.new(request:, actor:, kind: "deletion")
+      @self_service = self_service
+      @context = RequestContext.new(request:, actor:, kind: "deletion", self_service:)
     end
 
     def call
@@ -26,7 +27,7 @@ module Privacy
         operation = @ledger.stage!(user, erased_at:)
         self.class.scrub!(user, erased_at:)
         @request.reload.update!(status: "completed", resolved_at: erased_at, handled_by_user: @actor)
-        AuditEvent.create!(auditable: user, actor_user: @actor, action: "privacy.account_erased", metadata: {})
+        AuditEvent.create!(auditable: user, actor_user: @actor, action: "privacy.account_erased", metadata: { self_service: @self_service })
       end
       @ledger.commit!(operation)
       true
@@ -59,14 +60,14 @@ module Privacy
 
     def self.check_protection!(user, ignored_privacy_request_id: nil)
       raise ProtectedAccount, "Administrator accounts are excluded" if user.system_admin?
+      ongoing = user.created_assignments.where(status: %w[draft open matched]).exists? ||
+        user.proposals.joins(:assignment).where(assignments: { status: %w[draft open matched] }).exists?
+      raise ProtectedAccount, "Resolve ongoing assignments and proposals before account erasure" if ongoing
       raise ProtectedAccount, "Resolve the recorded hold or open request first" if Retention::Protection.held?(user, ignored_privacy_request_id:)
       related_work = Assignment.where(creator_user_id: user.id).or(Assignment.where(id: user.proposals.select(:assignment_id)))
       if related_work.any? { |assignment| Retention::Protection.held?(assignment, ignored_privacy_request_id:) }
         raise ProtectedAccount, "Resolve the related assignment, report or participant hold first"
       end
-      ongoing = user.created_assignments.where(status: %w[draft open matched]).exists? ||
-        user.proposals.joins(:assignment).where(assignments: { status: %w[draft open matched] }).exists?
-      raise ProtectedAccount, "Resolve ongoing assignments and proposals before account erasure" if ongoing
       raise ProtectedAccount, "Review billing evidence before account erasure" if user.firms.joins(billing_account: :invoices).exists? ||
         user.firms.joins(billing_account: :billing_payments).exists? || user.firms.joins(billing_account: :subscriptions).exists?
     end

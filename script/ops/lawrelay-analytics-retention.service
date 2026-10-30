@@ -2,6 +2,7 @@
 Description=Remove LawRelay Umami records older than 90 days
 After=docker.service
 Requires=docker.service
+OnFailure=lawrelay-failure@%n.service
 
 [Service]
 Type=oneshot

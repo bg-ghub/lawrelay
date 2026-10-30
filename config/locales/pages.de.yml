@@ -76,7 +76,7 @@ de:
           heading: "6. Aufbewahrung"
           paragraphs:
             - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
-            - "Konten bleiben bis zur Schließung bestehen. Nach Prüfung eines bestätigten Löschantrags entfernen wir nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Laufende Aufträge, Anfragen, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
+            - "Konten bleiben bis zur Schließung bestehen. Sie können Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. Wir entfernen nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Offene Aufträge, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
           heading: "7. Ihre Rechte"
@@ -146,7 +146,7 @@ de:
         liability:
           heading: "12. Haftung, Beendigung und Recht"
           paragraphs:
-            - "Sie können die Beta jederzeit nicht mehr nutzen und die Löschung Ihres Kontos unter support@lawrelay.be verlangen. LawRelay kann den Beta-Zugang mit angemessener Frist oder sofort beenden, wenn dies für Sicherheit, Gesetz oder diese Bedingungen erforderlich ist."
+            - "Sie können die Beta jederzeit nicht mehr nutzen und Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. LawRelay kann den Beta-Zugang mit angemessener Frist oder sofort beenden, wenn dies für Sicherheit, Gesetz oder diese Bedingungen erforderlich ist."
             - "Diese Bedingungen unterliegen belgischem Recht. Zwingende Rechte, die auf Sie anwendbar sind, bleiben unberührt. Diese Bedingungen schließen keine Haftung aus, die gesetzlich nicht ausgeschlossen werden darf."
     cookies:
       meta_title: "Cookie-Hinweise — LawRelay"

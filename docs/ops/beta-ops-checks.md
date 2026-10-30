@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 30 October 2026 — 0.14.0 analytics and profile
+
+Moved LawRelay's six existing pageviews into its own Umami 3.4.1 deployment, database and administrator account. Verified the retained event IDs, live collection and dashboard login, then removed only LawRelay from WetWijzer's shared instance. Its four other websites remain unchanged. Daily 90-day cleanup now runs on the LawRelay host.
+
+Members can delete their own account from Profile with password confirmation. Existing work/hold safeguards and the durable erasure ledger remain in place; tests cover failures before and after the database commit. No production account was deleted.
+
+Rails: 552 cases / 15,973 assertions, no failures or errors; 17 environment-specific skips. Analytics privacy tests, RuboCop and Brakeman pass. Manual browser checks verified both full-card destinations and keyboard lift, removal of the invoice-name helper, and the footer bottom in all four languages and at mobile width.
+
 ## 30 October 2026 — 0.12.0 KBO lookup and titles
 
 Added targeted public KBO lookup using Praxis's current approach, with no extra account or credentials. One explicit request previews name/number and an available registered-office address; emails, professional identity and missing address fields stay untouched. Attribution follows unchanged fields and assignment snapshots, including export/erasure. The authenticated SOAP endpoint was checked separately and is not used.
