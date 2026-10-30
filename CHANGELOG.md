@@ -5,6 +5,15 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-10-30
+
+### Fixed
+
+- Keep operator contact details simple, without professional credentials, in all four languages.
+- Fix mobile status badges and long headings in report and privacy screens.
+- Localize missing-page and error messages, with accessible headings and recovery links.
+- Expand browser coverage for access guards, recovery links, validation and admin reviews.
+
 ## [0.10.1] - 2026-10-29
 
 ### Fixed

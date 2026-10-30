@@ -1,26 +1,37 @@
-# Beta checks — 29 October 2026
+# Beta QA — 30 October 2026
 
-Release 0.4.7 fixes issues found during the beta review:
+Release 0.10.2. Browser mutations used an isolated local copy with fictitious accounts and captured mail. Production browser checks were read-only.
 
-- Expired directory links return safely; configured admin MFA cannot restart initial setup.
-- Response cutoffs and hearing dates are enforced. Invalid forms show errors without crashing.
-- Money inputs reject invalid/overflowing values and preserve cents and zero.
-- Past matched assignments remain reachable for completion.
-- Turbo's progress styling works with CSP. The broken professional-rules link is corrected.
-- Beta pricing and billing screens redirect; pricing material is archived. Other-product links remain.
-
-## Evidence
+## Results
 
 | Check | Result |
 | --- | --- |
-| Rails suite | 278 tests, 10,436 assertions; no failures or errors. |
-| Production image | Public/member/admin pages in four languages and seven emails in HTML/text pass with a disposable database, no network or mail delivery. |
-| Public UI audit | 128 page/viewport checks, 32 axe scans and 16 keyboard checks at 320/390/800/1440px. No overflow or missing translations. The detected CSP issue is fixed and browser-tested. Logo contrast is exempt as a logotype. |
-| Static/dependency checks | RuboCop and Brakeman pass; Ruby/import-map dependency audits report no vulnerabilities. |
-| Live operations | Healthy image, TLS and readiness; SQLite integrity passes, queues empty, backup/health timers successful. Fresh backup passed before deployment. |
+| Rails | 469 tests, 14,838 assertions; no failures/errors; 17 environment-specific skips |
+| Chrome system tests | 40 cases, 2,791 assertions; no failures/errors/skips |
+| Interactive browser audit | 876 page/viewport checks and 31 action checks across NL/FR/DE/EN; all 296 final-build page checks and all actions pass |
+| Responsive coverage | Public pages at 320/390/768/1440px; member/admin states at 320/1440px |
+| Emails | 13 templates × 4 languages, HTML and text, rendered in a disposable production image; no external delivery |
+| Captured email | 14 synthetic messages have both bodies and no missing translations; verification and fresh reset links opened in the browser |
 
-Browser checks cover Chrome and Edge (17 cases each) and Firefox (14 cases). Three viewport checks use Chromium-specific controls. Hosted CI repeats Chrome and the production-image checks; deployment is checked separately.
+The browser audit covered public/legal pages, anonymous and pending-member gates, assignment states, settings, notifications, privacy requests, member MFA, admin users/verification/reports/privacy, and localized 404/406/422/500 responses. Fault injection was available only in the unshipped local harness.
 
-## Limits at release 0.4.7
+Action checks covered proposal submission/withdrawal/decline/acceptance, contact privacy, completion/cancellation, notification pagination/read state, email confirmation, reset requests, admin suspension/restoration/session revocation, review decisions/reopening and password-plus-code sign-in.
 
-Browser signup, directory responses and mail are synthetic. These are historical checks; the [master checklist](../release-master-todo.md) records current evidence, the real-lawyer trial and deferred optional checks.
+The system suite also covers signup validation, expired links, password/email changes, MFA enrollment/recovery, profile import, unsaved-form language switching, keyboard navigation and accessibility checks.
+
+## Fixed
+
+- Scoped a marketing icon rule that clipped admin status badges.
+- Wrapped long German privacy headings on small screens.
+- Added short localized error pages with headings, recovery links and no exception details; non-HTML requests preserve the error status too.
+- Removed professional credentials from public operator contacts in all four languages.
+
+Initial findings remain in ignored local evidence at `tmp/full-browser-audit/browser-matrix.json`; affected pages passed the final-build rechecks. CI repeats the system suite and production-image rendering.
+
+## Limits
+
+A real second-lawyer trial and external inbox/header checks remain separate. The operator skipped recipient-side SPF/DKIM/DMARC inspection. No production test users, real email sends or new providers were used.
+
+Current browser results use Chromium. Earlier Edge/Firefox results are historical. Physical devices and screen readers have not been tested.
+
+See the [master checklist](../release-master-todo.md) and [operations log](beta-ops-checks.md).

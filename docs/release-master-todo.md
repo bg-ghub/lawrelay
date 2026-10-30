@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 30 October 2026. Current release: 0.10.1.
+Reviewed 30 October 2026. Current release: 0.10.2.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -22,6 +22,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Save current provider terms/DPAs and available account context in a restricted private archive outside Git, with sources and checksums.
 - [x] Retrieve the existing Hetzner account DPA with Appendix 1 and Migadu's account/subscription record and paid receipt copy; verify private access and archive checksums.
 - [x] Three-account synthetic trial: directory-shaped fixtures, confirmations, blank indicative price, competing proposals, selection/non-selection, completion, cancellation and captured email. Also checked manually in an isolated local copy.
+- [x] Full public/member/admin browser pass in four languages, including validation, recovery and review queues; mobile layout and localized error-page fixes. [Coverage and limits](ops/beta-thorough-qa.md).
 
 ## Finish during the beta
 

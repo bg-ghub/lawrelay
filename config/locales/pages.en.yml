@@ -172,7 +172,7 @@ en:
           paragraphs:
             - "Cookie and privacy questions can be sent to the privacy contact in the legal notice."
     operator_contact:
-      natural_person_description: "%{name}, lawyer."
+      natural_person_description: "%{name}"
       legal_notice_link: "View the legal notice"
       complaint_link: "Lodge a complaint with the Belgian Data Protection Authority"
       professional_profile_url_link: "View official professional profile"

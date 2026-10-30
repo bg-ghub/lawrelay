@@ -1,0 +1,15 @@
+en:
+  errors:
+    home: "Back to LawRelay"
+    "404":
+      title: "Page not found"
+      heading: "Page not found"
+      body: "Check the address or go back to LawRelay."
+    "422":
+      title: "That did not work"
+      heading: "Please try again"
+      body: "Your request could not be processed. Go back and try again."
+    "500":
+      title: "Something went wrong"
+      heading: "Something went wrong"
+      body: "Please try again in a moment."
