@@ -1,6 +1,6 @@
 # Beta trial handoff
 
-Owner: Gauthier Berth. Reviewed 29 October 2026. The second lawyer is joining; paid access stays disabled.
+Owner: Gauthier Berth. Reviewed 30 October 2026. Synthetic three-account workflow checks pass. Use the real trial below for participant feedback and external inbox evidence when another lawyer joins; paid access stays disabled.
 
 ## Two-lawyer trial
 

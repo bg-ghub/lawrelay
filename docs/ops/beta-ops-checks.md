@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 30 October 2026 — synthetic three-lawyer trial
+
+Created three clearly labelled fictitious profiles in a fresh local copy of the release image. The real directory parser used local HTML fixtures; normal registration and email-confirmation paths activated the accounts. The app has its own Docker volume, no production credentials, an internal network and a loopback-only browser proxy. Mail is captured locally and rejects non-test recipients. No production users or official directory records were changed.
+
+Manual browser checks passed for a blank indicative price, two competing proposals, acceptance, automatic non-selection, contact privacy and completion notifications. That completed scenario captured eight local messages, all to test addresses; its five workflow notifications were marked sent to that local capture. A separate open test assignment with two proposals remains for operator testing.
+
+The enhanced automated journey also checks separate login/directory mailbox confirmations and cancellation. The complete local browser suite passed: 32 cases, 1,507 assertions, no failures/errors/skips; RuboCop passed for the changed test. These are synthetic results, not real participant feedback or proof of external inbox delivery.
+
 ## 30 October 2026 — private provider archive
 
 Collected the existing Hetzner account DPA with Appendix 1 and Migadu's current account/subscription record and receipt text copy. These join the AWS/GitHub agreements and available account context in the restricted archive outside Git. Document hashes, PDF readability and owner/SYSTEM-only access checks passed. Only this status is public; no account documents or identifiers were added to the repository. No new agreement or account setting was submitted.

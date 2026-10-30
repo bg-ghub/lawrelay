@@ -21,10 +21,11 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Terms/privacy read-through against current behavior; clarify sharing, retention, transfers and signup acknowledgement in NL/FR/DE/EN.
 - [x] Save current provider terms/DPAs and available account context in a restricted private archive outside Git, with sources and checksums.
 - [x] Retrieve the existing Hetzner account DPA with Appendix 1 and Migadu's account/subscription record and paid receipt copy; verify private access and archive checksums.
+- [x] Three-account synthetic trial: directory-shaped fixtures, confirmations, blank indicative price, competing proposals, selection/non-selection, completion, cancellation and captured email. Also checked manually in an isolated local copy.
 
 ## Finish during the beta
 
-- [ ] Complete the [real two-lawyer trial](ops/beta-review-handoff.md) when the second lawyer joins; record actual results and feedback.
+- [ ] Collect real participant feedback using the [two-lawyer trial](ops/beta-review-handoff.md) when another lawyer joins. Synthetic workflow checks are complete; inbox arrival and participant feedback remain separate evidence.
 - [x] Retention periods and hold review are defined. Privacy requests still need a verified, case-by-case decision; shared records are pseudonymised where possible.
 
 ## Routine operations
