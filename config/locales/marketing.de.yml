@@ -29,9 +29,12 @@ de:
       source_code: Quellcode auf GitHub
       open_source: Open Source
       app_version: Version %{version}
+      beta_version: Version %{version} · Beta
     home:
       title: "LawRelay — Vertretungen und juristische Aufträge"
       og_description: "Finden Sie eine Vertretung oder Unterstützung bei juristischer Arbeit."
+      social_preview:
+        alt: "LawRelay — Vertretungen und juristische Aufträge"
       hero:
         heading_before: Vertretung gesucht
         heading_middle: für eine
@@ -39,18 +42,13 @@ de:
         lede: "Organisieren Sie eine Vertretung oder vergeben Sie einen juristischen Auftrag."
         note: "Open-Source-Beta."
       product:
-        aria_label: Beispiel des LawRelay-Arbeitsbereichs
-        today: Heute
-        response_received: "Neue Rückmeldung"
-        court_replacement: Sitzungsvertretung
-        court_example: Familiengericht Antwerpen
+        aria_label: Beispielauftrag auf LawRelay
+        example_label: Beispielauftrag
+        title: Sitzungsvertretung am Familiengericht Antwerpen
+        description: "Gesucht: ein Kollege für eine kurze familienrechtliche Verhandlung."
+        court: Familiengericht Antwerpen
         city: Antwerpen
-        tomorrow: morgen, 10:00 Uhr
-        responses: 3 Rückmeldungen
-        compare: Vergleichen
-        profile_rate: Profil & Honorar
-        choose: Wählen
-        at_your_pace: in Ihrem Tempo
+        practice_area: Familienrecht
       pathways:
         eyebrow: "Für Anwälte"
         heading_before: Wobei können wir

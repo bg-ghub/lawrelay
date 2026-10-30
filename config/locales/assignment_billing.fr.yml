@@ -1,0 +1,23 @@
+fr:
+  assignment_billing:
+    heading: Facturation de cette mission
+    form_hint: Qui votre confrère doit-il facturer ? Adaptez vos coordonnées si la facture est destinée au cabinet.
+    name: Nom sur la facture
+    enterprise_number: Numéro d’entreprise
+    vat_number: Numéro de TVA
+    email: E-mail de facturation
+    address: Adresse de facturation
+    postal_code: Code postal
+    city: Commune
+    details: Coordonnées de facturation
+    after_agreement: L’e-mail et l’adresse sont visibles par le confrère choisi.
+    legacy: Convenez des coordonnées de facturation avec le demandeur.
+  activerecord:
+    attributes:
+      assignment:
+        invoice_name: Nom sur la facture
+        invoice_enterprise_number: Numéro d’entreprise
+        invoice_email: E-mail de facturation
+        invoice_address_line_1: Adresse de facturation
+        invoice_postal_code: Code postal
+        invoice_city: Commune

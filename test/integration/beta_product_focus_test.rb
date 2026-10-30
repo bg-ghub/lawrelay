@@ -44,7 +44,7 @@ class BetaProductFocusTest < ActionDispatch::IntegrationTest
 
       get settings_path(locale: locale)
       assert_response :success
-      assert_select "input[name='firm[billing_email]']", count: 0
+      assert_select "input[name='firm[billing_email]']", count: 1
 
       get new_assignment_path(locale: locale)
       assert_response :success

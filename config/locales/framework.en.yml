@@ -58,7 +58,7 @@ en:
   activerecord:
     models:
       user: "User"
-      firm: "Firm"
+      firm: "Company"
       lawyer_profile: "Lawyer profile"
       assignment: "Assignment"
       proposal: "Proposal"
@@ -75,7 +75,7 @@ en:
         system_role: "System role"
         suspension_reason: "Suspension reason"
       firm: &firm_attributes
-        name: "Firm name"
+        name: "Company name"
         enterprise_number: "Enterprise number"
         vat_number: "VAT number"
         billing_email: "Billing email"

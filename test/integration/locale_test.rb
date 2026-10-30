@@ -27,7 +27,10 @@ class LocaleTest < ActionDispatch::IntegrationTest
         duration_minutes: 60,
         practice_area: "Droit commercial",
         languages: "FR",
-        content_rules_accepted: "1"
+        content_rules_accepted: "1",
+        invoice_name: "Synthetic recipient", invoice_enterprise_number: "1234567894",
+        invoice_email: "invoices@example.test", invoice_address_line_1: "Test Street 1",
+        invoice_postal_code: "1000", invoice_city: "Brussels"
       }
     }
 

@@ -20,6 +20,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
         get settings_path(locale: locale)
         assert_response :success
         assert_select "button[name='settings_action'][value='import_profile']", text: I18n.t("profile_import.button", locale: locale)
+        assert_select ".field-hint", text: I18n.t("profile_import.scope", locale: locale)
       end
     end
   end
@@ -48,11 +49,11 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
     assert_select "input[name='profile[court_preferences][]'][value='Unsaved court']"
     assert_select "input[name='profile[spoken_languages][]'][value='NL, FR']"
     assert_select "input[name='firm[name]'][value='Unsaved office']"
-    assert_select "input[name='firm[phone]'][value='+3225550101']"
+    assert_select "input[name='firm[phone]'][value='Old phone']"
     assert_equal original, records.map { |record| record.reload.attributes }
   end
 
-  test "ordinary members cannot import shared firm attributes" do
+  test "ordinary members cannot import shared billing details" do
     @account.user.memberships.first.update!(role: "member")
     original = @account.firm.attributes
     with_result(import_result) do
@@ -65,7 +66,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
 
   test "failed fetch keeps unsaved values and persisted records unchanged" do
     original = records.map(&:attributes)
-    result = Directory::ProfileImport::Result.new(status: :unavailable, profile_attributes: {}, firm_attributes: {})
+    result = Directory::ProfileImport::Result.new(status: :unavailable, profile_attributes: {})
     with_result(result) do
       patch settings_path(locale: :en), params: { settings_action: "import_profile", profile: { availability_note: "Keep this edit" } }
     end
@@ -73,6 +74,16 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
     assert_select "textarea[name='profile[availability_note]']", text: "Keep this edit"
     assert_includes response.body, I18n.t("profile_import.unavailable", locale: :en)
     assert_equal original, records.map { |record| record.reload.attributes }
+  end
+
+  test "valid profiles without importable fields explain that nothing was found" do
+    result = Directory::ProfileImport::Result.new(status: :empty, profile_attributes: {})
+    with_result(result) do
+      patch settings_path(locale: :en), params: { settings_action: "import_profile" }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes response.body, I18n.t("profile_import.empty", locale: :en)
   end
 
   test "administrator and unauthenticated requests cannot import a profile" do
@@ -96,8 +107,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
 
   def import_result
     Directory::ProfileImport::Result.new(status: :ok,
-      profile_attributes: { spoken_languages: %w[NL FR] },
-      firm_attributes: { phone: "+3225550101", address_line_1: "Example Street 10", postal_code: "1000", city: "Brussel" })
+      profile_attributes: { spoken_languages: %w[NL FR] })
   end
 
   def with_result(result, calls: [])

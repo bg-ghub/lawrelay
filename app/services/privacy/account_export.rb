@@ -7,6 +7,7 @@ module Privacy
       directory_name directory_email directory_checked_at directory_email_verified_at created_at updated_at].freeze
     ASSIGNMENT_FIELDS = %w[id kind title description court city starts_at duration_minutes practice_area fee_cents status
       urgent languages content_rules_accepted_at assignment_subtype response_deadline_at scope_indication delivery_due_at
+      invoice_name invoice_enterprise_number invoice_email invoice_address_line_1 invoice_postal_code invoice_city
       created_at updated_at].freeze
     PROPOSAL_FIELDS = %w[id assignment_id name email rate_cents rate_kind message status accepted_at declined_at
       withdrawn_at created_at updated_at].freeze

@@ -42,6 +42,8 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
 
   test "reviewed erasure removes profile, authentication and authored personal content without deleting shared work" do
     assignment = create_assignment_for(@member)
+    assignment.update_columns(invoice_name: "Private invoice firm", invoice_enterprise_number: "BE0123456789",
+      invoice_email: "private-invoice@example.test", invoice_address_line_1: "Private street 1", invoice_postal_code: "9000", invoice_city: "Gent")
     assignment.update_columns(status: "completed", starts_at: 1.day.ago, closed_at: Time.current)
     proposal = create_proposal_for(assignment, @other)
     own_proposal_assignment = create_assignment_for(@other)
@@ -69,6 +71,12 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     assert_not_includes @request.details, "private name"
     assert_equal "completed", assignment.reload.status
     assert_not_includes assignment.description, "Synthetic assignment"
+    assert_nil assignment.invoice_name
+    assert_nil assignment.invoice_enterprise_number
+    assert_nil assignment.invoice_email
+    assert_nil assignment.invoice_address_line_1
+    assert_nil assignment.invoice_postal_code
+    assert_nil assignment.invoice_city
     assert_equal I18n.t("retention.removed_content", locale: @user.locale), own_proposal.reload.message
     assert_nil own_proposal.contact_email
     assert_equal @other.user, proposal.reload.user

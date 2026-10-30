@@ -54,27 +54,7 @@
       <% if @assignments.any? %>
         <div class="assignment-list">
           <% @assignments.each do |assignment| %>
-            <article class="assignment-card <%= "assignment-card--urgent" if assignment.urgent? %>">
-              <div class="assignment-card__topline">
-                <span class="assignment-kind"><%= assignment.kind == "court_replacement" ? t("marketplace.kinds.court_replacement") : t("marketplace.kinds.legal_task") %></span>
-                <% if assignment.urgent? %><span class="urgent-badge"><%= t("marketplace.urgent") %></span><% end %>
-              </div>
-              <div class="assignment-card__body">
-                <div>
-                  <h2><%= link_to assignment.title, assignment_path(assignment) %></h2>
-                  <p><%= truncate(assignment.description, length: 150) %></p>
-                </div>
-                <dl class="assignment-facts">
-                  <div><dt><%= t("marketplace.index.when") %></dt><dd><%= l assignment.starts_at, format: "%d/%m · %H:%M" %></dd></div>
-                  <div><dt><%= t("marketplace.index.where") %></dt><dd><%= [assignment.court, assignment.city].compact_blank.join(" · ") %></dd></div>
-                  <div><dt><%= t("marketplace.index.practice_area") %></dt><dd><%= assignment.practice_area %></dd></div>
-                </dl>
-              </div>
-              <div class="assignment-card__footer">
-                <div class="rate-note"><span><%= t("marketplace.index.guideline_rate") %></span><strong><%= assignment.fee_cents.nil? ? t("marketplace.fee_unspecified") : "€ #{euro_amount(assignment.fee_cents)}" %></strong></div>
-                <%= link_to assignment_path(assignment), class: "button button--outline button--small" do %><%= t("marketplace.index.view_assignment") %> <span aria-hidden="true">→</span><% end %>
-              </div>
-            </article>
+              <%= render "card", assignment: assignment %>
           <% end %>
         </div>
       <% else %>

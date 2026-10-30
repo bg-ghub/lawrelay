@@ -29,9 +29,12 @@ fr:
       source_code: Code source sur GitHub
       open_source: Code ouvert
       app_version: Version %{version}
+      beta_version: Version %{version} · Bêta
     home:
       title: "LawRelay — remplacements et missions juridiques"
       og_description: "Trouvez un confrère pour une audience ou une mission juridique."
+      social_preview:
+        alt: "LawRelay — remplacements et missions juridiques"
       hero:
         heading_before: Besoin d'un confrère
         heading_middle: pour une
@@ -39,18 +42,13 @@ fr:
         lede: "Organisez un remplacement d’audience ou confiez une mission juridique."
         note: "Bêta open source."
       product:
-        aria_label: Exemple de l'espace de travail LawRelay
-        today: Aujourd'hui
-        response_received: "Nouvelle réponse"
-        court_replacement: Remplacement d'audience
-        court_example: Tribunal de la famille d'Anvers
+        aria_label: Exemple de mission sur LawRelay
+        example_label: Exemple de mission
+        title: Remplacement au tribunal de la famille d’Anvers
+        description: Recherche d’un confrère pour une courte audience en droit familial.
+        court: Tribunal de la famille d’Anvers
         city: Anvers
-        tomorrow: demain, 10:00
-        responses: 3 réponses
-        compare: Comparer
-        profile_rate: profil & tarif
-        choose: Choisir
-        at_your_pace: à votre rythme
+        practice_area: Droit familial
       pathways:
         eyebrow: "Pour les avocats"
         heading_before: Comment pouvons-nous

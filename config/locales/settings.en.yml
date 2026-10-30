@@ -30,13 +30,13 @@ en:
       availability_note: "Availability"
       availability_note_placeholder: "E.g. Tuesday and Thursday mornings."
     firm:
-      legend: "Firm and billing"
+      legend: "Billing details"
       billing_email: "Billing email"
       phone: "Phone"
       address: "Address"
       postal_code: "Postcode"
       city: "City"
-      review_hint: "Changes to firm name, enterprise or VAT number require another check."
+      assignment_hint: "Your default invoice recipient. You can choose different details for each assignment."
     aside:
       title: "Your details"
       body: "For verification and contact. Your contact details are shared after a match."

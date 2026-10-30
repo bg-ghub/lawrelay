@@ -10,9 +10,10 @@ fr:
       password: "Mot de passe"
       new_password: "Nouveau mot de passe"
       password_confirmation: "Confirmer le mot de passe"
-      firm_name: "Nom du cabinet"
-      enterprise_number: "Numéro d’entreprise (facultatif)"
-      vat_number: "Numéro de TVA (facultatif)"
+      company_name: "Nom de l’entreprise"
+      company_name_hint: "Destinataire de la facture : vous-même comme indépendant ou la raison sociale de votre société."
+      enterprise_number: "Numéro d’entreprise"
+      vat_number: "Numéro de TVA"
       bar_association: "Barreau"
       bar_number: "Numéro de barreau"
     sessions:
@@ -56,7 +57,7 @@ fr:
       lede: "Pour les avocats inscrits sur advocaat.be."
       identity: "Votre compte"
       professional_details: "Données professionnelles"
-      firm_details: "Votre cabinet"
+      firm_details: "Coordonnées de facturation"
       agreement: "Accord"
       email_hint: "Utilisez votre e-mail professionnel."
       bar_placeholder: "Par exemple : Barreau de Bruxelles"
@@ -141,7 +142,7 @@ fr:
         email_address: "E-mail professionnel"
         password: "Mot de passe"
       firm:
-        name: "Nom du cabinet"
+        name: "Nom de l’entreprise"
         enterprise_number: "Numéro d’entreprise"
         vat_number: "Numéro de TVA"
       lawyer_profile:

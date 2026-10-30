@@ -39,6 +39,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Tuesday mornings work well.", @account.profile.availability_note
     assert_equal "Settings Legal", @account.firm.name
     assert_equal "billing@example.test", @account.firm.billing_email
+    assert_equal "BE#{@account.firm.enterprise_number}", @account.firm.vat_number
+    assert_equal I18n.t("settings.notices.review_required", locale: :fr), flash[:notice]
   end
 
   test "settings ignores a forged direct email update" do
@@ -50,6 +52,48 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to settings_path(locale: :en)
     assert_equal original_email, @account.user.reload.email_address
+  end
+
+  test "settings requires an enterprise number when an owner saves company details" do
+    original_number = @account.firm.enterprise_number
+
+    patch settings_path(locale: :en), params: valid_params(firm: { enterprise_number: "" })
+
+    assert_response :unprocessable_content
+    assert_includes response.body, "Enterprise number"
+    assert_equal original_number, @account.firm.reload.enterprise_number
+  end
+
+  test "settings ignores a forged VAT number and keeps the derived value" do
+    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0000000000" })
+
+    assert_redirected_to settings_path(locale: :en)
+    assert_equal "BE#{@account.firm.enterprise_number}", @account.firm.reload.vat_number
+  end
+
+  test "formatting an unchanged enterprise number does not reset company verification" do
+    @account.firm.update!(enterprise_number: "1234567894", verification_status: "verified", verified_at: Time.current)
+
+    patch settings_path(locale: :en), params: valid_params(firm: { enterprise_number: "BE 1234.567.894" })
+
+    assert_redirected_to settings_path(locale: :en)
+    assert_equal "verified", @account.firm.reload.verification_status
+  end
+
+  test "billing recipient changes preserve professional verification and account isolation" do
+    other = create_marketplace_account(prefix: "samebilling")
+    @account.firm.update!(enterprise_number: "1234567894")
+    other.firm.update!(enterprise_number: "1234567894")
+
+    patch settings_path(locale: :en), params: valid_params(firm: { name: "My invoice recipient", enterprise_number: "2345678942" })
+
+    assert_redirected_to settings_path(locale: :en)
+    assert_equal I18n.t("settings.notices.updated", locale: :en), flash[:notice]
+    assert_equal "My invoice recipient", @account.firm.reload.name
+    assert_predicate @account.user.reload, :marketplace_verified?
+    assert_equal [ @account.firm.id ], @account.user.firm_ids
+    assert_equal "1234567894", other.firm.reload.enterprise_number
+    assert_not_equal "My invoice recipient", other.firm.name
   end
 
   test "name changes reset directory verification and queue a fresh check" do
@@ -110,7 +154,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test "a suspended firm remains suspended when its details are changed" do
     @account.firm.update!(verification_status: "suspended")
 
-    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0999999999" })
+    patch settings_path(locale: :en), params: valid_params(firm: { name: "Changed invoice recipient", enterprise_number: "2345678942" })
 
     assert_equal "suspended", @account.firm.reload.verification_status
   end
@@ -118,7 +162,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test "a rejected firm remains rejected when its details are changed" do
     @account.firm.update!(verification_status: "rejected")
 
-    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0999999999" })
+    patch settings_path(locale: :en), params: valid_params(firm: { name: "Changed invoice recipient", enterprise_number: "2345678942" })
 
     assert_equal "rejected", @account.firm.reload.verification_status
   end

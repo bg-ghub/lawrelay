@@ -58,7 +58,7 @@ nl:
   activerecord:
     models:
       user: "Gebruiker"
-      firm: "Kantoor"
+      firm: "Onderneming"
       lawyer_profile: "Advocatenprofiel"
       assignment: "Opdracht"
       proposal: "Voorstel"
@@ -75,7 +75,7 @@ nl:
         system_role: "Systeemrol"
         suspension_reason: "Reden van schorsing"
       firm:
-        name: "Kantoornaam"
+        name: "Naam onderneming"
         enterprise_number: "Ondernemingsnummer"
         vat_number: "Btw-nummer"
         billing_email: "Facturatie-e-mail"

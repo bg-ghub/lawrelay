@@ -1,0 +1,23 @@
+nl:
+  assignment_billing:
+    heading: Facturatie voor deze opdracht
+    form_hint: Aan wie moet je confrater factureren? Pas je gegevens aan als de factuur naar het kantoor moet.
+    name: Naam op de factuur
+    enterprise_number: Ondernemingsnummer
+    vat_number: Btw-nummer
+    email: E-mailadres voor facturen
+    address: Facturatieadres
+    postal_code: Postcode
+    city: Gemeente
+    details: Facturatiegegevens
+    after_agreement: E-mailadres en adres zijn zichtbaar voor de gekozen confrater.
+    legacy: Spreek de facturatiegegevens af met de opdrachtgever.
+  activerecord:
+    attributes:
+      assignment:
+        invoice_name: Naam op de factuur
+        invoice_enterprise_number: Ondernemingsnummer
+        invoice_email: E-mailadres voor facturen
+        invoice_address_line_1: Facturatieadres
+        invoice_postal_code: Postcode
+        invoice_city: Gemeente

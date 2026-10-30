@@ -35,14 +35,14 @@ en:
         clear: Clear
       fields:
         role: Role
-        firm: Firm
+        firm: Company
         status: Account access
         email_status: Email
         marketplace_access: Marketplace access
         mfa: Administrator MFA
         created_at: Registered
         suspension_reason: Suspension reason
-        firm_status: Firm check
+        firm_status: Company check
         lawyer_status: Lawyer check
         directory_name: Directory name
         directory_email: Listed email

@@ -15,8 +15,7 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     @original_import = Directory::ProfileImport.method(:call)
     Directory::ProfileImport.define_singleton_method(:call) do |**|
       Directory::ProfileImport::Result.new(status: :ok,
-        profile_attributes: { spoken_languages: %w[NL FR] },
-        firm_attributes: { phone: "+3225550101" })
+        profile_attributes: { spoken_languages: %w[NL FR] })
     end
     sign_in
   end
@@ -53,7 +52,7 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     active_element.send_keys(:enter)
     assert_selector "form[data-unsaved-changes='true']", visible: :all
     assert_selector "[role='status']", text: "Details loaded. Review them, then save."
-    assert_field "Phone", with: "+3225550101"
+      assert_field "Phone", with: ""
     assert_nil @account.firm.reload.phone
     assert_accessible_document(:en, 1440)
   end

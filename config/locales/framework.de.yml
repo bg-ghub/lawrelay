@@ -58,7 +58,7 @@ de:
   activerecord:
     models:
       user: "Benutzer"
-      firm: "Kanzlei"
+      firm: "Unternehmen"
       lawyer_profile: "Anwaltsprofil"
       assignment: "Auftrag"
       proposal: "Vorschlag"
@@ -75,7 +75,7 @@ de:
         system_role: "Systemrolle"
         suspension_reason: "Sperrgrund"
       firm:
-        name: "Kanzleiname"
+        name: "Unternehmensname"
         enterprise_number: "Unternehmensnummer"
         vat_number: "USt-IdNr."
         billing_email: "Rechnungs-E-Mail"

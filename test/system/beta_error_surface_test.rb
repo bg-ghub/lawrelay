@@ -118,6 +118,9 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       find("#assignment_legal_subtype option[value='advice']").select_option
       set_datetime("assignment_response_deadline_at", 3.days.from_now)
       set_datetime("assignment_execution_deadline", 2.days.from_now)
+      fill_in "assignment_invoice_address_line_1", with: "Test Street 1"
+      fill_in "assignment_invoice_postal_code", with: "1000"
+      fill_in "assignment_invoice_city", with: "Brussels"
       find("#assignment_content_rules_accepted").check
       assert_field "assignment_fee_cents", with: ""
       assert_no_selector "#assignment_fee_cents[required]"

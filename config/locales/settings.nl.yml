@@ -30,13 +30,13 @@ nl:
       availability_note: "Beschikbaarheid"
       availability_note_placeholder: "Bijv. dinsdag- en donderdagochtend."
     firm:
-      legend: "Kantoor en facturatie"
+      legend: "Facturatiegegevens"
       billing_email: "E-mailadres facturatie"
       phone: "Telefoon"
       address: "Adres"
       postal_code: "Postcode"
       city: "Gemeente"
-      review_hint: "Wijzigingen van kantoornaam, ondernemings- of btw-nummer worden opnieuw gecontroleerd."
+      assignment_hint: "Je standaard facturatiegegevens. Je kunt ze per opdracht aanpassen."
     aside:
       title: "Je gegevens"
       body: "Voor verificatie en contact. Andere advocaten zien je contactgegevens pas na een match."

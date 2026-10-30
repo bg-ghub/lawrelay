@@ -1,8 +1,5 @@
 <% content_for :title, t("marketing.home.title") %>
-<% content_for :head do %>
-  <meta property="og:title" content="<%= t("marketing.home.title") %>">
-  <meta property="og:description" content="<%= t("marketing.home.og_description") %>">
-<% end %>
+<% content_for :meta_description, t("marketing.home.og_description") %>
 
 <section class="hero-section">
   <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
@@ -15,28 +12,12 @@
         <%= link_to new_assignment_path, class: "button button-coral" do %><span><%= t("marketing.actions.post_assignment") %></span><span aria-hidden="true">→</span><% end %>
         <%= link_to assignments_path, class: "text-link text-link-light" do %><span><%= t("marketing.actions.browse_assignments") %></span><span aria-hidden="true">↗</span><% end %>
       </div>
-      <p class="hero-note"><span aria-hidden="true">✦</span> <%= t("marketing.home.hero.note") %></p>
     </div>
 
     <div class="hero-product" role="group" aria-label="<%= t("marketing.home.product.aria_label") %>">
-      <div class="product-window">
-        <div class="product-topbar"><div class="product-wordmark"><span class="product-mark">↗</span> LawRelay</div><div class="product-avatar">JS</div></div>
-        <div class="product-body">
-          <aside class="product-sidebar" aria-hidden="true"><span class="sidebar-active"></span><span></span><span></span><span></span><span></span></aside>
-          <div class="product-content">
-            <div class="product-heading"><div><p><%= t("marketing.home.product.today") %></p><strong><%= t("marketing.home.product.response_received") %></strong></div><span class="product-action">＋</span></div>
-            <article class="match-card match-card-main">
-              <div class="match-card-top"><span class="tag tag-coral"><%= t("marketing.home.product.court_replacement") %></span><span class="match-time">09:30</span></div>
-              <h2><%= t("marketing.home.product.court_example") %></h2>
-              <p><span aria-hidden="true">◎</span> <%= t("marketing.home.product.city") %> &nbsp; <span aria-hidden="true">◷</span> <%= t("marketing.home.product.tomorrow") %></p>
-              <div class="candidate-row"><div class="candidate-stack" aria-hidden="true"><i>MV</i><i>LD</i><i>SK</i></div><span><%= t("marketing.home.product.responses") %></span><b><%= t("marketing.actions.view") %> →</b></div>
-            </article>
-            <div class="product-mini-grid">
-              <article class="product-mini-card"><span class="mini-icon">↗</span><strong><%= t("marketing.home.product.compare") %></strong><small><%= t("marketing.home.product.profile_rate") %></small></article>
-              <article class="product-mini-card product-mini-card-mint"><span class="mini-icon">✓</span><strong><%= t("marketing.home.product.choose") %></strong></article>
-            </div>
-          </div>
-        </div>
+      <p class="hero-product__label"><%= t("marketing.home.product.example_label") %></p>
+      <div class="hero-assignment-preview">
+        <%= render "assignments/card", assignment: home_preview_assignment, preview: true %>
       </div>
     </div>
   </div>

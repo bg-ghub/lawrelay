@@ -31,6 +31,8 @@
         </dl>
       </section>
 
+      <%= render "assignments/invoice_recipient", assignment: @assignment %>
+
       <% if @owner_view && @assignment.status.in?(%w[open matched]) %>
         <div class="detail-actions">
           <% if @assignment.status == "matched" %>

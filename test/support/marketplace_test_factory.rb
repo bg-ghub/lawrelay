@@ -3,6 +3,8 @@ module MarketplaceTestFactory
 
   def create_marketplace_account(prefix:, verified: true, email_verified: true, system_role: "member")
     token = "#{prefix}-#{SecureRandom.hex(4)}"
+    enterprise_base = SecureRandom.random_number(90_000_000) + 10_000_000
+    enterprise_number = format("%08d%02d", enterprise_base, 97 - (enterprise_base % 97))
     status = verified ? "verified" : "pending"
     verified_at = verified ? Time.current : nil
 
@@ -17,7 +19,7 @@ module MarketplaceTestFactory
     )
     firm = Firm.create!(
       name: "#{prefix.capitalize} Legal",
-      enterprise_number: token,
+      enterprise_number: enterprise_number,
       verification_status: status,
       verified_at: verified_at
     )
@@ -48,6 +50,14 @@ module MarketplaceTestFactory
       content_rules_accepted_at: Time.current,
       status: status
     )
+  end
+
+  def invoice_recipient_attributes
+    {
+      invoice_name: "Synthetic recipient", invoice_enterprise_number: "1234567894",
+      invoice_email: "invoices@example.test", invoice_address_line_1: "Test Street 1",
+      invoice_postal_code: "1000", invoice_city: "Brussels"
+    }
   end
 
   def create_proposal_for(assignment, account, message: "I am available for this assignment.", rate_cents: 250_00)

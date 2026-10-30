@@ -1,0 +1,23 @@
+en:
+  assignment_billing:
+    heading: Invoice recipient for this assignment
+    form_hint: Who should your confrater invoice? Change these details if the invoice should go to the firm.
+    name: Invoice recipient
+    enterprise_number: Enterprise number
+    vat_number: VAT number
+    email: Invoice email
+    address: Billing address
+    postal_code: Postcode
+    city: City
+    details: Billing details
+    after_agreement: The email and address are shown to the selected confrater.
+    legacy: Agree the billing details with the requester.
+  activerecord:
+    attributes:
+      assignment:
+        invoice_name: Invoice recipient
+        invoice_enterprise_number: Enterprise number
+        invoice_email: Invoice email
+        invoice_address_line_1: Billing address
+        invoice_postal_code: Postcode
+        invoice_city: City

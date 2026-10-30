@@ -48,8 +48,9 @@ fr:
           bullets:
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
             - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
-            - "Données de vérification professionnelle : profil dans l’annuaire officiel, nom et e-mail professionnel publiés, coordonnées du cabinet et statut de vérification."
+            - "Données professionnelles et de facturation : profil officiel, nom et e-mail publiés, nom de l’entreprise, numéro d’entreprise/TVA, coordonnées et statut de vérification professionnelle."
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
+            - "Données du destinataire de facturation par mission, notamment le nom professionnel et le numéro d’entreprise/TVA. Les membres vérifiés qui consultent la mission voient le nom et le numéro ; le cabinet du donneur d’ordre et le confrère choisi voient l’adresse et l’e-mail complets."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
           paragraphs:
             - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."

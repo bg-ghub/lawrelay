@@ -67,6 +67,13 @@ input,select,textarea{border-color:#7c8c84}
 .flash-dismiss{display:grid;flex:0 0 auto;min-width:28px;min-height:28px;place-items:center}
 .primary-nav{white-space:nowrap}
 .header-login{max-width:8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-vat-preview[readonly]{background:var(--paper-deep);color:var(--muted);cursor:default}
+.company-lookup[aria-disabled="true"]{opacity:.55;pointer-events:none;cursor:default}
+
+/* Public hero: show the same assignment card used in the marketplace. */
+.hero-product{min-width:0;padding:0}.hero-product__label{margin:0 0 .55rem;color:var(--mint);font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.hero-assignment-preview{max-width:540px;margin-left:auto}.hero-assignment-preview .assignment-card{box-shadow:0 24px 56px rgba(0,0,0,.2)}.hero-assignment-preview .assignment-card:hover{box-shadow:0 24px 56px rgba(0,0,0,.2)}
+@media(max-width:760px){.hero-assignment-preview{max-width:none}.hero-assignment-preview .assignment-card__body{grid-template-columns:1fr;gap:1.2rem}.hero-assignment-preview .assignment-facts{grid-template-columns:repeat(3,1fr)}.hero-assignment-preview .assignment-facts div{display:block}.hero-assignment-preview .assignment-facts dd{margin-top:.15rem}}
+@media(max-width:520px){.hero-assignment-preview .assignment-facts{grid-template-columns:1fr}.hero-assignment-preview .assignment-facts div{display:grid;grid-template-columns:84px 1fr}}
 @media(min-width:1281px) and (max-width:1440px){.header-inner{gap:.75rem}.primary-nav{gap:.75rem}}
 @media(max-width:1280px){
   .header-inner{min-height:68px;gap:.8rem}
