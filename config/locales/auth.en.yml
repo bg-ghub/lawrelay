@@ -11,7 +11,6 @@ en:
       new_password: "New password"
       password_confirmation: "Confirm password"
       company_name: "Company name"
-      company_name_hint: "Invoice recipient: your own name as a sole trader, or your company’s legal name."
       enterprise_number: "Enterprise number"
       vat_number: "VAT number"
       bar_association: "Bar association"
@@ -148,3 +147,31 @@ en:
       lawyer_profile:
         bar_association: "Bar association"
         bar_number: "Bar number"
+  account_deletion:
+    title: "Delete account — LawRelay"
+    heading: "Delete account"
+    warning: "This removes your account and signs you out. Closed work is kept without your personal details where required."
+    request_details: "Self-service account deletion."
+    settings:
+      heading: "Delete account"
+      body: "Permanently close your account."
+      link: "Delete account"
+    form:
+      legend: "Confirm deletion"
+      password: "Current password"
+      confirm: "I understand that my account will be deleted."
+      cancel: "Back to profile"
+      submit: "Delete account"
+    aside:
+      title: "Before you continue"
+      body: "Finish or cancel open assignments and proposals first."
+    notices:
+      confirmation_required: "Confirm that you want to delete your account."
+      invalid_password: "Your password is incorrect."
+      open_work: "Finish or cancel open assignments and proposals first."
+      held: "This account is currently protected by a hold."
+      billing: "This account has billing records that need review first."
+      blocked: "Your account cannot be deleted yet."
+      unavailable: "Account deletion is temporarily unavailable. Please try again later."
+      rate_limited: "Please wait before trying again."
+      deleted: "Your account has been deleted."

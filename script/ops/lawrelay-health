@@ -11,6 +11,8 @@ mail_state_dir=${LAWRELAY_MAIL_RETENTION_STATE_DIR:-}
 max_mail_age_hours=${LAWRELAY_MAIL_RETENTION_MAX_AGE_HOURS:-50}
 disk_warn_percent=${LAWRELAY_DISK_WARN_PERCENT:-85}
 container=${LAWRELAY_DOCKER_CONTAINER:-}
+umami_db_container=${LAWRELAY_UMAMI_DB_CONTAINER:-}
+umami_app_container=${LAWRELAY_UMAMI_APP_CONTAINER:-}
 notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
 notify_direct=${LAWRELAY_NOTIFY_DIRECT:-false}
 tag=${LAWRELAY_LOG_TAG:-lawrelay-health}
@@ -68,5 +70,15 @@ stuck_jobs=$(sqlite3 -readonly "$queue_db" "
 
 if [ -n "$container" ]; then
   [ "$(docker inspect --format '{{.State.Running}}' "$container" 2>/dev/null || true)" = "true" ] || fail "application container is not running"
+fi
+
+# Keep this optional while LawRelay is not running its own Umami instance.
+# A configured analytics backup must have the same healthy pair as this check.
+if [ -n "$umami_db_container" ] || [ -n "$umami_app_container" ]; then
+  [ -n "$umami_db_container" ] && [ -n "$umami_app_container" ] || fail "Umami health configuration is incomplete"
+  [ "$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$umami_db_container" 2>/dev/null || true)" = healthy ] || fail "Umami database container is not healthy"
+  [ "$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$umami_app_container" 2>/dev/null || true)" = healthy ] || fail "Umami application container is not healthy"
+  response=$(curl --fail --silent --show-error --max-time 15 https://analytics.lawrelay.be/api/heartbeat) || fail "Umami heartbeat is unavailable"
+  printf '%s' "$response" | grep -q '"ok":true' || fail "Umami heartbeat is unhealthy"
 fi
 log "health check passed"

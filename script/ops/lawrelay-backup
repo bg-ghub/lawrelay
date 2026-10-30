@@ -11,6 +11,9 @@ ledger_dir=${LAWRELAY_ERASURE_LEDGER_DIR:-/var/lib/lawrelay-privacy}
 ledger=${LAWRELAY_ERASURE_LEDGER:-$ledger_dir/erasures.jsonl}
 ledger_lock=${LAWRELAY_ERASURE_LEDGER_LOCK:-$ledger.lock}
 mail_state_dir=${LAWRELAY_MAIL_RETENTION_STATE_DIR:-/var/lib/lawrelay-mail-retention}
+umami_db_container=${LAWRELAY_UMAMI_DB_CONTAINER:-}
+umami_app_container=${LAWRELAY_UMAMI_APP_CONTAINER:-}
+umami_config_dir=${LAWRELAY_UMAMI_CONFIG_DIR:-/home/deploy/lawrelay}
 notify=${LAWRELAY_NOTIFY_COMMAND:-/usr/local/libexec/lawrelay-notify}
 notify_direct=${LAWRELAY_NOTIFY_DIRECT:-false}
 tag=${LAWRELAY_LOG_TAG:-lawrelay-backup}
@@ -68,6 +71,38 @@ backup_db production.sqlite3
 backup_db production_queue.sqlite3
 backup_db production_cable.sqlite3
 
+container_healthy() {
+  [ "$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$1" 2>/dev/null || true)" = healthy ]
+}
+
+# Analytics backups are enabled explicitly so existing single-SQLite deployments
+# and restore drills keep their current behavior. Once either container name is configured, both
+# protected runtime env files and both healthy containers are mandatory.
+umami_enabled=false
+if [ -n "$umami_db_container" ] || [ -n "$umami_app_container" ]; then
+  [ -n "$umami_db_container" ] && [ -n "$umami_app_container" ] || fail "Umami backup configuration is incomplete"
+  container_healthy "$umami_db_container" || fail "Umami database container is not healthy"
+  container_healthy "$umami_app_container" || fail "Umami application container is not healthy"
+
+  mkdir -p "$stage/analytics"
+  for umami_file in umami.env umami-db.env; do
+    source="$umami_config_dir/$umami_file"
+    [ ! -L "$source" ] && [ -f "$source" ] || fail "Umami configuration file is unsafe: $umami_file"
+    [ "$(stat -c '%U:%a:%h' "$source")" = 'deploy:600:1' ] || fail "Umami configuration file permissions are unsafe: $umami_file"
+    cp -- "$source" "$stage/analytics/$umami_file" || fail "could not stage Umami configuration: $umami_file"
+    chmod 600 "$stage/analytics/$umami_file"
+  done
+
+  # Postgres credentials remain inside the container environment. The custom
+  # archive is checked before restic can send it off-host.
+  docker exec "$umami_db_container" sh -ec '
+    exec pg_dump --format=custom --no-owner --no-privileges -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+  ' >"$stage/analytics/database.dump" || fail "Umami PostgreSQL dump failed"
+  [ -s "$stage/analytics/database.dump" ] || fail "Umami PostgreSQL dump is empty"
+  docker exec -i "$umami_db_container" pg_restore --list <"$stage/analytics/database.dump" >/dev/null || fail "Umami PostgreSQL dump validation failed"
+  umami_enabled=true
+fi
+
 # Copy after the database snapshots so their committed erasures are included.
 exec 8<"$ledger_lock"
 flock -s 8 || fail "could not lock erasure ledger"
@@ -101,9 +136,11 @@ printf '%s\n' "created_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >"$stage/manifest"
 printf '%s\n' "volume=$volume" >>"$stage/manifest"
 printf '%s\n' "databases=production.sqlite3,production_queue.sqlite3,production_cable.sqlite3" >>"$stage/manifest"
 printf '%s\n' "erasure_ledger=erasures.jsonl" >>"$stage/manifest"
+[ "$umami_enabled" = false ] || printf '%s\n' "analytics=analytics/database.dump,analytics/umami.env,analytics/umami-db.env" >>"$stage/manifest"
 
 set -- databases storage.tar erasures.jsonl manifest
 [ ! -f "$stage/mail-retention-state.json" ] || set -- "$@" mail-retention-state.json
+[ "$umami_enabled" = false ] || set -- "$@" analytics
 (cd "$stage" && restic backup --tag lawrelay --tag sqlite-online --tag "host-$(hostname)" "$@") || fail "restic backup failed"
 restic snapshots --tag lawrelay --latest 1 --json >/dev/null || fail "could not verify LawRelay restic snapshot"
 # Keep recovery copies for 30 days. The fresh snapshot above must succeed before

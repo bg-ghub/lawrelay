@@ -9,6 +9,10 @@ param(
   [ValidateScript({ Test-Path -LiteralPath $_ -PathType Leaf })]
   [string]$SshKeyPath = 'C:\Users\Nobody\.ssh\id_ed25519_lawrelay',
 
+  # By default the two analytics env files sit beside production.env, but they
+  # remain separate so application deploys never load their credentials.
+  [string]$AnalyticsEnvDirectory,
+
   [string]$RemotePath = '/home/deploy/lawrelay',
 
   [switch]$SkipLocalPreflight
@@ -51,13 +55,47 @@ $requiredEnv = @(
   'SMTP_SSL', 'SMTP_STARTTLS', 'MAIL_FROM', 'SOLID_QUEUE_IN_PUMA', 'ACTIVE_STORAGE_SERVICE',
   'ASSUME_SSL', 'FORCE_SSL', 'LAWRELAY_BILLING_ENFORCED', 'LAWRELAY_RELEASE_MODE'
 )
-$environment = Get-EnvNames -Path (Resolve-Path -LiteralPath $ProductionEnvPath).Path
+$resolvedProductionEnvPath = (Resolve-Path -LiteralPath $ProductionEnvPath).Path
+$environment = Get-EnvNames -Path $resolvedProductionEnvPath
 $missing = @($requiredEnv | Where-Object { -not $environment.Names.Contains($_) -or [string]::IsNullOrWhiteSpace($environment.Values[$_]) })
 if ($missing.Count -gt 0) { throw "Production environment is incomplete: $($missing -join ', '). Values were not displayed." }
 
 if ($environment.Values['APP_HOST'] -ne 'lawrelay.be' -or $environment.Values['ADMIN_HOST'] -ne 'admin.lawrelay.be' -or $environment.Values['LAWRELAY_RELEASE_MODE'] -ne 'beta' -or $environment.Values['LAWRELAY_BILLING_ENFORCED'] -ne 'true') {
   throw 'Production environment must target lawrelay.be and enforce the free founding beta release mode.'
 }
+
+if ([string]::IsNullOrWhiteSpace($AnalyticsEnvDirectory)) {
+  $AnalyticsEnvDirectory = Split-Path -Parent $resolvedProductionEnvPath
+}
+if (-not (Test-Path -LiteralPath $AnalyticsEnvDirectory -PathType Container)) {
+  throw 'Analytics environment directory does not exist.'
+}
+$resolvedAnalyticsEnvDirectory = (Resolve-Path -LiteralPath $AnalyticsEnvDirectory).Path
+$umamiEnvPath = Join-Path $resolvedAnalyticsEnvDirectory 'umami.env'
+$umamiDbEnvPath = Join-Path $resolvedAnalyticsEnvDirectory 'umami-db.env'
+foreach ($analyticsEnvPath in @($umamiEnvPath, $umamiDbEnvPath)) {
+  if (-not (Test-Path -LiteralPath $analyticsEnvPath -PathType Leaf)) {
+    throw "Required analytics environment file is missing: $analyticsEnvPath"
+  }
+}
+
+function Assert-CompleteEnvironment {
+  param(
+    [Parameter(Mandatory = $true)][string]$Path,
+    [Parameter(Mandatory = $true)][string[]]$RequiredNames,
+    [Parameter(Mandatory = $true)][string]$Label
+  )
+  $parsed = Get-EnvNames -Path $Path
+  $missingNames = @($RequiredNames | Where-Object {
+    -not $parsed.Names.Contains($_) -or [string]::IsNullOrWhiteSpace($parsed.Values[$_])
+  })
+  if ($missingNames.Count -gt 0) {
+    throw "$Label is incomplete: $($missingNames -join ', '). Values were not displayed."
+  }
+}
+
+Assert-CompleteEnvironment -Path $umamiEnvPath -RequiredNames @('DATABASE_URL', 'APP_SECRET', 'TWO_FACTOR_ENCRYPTION_KEY', 'DISABLE_TELEMETRY') -Label 'Umami environment'
+Assert-CompleteEnvironment -Path $umamiDbEnvPath -RequiredNames @('POSTGRES_DB', 'POSTGRES_USER', 'POSTGRES_PASSWORD') -Label 'Umami database environment'
 
 Push-Location $workspace
 try {
@@ -94,23 +132,28 @@ try {
     $remote = "deploy@$Server"
     Invoke-Checked { & ssh @sshArguments $remote "mkdir -p $RemotePath && chmod 700 $RemotePath && docker compose version >/dev/null" } 'Remote preflight failed. Confirm Docker Compose v2 is installed for deploy.'
     Invoke-Checked { & scp @sshArguments $composePath $caddyPath $archivePath "${remote}:$RemotePath/" } 'Secure copy of deployment assets to the server failed.'
-    Invoke-Checked { & scp @sshArguments $ProductionEnvPath "${remote}:$RemotePath/production.env" } 'Secure copy of the production environment failed.'
+    Invoke-Checked { & scp @sshArguments $resolvedProductionEnvPath "${remote}:$RemotePath/production.env" } 'Secure copy of the production environment failed.'
+    Invoke-Checked { & scp @sshArguments $umamiEnvPath $umamiDbEnvPath "${remote}:$RemotePath/" } 'Secure copy of the analytics environment failed.'
 
     $remoteArchive = "$RemotePath/$([IO.Path]::GetFileName($archivePath))"
     $remoteCommand = @"
 set -eu
 cd $RemotePath
-chmod 600 production.env
+chmod 600 production.env umami.env umami-db.env
 printf '%s\n' 'LAWRELAY_IMAGE=$image' > release.env
 docker volume inspect lawrelay_storage >/dev/null 2>&1 || docker volume create lawrelay_storage >/dev/null
+docker volume inspect lawrelay_umami_db >/dev/null 2>&1 || docker volume create lawrelay_umami_db >/dev/null
 docker load --input '$remoteArchive' >/dev/null
 docker compose --env-file release.env -f compose.production.yml up --detach --remove-orphans
-for attempt in `$(seq 1 24); do
-  status=`$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}starting{{end}}' lawrelay-app 2>/dev/null || true)
-  [ "`$status" = healthy ] && break
-  sleep 5
+for container in lawrelay-umami-db lawrelay-umami lawrelay-app; do
+  status=starting
+  for attempt in `$(seq 1 24); do
+    status=`$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}starting{{end}}' "`$container" 2>/dev/null || true)
+    [ "`$status" = healthy ] && break
+    sleep 5
+  done
+  [ "`$status" = healthy ]
 done
-[ "`$status" = healthy ]
 docker compose --env-file release.env -f compose.production.yml exec -T caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
 rm -f '$remoteArchive'
 "@

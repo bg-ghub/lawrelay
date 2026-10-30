@@ -46,7 +46,7 @@
         data-business-lookup-invalid-value="<%= t("business_lookup.invalid") %>"
         data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
         <legend><%= t("auth.registration.firm_details") %></legend>
-        <div class="field-group"><%= form.label :firm_name, t("auth.fields.company_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"], aria: { describedby: "registration-firm-hint" }, data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %><p class="field-hint" id="registration-firm-hint"><%= t("auth.fields.company_name_hint") %></p></div>
+        <div class="field-group"><%= form.label :firm_name, t("auth.fields.company_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"], data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %></div>
         <div class="form-row">
           <div class="field-group"><%= form.label :enterprise_number, t("auth.fields.enterprise_number") %><%= form.text_field :enterprise_number, required: true, value: @firm.enterprise_number, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", business_lookup_target: "number", action: "input->company-number#sync input->business-lookup#edited" } %></div>
           <div class="field-group"><%= form.label :vat_number, t("auth.fields.vat_number") %><%= form.text_field :vat_number, value: @firm.vat_number, name: nil, readonly: true, autocomplete: "off", class: "company-vat-preview", data: { company_number_target: "vat" } %></div>

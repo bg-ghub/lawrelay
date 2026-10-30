@@ -100,3 +100,7 @@ input,select,textarea{border-color:#7c8c84}
 .analytics-preference__controls .button{min-height:42px;justify-content:center;white-space:nowrap}
 .footer-preference{border:0;background:transparent;padding:0;color:inherit;text-align:left;font-size:.84rem}.footer-preference:hover{color:var(--coral)}
 @media(max-width:760px){.analytics-preference{bottom:10px;width:calc(100% - 20px);border-radius:14px}.analytics-preference__inner{grid-template-columns:1fr;gap:.75rem;padding:.85rem}.analytics-preference__controls,.analytics-preference__actions{width:100%;min-width:0}.analytics-preference__controls .button{min-width:0;min-height:44px;white-space:normal;font-size:.875rem;line-height:1.3}}
+
+body.site-shell{display:flex;min-height:100vh;min-height:100dvh;flex-direction:column}body.site-shell>main{flex:1 0 auto}
+.pathways-section .pathway-card{transition:transform .18s,box-shadow .18s}.pathways-section .pathway-card:hover,.pathways-section .pathway-card:focus-visible{transform:translateY(-4px);box-shadow:var(--shadow)}.pathways-section .pathway-card:focus-visible{outline:3px solid var(--coral);outline-offset:4px}.pathways-section .pathway-card:hover .card-link,.pathways-section .pathway-card:focus-visible .card-link{color:var(--coral)}
+@media(prefers-reduced-motion:reduce){.pathways-section .pathway-card:hover,.pathways-section .pathway-card:focus-visible{transform:none}}

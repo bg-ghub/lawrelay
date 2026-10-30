@@ -76,7 +76,7 @@ fr:
           heading: "6. Conservation"
           paragraphs:
             - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
-            - "Les comptes restent jusqu’à leur clôture. Après examen d’une demande de suppression vérifiée, nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions, demandes, enquêtes, litiges en cours ou obligations légales peuvent justifier une conservation plus longue."
+            - "Les comptes restent jusqu’à leur clôture. Vous pouvez supprimer votre compte dans Profil après avoir confirmé votre mot de passe. Nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions en cours, enquêtes, litiges ou obligations légales peuvent justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
           heading: "7. Vos droits"
@@ -146,7 +146,7 @@ fr:
         liability:
           heading: "12. Responsabilité, fin et droit applicable"
           paragraphs:
-            - "Vous pouvez cesser d'utiliser la bêta et demander la suppression du compte à tout moment en écrivant à support@lawrelay.be. LawRelay peut mettre fin à l'accès bêta avec un préavis raisonnable ou immédiatement si nécessaire pour la sécurité, la loi ou ces conditions."
+            - "Vous pouvez cesser d’utiliser la bêta et supprimer votre compte dans Profil après avoir confirmé votre mot de passe. LawRelay peut mettre fin à l’accès bêta avec un préavis raisonnable ou immédiatement si nécessaire pour la sécurité, la loi ou ces conditions."
             - "Le droit belge régit ces conditions. Les droits impératifs qui vous sont applicables restent préservés. Rien dans ces conditions n'exclut une responsabilité qui ne peut légalement l'être."
     cookies:
       meta_title: "Déclaration relative aux cookies — LawRelay"

@@ -11,7 +11,6 @@ fr:
       new_password: "Nouveau mot de passe"
       password_confirmation: "Confirmer le mot de passe"
       company_name: "Nom de l’entreprise"
-      company_name_hint: "Destinataire de la facture : vous-même comme indépendant ou la raison sociale de votre société."
       enterprise_number: "Numéro d’entreprise"
       vat_number: "Numéro de TVA"
       bar_association: "Barreau"
@@ -148,3 +147,31 @@ fr:
       lawyer_profile:
         bar_association: "Barreau"
         bar_number: "Numéro de barreau"
+  account_deletion:
+    title: "Supprimer le compte — LawRelay"
+    heading: "Supprimer le compte"
+    warning: "Votre compte sera supprimé et vous serez déconnecté. Les missions clôturées restent conservées sans vos données personnelles lorsque nécessaire."
+    request_details: "Suppression autonome du compte."
+    settings:
+      heading: "Supprimer le compte"
+      body: "Fermer définitivement votre compte."
+      link: "Supprimer le compte"
+    form:
+      legend: "Confirmer la suppression"
+      password: "Mot de passe actuel"
+      confirm: "Je comprends que mon compte sera supprimé."
+      cancel: "Retour au profil"
+      submit: "Supprimer le compte"
+    aside:
+      title: "Avant de continuer"
+      body: "Terminez ou annulez d’abord les missions et réponses en cours."
+    notices:
+      confirmation_required: "Confirmez que vous souhaitez supprimer votre compte."
+      invalid_password: "Votre mot de passe est incorrect."
+      open_work: "Terminez ou annulez d’abord les missions et réponses en cours."
+      held: "Ce compte est actuellement protégé par une conservation."
+      billing: "Ce compte comporte des éléments de facturation à vérifier d’abord."
+      blocked: "Votre compte ne peut pas encore être supprimé."
+      unavailable: "La suppression du compte est temporairement indisponible. Réessayez plus tard."
+      rate_limited: "Veuillez patienter avant de réessayer."
+      deleted: "Votre compte a été supprimé."
