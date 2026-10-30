@@ -1,9 +1,11 @@
 en:
   marketing:
     analytics:
-      title: "Anonymous statistics"
-      copy: "Help us understand which public pages are useful."
-      allow: "Allow"
-      decline: "No thanks"
+      title: "Cookies and statistics"
+      copy: "LawRelay uses necessary cookies and cookieless statistics."
+      details: "Cookie details"
+      dismiss: "Got it"
+      enable: "Turn statistics on"
+      disable: "Turn statistics off"
       change_preference: "Statistics preference"
       privacy_signal: "Your browser privacy setting keeps statistics off."

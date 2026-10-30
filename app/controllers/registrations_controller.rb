@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-10-30-contact"
-  PRIVACY_VERSION = "2026-10-30-analytics-geo"
+  PRIVACY_VERSION = "2026-10-30-cookieless"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
