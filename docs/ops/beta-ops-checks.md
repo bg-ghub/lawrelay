@@ -1,5 +1,9 @@
 # Beta operations checks
 
+## 30 October 2026 — private provider archive
+
+Collected the existing Hetzner account DPA with Appendix 1 and Migadu's current account/subscription record and receipt text copy. These join the AWS/GitHub agreements and available account context in the restricted archive outside Git. Document hashes, PDF readability and owner/SYSTEM-only access checks passed. Only this status is public; no account documents or identifiers were added to the repository. No new agreement or account setting was submitted.
+
 ## 29 October 2026 — 0.10.1
 
 Terms/privacy read-through checked operator contacts and the implemented verification, visibility, retention and moderation flows. All four notices now clarify recipients, retention exceptions, provider transfers and rights requests. Signup distinguishes accepting terms from reading the notice; both versions are recorded. The platform-role wording is shorter. Account-specific provider-agreement evidence remains separate.

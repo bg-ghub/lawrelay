@@ -18,7 +18,7 @@ Record the actual language/browser, steps, outcome and email arrival. A queued j
 
 | Item | Next action |
 | --- | --- |
-| Provider agreements | Retain existing account-specific agreements/version evidence privately; follow the [data register](data-register.md). A public template is not account evidence. |
+| Provider agreements | Collected privately, including the existing Hetzner DPA/appendix and Migadu account record. Keep the archive current; follow the [data register](data-register.md). |
 | Retention and privacy requests | Decide periods, holds and field actions before real execution. The [protected helpers](privacy-operations.md) prepare scoped exports/inventories; closing a request does not erase data. |
 | Incident response | Technical recovery drills pass. Follow the [runbook](incident-response.md) for actual outages or delayed mail and record the response. |
 
