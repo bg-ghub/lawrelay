@@ -3,6 +3,64 @@ name: lawrelay
 # This file intentionally uses a locally-loaded image rather than a registry.
 # `script/ops/deploy.ps1` supplies LAWRELAY_IMAGE through release.env on the host.
 services:
+  umami-db:
+    image: postgres:15-alpine@sha256:3d0f7584ed7d04e27fa050d6683a74746608faf21f202be78460d679cc56461f
+    container_name: lawrelay-umami-db
+    env_file:
+      # Kept separate from the application environment and copied by deploy.
+      - path: ./umami-db.env
+        format: raw
+    volumes:
+      - lawrelay_umami_db:/var/lib/postgresql/data
+    networks:
+      - analytics-db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 20s
+    mem_limit: 384m
+    cpus: 0.25
+    pids_limit: 128
+    logging:
+      driver: journald
+      options:
+        tag: lawrelay-umami-db
+
+  umami:
+    image: ghcr.io/umami-software/umami:3.4.1@sha256:e69d1a7932e9dab0fc523edc7be1f3a53f3c261f57856fc2167ae74a8fc022e8
+    container_name: lawrelay-umami
+    env_file:
+      # Database access and per-instance application/encryption secrets.
+      - path: ./umami.env
+        format: raw
+    environment:
+      DISABLE_TELEMETRY: "1"
+    depends_on:
+      umami-db:
+        condition: service_healthy
+    expose:
+      - "3000"
+    networks:
+      - private
+      - analytics-db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent --show-error http://127.0.0.1:3000/api/heartbeat >/dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 45s
+    mem_limit: 768m
+    cpus: 0.50
+    pids_limit: 128
+    logging:
+      driver: journald
+      options:
+        tag: lawrelay-umami
+
   app:
     image: ${LAWRELAY_IMAGE:?LAWRELAY_IMAGE must be set by the deployment script}
     container_name: lawrelay-app
@@ -68,6 +126,10 @@ networks:
   private:
     # No app ports are published. This bridge remains egress-capable for
     # Migadu SMTP and Caddy's ACME certificate checks.
+  analytics-db:
+    # Only Umami and Postgres can use this network. The database has no
+    # published port and is never reachable from the application network.
+    internal: true
 
 volumes:
   # Explicitly external: backups, deploys, and compose project names must never
@@ -75,5 +137,8 @@ volumes:
   lawrelay_storage:
     external: true
     name: lawrelay_storage
+  lawrelay_umami_db:
+    external: true
+    name: lawrelay_umami_db
   caddy_data:
   caddy_config:

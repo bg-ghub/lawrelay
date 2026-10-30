@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post :retry_directory
     end
     resource :settings, only: %i[show update]
+    resource :account_deletion, path: "settings/delete-account", only: %i[show destroy]
     resource :two_factor_authentication, path: "settings/two-factor", only: %i[show destroy] do
       post :begin_setup, path: "begin-setup"
       get :setup

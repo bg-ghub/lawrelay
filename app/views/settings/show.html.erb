@@ -51,7 +51,7 @@
           data-business-lookup-invalid-value="<%= t("business_lookup.invalid") %>"
           data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
           <legend><%= t("settings.firm.legend") %></legend>
-          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.company_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization", aria: { describedby: "company-name-hint" }, data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %><p class="field-hint" id="company-name-hint"><%= t("auth.fields.company_name_hint") %></p></div>
+          <div class="field-group"><%= form.label "firm[name]", t("auth.fields.company_name") %><%= form.text_field "firm[name]", value: @firm.name, required: true, autocomplete: "organization", data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %></div>
           <div class="form-row">
             <div class="field-group"><%= form.label "firm[enterprise_number]", t("auth.fields.enterprise_number") %><%= form.text_field "firm[enterprise_number]", value: @firm.enterprise_number, required: true, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", business_lookup_target: "number", action: "input->company-number#sync input->business-lookup#edited" } %></div>
             <div class="field-group"><%= form.label "firm[vat_number]", t("auth.fields.vat_number") %><%= form.text_field "firm[vat_number]", value: @firm.vat_number, name: nil, readonly: true, autocomplete: "off", class: "company-vat-preview", data: { company_number_target: "vat" } %></div>
@@ -81,6 +81,11 @@
       <h2 id="account-security-heading"><%= t("two_factor.settings.heading") %></h2>
       <p><%= t(@user.two_factor_enabled? ? "two_factor.settings.status_on" : "two_factor.settings.status_off") %></p>
       <%= link_to t("two_factor.settings.manage"), two_factor_authentication_path, class: "text-link" %>
+    </section>
+    <section class="form-section two-factor-settings" aria-labelledby="account-deletion-heading">
+      <h2 id="account-deletion-heading"><%= t("account_deletion.settings.heading") %></h2>
+      <p><%= t("account_deletion.settings.body") %></p>
+      <%= link_to t("account_deletion.settings.link"), account_deletion_path, class: "text-link" %>
     </section>
   <% end %>
 </div>

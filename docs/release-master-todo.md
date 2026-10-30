@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 30 October 2026. Current release: 0.13.1.
+Reviewed 30 October 2026. Current release: 0.14.0.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -11,6 +11,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Signup, directory/email verification, firm boundaries, private-record access and suspended-account protections.
 - [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.
+- [x] Self-service member account deletion from the profile, with password confirmation and existing retention/hold safeguards.
 - [x] Assignment/proposal flows, optional indicative rates, profile-import preview and [localized notifications with retries/history](ops/notifications.md).
 - [x] Separate professional/billing details, validated enterprise numbers, [KBO billing preview](ops/kbo-lookup.md) and an invoice recipient per assignment with private contact sharing.
 - [x] Internal security fixes, translation checks, keyboard/responsive/axe checks and Chrome/Edge/Firefox journeys. See [QA](ops/beta-thorough-qa.md), [dated evidence](ops/beta-ops-checks.md) and [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml).
@@ -24,7 +25,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Retrieve the existing Hetzner account DPA with Appendix 1 and Migadu's account/subscription record and paid receipt copy; verify private access and archive checksums.
 - [x] Three-account synthetic trial: directory-shaped fixtures, confirmations, blank indicative price, competing proposals, selection/non-selection, completion, cancellation and captured email. Also checked manually in an isolated local copy.
 - [x] Full public/member/admin browser pass in four languages, including validation, recovery and review queues; mobile layout and localized error-page fixes. [Coverage and limits](ops/beta-thorough-qa.md).
-- [x] Optional public-page Umami statistics and a local GeoCaptcha outside Belgium, using existing infrastructure. [Configuration and retention](ops/analytics-and-geo.md).
+- [x] Cookieless public-page statistics in LawRelay's own Umami instance, and a local GeoCaptcha outside Belgium. [Configuration and retention](ops/analytics-and-geo.md).
 
 ## Finish during the beta
 

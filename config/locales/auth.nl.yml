@@ -11,7 +11,6 @@ nl:
       new_password: "Nieuw wachtwoord"
       password_confirmation: "Bevestig wachtwoord"
       company_name: "Naam onderneming"
-      company_name_hint: "De naam die op de factuur moet staan: jij als zelfstandige of je vennootschap."
       enterprise_number: "Ondernemingsnummer"
       vat_number: "Btw-nummer"
       bar_association: "Balie"
@@ -148,3 +147,31 @@ nl:
       lawyer_profile:
         bar_association: "Balie"
         bar_number: "Balienummer"
+  account_deletion:
+    title: "Account verwijderen — LawRelay"
+    heading: "Account verwijderen"
+    warning: "Je account wordt verwijderd en je wordt afgemeld. Afgesloten opdrachten blijven waar nodig zonder je persoonsgegevens bewaard."
+    request_details: "Zelfbediende accountverwijdering."
+    settings:
+      heading: "Account verwijderen"
+      body: "Sluit je account definitief."
+      link: "Account verwijderen"
+    form:
+      legend: "Verwijdering bevestigen"
+      password: "Huidig wachtwoord"
+      confirm: "Ik begrijp dat mijn account wordt verwijderd."
+      cancel: "Terug naar profiel"
+      submit: "Account verwijderen"
+    aside:
+      title: "Voor je verdergaat"
+      body: "Werk open opdrachten en reacties eerst af of annuleer ze."
+    notices:
+      confirmation_required: "Bevestig dat je je account wilt verwijderen."
+      invalid_password: "Je wachtwoord klopt niet."
+      open_work: "Werk open opdrachten en reacties eerst af of annuleer ze."
+      held: "Dit account is momenteel beschermd door een bewaarplicht."
+      billing: "Dit account heeft facturatiegegevens die eerst moeten worden nagekeken."
+      blocked: "Je account kan nog niet worden verwijderd."
+      unavailable: "Accountverwijdering is tijdelijk niet beschikbaar. Probeer later opnieuw."
+      rate_limited: "Wacht even voor je het opnieuw probeert."
+      deleted: "Je account is verwijderd."

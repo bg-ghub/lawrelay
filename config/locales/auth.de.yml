@@ -11,7 +11,6 @@ de:
       new_password: "Neues Passwort"
       password_confirmation: "Passwort bestätigen"
       company_name: "Unternehmensname"
-      company_name_hint: "Rechnungsempfänger: Ihr eigener Name als Selbstständiger oder der Firmenname Ihrer Gesellschaft."
       enterprise_number: "Unternehmensnummer"
       vat_number: "USt-IdNr."
       bar_association: "Rechtsanwaltskammer"
@@ -148,3 +147,31 @@ de:
       lawyer_profile:
         bar_association: "Rechtsanwaltskammer"
         bar_number: "Kammernummer"
+  account_deletion:
+    title: "Konto löschen — LawRelay"
+    heading: "Konto löschen"
+    warning: "Ihr Konto wird gelöscht und Sie werden abgemeldet. Abgeschlossene Aufträge bleiben, soweit nötig, ohne Ihre personenbezogenen Daten erhalten."
+    request_details: "Selbstständige Kontolöschung."
+    settings:
+      heading: "Konto löschen"
+      body: "Ihr Konto dauerhaft schließen."
+      link: "Konto löschen"
+    form:
+      legend: "Löschung bestätigen"
+      password: "Aktuelles Passwort"
+      confirm: "Ich verstehe, dass mein Konto gelöscht wird."
+      cancel: "Zurück zum Profil"
+      submit: "Konto löschen"
+    aside:
+      title: "Bevor Sie fortfahren"
+      body: "Schließen oder stornieren Sie zuerst offene Aufträge und Angebote."
+    notices:
+      confirmation_required: "Bestätigen Sie, dass Sie Ihr Konto löschen möchten."
+      invalid_password: "Ihr Passwort ist nicht korrekt."
+      open_work: "Schließen oder stornieren Sie zuerst offene Aufträge und Angebote."
+      held: "Dieses Konto ist derzeit durch eine Aufbewahrungssperre geschützt."
+      billing: "Dieses Konto enthält zuerst zu prüfende Abrechnungsdaten."
+      blocked: "Ihr Konto kann noch nicht gelöscht werden."
+      unavailable: "Die Kontolöschung ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut."
+      rate_limited: "Bitte warten Sie, bevor Sie es erneut versuchen."
+      deleted: "Ihr Konto wurde gelöscht."

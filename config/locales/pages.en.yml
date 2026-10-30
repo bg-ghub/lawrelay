@@ -76,7 +76,7 @@ en:
           heading: "6. Retention"
           paragraphs:
             - "Unused, unconfirmed registrations: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
-            - "Accounts remain until closure. After reviewing a verified deletion request, we remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Ongoing assignments, requests, investigations, disputes or legal duties may require longer retention."
+            - "Accounts remain until closure. You can delete your account in Profile after confirming your password. We remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Open work, investigations, disputes or legal duties may require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
           heading: "7. Your rights"
@@ -146,7 +146,7 @@ en:
         liability:
           heading: "12. Liability, termination, and law"
           paragraphs:
-            - "You may stop using the beta and request account deletion at any time by writing to support@lawrelay.be. LawRelay may end beta access on reasonable notice or immediately where needed for security, law, or these terms."
+            - "You may stop using the beta and delete your account in Profile after confirming your password. LawRelay may end beta access on reasonable notice or immediately where needed for security, law, or these terms."
             - "Belgian law governs these terms. Any mandatory rights that apply to you remain unaffected. Nothing in these terms excludes liability that cannot legally be excluded."
     cookies:
       meta_title: "Cookie notice — LawRelay"
