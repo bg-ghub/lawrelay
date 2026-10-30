@@ -1,8 +1,14 @@
 # Beta QA — 30 October 2026
 
-Release 0.10.2. Browser mutations used an isolated local copy with fictitious accounts and captured mail. Production browser checks were read-only.
+Browser mutations used an isolated local copy with fictitious accounts and captured mail. Production uses read-only smoke checks.
 
-## Results
+## 0.11.0 additions
+
+Rails: 500 tests / 15,256 assertions pass, with 17 environment-specific skips. After updating the older form expectations, all 11 affected Chrome cases pass (1,348 assertions); CI repeats the complete suite.
+
+An isolated live browser checked directory preview without overwriting billing edits, default billing save, a different assignment invoice recipient, proposal/acceptance and invoice-contact visibility. All 32 new page/viewport checks pass across NL/FR/DE/EN at 320/1440px. The production image renders the new forms, social metadata and all email variants without sending mail. KBO is an official external lookup link, with no scraping or background requests.
+
+## 0.10.2 baseline results
 
 | Check | Result |
 | --- | --- |
