@@ -1,5 +1,11 @@
 # Beta operations checks
 
+## 30 October 2026 — 0.12.0 KBO lookup and titles
+
+Added targeted public KBO lookup using Praxis's current approach, with no extra account or credentials. One explicit request previews name/number and an available registered-office address; emails, professional identity and missing address fields stay untouched. Attribution follows unchanged fields and assignment snapshots, including export/erasure. The authenticated SOAP endpoint was checked separately and is not used.
+
+Full Rails and all 44 Chrome cases pass, with focused regression checks for the actual page title and localized lawyer titles. Live source and production-host connectivity checks pass. Four-language production rendering and isolated browser Save/source checks pass. See [QA](beta-thorough-qa.md) and [lookup operations](kbo-lookup.md).
+
 ## 30 October 2026 — 0.11.0 billing and profile checks
 
 Each assignment stores its own invoice recipient; tests cover independent accounts sharing an enterprise number, immutable snapshots, restricted invoice contacts and export/erasure. Billing edits preserve professional verification. Directory import now keeps billing separate. KBO opens an official record and adds no integration account or background collection.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_30_091000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_30_092000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_091000) do
     t.string "invoice_address_line_1"
     t.string "invoice_postal_code"
     t.string "invoice_city"
+    t.json "invoice_kbo_details", default: {}, null: false
     t.index ["city"], name: "index_assignments_on_city"
     t.index ["creator_user_id"], name: "index_assignments_on_creator_user_id"
     t.index ["firm_id"], name: "index_assignments_on_firm_id"
@@ -115,6 +116,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_091000) do
     t.datetime "verified_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "kbo_details", default: {}, null: false
     t.index ["enterprise_number"], name: "index_firms_on_enterprise_number", where: "enterprise_number IS NOT NULL"
     t.index ["vat_number"], name: "index_firms_on_vat_number", where: "vat_number IS NOT NULL"
     t.index ["verification_status"], name: "index_firms_on_verification_status"

@@ -1,0 +1,3 @@
+nl:
+  lawyer_titles:
+    display_name: "mr. %{name}"

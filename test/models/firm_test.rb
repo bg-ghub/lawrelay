@@ -52,6 +52,16 @@ class FirmTest < ActiveSupport::TestCase
     assert_not_equal first.id, second.id
   end
 
+  test "accepts optional billing addresses within invoice field limits" do
+    firm = Firm.new(name: "Billing recipient", address_line_1: "a" * 200, postal_code: "1" * 12, city: "c" * 100)
+
+    assert_predicate firm, :valid?
+
+    firm.address_line_1 = "a" * 201
+    refute_predicate firm, :valid?
+    assert_includes firm.errors.attribute_names, :address_line_1
+  end
+
   private
 
   def with_env(values)

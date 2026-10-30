@@ -41,7 +41,7 @@
     <section class="dashboard-panel" aria-labelledby="user-professional-heading">
       <h2 id="user-professional-heading"><%= t("admin.users.show.professional") %></h2>
       <dl class="detail-facts">
-        <div><dt><%= t("admin.users.fields.firm") %></dt><dd><%= @firm&.name || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.firm") %></dt><dd><%= @firm&.name || t("admin.users.not_recorded") %><%= render "shared/business_source", metadata: @firm.kbo_details, fields: @firm.kbo_details.fetch("fields", []) & %w[name] if @firm %></dd></div>
         <div><dt><%= t("admin.users.fields.firm_status") %></dt><dd><%= @firm ? t("admin.users.verification.#{@firm.verification_status}") : t("admin.users.not_recorded") %></dd></div>
         <div><dt><%= t("admin.users.fields.lawyer_status") %></dt><dd><%= @profile ? t("admin.users.verification.#{@profile.verification_status}") : t("admin.users.not_recorded") %></dd></div>
         <div><dt><%= t("admin.users.fields.directory_name") %></dt><dd><%= @profile&.directory_name.presence || t("admin.users.not_recorded") %></dd></div>

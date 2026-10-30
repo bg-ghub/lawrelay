@@ -27,7 +27,7 @@
     <div class="header-actions">
       <%= render "shared/language_menu" %>
       <% if authenticated? %>
-        <%= link_to (current_user.system_admin? ? current_user.full_name : "mr. #{current_user.full_name}"), (current_user.system_admin? ? admin_users_path : settings_path), class: "header-login" %>
+        <%= link_to (current_user.system_admin? ? current_user.full_name : t("lawyer_titles.display_name", name: current_user.full_name)), (current_user.system_admin? ? admin_users_path : settings_path), class: "header-login" %>
         <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "header-logout header-login" %>
         <% if current_user.system_admin? %>
           <%= link_to t("admin.users.link"), admin_users_path, class: "button button-small button-dark" %>

@@ -11,6 +11,9 @@ class Firm < ApplicationRecord
   normalizes :billing_email, with: ->(value) { value.to_s.strip.downcase.presence }
 
   validates :name, presence: true, length: { maximum: 160 }
+  validates :address_line_1, length: { maximum: 200 }, allow_blank: true
+  validates :postal_code, length: { maximum: 12 }, allow_blank: true
+  validates :city, length: { maximum: 100 }, allow_blank: true
   validates :country_code, inclusion: { in: %w[BE] }
   validates :verification_status, inclusion: { in: VERIFICATION_STATUSES }
   validate :enterprise_number_is_present_for_company_details

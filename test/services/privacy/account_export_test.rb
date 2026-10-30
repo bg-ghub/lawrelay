@@ -27,7 +27,8 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     skip "POSIX file permissions are required" if Gem.win_platform?
     own_assignment = create_assignment_for(@member)
     own_assignment.update_columns(invoice_name: "Own invoice firm", invoice_enterprise_number: "BE0123456789",
-      invoice_email: "own-invoice@example.test", invoice_address_line_1: "Own street 1", invoice_postal_code: "9000", invoice_city: "Gent")
+      invoice_email: "own-invoice@example.test", invoice_address_line_1: "Own street 1", invoice_postal_code: "9000", invoice_city: "Gent",
+      invoice_kbo_details: { "snapshot_date" => "2026-10-15", "fields" => [ "name", "enterprise_number" ] })
     other_assignment = create_assignment_for(@other, title: "excluded-other-assignment")
     other_assignment.update_columns(invoice_name: "Other invoice firm", invoice_email: "other-invoice@example.test")
     create_proposal_for(own_assignment, @other, message: "excluded-counterpart-message")
@@ -55,6 +56,7 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     exported_assignment = package.fetch("authored_assignments").sole
     assert_equal "Own invoice firm", exported_assignment.fetch("invoice_name")
     assert_equal "own-invoice@example.test", exported_assignment.fetch("invoice_email")
+    assert_equal({ "snapshot_date" => "2026-10-15", "fields" => [ "name", "enterprise_number" ] }, exported_assignment.fetch("invoice_kbo_details"))
     assert_equal [ own_proposal.id ], package.fetch("authored_proposals").pluck("id")
     assert_equal @member.user.notifications.order(:id).pluck(:id), package.fetch("notifications").pluck("id")
     assert_equal "192.0.2.10", package.fetch("sessions").sole.fetch("ip_address")

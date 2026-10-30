@@ -90,7 +90,7 @@ module Privacy
       user.proposals.update_all(name: nil, email: nil, message: removed)
       user.created_assignments.update_all(title: removed, description: removed, scope_indication: nil,
         invoice_name: nil, invoice_enterprise_number: nil, invoice_email: nil, invoice_address_line_1: nil,
-        invoice_postal_code: nil, invoice_city: nil)
+        invoice_postal_code: nil, invoice_city: nil, invoice_kbo_details: {})
       user.created_assignments.where(status: %w[draft open matched]).update_all(status: "cancelled", closed_at: erased_at)
       user.proposals.joins(:assignment).where(assignments: { status: %w[draft open matched] })
         .update_all(status: "withdrawn", withdrawn_at: erased_at)
@@ -99,7 +99,7 @@ module Privacy
       user.submitted_reports.update_all(details: removed, resolution_note: nil)
       Firm.where(id: sole_firm_ids).update_all(name: I18n.t("retention.deleted_account", locale:), enterprise_number: nil,
         vat_number: nil, billing_email: nil, phone: nil, address_line_1: nil, postal_code: nil, city: nil,
-        verification_status: "pending", verified_at: nil)
+        verification_status: "pending", verified_at: nil, kbo_details: {})
       BillingAccount.where(firm_id: sole_firm_ids).update_all(billing_email: nil, peppol_id: nil, provider_customer_id: nil)
       user.memberships.destroy_all
       user.update_columns(first_name: "", last_name: "", email_address: "erased-#{SecureRandom.uuid}@lawrelay.invalid",

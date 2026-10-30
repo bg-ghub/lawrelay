@@ -1,0 +1,13 @@
+<% lookup_token = local_assigns[:token] %>
+<% snapshot_date = local_assigns[:kbo_snapshot_date] %>
+<% source_fields = local_assigns.fetch(:kbo_fields, []) %>
+<div class="business-lookup">
+  <%= hidden_field_tag "#{scope}[kbo_lookup_token]", lookup_token, data: { business_lookup_target: "token" } %>
+  <% if BusinessRegistry::PublicLookup.configured? %>
+    <%= button_tag t("business_lookup.button"), type: "button", class: "button button--ghost business-lookup__button", data: { action: "business-lookup#lookup", business_lookup_target: "button" } %>
+  <% else %>
+    <%= render "shared/company_lookup", enterprise_number: enterprise_number %>
+  <% end %>
+  <p class="field-hint business-lookup__status" role="status" aria-live="polite" aria-atomic="true" data-business-lookup-target="status"></p>
+  <p class="field-hint business-lookup__source" data-business-lookup-target="source" <%= "hidden" if snapshot_date.blank? %>><%= business_lookup_source_label(snapshot_date: snapshot_date, fields: source_fields) if snapshot_date.present? %></p>
+</div>

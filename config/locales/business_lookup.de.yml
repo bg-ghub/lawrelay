@@ -1,0 +1,19 @@
+de:
+  business_lookup:
+    rate_limited: "Zu viele Abfragen. Versuchen Sie es in einer Minute erneut."
+    limit_reached: "Abfragelimit erreicht. Geben Sie die Daten selbst ein."
+    button: "ZDU-Daten abrufen"
+    loading: "Wird geladen…"
+    loaded: "Daten geladen. Vor dem Speichern prüfen."
+    invalid: "Geben Sie eine gültige Unternehmensnummer ein."
+    not_found: "Kein Unternehmen gefunden. Geben Sie die Daten selbst ein."
+    unavailable: "Die ZDU ist nicht verfügbar. Versuchen Sie es später oder geben Sie die Daten selbst ein."
+    not_configured: "Geben Sie die Daten selbst ein."
+    stale: "Ihre Angaben haben sich geändert. Suchen Sie erneut."
+    source: "ZDU · %{date}"
+    fields:
+      name: "Name"
+      enterprise_number: "Unternehmensnummer"
+      address_line_1: "Adresse"
+      postal_code: "Postleitzahl"
+      city: "Ort"

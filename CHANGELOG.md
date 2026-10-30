@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-10-30
+
+### Added
+
+- KBO billing lookup using the public-source approach already used in Praxis, with a preview before saving.
+- Source dates and attribution for unchanged registry fields, including assignment snapshots and privacy exports/erasure.
+
+### Fixed
+
+- Keep manually entered invoice email, phone and unavailable address fields during a registry lookup.
+- Translate the lawyer's header title with the selected page language.
+
 ## [0.11.0] - 2026-10-30
 
 ### Added

@@ -1,31 +1,37 @@
-<fieldset class="form-section" data-controller="company-number" data-company-number-locale-value="<%= I18n.locale %>">
+<fieldset class="form-section" data-controller="company-number business-lookup" data-company-number-locale-value="<%= I18n.locale %>"
+  data-business-lookup-url-value="<%= company_lookup_path %>"
+  data-business-lookup-loading-value="<%= t("business_lookup.loading") %>"
+  data-business-lookup-loaded-value="<%= t("business_lookup.loaded") %>"
+  data-business-lookup-unavailable-value="<%= t("business_lookup.unavailable") %>"
+  data-business-lookup-invalid-value="<%= t("business_lookup.invalid") %>"
+  data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
   <legend><%= t("assignment_billing.heading") %></legend>
   <p class="field-hint"><%= t("assignment_billing.form_hint") %></p>
   <div class="field-group">
     <%= form.label :invoice_name, t("assignment_billing.name") %>
-    <%= form.text_field :invoice_name, required: true, maxlength: 160, autocomplete: "organization" %>
+    <%= form.text_field :invoice_name, required: true, maxlength: 160, autocomplete: "organization", data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %>
   </div>
   <div class="form-row">
     <div class="field-group">
       <%= form.label :invoice_enterprise_number, t("assignment_billing.enterprise_number") %>
-      <%= form.text_field :invoice_enterprise_number, required: true, maxlength: 20, inputmode: "numeric", data: { company_number_target: "enterprise", action: "input->company-number#sync blur->company-number#sync" } %>
+      <%= form.text_field :invoice_enterprise_number, required: true, maxlength: 20, inputmode: "numeric", data: { company_number_target: "enterprise", business_lookup_target: "number", action: "input->company-number#sync input->business-lookup#edited blur->company-number#sync" } %>
     </div>
     <div class="field-group">
       <%= label_tag "assignment_invoice_vat_number", t("assignment_billing.vat_number") %>
       <%= text_field_tag nil, assignment.invoice_vat_number, id: "assignment_invoice_vat_number", readonly: true, class: "company-vat-preview", data: { company_number_target: "vat" } %>
     </div>
   </div>
-  <p class="field-hint"><%= render "shared/company_lookup", enterprise_number: assignment.invoice_enterprise_number %></p>
+  <%= render "shared/business_lookup", scope: "assignment", enterprise_number: assignment.invoice_enterprise_number, token: params.dig(:assignment, :kbo_lookup_token), kbo_snapshot_date: assignment.invoice_kbo_details["snapshot_date"], kbo_fields: assignment.invoice_kbo_details.fetch("fields", []) %>
   <div class="field-group">
     <%= form.label :invoice_email, t("assignment_billing.email") %>
     <%= form.email_field :invoice_email, required: true, maxlength: 254, autocomplete: "email" %>
   </div>
   <div class="field-group">
     <%= form.label :invoice_address_line_1, t("assignment_billing.address") %>
-    <%= form.text_field :invoice_address_line_1, required: true, maxlength: 200, autocomplete: "address-line1" %>
+    <%= form.text_field :invoice_address_line_1, required: true, maxlength: 200, autocomplete: "address-line1", data: { business_lookup_target: "address", action: "input->business-lookup#edited" } %>
   </div>
   <div class="form-row">
-    <div class="field-group"><%= form.label :invoice_postal_code, t("assignment_billing.postal_code") %><%= form.text_field :invoice_postal_code, required: true, maxlength: 12, autocomplete: "postal-code" %></div>
-    <div class="field-group"><%= form.label :invoice_city, t("assignment_billing.city") %><%= form.text_field :invoice_city, required: true, maxlength: 100, autocomplete: "address-level2" %></div>
+    <div class="field-group"><%= form.label :invoice_postal_code, t("assignment_billing.postal_code") %><%= form.text_field :invoice_postal_code, required: true, maxlength: 12, autocomplete: "postal-code", data: { business_lookup_target: "postalCode", action: "input->business-lookup#edited" } %></div>
+    <div class="field-group"><%= form.label :invoice_city, t("assignment_billing.city") %><%= form.text_field :invoice_city, required: true, maxlength: 100, autocomplete: "address-level2", data: { business_lookup_target: "city", action: "input->business-lookup#edited" } %></div>
   </div>
 </fieldset>
