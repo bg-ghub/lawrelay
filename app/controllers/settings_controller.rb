@@ -20,6 +20,7 @@ class SettingsController < ApplicationController
 
       if @can_manage_firm
         @firm.assign_attributes(firm_params)
+        BusinessRegistry::Preview.apply(@firm, token: params.dig(:firm, :kbo_lookup_token))
         raise ActiveRecord::RecordInvalid, @firm unless @firm.valid?(:company_details)
       end
 

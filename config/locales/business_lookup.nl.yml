@@ -1,0 +1,19 @@
+nl:
+  business_lookup:
+    rate_limited: "Te veel opzoekingen. Probeer over een minuut opnieuw."
+    limit_reached: "Opzoeklimiet bereikt. Vul de gegevens zelf in."
+    button: "KBO-gegevens ophalen"
+    loading: "Ophalen…"
+    loaded: "Gegevens opgehaald. Kijk ze na voor je opslaat."
+    invalid: "Vul een geldig ondernemingsnummer in."
+    not_found: "Geen onderneming gevonden. Vul de gegevens zelf in."
+    unavailable: "KBO is even niet beschikbaar. Probeer later opnieuw of vul de gegevens zelf in."
+    not_configured: "Vul de gegevens zelf in."
+    stale: "Je gegevens zijn gewijzigd. Zoek opnieuw op."
+    source: "KBO · %{date}"
+    fields:
+      name: "naam"
+      enterprise_number: "ondernemingsnummer"
+      address_line_1: "adres"
+      postal_code: "postcode"
+      city: "gemeente"

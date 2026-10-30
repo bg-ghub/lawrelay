@@ -33,6 +33,7 @@
             <div><dt><%= t("admin.verifications.firm_status") %></dt><dd><%= firm ? t("admin.users.verification.#{firm.verification_status}") : t("admin.verifications.missing") %></dd></div>
             <div><dt><%= t("admin.verifications.lawyer_status") %></dt><dd><%= profile ? t("admin.users.verification.#{profile.verification_status}") : t("admin.verifications.missing") %></dd></div>
           </dl>
+          <%= render "shared/business_source", metadata: firm.kbo_details, fields: firm.kbo_details.fetch("fields", []) & %w[name enterprise_number] if firm %>
 
           <%= form_with url: admin_verification_path(user), method: :patch, scope: :verification, namespace: dom_id(user), class: "assignment-form" do |form| %>
             <div class="field-group">

@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-10-30-contact"
-  PRIVACY_VERSION = "2026-10-30-company"
+  PRIVACY_VERSION = "2026-10-30-kbo"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -61,8 +61,12 @@ class RegistrationsController < ApplicationController
     @firm = Firm.new(
       name: attributes[:firm_name],
       enterprise_number: attributes[:enterprise_number],
+      address_line_1: attributes[:address_line_1],
+      postal_code: attributes[:postal_code],
+      city: attributes[:city],
       billing_email: email
     )
+    BusinessRegistry::Preview.apply(@firm, token: attributes[:kbo_lookup_token])
     @lawyer_profile = @user.build_lawyer_profile(
       # Existing schema requires a registry value before the official lookup.
       # Keep it opaque so a public directory UUID cannot be squatted at signup.
@@ -95,6 +99,7 @@ class RegistrationsController < ApplicationController
     params.require(:registration).permit(
       :first_name, :last_name, :email_address, :password, :password_confirmation,
       :firm_name, :enterprise_number, :directory_profile_url,
+      :address_line_1, :postal_code, :city, :kbo_lookup_token,
       :locale, :terms_accepted
     )
   end

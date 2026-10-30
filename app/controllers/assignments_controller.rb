@@ -40,6 +40,7 @@ class AssignmentsController < ApplicationController
     @assignment.status = "open"
     @assignment.urgent = false
     @assignment.content_rules_accepted_at = Time.current if content_rules_accepted?
+    BusinessRegistry::Preview.apply(@assignment, token: params.dig(:assignment, :kbo_lookup_token), fallback: current_firm)
 
     if @assignment.save(context: [ :create, :invoice_details ])
       @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.created")

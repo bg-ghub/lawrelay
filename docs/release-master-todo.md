@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 30 October 2026. Current release: 0.11.0.
+Reviewed 30 October 2026. Current release: 0.12.0.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -12,7 +12,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.
 - [x] Assignment/proposal flows, optional indicative rates, profile-import preview and [localized notifications with retries/history](ops/notifications.md).
-- [x] Separate professional/billing details, validated enterprise numbers, official KBO lookup and an invoice recipient per assignment with private contact sharing.
+- [x] Separate professional/billing details, validated enterprise numbers, [KBO billing preview](ops/kbo-lookup.md) and an invoice recipient per assignment with private contact sharing.
 - [x] Internal security fixes, translation checks, keyboard/responsive/axe checks and Chrome/Edge/Firefox journeys. See [QA](ops/beta-thorough-qa.md), [dated evidence](ops/beta-ops-checks.md) and [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml).
 - [x] Backups, isolated restore/compatible-image drills, HTTPS/readiness/queue probes and owner alerts. [Operations evidence](ops/beta-ops-checks.md).
 - [x] Operator contact details, terms/privacy, [support playbook](ops/support.md), [data register](ops/data-register.md) and protected [privacy review packages](ops/privacy-operations.md).

@@ -2,6 +2,12 @@
 
 Browser mutations used an isolated local copy with fictitious accounts and captured mail. Production uses read-only smoke checks.
 
+## 0.12.0 additions
+
+The full Rails suite passes (525 cases, 15,572 assertions, 17 environment-specific skips); nine focused cases also pass after the final live-page guard adjustment. All 44 Chrome cases pass (3,017 assertions), including automatic KBO preview, explicit Save, unchanged professional identity, missing/manual addresses and stale-response protection. Requests in browser tests use an offline fixture shaped like the actual public page.
+
+Live read-only checks confirmed the public page is reachable from the production host and the parser handles a natural person and a registered company. An isolated browser saved a reviewed preview and checked source/date attribution and localized header titles in NL/FR/DE/EN. Production-image localization and internal security checks pass. No account, service subscription or external email was created.
+
 ## 0.11.0 additions
 
 Rails: 500 tests / 15,256 assertions pass, with 17 environment-specific skips. After updating the older form expectations, all 11 affected Chrome cases pass (1,348 assertions); CI repeats the complete suite.

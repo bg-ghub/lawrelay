@@ -43,7 +43,9 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
   test "reviewed erasure removes profile, authentication and authored personal content without deleting shared work" do
     assignment = create_assignment_for(@member)
     assignment.update_columns(invoice_name: "Private invoice firm", invoice_enterprise_number: "BE0123456789",
-      invoice_email: "private-invoice@example.test", invoice_address_line_1: "Private street 1", invoice_postal_code: "9000", invoice_city: "Gent")
+      invoice_email: "private-invoice@example.test", invoice_address_line_1: "Private street 1", invoice_postal_code: "9000", invoice_city: "Gent",
+      invoice_kbo_details: { "snapshot_date" => "2026-10-15", "fields" => [ "name", "enterprise_number" ] })
+    @member.firm.update!(kbo_details: { "snapshot_date" => "2026-10-15", "fields" => [ "name", "enterprise_number" ] })
     assignment.update_columns(status: "completed", starts_at: 1.day.ago, closed_at: Time.current)
     proposal = create_proposal_for(assignment, @other)
     own_proposal_assignment = create_assignment_for(@other)
@@ -77,6 +79,8 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     assert_nil assignment.invoice_address_line_1
     assert_nil assignment.invoice_postal_code
     assert_nil assignment.invoice_city
+    assert_equal({}, assignment.invoice_kbo_details)
+    assert_equal({}, @member.firm.reload.kbo_details)
     assert_equal I18n.t("retention.removed_content", locale: @user.locale), own_proposal.reload.message
     assert_nil own_proposal.contact_email
     assert_equal @other.user, proposal.reload.user
