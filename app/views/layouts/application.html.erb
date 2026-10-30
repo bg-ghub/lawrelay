@@ -44,9 +44,10 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="/favicon.ico?v=<%= LawRelay::VERSION %>" type="image/x-icon" sizes="16x16 32x32 48x48">
+    <link rel="icon" href="/icon.png?v=<%= LawRelay::VERSION %>" type="image/png" sizes="512x512">
+    <link rel="icon" href="/icon.svg?v=<%= LawRelay::VERSION %>" type="image/svg+xml" sizes="any">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=<%= LawRelay::VERSION %>" sizes="180x180">
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>

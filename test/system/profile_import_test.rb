@@ -108,8 +108,11 @@ class ProfileImportTest < ApplicationSystemTestCase
     fill_in "Enterprise number", with: "1234567890"
     click_button "Save"
     assert_text "Enterprise number is invalid"
+    assert_selector ".form-error[role='alert']:focus"
     fill_in "Enterprise number", with: "1234567894"
     fill_in "Company name", with: "My default invoice recipient"
+    assert_field "Enterprise number", with: "1234567894"
+    assert_field "VAT number", with: "BE 1234567894"
     click_button "Save"
     assert_text "Changes saved."
     assert_equal "BE1234567894", @account.firm.reload.vat_number
