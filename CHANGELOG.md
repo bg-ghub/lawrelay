@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-10-30
+
+### Fixed
+
+- Use cookieless public-page statistics without an opt-in gate, matching WetWijzer.
+- Show a compact informational cookie banner in all four languages; dismissal does not change statistics preferences.
+- Keep existing opt-outs, browser privacy signals and the footer statistics controls.
+
 ## [0.13.0] - 2026-10-30
 
 ### Added

@@ -1,9 +1,11 @@
 nl:
   marketing:
     analytics:
-      title: "Anonieme statistieken"
-      copy: "Help ons te begrijpen welke publieke pagina’s nuttig zijn."
-      allow: "Toestaan"
-      decline: "Nee, bedankt"
+      title: "Cookies en statistieken"
+      copy: "LawRelay gebruikt noodzakelijke cookies en cookieloze statistieken."
+      details: "Cookiebeleid"
+      dismiss: "Begrepen"
+      enable: "Statistieken inschakelen"
+      disable: "Statistieken uitschakelen"
       change_preference: "Statistieken aanpassen"
       privacy_signal: "De privacy-instelling van je browser houdt statistieken uit."

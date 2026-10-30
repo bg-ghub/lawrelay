@@ -7,18 +7,21 @@ const trackerSource = readFileSync(new URL("../../app/javascript/analytics.js", 
 const validPreference = (choice = "allow") => `${choice}.v1.${Date.now()}`
 const preferenceLifetime = 180 * 24 * 60 * 60 * 1000
 
-function createTracker({ href = "https://lawrelay.be/en?token=private#section", referrer = "", dnt = false, gpc = false, preference } = {}) {
+function createTracker({ href = "https://lawrelay.be/en?token=private#section", referrer = "", dnt = false, gpc = false, preference, notice } = {}) {
   const listeners = {}
   const pageviews = []
   let script
-  let cookie = preference ? `lawrelay_statistics=${preference}` : ""
+  const cookies = new Map()
+  if (preference) cookies.set("lawrelay_statistics", preference)
+  if (notice) cookies.set("lawrelay_cookie_notice", notice)
   const body = { dataset: { lawrelayAnalyticsWebsiteId: "website-id" } }
   const status = { hidden: true }
+  const actions = { hidden: true }
   const allowButton = { focus: () => { allowButton.focused = true } }
   const panel = {
     dataset: { analyticsPrivacySignalMessage: "Browser preference keeps statistics off." },
     hidden: false,
-    querySelector: (selector) => selector.includes("status") ? status : allowButton
+    querySelector: (selector) => selector.includes("status") ? status : selector.includes("actions") ? actions : allowButton
   }
   const document = {
     body,
@@ -29,8 +32,12 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
     querySelector: (selector) => selector.includes("analytics-preference-panel") ? panel : null
   }
   Object.defineProperty(document, "cookie", {
-    get: () => cookie,
-    set: (value) => { cookie = value.split(";")[0] }
+    get: () => [...cookies].map(([name, value]) => `${name}=${value}`).join("; "),
+    set: (value) => {
+      const pair = value.split(";")[0]
+      const separator = pair.indexOf("=")
+      cookies.set(pair.slice(0, separator), pair.slice(separator + 1))
+    }
   })
   const window = {
     location: { href, protocol: new URL(href).protocol },
@@ -64,9 +71,10 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
     emitTurboLoad: () => listeners["turbo:load"](),
     pageviews,
     panel,
+    actions,
     script: () => script,
-    cookie: () => cookie,
-    expirePreference: () => { cookie = "" },
+    cookie: (name = "lawrelay_statistics") => cookies.has(name) ? `${name}=${cookies.get(name)}` : "",
+    expirePreference: () => { cookies.delete("lawrelay_statistics") },
     setHref: (nextHref) => {
       window.location.href = nextHref
       window.location.protocol = new URL(nextHref).protocol
@@ -80,6 +88,9 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
     }),
     openPreferences: () => listeners.click({
       target: { closest: (selector) => selector.includes("analytics-open-preferences") ? {} : null }
+    }),
+    dismissNotice: () => listeners.click({
+      target: { closest: (selector) => selector.includes("analytics-dismiss-banner") ? {} : null }
     })
   }
 }
@@ -180,26 +191,43 @@ test("private pages keep the preference control without loading analytics", () =
   assert.equal(tracker.script(), undefined)
 })
 
-test("statistics stay off by default, then explicit allow loads exactly one pageview", () => {
+test("public statistics start without opt in and dismissing the notice changes no tracking preference", () => {
   const tracker = createTracker({ href: "https://lawrelay.be/de/terms" })
 
   tracker.emitTurboLoad()
-  assert.equal(tracker.script(), undefined)
+  assert.ok(tracker.script())
   assert.equal(tracker.panel.hidden, false)
+  assert.equal(tracker.actions.hidden, true)
 
-  tracker.choose("allow")
-  assert.match(tracker.cookie(), /^lawrelay_statistics=allow\.v1\.\d+$/)
-  assert.equal(tracker.panel.hidden, true)
   tracker.script().onload()
   assert.equal(tracker.pageviews.length, 1)
+  tracker.dismissNotice()
+  assert.equal(tracker.cookie(), "")
+  assert.match(tracker.cookie("lawrelay_cookie_notice"), /^lawrelay_cookie_notice=seen\.v1\.\d+$/)
+  assert.equal(tracker.panel.hidden, true)
+  assert.equal(tracker.pageviews.length, 1)
+  tracker.openPreferences()
+  assert.equal(tracker.actions.hidden, false)
 })
 
-test("declining or withdrawing stops future public pageviews and an expired preference is off", () => {
-  const declined = createTracker({ href: "https://lawrelay.be/en" })
+test("an existing opt out is preserved and disabling statistics stops an in flight pageview", () => {
+  const declined = createTracker({ href: "https://lawrelay.be/en", preference: validPreference("deny") })
   declined.emitTurboLoad()
-  declined.choose("deny")
   assert.match(declined.cookie(), /^lawrelay_statistics=deny\.v1\.\d+$/)
   assert.equal(declined.script(), undefined)
+  declined.dismissNotice()
+  assert.match(declined.cookie(), /^lawrelay_statistics=deny\.v1\.\d+$/)
+  declined.openPreferences()
+  declined.choose("allow")
+  declined.script().onload()
+  assert.equal(declined.pageviews.length, 1)
+
+  const pending = createTracker({ href: "https://lawrelay.be/en" })
+  pending.emitTurboLoad()
+  pending.openPreferences()
+  pending.choose("deny")
+  pending.script().onload()
+  assert.equal(pending.pageviews.length, 0)
 
   const tracker = createTracker({ href: "https://lawrelay.be/en", preference: validPreference() })
   tracker.emitTurboLoad()
@@ -213,15 +241,23 @@ test("declining or withdrawing stops future public pageviews and an expired pref
 
   const expired = createTracker({ href: "https://lawrelay.be/en", preference: `allow.v1.${Date.now() - preferenceLifetime - 1}` })
   expired.emitTurboLoad()
-  assert.equal(expired.script(), undefined)
+  assert.ok(expired.script())
   assert.equal(expired.panel.hidden, false)
+})
+
+test("the informational notice stays dismissed while public statistics keep working", () => {
+  const tracker = createTracker({ notice: `seen.v1.${Date.now()}` })
+  tracker.emitTurboLoad()
+  assert.equal(tracker.panel.hidden, true)
+  tracker.script().onload()
+  assert.equal(tracker.pageviews.length, 1)
 })
 
 test("malformed and future-dated preference cookies are ignored", () => {
   for (const preference of ["%E0%A4%A", `allow.v1.${Date.now() + 60_000}`]) {
     const tracker = createTracker({ href: "https://lawrelay.be/en", preference })
     tracker.emitTurboLoad()
-    assert.equal(tracker.script(), undefined)
+    assert.ok(tracker.script())
     assert.equal(tracker.panel.hidden, false)
   }
 })

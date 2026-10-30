@@ -52,7 +52,7 @@ fr:
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
             - "Données du destinataire de facturation par mission, notamment le nom professionnel et le numéro d’entreprise/TVA. Les membres vérifiés qui consultent la mission voient le nom et le numéro ; le cabinet du donneur d’ordre et le confrère choisi voient l’adresse et l’e-mail complets."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
-            - "Pour les pages publiques uniquement : statistiques Umami sans cookies, comprenant le chemin de page, le domaine référent et des métadonnées ordinaires du navigateur et de la requête. Nous n’envoyons ni données de compte, ni formulaires, ni requêtes, ni données de mission."
+            - "Uniquement pour les visites publiques non connectées : statistiques Umami sans cookies comprenant un chemin de page limité, l’origine du référent et des métadonnées ordinaires de la requête du navigateur. Nous n’envoyons ni données de compte, ni pages privées, ni formulaires, ni requêtes, ni données de mission."
             - "Pour les visiteurs anonymes hors de Belgique, un contrôle de sécurité local utilise l’adresse IP pour déterminer le pays et conserve brièvement une preuve de vérification."
           paragraphs:
             - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."
@@ -61,7 +61,7 @@ fr:
           bullets:
             - "Créer et sécuriser les comptes, vérifier l'accès et fournir la mise en relation : exécution du contrat de service."
             - "Prévenir les abus, sécuriser le service, assister les utilisateurs, améliorer la fiabilité et établir ou défendre des droits : intérêts légitimes mis en balance avec les droits des utilisateurs."
-            - "Pour comprendre l’usage des pages publiques et améliorer le service : analyses limitées, agrégées et sans cookies, seulement avec votre consentement. Do Not Track et Global Privacy Control prévalent sur un choix antérieur de les autoriser."
+            - "Pour comprendre l’usage des pages publiques et améliorer le service : des statistiques agrégées limitées, sans cookies, sur la base de nos intérêts légitimes. Vous pouvez désactiver les statistiques dans le pied de page. Do Not Track et Global Privacy Control sont respectés."
         sharing:
           heading: "4. Destinataires"
           paragraphs:
@@ -157,11 +157,11 @@ fr:
         current_use:
           heading: "1. Ce qui est utilisé aujourd'hui"
           paragraphs:
-            - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Pour un visiteur anonyme hors de Belgique, le contrôle de sécurité utilise un cookie de vérification signé pendant 24 heures et un cookie de retour pendant 10 minutes au plus. Modifier les statistiques conserve Autoriser ou Non merci pendant 180 jours."
+            - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Pour un visiteur anonyme hors de Belgique, le contrôle de sécurité utilise un cookie de vérification signé pendant 24 heures et un cookie de retour pendant 10 minutes au plus. Le cookie de préférence Statistiques conserve votre réglage pendant 180 jours. Un cookie d’information distinct conserve pendant 180 jours la fermeture de la bannière d’information. Umami n’utilise lui-même aucun cookie."
         no_tracking:
           heading: "2. Analyses des pages publiques"
           paragraphs:
-            - "LawRelay demande votre accord avant de charger Umami auto-hébergé pour des statistiques agrégées sans cookies, uniquement sur les pages publiques. Il ne suit pas la publicité, ne crée pas de profils et n’enregistre pas les pages de compte, formulaires, requêtes de page ou données de mission. Statistiques permet de modifier ou retirer ce choix à tout moment. Do Not Track et Global Privacy Control bloquent les statistiques."
+            - "LawRelay utilise Umami auto-hébergé pour des statistiques agrégées limitées, sans cookies, concernant les pages publiques non connectées. Il ne suit pas la publicité, ne crée pas de profils et n’enregistre pas les pages de compte, formulaires, requêtes de page ou données de mission. Utilisez Statistiques dans le pied de page pour désactiver ou réactiver les statistiques. Do Not Track et Global Privacy Control bloquent les statistiques."
         retention:
           heading: "3. Durée et contrôle"
           paragraphs:
