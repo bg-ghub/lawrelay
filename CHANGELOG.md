@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-10-30
+
+### Fixed
+
+- Match the favicon and touch icon to the homepage logo, with fresh icon URLs for browser caches.
+
 ## [0.14.0] - 2026-10-30
 
 ### Added
