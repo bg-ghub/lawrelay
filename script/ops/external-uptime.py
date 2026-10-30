@@ -37,6 +37,7 @@ class Page(html.parser.HTMLParser):
         self.password = False
         self.email = False
         self.form = False
+        self.geo_widget = False
 
     def handle_starttag(self, tag, attributes):
         attributes = dict(attributes)
@@ -44,6 +45,8 @@ class Page(html.parser.HTMLParser):
             self.language = attributes.get("lang")
         if tag == "form":
             self.form = True
+        if tag == "altcha-widget":
+            self.geo_widget = True
         if tag == "input":
             self.password |= attributes.get("type") == "password"
             self.email |= attributes.get("name") == "email_address"
@@ -85,11 +88,36 @@ def check_endpoint(name, path):
                     name, body, response.headers.get("content-type", "").lower()
                 ):
                     return {"check": name, "ok": True}
+        except urllib.error.HTTPError as error:
+            # Foreign anonymous probes should reach the intentional security
+            # check, not treat its exact local redirect as an outage.
+            if name == "homepage" and error.code == 303 and error.headers.get("Location") in {
+                "/nl/geo-challenge", BASE_URL + "/nl/geo-challenge",
+            }:
+                return check_geo_challenge(opener)
         except (OSError, ValueError, urllib.error.URLError):
             pass
         if attempt == 0:
             time.sleep(3)
     return {"check": name, "ok": False}
+
+
+def check_geo_challenge(opener):
+    try:
+        request = urllib.request.Request(
+            BASE_URL + "/nl/geo-challenge",
+            headers={"User-Agent": "LawRelay-external-uptime/1.0"},
+        )
+        with opener.open(request, timeout=12) as response:
+            body = response.read(MAX_BODY + 1)
+            page = Page()
+            page.feed(body.decode("utf-8"))
+            ok = response.status == 200 and len(body) <= MAX_BODY and valid_body(
+                "homepage", body, response.headers.get("content-type", "").lower()
+            ) and page.form and page.geo_widget
+            return {"check": "homepage", "ok": bool(ok)}
+    except (OSError, ValueError, urllib.error.URLError):
+        return {"check": "homepage", "ok": False}
 
 
 def check_certificate():

@@ -1,0 +1,13 @@
+[Unit]
+Description=Refresh LawRelay's local copy of the existing country database
+Wants=network-online.target
+After=network-online.target
+OnFailure=lawrelay-failure@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/lawrelay-geoip-sync
+User=root
+UMask=0077
+PrivateTmp=true
+NoNewPrivileges=true

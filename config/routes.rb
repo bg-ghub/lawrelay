@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /nl|fr|de|en/ do
     root "home#index"
 
+    get "geo-challenge", to: "geo_challenges#show", as: :geo_challenge
+    post "geo-challenge", to: "geo_challenges#create"
+    get "altcha-challenge.json", to: "geo_challenges#challenge_json", as: :altcha_challenge
+
     get "pricing", to: "pages#pricing", as: :pricing
     get "privacy", to: "pages#privacy", as: :privacy
     get "terms", to: "pages#terms", as: :terms

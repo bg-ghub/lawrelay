@@ -52,6 +52,8 @@ de:
             - "Daten zum beruflichen Profil und zu Vermittlungspräferenzen, einschließlich Rechtsgebieten, Gerichtspräferenzen und—soweit für juristische Aufgaben relevant—gesprochenen Sprachen; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
             - "Rechnungsdaten je Auftrag, einschließlich beruflichem Namen und Unternehmens-/USt-Nummer. Verifizierte Mitglieder mit Zugriff auf den Auftrag sehen Name und Nummer; die Kanzlei des Auftraggebers und der ausgewählte Kollege sehen die vollständige Rechnungsadresse und E-Mail-Adresse."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
+            - "Nur für öffentliche Seiten: cookielose Umami-Statistiken mit Seitenpfad, verweisender Domain und gewöhnlichen Browser- und Anfragemetadaten. Kontoangaben, Formulare, Suchparameter und Auftragsdaten werden nicht übermittelt."
+            - "Für anonyme Besucher außerhalb Belgiens bestimmt eine lokale Sicherheitsprüfung anhand der IP-Adresse das Land und speichert kurz einen Prüfungsnachweis."
           paragraphs:
             - "LawRelay ist nicht für Mandantennamen, Sachverhalte, Schriftsätze, Beweismittel, Dokumente oder vertrauliche Kommunikation bestimmt. Diese Informationen müssen in Systemen unter Kontrolle der beteiligten Anwälte bleiben."
         purposes:
@@ -59,7 +61,7 @@ de:
           bullets:
             - "Konten anlegen und sichern, Berechtigung prüfen und Vermittlungsfunktionen bereitstellen: Erfüllung des Dienstleistungsvertrags."
             - "Missbrauch verhindern, den Dienst sichern, Nutzer unterstützen, Zuverlässigkeit verbessern und Ansprüche begründen oder abwehren: berechtigte Interessen nach Abwägung mit den Nutzerrechten."
-            - "LawRelay verwendet keine optionalen Analysen."
+            - "Um die Nutzung öffentlicher Seiten zu verstehen und den Dienst zu verbessern: begrenzte, cookielose, aggregierte Analysen nur mit Ihrer Einwilligung. Do Not Track und Global Privacy Control übersteuern eine frühere Erlaubnis."
         sharing:
           heading: "4. Empfänger"
           paragraphs:
@@ -73,7 +75,7 @@ de:
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
-            - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
+            - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
             - "Konten bleiben bis zur Schließung bestehen. Nach Prüfung eines bestätigten Löschantrags entfernen wir nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Laufende Aufträge, Anfragen, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
@@ -155,11 +157,11 @@ de:
         current_use:
           heading: "1. Was derzeit verwendet wird"
           paragraphs:
-            - "Erforderliche signierte Sitzungs- und Formularsicherheitscookies halten Sie angemeldet und schützen Formulare vor gefälschten Anfragen. Eine Anmeldungssitzung dauert höchstens 30 Tage und endet früher bei Abmeldung, Passwortzurücksetzung oder Sitzungswiderruf. Diese Cookies sind für den angeforderten Dienst unbedingt erforderlich."
+            - "Erforderliche signierte Sitzungs- und Formularsicherheitscookies halten Sie angemeldet und schützen Formulare vor gefälschten Anfragen. Eine Anmeldungssitzung dauert höchstens 30 Tage und endet früher bei Abmeldung, Passwortzurücksetzung oder Sitzungswiderruf. Für anonyme Besucher außerhalb Belgiens verwendet die Sicherheitsprüfung ein signiertes Prüfungs-Cookie für 24 Stunden und ein Rückkehrpfad-Cookie für höchstens 10 Minuten. Statistiken ändern speichert Zulassen oder Nein, danke für 180 Tage."
         no_tracking:
-          heading: "2. Kein optionales Tracking in der aktuellen Fassung"
+          heading: "2. Analysen öffentlicher Seiten"
           paragraphs:
-            - "LawRelay setzt derzeit keine Werbe-, Profiling- oder optionalen Analyse-Cookies. Die Sprache steht in der Seiten-URL und nicht in einem Tracking-Cookie."
+            - "LawRelay fragt, bevor selbst gehostetes Umami für cookielose, aggregierte Statistiken nur auf öffentlichen Seiten geladen wird. Es verfolgt keine Werbung, erstellt keine Profile und erfasst keine Kontoseiten, Formulare, Seitenparameter oder Auftragsdaten. Über Statistiken können Sie Ihre Wahl jederzeit ändern oder widerrufen. Do Not Track und Global Privacy Control verhindern Statistiken."
         retention:
           heading: "3. Dauer und Kontrolle"
           paragraphs:

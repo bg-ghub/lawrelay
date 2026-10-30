@@ -5,6 +5,19 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-10-30
+
+### Added
+
+- Optional public-page statistics through the existing self-hosted Umami instance at `analytics.lawrelay.be`.
+- A local GeoCaptcha for anonymous visitors outside Belgium, reusing WetWijzer's country data and proof-of-work widget.
+- Daily analytics retention and country-database refresh without a new service provider.
+
+### Changed
+
+- Update all four privacy and cookie notices for statistics preferences and the security check.
+- Keep external uptime checks working with the intentional foreign-visitor redirect.
+
 ## [0.12.0] - 2026-10-30
 
 ### Added

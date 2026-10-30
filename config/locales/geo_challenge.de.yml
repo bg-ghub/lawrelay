@@ -1,0 +1,16 @@
+de:
+  geo_challenge:
+    title: "Sicherheitsprüfung — LawRelay"
+    heading: "Eine kurze Prüfung"
+    body: "Bitte schließen Sie diese automatische Sicherheitsprüfung ab."
+    legend: "Sicherheitsprüfung"
+    error: "Die Prüfung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
+    javascript_required: "JavaScript wird für diese Prüfung benötigt."
+    widget:
+      label: "Ich bin kein Roboter"
+      loading: "Wird geladen…"
+      verifying: "Wird geprüft…"
+      verified: "Bestätigt"
+      error: "Prüfung fehlgeschlagen. Bitte erneut versuchen."
+      expired: "Prüfung abgelaufen. Bitte erneut versuchen."
+      reload: "Neu laden"
