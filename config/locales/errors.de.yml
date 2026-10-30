@@ -1,0 +1,15 @@
+de:
+  errors:
+    home: "Zurück zu LawRelay"
+    "404":
+      title: "Seite nicht gefunden"
+      heading: "Seite nicht gefunden"
+      body: "Prüfen Sie die Adresse oder gehen Sie zu LawRelay zurück."
+    "422":
+      title: "Das hat nicht funktioniert"
+      heading: "Bitte erneut versuchen"
+      body: "Ihre Anfrage konnte nicht verarbeitet werden. Gehen Sie zurück und versuchen Sie es erneut."
+    "500":
+      title: "Etwas ist schiefgelaufen"
+      heading: "Etwas ist schiefgelaufen"
+      body: "Bitte versuchen Sie es gleich noch einmal."

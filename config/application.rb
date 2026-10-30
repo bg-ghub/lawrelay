@@ -38,6 +38,11 @@ module LawRelay
       en: %i[en]
     }
 
+    # Keep errors short and useful too. The controller does not inherit the
+    # authenticated application stack, so it also works when routing or a
+    # session fails.
+    config.exceptions_app = routes
+
     config.action_dispatch.default_headers.merge!(
       "Referrer-Policy" => "strict-origin-when-cross-origin",
       "Permissions-Policy" => "camera=(), microphone=(), geolocation=(), payment=()",

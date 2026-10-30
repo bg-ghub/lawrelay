@@ -1,0 +1,15 @@
+fr:
+  errors:
+    home: "Retour à LawRelay"
+    "404":
+      title: "Page introuvable"
+      heading: "Page introuvable"
+      body: "Vérifiez l’adresse ou retournez sur LawRelay."
+    "422":
+      title: "Cela n’a pas marché"
+      heading: "Réessayez"
+      body: "Votre demande n’a pas pu être traitée. Revenez en arrière et réessayez."
+    "500":
+      title: "Un problème est survenu"
+      heading: "Un problème est survenu"
+      body: "Réessayez dans un instant."

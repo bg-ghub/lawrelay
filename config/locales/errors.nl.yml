@@ -1,0 +1,15 @@
+nl:
+  errors:
+    home: "Terug naar LawRelay"
+    "404":
+      title: "Pagina niet gevonden"
+      heading: "Pagina niet gevonden"
+      body: "Controleer het adres of ga terug naar LawRelay."
+    "422":
+      title: "Dat lukte niet"
+      heading: "Probeer opnieuw"
+      body: "Je verzoek kon niet worden verwerkt. Ga terug en probeer opnieuw."
+    "500":
+      title: "Er ging iets mis"
+      heading: "Er ging iets mis"
+      body: "Probeer het straks opnieuw."
