@@ -52,7 +52,7 @@ en:
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Per-assignment invoice recipient data, including professional name and enterprise/VAT number. Verified assignment viewers can see the recipient name and number; the requester’s firm and the selected confrater can see the full invoice address and email."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
-            - "For public pages only, cookieless Umami statistics: page path, referrer domain and ordinary browser-request metadata. We do not send account details, forms, queries or assignment data."
+            - "For anonymous public visits only, cookieless Umami statistics: a limited page path, referrer origin and ordinary browser-request metadata. We do not send account details, private pages, forms, queries or assignment data."
             - "For anonymous visitors outside Belgium, a local security check uses the request IP to determine the country and stores a short-lived verification record."
           paragraphs:
             - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
@@ -61,7 +61,7 @@ en:
           bullets:
             - "To create and secure accounts, verify eligibility, and provide matching features: performance of the service agreement."
             - "To prevent abuse, secure the service, support users, improve reliability, and establish or defend claims: legitimate interests, balanced against user rights."
-            - "To understand use of public pages and improve the service: limited, cookieless aggregate analytics, only after your consent. Do Not Track and Global Privacy Control override an earlier choice to allow it."
+            - "To understand use of public pages and improve the service: limited, cookieless aggregate analytics on the basis of our legitimate interests. You can turn statistics off in the footer. Do Not Track and Global Privacy Control are respected."
         sharing:
           heading: "4. Who receives data"
           paragraphs:
@@ -157,11 +157,11 @@ en:
         current_use:
           heading: "1. What is used today"
           paragraphs:
-            - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. For an anonymous visitor outside Belgium, the security check uses a signed verification cookie for 24 hours and a return-path cookie for up to 10 minutes. The Statistics preference records Allow or No thanks for 180 days."
+            - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. For an anonymous visitor outside Belgium, the security check uses a signed verification cookie for 24 hours and a return-path cookie for up to 10 minutes. The Statistics preference cookie remembers your setting for 180 days. A separate notice cookie remembers for 180 days that the information banner was closed. Umami itself uses no cookies."
         no_tracking:
           heading: "2. Public-page analytics"
           paragraphs:
-            - "LawRelay asks before loading self-hosted Umami for cookieless, aggregate statistics on public pages only. It does not track advertising, profile visitors or record account pages, forms, page queries or assignment data. Use Statistics at any time to change or withdraw your choice. Do Not Track and Global Privacy Control prevent statistics."
+            - "LawRelay uses self-hosted Umami for limited, cookieless aggregate statistics on anonymous public pages. It does not track advertising, profile visitors or record account pages, forms, page queries or assignment data. Use Statistics in the footer to turn statistics off or back on. Do Not Track and Global Privacy Control prevent statistics."
         retention:
           heading: "3. Duration and control"
           paragraphs:

@@ -4,10 +4,13 @@ LawRelay reuses WetWijzer's Umami 3.2 instance in Germany. The dashboard at
 [analytics.lawrelay.be](https://analytics.lawrelay.be) requires the existing Umami login.
 LawRelay has its own website record; it does not share WetWijzer's statistics.
 
-Only anonymous public pages can send pageviews, after the visitor allows statistics.
+Only anonymous public pages send cookieless pageviews, without an opt-in gate.
 Queries, fragments, account details and form values are excluded. Referrers contain
-only the origin. Admin, sign-in and marketplace pages are excluded. DNT/GPC stops
-tracking even after consent. The Statistics control lets visitors withdraw consent.
+only the origin. Admin, sign-in and marketplace pages are excluded. DNT/GPC and
+existing opt-outs stop tracking. The footer Statistics control can turn it off or
+back on. Choices last 180 days.
+New visitors see a compact informational cookie banner. Its dismissal is stored
+separately for 180 days and never enables or disables statistics. It is not consent.
 
 The production environment sets `UMAMI_WEBSITE_ID`. The exact analytics origin is
 allowed in CSP; automatic Umami tracking, replay and custom events are disabled.

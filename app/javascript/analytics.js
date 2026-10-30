@@ -1,11 +1,13 @@
 const analyticsAttribute = "lawrelayAnalyticsWebsiteId"
 const publicPath = /^\/(?:(?:nl|fr|de|en)(?:\/(?:privacy|terms|cookies|legal-notice))?|(?:privacy|terms|cookies|legal-notice)?)\/?$/
 const preferenceCookie = "lawrelay_statistics"
+const noticeCookie = "lawrelay_cookie_notice"
 const preferenceLifetime = 180 * 24 * 60 * 60
 
 let trackerLoading = false
 let trackerReady = false
 let pendingPageview = null
+let preferencesOpen = false
 
 function privacySignalEnabled() {
   return navigator.globalPrivacyControl === true ||
@@ -14,13 +16,14 @@ function privacySignalEnabled() {
     navigator.msDoNotTrack === "1"
 }
 
-function preference() {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${preferenceCookie}=([^;]*)`))
+function timedCookie(name, values) {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
   if (!match) return null
 
   try {
-    const parsed = /^(allow|deny)\.v1\.(\d+)$/.exec(decodeURIComponent(match[1]))
+    const parsed = /^(\w+)\.v1\.(\d+)$/.exec(decodeURIComponent(match[1]))
     if (!parsed) return null
+    if (!values.includes(parsed[1])) return null
 
     const recordedAt = Number(parsed[2])
     const now = Date.now()
@@ -32,13 +35,23 @@ function preference() {
   }
 }
 
-function statisticsAllowed() {
-  return preference() === "allow" && !privacySignalEnabled()
+function preference() {
+  return timedCookie(preferenceCookie, ["allow", "deny"])
 }
 
-function savePreference(value) {
+function statisticsAllowed() {
+  return preference() !== "deny" && !privacySignalEnabled()
+}
+
+function saveTimedCookie(name, value) {
   const secure = window.location.protocol === "https:" ? "; Secure" : ""
-  document.cookie = `${preferenceCookie}=${value}.v1.${Date.now()}; Max-Age=${preferenceLifetime}; Path=/; SameSite=Lax${secure}`
+  document.cookie = `${name}=${value}.v1.${Date.now()}; Max-Age=${preferenceLifetime}; Path=/; SameSite=Lax${secure}`
+}
+
+function dismissBanner() {
+  saveTimedCookie(noticeCookie, "seen")
+  preferencesOpen = false
+  updatePreferencePanel()
 }
 
 function preferencePanel() {
@@ -54,7 +67,10 @@ function updatePreferencePanel() {
   if (!panel) return
 
   const status = panel.querySelector("[data-analytics-preference-status]")
-  panel.hidden = preference() === "allow" || preference() === "deny" || !publicAnalyticsPage()
+  const actions = panel.querySelector("[data-analytics-preference-actions]")
+  const alreadyInformed = timedCookie(noticeCookie, ["seen"]) || preference()
+  panel.hidden = !preferencesOpen && (Boolean(alreadyInformed) || !publicAnalyticsPage())
+  if (actions) actions.hidden = !preferencesOpen
   if (status) {
     status.hidden = !privacySignalEnabled()
     status.textContent = privacySignalEnabled() ? panel.dataset.analyticsPrivacySignalMessage : ""
@@ -120,6 +136,7 @@ function loadTracker(websiteId) {
 
 function trackPublicPage() {
   pendingPageview = null
+  preferencesOpen = false
   updatePreferencePanel()
   if (!statisticsAllowed()) return
 
@@ -136,11 +153,17 @@ function trackPublicPage() {
 document.addEventListener("turbo:load", trackPublicPage)
 document.addEventListener("click", (event) => {
   const choice = event.target.closest("[data-analytics-preference]")?.dataset.analyticsPreference
-  if (choice) {
-    savePreference(choice)
-    updatePreferencePanel()
-    if (choice === "allow") trackPublicPage()
-    else pendingPageview = null
+  if (["allow", "deny"].includes(choice)) {
+    const wasAllowed = statisticsAllowed()
+    saveTimedCookie(preferenceCookie, choice)
+    dismissBanner()
+    if (choice === "deny") pendingPageview = null
+    else if (!wasAllowed) trackPublicPage()
+    return
+  }
+
+  if (event.target.closest("[data-analytics-dismiss-banner]")) {
+    dismissBanner()
     return
   }
 
@@ -149,7 +172,8 @@ document.addEventListener("click", (event) => {
     const panel = preferencePanel()
     if (!panel) return
 
-    panel.hidden = false
+    preferencesOpen = true
+    updatePreferencePanel()
     panel.querySelector("[data-analytics-preference]")?.focus()
   }
 })
