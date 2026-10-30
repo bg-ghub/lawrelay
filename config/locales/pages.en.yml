@@ -52,6 +52,8 @@ en:
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Per-assignment invoice recipient data, including professional name and enterprise/VAT number. Verified assignment viewers can see the recipient name and number; the requester’s firm and the selected confrater can see the full invoice address and email."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
+            - "For public pages only, cookieless Umami statistics: page path, referrer domain and ordinary browser-request metadata. We do not send account details, forms, queries or assignment data."
+            - "For anonymous visitors outside Belgium, a local security check uses the request IP to determine the country and stores a short-lived verification record."
           paragraphs:
             - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
         purposes:
@@ -59,7 +61,7 @@ en:
           bullets:
             - "To create and secure accounts, verify eligibility, and provide matching features: performance of the service agreement."
             - "To prevent abuse, secure the service, support users, improve reliability, and establish or defend claims: legitimate interests, balanced against user rights."
-            - "LawRelay does not use optional analytics."
+            - "To understand use of public pages and improve the service: limited, cookieless aggregate analytics, only after your consent. Do Not Track and Global Privacy Control override an earlier choice to allow it."
         sharing:
           heading: "4. Who receives data"
           paragraphs:
@@ -73,7 +75,7 @@ en:
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "Unused, unconfirmed registrations: 30 days of inactivity. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
+            - "Unused, unconfirmed registrations: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
             - "Accounts remain until closure. After reviewing a verified deletion request, we remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Ongoing assignments, requests, investigations, disputes or legal duties may require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
@@ -155,11 +157,11 @@ en:
         current_use:
           heading: "1. What is used today"
           paragraphs:
-            - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. These cookies are strictly necessary for the requested service."
+            - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. For an anonymous visitor outside Belgium, the security check uses a signed verification cookie for 24 hours and a return-path cookie for up to 10 minutes. The Statistics preference records Allow or No thanks for 180 days."
         no_tracking:
-          heading: "2. No optional tracking in the current release"
+          heading: "2. Public-page analytics"
           paragraphs:
-            - "LawRelay does not currently place advertising, behavioural-profiling, or optional analytics cookies. Language is carried in the page URL rather than a tracking cookie."
+            - "LawRelay asks before loading self-hosted Umami for cookieless, aggregate statistics on public pages only. It does not track advertising, profile visitors or record account pages, forms, page queries or assignment data. Use Statistics at any time to change or withdraw your choice. Do Not Track and Global Privacy Control prevent statistics."
         retention:
           heading: "3. Duration and control"
           paragraphs:

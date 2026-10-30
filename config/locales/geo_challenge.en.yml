@@ -1,0 +1,16 @@
+en:
+  geo_challenge:
+    title: "Security check — LawRelay"
+    heading: "One quick check"
+    body: "Before you continue, please complete this automatic security check."
+    legend: "Security check"
+    error: "That check did not work. Please try again."
+    javascript_required: "JavaScript is needed for this check."
+    widget:
+      label: "I’m not a robot"
+      loading: "Loading…"
+      verifying: "Checking…"
+      verified: "Verified"
+      error: "Verification failed. Try again."
+      expired: "Verification expired. Try again."
+      reload: "Reload"

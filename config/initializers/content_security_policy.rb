@@ -15,6 +15,11 @@ Rails.application.configure do
     policy.script_src :self
     policy.style_src :self
     policy.worker_src :self
+
+    if Rails.env.production? && ENV["UMAMI_WEBSITE_ID"].present?
+      policy.connect_src :self, "https://analytics.lawrelay.be"
+      policy.script_src :self, "https://analytics.lawrelay.be"
+    end
   end
 
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }

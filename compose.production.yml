@@ -18,6 +18,8 @@ services:
       # Host-owned deletion ledger. It stays outside the Rails tree and backup
       # volume so approved erasures can be replayed after a restore.
       - /var/lib/lawrelay-privacy:/var/lib/lawrelay-privacy
+      # Country lookup stays local; this directory is refreshed from WetWijzer.
+      - /var/lib/lawrelay-geoip:/var/lib/lawrelay-geoip:ro
     environment:
       LAWRELAY_ERASURE_LEDGER: /var/lib/lawrelay-privacy/erasures.jsonl
     networks:

@@ -1,0 +1,16 @@
+nl:
+  geo_challenge:
+    title: "Beveiligingscontrole — LawRelay"
+    heading: "Even controleren"
+    body: "Voltooi deze automatische beveiligingscontrole om verder te gaan."
+    legend: "Beveiligingscontrole"
+    error: "De controle lukte niet. Probeer opnieuw."
+    javascript_required: "JavaScript is nodig voor deze controle."
+    widget:
+      label: "Ik ben geen robot"
+      loading: "Laden…"
+      verifying: "Controleren…"
+      verified: "Geverifieerd"
+      error: "Verificatie mislukt. Probeer opnieuw."
+      expired: "Verificatie verlopen. Probeer opnieuw."
+      reload: "Opnieuw laden"

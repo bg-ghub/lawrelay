@@ -52,7 +52,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="site-shell">
+  <% analytics_data = umami_analytics_enabled? ? { lawrelay_analytics_website_id: ENV.fetch("UMAMI_WEBSITE_ID") } : {} %>
+  <body <%= tag.attributes(class: "site-shell", data: analytics_data) %>>
     <a class="skip-link" href="#main-content" data-turbo="false"><%= t("marketing.layout.skip_to_content") %></a>
     <% if admin_host? %>
       <%= render "admin/shared/header" %>
@@ -76,6 +77,7 @@
       <% end %>
       <%= yield %>
     </main>
+    <%= render "shared/analytics_preference" if umami_analytics_preferences_available? %>
     <%= render(admin_host? ? "admin/shared/footer" : "shared/footer") %>
   </body>
 </html>

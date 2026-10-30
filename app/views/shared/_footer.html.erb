@@ -27,6 +27,9 @@
       <%= link_to t("pages.navigation.terms"), terms_path %>
       <%= link_to t("pages.navigation.cookies"), cookies_path %>
       <%= link_to t("pages.navigation.legal_notice"), legal_notice_path %>
+      <% if umami_analytics_preferences_available? %>
+        <button class="footer-preference" type="button" data-analytics-open-preferences><%= t("marketing.analytics.change_preference") %></button>
+      <% end %>
     </div>
     <div class="footer-column">
       <p class="footer-label"><%= t("marketing.footer.contact") %></p>

@@ -1,0 +1,12 @@
+[Unit]
+Description=Remove LawRelay Umami records older than 90 days
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/umami-lawrelay-retention --apply
+User=root
+UMask=0077
+PrivateTmp=true
+NoNewPrivileges=true

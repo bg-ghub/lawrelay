@@ -1,0 +1,16 @@
+fr:
+  geo_challenge:
+    title: "Vérification de sécurité — LawRelay"
+    heading: "Une vérification rapide"
+    body: "Effectuez cette vérification automatique pour continuer."
+    legend: "Vérification de sécurité"
+    error: "La vérification a échoué. Veuillez réessayer."
+    javascript_required: "JavaScript est requis pour cette vérification."
+    widget:
+      label: "Je ne suis pas un robot"
+      loading: "Chargement…"
+      verifying: "Vérification…"
+      verified: "Vérifié"
+      error: "La vérification a échoué. Réessayez."
+      expired: "La vérification a expiré. Réessayez."
+      reload: "Recharger"

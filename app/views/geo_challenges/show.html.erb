@@ -1,0 +1,41 @@
+<% content_for :title, t("geo_challenge.title") %>
+<% content_for :head do %>
+  <%# Link previews get the public LawRelay card, never the original path. %>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LawRelay">
+  <meta property="og:locale" content="<%= social_preview_locale %>">
+  <meta property="og:title" content="<%= t("marketing.layout.title") %>">
+  <meta property="og:description" content="<%= t("marketing.layout.description") %>">
+  <meta property="og:url" content="<%= geo_challenge_url(locale: I18n.locale) %>">
+  <meta property="og:image" content="<%= social_preview_image_url %>">
+  <meta property="og:image:secure_url" content="<%= social_preview_image_url %>">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="<%= t("marketing.home.social_preview.alt") %>">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= t("marketing.layout.title") %>">
+  <meta name="twitter:description" content="<%= t("marketing.layout.description") %>">
+  <meta name="twitter:image" content="<%= social_preview_image_url %>">
+  <meta name="twitter:image:alt" content="<%= t("marketing.home.social_preview.alt") %>">
+<% end %>
+
+<div class="new-assignment shell">
+  <div class="new-assignment__intro">
+    <h1><%= t("geo_challenge.heading") %></h1>
+    <p><%= t("geo_challenge.body") %></p>
+  </div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <%= form_with url: geo_challenge_path, class: "assignment-form", data: { controller: "geo-challenge", geo_challenge_target: "form" } do %>
+      <fieldset class="form-section">
+        <legend><%= t("geo_challenge.legend") %></legend>
+        <% if @error %><p class="form-error"><%= t("geo_challenge.error") %></p><% end %>
+        <altcha-widget data-geo-challenge-target="widget" challengeurl="<%= altcha_challenge_path(format: :json) %>" strings="<%= ERB::Util.json_escape(t("geo_challenge.widget").to_json) %>" hidefooter hidelogo></altcha-widget>
+        <noscript><p class="field-hint"><%= t("geo_challenge.javascript_required") %></p></noscript>
+      </fieldset>
+    <% end %>
+  </div>
+</div>
+
+<script src="/altcha.min.js" type="module" defer nonce="<%= content_security_policy_nonce %>"></script>

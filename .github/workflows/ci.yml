@@ -47,6 +47,8 @@ jobs:
         run: bin/bundler-audit check --update
       - name: Audit import-map dependencies
         run: bin/importmap audit
+      - name: Test public analytics privacy boundary
+        run: node --test script/ops/test-public-analytics.mjs
       - name: Check external probes and operational alerts without sending
         env:
           PYTHONDONTWRITEBYTECODE: "1"
