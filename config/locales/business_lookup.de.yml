@@ -7,6 +7,7 @@ de:
     loaded: "Daten geladen. Vor dem Speichern prüfen."
     invalid: "Geben Sie eine gültige Unternehmensnummer ein."
     not_found: "Kein Unternehmen gefunden. Geben Sie die Daten selbst ein."
+    inactive: "Dieses Unternehmen ist in der ZDU eingestellt. Geben Sie die Daten selbst ein."
     unavailable: "Die ZDU ist nicht verfügbar. Versuchen Sie es später oder geben Sie die Daten selbst ein."
     not_configured: "Geben Sie die Daten selbst ein."
     stale: "Ihre Angaben haben sich geändert. Suchen Sie erneut."

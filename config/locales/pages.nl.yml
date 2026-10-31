@@ -49,6 +49,7 @@ nl:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Op uw verzoek halen we uw openbare naam, e-mailadres, talen en rechtsdomeinen van advocaat.be op om het registratieformulier in te vullen. Het voorbeeld is 20 minuten geldig."
+            - "We controleren dagelijks je advocaat.be-profiel en ondernemingsnummer in de KBO. De beheerder krijgt een melding bij een inactieve onderneming of een verdwenen of gewijzigd profiel."
             - "Professionele en facturatiegegevens: uw officiële profiel, vermelde naam en e-mailadres, ondernemingsnaam, ondernemings-/btw-nummer, contactgegevens en professionele verificatiestatus. Als u via de officiële publieke KBO-zoekpagina zelf een ondernemingsnummer opzoekt, bewaren we de teruggegeven facturatiegegevens (naam, nummer en, waar beschikbaar, zeteladres) en de datum van de KBO-gegevens."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Facturatiegegevens per opdracht, zoals professionele naam en ondernemings-/btw-nummer. Geverifieerde kijkers van de opdracht zien naam en nummer; het kantoor van de opdrachtgever en de gekozen confrater zien het volledige facturatieadres en e-mailadres."
@@ -76,6 +77,7 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
+            - "De laatste registercontrole blijft bij je account. Controleoverzichten en afgehandelde waarschuwingen: 90 dagen. Open waarschuwingen kunnen voor onderzoek bewaard blijven."
             - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Analytics van openbare pagina's: 90 dagen. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
             - "Accounts blijven bestaan tot afsluiting. Je kunt je account in Profiel verwijderen na bevestiging van je wachtwoord. We verwijderen gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Open opdrachten, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
             - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."

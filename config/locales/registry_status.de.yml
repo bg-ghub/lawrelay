@@ -1,0 +1,56 @@
+de:
+  registry_status:
+    title: "Registerprüfungen"
+    intro: "Tägliche Prüfung von ZDU und advocaat.be."
+    back: "Zurück zu den Mitgliedern"
+    latest_run: "Letzte tägliche Prüfung"
+    run_date: "Prüfdatum"
+    result: "Letztes Ergebnis"
+    completed_at: "Abgeschlossen"
+    checked_count: "Geprüfte Quellen"
+    not_yet: "Noch nicht"
+    empty_title: "Noch keine tägliche Prüfung"
+    empty_body: "Die Ergebnisse erscheinen nach der ersten geplanten Serverprüfung."
+    checks: "Registerprüfungen aktueller Mitglieder"
+    checked_at: "Letzter Versuch"
+    last_definitive: "Letztes bestätigtes Ergebnis"
+    issue: "Prüfung erforderlich"
+    since: "seit %{time}"
+    resolved_at: "Meldung erledigt"
+    members: "Mitglieder"
+    sources:
+      kbo: "ZDU-Unternehmensregister"
+      directory: "advocaat.be-Verzeichnis"
+    runs:
+      pending: "Geplant"
+      running: "Läuft"
+      completed: "Abgeschlossen"
+    statuses:
+      kbo:
+        pending: "Erste Prüfung ausstehend"
+        ok: "Aktives Unternehmen"
+        active: "Aktives Unternehmen"
+        inactive: "Inaktives Unternehmen"
+        not_found: "Unternehmen nicht gefunden; Status unbestätigt"
+        invalid: "Gespeicherte Unternehmensnummer ungültig; Status unbestätigt"
+        unavailable: "Quelle nicht verfügbar; Unternehmensstatus unbestätigt"
+      directory:
+        pending: "Erste Prüfung ausstehend"
+        active: "Berufsprofil bestätigt"
+        not_listed: "Profil nicht mehr verzeichnet"
+        changed: "Berufliche Identitätsdaten geändert"
+        unavailable: "Quelle nicht verfügbar; Berufsstatus unbestätigt"
+    issues:
+      kbo:
+        inactive: "Das Unternehmen ist in der ZDU inaktiv. Prüfen Sie das Mitgliedskonto."
+      directory:
+        not_listed: "Das gespeicherte Profil ist nicht mehr verzeichnet. Prüfen Sie das Mitgliedskonto."
+        changed: "Die Identität im gespeicherten Profil stimmt nicht mehr überein. Prüfen Sie das Mitgliedskonto."
+    mailer:
+      subject:
+        one: "LawRelay: 1 neue Registermeldung"
+        other: "LawRelay: %{count} neue Registermeldungen"
+      body:
+        one: "Die tägliche Prüfung ergab 1 neue Meldung."
+        other: "Die tägliche Prüfung ergab %{count} neue Meldungen."
+      review: "In der Verwaltung ansehen"

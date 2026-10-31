@@ -7,6 +7,7 @@ nl:
     loaded: "Gegevens opgehaald. Kijk ze na voor je opslaat."
     invalid: "Vul een geldig ondernemingsnummer in."
     not_found: "Geen onderneming gevonden. Vul de gegevens zelf in."
+    inactive: "Deze onderneming is stopgezet in de KBO. Vul de gegevens zelf in."
     unavailable: "KBO is even niet beschikbaar. Probeer later opnieuw of vul de gegevens zelf in."
     not_configured: "Vul de gegevens zelf in."
     stale: "Je gegevens zijn gewijzigd. Zoek opnieuw op."

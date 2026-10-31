@@ -1,0 +1,64 @@
+<% content_for :title, t("registry_status.title") %>
+<div class="dashboard-page shell admin-users-page">
+  <div class="dashboard-heading">
+    <div>
+      <h1><%= t("registry_status.title") %></h1>
+      <p><%= t("registry_status.intro") %></p>
+    </div>
+    <%= link_to t("registry_status.back"), admin_users_path, class: "text-link" %>
+  </div>
+
+  <% if @latest_run %>
+    <section class="dashboard-panel" aria-labelledby="registry-latest-run">
+      <h2 id="registry-latest-run"><%= t("registry_status.latest_run") %></h2>
+      <dl class="detail-facts">
+        <div><dt><%= t("registry_status.run_date") %></dt><dd><%= l(@latest_run.run_on, format: :long) %></dd></div>
+        <div><dt><%= t("registry_status.result") %></dt><dd><%= t("registry_status.runs.#{@latest_run.status}") %></dd></div>
+        <div><dt><%= t("registry_status.completed_at") %></dt><dd><%= @latest_run.completed_at ? l(@latest_run.completed_at, format: :long) : t("registry_status.not_yet") %></dd></div>
+        <div><dt><%= t("registry_status.checked_count") %></dt><dd><%= @latest_run.checked_count %></dd></div>
+      </dl>
+    </section>
+  <% else %>
+    <section class="empty-state">
+      <h2><%= t("registry_status.empty_title") %></h2>
+      <p><%= t("registry_status.empty_body") %></p>
+    </section>
+  <% end %>
+
+  <% if @checks.any? %>
+    <ul class="admin-user-list" aria-label="<%= t("registry_status.checks") %>">
+      <% @checks.each do |check| %>
+        <li class="dashboard-panel registry-status-check">
+          <h2><%= t("registry_status.sources.#{check.source}") %></h2>
+          <dl class="detail-facts">
+            <div><dt><%= t("registry_status.result") %></dt><dd><%= t("registry_status.statuses.#{check.source}.#{check.status}") %></dd></div>
+            <div><dt><%= t("registry_status.checked_at") %></dt><dd><%= check.checked_at ? l(check.checked_at, format: :long) : t("registry_status.not_yet") %></dd></div>
+            <% if check.last_definitive_status.present? %>
+              <div><dt><%= t("registry_status.last_definitive") %></dt><dd><%= t("registry_status.statuses.#{check.source}.#{check.last_definitive_status}") %><% if check.last_definitive_at %> · <%= l(check.last_definitive_at, format: :long) %><% end %></dd></div>
+            <% end %>
+            <% if check.issue_status.present? %>
+              <div><dt><%= t("registry_status.issue") %></dt><dd><%= t("registry_status.issues.#{check.source}.#{check.issue_status}") %><% if check.issue_since %> · <%= t("registry_status.since", time: l(check.issue_since, format: :long)) %><% end %></dd></div>
+            <% elsif check.resolved_at %>
+              <div><dt><%= t("registry_status.resolved_at") %></dt><dd><%= l(check.resolved_at, format: :long) %></dd></div>
+            <% end %>
+            <div>
+              <dt><%= t("registry_status.members") %></dt>
+              <dd>
+                <% check.relevant_users.each do |user| %>
+                  <%= link_to user.full_name, admin_user_path(user), class: "text-link" %>
+                <% end %>
+              </dd>
+            </div>
+          </dl>
+        </li>
+      <% end %>
+    </ul>
+    <% if @total_pages > 1 %>
+      <nav class="admin-users-pagination" aria-label="<%= t("admin.users.pagination.label") %>">
+        <% if @page > 1 %><%= link_to t("admin.users.pagination.previous"), admin_registry_statuses_path(page: @page - 1), class: "button button--ghost" %><% end %>
+        <span aria-current="page"><%= t("admin.users.pagination.page", current: @page, total: @total_pages) %></span>
+        <% if @page < @total_pages %><%= link_to t("admin.users.pagination.next"), admin_registry_statuses_path(page: @page + 1), class: "button button--ghost" %><% end %>
+      </nav>
+    <% end %>
+  <% end %>
+</div>

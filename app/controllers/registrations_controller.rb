@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-10-31-email-review"
-  PRIVACY_VERSION = "2026-10-31-signup-prefill"
+  PRIVACY_VERSION = "2026-10-31-daily-checks"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,

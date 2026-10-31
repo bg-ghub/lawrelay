@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.18.0] - 2026-10-31
+
+### Added
+
+- Check registered members' KBO numbers and advocaat.be profiles daily on the server.
+- Show results in admin and email the operator about new inactivity or directory issues, without repeating unchanged warnings.
+- Keep lookup outages separate from inactivity; checks do not suspend accounts.
+
 ## [0.17.0] - 2026-10-31
 
 ### Added

@@ -42,6 +42,10 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     @other.firm.update!(billing_email: "excluded-billing@example.test")
     @member.user.notifications.create!(kind: "new_proposal", data: { unsafe: "excluded-notification-data" })
     @other.user.notifications.create!(kind: "new_proposal", data: {})
+    own_check = RegistryStatusCheck.create!(source: "directory", target_digest: SecureRandom.hex(32),
+      identity_digest: SecureRandom.hex(32), lawyer_profile: @member.profile, status: "active", checked_at: Time.current)
+    RegistryStatusCheck.create!(source: "directory", target_digest: SecureRandom.hex(32),
+      identity_digest: SecureRandom.hex(32), lawyer_profile: @other.profile, status: "changed")
     @member.user.sessions.create!(ip_address: "192.0.2.10", user_agent: "Test browser", expires_at: 1.day.from_now)
     AuditEvent.create!(auditable: @member.user, actor_user: @admin, action: "user.updated", metadata: { note: "excluded-audit-metadata" })
     @other.user.privacy_requests.create!(kind: "correction", details: "excluded-other-request")
@@ -56,6 +60,12 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     package = JSON.parse(raw)
     assert_equal @member.user.email_address, package.dig("account", "email_address")
     assert_equal @member.user.public_id, package.dig("account", "public_id")
+    exported_check = package.fetch("professional_status_checks").sole
+    assert_equal own_check.status, exported_check.fetch("status")
+    assert exported_check.fetch("checked_at")
+    assert_not exported_check.key?("target_digest")
+    assert_not exported_check.key?("identity_digest")
+    assert_not exported_check.key?("lawyer_profile_id")
     exported_profile = package.fetch("professional_profile")
     assert_equal "approved", exported_profile.fetch("email_review_status")
     assert_equal @member.user.email_address, exported_profile.fetch("email_review_email_address")

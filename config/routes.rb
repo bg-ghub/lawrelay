@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       post "mfa/challenge", to: "mfa#verify"
       resources :verifications, only: %i[index update]
       resources :email_reviews, path: "email-reviews", only: %i[index show update]
+      resources :registry_statuses, path: "registry-status", only: :index
       resources :founding_accesses, param: :firm_id, only: %i[index create destroy]
       resources :reports, only: %i[index update]
       resources :privacy_requests, only: %i[index update]
