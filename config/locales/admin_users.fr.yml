@@ -13,6 +13,7 @@ fr:
       eyebrow: Administration
       you: Vous
       not_recorded: Non renseigné
+      manual_activation: Approuvé manuellement
       timezone: 'Fuseau horaire : Europe/Brussels.'
       index:
         title: Utilisateurs — Administration LawRelay
@@ -34,6 +35,7 @@ fr:
         apply: Rechercher
         clear: Effacer
       fields:
+        activation: Activation
         role: Rôle
         firm: Entreprise
         status: Accès au compte

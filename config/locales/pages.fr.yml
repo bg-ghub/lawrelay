@@ -42,7 +42,7 @@ fr:
           heading: "1. Qui est responsable du traitement"
           paragraphs:
             - "L'exploitant de LawRelay indiqué ci-dessus est responsable du traitement."
-            - "Questions de confidentialité et demandes d’exercice de droits : privacy@lawrelay.be. Nous comparons votre nom et votre e-mail professionnel à advocaat.be et confirmons votre e-mail. Si l’adresse publiée est inaccessible, un administrateur peut examiner une autre adresse confirmée à l’aide de coordonnées professionnelles indépendantes."
+            - "Questions de confidentialité et demandes d’exercice de droits : privacy@lawrelay.be. Nous comparons votre nom et votre e-mail professionnel à advocaat.be. Vous confirmez normalement votre e-mail ; un administrateur peut aussi approuver l’accès manuellement après vérification. Si l’adresse publiée est inaccessible, un administrateur peut examiner une autre adresse confirmée à l’aide de coordonnées professionnelles indépendantes."
         scope:
           heading: "2. Données traitées"
           bullets:
@@ -78,7 +78,7 @@ fr:
           heading: "6. Conservation"
           paragraphs:
             - "Le dernier contrôle du profil reste lié à votre compte. Résumés des contrôles et alertes traitées : 90 jours. Les alertes ouvertes peuvent être conservées pour examen."
-            - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
+            - "Inscriptions inutilisées sans confirmation de l’e-mail ni approbation manuelle : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
             - "Les comptes restent jusqu’à leur clôture. Vous pouvez supprimer votre compte dans Profil après avoir confirmé votre mot de passe. Nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions en cours, enquêtes, litiges ou obligations légales peuvent justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
@@ -105,7 +105,7 @@ fr:
         eligibility:
           heading: "2. Accès et vérification"
           paragraphs:
-            - "L’inscription est ouverte aux avocats repris sur advocaat.be. L’accès exige la vérification du profil et de l’e-mail. Si l’adresse publiée est inaccessible, un administrateur examine votre identité et votre nouvelle adresse confirmée. Les utilisateurs actualisent leurs données professionnelles, protègent leur accès et signalent tout abus. La vérification n’est ni une recommandation ni une garantie de compétence."
+            - "L’inscription est ouverte aux avocats repris sur advocaat.be. L’accès exige la vérification du profil et de l’e-mail. Un administrateur peut aussi approuver l’accès manuellement après vérification. Si l’adresse publiée est inaccessible, un administrateur examine votre identité et votre nouvelle adresse confirmée. Les utilisateurs actualisent leurs données professionnelles, protègent leur accès et signalent tout abus. La vérification n’est ni une recommandation ni une garantie de compétence."
         role:
           heading: "3. Rôle de LawRelay"
           paragraphs:

@@ -42,7 +42,7 @@ en:
           heading: "1. Who controls your data"
           paragraphs:
             - "LawRelay's operator named above is the controller."
-            - "Privacy questions and rights requests: privacy@lawrelay.be. We compare your name and professional email with advocaat.be and confirm your email. If you cannot access the listed address, an administrator can review another confirmed address using independent professional contact details."
+            - "Privacy questions and rights requests: privacy@lawrelay.be. We compare your name and professional email with advocaat.be. You normally confirm your email; an administrator can also approve access manually after review. If you cannot access the listed address, an administrator can review another confirmed address using independent professional contact details."
         scope:
           heading: "2. Data we process"
           bullets:
@@ -78,7 +78,7 @@ en:
           heading: "6. Retention"
           paragraphs:
             - "The latest directory check stays with your account. Check summaries and resolved alerts: 90 days. Open alerts may remain for investigation."
-            - "Unused, unconfirmed registrations: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
+            - "Unused registrations without email confirmation or manual approval: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
             - "Accounts remain until closure. You can delete your account in Profile after confirming your password. We remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Open work, investigations, disputes or legal duties may require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
@@ -105,7 +105,7 @@ en:
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
-            - "Registration is open to lawyers listed on advocaat.be. Access requires directory and email verification. If the listed email is inaccessible, an administrator must review your identity and confirmed alternative address. Users keep professional details current, protect their credentials and report compromised access. Verification is not an endorsement or guarantee of competence."
+            - "Registration is open to lawyers listed on advocaat.be. Access requires directory and email checks. An administrator can also approve access manually after review. If the listed email is inaccessible, an administrator must review your identity and confirmed alternative address. Users keep professional details current, protect their credentials and report compromised access. Verification is not an endorsement or guarantee of competence."
         role:
           heading: "3. LawRelay's role"
           paragraphs:

@@ -13,7 +13,7 @@ module Admin
       return false if profile&.verification_status.in?(%w[rejected suspended]) || profile&.email_review_status == "rejected"
       return false if @user.primary_firm&.verification_status.in?(%w[rejected suspended])
 
-      !@user.email_verified? || profile&.directory_confirmation_required? || false
+      @user.email_verification_required? || profile&.directory_confirmation_required? || false
     end
 
     def directory_check_pending?
@@ -25,7 +25,7 @@ module Admin
       return :ineligible unless eligible?
 
       channels = []
-      email_needed = !@user.email_verified?
+      email_needed = @user.email_verification_required?
       directory_needed = profile&.directory_confirmation_required?
       email_ready = !email_needed || Onboarding::Delivery.request(@user, directory: false)
       channels << "account_email" if email_needed && email_ready

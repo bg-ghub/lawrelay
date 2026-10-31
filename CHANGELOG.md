@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.20.0] - 2026-10-31
+
+### Added
+
+- Allow an administrator to record a manual activation for a matched directory identity without marking the email confirmed or sending another message.
+- Bind manual approval to the reviewed identity and revoke it when those details change.
+- Show manual approval in admin and preserve it through retention and privacy handling.
+
 ## [0.19.1] - 2026-10-31
 
 ### Fixed

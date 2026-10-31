@@ -5,6 +5,7 @@ module Privacy
     PROFILE_FIELDS = %w[bar_association bar_number professional_email spoken_languages practice_areas verification_status
       verified_at bar_admission_year court_preferences availability_note directory_profile_url directory_profile_id
       directory_name directory_email directory_checked_at directory_email_verified_at
+      manual_activation_approved_at
       email_review_status email_review_email_address email_review_requested_at email_reviewed_at created_at updated_at].freeze
     ASSIGNMENT_FIELDS = %w[id kind title description court city starts_at duration_minutes practice_area fee_cents status
       urgent languages content_rules_accepted_at assignment_subtype response_deadline_at scope_indication delivery_due_at

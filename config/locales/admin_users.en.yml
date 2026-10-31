@@ -13,6 +13,7 @@ en:
       eyebrow: Administration
       you: You
       not_recorded: Not recorded
+      manual_activation: Approved manually
       timezone: 'Time zone: Europe/Brussels.'
       index:
         title: Users — LawRelay admin
@@ -39,6 +40,7 @@ en:
         status: Account access
         email_status: Email
         marketplace_access: Marketplace access
+        activation: Activation
         mfa: Administrator MFA
         created_at: Registered
         suspension_reason: Suspension reason

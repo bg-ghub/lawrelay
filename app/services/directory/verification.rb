@@ -12,18 +12,19 @@ module Directory
       new(user, lookup:).request!(directory_profile_url:)
     end
 
-    def self.activate_if_ready!(user:)
-      new(user).activate_if_ready!
+    def self.activate_if_ready!(user:, actor: nil)
+      new(user, actor:).activate_if_ready!
     end
 
     def self.confirm!(profile)
       new(profile.user).confirm!(profile)
     end
 
-    def initialize(user, lookup: AdvocaatBeProfileLookup)
+    def initialize(user, lookup: AdvocaatBeProfileLookup, actor: nil)
       @user = user
       @profile = user.lawyer_profile
       @lookup = lookup
+      @actor = actor || user
     end
 
     def request!(directory_profile_url: nil)
@@ -38,7 +39,7 @@ module Directory
         return Result.new(status: evidence.status, profile: @profile)
       end
       if LawyerProfile.where.not(id: @profile.id).where(directory_profile_id: evidence.profile_id)
-        .where("directory_email_verified_at IS NOT NULL OR email_review_status = ?", "approved").exists?
+        .where("directory_email_verified_at IS NOT NULL OR email_review_status = ? OR manual_activation_approved_at IS NOT NULL", "approved").exists?
         record_lookup_failure(:already_claimed, requested_url:, requested_name:)
         return Result.new(status: :already_claimed, profile: @profile)
       end
@@ -111,8 +112,9 @@ module Directory
           @profile.update!(directory_email_verified_at: Time.current)
         end
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
-        return Result.new(status: :pending, profile: @profile) unless @profile.directory_matched? && @user.email_verified? &&
-          (@profile.directory_email_verified? || @profile.email_review_approved?)
+        manually_approved = @profile.manual_activation_valid?
+        return Result.new(status: :pending, profile: @profile) unless @profile.directory_matched? && (@user.email_verified? || manually_approved) &&
+          (@profile.directory_email_verified? || @profile.email_review_approved? || manually_approved)
         @profile.update!(verification_status: "verified", verified_at: Time.current) unless @profile.verified?
         firm.update!(verification_status: "verified", verified_at: Time.current) unless firm.verified?
         audit!("verification.directory_activated", profile_id: @profile.id, firm_id: firm.id, directory_profile_id: @profile.directory_profile_id)
@@ -159,7 +161,7 @@ module Directory
     end
 
     def audit!(action, metadata)
-      AuditEvent.create!(actor_user: @user, firm: @user.primary_firm, auditable: @profile, action:, metadata:)
+      AuditEvent.create!(actor_user: @actor, firm: @user.primary_firm, auditable: @profile, action:, metadata:)
     end
   end
 end

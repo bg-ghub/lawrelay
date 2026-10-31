@@ -13,6 +13,7 @@ de:
       eyebrow: Verwaltung
       you: Sie
       not_recorded: Nicht angegeben
+      manual_activation: Manuell genehmigt
       timezone: 'Zeitzone: Europe/Brussels.'
       index:
         title: Benutzer — LawRelay-Verwaltung
@@ -39,6 +40,7 @@ de:
         status: Kontozugang
         email_status: E-Mail-Adresse
         marketplace_access: Zugang zu Aufträgen
+        activation: Aktivierung
         mfa: Administrator-MFA
         created_at: Registriert
         suspension_reason: Grund der Sperrung
