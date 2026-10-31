@@ -3,7 +3,7 @@ require "test_helper"
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
 
-  test "creates a pending lawyer and firm atomically" do
+  test "creates a pending lawyer and minimal internal workspace atomically" do
     assert_enqueued_jobs 2 do
       assert_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ], 1 do
         post registration_path(locale: :en), params: { registration: valid_registration }
@@ -15,6 +15,15 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Ada", user.first_name
     assert_equal "owner", user.primary_membership.role
     assert_equal "pending", user.primary_firm.verification_status
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, user.primary_firm.name
+    assert_nil user.primary_firm.enterprise_number
+    assert_nil user.primary_firm.vat_number
+    assert_nil user.primary_firm.billing_email
+    assert_nil user.primary_firm.phone
+    assert_nil user.primary_firm.address_line_1
+    assert_nil user.primary_firm.postal_code
+    assert_nil user.primary_firm.city
+    assert_empty user.primary_firm.kbo_details
     assert_equal "pending", user.lawyer_profile.verification_status
     assert_equal "OVB", user.lawyer_profile.bar_association
     assert_match(/\APENDING-[0-9a-f-]{36}\z/i, user.lawyer_profile.bar_number)
@@ -36,11 +45,20 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "must accept"
   end
 
-  test "shows a read-only VAT preview that is not submitted" do
-    get new_registration_path(locale: :en)
+  test "registration collects personal identity without company or billing fields in every locale" do
+    %i[nl fr de en].each do |locale|
+      get new_registration_path(locale:)
 
-    assert_select "input#registration_vat_number[readonly]"
-    assert_select "input#registration_vat_number[name]", count: 0
+      assert_response :success
+      assert_select "input#registration_first_name"
+      assert_select "input#registration_last_name"
+      assert_select "input#registration_email_address"
+      assert_select "input#registration_directory_profile_url"
+      assert_select "[data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
+      %w[firm_name enterprise_number vat_number billing_email phone address_line_1 postal_code city kbo_lookup_token].each do |field|
+        assert_select "[name='registration[#{field}]'], #registration_#{field}", count: 0
+      end
+    end
   end
 
   test "email enqueue failure preserves the account and independently queues the directory check" do
@@ -130,8 +148,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "does not reserve a public directory UUID while registration is pending" do
     first = valid_registration
     second = valid_registration.merge(
-      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example", firm_name: "Hopper Legal",
-      enterprise_number: "2345678942", vat_number: "BE2345678942"
+      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example"
     )
 
     assert_difference "LawyerProfile.count", 2 do
@@ -145,11 +162,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert profiles.all? { |profile| profile.bar_number.start_with?("PENDING-") }
   end
 
-  test "allows separate accounts with the same company number" do
+  test "accounts receive separate workspaces without a supplied company identity" do
     first = valid_registration
-    second = valid_registration.merge(
-      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example", firm_name: "Hopper Legal"
-    )
+    second = valid_registration.merge(first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example")
 
     assert_difference [ "User.count", "Firm.count", "Membership.count" ], 2 do
       post registration_path(locale: :en), params: { registration: first }
@@ -158,29 +173,35 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     first_user = User.find_by!(email_address: first[:email_address])
     second_user = User.find_by!(email_address: second[:email_address])
-    assert_equal "1234567894", first_user.primary_firm.enterprise_number
-    assert_equal first_user.primary_firm.enterprise_number, second_user.primary_firm.enterprise_number
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, first_user.primary_firm.name
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, second_user.primary_firm.name
     assert_not_equal first_user.primary_firm.id, second_user.primary_firm.id
     assert_equal [ first_user.id ], first_user.primary_firm.user_ids
     assert_equal [ second_user.id ], second_user.primary_firm.user_ids
   end
 
-  test "normalizes the enterprise number and derives VAT instead of trusting a submitted VAT number" do
-    post registration_path(locale: :en), params: {
-      registration: valid_registration.merge(enterprise_number: "BE 1234.567.894", vat_number: "BE0000000000")
-    }
-
-    firm = User.order(:id).last.primary_firm
-    assert_equal "1234567894", firm.enterprise_number
-    assert_equal "BE1234567894", firm.vat_number
-  end
-
-  test "rejects an enterprise number with an invalid checksum" do
-    assert_no_difference "Firm.count" do
-      post registration_path(locale: :en), params: { registration: valid_registration.merge(enterprise_number: "1234567890") }
+  test "ignores forged legacy company and billing attributes including a lookup token" do
+    original = BusinessRegistry::Preview.method(:apply)
+    BusinessRegistry::Preview.define_singleton_method(:apply) { |*| raise "Registration must not apply company details" }
+    assert_difference "Firm.count", 1 do
+      post registration_path(locale: :en), params: {
+        registration: valid_registration.merge(
+          firm_name: "Forged Legal", enterprise_number: "invalid", vat_number: "BE0000000000",
+          billing_email: "billing@example.test", phone: "+3225550199", address_line_1: "Private street 10",
+          postal_code: "1000", city: "Brussels", kbo_lookup_token: "forged-token"
+        )
+      }
     end
 
-    assert_response :unprocessable_content
+    assert_redirected_to verification_status_path(locale: :en)
+    firm = User.order(:id).last.primary_firm
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, firm.name
+    %w[enterprise_number vat_number billing_email phone address_line_1 postal_code city].each do |attribute|
+      assert_nil firm.public_send(attribute), attribute
+    end
+    assert_empty firm.kbo_details
+  ensure
+    BusinessRegistry::Preview.define_singleton_method(:apply, original) if original
   end
 
   private
@@ -206,8 +227,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       email_address: "ada@law.example",
       password: "correct-horse-battery-staple",
       password_confirmation: "correct-horse-battery-staple",
-      firm_name: "Lovelace Legal",
-      enterprise_number: "1234567894",
       directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
       locale: "en",
       terms_accepted: "1"

@@ -5,6 +5,16 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.19.0] - 2026-10-31
+
+### Changed
+
+- Remove member company and invoice-recipient collection; confraters exchange invoicing details privately.
+- Retire KBO lookups and monitoring while keeping daily advocaat.be checks.
+- Clear unneeded stored company details while preserving workspace permissions and protected financial evidence.
+- Describe the type of replacement in Omschrijving, with procedural tips instead of a separate dropdown.
+- Update the privacy policy and terms in NL, FR, DE and EN.
+
 ## [0.18.0] - 2026-10-31
 
 ### Added

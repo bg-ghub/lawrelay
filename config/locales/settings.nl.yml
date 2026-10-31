@@ -38,5 +38,5 @@ nl:
       city: "Gemeente"
       assignment_hint: "Je standaard facturatiegegevens. Je kunt ze per opdracht aanpassen."
     aside:
-      title: "Je gegevens"
-      body: "Voor verificatie en contact. Andere advocaten zien je contactgegevens pas na een match."
+      title: "Je beroepsprofiel"
+      body: "Houd je naam, taal en professionele voorkeuren actueel."

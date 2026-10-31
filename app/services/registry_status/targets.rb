@@ -9,18 +9,8 @@ module RegistryStatus
     end
 
     def all
-      seen = {}
       targets = []
       members = User.where(system_role: "member", erased_at: nil)
-      Firm.joins(:memberships).where(memberships: { user_id: members.select(:id) }).distinct.find_each do |firm|
-        number = Firm.normalize_enterprise_number(firm.enterprise_number)
-        next unless Firm.valid_enterprise_number?(number)
-        next if seen[[ "kbo", number ]]
-
-        seen[[ "kbo", number ]] = true
-        targets << Target.new(source: "kbo", value: number, identity_digest: RegistryStatusCheck.digest("kbo", number),
-          firm_id: firm.id, lawyer_profile_id: nil, full_name: nil, expected_email: nil)
-      end
       LawyerProfile.where(user_id: members.select(:id)).includes(:user).find_each do |profile|
         url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(profile.directory_profile_url)&.downcase
         next unless url

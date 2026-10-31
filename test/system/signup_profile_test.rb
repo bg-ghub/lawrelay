@@ -65,16 +65,15 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
     assert_selector ".registration-profile__summary", text: @listed_email
     assert_no_selector "#registration_first_name", visible: :visible
-    assert_field "registration_firm_name", with: ""
-    assert_field "registration_address_line_1", with: ""
-    assert_field "registration_city", with: ""
+    assert_no_selector "[name='registration[firm_name]'], [name='registration[enterprise_number]'], [name='registration[address_line_1]']", visible: :all
+    assert_no_selector "[data-controller*='business-lookup']", visible: :all
 
     click_button "Edit details"
     fill_in "registration_first_name", with: "Jean Pierre"
     fill_in "registration_last_name", with: "Example"
     fill_in "registration_email_address", with: @working_email
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
-    fill_credentials_and_company
+    fill_credentials
     perform_enqueued_jobs do
       find("#registration_password_confirmation").send_keys(:enter)
       assert_current_path verification_status_path(locale: :en)
@@ -90,7 +89,11 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_nil user.lawyer_profile.directory_email_verified_at
     assert user.primary_firm.address_line_1.blank?
     assert_nil user.primary_firm.phone
-    assert_equal "Synthetic invoice company", user.primary_firm.name
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, user.primary_firm.name
+    assert_nil user.primary_firm.enterprise_number
+    assert_nil user.primary_firm.vat_number
+    assert_nil user.primary_firm.billing_email
+    assert_empty user.primary_firm.kbo_details
     assert ActionMailer::Base.deliveries.any? { |mail| mail.to == [ @working_email ] }
   end
 
@@ -201,7 +204,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_field "registration_email_address", with: @listed_email
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     assert_empty ActionMailer::Base.deliveries
-    fill_credentials_and_company
+    fill_credentials
     find("form.assignment-form input[type='submit']").click
     assert_current_path verification_status_path(locale: :en)
     user = User.find_by!(email_address: @listed_email)
@@ -229,11 +232,9 @@ class SignupProfileTest < ApplicationSystemTestCase
     end
   end
 
-  def fill_credentials_and_company
+  def fill_credentials
     fill_in "registration_password", with: "Synthetic-password1!"
     fill_in "registration_password_confirmation", with: "Synthetic-password1!"
-    fill_in "registration_firm_name", with: "Synthetic invoice company"
-    fill_in "registration_enterprise_number", with: "1234567894"
     find("#registration_terms_accepted").check
   end
 

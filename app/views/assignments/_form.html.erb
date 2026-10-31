@@ -14,7 +14,11 @@
   <fieldset class="form-section">
     <legend><%= t("marketplace.form.details_legend") %></legend>
     <div class="field-group"><%= form.label :title, t("marketplace.form.title_label") %><%= form.text_field :title, required: true, maxlength: 160, placeholder: t("marketplace.form.title_placeholder") %></div>
-    <div class="field-group"><%= form.label :description, t("marketplace.form.description_label") %><%= form.text_area :description, rows: 5, required: true, maxlength: 4000, placeholder: t("marketplace.form.description_placeholder") %></div>
+    <div class="field-group">
+      <%= form.label :description, t("marketplace.form.description_label") %>
+      <%= form.text_area :description, rows: 5, required: true, maxlength: 4000, placeholder: t("marketplace.form.description_placeholder"), aria: { describedby: assignment.court_replacement? ? "assignment-description-hint" : nil }, data: { assignment_kind_target: "description" } %>
+      <p class="field-hint" id="assignment-description-hint" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>><%= t("assignment_hints.court_description") %></p>
+    </div>
     <div class="field-group" data-controller="other-choice" data-other-choice-other-value="<%= Assignment::OTHER_CHOICE %>">
       <%= form.label :practice_area, t("marketplace.form.practice_area_label") %>
       <%= searchable_select form, :practice_area, t("marketplace.practice_areas").map { |key, label| [ label, key.to_s == "other" ? Assignment::OTHER_CHOICE : label ] }, { prompt: t("marketplace.form.practice_area_prompt"), selected: assignment_practice_area_choice(assignment) }, required: true, class: "select-field", data: { other_choice_target: "select", action: "change->other-choice#toggle" } %>
@@ -24,10 +28,6 @@
       </div>
     </div>
 
-    <div class="field-group" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
-      <%= form.label :assignment_subtype, t("marketplace.form.court_subtype_label"), for: "assignment_court_subtype" %>
-      <%= searchable_select form, :assignment_subtype, Assignment::SUBTYPES.fetch(:court_replacement).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.court_subtype_prompt") }, id: "assignment_court_subtype", required: assignment.court_replacement?, disabled: assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "courtInput" } %>
-    </div>
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= form.label :assignment_subtype, t("marketplace.form.legal_subtype_label"), for: "assignment_legal_subtype" %>
       <%= searchable_select form, :assignment_subtype, Assignment::SUBTYPES.fetch(:legal_task).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.legal_subtype_prompt") }, id: "assignment_legal_subtype", required: assignment.legal_task?, disabled: !assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "legalInput" } %>
@@ -73,10 +73,9 @@
     <% end %>
   </fieldset>
 
-  <%= render "invoice_fields", form: form, assignment: assignment %>
-
   <fieldset class="form-section"><legend><%= t("marketplace.form.conditions_legend") %></legend>
     <div class="field-group"><%= form.label :fee_cents, t("marketplace.form.fee_label") %><%= form.number_field :fee_cents, min: 0, step: 0.01, value: euro_amount(assignment.fee_cents, field: true) %></div>
+    <p class="field-hint"><%= t("company_minimization.private_invoice_details") %></p>
     <label class="form-check">
       <%= check_box_tag "assignment[content_rules_accepted]", "1", assignment.content_rules_accepted_at.present?, required: true, aria: { describedby: "assignment-content-hint" } %>
       <span><%= t("marketplace.form.content_rules_label") %></span>

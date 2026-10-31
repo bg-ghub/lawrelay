@@ -5,11 +5,12 @@ end
 
 demo_password = ENV.fetch("LAWRELAY_DEMO_PASSWORD", "LawRelayDemo!2026")
 
-def verified_firm!(name:, enterprise_number:, email:)
-  Firm.find_or_initialize_by(name: name, enterprise_number: enterprise_number).tap do |firm|
+def verified_workspace!(email:)
+  (User.find_by(email_address: email)&.primary_firm || Firm.new).tap do |firm|
     firm.assign_attributes(
-      name: name,
-      billing_email: email,
+      name: Firm::INTERNAL_WORKSPACE_NAME,
+      enterprise_number: nil,
+      billing_email: nil,
       country_code: "BE",
       verification_status: "verified",
       verified_at: Time.current
@@ -47,14 +48,10 @@ def verified_user!(email:, first_name:, last_name:, password:, firm:, bar_number
   end
 end
 
-owner_firm = verified_firm!(
-  name: "Demo Advocaten",
-  enterprise_number: "DEMO000001",
+owner_firm = verified_workspace!(
   email: "owner@lawrelay.test"
 )
-candidate_firm = verified_firm!(
-  name: "Demo Confraters",
-  enterprise_number: "DEMO000002",
+candidate_firm = verified_workspace!(
   email: "candidate@lawrelay.test"
 )
 
@@ -94,6 +91,7 @@ assignments = [
   },
   {
     kind: "legal_task",
+    assignment_subtype: "submissions",
     title: "Demo · Conclusies nalezen en aanscherpen",
     description: "Second opinion gevraagd op ontwerpconclusies in een commercieel geschil. Geen cliëntgegevens op het platform.",
     city: "Gent",
@@ -120,6 +118,7 @@ assignments = [
   },
   {
     kind: "legal_task",
+    assignment_subtype: "advice",
     title: "Demo · Advies bij aandeelhoudersgeschil",
     description: "Gerichte analyse met beknopt strategisch advies. Vertrouwelijke stukken blijven buiten LawRelay.",
     city: "Leuven",
@@ -149,6 +148,7 @@ assignments = [
 candidate_assignment = candidate_firm.assignments.create!(
   creator_user: candidate,
   kind: "legal_task",
+  assignment_subtype: "other",
   title: "Demo · Opmaak ingebrekestelling",
   description: "Opstellen van een onderbouwde ingebrekestelling. De dossierstukken worden rechtstreeks gedeeld.",
   city: "Mechelen",

@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 31 October 2026. Current release: 0.18.0.
+Reviewed 31 October 2026. Current release: 0.19.0.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -9,17 +9,17 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Live HTTPS site in NL/FR/DE/EN, English URL slugs and language switching.
 - [x] Public AGPL source, SemVer releases and source/version links in the footer.
 - [x] Signup, directory/email verification, firm boundaries, private-record access and suspended-account protections.
-- [x] Profile-first signup with reviewed directory prefill and manual fallback; billing stays separate.
+- [x] Profile-first signup with reviewed directory prefill and manual fallback; no member company or billing fields.
 - [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
 - [x] Admin resend for pending member verification emails, with existing mail delivery, MFA and rate limits.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.
 - [x] Random UUID user URLs with scoped admin/MFA checks and consistent user-management buttons.
-- [x] Daily server checks of registered members' KBO numbers and advocaat.be profiles, with an admin overview and consolidated operator alerts.
+- [x] Daily server checks of registered members' advocaat.be profiles, with an admin overview and consolidated operator alerts.
 - [x] Confirmed alternative email requests, MFA-protected admin identity review and localized decision emails through the existing mail service.
 - [x] Self-service member account deletion from the profile, with password confirmation and existing retention/hold safeguards.
 - [x] Assignment/proposal flows, optional indicative rates, profile-import preview and [localized notifications with retries/history](ops/notifications.md).
-- [x] Expanded legal areas, searchable dropdowns across forms, Belgian courts with automatic locations and a Peppol reminder beside invoice details.
-- [x] Separate professional/billing details, validated enterprise numbers, [KBO billing preview](ops/kbo-lookup.md) and an invoice recipient per assignment with private contact sharing.
+- [x] Expanded legal areas, searchable dropdowns and Belgian courts with automatic locations. Replacement details belong in Omschrijving, with short procedural tips.
+- [x] Confraters exchange invoicing details privately after acceptance. Retired company fields and KBO monitoring are cleared with protected-evidence safeguards.
 - [x] Internal security fixes, translation checks, keyboard/responsive/axe checks and Chrome/Edge/Firefox journeys. See [QA](ops/beta-thorough-qa.md), [dated evidence](ops/beta-ops-checks.md) and [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml).
 - [x] Backups, isolated restore/compatible-image drills, HTTPS/readiness/queue probes and owner alerts. [Operations evidence](ops/beta-ops-checks.md).
 - [x] Operator contact details, terms/privacy, [support playbook](ops/support.md), [data register](ops/data-register.md) and protected [privacy review packages](ops/privacy-operations.md).

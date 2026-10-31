@@ -27,7 +27,7 @@ en:
       filters:
         label: Find users
         search: Search
-        search_hint: Name, email or firm
+        search_hint: Name or email
         status: Account access
         verification: Lawyer check
         all: All

@@ -27,10 +27,8 @@ class AssignmentsController < ApplicationController
 
   def new
     @assignment = current_firm.assignments.build(
-      Assignment.default_invoice_recipient(firm: current_firm, user: current_user).merge(
-        creator_user: current_user,
-        kind: Assignment::KINDS[:court_replacement]
-      )
+      creator_user: current_user,
+      kind: Assignment::KINDS[:court_replacement]
     )
   end
 
@@ -40,9 +38,8 @@ class AssignmentsController < ApplicationController
     @assignment.status = "open"
     @assignment.urgent = false
     @assignment.content_rules_accepted_at = Time.current if content_rules_accepted?
-    BusinessRegistry::Preview.apply(@assignment, token: params.dig(:assignment, :kbo_lookup_token), fallback: current_firm)
 
-    if @assignment.save(context: [ :create, :invoice_details ])
+    if @assignment.save
       @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.created")
       redirect_to @assignment, notice: t("notices.assignment_created")
     else
@@ -90,11 +87,10 @@ class AssignmentsController < ApplicationController
     attributes = params.require(:assignment).permit(
       :kind, :title, :description, :court, :court_selection, :court_other, :city, :starts_at,
       :duration_minutes, :practice_area, :practice_area_other, :fee_cents, :languages,
-      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at,
-      :invoice_name, :invoice_enterprise_number, :invoice_email,
-      :invoice_address_line_1, :invoice_postal_code, :invoice_city
+      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at
     )
     attributes.delete(:practice_area_other) unless attributes[:practice_area] == Assignment::OTHER_CHOICE
+    attributes.delete(:assignment_subtype) unless attributes[:kind] == Assignment::KINDS[:legal_task]
     attributes[:fee_cents] = euros_to_cents(attributes[:fee_cents])
     attributes
   end

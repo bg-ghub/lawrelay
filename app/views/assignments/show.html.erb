@@ -31,7 +31,7 @@
         </dl>
       </section>
 
-      <%= render "assignments/invoice_recipient", assignment: @assignment %>
+      <p class="field-hint"><%= t("company_minimization.private_invoice_details") %></p>
 
       <% if @owner_view && @assignment.status.in?(%w[open matched]) %>
         <div class="detail-actions">

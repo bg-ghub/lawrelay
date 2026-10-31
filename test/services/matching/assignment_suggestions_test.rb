@@ -19,6 +19,7 @@ class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
     legal_match = legal_owner.firm.assignments.create!(
       creator_user: legal_owner.user,
       kind: "legal_task",
+      assignment_subtype: "advice",
       title: "Language and practice match",
       description: "A bounded assignment without client-identifying information.",
       city: "Brussels",

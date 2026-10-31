@@ -2,7 +2,7 @@ en:
   profile_import:
     button: "Get details from advocaat.be"
     preview: "Details loaded. Review them, then save."
-    scope: "Imports languages and practice areas. Billing details stay separate."
+    scope: "Imports languages and practice areas."
     empty: "Your profile has no languages or practice areas to import."
     unavailable: "We couldn’t load your profile. Try again later."
     missing_profile: "No valid advocaat.be profile is linked."

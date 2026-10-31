@@ -76,9 +76,9 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     end
     assert_equal [ own_assignment.id ], package.fetch("authored_assignments").pluck("id")
     exported_assignment = package.fetch("authored_assignments").sole
-    assert_equal "Own invoice firm", exported_assignment.fetch("invoice_name")
-    assert_equal "own-invoice@example.test", exported_assignment.fetch("invoice_email")
-    assert_equal({ "snapshot_date" => "2026-10-15", "fields" => [ "name", "enterprise_number" ] }, exported_assignment.fetch("invoice_kbo_details"))
+    %w[invoice_name invoice_enterprise_number invoice_email invoice_address_line_1 invoice_postal_code invoice_city invoice_kbo_details].each do |field|
+      assert_not exported_assignment.key?(field)
+    end
     assert_equal [ own_proposal.id ], package.fetch("authored_proposals").pluck("id")
     assert_equal @member.user.notifications.order(:id).pluck(:id), package.fetch("notifications").pluck("id")
     assert_equal "192.0.2.10", package.fetch("sessions").sole.fetch("ip_address")
