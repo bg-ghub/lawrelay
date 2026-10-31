@@ -28,6 +28,49 @@ class BusinessRegistryPublicLookupTest < ActiveSupport::TestCase
     assert_equal "GET", request.method
   end
 
+  test "prefixes the registered legal form separately from the official name" do
+    html = with_registry_rows(
+      '<tr><td class="QL">Type entiteit:</td><td class="QL">Rechtspersoon</td></tr>',
+      '<tr><td class="RL">Rechtsvorm:</td><td class="RL">Besloten Vennootschap<span class="upd"><br>Sinds 29 oktober 2026</span></td></tr>'
+    ).sub("TEST CBE Company", "BG Legal")
+    result = lookup(html:)
+
+    assert_predicate result, :success?
+    assert_equal "BV BG Legal", result.attributes[:name]
+    assert_equal "TEST Registerstraat 12 / 3", result.attributes[:address_line_1]
+    assert_equal Date.new(2026, 10, 29), result.snapshot_date
+  end
+
+  test "normalizes a legal form already present in the official name" do
+    html = with_registry_rows('<tr><td class="RL">Rechtsvorm:</td><td class="RL">Besloten vennootschap</td></tr>')
+      .sub("TEST CBE Company", "BG Legal (B.V.)")
+
+    assert_equal "BV BG Legal", lookup(html:).attributes[:name]
+  end
+
+  test "designates explicit natural persons and preserves unknown or absent registered legal forms" do
+    natural_person = with_registry_rows('<tr><td class="RL">Type entiteit:</td><td class="RL">Natuurlijk persoon</td></tr>')
+      .sub("TEST CBE Company", "Jan Janssens")
+    assert_equal "NP Jan Janssens", lookup(html: natural_person).attributes[:name]
+    unknown_form = with_registry_rows('<tr><td class="RL">Rechtsvorm:</td><td class="RL">Onbekende rechtsvorm</td></tr>')
+    assert_equal "TEST CBE Company", lookup(html: unknown_form).attributes[:name]
+    assert_equal "TEST CBE Company", lookup.attributes[:name]
+  end
+
+  test "does not infer the current BV form from a registered legacy BVBA" do
+    html = with_registry_rows('<tr><td class="RL">Rechtsvorm:</td><td class="RL">Besloten vennootschap met beperkte aansprakelijkheid</td></tr>')
+      .sub("TEST CBE Company", "BG Legal")
+
+    assert_equal "BVBA BG Legal", lookup(html:).attributes[:name]
+  end
+
+  test "enforces the stored name limit after adding the registered legal form" do
+    html = with_registry_rows('<tr><td class="RL">Rechtsvorm:</td><td class="RL">Besloten vennootschap</td></tr>')
+      .sub("TEST CBE Company", "A" * 159)
+
+    assert_equal :unavailable, lookup(html:).status
+  end
+
   test "does not use an establishment address when no registered office is present" do
     html = fixture_html.sub(%r{<tr><td class="RL">Adres van de zetel:</td>.*?</tr>}m, "")
     result = lookup(html:)
@@ -73,5 +116,9 @@ class BusinessRegistryPublicLookupTest < ActiveSupport::TestCase
 
   def fixture_html
     file_fixture("kbo_company.html").binread
+  end
+
+  def with_registry_rows(*rows)
+    fixture_html.sub("<table>", "<table>#{rows.join}")
   end
 end

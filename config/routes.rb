@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resource :session, only: %i[new create destroy]
     resources :passwords, param: :token, only: %i[new create edit update]
     resource :registration, only: %i[new create]
+    post "registration/profile", to: "registrations#preview", as: :registration_profile
     resource :company_lookup, path: "company-lookup", only: :create
     get "email-verification/:token", to: "email_verifications#show", as: :email_verification
     post "email-verification/:token", to: "email_verifications#confirm", as: :confirm_email_verification

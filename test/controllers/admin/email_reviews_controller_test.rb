@@ -112,6 +112,46 @@ class Admin::EmailReviewsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "numeric email review bookmarks redirect to UUIDs without reviewing the request" do
+    original_profile = @profile.reload.attributes
+    assert_no_enqueued_jobs do
+      assert_no_difference "AuditEvent.count" do
+        get admin_email_review_path(@account.user.id, locale: :fr)
+      end
+    end
+    assert_response :moved_permanently
+    assert_redirected_to admin_email_review_path(@account.user, locale: :fr)
+    assert_equal "no-store", response.headers["Cache-Control"]
+    assert_equal original_profile, @profile.reload.attributes
+  end
+
+  test "legacy numeric review forms retain the identity attestation requirement" do
+    parameters = review_params
+    parameters[:email_review].delete(:identity_checked)
+    assert_no_enqueued_jobs do
+      patch admin_email_review_path(@account.user.id, locale: :en), params: parameters
+    end
+    assert_response :unprocessable_content
+    assert_select "a[hreflang='fr'][href='#{admin_email_review_path(@account.user, locale: :fr)}']", count: 1
+    assert @profile.reload.email_review_pending?
+
+    patch admin_email_review_path(@account.user.id, locale: :en), params: review_params
+    assert_redirected_to admin_email_review_path(@account.user, locale: :en)
+    assert @profile.reload.email_review_approved?
+  end
+
+  test "email review identifiers never bind through numeric prefixes or unknown UUIDs" do
+    [ "#{@account.user.id}extra", SecureRandom.uuid ].each do |identifier|
+      assert_no_enqueued_jobs do
+        assert_no_difference "AuditEvent.count" do
+          patch admin_email_review_path(identifier, locale: :en), params: review_params
+        end
+      end
+      assert_response :not_found
+    end
+    assert @profile.reload.email_review_pending?
+  end
+
   private
 
   def review_params

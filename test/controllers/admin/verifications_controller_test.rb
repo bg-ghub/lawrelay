@@ -36,7 +36,7 @@ class Admin::VerificationsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@admin, admin_mfa: true)
 
     assert_difference("AuditEvent.count", 2) do
-      patch "/en/admin/verifications/#{@review_user.id}", params: {
+      patch admin_verification_path(@review_user, locale: :en), params: {
         decision: "approve",
         verification: { note: "Checked against the bar directory." }
       }
@@ -53,7 +53,7 @@ class Admin::VerificationsControllerTest < ActionDispatch::IntegrationTest
   test "system admin can reject a verification" do
     sign_in_as(@admin, admin_mfa: true)
     %w[nl fr de en].each do |locale|
-      patch "/#{locale}/admin/verifications/#{@review_user.id}", params: {
+      patch admin_verification_path(@review_user, locale:), params: {
         decision: "reject",
         verification: { note: "Bar number could not be confirmed." }
       }
@@ -65,6 +65,28 @@ class Admin::VerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_nil @review_firm.verified_at
     assert_equal "rejected", @review_profile.reload.verification_status
     assert_nil @review_profile.verified_at
+  end
+
+  test "legacy numeric verification forms remain bound to the same member" do
+    sign_in_as(@admin, admin_mfa: true)
+    patch admin_verification_path(@review_user.id, locale: :en), params: {
+      decision: "reject", verification: { note: "Existing form checked." }
+    }
+
+    assert_redirected_to admin_verifications_path(locale: :en)
+    assert_equal "rejected", @review_profile.reload.verification_status
+    assert_equal "rejected", @review_firm.reload.verification_status
+  end
+
+  test "verification identifiers cannot bind through numeric prefixes or unknown UUIDs" do
+    sign_in_as(@admin, admin_mfa: true)
+    [ "#{@review_user.id}extra", SecureRandom.uuid ].each do |identifier|
+      assert_no_difference "AuditEvent.count" do
+        patch admin_verification_path(identifier, locale: :en), params: { decision: "approve" }
+      end
+      assert_response :not_found
+    end
+    assert_equal "pending", @review_profile.reload.verification_status
   end
 
   private

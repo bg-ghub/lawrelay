@@ -1,6 +1,14 @@
 .admin-users-page .dashboard-panel{min-height:0}
 .admin-users-page .dashboard-heading>div,.admin-user-identity,.admin-user-row-fact{min-width:0}
 .admin-users-page .dashboard-heading p,.admin-user-identity p,.admin-user-row-fact strong,.admin-user-suspension p,.admin-user-audit-list p{overflow-wrap:anywhere}
+.admin-users-page .button{min-width:0;max-width:100%;min-height:48px;border:1px solid transparent;border-radius:999px;padding:.7rem 1.1rem;line-height:1.4;white-space:normal;overflow-wrap:anywhere;text-align:center;box-shadow:none;transform:none;transition:background .18s,border-color .18s,color .18s}
+.admin-users-page .button:hover,.admin-users-page .button:focus{box-shadow:none;transform:none}
+.admin-users-page .button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:none}
+.admin-users-page .button--dark{background:var(--ink);color:var(--white)}
+.admin-users-page .button--dark:hover{background:var(--ink-deep)}
+.admin-users-page .button--ghost{border-color:rgba(21,63,54,.3);background:transparent;color:var(--ink)}
+.admin-users-page .button--ghost:hover{border-color:var(--ink);background:var(--mint)}
+.admin-user-detail-grid .form-actions .button{width:100%}
 .admin-users-total{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:var(--white);padding:.5rem .85rem;color:var(--ink);font-size:.85rem;font-weight:700}
 .admin-users-filters{margin:2rem 0 1rem}
 .admin-users-filter-form{display:grid;grid-template-columns:minmax(200px,2fr) repeat(2,minmax(120px,1fr)) auto;align-items:end;gap:1rem}

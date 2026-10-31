@@ -169,12 +169,14 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
   end
 
   test "restored accounts are scrubbed before traffic and replay is idempotent" do
-    original = @user.attributes
+    original = @user.reload.attributes
     erase
-    @user.update_columns(original.except("id"))
+    @user.update_columns(original.except("id", "public_id"))
+    assert_equal original, @user.reload.attributes
     assignment = create_assignment_for(@member)
     assert_equal 1, Privacy::AccountErasure.reapply!(ledger: @ledger)
     assert_not @user.reload.active?
+    assert_equal original.fetch("public_id"), @user.public_id
     assert_equal "cancelled", assignment.reload.status
     assert_equal 0, Privacy::AccountErasure.reapply!(ledger: @ledger)
     assert_raises(Admin::UserManagement::InvalidAction) do

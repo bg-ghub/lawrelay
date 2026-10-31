@@ -102,7 +102,8 @@ module BusinessRegistry
       return result(:not_found) unless Firm.normalize_enterprise_number(number) == @enterprise_number
       return result(:not_found) unless active?(document)
 
-      name = value_for(document, "Naam")
+      name = RegisteredName.call(name: value_for(document, "Naam"),
+        legal_form: value_for(document, "Rechtsvorm"), entity_type: value_for(document, "Type entiteit"))
       return result(:unavailable) unless valid_length?(name, 160)
 
       attributes = { name:, enterprise_number: @enterprise_number }.merge(registered_office(document))

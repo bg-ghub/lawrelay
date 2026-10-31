@@ -48,6 +48,7 @@ nl:
           bullets:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
+            - "Op uw verzoek halen we uw openbare naam, e-mailadres, talen en rechtsdomeinen van advocaat.be op om het registratieformulier in te vullen. Het voorbeeld is 20 minuten geldig."
             - "Professionele en facturatiegegevens: uw officiële profiel, vermelde naam en e-mailadres, ondernemingsnaam, ondernemings-/btw-nummer, contactgegevens en professionele verificatiestatus. Als u via de officiële publieke KBO-zoekpagina zelf een ondernemingsnummer opzoekt, bewaren we de teruggegeven facturatiegegevens (naam, nummer en, waar beschikbaar, zeteladres) en de datum van de KBO-gegevens."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Facturatiegegevens per opdracht, zoals professionele naam en ondernemings-/btw-nummer. Geverifieerde kijkers van de opdracht zien naam en nummer; het kantoor van de opdrachtgever en de gekozen confrater zien het volledige facturatieadres en e-mailadres."

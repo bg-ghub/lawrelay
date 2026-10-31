@@ -1,0 +1,18 @@
+fr:
+  signup_profile:
+    hint: "Nous récupérons votre nom, votre e-mail et les informations de votre profil."
+    fetch: "Charger mon profil"
+    manual: "Saisir mes données"
+    edit: "Modifier les données"
+    loading: "Chargement…"
+    loaded: "Données chargées. Vérifiez-les rapidement."
+    stale: "Le lien de votre profil a changé. Rechargez les données."
+    review: "Vérifiez votre nom et votre e-mail."
+    errors:
+      invalid_url: "Indiquez le lien de votre profil advocaat.be."
+      unavailable: "Advocaat.be est indisponible. Réessayez ou saisissez vos données."
+      malformed: "Ce profil est illisible. Saisissez vos données."
+      email_missing: "Ce profil ne contient pas d’e-mail. Saisissez vos données."
+      invalid_preview: "Rechargez votre profil ou saisissez vos données."
+      rate_limited: "Patientez avant de réessayer."
+      limit_reached: "Réessayez plus tard ou saisissez vos données."

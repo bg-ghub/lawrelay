@@ -158,6 +158,7 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
 
   test "registration validation moves focus to the error summary" do
     visit new_registration_path(locale: :en)
+    click_button I18n.t("signup_profile.manual", locale: :en)
     fill_in "registration_first_name", with: "Test"
     fill_in "registration_last_name", with: "Lawyer"
     fill_in "registration_email_address", with: "system-invalid-#{SecureRandom.hex(5)}@example.test"

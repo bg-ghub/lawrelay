@@ -116,6 +116,7 @@ class KboBillingLookupTest < ApplicationSystemTestCase
 
     Capybara.reset_sessions!
     visit new_registration_path(locale: :en)
+    click_button I18n.t("signup_profile.manual", locale: :en)
     wait_for_lookup
     fill_in "registration_first_name", with: "Alex"
     fill_in "registration_last_name", with: "Example"

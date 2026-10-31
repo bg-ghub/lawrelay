@@ -63,7 +63,8 @@ module Admin
     private
 
     def set_user
-      @user = managed_users.includes(:lawyer_profile, memberships: :firm).find(params[:id])
+      @user = find_user_resource!(managed_users.includes(:lawyer_profile, memberships: :firm))
+      redirect_legacy_user_resource(@user, admin_user_path(@user))
     end
 
     def managed_users
