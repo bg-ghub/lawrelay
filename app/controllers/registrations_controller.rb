@@ -28,7 +28,7 @@ class RegistrationsController < ApplicationController
       end
       format.html do
         attributes = preview_form_attributes
-        { first_name: result.first_name, last_name: result.last_name, email_address: result.email_address }.each do |key, value|
+        { first_name: result.first_name, last_name: result.last_name }.each do |key, value|
           attributes[key] = value if attributes[key].blank?
         end
         attributes[:directory_profile_url] = result.profile_url
@@ -47,6 +47,11 @@ class RegistrationsController < ApplicationController
     @terms_accepted = ActiveModel::Type::Boolean.new.cast(attributes.delete(:terms_accepted))
     prepare_form(attributes)
 
+    unless @directory_identity
+      @registration_errors << t("signup_profile.errors.invalid_preview")
+      return render :new, status: :unprocessable_content
+    end
+
     @user.accepted_terms_at = Time.current if @terms_accepted
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
     # Record receipt of the privacy notice, not consent as a processing basis.
@@ -57,8 +62,7 @@ class RegistrationsController < ApplicationController
       models_valid = false
     end
     unless Directory::SignupPreview.apply(@lawyer_profile, user: @user, token: attributes[:directory_preview_token])
-      @lawyer_profile.errors.add(:base, t("signup_profile.errors.invalid_preview"))
-      @form_values.delete("directory_preview_token")
+      @lawyer_profile.errors.add(:base, t("signup_profile.review"))
       models_valid = false
     end
     @user.errors.add(:base, t("auth.registration.errors.accept_terms")) unless @terms_accepted
@@ -112,11 +116,12 @@ class RegistrationsController < ApplicationController
 
   def prepare_form(attributes = {})
     locale = attributes[:locale].presence_in(User::LOCALES) || I18n.locale.to_s
-    email = attributes[:email_address].to_s
+    @directory_identity = Directory::SignupPreview.read(token: attributes[:directory_preview_token], profile_url: attributes[:directory_profile_url])
+    email = @directory_identity&.fetch("email_address", nil)
 
     @user = User.new(
-      first_name: attributes[:first_name],
-      last_name: attributes[:last_name],
+      first_name: attributes[:first_name].presence || @directory_identity&.fetch("first_name", nil),
+      last_name: attributes[:last_name].presence || @directory_identity&.fetch("last_name", nil),
       email_address: email,
       password: attributes[:password],
       password_confirmation: attributes[:password_confirmation],
@@ -132,7 +137,9 @@ class RegistrationsController < ApplicationController
       directory_profile_url: Directory::AdvocaatBeProfileLookup.canonical_profile_url(attributes[:directory_profile_url]),
       spoken_languages: [ locale.upcase ]
     )
-    @form_values = attributes.except(:password, :password_confirmation).stringify_keys
+    @form_values = attributes.except(:password, :password_confirmation, :email_address).stringify_keys
+    @form_values.delete("directory_preview_token") unless @directory_identity
+    @form_values.merge!(@user.attributes.slice("first_name", "last_name"))
     @registration_errors = []
   end
 
@@ -153,7 +160,7 @@ class RegistrationsController < ApplicationController
 
   def registration_params
     params.require(:registration).permit(
-      :first_name, :last_name, :email_address, :password, :password_confirmation,
+      :first_name, :last_name, :password, :password_confirmation,
       :directory_profile_url, :directory_preview_token,
       :locale, :terms_accepted
     )

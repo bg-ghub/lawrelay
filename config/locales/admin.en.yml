@@ -3,7 +3,7 @@ en:
     verifications:
       eyebrow: "Administration"
       title: "Lawyer verification"
-      intro: "Check the lawyer and company before approving access."
+      intro: "Check the lawyer before approving access."
       back: "Back to dashboard"
       account: "Account"
       email: "Email"

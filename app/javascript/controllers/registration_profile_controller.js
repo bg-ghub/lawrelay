@@ -1,19 +1,18 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["url", "token", "fetch", "manual", "status", "initial", "details", "identityFields", "summary", "summaryName", "summaryEmail", "firstName", "lastName", "email"]
+  static targets = ["url", "token", "fetch", "status", "initial", "details", "identityFields", "summary", "summaryName", "summaryEmail", "firstName", "lastName"]
   static values = { url: String, fetchLabel: String, loading: String, loaded: String, unavailable: String, stale: String, review: String, ready: Boolean, errors: Boolean, imported: Object, importedName: String }
 
   connect() {
     this.revision = 0
     this.lastImported = this.importedValue
-    this.importedName = this.importedNameValue || (this.tokenTarget.value ? this.fullName() : "")
-    this.previewToken = this.tokenTarget.value
+    this.importedName = this.importedNameValue
+    this.listedEmail = this.lastImported.email_address || ""
     this.fetchTarget.type = "button"
     this.fetchTarget.disabled = false
     this.fetchTarget.textContent = this.fetchLabelValue
     this.fetchTarget.removeAttribute("aria-busy")
-    this.manualTarget.hidden = false
     this.showDetails(this.readyValue)
     this.updateSummary()
     if (this.readyValue) {
@@ -40,18 +39,6 @@ export default class extends Controller {
     this.summaryTarget.hidden = editable
   }
 
-  manual(event) {
-    event?.preventDefault()
-    this.revision += 1
-    this.request?.abort()
-    this.previewToken = ""
-    this.tokenTarget.value = ""
-    this.showDetails(true)
-    this.showIdentity(true)
-    this.showStatus("")
-    this.firstNameTarget.focus()
-  }
-
   edit(event) {
     event.preventDefault()
     this.showIdentity(true)
@@ -63,16 +50,16 @@ export default class extends Controller {
     const hadPreview = Boolean(this.tokenTarget.value || this.request)
     this.revision += 1
     this.request?.abort()
-    this.previewToken = ""
     this.tokenTarget.value = ""
-    if (this.ready) this.showIdentity(true)
+    this.listedEmail = ""
+    this.showDetails(false)
+    this.updateSummary()
     this.showStatus(hadPreview ? this.staleValue : "")
   }
 
   identityChanged() {
     if (this.applying) return
     this.revision += 1
-    this.tokenTarget.value = this.normalizedName(this.fullName()) === this.normalizedName(this.importedName) ? this.previewToken : ""
     this.updateSummary()
   }
 
@@ -128,8 +115,8 @@ export default class extends Controller {
         this.importedValue = this.lastImported
         this.importedNameValue = this.importedName
         const matches = this.normalizedName(this.fullName()) === this.normalizedName(result.name)
-        this.previewToken = result.token
-        this.tokenTarget.value = matches ? result.token : ""
+        this.listedEmail = result.email_address
+        this.tokenTarget.value = result.token
         this.showDetails(true)
         this.updateSummary()
         this.showIdentity(!matches || !this.identityValid())
@@ -149,14 +136,14 @@ export default class extends Controller {
     }
   }
 
-  identityFields() { return { first_name: this.firstNameTarget, last_name: this.lastNameTarget, email_address: this.emailTarget } }
+  identityFields() { return { first_name: this.firstNameTarget, last_name: this.lastNameTarget } }
   identityValues() { return Object.fromEntries(Object.entries(this.identityFields()).map(([key, field]) => [key, field.value])) }
   fullName() { return `${this.firstNameTarget.value.trim()} ${this.lastNameTarget.value.trim()}`.trim() }
   normalizedName(value) { return value.toString().normalize("NFKD").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "") }
   identityValid() { return Object.values(this.identityFields()).every((field) => field.checkValidity()) }
   updateSummary() {
     this.summaryNameTarget.textContent = this.fullName()
-    this.summaryEmailTarget.textContent = this.emailTarget.value
+    this.summaryEmailTarget.textContent = this.listedEmail
   }
   showStatus(message, error = false) {
     this.statusTarget.textContent = message

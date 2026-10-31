@@ -4,7 +4,7 @@ class DirectorySignupPreviewTest < ActiveSupport::TestCase
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111"
 
   setup do
-    @user = User.new(first_name: "Jane", last_name: "van den Berg", email_address: "working@example.test")
+    @user = User.new(first_name: "Jane", last_name: "van den Berg", email_address: "listed@example.test")
     @profile = @user.build_lawyer_profile(directory_profile_url: PROFILE_URL, spoken_languages: [ "DE" ])
     @result = Directory::SignupProfile::Result.new(status: :ok, profile_url: PROFILE_URL, name: "Jane van den Berg",
       first_name: "Jane", last_name: "van den Berg", email_address: "listed@example.test",
@@ -16,7 +16,7 @@ class DirectorySignupPreviewTest < ActiveSupport::TestCase
     assert Directory::SignupPreview.apply(@profile, user: @user, token: @token)
     assert_equal %w[NL FR], @profile.spoken_languages
     assert_equal [ "Familierecht" ], @profile.practice_areas
-    assert_equal "working@example.test", @user.email_address
+    assert_equal "listed@example.test", @user.email_address
     assert_nil @user.email_verified_at
     assert_nil @profile.directory_profile_id
     assert_nil @profile.directory_email
@@ -24,9 +24,17 @@ class DirectorySignupPreviewTest < ActiveSupport::TestCase
     assert_nil @profile.verified_at
   end
 
-  test "manual registration without a preview preserves default profile values" do
-    assert Directory::SignupPreview.apply(@profile, user: @user, token: nil)
+  test "a missing preview cannot supply a signup email" do
+    assert_nil Directory::SignupPreview.read(token: nil, profile_url: PROFILE_URL)
+    assert_not Directory::SignupPreview.apply(@profile, user: @user, token: nil)
     assert_equal [ "DE" ], @profile.spoken_languages
+  end
+
+  test "a preview cannot be reused with another account email" do
+    @user.email_address = "another@example.test"
+    assert_not Directory::SignupPreview.apply(@profile, user: @user, token: @token)
+    assert_equal [ "DE" ], @profile.spoken_languages
+    assert_equal "listed@example.test", Directory::SignupPreview.read(token: @token, profile_url: PROFILE_URL).fetch("email_address")
   end
 
   test "forged expired wrong-purpose and malformed previews are rejected" do
@@ -64,7 +72,8 @@ class DirectorySignupPreviewTest < ActiveSupport::TestCase
   private
 
   def payload
-    { "profile_url" => PROFILE_URL, "name" => "Jane van den Berg", "profile_attributes" => {} }
+    { "profile_url" => PROFILE_URL, "name" => "Jane van den Berg", "first_name" => "Jane", "last_name" => "van den Berg",
+      "email_address" => "listed@example.test", "profile_attributes" => {} }
   end
 
   def verifier

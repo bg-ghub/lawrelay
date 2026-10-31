@@ -14,10 +14,10 @@
       registration_profile_unavailable_value: t("signup_profile.errors.unavailable"),
       registration_profile_stale_value: t("signup_profile.stale"),
       registration_profile_review_value: t("signup_profile.review"),
-      registration_profile_ready_value: @registration_errors.any? || @form_values.values_at("first_name", "last_name", "email_address").any?(&:present?),
+      registration_profile_ready_value: @directory_identity.present?,
       registration_profile_errors_value: @registration_errors.any?,
-      registration_profile_imported_value: @directory_preview&.success? ? { first_name: @directory_preview.first_name, last_name: @directory_preview.last_name, email_address: @directory_preview.email_address } : {},
-      registration_profile_imported_name_value: @directory_preview&.name.to_s
+      registration_profile_imported_value: @directory_identity&.slice("first_name", "last_name", "email_address") || {},
+      registration_profile_imported_name_value: @directory_identity&.fetch("name", "").to_s
     } do |form| %>
       <%= form.hidden_field :directory_preview_token, value: @form_values["directory_preview_token"], data: { registration_profile_target: "token" } %>
       <% if @registration_errors.any? %>
@@ -37,16 +37,15 @@
         </div>
         <div class="registration-profile__actions">
           <%= form.button t("signup_profile.fetch"), type: "submit", formaction: registration_profile_path, formmethod: "post", formnovalidate: true, class: "button button--dark", data: { registration_profile_target: "fetch", action: "click->registration-profile#lookup" } %>
-          <%= button_tag t("signup_profile.manual"), type: "button", hidden: true, class: "text-link registration-profile__manual", data: { registration_profile_target: "manual", action: "registration-profile#manual" } %>
         </div>
         <p class="field-hint registration-profile__status" id="registration-profile-status" role="status" aria-live="polite" data-registration-profile-target="status"></p>
         <p hidden data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
       </fieldset>
 
-      <fieldset class="form-section" data-registration-profile-target="details">
+      <fieldset class="form-section" <%= 'hidden disabled' unless @directory_identity %> data-registration-profile-target="details">
         <legend><%= t("auth.registration.identity") %></legend>
         <div class="registration-profile__summary" hidden data-registration-profile-target="summary">
-          <div><strong data-registration-profile-target="summaryName"></strong><span data-registration-profile-target="summaryEmail"></span></div>
+          <div><strong data-registration-profile-target="summaryName"></strong></div>
           <%= button_tag t("signup_profile.edit"), type: "button", class: "text-link", data: { action: "registration-profile#edit" } %>
         </div>
         <div data-registration-profile-target="identityFields">
@@ -54,7 +53,11 @@
             <div class="field-group"><%= form.label :first_name, t("auth.fields.first_name") %><%= form.text_field :first_name, required: true, maxlength: 100, autocomplete: "given-name", value: @form_values["first_name"], data: { registration_profile_target: "firstName", action: "input->registration-profile#identityChanged" } %></div>
             <div class="field-group"><%= form.label :last_name, t("auth.fields.last_name") %><%= form.text_field :last_name, required: true, maxlength: 100, autocomplete: "family-name", value: @form_values["last_name"], data: { registration_profile_target: "lastName", action: "input->registration-profile#identityChanged" } %></div>
           </div>
-          <div class="field-group"><%= form.label :email_address, t("auth.fields.professional_email") %><%= form.email_field :email_address, required: true, autocomplete: "email", value: @form_values["email_address"], aria: { describedby: "registration-email-hint" }, data: { registration_profile_target: "email", action: "input->registration-profile#identityChanged" } %><p class="field-hint" id="registration-email-hint"><%= t("auth.registration.email_hint") %></p></div>
+        </div>
+        <div class="field-group">
+          <strong><%= t("signup_profile.listed_email") %></strong>
+          <p data-registration-profile-target="summaryEmail"><%= @directory_identity&.fetch("email_address", "") %></p>
+          <p class="field-hint"><%= t("signup_profile.confirm_email") %></p>
         </div>
         <div class="form-row">
           <div class="field-group"><%= form.label :password, t("auth.fields.password") %><%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
@@ -63,7 +66,7 @@
         <%= form.hidden_field :locale, value: I18n.locale %>
       </fieldset>
 
-      <fieldset class="form-section" data-registration-profile-target="details">
+      <fieldset class="form-section" <%= 'hidden disabled' unless @directory_identity %> data-registration-profile-target="details">
         <legend><%= t("auth.registration.agreement") %></legend>
         <label class="toggle-row">
           <%= form.check_box :terms_accepted, { required: true, checked: @terms_accepted }, "1", "0" %>
@@ -73,7 +76,7 @@
         </label>
       </fieldset>
 
-      <div class="form-actions" data-registration-profile-target="details">
+      <div class="form-actions" <%= 'hidden' unless @directory_identity %> data-registration-profile-target="details">
         <%= link_to t("auth.actions.already_registered"), new_session_path, class: "button button--ghost" %>
         <%= form.submit t("auth.registration.submit"), class: "button button--dark" %>
       </div>

@@ -52,7 +52,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
       assert_select "input#registration_first_name"
       assert_select "input#registration_last_name"
-      assert_select "input#registration_email_address"
+      assert_select "input[name='registration[email_address]']", count: 0
       assert_select "input#registration_directory_profile_url"
       assert_select "[data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
       %w[firm_name enterprise_number vat_number billing_email phone address_line_1 postal_code city kbo_lookup_token].each do |field|
@@ -147,7 +147,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "does not reserve a public directory UUID while registration is pending" do
     first = valid_registration
-    second = valid_registration.merge(
+    second = valid_registration(
       first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example"
     )
 
@@ -164,7 +164,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "accounts receive separate workspaces without a supplied company identity" do
     first = valid_registration
-    second = valid_registration.merge(first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example")
+    second = valid_registration(first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example")
 
     assert_difference [ "User.count", "Firm.count", "Membership.count" ], 2 do
       post registration_path(locale: :en), params: { registration: first }
@@ -204,6 +204,25 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     BusinessRegistry::Preview.define_singleton_method(:apply, original) if original
   end
 
+  test "the listed email is authoritative even when another email is posted" do
+    assert_difference "User.count", 1 do
+      post registration_path(locale: :en), params: { registration: valid_registration.merge(email_address: "forged@example.test") }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal "ada@law.example", User.order(:id).last.email_address
+    assert_nil User.find_by(email_address: "forged@example.test")
+    assert_not User.order(:id).last.email_verified?
+  end
+
+  test "signup cannot use an arbitrary email without a signed directory result" do
+    assert_no_difference [ "User.count", "Firm.count", "LawyerProfile.count" ] do
+      post registration_path(locale: :en), params: { registration: valid_registration.except(:directory_preview_token) }
+    end
+    assert_response :unprocessable_content
+    assert_includes response.body, I18n.t("signup_profile.errors.invalid_preview", locale: :en)
+    assert_select "input[name='registration[email_address]']", count: 0
+  end
+
   private
 
   def with_failed_verification_email(result: nil)
@@ -220,14 +239,18 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     EmailVerificationMailer.define_singleton_method(:verify, original) if original
   end
 
-  def valid_registration
+  def valid_registration(first_name: "Ada", last_name: "Lovelace", email_address: "ada@law.example")
+    url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+    result = Directory::SignupProfile::Result.new(status: :ok, profile_url: url, name: "#{first_name} #{last_name}",
+      first_name:, last_name:, email_address:, profile_attributes: {})
     {
-      first_name: "Ada",
-      last_name: "Lovelace",
-      email_address: "ada@law.example",
+      first_name:,
+      last_name:,
+      email_address:,
       password: "correct-horse-battery-staple",
       password_confirmation: "correct-horse-battery-staple",
-      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_profile_url: url,
+      directory_preview_token: Directory::SignupPreview.issue(result),
       locale: "en",
       terms_accepted: "1"
     }

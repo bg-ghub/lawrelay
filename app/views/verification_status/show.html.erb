@@ -8,7 +8,6 @@
   <div class="dashboard-summary">
     <div class="summary-card"><span><%= t("auth.verification_status.email") %></span><strong><%= @user.email_verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@user.email_verified? ? 'verified' : 'pending'}") %></small></div>
     <div class="summary-card"><span><%= t("directory_onboarding.status.directory") %></span><strong><%= @lawyer_profile&.directory_matched? ? "✓" : "…" %></strong><small><%= t("directory_onboarding.status.states.#{@lawyer_profile&.directory_matched? ? 'matched' : 'pending'}") %></small></div>
-    <div class="summary-card"><span><%= t("auth.verification_status.firm") %></span><strong><%= @firm&.verified? ? "✓" : "…" %></strong><small><%= t("auth.verification_status.states.#{@firm&.verification_status || 'pending'}") %></small></div>
   </div>
 
   <% unless @user.email_verified? %>

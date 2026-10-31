@@ -16,10 +16,8 @@
       <h2><%= t("email_access.admin.details") %></h2>
       <dl class="detail-facts">
         <div><dt><%= t("email_access.admin.name") %></dt><dd><%= @user.full_name %></dd></div>
-        <div><dt><%= t("email_access.admin.company") %></dt><dd><%= @firm&.name || t("admin.users.not_recorded") %></dd></div>
         <div><dt><%= t("admin.users.fields.status") %></dt><dd><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></dd></div>
         <div><dt><%= t("admin.users.fields.lawyer_status") %></dt><dd><%= t("admin.users.verification.#{@profile.verification_status}") %></dd></div>
-        <div><dt><%= t("admin.users.fields.firm_status") %></dt><dd><%= @firm ? t("admin.users.verification.#{@firm.verification_status}") : t("admin.users.not_recorded") %></dd></div>
         <div><dt><%= t("email_access.admin.working_email") %></dt><dd><%= @user.email_address %></dd></div>
         <div><dt><%= t("email_access.admin.directory_email") %></dt><dd><%= @profile.directory_email.presence || t("admin.users.not_recorded") %></dd></div>
         <div><dt><%= t("email_access.admin.email_state") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>

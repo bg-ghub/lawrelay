@@ -3,7 +3,7 @@ fr:
     verifications:
       eyebrow: "Administration"
       title: "Vérification des avocats"
-      intro: "Vérifiez l’avocat et l’entreprise avant d’autoriser l’accès."
+      intro: "Vérifiez l’avocat avant d’autoriser l’accès."
       back: "Retour au tableau de bord"
       account: "Compte"
       email: "E-mail"

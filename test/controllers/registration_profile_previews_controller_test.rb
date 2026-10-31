@@ -48,7 +48,10 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_response :success
     assert_select "input[name='registration[first_name]'][value='Jane']"
     assert_select "input[name='registration[last_name]'][value='van den Berg']"
-    assert_select "input[name='registration[email_address]'][value='working@example.test']"
+    assert_select "input[name='registration[email_address]']", count: 0
+    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@example.test"
+    assert_includes response.body, I18n.t("signup_profile.confirm_email", locale: :en)
+    assert_not_includes response.body, "working@example.test"
     assert_select "input[name='registration[firm_name]'], input[name='registration[address_line_1]']", count: 0
     assert_not_includes response.body, "My invoice company"
     assert_not_includes response.body, "My invoice street"
@@ -61,7 +64,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: registration_attributes }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    user = User.find_by!(email_address: "working@example.test")
+    user = User.find_by!(email_address: "listed@example.test")
     assert_nil user.email_verified_at
     assert_equal "pending", user.lawyer_profile.verification_status
     assert_nil user.lawyer_profile.directory_profile_id
@@ -79,7 +82,6 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
   test "tampering expiry and changed profile identity do not create an account" do
     base = registration_attributes
     [ base.merge(directory_preview_token: base[:directory_preview_token] + "invalid"),
-      base.merge(last_name: "Another identity"),
       base.merge(directory_profile_url: PROFILE_URL.sub("11111111", "22222222")) ].each do |attributes|
       assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
         post registration_path(locale: :en), params: { registration: attributes }
@@ -101,21 +103,39 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: registration_attributes.merge(firm_name: "", enterprise_number: "") }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    assert_equal Firm::INTERNAL_WORKSPACE_NAME, User.find_by!(email_address: "working@example.test").primary_firm.name
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, User.find_by!(email_address: "listed@example.test").primary_firm.name
   end
 
-  test "after an invalid preview the preserved fields can be registered through manual fallback" do
+  test "an invalid preview retains the link and requires a new lookup" do
     attributes = registration_attributes.merge(directory_preview_token: "expired-or-invalid")
     post registration_path(locale: :en), params: { registration: attributes }
     assert_response :unprocessable_content
     assert_select "input[name='registration[first_name]'][value='Jane']"
-    assert_select "input[name='registration[email_address]'][value='working@example.test']"
+    assert_select "input[name='registration[directory_profile_url]'][value='#{PROFILE_URL}']"
+    assert_select "input[name='registration[email_address]']", count: 0
 
-    assert_difference "User.count", 1 do
+    assert_no_difference "User.count" do
       post registration_path(locale: :en), params: { registration: attributes.except(:directory_preview_token) }
     end
+    assert_response :unprocessable_content
+
+    assert_difference "User.count", 1 do
+      post registration_path(locale: :en), params: { registration: registration_attributes }
+    end
     assert_redirected_to verification_status_path(locale: :en)
-    assert_equal [ "EN" ], User.find_by!(email_address: "working@example.test").lawyer_profile.spoken_languages
+    assert_equal %w[NL FR], User.find_by!(email_address: "listed@example.test").lawyer_profile.spoken_languages
+  end
+
+  test "a corrected name keeps the signed listed email available without granting access" do
+    attributes = registration_attributes.merge(last_name: "Another identity")
+    assert_no_difference "User.count" do
+      post registration_path(locale: :en), params: { registration: attributes }
+    end
+    assert_response :unprocessable_content
+    assert_includes response.body, I18n.t("signup_profile.review", locale: :en)
+    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@example.test"
+    assert_select "input[name='registration[directory_preview_token]'][value='#{attributes[:directory_preview_token]}']"
+    assert_select "input[name='registration[email_address]']", count: 0
   end
 
   test "preview errors are localized and do not create accounts or jobs" do
