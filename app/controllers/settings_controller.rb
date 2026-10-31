@@ -133,6 +133,7 @@ class SettingsController < ApplicationController
   end
 
   def clear_directory_evidence!
+    @profile.clear_email_review
     @profile.assign_attributes(
       directory_profile_id: nil,
       directory_name: nil,

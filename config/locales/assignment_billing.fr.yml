@@ -2,6 +2,7 @@ fr:
   assignment_billing:
     heading: Facturation de cette mission
     form_hint: Qui votre confrère doit-il facturer ? Adaptez vos coordonnées si la facture est destinée au cabinet.
+    peppol_hint: Le nom, le numéro d’entreprise et l’adresse sont nécessaires pour la facture Peppol. Votre confrère utilise son propre logiciel de facturation ; LawRelay n’envoie pas de factures.
     name: Nom sur la facture
     enterprise_number: Numéro d’entreprise
     vat_number: Numéro de TVA

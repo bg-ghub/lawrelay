@@ -1,0 +1,5 @@
+<%= t("email_access.mailer.heading", name: @user.first_name) %>
+
+<%= t("email_access.mailer.body.#{@profile.email_review_status}") %>
+
+<%= @review_url %>

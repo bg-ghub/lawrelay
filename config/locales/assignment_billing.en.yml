@@ -2,6 +2,7 @@ en:
   assignment_billing:
     heading: Invoice recipient for this assignment
     form_hint: Who should your confrater invoice? Change these details if the invoice should go to the firm.
+    peppol_hint: The name, enterprise number and address are needed for the Peppol invoice. Your confrater uses their own invoicing software; LawRelay does not send invoices.
     name: Invoice recipient
     enterprise_number: Enterprise number
     vat_number: VAT number

@@ -101,6 +101,7 @@ module Admin
     end
 
     def clear_directory_evidence!(profile)
+      profile.clear_email_review
       profile.assign_attributes(
         directory_profile_id: nil, directory_name: nil, directory_email: nil,
         directory_checked_at: nil, directory_email_verified_at: nil,

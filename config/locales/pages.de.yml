@@ -42,11 +42,11 @@ de:
           heading: "1. Wer verantwortlich ist"
           paragraphs:
             - "Der oben genannte Betreiber von LawRelay ist Verantwortlicher."
-            - "Datenschutzfragen und Betroffenenanträge: privacy@lawrelay.be. Wir gleichen Ihren Namen und Ihre berufliche E-Mail-Adresse mit Ihrem öffentlichen Profil auf advocaat.be ab. Profil- und E-Mail-Prüfung sind für den Marktplatz-Zugang erforderlich. Bitten Sie support@lawrelay.be um Überprüfung einer fehlgeschlagenen Kontrolle."
+            - "Datenschutzfragen und Betroffenenanträge: privacy@lawrelay.be. Wir gleichen Ihren Namen und Ihre berufliche E-Mail-Adresse mit advocaat.be ab und bestätigen Ihre E-Mail-Adresse. Ist die veröffentlichte Adresse nicht erreichbar, kann ein Administrator eine andere bestätigte Adresse anhand unabhängig veröffentlichter beruflicher Kontaktdaten prüfen."
         scope:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
-            - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten."
+            - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten. Anträge auf eine andere Adresse, Entscheidungen und Prüfvermerke werden mit Ihrem Berufsprofil gespeichert."
             - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
             - "Berufs- und Rechnungsdaten: offizielles Verzeichnisprofil, veröffentlichter Name und E-Mail-Adresse, Unternehmensname, Unternehmens-/USt-Nummer, Kontaktdaten und beruflicher Prüfstatus. Wenn Sie über den offizielle öffentliche KBO-Suche selbst eine Unternehmensnummer abfragen, speichern wir die zurückgegebenen Abrechnungsdaten (Name, Nummer und, soweit verfügbar, Sitzadresse) sowie das Datum des KBO-Datenbestands."
             - "Daten zum beruflichen Profil und zu Vermittlungspräferenzen, einschließlich Rechtsgebieten, Gerichtspräferenzen und—soweit für juristische Aufgaben relevant—gesprochenen Sprachen; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
@@ -102,7 +102,7 @@ de:
         eligibility:
           heading: "2. Zugang und Verifizierung"
           paragraphs:
-            - "Die Registrierung steht Anwälten im offiziellen Verzeichnis von advocaat.be offen. Der Marktplatz-Zugang folgt nach einer Prüfung in diesem Verzeichnis. Nutzer machen richtige berufliche Angaben, halten sie aktuell, schützen den Zugang und melden Kompromittierungen sofort. Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
+            - "Die Registrierung steht Anwälten auf advocaat.be offen. Der Zugang erfordert die Prüfung des Profils und der E-Mail-Adresse. Ist die veröffentlichte Adresse nicht erreichbar, prüft ein Administrator Ihre Identität und die bestätigte neue Adresse. Nutzer halten berufliche Angaben aktuell, schützen ihren Zugang und melden Missbrauch. Die Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
         role:
           heading: "3. Rolle von LawRelay"
           paragraphs:

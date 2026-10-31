@@ -16,13 +16,19 @@
       <h2><%= t("auth.verification_status.check_inbox") %></h2>
       <p><%= t("auth.verification_status.check_inbox_body", email: @user.email_address) %></p>
       <%= button_to t("auth.verification_status.resend"), verification_status_path, method: :post, class: "button button--dark" %>
+      <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
     </section>
+    <%= render "shared/email_access_status", user: @user, profile: @lawyer_profile if @lawyer_profile&.email_review_status.present? %>
   <% else %>
+    <% if @lawyer_profile&.email_review_status.present? %>
+      <%= render "shared/email_access_status", user: @user, profile: @lawyer_profile %>
+    <% else %>
     <section class="form-section">
       <% if @lawyer_profile&.directory_confirmation_required? %>
         <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
         <p><%= t(@lawyer_profile.directory_confirmation_requested_at.present? ? "directory_onboarding.status.confirmation_body" : "directory_onboarding.status.confirmation_not_sent_body", email: @lawyer_profile.directory_email) %></p>
         <%= button_to t("directory_feedback.resend_confirmation"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
+        <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
       <% elsif @lawyer_profile&.directory_email_verified? %>
         <h2><%= t("directory_onboarding.status.ready_title") %></h2>
         <p><%= t("directory_onboarding.status.ready_body") %></p>
@@ -35,5 +41,6 @@
       <% end %>
       <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to("info@lawrelay.be")) %></p>
     </section>
+    <% end %>
   <% end %>
 </section>

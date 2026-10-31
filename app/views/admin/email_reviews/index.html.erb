@@ -1,0 +1,27 @@
+<% content_for :title, t("email_access.admin.title") %>
+<div class="dashboard-page shell admin-users-page">
+  <div class="dashboard-heading">
+    <div><h1><%= t("email_access.admin.title") %></h1><p><%= t("email_access.admin.intro") %></p></div>
+    <%= link_to t("admin.users.actions.back"), admin_users_path, class: "button button--ghost" %>
+  </div>
+
+  <% if @users.any? %>
+    <div class="assignment-list">
+      <% @users.each do |user| %>
+        <% profile = user.lawyer_profile %>
+        <article class="dashboard-panel">
+          <div class="panel-heading"><h2><%= link_to user.full_name, admin_email_review_path(user), class: "text-link" %></h2><span class="status-pill"><%= t("email_access.admin.states.pending") %></span></div>
+          <dl class="detail-facts">
+            <div><dt><%= t("email_access.admin.working_email") %></dt><dd><%= user.email_address %></dd></div>
+            <div><dt><%= t("email_access.admin.directory_email") %></dt><dd><%= profile&.directory_email.presence || t("admin.users.not_recorded") %></dd></div>
+            <div><dt><%= t("email_access.admin.email_state") %></dt><dd><%= t("admin.users.email.#{user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
+            <div><dt><%= t("email_access.admin.requested_at") %></dt><dd><%= profile&.email_review_requested_at ? l(profile.email_review_requested_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") : "—" %></dd></div>
+          </dl>
+          <p><%= link_to t("email_access.admin.review"), admin_email_review_path(user), class: "button button--dark" %></p>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <section class="empty-state"><h2><%= t("email_access.admin.empty") %></h2></section>
+  <% end %>
+</div>

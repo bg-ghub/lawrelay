@@ -38,7 +38,7 @@ module Directory
         return Result.new(status: evidence.status, profile: @profile)
       end
       if LawyerProfile.where.not(id: @profile.id).where(directory_profile_id: evidence.profile_id)
-        .where.not(directory_email_verified_at: nil).exists?
+        .where("directory_email_verified_at IS NOT NULL OR email_review_status = ?", "approved").exists?
         record_lookup_failure(:already_claimed, requested_url:, requested_name:)
         return Result.new(status: :already_claimed, profile: @profile)
       end
@@ -49,13 +49,15 @@ module Directory
         return Result.new(status: :protected, profile: @profile) unless @user.active?
         return Result.new(status: :stale, profile: @profile) unless @profile.directory_profile_url == requested_url && @user.full_name == requested_name
 
-        @profile.update!(
+        @profile.assign_attributes(
           directory_profile_id: evidence.profile_id, directory_profile_url: evidence.source_url,
           directory_name: evidence.name, directory_email: evidence.email, directory_checked_at: evidence.checked_at,
           directory_email_verified_at: (@user.email_verified? && same_email?(@user.email_address, evidence.email) ? Time.current : nil),
           directory_confirmation_requested_at: nil,
           directory_identity_digest: identity_digest(evidence)
         )
+        @profile.invalidate_changed_email_review
+        @profile.save!
         audit!("verification.directory_matched", profile_id: @profile.id, directory_profile_id: evidence.profile_id)
       end
       if @profile.directory_confirmation_required?
@@ -104,11 +106,13 @@ module Directory
         return Result.new(status: :protected, profile: @profile) unless @user.active?
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
         return Result.new(status: :pending, profile: @profile) unless identity_current?(@profile)
+        return Result.new(status: :pending, profile: @profile) unless @profile.email_review_allows_access?
         if @user.email_verified? && !@profile.directory_email_verified? && same_email?(@user.email_address, @profile.directory_email)
           @profile.update!(directory_email_verified_at: Time.current)
         end
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
-        return Result.new(status: :pending, profile: @profile) unless @profile.directory_matched? && @user.email_verified? && @profile.directory_email_verified?
+        return Result.new(status: :pending, profile: @profile) unless @profile.directory_matched? && @user.email_verified? &&
+          (@profile.directory_email_verified? || @profile.email_review_approved?)
         @profile.update!(verification_status: "verified", verified_at: Time.current) unless @profile.verified?
         firm.update!(verification_status: "verified", verified_at: Time.current) unless firm.verified?
         audit!("verification.directory_activated", profile_id: @profile.id, firm_id: firm.id, directory_profile_id: @profile.directory_profile_id)

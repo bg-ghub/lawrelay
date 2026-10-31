@@ -1,0 +1,3 @@
+<h1><%= t("email_access.mailer.heading", name: @user.first_name) %></h1>
+<p><%= t("email_access.mailer.body.#{@profile.email_review_status}") %></p>
+<p><%= link_to t("email_access.mailer.action"), @review_url %></p>

@@ -1,0 +1,3073 @@
+{
+  "checked_on": "2026-10-31",
+  "overview_sources": [
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/vredegerecht",
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/politierechtbank",
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/rechtbank-van-eerste-aanleg",
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/arbeidsrechtbank",
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/ondernemingsrechtbank",
+    "https://www.tribunaux-rechtbanken.be/nl/hoven/hof-van-beroep",
+    "https://www.tribunaux-rechtbanken.be/nl/hoven/arbeidshof",
+    "https://www.tribunaux-rechtbanken.be/nl/hoven/hof-van-assisen",
+    "https://www.tribunaux-rechtbanken.be/nl/hoven/hof-van-cassatie"
+  ],
+  "places": {
+    "Brussel": {
+      "fr": "Bruxelles",
+      "de": "Brüssel",
+      "en": "Brussels"
+    },
+    "Antwerpen": {
+      "fr": "Anvers",
+      "de": "Antwerpen",
+      "en": "Antwerp"
+    },
+    "Gent": {
+      "fr": "Gand",
+      "de": "Gent",
+      "en": "Ghent"
+    },
+    "Brugge": {
+      "fr": "Bruges",
+      "de": "Brügge",
+      "en": "Bruges"
+    },
+    "Leuven": {
+      "fr": "Louvain",
+      "de": "Löwen",
+      "en": "Leuven"
+    },
+    "Mechelen": {
+      "fr": "Malines",
+      "de": "Mechelen",
+      "en": "Mechelen"
+    },
+    "Luik": {
+      "fr": "Liège",
+      "de": "Lüttich",
+      "en": "Liège"
+    },
+    "Liège": {
+      "fr": "Liège",
+      "de": "Lüttich",
+      "en": "Liège"
+    },
+    "Namen": {
+      "fr": "Namur",
+      "de": "Namur",
+      "en": "Namur"
+    },
+    "Bergen": {
+      "fr": "Mons",
+      "de": "Mons",
+      "en": "Mons"
+    },
+    "Henegouwen": {
+      "fr": "Hainaut",
+      "de": "Hennegau",
+      "en": "Hainaut"
+    },
+    "Waals-Brabant": {
+      "fr": "Brabant wallon",
+      "de": "Wallonisch-Brabant",
+      "en": "Walloon Brabant"
+    },
+    "Vlaams-Brabant": {
+      "fr": "Brabant flamand",
+      "de": "Flämisch-Brabant",
+      "en": "Flemish Brabant"
+    },
+    "Oost-Vlaanderen": {
+      "fr": "Flandre orientale",
+      "de": "Ostflandern",
+      "en": "East Flanders"
+    },
+    "West-Vlaanderen": {
+      "fr": "Flandre occidentale",
+      "de": "Westflandern",
+      "en": "West Flanders"
+    },
+    "Luxemburg": {
+      "fr": "Luxembourg",
+      "de": "Luxemburg",
+      "en": "Luxembourg"
+    },
+    "Limburg": {
+      "fr": "Limbourg",
+      "de": "Limburg",
+      "en": "Limburg"
+    },
+    "Oudergem": {
+      "fr": "Auderghem",
+      "de": "Auderghem",
+      "en": "Auderghem"
+    },
+    "Etterbeek": {
+      "fr": "Etterbeek",
+      "de": "Etterbeek",
+      "en": "Etterbeek"
+    },
+    "Elsene": {
+      "fr": "Ixelles",
+      "de": "Ixelles",
+      "en": "Ixelles"
+    },
+    "Ukkel": {
+      "fr": "Uccle",
+      "de": "Uccle",
+      "en": "Uccle"
+    },
+    "Vorst": {
+      "fr": "Forest",
+      "de": "Forest",
+      "en": "Forest"
+    },
+    "Sint-Jans-Molenbeek": {
+      "fr": "Molenbeek-Saint-Jean",
+      "de": "Molenbeek-Saint-Jean",
+      "en": "Molenbeek-Saint-Jean"
+    },
+    "Sint-Genesius-Rode": {
+      "fr": "Rhode-Saint-Genèse",
+      "de": "Rhode-Saint-Genèse",
+      "en": "Rhode-Saint-Genèse"
+    },
+    "Sint-Gillis": {
+      "fr": "Saint-Gilles",
+      "de": "Saint-Gilles",
+      "en": "Saint-Gilles"
+    },
+    "Sint-Joost-ten-Node": {
+      "fr": "Saint-Josse-ten-Noode",
+      "de": "Saint-Josse-ten-Noode",
+      "en": "Saint-Josse-ten-Noode"
+    },
+    "Schaarbeek": {
+      "fr": "Schaerbeek",
+      "de": "Schaerbeek",
+      "en": "Schaerbeek"
+    },
+    "Sint-Pieters-Woluwe": {
+      "fr": "Woluwe-Saint-Pierre",
+      "de": "Woluwe-Saint-Pierre",
+      "en": "Woluwe-Saint-Pierre"
+    },
+    "Ieper": {
+      "fr": "Ypres",
+      "de": "Ypern",
+      "en": "Ypres"
+    },
+    "Kortrijk": {
+      "fr": "Courtrai",
+      "de": "Kortrijk",
+      "en": "Kortrijk"
+    },
+    "Oostende": {
+      "fr": "Ostende",
+      "de": "Ostende",
+      "en": "Ostend"
+    },
+    "Dendermonde": {
+      "fr": "Termonde",
+      "de": "Dendermonde",
+      "en": "Dendermonde"
+    },
+    "Tienen": {
+      "fr": "Tirlemont",
+      "de": "Tienen",
+      "en": "Tienen"
+    },
+    "Tongeren-Borgloon": {
+      "fr": "Tongres-Looz",
+      "de": "Tongern-Borgloon",
+      "en": "Tongeren-Borgloon"
+    },
+    "Saint-Vith": {
+      "fr": "Saint-Vith",
+      "de": "Sankt Vith",
+      "en": "Saint-Vith"
+    }
+  },
+  "courts": [
+    {
+      "type": "peace",
+      "district": "Eupen",
+      "venue": "premier canton d'Eupen-Saint Vith",
+      "city": "Eupen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-premier-canton-deupen-saint-vith"
+    },
+    {
+      "type": "peace",
+      "district": "Eupen",
+      "venue": "second canton d'Eupen-Saint Vith",
+      "city": "Saint-Vith",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-second-canton-deupen-saint-vith"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Anderlecht 1e kanton",
+      "city": "Anderlecht",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-1e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Anderlecht 2e kanton",
+      "city": "Anderlecht",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-2e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Oudergem",
+      "city": "Oudergem",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Etterbeek",
+      "city": "Etterbeek",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-etterbeek"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Elsene",
+      "city": "Elsene",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-elsene"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Ukkel",
+      "city": "Ukkel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ukkel"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Brussel 1e kanton",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-1e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Brussel 2e kanton",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-2e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Brussel 3e kanton",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-3e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Brussel 4e kanton",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-4e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Vorst",
+      "city": "Vorst",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vorst"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Ganshoren",
+      "city": "Ganshoren",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ganshoren"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Jette",
+      "city": "Jette",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Meise",
+      "city": "Meise",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-meise"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Sint-Jans-Molenbeek",
+      "city": "Sint-Jans-Molenbeek",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-jans-molenbeek"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Sint-Genesius-Rode",
+      "city": "Sint-Genesius-Rode",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-genesius-rode"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Sint-Gillis",
+      "city": "Sint-Gillis",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-gillis"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Sint-Joost-ten-Node",
+      "city": "Sint-Joost-ten-Node",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-joost-ten-node"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Schaarbeek 1e kanton",
+      "city": "Schaarbeek",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-1e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Schaarbeek 2e kanton",
+      "city": "Schaarbeek",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Sint-Pieters-Woluwe",
+      "city": "Sint-Pieters-Woluwe",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-pieters-woluwe"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Asse",
+      "city": "Asse",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-asse"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Halle",
+      "city": "Halle",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-halle"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Lennik",
+      "city": "Lennik",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lennik"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Vilvoorde",
+      "city": "Vilvoorde",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vilvoorde"
+    },
+    {
+      "type": "peace",
+      "district": "Brussel",
+      "venue": "Zaventem",
+      "city": "Zaventem",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zaventem"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Fléron",
+      "city": "Fléron",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fleron"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Grâce-Hollogne",
+      "city": "Grâce-Hollogne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Herstal",
+      "city": "Herstal",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-herstal"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Huy I",
+      "city": "Huy",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-i"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Huy II",
+      "city": "Huy",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Liège I",
+      "city": "Liège",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Liège II",
+      "city": "Liège",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Liège III",
+      "city": "Liège",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Liège IV",
+      "city": "Liège",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Limbourg",
+      "city": "Limbourg",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Seraing",
+      "city": "Seraing",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seraing"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Spa",
+      "city": "Spa",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-spa"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Sprimont",
+      "city": "Sprimont",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-sprimont"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Verviers I",
+      "city": "Verviers",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-i"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Verviers II",
+      "city": "Verviers",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Visé",
+      "city": "Visé",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise"
+    },
+    {
+      "type": "peace",
+      "district": "Luik",
+      "venue": "Waremme",
+      "city": "Waremme",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Andenne",
+      "city": "Andenne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dandenne"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Ciney",
+      "city": "Ciney",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Dinant",
+      "city": "Dinant",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Fosses-la-Ville",
+      "city": "Fosses-la-Ville",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fosses-la-ville"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Gembloux",
+      "city": "Gembloux",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-gembloux"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Namur I",
+      "city": "Namur",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Namur II",
+      "city": "Namur",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Philippeville - siège Couvin",
+      "city": "Couvin",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-couvin"
+    },
+    {
+      "type": "peace",
+      "district": "Namen",
+      "venue": "Philippeville - siège Florennes",
+      "city": "Florennes",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-florennes"
+    },
+    {
+      "type": "peace",
+      "district": "Waals-Brabant",
+      "venue": "Braine-l'Alleud",
+      "city": "Braine-l'Alleud",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-braine-lalleud"
+    },
+    {
+      "type": "peace",
+      "district": "Waals-Brabant",
+      "venue": "Jodoigne",
+      "city": "Jodoigne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-jodoigne"
+    },
+    {
+      "type": "peace",
+      "district": "Waals-Brabant",
+      "venue": "Nivelles",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles"
+    },
+    {
+      "type": "peace",
+      "district": "Waals-Brabant",
+      "venue": "Wavre I",
+      "city": "Wavre",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i"
+    },
+    {
+      "type": "peace",
+      "district": "Waals-Brabant",
+      "venue": "Wavre II",
+      "city": "Wavre",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Ath",
+      "city": "Ath",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Binche",
+      "city": "Binche",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Boussu-Colfontaine I",
+      "city": "Boussu-Colfontaine",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Boussu-Colfontaine II",
+      "city": "Boussu-Colfontaine",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Charleroi I",
+      "city": "Charleroi",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Charleroi II",
+      "city": "Charleroi",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Charleroi III",
+      "city": "Charleroi",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iii"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Charleroi IV",
+      "city": "Charleroi",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iv"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Châtelet",
+      "city": "Châtelet",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Chimay",
+      "city": "Chimay",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chimay"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "La Louvière",
+      "city": "La Louvière",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-la-louviere"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Leuze-en-Hainaut",
+      "city": "Leuze-en-Hainaut",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-leuze-en-hainaut"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Mons I",
+      "city": "Mons",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Mons II",
+      "city": "Mons",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Mouscron",
+      "city": "Mouscron",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Seneffe",
+      "city": "Seneffe",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Soignies",
+      "city": "Soignies",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-soignies"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Thuin",
+      "city": "Thuin",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-thuin"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Tournai I",
+      "city": "Tournai",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-i"
+    },
+    {
+      "type": "peace",
+      "district": "Henegouwen",
+      "venue": "Tournai II",
+      "city": "Tournai",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-ii"
+    },
+    {
+      "type": "peace",
+      "district": "Luxemburg",
+      "venue": "Arlon",
+      "city": "Arlon",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon"
+    },
+    {
+      "type": "peace",
+      "district": "Luxemburg",
+      "venue": "Bastogne",
+      "city": "Bastogne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-bastogne"
+    },
+    {
+      "type": "peace",
+      "district": "Luxemburg",
+      "venue": "Marche-en-Famenne",
+      "city": "Marche-en-Famenne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne"
+    },
+    {
+      "type": "peace",
+      "district": "Luxemburg",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-neufchateau"
+    },
+    {
+      "type": "peace",
+      "district": "Luxemburg",
+      "venue": "Virton",
+      "city": "Virton",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-virton"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 1",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-1"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 2",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-2"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 3",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-3"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 4",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-4"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 5",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-5"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 6",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-6"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Antwerpen 7",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-7"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Boom",
+      "city": "Boom",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Brasschaat",
+      "city": "Brasschaat",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Deurne",
+      "city": "Deurne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deurne"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "eerste kanton Mol-Geel",
+      "city": "Mol-Geel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "eerste kanton Turnhout",
+      "city": "Turnhout",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-turnhout"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Heist-op-den-Berg",
+      "city": "Heist-op-den-Berg",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-heist-op-den-berg"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Kapellen",
+      "city": "Kapellen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kapellen"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Kontich",
+      "city": "Kontich",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kontich"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Lier",
+      "city": "Lier",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Mechelen",
+      "city": "Mechelen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Merksem",
+      "city": "Merksem",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merksem"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "tweede kanton Mol-Geel",
+      "city": "Mol-Geel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "tweede kanton Turnhout",
+      "city": "Turnhout",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-turnhout"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Westerlo",
+      "city": "Westerlo",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-westerlo"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Willebroek",
+      "city": "Willebroek",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-willebroek"
+    },
+    {
+      "type": "peace",
+      "district": "Antwerpen",
+      "venue": "Zandhoven",
+      "city": "Zandhoven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zandhoven"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Aarschot",
+      "city": "Aarschot",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aarschot"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Diest",
+      "city": "Diest",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-diest"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Leuven 1",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-1"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Leuven 2",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-2"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Leuven 3",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-3"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Tienen",
+      "city": "Tienen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tienen"
+    },
+    {
+      "type": "peace",
+      "district": "Leuven",
+      "venue": "Zoutleeuw",
+      "city": "Zoutleeuw",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zoutleeuw"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Tongeren-Borgloon",
+      "city": "Tongeren-Borgloon",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tongeren-borgloon"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Beringen",
+      "city": "Beringen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beringen"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Bilzen-Hoeselt",
+      "city": "Bilzen-Hoeselt",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bilzen-hoeselt"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Bree",
+      "city": "Bree",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Genk",
+      "city": "Genk",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Hasselt 1",
+      "city": "Hasselt",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-1"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Hasselt 2",
+      "city": "Hasselt",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-2"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Houthalen - Helchteren",
+      "city": "Houthalen - Helchteren",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Maasmechelen",
+      "city": "Maasmechelen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-maasmechelen"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Pelt",
+      "city": "Pelt",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-pelt"
+    },
+    {
+      "type": "peace",
+      "district": "Limburg",
+      "venue": "Sint-Truiden",
+      "city": "Sint-Truiden",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-truiden"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Aalst 1",
+      "city": "Aalst",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Aalst 2",
+      "city": "Aalst",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Beveren-Kruibeke-Zwijndrecht",
+      "city": "Beveren-Kruibeke-Zwijndrecht",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Deinze",
+      "city": "Deinze",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deinze"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Dendermonde",
+      "city": "Dendermonde",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Eeklo",
+      "city": "Eeklo",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eeklo"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent 1",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent 2",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent 3",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent 4",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent 5",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Geraardsbergen",
+      "city": "Geraardsbergen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Hamme",
+      "city": "Hamme",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hamme"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Herzele",
+      "city": "Herzele",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-herzele"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Lokeren",
+      "city": "Lokeren",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lokeren"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Merelbeke-Melle",
+      "city": "Merelbeke-Melle",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Ninove",
+      "city": "Ninove",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ninove"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Oudenaarde",
+      "city": "Oudenaarde",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Sint-Niklaas",
+      "city": "Sint-Niklaas",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-niklaas"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Wetteren",
+      "city": "Wetteren",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-wetteren"
+    },
+    {
+      "type": "peace",
+      "district": "Oost-Vlaanderen",
+      "venue": "Zelzate",
+      "city": "Zelzate",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zelzate"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge I",
+      "city": "Brugge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-i"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge II",
+      "city": "Brugge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-ii"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge III",
+      "city": "Brugge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iii"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge IV",
+      "city": "Brugge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iv"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Ieper",
+      "city": "Ieper",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ieper"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Izegem",
+      "city": "Izegem",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-izegem"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Kortrijk I",
+      "city": "Kortrijk",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-i"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Kortrijk II",
+      "city": "Kortrijk",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-ii"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Menen",
+      "city": "Menen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-menen"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Oostende I",
+      "city": "Oostende",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Oostende II",
+      "city": "Oostende",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Poperinge",
+      "city": "Poperinge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-poperinge"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Roeselare",
+      "city": "Roeselare",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-roeselare"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Tielt",
+      "city": "Tielt",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tielt"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Torhout",
+      "city": "Torhout",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Veurne",
+      "city": "Veurne",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-veurne"
+    },
+    {
+      "type": "peace",
+      "district": "West-Vlaanderen",
+      "venue": "Waregem",
+      "city": "Waregem",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem"
+    },
+    {
+      "type": "police",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "nl",
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel"
+    },
+    {
+      "type": "police",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "type": "police",
+      "district": "Antwerpen",
+      "venue": "Mechelen",
+      "city": "Mechelen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "type": "police",
+      "district": "Antwerpen",
+      "venue": "Turnhout",
+      "city": "Turnhout",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "type": "police",
+      "district": "Halle",
+      "venue": "Halle",
+      "city": "Halle",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-halle"
+    },
+    {
+      "type": "police",
+      "district": "Leuven",
+      "venue": "Leuven",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Beringen",
+      "city": "Beringen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-beringen"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Genk",
+      "city": "Genk",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Hasselt",
+      "city": "Hasselt",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-hasselt"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Maaseik",
+      "city": "Maaseik",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Sint-Truiden",
+      "city": "Sint-Truiden",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden"
+    },
+    {
+      "type": "police",
+      "district": "Limburg",
+      "venue": "Tongeren-Borgloon",
+      "city": "Tongeren-Borgloon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-tongeren-borgloon"
+    },
+    {
+      "type": "police",
+      "district": "Oost-Vlaanderen",
+      "venue": "Aalst",
+      "city": "Aalst",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst"
+    },
+    {
+      "type": "police",
+      "district": "Oost-Vlaanderen",
+      "venue": "Dendermonde",
+      "city": "Dendermonde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde"
+    },
+    {
+      "type": "police",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent"
+    },
+    {
+      "type": "police",
+      "district": "Oost-Vlaanderen",
+      "venue": "Oudenaarde",
+      "city": "Oudenaarde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-oudenaarde"
+    },
+    {
+      "type": "police",
+      "district": "Oost-Vlaanderen",
+      "venue": "Sint-Niklaas",
+      "city": "Sint-Niklaas",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-sint-niklaas"
+    },
+    {
+      "type": "police",
+      "district": "Vilvoorde",
+      "venue": "Vilvoorde",
+      "city": "Vilvoorde",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-vilvoorde"
+    },
+    {
+      "type": "police",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge",
+      "city": "Brugge",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-brugge"
+    },
+    {
+      "type": "police",
+      "district": "West-Vlaanderen",
+      "venue": "Ieper",
+      "city": "Ieper",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-ieper"
+    },
+    {
+      "type": "police",
+      "district": "West-Vlaanderen",
+      "venue": "Kortrijk",
+      "city": "Kortrijk",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-kortrijk"
+    },
+    {
+      "type": "police",
+      "district": "West-Vlaanderen",
+      "venue": "Veurne",
+      "city": "Veurne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-veurne"
+    },
+    {
+      "type": "police",
+      "district": "Eupen",
+      "venue": "Eupen",
+      "city": "Eupen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-eupen"
+    },
+    {
+      "type": "police",
+      "district": "Eupen",
+      "venue": "Saint-Vith",
+      "city": "Saint-Vith",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith"
+    },
+    {
+      "type": "police",
+      "district": "Luik",
+      "venue": "Huy",
+      "city": "Huy",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-huy"
+    },
+    {
+      "type": "police",
+      "district": "Luik",
+      "venue": "Liège",
+      "city": "Liège",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege"
+    },
+    {
+      "type": "police",
+      "district": "Luik",
+      "venue": "Verviers",
+      "city": "Verviers",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers"
+    },
+    {
+      "type": "police",
+      "district": "Namen",
+      "venue": "Dinant",
+      "city": "Dinant",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant"
+    },
+    {
+      "type": "police",
+      "district": "Namen",
+      "venue": "Namur",
+      "city": "Namur",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-namur"
+    },
+    {
+      "type": "police",
+      "district": "Waals-Brabant",
+      "venue": "Nivelles",
+      "city": "Nivelles",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles"
+    },
+    {
+      "type": "police",
+      "district": "Waals-Brabant",
+      "venue": "Wavre",
+      "city": "Wavre",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre"
+    },
+    {
+      "type": "police",
+      "district": "Henegouwen",
+      "venue": "Charleroi",
+      "city": "Charleroi",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi"
+    },
+    {
+      "type": "police",
+      "district": "Henegouwen",
+      "venue": "Mons",
+      "city": "Mons",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-mons"
+    },
+    {
+      "type": "police",
+      "district": "Henegouwen",
+      "venue": "Tournai",
+      "city": "Tournai",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-tournai"
+    },
+    {
+      "type": "police",
+      "district": "Luxemburg",
+      "venue": "Arlon",
+      "city": "Arlon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon"
+    },
+    {
+      "type": "police",
+      "district": "Luxemburg",
+      "venue": "Marche-en-Famenne",
+      "city": "Marche-en-Famenne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-marche-en-famenne"
+    },
+    {
+      "type": "police",
+      "district": "Luxemburg",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-neufchateau"
+    },
+    {
+      "type": "police",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "fr",
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-francophone-de-bruxelles"
+    },
+    {
+      "type": "first_instance",
+      "district": "Eupen",
+      "venue": "Eupen",
+      "city": "Eupen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-deupen"
+    },
+    {
+      "type": "first_instance",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "nl",
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-rechtbank-van-eerste-aanleg-brussel"
+    },
+    {
+      "type": "first_instance",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "type": "first_instance",
+      "district": "Antwerpen",
+      "venue": "Mechelen",
+      "city": "Mechelen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-mechelen"
+    },
+    {
+      "type": "first_instance",
+      "district": "Antwerpen",
+      "venue": "Turnhout",
+      "city": "Turnhout",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-turnhout"
+    },
+    {
+      "type": "first_instance",
+      "district": "Leuven",
+      "venue": "Leuven",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-leuven"
+    },
+    {
+      "type": "first_instance",
+      "district": "Limburg",
+      "venue": "Hasselt",
+      "city": "Hasselt",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt"
+    },
+    {
+      "type": "first_instance",
+      "district": "Limburg",
+      "venue": "Tongeren-Borgloon",
+      "city": "Tongeren-Borgloon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-tongeren-borgloon"
+    },
+    {
+      "type": "first_instance",
+      "district": "Oost-Vlaanderen",
+      "venue": "Dendermonde",
+      "city": "Dendermonde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-dendermonde"
+    },
+    {
+      "type": "first_instance",
+      "district": "Oost-Vlaanderen",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-gent"
+    },
+    {
+      "type": "first_instance",
+      "district": "Oost-Vlaanderen",
+      "venue": "Oudenaarde",
+      "city": "Oudenaarde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-oudenaarde"
+    },
+    {
+      "type": "first_instance",
+      "district": "West-Vlaanderen",
+      "venue": "Brugge",
+      "city": "Brugge",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-brugge"
+    },
+    {
+      "type": "first_instance",
+      "district": "West-Vlaanderen",
+      "venue": "Ieper",
+      "city": "Ieper",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-ieper"
+    },
+    {
+      "type": "first_instance",
+      "district": "West-Vlaanderen",
+      "venue": "Kortrijk",
+      "city": "Kortrijk",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-kortrijk"
+    },
+    {
+      "type": "first_instance",
+      "district": "West-Vlaanderen",
+      "venue": "Veurne",
+      "city": "Veurne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-veurne"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luik",
+      "venue": "Huy",
+      "city": "Huy",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luik",
+      "venue": "Liège",
+      "city": "Liège",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luik",
+      "venue": "Verviers",
+      "city": "Verviers",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-verviers"
+    },
+    {
+      "type": "first_instance",
+      "district": "Namen",
+      "venue": "Dinant",
+      "city": "Dinant",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-dinant"
+    },
+    {
+      "type": "first_instance",
+      "district": "Namen",
+      "venue": "Namur",
+      "city": "Namur",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur"
+    },
+    {
+      "type": "first_instance",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon"
+    },
+    {
+      "type": "first_instance",
+      "district": "Henegouwen",
+      "venue": "Charleroi",
+      "city": "Charleroi",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi"
+    },
+    {
+      "type": "first_instance",
+      "district": "Henegouwen",
+      "venue": "Mons",
+      "city": "Mons",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-mons"
+    },
+    {
+      "type": "first_instance",
+      "district": "Henegouwen",
+      "venue": "Tournai",
+      "city": "Tournai",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luxemburg",
+      "venue": "Arlon",
+      "city": "Arlon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luxemburg",
+      "venue": "Marche-en-Famenne",
+      "city": "Marche-en-Famenne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-marche-en-famenne"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luxemburg",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau"
+    },
+    {
+      "type": "first_instance",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "fr",
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-francophone-de-bruxelles"
+    },
+    {
+      "type": "labour",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "type": "labour",
+      "district": "Antwerpen",
+      "venue": "Hasselt",
+      "city": "Hasselt",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt"
+    },
+    {
+      "type": "labour",
+      "district": "Antwerpen",
+      "venue": "Mechelen",
+      "city": "Mechelen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "type": "labour",
+      "district": "Antwerpen",
+      "venue": "Tongeren-Borgloon",
+      "city": "Tongeren-Borgloon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-tongeren-borgloon"
+    },
+    {
+      "type": "labour",
+      "district": "Antwerpen",
+      "venue": "Turnhout",
+      "city": "Turnhout",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Aalst",
+      "city": "Aalst",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Brugge",
+      "city": "Brugge",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-brugge"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Dendermonde",
+      "city": "Dendermonde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-gent"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Ieper",
+      "city": "Ieper",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-ieper"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Kortrijk",
+      "city": "Kortrijk",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-kortrijk"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Oudenaarde",
+      "city": "Oudenaarde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-oudenaarde"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Roeselare",
+      "city": "Roeselare",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Sint-Niklaas",
+      "city": "Sint-Niklaas",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-sint-niklaas"
+    },
+    {
+      "type": "labour",
+      "district": "Gent",
+      "venue": "Veurne",
+      "city": "Veurne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-veurne"
+    },
+    {
+      "type": "labour",
+      "district": "Leuven",
+      "venue": "Leuven",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-leuven"
+    },
+    {
+      "type": "labour",
+      "district": "Eupen",
+      "venue": "Eupen",
+      "city": "Eupen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-deupen"
+    },
+    {
+      "type": "labour",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "nl",
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-arbeidsrechtbank-brussel"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Arlon",
+      "city": "Arlon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Dinant",
+      "city": "Dinant",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-dinant"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Huy",
+      "city": "Huy",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-huy"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Liège",
+      "city": "Liège",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Marche-en-Famenne",
+      "city": "Marche-en-Famenne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-marche-en-famenne"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Namur",
+      "city": "Namur",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-neufchateau"
+    },
+    {
+      "type": "labour",
+      "district": "Luik",
+      "venue": "Verviers",
+      "city": "Verviers",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-verviers"
+    },
+    {
+      "type": "labour",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Binche",
+      "city": "Binche",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Charleroi",
+      "city": "Charleroi",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "La Louvière",
+      "city": "La Louvière",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Mons",
+      "city": "Mons",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Mouscron",
+      "city": "Mouscron",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Tournai",
+      "city": "Tournai",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-tournai"
+    },
+    {
+      "type": "labour",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "fr",
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-francophone-de-bruxelles"
+    },
+    {
+      "type": "enterprise",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "nl",
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel"
+    },
+    {
+      "type": "enterprise",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "type": "enterprise",
+      "district": "Antwerpen",
+      "venue": "Hasselt",
+      "city": "Hasselt",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt"
+    },
+    {
+      "type": "enterprise",
+      "district": "Antwerpen",
+      "venue": "Mechelen",
+      "city": "Mechelen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "type": "enterprise",
+      "district": "Antwerpen",
+      "venue": "Tongeren-Borgloon",
+      "city": "Tongeren-Borgloon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-tongeren-borgloon"
+    },
+    {
+      "type": "enterprise",
+      "district": "Antwerpen",
+      "venue": "Turnhout",
+      "city": "Turnhout",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Brugge",
+      "city": "Brugge",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-brugge"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Dendermonde",
+      "city": "Dendermonde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Ieper",
+      "city": "Ieper",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-ieper"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Kortrijk",
+      "city": "Kortrijk",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-kortrijk"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Oostende",
+      "city": "Oostende",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Oudenaarde",
+      "city": "Oudenaarde",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oudenaarde"
+    },
+    {
+      "type": "enterprise",
+      "district": "Gent",
+      "venue": "Veurne",
+      "city": "Veurne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-veurne"
+    },
+    {
+      "type": "enterprise",
+      "district": "Leuven",
+      "venue": "Leuven",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-leuven"
+    },
+    {
+      "type": "enterprise",
+      "district": "Eupen",
+      "venue": "Eupen",
+      "city": "Eupen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-deupen"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Arlon",
+      "city": "Arlon",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Dinant",
+      "city": "Dinant",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Huy",
+      "city": "Huy",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Liège",
+      "city": "Liège",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-liege"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Marche-en-Famenne",
+      "city": "Marche-en-Famenne",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Namur",
+      "city": "Namur",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau"
+    },
+    {
+      "type": "enterprise",
+      "district": "Luik",
+      "venue": "Verviers",
+      "city": "Verviers",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-verviers"
+    },
+    {
+      "type": "enterprise",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon"
+    },
+    {
+      "type": "enterprise",
+      "district": "Henegouwen",
+      "venue": "Charleroi",
+      "city": "Charleroi",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi"
+    },
+    {
+      "type": "enterprise",
+      "district": "Henegouwen",
+      "venue": "Mons",
+      "city": "Mons",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-mons"
+    },
+    {
+      "type": "enterprise",
+      "district": "Henegouwen",
+      "venue": "Tournai",
+      "city": "Tournai",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai"
+    },
+    {
+      "type": "enterprise",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": "fr",
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles"
+    },
+    {
+      "type": "appeal",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-brussel"
+    },
+    {
+      "type": "appeal",
+      "district": "Luik",
+      "venue": "Luik",
+      "city": "Luik",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-liege"
+    },
+    {
+      "type": "appeal",
+      "district": "Bergen",
+      "venue": "Bergen",
+      "city": "Bergen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-mons"
+    },
+    {
+      "type": "appeal",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-antwerpen"
+    },
+    {
+      "type": "appeal",
+      "district": "Gent",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-gent"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Antwerpen",
+      "venue": "Hasselt",
+      "city": "Hasselt",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-brussel"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Gent",
+      "venue": "Brugge",
+      "city": "Brugge",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-brugge"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Gent",
+      "venue": "Gent",
+      "city": "Gent",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-gent"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Luik",
+      "venue": "Liège",
+      "city": "Liège",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Luik",
+      "venue": "Namur",
+      "city": "Namur",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Luik",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-neufchateau"
+    },
+    {
+      "type": "labour_appeal",
+      "district": "Bergen",
+      "venue": "Bergen",
+      "city": "Bergen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-mons"
+    },
+    {
+      "type": "assize",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-van-het-administratief-arrondissement-brussel-hoofdstad"
+    },
+    {
+      "type": "assize",
+      "district": "Luik",
+      "venue": "Luik",
+      "city": "Liège",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-liege"
+    },
+    {
+      "type": "assize",
+      "district": "Namen",
+      "venue": "Namen",
+      "city": "Namur",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-namur"
+    },
+    {
+      "type": "assize",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon"
+    },
+    {
+      "type": "assize",
+      "district": "Henegouwen",
+      "venue": "Henegouwen",
+      "city": "Mons",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut"
+    },
+    {
+      "type": "assize",
+      "district": "Luxemburg",
+      "venue": "Luxemburg",
+      "city": "Arlon",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg"
+    },
+    {
+      "type": "assize",
+      "district": "Antwerpen",
+      "venue": "Antwerpen",
+      "city": "Antwerpen",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-antwerpen"
+    },
+    {
+      "type": "assize",
+      "district": "Limburg",
+      "venue": "Limburg",
+      "city": "Tongeren-Borgloon",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-limburg"
+    },
+    {
+      "type": "assize",
+      "district": "Oost-Vlaanderen",
+      "venue": "Oost-Vlaanderen",
+      "city": "Gent",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen"
+    },
+    {
+      "type": "assize",
+      "district": "Vlaams-Brabant",
+      "venue": "Vlaams-Brabant",
+      "city": "Leuven",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant"
+    },
+    {
+      "type": "assize",
+      "district": "West-Vlaanderen",
+      "venue": "West-Vlaanderen",
+      "city": "Brugge",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-west-vlaanderen"
+    },
+    {
+      "type": "cassation",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.courdecassation.be/nl/Acces-Toegang.html"
+    },
+    {
+      "type": "constitutional",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://fr.const-court.be/footer/contacts"
+    },
+    {
+      "type": "state",
+      "district": "Brussel",
+      "venue": "Brussel",
+      "city": "Brussel",
+      "division": false,
+      "language": null,
+      "source": "https://www.raadvst-consetat.be/?lang=nl&page=contact"
+    }
+  ]
+}

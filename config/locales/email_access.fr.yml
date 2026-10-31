@@ -1,0 +1,99 @@
+fr:
+  email_access:
+    link: "Je n’ai pas accès à cette adresse"
+    request:
+      title: "Accès e-mail — LawRelay"
+      heading: "Utilisez une adresse accessible"
+      intro: "Confirmez une adresse professionnelle accessible. Nous vérifierons votre identité via les coordonnées publiques du cabinet."
+      form:
+        legend: "Adresse accessible"
+        current_email: "Adresse de connexion actuelle"
+        new_email: "Adresse e-mail accessible"
+        password: "Mot de passe actuel"
+        hint: "Elle devient votre adresse de connexion. L’accès reste en attente de validation."
+        submit: "Demander une vérification"
+        cancel: "Retour"
+    status:
+      pending:
+        heading: "Vérification e-mail en attente"
+        body: "Nous vérifions votre identité."
+        confirm_first: "Confirmez d’abord votre nouvelle adresse. Nous vérifierons ensuite votre identité."
+      approved:
+        heading: "Vérification e-mail approuvée"
+        body: "Votre adresse accessible a été approuvée."
+      rejected:
+        heading: "Vérification e-mail non approuvée"
+        body: "Nous n’avons pas pu confirmer votre identité. Contactez info@lawrelay.be ou faites une nouvelle demande."
+      changed:
+        heading: "Nouvelle vérification nécessaire"
+        body: "Vos coordonnées ont changé. Demandez une nouvelle vérification."
+      try_again: "Demander une nouvelle vérification"
+    admin:
+      title: "Vérifications e-mail"
+      intro: "Demandes pour utiliser une autre adresse que celle de l’annuaire."
+      empty: "Aucune vérification e-mail en attente"
+      review: "Vérifier l’e-mail"
+      back: "Toutes les vérifications e-mail"
+      details: "Données du compte"
+      name: "Nom"
+      company: "Entreprise"
+      working_email: "Adresse accessible"
+      directory_email: "Adresse sur advocaat.be"
+      email_state: "Adresse accessible confirmée"
+      directory_state: "Correspondance avec l’annuaire"
+      state: "Vérification"
+      requested_at: "Demandée le"
+      note: "Note de vérification"
+      note_hint: "Par exemple : appel au numéro publié sur le site du cabinet."
+      identity_hint: "Vérifiez l’identité via des coordonnées du cabinet publiées indépendamment."
+      identity_checked: "J’ai vérifié l’identité via des coordonnées publiées indépendamment."
+      not_ready: "L’approbation nécessite une adresse confirmée, une correspondance actuelle et un compte sans restriction."
+      approve: "Approuver"
+      reject: "Refuser"
+      decision: "Décision"
+      no_request: "Aucune vérification e-mail demandée."
+      use_review: "Examinez la demande e-mail avant d’approuver ce compte."
+      states:
+        pending: "En attente"
+        approved: "Approuvée"
+        rejected: "Non approuvée"
+        changed: "Nouvelle vérification nécessaire"
+      directory:
+        matched: "Correspondance trouvée"
+        pending: "En attente"
+    notices:
+      requested: "Vérification demandée. Confirmez votre adresse si ce n’est pas encore fait."
+      approved: "Vérification e-mail approuvée."
+      rejected: "Vérification e-mail refusée."
+    errors:
+      password: "Votre mot de passe actuel est incorrect."
+      unchanged: "Saisissez une autre adresse e-mail."
+      unavailable: "Cette demande n’est pas disponible pour votre compte."
+      rate_limited: "Patientez avant de réessayer."
+      incomplete: "Des données professionnelles manquent à ce compte."
+      directory_required: "Un profil correspondant sur advocaat.be est d’abord nécessaire."
+      email_unconfirmed: "Le membre doit d’abord confirmer l’adresse accessible."
+      identity_required: "Confirmez que vous avez vérifié l’identité."
+      note_required: "Ajoutez une courte note de vérification."
+      stale: "Le compte a changé. Rechargez et vérifiez à nouveau."
+      invalid_decision: "Choisissez approuver ou refuser."
+      claimed: "Ce profil est déjà lié à un autre compte."
+      already_reviewed: "Cette demande a déjà été examinée."
+      review_required: "Examinez d’abord la demande e-mail."
+      protected: "Un compte suspendu ou refusé ne peut pas être approuvé ici."
+    mailer:
+      subject:
+        approved: "Votre vérification e-mail LawRelay est approuvée"
+        rejected: "Votre vérification e-mail LawRelay"
+      heading: "Bonjour %{name},"
+      body:
+        approved: "Votre vérification e-mail est approuvée. Vous pouvez vous connecter à LawRelay."
+        rejected: "Nous n’avons pas pu approuver votre vérification e-mail. Contactez info@lawrelay.be si vous avez besoin d’aide."
+      action: "Ouvrir LawRelay"
+  admin:
+    users:
+      audit:
+        actions:
+          email_access_requested: "Vérification e-mail demandée"
+          email_access_approved: "Vérification e-mail approuvée"
+          email_access_rejected: "Vérification e-mail refusée"

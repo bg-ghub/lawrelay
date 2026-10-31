@@ -1,0 +1,56 @@
+<% content_for :title, t("email_access.admin.title") %>
+<% approval_ready = @user.email_verified? && @profile.email_review_directory_ready? && @profile.email_review_pending? && @user.active? && !@profile.verification_status.in?(%w[rejected suspended]) && @firm && !@firm.verification_status.in?(%w[rejected suspended]) %>
+<% review_state = @profile.email_review_status == "approved" && !@profile.email_review_approved? ? "changed" : @profile.email_review_status %>
+<div class="dashboard-page shell admin-users-page">
+  <div class="dashboard-heading">
+    <div><h1><%= t("email_access.admin.title") %></h1><p><%= link_to @user.full_name, admin_user_path(@user), class: "text-link" %></p></div>
+    <%= link_to t("email_access.admin.back"), admin_email_reviews_path, class: "button button--ghost" %>
+  </div>
+
+  <% if @errors.present? %>
+    <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><ul><% @errors.each do |message| %><li><%= message %></li><% end %></ul></div>
+  <% end %>
+
+  <div class="admin-user-detail-grid">
+    <section class="dashboard-panel">
+      <h2><%= t("email_access.admin.details") %></h2>
+      <dl class="detail-facts">
+        <div><dt><%= t("email_access.admin.name") %></dt><dd><%= @user.full_name %></dd></div>
+        <div><dt><%= t("email_access.admin.company") %></dt><dd><%= @firm&.name || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("admin.users.fields.status") %></dt><dd><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></dd></div>
+        <div><dt><%= t("admin.users.fields.lawyer_status") %></dt><dd><%= t("admin.users.verification.#{@profile.verification_status}") %></dd></div>
+        <div><dt><%= t("admin.users.fields.firm_status") %></dt><dd><%= @firm ? t("admin.users.verification.#{@firm.verification_status}") : t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("email_access.admin.working_email") %></dt><dd><%= @user.email_address %></dd></div>
+        <div><dt><%= t("email_access.admin.directory_email") %></dt><dd><%= @profile.directory_email.presence || t("admin.users.not_recorded") %></dd></div>
+        <div><dt><%= t("email_access.admin.email_state") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
+        <div><dt><%= t("email_access.admin.directory_state") %></dt><dd><%= t("email_access.admin.directory.#{@profile.email_review_directory_ready? ? 'matched' : 'pending'}") %></dd></div>
+        <div><dt><%= t("email_access.admin.state") %></dt><dd><%= review_state ? t("email_access.admin.states.#{review_state}") : "—" %></dd></div>
+        <div><dt><%= t("email_access.admin.requested_at") %></dt><dd><%= @profile.email_review_requested_at ? l(@profile.email_review_requested_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") : "—" %></dd></div>
+      </dl>
+      <% directory_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(@profile.directory_profile_url) %>
+      <% if directory_url %><p><%= link_to t("admin.users.actions.directory"), directory_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><% end %>
+    </section>
+
+    <section class="dashboard-panel">
+      <% if @profile.email_review_pending? %>
+        <h2><%= t("email_access.admin.review") %></h2>
+        <p><%= t("email_access.admin.identity_hint") %></p>
+        <% unless approval_ready %><p class="field-hint"><%= t("email_access.admin.not_ready") %></p><% end %>
+        <%= form_with url: admin_email_review_path(@user), method: :patch, scope: :email_review, class: "assignment-form" do |form| %>
+          <%= form.hidden_field :identity_digest, value: @profile.email_review_current_identity_digest %>
+          <div class="field-group"><%= form.label :note, t("email_access.admin.note") %><%= form.text_area :note, value: params.dig(:email_review, :note), required: true, rows: 3, maxlength: 2_000, placeholder: t("email_access.admin.note_hint") %></div>
+          <div class="field-group"><label class="toggle-row"><%= form.check_box :identity_checked, required: true %><span><%= t("email_access.admin.identity_checked") %></span></label></div>
+          <div class="form-actions">
+            <%= form.button t("email_access.admin.reject"), name: "decision", value: "reject", formnovalidate: true, class: "button button--ghost" %>
+            <%= form.button t("email_access.admin.approve"), name: "decision", value: "approve", disabled: !approval_ready, class: "button button--dark" %>
+          </div>
+        <% end %>
+      <% else %>
+        <h2><%= t("email_access.admin.decision") %></h2>
+        <p><%= review_state ? t("email_access.admin.states.#{review_state}") : t("email_access.admin.no_request") %></p>
+        <% if @profile.email_reviewed_at %><p><time datetime="<%= @profile.email_reviewed_at.iso8601 %>"><%= l(@profile.email_reviewed_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></p><% end %>
+        <% if @profile.email_review_note.present? %><p><%= @profile.email_review_note %></p><% end %>
+      <% end %>
+    </section>
+  </div>
+</div>

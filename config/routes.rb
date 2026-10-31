@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     resource :verification_status, only: %i[show create], controller: "verification_status" do
       post :retry_directory
     end
+    get "verification/email-access", to: "email_access_requests#new", as: :email_access_request
+    post "verification/email-access", to: "email_access_requests#create"
     resource :settings, only: %i[show update]
     resource :account_deletion, path: "settings/delete-account", only: %i[show destroy]
     resource :two_factor_authentication, path: "settings/two-factor", only: %i[show destroy] do
@@ -72,6 +74,7 @@ Rails.application.routes.draw do
       get "mfa/challenge", to: "mfa#challenge", as: :mfa_challenge
       post "mfa/challenge", to: "mfa#verify"
       resources :verifications, only: %i[index update]
+      resources :email_reviews, path: "email-reviews", only: %i[index show update]
       resources :founding_accesses, param: :firm_id, only: %i[index create destroy]
       resources :reports, only: %i[index update]
       resources :privacy_requests, only: %i[index update]

@@ -53,6 +53,12 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     own_proposal_assignment.update_columns(status: "completed", starts_at: 1.day.ago, closed_at: Time.current)
     @user.sessions.create!
     @user.update!(two_factor_secret_ciphertext: "synthetic-secret", two_factor_recovery_code_digests: [ "synthetic-hash" ])
+    profile_id = @member.profile.id
+    @member.profile.update_columns(email_review_status: "approved", email_review_email_address: @user.email_address,
+      email_review_requested_at: 2.hours.ago, email_reviewed_at: 1.hour.ago, email_reviewed_by_user_id: @admin.id,
+      email_review_note: "Private identity review", email_review_identity_digest: "private-review-digest")
+    review_event = AuditEvent.create!(auditable: @member.profile, actor_user: @admin, firm: @member.firm,
+      action: "email_access.approved", metadata: { note: "Private independent contact evidence" })
     old_email = @user.email_address
     old_password = @user.password_digest
     AuditEvent.create!(auditable: assignment, actor_user: @user, action: "assignment.created", metadata: { name: "Private name" })
@@ -64,6 +70,8 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     assert_not_equal old_email, @user.email_address
     assert_not_equal old_password, @user.password_digest
     assert_nil @user.lawyer_profile
+    assert_not LawyerProfile.exists?(profile_id)
+    assert_equal({}, review_event.reload.metadata)
     assert_empty @user.sessions
     assert_empty @user.memberships
     assert_empty @user.notifications

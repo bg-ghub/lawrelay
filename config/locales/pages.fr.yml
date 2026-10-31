@@ -42,11 +42,11 @@ fr:
           heading: "1. Qui est responsable du traitement"
           paragraphs:
             - "L'exploitant de LawRelay indiqué ci-dessus est responsable du traitement."
-            - "Questions de confidentialité et demandes d’exercice de droits : privacy@lawrelay.be. Nous comparons votre nom et votre e-mail professionnel à votre profil public sur advocaat.be. La vérification du profil et de l’e-mail est nécessaire pour accéder aux missions. Demandez à support@lawrelay.be de réexaminer un contrôle qui a échoué."
+            - "Questions de confidentialité et demandes d’exercice de droits : privacy@lawrelay.be. Nous comparons votre nom et votre e-mail professionnel à advocaat.be et confirmons votre e-mail. Si l’adresse publiée est inaccessible, un administrateur peut examiner une autre adresse confirmée à l’aide de coordonnées professionnelles indépendantes."
         scope:
           heading: "2. Données traitées"
           bullets:
-            - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d'authentification."
+            - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d’authentification. Les demandes de changement d’adresse, décisions et notes de contrôle sont conservées avec votre profil professionnel."
             - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
             - "Données professionnelles et de facturation : profil officiel, nom et e-mail publiés, nom de l’entreprise, numéro d’entreprise/TVA, coordonnées et statut de vérification professionnelle. Si vous lancez vous-même une recherche via le registre public officiel de la BCE, nous conservons les données de facturation renvoyées (nom, numéro et, si disponible, adresse du siège) et la date des données de la BCE."
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
@@ -102,7 +102,7 @@ fr:
         eligibility:
           heading: "2. Accès et vérification"
           paragraphs:
-            - "L'inscription est ouverte aux avocats repris dans l'annuaire officiel advocaat.be. L'accès à la plateforme suit une vérification dans cet annuaire. Les utilisateurs fournissent des données professionnelles exactes, les actualisent, protègent leur accès et signalent immédiatement toute compromission. La vérification n'est ni une recommandation ni une garantie de compétence."
+            - "L’inscription est ouverte aux avocats repris sur advocaat.be. L’accès exige la vérification du profil et de l’e-mail. Si l’adresse publiée est inaccessible, un administrateur examine votre identité et votre nouvelle adresse confirmée. Les utilisateurs actualisent leurs données professionnelles, protègent leur accès et signalent tout abus. La vérification n’est ni une recommandation ni une garantie de compétence."
         role:
           heading: "3. Rôle de LawRelay"
           paragraphs:

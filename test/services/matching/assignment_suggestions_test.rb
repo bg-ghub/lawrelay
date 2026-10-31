@@ -60,4 +60,31 @@ class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
 
     assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
   end
+
+  test "matches expanded practice areas across all supported interface languages" do
+    candidate = create_marketplace_account(prefix: "taxcandidate")
+    candidate.profile.update!(practice_areas: [ "Droit fiscal" ], court_preferences: [])
+    owner = create_marketplace_account(prefix: "taxowner")
+    assignment = create_assignment_for(owner, title: "Tax assignment")
+    unrelated = create_assignment_for(owner, title: "Criminal assignment")
+    unrelated.update!(practice_area: "Criminal law")
+
+    I18n.available_locales.each do |locale|
+      assignment.update!(practice_area: I18n.t("marketplace.practice_areas.tax", locale: locale))
+      suggestions = Matching::AssignmentSuggestions.new(user: candidate.user).call
+
+      assert_includes suggestions, assignment, "Tax area should match in #{locale}"
+      assert_not_includes suggestions, unrelated
+    end
+  end
+
+  test "keeps historical practice area synonyms when using current labels" do
+    candidate = create_marketplace_account(prefix: "corporatecandidate")
+    candidate.profile.update!(practice_areas: [ "Vennootschapsrecht" ], court_preferences: [])
+    owner = create_marketplace_account(prefix: "corporateowner")
+    assignment = create_assignment_for(owner, title: "Company assignment")
+    assignment.update!(practice_area: "Corporate law")
+
+    assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+  end
 end
