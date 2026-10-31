@@ -1,6 +1,38 @@
 module ApplicationHelper
   SOCIAL_LOCALES = { nl: "nl_BE", fr: "fr_BE", de: "de_BE", en: "en_GB" }.freeze
 
+  def searchable_select(form, method, choices, options = {}, html_options = {})
+    tag.div(class: "searchable-select", data: {
+      controller: "searchable-select",
+      searchable_select_placeholder_value: t("searchable_select.placeholder"),
+      searchable_select_empty_value: t("searchable_select.empty"),
+      searchable_select_choose_value: t("searchable_select.choose"),
+      searchable_select_count_value: t("searchable_select.results", number: "%{count}")
+    }) do
+      form.select(method, choices, options, html_options.deep_merge(data: { searchable_select_target: "source" }))
+    end
+  end
+
+  def assignment_practice_area_choice(assignment)
+    return Assignment::OTHER_CHOICE unless assignment.practice_area_other.nil?
+    return if assignment.practice_area.blank?
+
+    key = I18n.available_locales.filter_map do |locale|
+      I18n.t("marketplace.practice_areas", locale:).key(assignment.practice_area)
+    end.first
+    return Assignment::OTHER_CHOICE if key.nil? || key.to_s == "other"
+
+    t("marketplace.practice_areas.#{key}")
+  end
+
+  def assignment_practice_area_other_value(assignment)
+    return assignment.practice_area_other unless assignment.practice_area_other.nil?
+    return unless assignment_practice_area_choice(assignment) == Assignment::OTHER_CHOICE
+    return if I18n.available_locales.any? { |locale| I18n.t("marketplace.practice_areas.other", locale:) == assignment.practice_area }
+
+    assignment.practice_area
+  end
+
   def platform_billing_enabled?
     ENV.fetch("LAWRELAY_RELEASE_MODE", "beta") == "paid"
   end

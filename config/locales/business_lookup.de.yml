@@ -12,7 +12,7 @@ de:
     stale: "Ihre Angaben haben sich geändert. Suchen Sie erneut."
     source: "ZDU · %{date}"
     fields:
-      name: "Name"
+      name: "Unternehmensname"
       enterprise_number: "Unternehmensnummer"
       address_line_1: "Adresse"
       postal_code: "Postleitzahl"

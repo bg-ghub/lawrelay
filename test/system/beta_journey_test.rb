@@ -198,12 +198,14 @@ class BetaJourneyTest < ApplicationSystemTestCase
     visit new_assignment_path(locale: :en)
     fill_in "assignment_title", with: title
     fill_in "assignment_description", with: "Court cover request without client or case details."
-    find("#assignment_practice_area").find("option", text: "Commercial law").select_option
-    find("#assignment_court_subtype").find("option[value='hearing']").select_option
+    choose_searchable_option("assignment_practice_area", label: "Commercial law")
+    choose_searchable_option("assignment_court_subtype", value: "hearing")
     set_datetime("assignment_response_deadline_at", 2.days.from_now)
     set_datetime("assignment_hearing_at", 3.days.from_now)
     fill_in "assignment_duration_minutes", with: "60"
-    fill_in "assignment_court", with: "Synthetic court"
+    find("#assignment_court").click
+    find("#assignment-court-options [role='option'][data-other='true']").click
+    fill_in "assignment_court_other", with: "Synthetic court"
     fill_in "assignment_city", with: "Brussels"
     fill_in "assignment_invoice_address_line_1", with: "Test Street 1"
     fill_in "assignment_invoice_postal_code", with: "1000"

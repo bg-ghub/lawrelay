@@ -1,5 +1,11 @@
 # Beta operations checks
 
+## 31 October 2026 — 0.16.0 form controls
+
+All 13 form dropdowns accept partial typing. Focused browser checks cover native fallback, keyboard selection, invalid queries, reset, Turbo navigation, language switching and actual scrollbar dragging. Court and legal-area Other choices reveal custom fields; backend and browser checks confirm validation, retained input and saved custom names. Listed courts fill their hidden location. KBO attribution now names the company field explicitly.
+
+Four-language production rendering and internal lint/security checks passed. The directory-retry browser check now waits for the actual queued-response message, fixing a timing failure seen after the preceding merge. CI repeats the full Rails and Chrome suites; no customer account or service was changed by these tests.
+
 ## 31 October 2026 — 0.15.0 email access and assignments
 
 Synthetic browser checks covered a confirmed alternative email, MFA-protected administrator approval, gated marketplace access, court search/selection and four-language mobile layouts. Internal review found no access bypass. Privacy exports and erasure include the review state; internal identity notes stay private.

@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-10-31
+
+### Added
+
+- Filter dropdowns by typing across member and admin forms, with keyboard selection and native fallback.
+- Choose Other to enter a custom court or legal area.
+
+### Fixed
+
+- Keep court dropdowns open while dragging their scrollbar.
+- Fill the court's location without a redundant visible field; manual venues can still specify a location.
+
 ## [0.15.0] - 2026-10-31
 
 ### Added

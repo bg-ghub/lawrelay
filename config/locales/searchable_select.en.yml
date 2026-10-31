@@ -1,0 +1,6 @@
+en:
+  searchable_select:
+    placeholder: "Type to search"
+    empty: "No options found."
+    choose: "Choose an option from the list."
+    results: "%{number} options"
