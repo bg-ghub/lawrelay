@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 31 October 2026. Current release: 0.15.0.
+Reviewed 31 October 2026. Current release: 0.16.0.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
@@ -14,7 +14,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Confirmed alternative email requests, MFA-protected admin identity review and localized decision emails through the existing mail service.
 - [x] Self-service member account deletion from the profile, with password confirmation and existing retention/hold safeguards.
 - [x] Assignment/proposal flows, optional indicative rates, profile-import preview and [localized notifications with retries/history](ops/notifications.md).
-- [x] Expanded legal areas, searchable Belgian courts with locations and a Peppol reminder beside invoice details.
+- [x] Expanded legal areas, searchable dropdowns across forms, Belgian courts with automatic locations and a Peppol reminder beside invoice details.
 - [x] Separate professional/billing details, validated enterprise numbers, [KBO billing preview](ops/kbo-lookup.md) and an invoice recipient per assignment with private contact sharing.
 - [x] Internal security fixes, translation checks, keyboard/responsive/axe checks and Chrome/Edge/Firefox journeys. See [QA](ops/beta-thorough-qa.md), [dated evidence](ops/beta-ops-checks.md) and [CI](https://github.com/bg-ghub/lawrelay/actions/workflows/ci.yml).
 - [x] Backups, isolated restore/compatible-image drills, HTTPS/readiness/queue probes and owner alerts. [Operations evidence](ops/beta-ops-checks.md).

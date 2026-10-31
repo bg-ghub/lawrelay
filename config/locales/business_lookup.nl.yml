@@ -12,7 +12,7 @@ nl:
     stale: "Je gegevens zijn gewijzigd. Zoek opnieuw op."
     source: "KBO · %{date}"
     fields:
-      name: "naam"
+      name: "ondernemingsnaam"
       enterprise_number: "ondernemingsnummer"
       address_line_1: "adres"
       postal_code: "postcode"

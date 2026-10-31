@@ -69,7 +69,7 @@
             <div class="field-group"><%= form.label :last_name, t("admin.users.fields.last_name") %><%= form.text_field :last_name, required: true, maxlength: 100, autocomplete: "off", aria: { invalid: @user.errors.include?(:last_name), describedby: @user.errors.include?(:last_name) ? "admin-user-errors" : "identity-change-hint" } %></div>
           </div>
           <div class="field-group"><%= form.label :email_address, t("admin.users.fields.email_address") %><%= form.email_field :email_address, required: true, autocomplete: "off", aria: { invalid: @user.errors.include?(:email_address), describedby: @user.errors.include?(:email_address) ? "admin-user-errors identity-change-hint" : "identity-change-hint" } %></div>
-          <div class="field-group"><%= form.label :locale, t("admin.users.fields.locale") %><%= form.select :locale, [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], {}, aria: { invalid: @user.errors.include?(:locale), describedby: @user.errors.include?(:locale) ? "admin-user-errors" : nil } %></div>
+          <div class="field-group"><%= form.label :locale, t("admin.users.fields.locale") %><%= searchable_select form, :locale, [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], {}, aria: { invalid: @user.errors.include?(:locale), describedby: @user.errors.include?(:locale) ? "admin-user-errors" : nil } %></div>
           <p id="identity-change-hint" class="field-hint"><%= t("admin.users.show.identity_hint") %></p>
           <div class="form-actions"><%= form.submit t("admin.users.actions.save"), class: "button button--dark" %></div>
         <% end %>

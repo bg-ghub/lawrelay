@@ -40,12 +40,14 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     visit new_assignment_path(locale: :en)
     fill_in "assignment_title", with: "System-test court cover"
     fill_in "assignment_description", with: "A safe summary without client or matter information."
-    find("#assignment_practice_area").find("option", text: "Commercial law").select_option
-    find("#assignment_court_subtype").find("option[value='hearing']").select_option
+    choose_searchable_option("assignment_practice_area", label: "Commercial law")
+    choose_searchable_option("assignment_court_subtype", value: "hearing")
     set_datetime("assignment_response_deadline_at", 2.days.from_now)
     set_datetime("assignment_hearing_at", 3.days.from_now)
     fill_in "assignment_duration_minutes", with: "60"
-    fill_in "assignment_court", with: "Enterprise Court"
+    find("#assignment_court").click
+    find("#assignment-court-options [role='option'][data-other='true']").click
+    fill_in "assignment_court_other", with: "Enterprise Court"
     fill_in "assignment_city", with: "Brussels"
     assert_field "assignment_invoice_name", with: account.firm.name
     fill_in "assignment_invoice_name", with: "Firm receiving this invoice"

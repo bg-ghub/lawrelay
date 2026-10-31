@@ -12,7 +12,7 @@ fr:
     stale: "Vos données ont changé. Relancez la recherche."
     source: "BCE · %{date}"
     fields:
-      name: "nom"
+      name: "nom de l’entreprise"
       enterprise_number: "numéro d’entreprise"
       address_line_1: "adresse"
       postal_code: "code postal"

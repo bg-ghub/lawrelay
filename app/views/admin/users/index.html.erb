@@ -15,11 +15,11 @@
       </div>
       <div class="field-group">
         <%= form.label :status, t("admin.users.filters.status") %>
-        <%= form.select :status, [[t("admin.users.filters.all"), ""], [t("admin.users.status.active"), "active"], [t("admin.users.status.suspended"), "suspended"]], selected: @status_filter %>
+        <%= searchable_select form, :status, [[t("admin.users.filters.all"), ""], [t("admin.users.status.active"), "active"], [t("admin.users.status.suspended"), "suspended"]], selected: @status_filter %>
       </div>
       <div class="field-group">
         <%= form.label :verification, t("admin.users.filters.verification") %>
-        <%= form.select :verification, [[t("admin.users.filters.all"), ""], *%w[pending verified rejected suspended].map { |status| [t("admin.users.verification.#{status}"), status] }], selected: @verification_filter %>
+        <%= searchable_select form, :verification, [[t("admin.users.filters.all"), ""], *%w[pending verified rejected suspended].map { |status| [t("admin.users.verification.#{status}"), status] }], selected: @verification_filter %>
       </div>
       <div class="admin-users-filter-actions">
         <%= form.submit t("admin.users.filters.apply"), class: "button button--dark" %>

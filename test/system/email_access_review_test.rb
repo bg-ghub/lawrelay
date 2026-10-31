@@ -151,6 +151,7 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
 
     perform_enqueued_jobs do
       click_button I18n.t("directory_onboarding.status.retry", locale: :en)
+      assert_text I18n.t("directory_onboarding.status.retry_queued", locale: :en)
       assert_current_path verification_status_path(locale: :en)
     end
     visit verification_status_path(locale: :en)

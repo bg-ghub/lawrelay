@@ -1,9 +1,12 @@
 nl:
   court_picker:
     placeholder: "Zoek een rechtbank of plaats"
-    hint: "Andere locatie? Vul die zelf in."
+    hint: "Niet in de lijst? Kies Andere."
     result_count: "%{number} resultaten"
-    no_results: "Geen resultaat. Vul de rechtbank of locatie en plaats zelf in."
+    no_results: "Geen resultaat. Kies Andere om een locatie in te vullen."
+    other: "Andere"
+    other_label: "Andere rechtbank of instantie"
+    choose: "Kies een rechtbank of Andere."
     division: "afdeling"
     first_canton: "eerste kanton"
     second_canton: "tweede kanton"
