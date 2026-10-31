@@ -35,6 +35,7 @@ module Privacy
           created_assignments: user.created_assignments.count,
           proposals: user.proposals.count,
           notifications: user.notifications.count,
+          professional_status_checks: user.lawyer_profile ? RegistryStatusCheck.where(lawyer_profile: user.lawyer_profile).count : 0,
           sessions: user.sessions.count,
           privacy_requests: user.privacy_requests.count,
           submitted_reports: user.submitted_reports.count,

@@ -1,5 +1,7 @@
 # Assignment notifications
 
+Solid Queue runs KBO/directory checks daily at 05:00 UTC on the existing server. New issues produce one operator summary through Migadu and appear under Registry checks in admin. Lookup outages never count as confirmed inactivity, and monitoring does not suspend accounts. Summary delivery has durable retries and is covered by generic operations health.
+
 | Event | Recipient |
 | --- | --- |
 | New response | Assignment creator |

@@ -56,6 +56,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+Releases before `0.18.0` do not run daily registry checks or deliver their alerts. After enabling this feature, prefer a compatible forward fix and review pending registry jobs before any application downgrade.
+
 From `0.17.0`, every user has a non-null public UUID. Earlier images do not generate it when creating users, so they are not compatible with the migrated database for normal traffic. Prefer a forward fix that preserves UUID URLs. A schema reversal removes those identifiers and breaks new bookmarks; test it only on an isolated restore and assess the impact before any production recovery.
 
 Releases before `0.15.0` do not enforce email-access review decisions or process their decision emails. Once this flow is used, recover with a compatible build that preserves the review gate and pending jobs.

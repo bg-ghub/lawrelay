@@ -1,0 +1,15 @@
+---
+de:
+  admin:
+    users:
+      verification_delivery:
+        action: Bestätigungsmail erneut senden
+        directory_pending_hint: Die Profilprüfung steht noch aus.
+        queued: Bestätigungsmail angefordert.
+        queued_directory_pending: Bestätigungsmail angefordert. Die Profilprüfung steht noch aus.
+        unavailable: Anfrage fehlgeschlagen. Versuchen Sie es später erneut.
+        ineligible: Für dieses Konto kann keine Bestätigungsmail erneut gesendet werden.
+        throttled: Höchstens 3 Mal pro Viertelstunde.
+      audit:
+        actions:
+          user_verification_resent: Erneuter Bestätigungsversand angefordert

@@ -61,6 +61,10 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
       action: "email_access.approved", metadata: { note: "Private independent contact evidence" })
     old_email = @user.email_address
     old_password = @user.password_digest
+    registry_check = RegistryStatusCheck.create!(source: "directory", target_digest: SecureRandom.hex(32),
+      identity_digest: SecureRandom.hex(32), lawyer_profile: @member.profile, status: "not_listed")
+    registry_run = RegistryStatusRun.create!(run_on: Date.current, status: "completed", completed_at: Time.current,
+      findings: [ registry_check.finding_snapshot ], alert_status: "pending")
     AuditEvent.create!(auditable: assignment, actor_user: @user, action: "assignment.created", metadata: { name: "Private name" })
 
     assert_no_enqueued_emails { erase }
@@ -71,6 +75,9 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     assert_not_equal old_password, @user.password_digest
     assert_nil @user.lawyer_profile
     assert_not LawyerProfile.exists?(profile_id)
+    assert_not RegistryStatusCheck.exists?(registry_check.id)
+    assert_empty registry_run.reload.findings
+    assert_nil registry_run.alert_status
     assert_equal({}, review_event.reload.metadata)
     assert_empty @user.sessions
     assert_empty @user.memberships

@@ -1,0 +1,56 @@
+nl:
+  registry_status:
+    title: "Registercontroles"
+    intro: "Dagelijkse controle van KBO en advocaat.be."
+    back: "Terug naar leden"
+    latest_run: "Laatste dagelijkse controle"
+    run_date: "Controledatum"
+    result: "Laatste resultaat"
+    completed_at: "Voltooid"
+    checked_count: "Gecontroleerde bronnen"
+    not_yet: "Nog niet"
+    empty_title: "Nog geen dagelijkse controles"
+    empty_body: "Resultaten verschijnen na de eerste geplande servercontrole."
+    checks: "Registercontroles van huidige leden"
+    checked_at: "Laatste poging"
+    last_definitive: "Laatste bevestigde resultaat"
+    issue: "Beoordeling nodig"
+    since: "sinds %{time}"
+    resolved_at: "Bevinding opgelost"
+    members: "Leden"
+    sources:
+      kbo: "KBO-ondernemingsregister"
+      directory: "advocaat.be-advocatengids"
+    runs:
+      pending: "Gepland"
+      running: "Bezig"
+      completed: "Voltooid"
+    statuses:
+      kbo:
+        pending: "Wacht op eerste controle"
+        ok: "Actieve onderneming"
+        active: "Actieve onderneming"
+        inactive: "Inactieve onderneming"
+        not_found: "Onderneming niet gevonden; status onbevestigd"
+        invalid: "Ongeldig opgeslagen ondernemingsnummer; status onbevestigd"
+        unavailable: "Bron onbereikbaar; ondernemingsstatus onbevestigd"
+      directory:
+        pending: "Wacht op eerste controle"
+        active: "Beroepsprofiel bevestigd"
+        not_listed: "Profiel niet meer vermeld"
+        changed: "Beroepsgegevens gewijzigd"
+        unavailable: "Bron onbereikbaar; beroepsstatus onbevestigd"
+    issues:
+      kbo:
+        inactive: "De onderneming is inactief in de KBO. Beoordeel de ledenaccount."
+      directory:
+        not_listed: "Het opgeslagen profiel is niet meer vermeld. Beoordeel de ledenaccount."
+        changed: "De identiteit op het opgeslagen profiel stemt niet meer overeen. Beoordeel de ledenaccount."
+    mailer:
+      subject:
+        one: "LawRelay: 1 nieuwe registermelding"
+        other: "LawRelay: %{count} nieuwe registermeldingen"
+      body:
+        one: "Er is 1 nieuwe melding bij de dagelijkse controle."
+        other: "Er zijn %{count} nieuwe meldingen bij de dagelijkse controle."
+      review: "Bekijk in beheer"

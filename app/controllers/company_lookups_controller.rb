@@ -20,7 +20,7 @@ class CompanyLookupsController < ApplicationController
         source_date: result.snapshot_date.iso8601,
         source_label: helpers.business_lookup_source_label(snapshot_date: result.snapshot_date, fields: result.attributes.keys) }
     else
-      status = { invalid: :unprocessable_content, not_found: :not_found }.fetch(result.status, :service_unavailable)
+      status = { invalid: :unprocessable_content, inactive: :unprocessable_content, not_found: :not_found }.fetch(result.status, :service_unavailable)
       render json: { status: result.status, message: I18n.t("business_lookup.#{result.status}") }, status:
     end
   end

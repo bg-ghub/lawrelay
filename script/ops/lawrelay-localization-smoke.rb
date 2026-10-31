@@ -162,7 +162,7 @@ mfa_challenge.post("/nl/admin/mfa/challenge", params: { authenticity_token: csrf
 check(mfa_challenge.response.redirect?, "MFA challenge accepts a current TOTP")
 
 LOCALES.each do |locale|
-  [ "/admin/users", "/admin/users/#{member.to_param}", "/admin/verifications", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
+  [ "/admin/users", "/admin/users/#{member.to_param}", "/admin/registry-status", "/admin/verifications", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
     visit(mfa_challenge, "/#{locale}#{suffix}")
   end
   if ENV["LAWRELAY_RELEASE_MODE"] == "paid"
@@ -307,6 +307,35 @@ end
       check(!body.include?(profile.email_review_note), "#{locale} email review #{status} keeps internal notes private")
     end
   end
+end
+
+target = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == profile.id }
+check(target.present?, "synthetic directory target is available")
+registry_check = RegistryStatusCheck.new(source: "directory", target_digest: target.digest, lawyer_profile: profile)
+registry_check.record_result!(outcome: "not_listed", checked_at: Time.current, run_on: Date.current, identity_digest: target.identity_digest)
+registry_run = RegistryStatusRun.create!(run_on: Date.current, status: "completed", completed_at: Time.current,
+  findings: [ registry_check.finding_snapshot ])
+LOCALES.each do |locale|
+  admin.update!(locale:)
+  visit(mfa_challenge, "/#{locale}/admin/registry-status")
+  message = RegistryStatusMailer.daily_alert(registry_run).message
+  check(message.html_part.present? && message.text_part.present?, "#{locale} registry summary has both bodies")
+  [ message.html_part, message.text_part ].each do |part|
+    body = part.decoded
+    check(body.include?("/#{locale}/admin/registry-status") && !body.match?(/translation missing/i), "#{locale} registry summary is localized")
+    check(!body.include?(member.email_address) && !body.include?(profile.directory_email), "#{locale} registry summary keeps member addresses private")
+  end
+end
+
+member.update!(email_verified_at: nil)
+profile.update!(email_review_status: nil)
+AuditEvent.create!(auditable: member, actor_user: admin, action: "user.verification_resent", metadata: { channels: [ "account_email" ] })
+LOCALES.each do |locale|
+  visit(mfa_challenge, "/#{locale}/admin/users/#{member.to_param}")
+  button = Nokogiri::HTML(mfa_challenge.response.body).css("button").find do |candidate|
+    candidate.text == I18n.t("admin.users.verification_delivery.action", locale:)
+  end
+  check(button.present?, "#{locale} pending verification has a localized admin resend button")
 end
 
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
