@@ -1,6 +1,21 @@
-# Beta QA — 30 October 2026
+# Beta QA — 31 October 2026
 
 Browser mutations used an isolated local copy with fictitious accounts and captured mail. Production uses read-only smoke checks.
+
+## Current in-app browser pass
+
+- Public pages: 20 pages across NL/FR/DE/EN; mobile navigation, FAQ, language switching and social metadata.
+- Assignments: post hearing and legal work, optional price, searchable/custom court and legal area, competing proposals, selection, rejection, withdrawal, completion and open/matched cancellation. Contact visibility and localized notification history checked per account.
+- Members: directory import and saved preferences, verified email change, inaccessible-email review, authenticator/recovery sign-in, privacy requests, reports and self-service deletion. Open work blocks deletion; erased credentials no longer work.
+- Admin: 24 localized pages, password/MFA, user search, suspend/restore/revoke sessions, verification resend, email review, moderation and privacy decisions. Email confirmation remains separate from ordinary professional approval.
+- Cookie notice and statistics preferences persist. Anonymous non-Belgian access reaches the local security check; signed-in members are exempt.
+- Signup: the listed email is read-only in all four languages, including name editing. A signed, unexpired directory result is required; posted email overrides are ignored.
+
+Deadline/expiry jobs were also exercised on synthetic records: correct recipients, no duplicates on rerun and no failed jobs. Captured emails prove application/worker output, not external inbox delivery. New-password entry and MFA enrollment were covered by automated system tests; their final credential steps were not performed through the in-app browser.
+
+Regression checks: 750 Rails tests and 68 automated browser tests passed (19,975 and 3,318 assertions). The Rails run skipped 17 environment-specific cases.
+
+The pass found and removed obsolete company-check labels and empty legal-task locations. Detailed screenshots and results stay in the private operations archive.
 
 ## 0.12.0 additions
 

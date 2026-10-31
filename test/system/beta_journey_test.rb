@@ -141,7 +141,7 @@ class BetaJourneyTest < ApplicationSystemTestCase
 
   def register_and_confirm(first_name)
     login_email = "journey-#{first_name.downcase}-#{@nonce}@example.test"
-    listed_email = "listed-#{first_name.downcase}-#{@nonce}@example.test"
+    listed_email = login_email
     @login_emails << login_email
     last_name = "Journey#{@nonce}"
     source_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
@@ -152,13 +152,12 @@ class BetaJourneyTest < ApplicationSystemTestCase
     HTML
 
     visit new_registration_path(locale: :en)
-    click_button I18n.t("signup_profile.manual", locale: :en)
-    fill_in "registration_first_name", with: first_name
-    fill_in "registration_last_name", with: last_name
-    fill_in "registration_email_address", with: login_email
+    fill_in "registration_directory_profile_url", with: source_url
+    click_button I18n.t("signup_profile.fetch", locale: :en)
+    assert_text listed_email
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
     fill_in "registration_password", with: "password1234"
     fill_in "registration_password_confirmation", with: "password1234"
-    fill_in "registration_directory_profile_url", with: source_url
     find("#registration_terms_accepted").check
     find("form.assignment-form input[type='submit']").click
     assert_current_path verification_status_path(locale: :en)
@@ -171,16 +170,10 @@ class BetaJourneyTest < ApplicationSystemTestCase
     visit captured_email_path(login_email, "/email-verification/")
     assert_not user.reload.email_verified?, "Opening an email link must not confirm it"
     click_button I18n.t("auth.email_verifications.review.submit", locale: :en)
-    assert_current_path verification_status_path(locale: :en)
+    assert_current_path dashboard_path(locale: :en)
     assert_predicate user.reload, :email_verified?
-    assert_not user.marketplace_verified?, "The separate directory mailbox must also be confirmed"
-
-    visit captured_email_path(listed_email, "/directory-verification/")
-    assert_text login_email
-    assert_not user.lawyer_profile.reload.directory_email_verified?
-    click_button I18n.t("directory_mail.page.action", locale: :en)
-    assert_current_path new_session_path(locale: :en)
-    assert_predicate user.reload, :marketplace_verified?
+    assert_predicate user, :marketplace_verified?
+    assert_predicate user.lawyer_profile.reload, :directory_email_verified?
 
     # Exercise the actual password sign-in rather than relying on signup's session.
     find(".header-logout").click
@@ -254,9 +247,15 @@ class BetaJourneyTest < ApplicationSystemTestCase
     lookup.define_singleton_method(:call) do |profile_url:, full_name:|
       original_lookup.call(profile_url:, full_name:, fetcher: ->(uri) { pages.fetch(uri.to_s) })
     end
+    signup = Directory::SignupProfile
+    original_signup = signup.method(:call)
+    signup.define_singleton_method(:call) do |profile_url:|
+      original_signup.call(profile_url:, fetcher: ->(uri) { pages.fetch(uri.to_s) })
+    end
     yield
   ensure
     lookup.define_singleton_method(:call, original_lookup) if original_lookup
+    signup.define_singleton_method(:call, original_signup) if original_signup
   end
 
   def remove_journey_records

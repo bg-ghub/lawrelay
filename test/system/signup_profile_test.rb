@@ -54,7 +54,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     ActionMailer::Base.deliveries.clear
   end
 
-  test "a profile supplies editable identity and preferences but never verifies an account" do
+  test "the directory supplies a read-only email and access waits for its confirmation" do
     visit_signup
     assert_no_selector "#registration_first_name", visible: :visible
     assert find("#registration_password", visible: :all).disabled?
@@ -63,22 +63,22 @@ class SignupProfileTest < ApplicationSystemTestCase
     end
     assert_empty ActionMailer::Base.deliveries
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
-    assert_selector ".registration-profile__summary", text: @listed_email
-    assert_no_selector "#registration_first_name", visible: :visible
-    assert_no_selector "[name='registration[firm_name]'], [name='registration[enterprise_number]'], [name='registration[address_line_1]']", visible: :all
-    assert_no_selector "[data-controller*='business-lookup']", visible: :all
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_text I18n.t("signup_profile.confirm_email", locale: :en)
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
+    assert_no_selector "[name='registration[firm_name]'], [name='registration[enterprise_number]']", visible: :all
 
-    click_button "Edit details"
+    click_button "Edit name"
     fill_in "registration_first_name", with: "Jean Pierre"
     fill_in "registration_last_name", with: "Example"
-    fill_in "registration_email_address", with: @working_email
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     fill_credentials
     perform_enqueued_jobs do
       find("#registration_password_confirmation").send_keys(:enter)
       assert_current_path verification_status_path(locale: :en)
     end
-    user = User.find_by!(email_address: @working_email)
+    user = User.find_by!(email_address: @listed_email)
     assert_equal "Jean Pierre", user.first_name
     assert_equal "Example", user.last_name
     assert_equal %w[NL FR], user.lawyer_profile.spoken_languages
@@ -87,69 +87,74 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_not user.email_verified?
     assert_not user.marketplace_verified?
     assert_nil user.lawyer_profile.directory_email_verified_at
-    assert user.primary_firm.address_line_1.blank?
-    assert_nil user.primary_firm.phone
     assert_equal Firm::INTERNAL_WORKSPACE_NAME, user.primary_firm.name
     assert_nil user.primary_firm.enterprise_number
-    assert_nil user.primary_firm.vat_number
-    assert_nil user.primary_firm.billing_email
-    assert_empty user.primary_firm.kbo_details
-    assert ActionMailer::Base.deliveries.any? { |mail| mail.to == [ @working_email ] }
+    assert_nil User.find_by(email_address: @working_email)
+    mail = ActionMailer::Base.deliveries.find { |message| message.to == [ @listed_email ] }
+    assert mail
+    link = Nokogiri::HTML(mail.html_part.body.decoded).at_css("a[href*='/email-verification/']")
+    assert link
+    visit URI(link["href"]).request_uri
+    assert_not user.reload.email_verified?, "Email link previews must not activate the account"
+    click_button I18n.t("auth.email_verifications.review.submit", locale: :en)
+    assert_current_path dashboard_path(locale: :en)
+    assert user.reload.marketplace_verified?
   end
 
-  test "an unavailable directory leaves a manual signup path" do
+  test "an unavailable directory retains the link and requires a successful retry" do
     @gate[:unavailable] = true
     visit_signup
     load_profile(expect_success: false)
     assert_text I18n.t("signup_profile.errors.unavailable", locale: :en)
-    assert_no_selector "#registration_password", visible: :visible
-    click_button "Enter details manually"
-    assert_field "registration_first_name", with: ""
-    assert_field "registration_email_address", with: ""
     assert_field "registration_directory_profile_url", with: @profile_url
-    assert_not find("#registration_password").disabled?
+    assert_no_selector "#registration_password", visible: :visible
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
+    assert find("#registration_password", visible: :all).disabled?
     assert_equal "", find("#registration_directory_preview_token", visible: :all).value
+    @gate[:unavailable] = false
+    click_button "Get profile details"
+    assert_text I18n.t("signup_profile.loaded", locale: :en)
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
   end
 
-  test "a late response cannot overwrite a changed profile link or manual identity" do
+  test "a late response cannot bind the email from a changed profile link" do
     visit_signup
     @gate[:hold] = true
     fill_in "registration_directory_profile_url", with: @profile_url
     click_button "Get profile details"
     assert_button "Loading…", disabled: true
     fill_in "registration_directory_profile_url", with: @second_url
-    click_button "Enter details manually"
-    fill_in "registration_first_name", with: "Keep my name"
     @gate[:hold] = false
     @gate[:release] << true
     assert_button "Get profile details", disabled: false
     assert_field "registration_directory_profile_url", with: @second_url
-    assert_field "registration_first_name", with: "Keep my name"
     assert_equal "", find("#registration_directory_preview_token", visible: :all).value
+    assert_no_selector "#registration_password", visible: :visible
     click_button "Get profile details"
-    assert_text I18n.t("signup_profile.review", locale: :en)
-    assert_field "registration_first_name", with: "Keep my name"
-    assert_field "registration_email_address", with: "second-#{@nonce}@example.test"
-    assert_equal "", find("#registration_directory_preview_token", visible: :all).value
+    assert_text I18n.t("signup_profile.loaded", locale: :en)
+    assert_selector ".registration-profile__summary", text: "Grace Example"
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: "second-#{@nonce}@example.test"
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
 
-  test "import and manual identity survive Turbo back without replacing an edited email" do
+  test "Turbo back retains the listed email and clears typed passwords" do
     visit_signup
     load_profile
-    click_button "Edit details"
-    fill_in "registration_email_address", with: @working_email
+    click_button "Edit name"
+    fill_in "registration_first_name", with: "Jean Pierre"
+    fill_in "registration_last_name", with: "Example"
     fill_in "registration_password", with: "Keep-this-password1!"
     find("a[href='#{new_session_path(locale: :en)}']", text: I18n.t("auth.actions.already_registered", locale: :en)).click
     assert_current_path new_session_path(locale: :en)
     page.go_back
     assert_current_path new_registration_path(locale: :en)
-    assert_selector ".registration-profile__summary", text: @working_email
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
     assert_field "registration_password", with: ""
     click_button "Get profile details"
     assert_text I18n.t("signup_profile.loaded", locale: :en)
-    assert_selector ".registration-profile__summary", text: @working_email
-    click_button "Edit details"
-    assert_field "registration_email_address", with: @working_email
+    click_button "Edit name"
+    assert_field "registration_first_name", with: "Jean Pierre"
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
 
   test "Turbo back re-enables a profile lookup interrupted by navigation" do
@@ -171,29 +176,29 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
   end
 
-  test "all four languages fit a narrow screen before and after import" do
+  test "all four languages fit a narrow screen with a read-only listed email" do
     page.driver.browser.execute_cdp("Emulation.setDeviceMetricsOverride", width: 320, height: 1000, deviceScaleFactor: 1, mobile: false)
     %i[nl fr de en].each do |locale|
       visit_signup(locale:)
       assert_selector "html[lang='#{locale}']"
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
-      page.save_screenshot(Rails.root.join("tmp/screenshots/signup-profile-initial-nl-320.png").to_s) if locale == :nl
       load_profile(locale:)
       assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
+      assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+      assert_text I18n.t("signup_profile.confirm_email", locale:)
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       assert_no_text(/translation missing/i)
-      page.save_screenshot(Rails.root.join("tmp/screenshots/signup-profile-loaded-nl-320.png").to_s) if locale == :nl
       click_button I18n.t("signup_profile.edit", locale:)
       assert_field "registration_first_name", with: "Jean"
-      assert_field "registration_email_address", with: @listed_email
+      assert_no_selector "input[name='registration[email_address]']", visible: :all
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
     end
   end
 
-  test "without JavaScript the preview button fills the ordinary form and signup remains pending" do
+  test "without JavaScript the preview supplies the listed email before signup" do
     page.driver.browser.execute_cdp("Emulation.setScriptExecutionDisabled", value: true)
     visit new_registration_path(locale: :en)
-    assert_field "registration_first_name", with: ""
+    assert_no_selector "#registration_first_name", visible: :visible
     fill_in "registration_directory_profile_url", with: @profile_url
     assert_no_difference [ "User.count", "Firm.count" ] do
       click_button "Get profile details"
@@ -201,7 +206,8 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_field "registration_first_name", with: "Jean"
     end
     assert_field "registration_last_name", with: "Pierre Example"
-    assert_field "registration_email_address", with: @listed_email
+    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     assert_empty ActionMailer::Base.deliveries
     fill_credentials
@@ -218,7 +224,8 @@ class SignupProfileTest < ApplicationSystemTestCase
 
   def visit_signup(locale: :en)
     visit new_registration_path(locale:)
-    assert_button I18n.t("signup_profile.manual", locale:)
+    assert_button I18n.t("signup_profile.fetch", locale:)
+    assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
 
   def load_profile(locale: :en, expect_success: true)
