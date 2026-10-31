@@ -10,6 +10,12 @@
 #     schedule: at 5am every day
 
 production:
+  daily_registry_status:
+    class: DailyRegistryStatusJob
+    schedule: "0 5 * * * UTC"
+  reconcile_registry_status:
+    class: ReconcileRegistryStatusJob
+    schedule: every 5 minutes
   purge_expired_sessions:
     command: "Session.where(expires_at: ..Time.current).delete_all"
     schedule: at 3:20am every day

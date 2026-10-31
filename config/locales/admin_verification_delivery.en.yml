@@ -1,0 +1,15 @@
+---
+en:
+  admin:
+    users:
+      verification_delivery:
+        action: Resend verification email
+        directory_pending_hint: The profile check is still pending.
+        queued: Verification email requested.
+        queued_directory_pending: Verification email requested. The profile check is still pending.
+        unavailable: Request failed. Try again later.
+        ineligible: No verification email can be resent for this account.
+        throttled: Up to 3 times per 15 minutes.
+      audit:
+        actions:
+          user_verification_resent: Verification email resend requested

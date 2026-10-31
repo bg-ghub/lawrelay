@@ -3,6 +3,7 @@
   <div class="dashboard-heading">
     <div>
       <h1><%= t("admin.users.index.heading") %></h1>
+      <%= link_to t("registry_status.title"), admin_registry_statuses_path, class: "text-link" %>
     </div>
     <span class="admin-users-total"><%= t("admin.users.index.total", count: @total_count) %></span>
   </div>

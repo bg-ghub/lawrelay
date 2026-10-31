@@ -1,0 +1,56 @@
+en:
+  registry_status:
+    title: "Register checks"
+    intro: "Daily checks of KBO and advocaat.be."
+    back: "Back to members"
+    latest_run: "Latest daily check"
+    run_date: "Check date"
+    result: "Latest result"
+    completed_at: "Completed"
+    checked_count: "Sources checked"
+    not_yet: "Not yet"
+    empty_title: "No daily checks yet"
+    empty_body: "Results will appear after the first scheduled server check."
+    checks: "Current member register checks"
+    checked_at: "Last attempt"
+    last_definitive: "Last confirmed result"
+    issue: "Requires review"
+    since: "since %{time}"
+    resolved_at: "Finding resolved"
+    members: "Members"
+    sources:
+      kbo: "KBO company register"
+      directory: "advocaat.be directory"
+    runs:
+      pending: "Scheduled"
+      running: "In progress"
+      completed: "Completed"
+    statuses:
+      kbo:
+        pending: "Awaiting first check"
+        ok: "Active company"
+        active: "Active company"
+        inactive: "Inactive company"
+        not_found: "Company not found; status unconfirmed"
+        invalid: "Invalid stored company number; status unconfirmed"
+        unavailable: "Source unavailable; company status unconfirmed"
+      directory:
+        pending: "Awaiting first check"
+        active: "Professional profile confirmed"
+        not_listed: "Profile no longer listed"
+        changed: "Professional identity details changed"
+        unavailable: "Source unavailable; professional status unconfirmed"
+    issues:
+      kbo:
+        inactive: "The company is inactive in KBO. Review the member account."
+      directory:
+        not_listed: "The saved profile is no longer listed. Review the member account."
+        changed: "The saved profile identity no longer matches. Review the member account."
+    mailer:
+      subject:
+        one: "LawRelay: 1 new register alert"
+        other: "LawRelay: %{count} new register alerts"
+      body:
+        one: "The daily check found 1 new alert."
+        other: "The daily check found %{count} new alerts."
+      review: "View in administration"

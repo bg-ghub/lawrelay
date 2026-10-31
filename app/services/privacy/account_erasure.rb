@@ -110,6 +110,7 @@ module Privacy
         two_factor_secret_ciphertext: nil, two_factor_pending_secret_ciphertext: nil, two_factor_enabled_at: nil,
         two_factor_last_verified_at: nil, two_factor_recovery_code_digests: [],
         accepted_terms_at: nil, accepted_terms_version: nil, accepted_privacy_version: nil)
+      RegistryStatus::Cleanup.new.call
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_31_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_31_120000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -255,6 +255,52 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_100000) do
     t.index ["user_id"], name: "index_proposals_on_user_id"
   end
 
+  create_table "registry_status_checks", force: :cascade do |t|
+    t.string "source", null: false
+    t.string "target_digest", null: false
+    t.string "identity_digest", null: false
+    t.integer "firm_id"
+    t.integer "lawyer_profile_id"
+    t.string "status", default: "pending", null: false
+    t.datetime "checked_at"
+    t.date "last_run_on"
+    t.string "last_definitive_status"
+    t.datetime "last_definitive_at"
+    t.string "issue_status"
+    t.datetime "issue_since"
+    t.datetime "resolved_at"
+    t.datetime "last_alerted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["firm_id"], name: "index_registry_status_checks_on_firm_id"
+    t.index ["issue_status", "checked_at"], name: "index_registry_status_checks_on_issue_status_and_checked_at"
+    t.index ["lawyer_profile_id"], name: "index_registry_status_checks_on_lawyer_profile_id"
+    t.index ["source", "target_digest"], name: "index_registry_status_checks_on_source_and_target_digest", unique: true
+  end
+
+  create_table "registry_status_runs", force: :cascade do |t|
+    t.date "run_on", null: false
+    t.string "status", default: "pending", null: false
+    t.string "lease_token"
+    t.datetime "lease_expires_at"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.integer "checked_count", default: 0, null: false
+    t.json "checked_target_digests", default: [], null: false
+    t.json "findings", default: [], null: false
+    t.string "alert_status"
+    t.integer "alert_attempts", default: 0, null: false
+    t.datetime "alert_claimed_at"
+    t.datetime "alert_retry_at"
+    t.datetime "alert_sent_at"
+    t.string "alert_status_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alert_status", "alert_retry_at"], name: "index_registry_status_runs_on_alert_status_and_alert_retry_at"
+    t.index ["run_on"], name: "index_registry_status_runs_on_run_on", unique: true
+    t.index ["status", "lease_expires_at"], name: "index_registry_status_runs_on_status_and_lease_expires_at"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.integer "reporter_user_id", null: false
     t.string "reportable_type", null: false
@@ -388,6 +434,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_100000) do
   add_foreign_key "proposals", "assignments"
   add_foreign_key "proposals", "firms"
   add_foreign_key "proposals", "users"
+  add_foreign_key "registry_status_checks", "firms", on_delete: :nullify
+  add_foreign_key "registry_status_checks", "lawyer_profiles", on_delete: :cascade
   add_foreign_key "reports", "users", column: "reporter_user_id"
   add_foreign_key "reports", "users", column: "reviewed_by_user_id"
   add_foreign_key "retention_holds", "users", column: "actor_id"

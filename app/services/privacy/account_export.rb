@@ -13,6 +13,8 @@ module Privacy
       created_at updated_at].freeze
     PROPOSAL_FIELDS = %w[id assignment_id name email rate_cents rate_kind message status accepted_at declined_at
       withdrawn_at created_at updated_at].freeze
+    REGISTRY_CHECK_FIELDS = %w[source status checked_at last_definitive_status last_definitive_at
+      issue_status issue_since resolved_at last_alerted_at].freeze
 
     def initialize(request:, actor:)
       @request = request
@@ -52,6 +54,7 @@ module Privacy
         ],
         account: user.attributes.slice(*USER_FIELDS),
         professional_profile: user.lawyer_profile&.attributes&.slice(*PROFILE_FIELDS),
+        professional_status_checks: user.lawyer_profile ? rows(RegistryStatusCheck.where(lawyer_profile: user.lawyer_profile), REGISTRY_CHECK_FIELDS) : [],
         memberships: rows(user.memberships, %w[firm_id role created_at updated_at]),
         authored_assignments: rows(user.created_assignments, ASSIGNMENT_FIELDS),
         authored_proposals: rows(user.proposals, PROPOSAL_FIELDS),

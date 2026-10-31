@@ -79,11 +79,43 @@ class BusinessRegistryPublicLookupTest < ActiveSupport::TestCase
     assert_equal({ name: "TEST CBE Company", enterprise_number: "1234567894" }, result.attributes)
   end
 
-  test "rejects invalid input and public records that do not identify an active requested entity" do
+  test "rejects invalid input and confirmed records for a different requested entity" do
     assert_equal :invalid, lookup(number: "12345678940").status
-    assert_equal :not_found, lookup(html: fixture_html.sub("1234.567.894", "0123.456.789")).status
-    inactive = fixture_html.sub('<span class="pageactief">Actief</span>', '<span class="pageinactief">Stopgezet</span>')
-    assert_equal :not_found, lookup(html: inactive).status
+    assert_equal :not_found, lookup(html: fixture_html.sub("1234.567.894", "0781.961.243")).status
+    assert_equal :not_found, BusinessRegistry::PublicLookup.call(enterprise_number: "1234567894", locale: :nl,
+      transport: ->(_uri, _request) { [ 404, nil ] }).status
+  end
+
+  test "reports only the explicit discontinued status of the requested entity as inactive" do
+    html = with_status('<span class="pageinactief">Stopgezet</span><span class="upd"><br>Sinds 29 oktober 2026</span>')
+    result = lookup(html:)
+
+    assert_equal :inactive, result.status
+    assert_not_predicate result, :success?
+    assert_empty result.attributes
+    assert_equal Date.new(2026, 10, 29), result.snapshot_date
+    assert_equal :not_found, lookup(html: html.sub("1234.567.894", "0781.961.243")).status
+    assert_equal :unavailable, lookup(html: html.sub("Gegevens van de geregistreerde entiteit</title>", "Access denied</title>")).status
+  end
+
+  test "does not infer inactivity from missing active markers or unrecognized statuses" do
+    [ "", "Actief", '<span class="pageinactief">Onbekend</span>',
+      '<span class="pageactief">Stopgezet wegens onbekende reden</span>',
+      '<span class="pageinactief">Niet actief</span>' ].each do |status|
+      assert_equal :unavailable, lookup(html: with_status(status)).status, status.inspect
+    end
+
+    html = fixture_html.sub(%r{<tr><td class="RL">Status:</td>.*?</tr>}m, "")
+    assert_equal :unavailable, lookup(html:).status
+  end
+
+  test "requires an identifiable enterprise number and snapshot date for an inactive record" do
+    html = with_status('<span class="pageinactief">Stopgezet</span>')
+    [ "", "unknown", "0123.456.789" ].each do |number|
+      assert_equal :unavailable, lookup(html: html.sub("1234.567.894", number)).status, number.inspect
+    end
+    assert_equal :unavailable, lookup(html: html.sub("29/10/2026", "31/02/2026")).status
+    assert_equal :unavailable, lookup(html: html.sub("Toestand in de KBO databank op 29/10/2026", "")).status
   end
 
   test "treats malformed, blocked and non-html responses as unavailable" do
@@ -120,5 +152,9 @@ class BusinessRegistryPublicLookupTest < ActiveSupport::TestCase
 
   def with_registry_rows(*rows)
     fixture_html.sub("<table>", "<table>#{rows.join}")
+  end
+
+  def with_status(status)
+    fixture_html.sub('<span class="pageactief">Actief</span>', status)
   end
 end

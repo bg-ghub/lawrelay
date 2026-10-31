@@ -5,7 +5,7 @@ require "uri"
 
 module BusinessRegistry
   # A deliberately narrow wrapper around CBE Public Search. It supports one
-  # user-requested company lookup; it is not a directory importer.
+  # company lookup at a time; it is not a directory importer.
   class PublicLookup
     Result = Data.define(:status, :attributes, :snapshot_date) do
       def success?
@@ -99,23 +99,33 @@ module BusinessRegistry
       document = Nokogiri::HTML::Document.parse(body, nil, nil, options)
       return result(:unavailable) unless normalized(document.at_css("title")&.text).start_with?("Gegevens van de geregistreerde entiteit")
       number = value_for(document, "Ondernemingsnummer")
+      return result(:unavailable) unless Firm.valid_enterprise_number?(number)
       return result(:not_found) unless Firm.normalize_enterprise_number(number) == @enterprise_number
-      return result(:not_found) unless active?(document)
+
+      status = registry_status(document)
+      return result(:unavailable) unless status
+      date = snapshot_date(document)
+      return result(:unavailable) unless date
+      return Result.new(status: :inactive, attributes: {}, snapshot_date: date) if status == :inactive
 
       name = RegisteredName.call(name: value_for(document, "Naam"),
         legal_form: value_for(document, "Rechtsvorm"), entity_type: value_for(document, "Type entiteit"))
       return result(:unavailable) unless valid_length?(name, 160)
 
       attributes = { name:, enterprise_number: @enterprise_number }.merge(registered_office(document))
-      date = snapshot_date(document)
-      return result(:unavailable) unless date
-
       Result.new(status: :ok, attributes:, snapshot_date: date)
     end
 
-    def active?(document)
+    def registry_status(document)
       row = row_for(document, "Status")
-      row && normalized(row.xpath("./td").last.at_css("span.pageactief")&.text) == "Actief"
+      case value_lines(row).join(" ")
+      when "Actief"
+        :ok if normalized(row.xpath("./td").last.at_css("span.pageactief")&.text) == "Actief"
+      when "Stopgezet"
+        # Only the explicit official status proves inactivity. A missing active
+        # marker, a different legal situation or an unknown status does not.
+        :inactive
+      end
     end
 
     def registered_office(document)

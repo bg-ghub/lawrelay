@@ -1,0 +1,15 @@
+---
+nl:
+  admin:
+    users:
+      verification_delivery:
+        action: Verificatiemail opnieuw sturen
+        directory_pending_hint: De profielcontrole staat nog open.
+        queued: Verificatiemail aangevraagd.
+        queued_directory_pending: Verificatiemail aangevraagd. De profielcontrole staat nog open.
+        unavailable: Aanvragen lukt niet. Probeer later opnieuw.
+        ineligible: Voor dit account kan geen verificatiemail opnieuw worden gestuurd.
+        throttled: Maximaal 3 keer per kwartier.
+      audit:
+        actions:
+          user_verification_resent: Verificatiemail opnieuw aangevraagd

@@ -78,15 +78,17 @@ class CompanyLookupsControllerTest < ActionDispatch::IntegrationTest
     assert_empty @calls
   end
 
-  test "unavailable and not found messages are localized in every language" do
+  test "unsuccessful lookup statuses are localized in every language" do
     %i[nl fr de en].each do |locale|
-      %i[not_found unavailable not_configured invalid].each do |status|
+      %i[not_found inactive unavailable not_configured invalid].each do |status|
         result = BusinessRegistry::PublicLookup::Result.new(status:, attributes: {}, snapshot_date: nil)
         BusinessRegistry::PublicLookup.define_singleton_method(:call) { |**| result }
         post company_lookup_path(locale:), params: { enterprise_number: "0781961243" }, as: :json
         assert_equal status.to_s, response.parsed_body["status"]
         assert_equal I18n.t("business_lookup.#{status}", locale:), response.parsed_body["message"]
-        assert_response(status == :not_found ? :not_found : (status == :invalid ? :unprocessable_content : :service_unavailable))
+        expected_status = { not_found: :not_found, invalid: :unprocessable_content, inactive: :unprocessable_content }
+          .fetch(status, :service_unavailable)
+        assert_response expected_status
       end
     end
   end

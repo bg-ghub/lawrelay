@@ -36,6 +36,13 @@
           <small><time datetime="<%= @user.suspended_at.iso8601 %>"><%= l(@user.suspended_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></small>
         </div>
       <% end %>
+      <% if @verification_delivery.eligible? %>
+        <% directory_check_pending = @verification_delivery.directory_check_pending? %>
+        <div class="detail-actions">
+          <%= button_to t("admin.users.verification_delivery.action"), resend_verification_admin_user_path(@user), method: :post, class: "button button--dark", form: { aria: { describedby: ("verification-delivery-hint" if directory_check_pending) } } %>
+        </div>
+        <% if directory_check_pending %><p id="verification-delivery-hint" class="field-hint"><%= t("admin.users.verification_delivery.directory_pending_hint") %></p><% end %>
+      <% end %>
     </section>
 
     <section class="dashboard-panel" aria-labelledby="user-professional-heading">
