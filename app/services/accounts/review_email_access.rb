@@ -37,7 +37,7 @@ module Accounts
           return failure(user, profile, :identity_required) unless @identity_checked
           return failure(user, profile, :directory_required) unless profile.email_review_directory_ready?
           claimed = LawyerProfile.where.not(id: profile.id).where(directory_profile_id: profile.directory_profile_id)
-            .where("directory_email_verified_at IS NOT NULL OR email_review_status = ?", "approved").exists?
+            .where("directory_email_verified_at IS NOT NULL OR email_review_status = ? OR manual_activation_approved_at IS NOT NULL", "approved").exists?
           return failure(user, profile, :claimed) if claimed
         end
 

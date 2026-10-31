@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  TERMS_VERSION = "2026-10-31-private-invoicing"
-  PRIVACY_VERSION = "2026-10-31-company-data-retired"
+  TERMS_VERSION = "2026-10-31-manual-approval"
+  PRIVACY_VERSION = "2026-10-31-manual-approval"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,

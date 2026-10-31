@@ -20,6 +20,7 @@ class User < ApplicationRecord
     [ Digest::SHA256.hexdigest(email_address), password_salt&.last(10) ]
   end
   before_update :clear_email_verification, if: :will_save_change_to_email_address?
+  before_update :clear_manual_activation, if: :will_save_change_to_professional_identity?
   has_many :sessions, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :firms, through: :memberships
@@ -75,8 +76,12 @@ class User < ApplicationRecord
     email_verified_at.present?
   end
 
+  def email_verification_required?
+    !email_verified? && !lawyer_profile&.manual_activation_valid?
+  end
+
   def marketplace_verified?
-    !system_admin? && active? && email_verified? && lawyer_profile&.verified? &&
+    !system_admin? && active? && (email_verified? || lawyer_profile&.manual_activation_valid?) && lawyer_profile&.verified? &&
       lawyer_profile.email_review_allows_access? && primary_firm&.verified?
   end
 
@@ -155,6 +160,18 @@ class User < ApplicationRecord
   end
 
   private
+
+  def will_save_change_to_professional_identity?
+    will_save_change_to_first_name? || will_save_change_to_last_name? || will_save_change_to_email_address?
+  end
+
+  def clear_manual_activation
+    profile = LawyerProfile.find_by(user_id: id)
+    return unless profile&.manual_activation_approved_at
+
+    profile.clear_manual_activation
+    profile.save!
+  end
 
   def clear_email_verification
     self.email_verified_at = nil

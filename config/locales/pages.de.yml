@@ -42,7 +42,7 @@ de:
           heading: "1. Wer verantwortlich ist"
           paragraphs:
             - "Der oben genannte Betreiber von LawRelay ist Verantwortlicher."
-            - "Datenschutzfragen und Betroffenenanträge: privacy@lawrelay.be. Wir gleichen Ihren Namen und Ihre berufliche E-Mail-Adresse mit advocaat.be ab und bestätigen Ihre E-Mail-Adresse. Ist die veröffentlichte Adresse nicht erreichbar, kann ein Administrator eine andere bestätigte Adresse anhand unabhängig veröffentlichter beruflicher Kontaktdaten prüfen."
+            - "Datenschutzfragen und Betroffenenanträge: privacy@lawrelay.be. Wir gleichen Ihren Namen und Ihre berufliche E-Mail-Adresse mit advocaat.be ab. Normalerweise bestätigen Sie Ihre E-Mail-Adresse; ein Administrator kann den Zugang nach Prüfung auch manuell genehmigen. Ist die veröffentlichte Adresse nicht erreichbar, kann ein Administrator eine andere bestätigte Adresse anhand unabhängig veröffentlichter beruflicher Kontaktdaten prüfen."
         scope:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
@@ -78,7 +78,7 @@ de:
           heading: "6. Aufbewahrung"
           paragraphs:
             - "Das letzte Ergebnis der Profilprüfung bleibt bei Ihrem Konto. Prüfübersichten und erledigte Warnungen: 90 Tage. Offene Warnungen können für Untersuchungen aufbewahrt werden."
-            - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
+            - "Ungenutzte Registrierungen ohne E-Mail-Bestätigung oder manuelle Genehmigung: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
             - "Konten bleiben bis zur Schließung bestehen. Sie können Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. Wir entfernen nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Offene Aufträge, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
@@ -105,7 +105,7 @@ de:
         eligibility:
           heading: "2. Zugang und Verifizierung"
           paragraphs:
-            - "Die Registrierung steht Anwälten auf advocaat.be offen. Der Zugang erfordert die Prüfung des Profils und der E-Mail-Adresse. Ist die veröffentlichte Adresse nicht erreichbar, prüft ein Administrator Ihre Identität und die bestätigte neue Adresse. Nutzer halten berufliche Angaben aktuell, schützen ihren Zugang und melden Missbrauch. Die Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
+            - "Die Registrierung steht Anwälten auf advocaat.be offen. Der Zugang erfordert die Prüfung des Profils und der E-Mail-Adresse. Ein Administrator kann den Zugang nach Prüfung auch manuell genehmigen. Ist die veröffentlichte Adresse nicht erreichbar, prüft ein Administrator Ihre Identität und die bestätigte neue Adresse. Nutzer halten berufliche Angaben aktuell, schützen ihren Zugang und melden Missbrauch. Die Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
         role:
           heading: "3. Rolle von LawRelay"
           paragraphs:
