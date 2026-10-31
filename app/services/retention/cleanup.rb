@@ -41,11 +41,12 @@ module Retention
       cutoff = Policy.before(Policy::UNVERIFIED_REGISTRATION, now: @now)
       return false unless user.system_role == "member" && user.email_verified_at.nil? && user.erased_at.nil?
       return false unless user.updated_at <= cutoff
+      profile = user.lawyer_profile
+      return false if profile&.manual_activation_valid?
       return false if Protection.held?(user, now: @now)
       return false if user.created_assignments.exists? || user.proposals.exists? || user.privacy_requests.exists? || user.submitted_reports.exists?
       return false unless isolated_registration?(user)
 
-      profile = user.lawyer_profile
       return false if profile && profile.updated_at > cutoff
       return false if profile&.verified_at || user.firms.where.not(verified_at: nil).exists?
 

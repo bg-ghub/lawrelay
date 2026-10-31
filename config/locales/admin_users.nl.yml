@@ -13,6 +13,7 @@ nl:
       eyebrow: Beheer
       you: Jij
       not_recorded: Niet ingevuld
+      manual_activation: Handmatig goedgekeurd
       timezone: 'Tijdzone: Europe/Brussels.'
       index:
         title: Gebruikers — LawRelay-beheer
@@ -39,6 +40,7 @@ nl:
         status: Accounttoegang
         email_status: E-mailadres
         marketplace_access: Toegang tot opdrachten
+        activation: Activering
         mfa: MFA voor beheerders
         created_at: Geregistreerd
         suspension_reason: Reden van schorsing

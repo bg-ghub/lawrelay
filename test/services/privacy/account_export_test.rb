@@ -109,6 +109,22 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     end
   end
 
+  test "manual activation is exported without an approver identity or identity digest" do
+    approved_at = 1.hour.ago.change(usec: 0)
+    @member.user.update!(email_verified_at: nil)
+    @member.profile.update_columns(manual_activation_approved_at: approved_at,
+      manual_activation_approved_by_user_id: @admin.id, manual_activation_identity_digest: "excluded-manual-approval-digest")
+
+    package = JSON.parse(JSON.generate(Privacy::AccountExport.new(request: @request, actor: @admin).send(:package)))
+    profile = package.fetch("professional_profile")
+
+    assert_equal approved_at.to_i, Time.zone.parse(profile.fetch("manual_activation_approved_at")).to_i
+    assert_nil package.dig("account", "email_verified_at")
+    assert_not profile.key?("manual_activation_approved_by_user_id")
+    assert_not profile.key?("manual_activation_identity_digest")
+    assert_not_includes package.to_json, "excluded-manual-approval-digest"
+  end
+
   test "member, suspended and MFA-unconfigured operators are refused" do
     assert_rejected(actor: @member.user)
     @admin.update!(suspended_at: Time.current)

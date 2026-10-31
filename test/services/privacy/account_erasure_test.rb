@@ -115,6 +115,23 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     assert Membership.exists?(user: @other.user, firm: @member.firm)
   end
 
+  test "erasure removes manual activation evidence and clears its audit details" do
+    @user.update!(email_verified_at: nil)
+    @member.profile.update_columns(manual_activation_approved_at: 1.hour.ago,
+      manual_activation_approved_by_user_id: @admin.id, manual_activation_identity_digest: "private-manual-approval-digest")
+    profile_id = @member.profile.id
+    approval = AuditEvent.create!(auditable: @member.profile, actor_user: @admin, firm: @member.firm,
+      action: "verification.approved", metadata: { method: "manual_activation", note: "Private operator approval" })
+
+    assert_no_enqueued_emails { erase }
+
+    assert_not LawyerProfile.exists?(profile_id)
+    assert_nil @user.reload.lawyer_profile
+    assert_nil @user.email_verified_at
+    assert_not @user.marketplace_verified?
+    assert_equal({}, approval.reload.metadata)
+  end
+
   test "ongoing work, recorded holds and another open privacy request prevent erasure" do
     assignment = create_assignment_for(@member)
     assert_raises(Privacy::AccountErasure::ProtectedAccount) { erase }

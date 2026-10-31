@@ -148,6 +148,43 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
     LOCALES.each { |locale| render_page(admin_mfa_challenge_path(locale:), locale:) }
   end
 
+  test "manual approval opens the marketplace while admin keeps the email unconfirmed in every locale" do
+    secret = @admin.begin_admin_mfa_setup!
+    @admin.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+    profile_id = SecureRandom.uuid
+    @pending.profile.update!(
+      directory_profile_id: profile_id,
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{profile_id}",
+      directory_name: @pending.user.full_name,
+      directory_email: @pending.user.email_address,
+      directory_checked_at: Time.current
+    )
+    assert_no_enqueued_jobs do
+      result = Admin::ManualActivation.call(user: @pending.user, actor: @admin,
+        note: "Operator approved access after direct professional contact.",
+        identity_digest: @pending.profile.email_review_current_identity_digest)
+      assert result.success?, result.status.to_s
+    end
+    assert_nil @pending.user.reload.email_verified_at
+    assert_nil @pending.profile.reload.directory_email_verified_at
+
+    sign_in_as(@pending.user)
+    LOCALES.each do |locale|
+      get verification_status_path(locale:)
+      assert_redirected_to dashboard_path(locale:)
+      render_page(new_assignment_path(locale:), locale:)
+    end
+    sign_out
+
+    sign_in_as(@admin, admin_mfa: true)
+    LOCALES.each do |locale|
+      render_page(admin_user_path(@pending.user, locale:), locale:)
+      assert_select ".admin-user-overview dd", text: I18n.t("admin.users.manual_activation", locale:, raise: true)
+      assert_select ".admin-user-overview dd", text: I18n.t("admin.users.email.pending", locale:, raise: true)
+      assert_select ".admin-user-overview dd", text: I18n.t("admin.users.marketplace.available", locale:, raise: true)
+    end
+  end
+
   private
 
   def render_page(path, locale:)

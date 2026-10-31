@@ -26,6 +26,9 @@
         <div><dt><%= t("admin.users.fields.status") %></dt><dd><span class="status-pill <%= "admin-user-status--suspended" if @user.suspended? %>"><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></span></dd></div>
         <div><dt><%= t("admin.users.fields.email_status") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
         <div><dt><%= t("admin.users.fields.marketplace_access") %></dt><dd><%= t("admin.users.marketplace.#{@user.marketplace_verified? ? 'available' : 'unavailable'}") %></dd></div>
+        <% if @profile&.manual_activation_valid? %>
+          <div><dt><%= t("admin.users.fields.activation") %></dt><dd><%= t("admin.users.manual_activation") %></dd></div>
+        <% end %>
         <div><dt><%= t("two_factor.heading") %></dt><dd><%= t(@user.two_factor_enabled? ? "two_factor.status_on" : "two_factor.status_off") %></dd></div>
         <div><dt><%= t("admin.users.fields.created_at") %></dt><dd><time datetime="<%= @user.created_at.iso8601 %>"><%= l(@user.created_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") %></time></dd></div>
       </dl>

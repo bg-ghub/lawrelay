@@ -10,7 +10,7 @@ class VerificationStatusController < ApplicationController
   end
 
   def create
-    queued = Current.user.email_verified? || Onboarding::Delivery.enqueue { EmailVerificationMailer.verify(Current.user).deliver_later }
+    queued = !Current.user.email_verification_required? || Onboarding::Delivery.enqueue { EmailVerificationMailer.verify(Current.user).deliver_later }
     if queued
       redirect_to verification_status_path, notice: t("auth.verification_status.resent")
     else

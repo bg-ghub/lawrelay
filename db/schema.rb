@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_31_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_31_130000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -176,9 +176,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_120000) do
     t.integer "email_reviewed_by_user_id"
     t.text "email_review_note"
     t.string "email_review_identity_digest"
+    t.datetime "manual_activation_approved_at"
+    t.integer "manual_activation_approved_by_user_id"
+    t.string "manual_activation_identity_digest"
     t.index ["bar_association", "bar_number"], name: "index_lawyer_profiles_on_bar_association_and_bar_number", unique: true
-    t.index ["directory_profile_id"], name: "index_lawyer_profiles_on_directory_profile_id", unique: true, where: "directory_profile_id IS NOT NULL AND (directory_email_verified_at IS NOT NULL OR email_review_status = 'approved')"
+    t.index ["directory_profile_id"], name: "index_lawyer_profiles_on_directory_profile_id", unique: true, where: "directory_profile_id IS NOT NULL AND (directory_email_verified_at IS NOT NULL OR email_review_status = 'approved' OR manual_activation_approved_at IS NOT NULL)"
     t.index ["email_review_status", "email_review_requested_at"], name: "index_lawyer_profiles_on_email_review_queue"
+    t.index ["manual_activation_approved_by_user_id"], name: "index_lawyer_profiles_on_manual_activation_approved_by_user_id"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
     t.index ["verification_status"], name: "index_lawyer_profiles_on_verification_status"
   end
@@ -426,6 +430,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_120000) do
   add_foreign_key "invoices", "subscriptions"
   add_foreign_key "lawyer_profiles", "users"
   add_foreign_key "lawyer_profiles", "users", column: "email_reviewed_by_user_id"
+  add_foreign_key "lawyer_profiles", "users", column: "manual_activation_approved_by_user_id"
   add_foreign_key "memberships", "firms"
   add_foreign_key "memberships", "users"
   add_foreign_key "notifications", "users"

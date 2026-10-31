@@ -130,7 +130,44 @@ class RetentionCleanupTest < ActiveSupport::TestCase
     assert User.exists?(account.user.id)
   end
 
+  test "valid manual activation is not removed as an unconfirmed abandoned signup" do
+    account = stale_manually_approved_registration(prefix: "retention-manual")
+    assert account.profile.manual_activation_valid?
+
+    result = Retention::Cleanup.new(dry_run: false).call
+
+    assert_equal 0, result.unverified_users
+    assert User.exists?(account.user.id)
+    assert_nil account.user.reload.email_verified_at
+  end
+
+  test "an invalidated manual approval does not exempt an otherwise abandoned signup" do
+    account = stale_manually_approved_registration(prefix: "retention-stale-manual")
+    account.user.update_columns(first_name: "Changed identity", updated_at: 31.days.ago)
+    assert account.profile.manual_activation_approved_at
+    assert_not account.profile.reload.manual_activation_valid?
+
+    result = Retention::Cleanup.new(dry_run: false).call
+
+    assert_equal 1, result.unverified_users
+    assert_not User.exists?(account.user.id)
+  end
+
   private
+
+  def stale_manually_approved_registration(prefix:)
+    account = create_marketplace_account(prefix:, verified: false, email_verified: false)
+    profile_id = SecureRandom.uuid
+    account.profile.update!(directory_profile_id: profile_id,
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{profile_id}",
+      directory_name: account.user.full_name, directory_email: account.user.email_address, directory_checked_at: 31.days.ago)
+    account.profile.update_columns(manual_activation_approved_at: 31.days.ago,
+      manual_activation_approved_by_user_id: mfa_admin.id,
+      manual_activation_identity_digest: account.profile.email_review_current_identity_digest,
+      created_at: 31.days.ago, updated_at: 31.days.ago)
+    account.user.update_columns(created_at: 31.days.ago, updated_at: 31.days.ago)
+    account
+  end
 
   def mfa_admin
     @mfa_admin ||= begin

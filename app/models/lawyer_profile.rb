@@ -6,9 +6,12 @@ class LawyerProfile < ApplicationRecord
   EMAIL_REVIEW_STATUSES = %w[pending approved rejected].freeze
   EMAIL_REVIEW_FIELDS = %w[email_review_status email_review_email_address email_review_requested_at email_reviewed_at
     email_reviewed_by_user_id email_review_note email_review_identity_digest].freeze
+  MANUAL_ACTIVATION_FIELDS = %w[manual_activation_approved_at manual_activation_approved_by_user_id manual_activation_identity_digest].freeze
+  MANUAL_ACTIVATION_IDENTITY_FIELDS = %w[directory_profile_id directory_profile_url directory_name directory_email].freeze
 
   belongs_to :user
   belongs_to :email_reviewed_by_user, class_name: "User", optional: true
+  belongs_to :manual_activation_approved_by_user, class_name: "User", optional: true
 
   normalizes :bar_association, :bar_number, with: ->(value) { value.to_s.strip.upcase }
   normalizes :professional_email, with: ->(value) { value.to_s.strip.downcase.presence }
@@ -17,6 +20,7 @@ class LawyerProfile < ApplicationRecord
   normalizes :availability_note, with: ->(value) { value.to_s.strip.presence }
 
   before_validation :normalize_matching_preferences
+  before_validation :invalidate_changed_manual_activation
 
   validates :bar_association, :bar_number, presence: true
   validates :bar_number, uniqueness: { scope: :bar_association }
@@ -62,6 +66,19 @@ class LawyerProfile < ApplicationRecord
       directory_profile_id, directory_name, directory_email ].join("\u0000"))
   end
 
+  def manual_activation_valid?
+    manual_activation_approved_at.present? && manual_activation_approved_by_user_id.present? &&
+      manual_activation_identity_digest.present? && manual_activation_identity_digest == email_review_current_identity_digest &&
+      user.active? && !user.system_admin? && !verification_status.in?(%w[rejected suspended]) && email_review_allows_access? &&
+      directory_matched? && Directory::AdvocaatBeProfileLookup.valid_profile_url?(directory_profile_url) &&
+      Directory::AdvocaatBeProfileLookup.names_match?(directory_name, user.full_name) &&
+      directory_email.to_s.casecmp?(user.email_address.to_s)
+  end
+
+  def clear_manual_activation
+    assign_attributes(MANUAL_ACTIVATION_FIELDS.index_with { nil })
+  end
+
   def email_review_directory_ready?
     directory_matched? && email_review_requested_at.present? && directory_checked_at >= email_review_requested_at &&
       Directory::AdvocaatBeProfileLookup.valid_profile_url?(directory_profile_url) &&
@@ -99,6 +116,16 @@ class LawyerProfile < ApplicationRecord
   end
 
   private
+
+  def invalidate_changed_manual_activation
+    if persisted? && MANUAL_ACTIVATION_IDENTITY_FIELDS.any? { |field| will_save_change_to_attribute?(field) }
+      clear_manual_activation
+      # A profile may have been loaded before the approval was committed.
+      MANUAL_ACTIVATION_FIELDS.each { |field| attribute_will_change!(field) }
+    elsif manual_activation_approved_at.present? && !manual_activation_valid?
+      clear_manual_activation
+    end
+  end
 
   def normalize_matching_preferences
     self.court_preferences = Array(court_preferences)
