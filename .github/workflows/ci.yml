@@ -72,7 +72,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Cache RuboCop
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.RUBOCOP_CACHE_ROOT }}
           key: rubocop-${{ runner.os }}-${{ hashFiles('.ruby-version', '**/.rubocop.yml', '**/.rubocop_todo.yml', 'Gemfile.lock') }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
