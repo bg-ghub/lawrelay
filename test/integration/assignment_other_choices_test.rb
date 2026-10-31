@@ -7,12 +7,12 @@ class AssignmentOtherChoicesTest < ActionDispatch::IntegrationTest
   test "a member can publish custom court and legal area details together" do
     account = create_marketplace_account(prefix: "custom-choices")
     sign_in_as(account.user)
-    attributes = invoice_recipient_attributes.merge(kind: "court_replacement", assignment_subtype: "hearing",
+    attributes = { kind: "court_replacement",
       title: "Synthetic custom venue", description: "A bounded assignment without client information.",
       court: "Other", court_selection: Assignment::OTHER_CHOICE, court_other: "  Synthetic mediation office  ",
       city: "Brussels", practice_area: Assignment::OTHER_CHOICE, practice_area_other: "  Sports law  ",
       starts_at: 3.days.from_now, response_deadline_at: 2.days.from_now, duration_minutes: 60,
-      content_rules_accepted: "1")
+      content_rules_accepted: "1" }
 
     assert_difference("Assignment.count", 1) do
       post assignments_path(locale: :en), params: { assignment: attributes }

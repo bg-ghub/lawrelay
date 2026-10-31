@@ -10,6 +10,7 @@ if [ "${1:-}" = "./bin/thrust" ]; then
   if [ -n "${LAWRELAY_ERASURE_LEDGER:-}" ]; then
     bundle exec rails privacy:reapply_erasures
   fi
+  bundle exec rails privacy:remove_member_company_data
 fi
 
 exec "$@"

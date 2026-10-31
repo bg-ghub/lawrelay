@@ -8,8 +8,6 @@ module Privacy
       email_review_status email_review_email_address email_review_requested_at email_reviewed_at created_at updated_at].freeze
     ASSIGNMENT_FIELDS = %w[id kind title description court city starts_at duration_minutes practice_area fee_cents status
       urgent languages content_rules_accepted_at assignment_subtype response_deadline_at scope_indication delivery_due_at
-      invoice_name invoice_enterprise_number invoice_email invoice_address_line_1 invoice_postal_code invoice_city
-      invoice_kbo_details
       created_at updated_at].freeze
     PROPOSAL_FIELDS = %w[id assignment_id name email rate_cents rate_kind message status accepted_at declined_at
       withdrawn_at created_at updated_at].freeze
@@ -48,7 +46,7 @@ module Privacy
         review_required: true,
         limitations: [
           "Review authored free text for third-party information before release.",
-          "Administrator notes, audit metadata, other users' records and shared firm/billing records are excluded; assess separately.",
+          "Administrator notes, audit metadata, other users' records and protected historical financial evidence are excluded; assess separately.",
           "Support email, host/provider logs, backups and external provider records require separate review.",
           "Preparing this package does not complete the request or establish that every access obligation is fulfilled."
         ],

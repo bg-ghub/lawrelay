@@ -27,7 +27,7 @@ nl:
       filters:
         label: Gebruikers zoeken
         search: Zoeken
-        search_hint: Naam, e-mailadres of kantoor
+        search_hint: Naam of e-mailadres
         status: Accounttoegang
         verification: Advocatencontrole
         all: Alle

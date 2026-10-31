@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["legalOnly", "courtOnly", "legalInput", "courtInput"]
+  static targets = ["legalOnly", "courtOnly", "legalInput", "courtInput", "description"]
 
   connect() {
     this.update()
@@ -20,6 +20,10 @@ export default class extends Controller {
 
     const isLegalTask = selectedKind?.value === "legal_task"
 
+    this.descriptionTargets.forEach((input) => {
+      if (isLegalTask) input.removeAttribute("aria-describedby")
+      else input.setAttribute("aria-describedby", "assignment-description-hint")
+    })
     this.legalOnlyTargets.forEach((element) => { element.hidden = !isLegalTask })
     this.courtOnlyTargets.forEach((element) => { element.hidden = isLegalTask })
     this.legalInputTargets.forEach((input) => {

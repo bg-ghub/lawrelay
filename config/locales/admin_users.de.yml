@@ -27,7 +27,7 @@ de:
       filters:
         label: Benutzer suchen
         search: Suchen
-        search_hint: Name, E-Mail oder Kanzlei
+        search_hint: Name oder E-Mail
         status: Kontozugang
         verification: Anwaltsprüfung
         all: Alle

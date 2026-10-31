@@ -49,15 +49,15 @@ fr:
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d’authentification. Les demandes de changement d’adresse, décisions et notes de contrôle sont conservées avec votre profil professionnel."
             - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
             - "À votre demande, nous reprenons votre nom, e-mail, langues et domaines juridiques publics sur advocaat.be pour préremplir l’inscription. L’aperçu est valable 20 minutes."
-            - "Nous vérifions chaque jour votre profil advocaat.be et votre numéro d’entreprise dans la BCE. L’exploitant est averti si une entreprise est inactive ou si un profil a disparu ou changé."
-            - "Données professionnelles et de facturation : profil officiel, nom et e-mail publiés, nom de l’entreprise, numéro d’entreprise/TVA, coordonnées et statut de vérification professionnelle. Si vous lancez vous-même une recherche via le registre public officiel de la BCE, nous conservons les données de facturation renvoyées (nom, numéro et, si disponible, adresse du siège) et la date des données de la BCE."
+            - "Nous vérifions chaque jour votre profil advocaat.be. L’exploitant est averti si un profil a disparu ou changé."
+            - "Identité professionnelle : profil officiel, nom et e-mail publiés et statut de vérification professionnelle."
             - "Données de profil professionnel et de préférences de mise en relation, notamment les domaines de pratique, préférences de juridiction et—lorsque cela est pertinent pour les missions juridiques—langues parlées ; ainsi que données de mission, candidature, acceptation, annulation et audit."
-            - "Données du destinataire de facturation par mission, notamment le nom professionnel et le numéro d’entreprise/TVA. Les membres vérifiés qui consultent la mission voient le nom et le numéro ; le cabinet du donneur d’ordre et le confrère choisi voient l’adresse et l’e-mail complets."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."
             - "Uniquement pour les visites publiques non connectées : statistiques Umami sans cookies comprenant un chemin de page limité, l’origine du référent et des métadonnées ordinaires de la requête du navigateur. Nous n’envoyons ni données de compte, ni pages privées, ni formulaires, ni requêtes, ni données de mission."
             - "Pour les visiteurs anonymes hors de Belgique, un contrôle de sécurité local utilise l’adresse IP pour déterminer le pays et conserve brièvement une preuve de vérification."
           paragraphs:
             - "LawRelay n'est pas destiné aux noms de clients, faits du dossier, conclusions, preuves, documents ou communications couvertes par le secret professionnel. Ces informations doivent rester dans des systèmes contrôlés par les avocats concernés."
+            - "Après acceptation, les avocats échangent les coordonnées du destinataire de la facture et les données Peppol en privé."
         purposes:
           heading: "3. Finalités et bases juridiques"
           bullets:
@@ -67,7 +67,7 @@ fr:
         sharing:
           heading: "4. Destinataires"
           paragraphs:
-            - "Les missions ouvertes sont visibles par les membres vérifiés. Les propositions sont visibles par l’avocat qui les soumet et le cabinet du donneur d’ordre. Après acceptation, le donneur d’ordre et l’avocat choisi reçoivent leurs adresses e-mail respectives."
+            - "Les missions ouvertes sont visibles par les membres vérifiés. Les propositions sont visibles par l’avocat qui les soumet et les membres de l’espace de travail du donneur d’ordre. Après acceptation, le donneur d’ordre et l’avocat choisi reçoivent leurs adresses e-mail respectives."
             - "L’exploitant et les prestataires d’hébergement, d’e-mail et de sauvegarde ci-dessous traitent les données nécessaires au fonctionnement du service. Les données ne sont pas vendues."
         transfers:
           heading: "5. Lieu et transferts"
@@ -77,7 +77,7 @@ fr:
         retention:
           heading: "6. Conservation"
           paragraphs:
-            - "Le dernier contrôle reste lié à votre compte. Résumés des contrôles et alertes traitées : 90 jours. Les alertes ouvertes peuvent être conservées pour examen."
+            - "Le dernier contrôle du profil reste lié à votre compte. Résumés des contrôles et alertes traitées : 90 jours. Les alertes ouvertes peuvent être conservées pour examen."
             - "Inscriptions inutilisées et non confirmées : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
             - "Les comptes restent jusqu’à leur clôture. Vous pouvez supprimer votre compte dans Profil après avoir confirmé votre mot de passe. Nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions en cours, enquêtes, litiges ou obligations légales peuvent justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
@@ -115,7 +115,7 @@ fr:
           bullets:
             - "Chaque avocat reste responsable du pouvoir de déléguer, des conflits d'intérêts, de l'indépendance, de la compétence, des délais, règles de procédure, du secret professionnel, de l'assurance, de la communication au client et des obligations du barreau."
             - "Une mise en relation ou un statut vérifié ne remplace jamais les vérifications propres de l'avocat."
-            - "Les utilisateurs conviennent directement de l'étendue, des honoraires, de la facturation et de l'organisation pratique."
+            - "Les utilisateurs conviennent directement de l’étendue, des honoraires, de la facturation et de l’organisation pratique. Après acceptation, ils échangent les coordonnées du destinataire de la facture et les données Peppol en privé."
         content:
           heading: "5. Missions et contenu interdit"
           paragraphs:

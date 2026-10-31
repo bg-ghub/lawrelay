@@ -40,10 +40,8 @@ class Assignment < ApplicationRecord
   validates :duration_minutes, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 1_440 }, allow_nil: true
   validates :duration_minutes, presence: true, if: :court_replacement?
   validates :fee_cents, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10_000_000 }, allow_nil: true
-  validates :assignment_subtype, presence: true
+  validates :assignment_subtype, presence: true, if: :legal_task?
   validates :scope_indication, length: { maximum: 250 }, allow_blank: true
-  validates :invoice_name, :invoice_enterprise_number, :invoice_email, :invoice_address_line_1,
-    :invoice_postal_code, :invoice_city, presence: true, on: :invoice_details
   validates :invoice_name, length: { maximum: 160 }, allow_blank: true
   validates :invoice_email, length: { maximum: 254 }, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
   validates :invoice_address_line_1, length: { maximum: 200 }, allow_blank: true
@@ -84,6 +82,8 @@ class Assignment < ApplicationRecord
   end
 
   def subtype_label
+    return if assignment_subtype.blank?
+
     I18n.t("marketplace.assignment_subtypes.#{assignment_subtype}")
   end
 
@@ -200,7 +200,6 @@ class Assignment < ApplicationRecord
       end
     end
     self.practice_area = custom_choice(practice_area_other) if practice_area == OTHER_CHOICE
-    self.assignment_subtype ||= court_replacement? ? "hearing" : "advice"
     self.response_deadline_at ||= starts_at&.advance(hours: -1)
 
     return unless court_replacement?

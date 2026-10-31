@@ -48,7 +48,6 @@ class BillingController < ApplicationController
     redirect_to root_path, alert: t("billing.notices.no_firm") and return unless @firm
 
     @billing_account = BillingAccount.find_or_create_by!(firm: @firm) do |account|
-      account.billing_email = @firm.billing_email || Current.user.email_address
       account.plan_key = "founding_beta"
       account.status = "pending"
     end

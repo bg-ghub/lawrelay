@@ -1,17 +1,17 @@
 fr:
   registry_status:
-    title: "Contrôles des registres"
-    intro: "Contrôle quotidien de la BCE et d’advocaat.be."
+    title: "Contrôles de l’annuaire"
+    intro: "Contrôle quotidien d’advocaat.be."
     back: "Retour aux membres"
     latest_run: "Dernier contrôle quotidien"
     run_date: "Date du contrôle"
     result: "Dernier résultat"
     completed_at: "Terminé"
-    checked_count: "Sources contrôlées"
+    checked_count: "Profils contrôlés"
     not_yet: "Pas encore"
     empty_title: "Aucun contrôle quotidien"
     empty_body: "Les résultats apparaîtront après le premier contrôle planifié sur le serveur."
-    checks: "Contrôles des registres des membres actuels"
+    checks: "Contrôles de l’annuaire des membres actuels"
     checked_at: "Dernière tentative"
     last_definitive: "Dernier résultat confirmé"
     issue: "Examen nécessaire"
@@ -19,21 +19,12 @@ fr:
     resolved_at: "Signalement résolu"
     members: "Membres"
     sources:
-      kbo: "Banque-Carrefour des Entreprises"
       directory: "Annuaire advocaat.be"
     runs:
       pending: "Planifié"
       running: "En cours"
       completed: "Terminé"
     statuses:
-      kbo:
-        pending: "Premier contrôle en attente"
-        ok: "Entreprise active"
-        active: "Entreprise active"
-        inactive: "Entreprise inactive"
-        not_found: "Entreprise introuvable ; statut non confirmé"
-        invalid: "Numéro d’entreprise enregistré invalide ; statut non confirmé"
-        unavailable: "Source indisponible ; statut de l’entreprise non confirmé"
       directory:
         pending: "Premier contrôle en attente"
         active: "Profil professionnel confirmé"
@@ -41,15 +32,13 @@ fr:
         changed: "Identité professionnelle modifiée"
         unavailable: "Source indisponible ; statut professionnel non confirmé"
     issues:
-      kbo:
-        inactive: "L’entreprise est inactive à la BCE. Examinez le compte du membre."
       directory:
         not_listed: "Le profil enregistré ne figure plus dans l’annuaire. Examinez le compte du membre."
         changed: "L’identité du profil enregistré ne correspond plus. Examinez le compte du membre."
     mailer:
       subject:
-        one: "LawRelay : 1 nouveau signalement"
-        other: "LawRelay : %{count} nouveaux signalements"
+        one: "LawRelay : 1 nouveau signalement de l’annuaire"
+        other: "LawRelay : %{count} nouveaux signalements de l’annuaire"
       body:
         one: "Le contrôle quotidien a relevé 1 nouveau signalement."
         other: "Le contrôle quotidien a relevé %{count} nouveaux signalements."

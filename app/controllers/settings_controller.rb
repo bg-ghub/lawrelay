@@ -18,15 +18,8 @@ class SettingsController < ApplicationController
       clear_directory_evidence! if directory_identity_changed
       reset_profile_verification! if profile_requires_review || directory_identity_changed
 
-      if @can_manage_firm
-        @firm.assign_attributes(firm_params)
-        BusinessRegistry::Preview.apply(@firm, token: params.dig(:firm, :kbo_lookup_token))
-        raise ActiveRecord::RecordInvalid, @firm unless @firm.valid?(:company_details)
-      end
-
       @user.save!
       @profile.save!
-      @firm.save! if @can_manage_firm
       record_changes!(profile_requires_review:)
     end
 
@@ -72,20 +65,18 @@ class SettingsController < ApplicationController
   end
 
   def mark_profile_import_preview
-    @profile_import_preview = [ @user, @profile, (@firm if @can_manage_firm) ].compact.any?(&:changed?)
+    @profile_import_preview = [ @user, @profile ].any?(&:changed?)
   end
 
   def assign_preview_values
     @user.assign_attributes(user_params)
     @profile.assign_attributes(profile_params)
-    @firm.assign_attributes(firm_params) if @can_manage_firm
   end
 
   def load_records
     @user = current_user
     @profile = @user.lawyer_profile || @user.build_lawyer_profile
     @firm = current_firm
-    @can_manage_firm = @firm.present? && current_user.firm_administrator?(@firm)
   end
 
   def user_params
@@ -101,13 +92,6 @@ class SettingsController < ApplicationController
     permitted[:practice_areas] = list_values(permitted[:practice_areas]) if permitted.key?(:practice_areas)
     permitted[:court_preferences] = list_values(permitted[:court_preferences]) if permitted.key?(:court_preferences)
     permitted
-  end
-
-  def firm_params
-    params.fetch(:firm, {}).permit(
-      :name, :enterprise_number, :billing_email, :phone,
-      :address_line_1, :postal_code, :city
-    )
   end
 
   def profile_review_required?
@@ -150,7 +134,7 @@ class SettingsController < ApplicationController
   end
 
   def record_changes!(profile_requires_review:)
-    changed_models = [ @user, @profile, (@firm if @can_manage_firm) ].compact.select(&:saved_changes?)
+    changed_models = [ @user, @profile ].select(&:saved_changes?)
     changed_models.each do |record|
       AuditEvent.create!(
         auditable: record,

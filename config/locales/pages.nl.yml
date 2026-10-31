@@ -49,15 +49,15 @@ nl:
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Op uw verzoek halen we uw openbare naam, e-mailadres, talen en rechtsdomeinen van advocaat.be op om het registratieformulier in te vullen. Het voorbeeld is 20 minuten geldig."
-            - "We controleren dagelijks je advocaat.be-profiel en ondernemingsnummer in de KBO. De beheerder krijgt een melding bij een inactieve onderneming of een verdwenen of gewijzigd profiel."
-            - "Professionele en facturatiegegevens: uw officiële profiel, vermelde naam en e-mailadres, ondernemingsnaam, ondernemings-/btw-nummer, contactgegevens en professionele verificatiestatus. Als u via de officiële publieke KBO-zoekpagina zelf een ondernemingsnummer opzoekt, bewaren we de teruggegeven facturatiegegevens (naam, nummer en, waar beschikbaar, zeteladres) en de datum van de KBO-gegevens."
+            - "We controleren dagelijks uw advocaat.be-profiel. De beheerder krijgt een melding bij een verdwenen of gewijzigd profiel."
+            - "Professionele identiteit: uw officiële profiel, vermelde naam en e-mailadres en professionele verificatiestatus."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
-            - "Facturatiegegevens per opdracht, zoals professionele naam en ondernemings-/btw-nummer. Geverifieerde kijkers van de opdracht zien naam en nummer; het kantoor van de opdrachtgever en de gekozen confrater zien het volledige facturatieadres en e-mailadres."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
             - "Alleen voor niet-aangemelde openbare bezoeken: cookieless Umami-statistieken met een beperkt paginapad, de oorsprong van de verwijzer en gewone metadata van het browserverzoek. We sturen geen accountgegevens, private pagina's, formulieren, zoekopdrachten of opdrachtdetails door."
             - "Voor anonieme bezoekers buiten België gebruikt een lokale beveiligingscontrole het IP-adres om het land te bepalen en bewaart zij kort een verificatierecord."
           paragraphs:
             - "LawRelay is niet bedoeld voor cliëntnamen, dossierfeiten, conclusies, bewijsstukken, documenten of vertrouwelijke communicatie. Die informatie hoort in systemen onder controle van de betrokken advocaten."
+            - "Na aanvaarding wisselen de advocaten de facturatie- en Peppol-gegevens onderling privé uit."
         purposes:
           heading: "3. Waarom en op welke grond"
           bullets:
@@ -67,7 +67,7 @@ nl:
         sharing:
           heading: "4. Met wie gegevens worden gedeeld"
           paragraphs:
-            - "Open opdrachten zijn zichtbaar voor geverifieerde leden. Reacties zijn zichtbaar voor de reagerende advocaat en het kantoor van de opdrachtgever. Na aanvaarding ontvangen de opdrachtgever en de gekozen advocaat elkaars e-mailadres."
+            - "Open opdrachten zijn zichtbaar voor geverifieerde leden. Reacties zijn zichtbaar voor de reagerende advocaat en leden van de werkruimte van de opdrachtgever. Na aanvaarding ontvangen de opdrachtgever en de gekozen advocaat elkaars e-mailadres."
             - "De uitbater en de hieronder vermelde hosting-, e-mail- en back-upleveranciers verwerken gegevens voor de werking van de dienst. Gegevens worden niet verkocht."
         transfers:
           heading: "5. Locatie en doorgiften"
@@ -77,7 +77,7 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
-            - "De laatste registercontrole blijft bij je account. Controleoverzichten en afgehandelde waarschuwingen: 90 dagen. Open waarschuwingen kunnen voor onderzoek bewaard blijven."
+            - "De laatste profielcontrole blijft bij uw account. Controleoverzichten en afgehandelde waarschuwingen: 90 dagen. Open waarschuwingen kunnen voor onderzoek bewaard blijven."
             - "Ongebruikte, onbevestigde registraties: 30 dagen inactiviteit. Analytics van openbare pagina's: 90 dagen. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
             - "Accounts blijven bestaan tot afsluiting. Je kunt je account in Profiel verwijderen na bevestiging van je wachtwoord. We verwijderen gegevens die niet meer nodig zijn. Gedeelde opdrachtgegevens kunnen 2 jaar gepseudonimiseerd blijven, net als minimale verwijderregistraties. Open opdrachten, onderzoeken, geschillen of wettelijke plichten kunnen langere bewaring vereisen."
             - "Back-ups worden 30 dagen bewaard. Verwijderde gegevens kunnen nog tijdelijk in versleutelde back-ups of opslagversies staan, maximaal ongeveer 60 dagen."
@@ -115,7 +115,7 @@ nl:
           bullets:
             - "Elke advocaat blijft verantwoordelijk voor bevoegdheid tot uitbesteding, belangenconflicten, onafhankelijkheid, bekwaamheid, termijnen, rechtbankregels, beroepsgeheim, verzekering, cliëntcommunicatie en alle balieverplichtingen."
             - "Een match of verificatiestatus vervangt nooit het eigen onderzoek van de advocaat."
-            - "Gebruikers spreken omvang, ereloon, facturatie en praktische uitvoering rechtstreeks af."
+            - "Gebruikers spreken omvang, ereloon, facturatie en praktische uitvoering rechtstreeks af. Na aanvaarding wisselen ze de facturatie- en Peppol-gegevens onderling privé uit."
         content:
           heading: "5. Opdrachten en verboden inhoud"
           paragraphs:

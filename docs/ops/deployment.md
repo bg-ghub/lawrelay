@@ -56,6 +56,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+From `0.19.0`, startup clears retired member company fields before serving traffic, preserving held records and historical financial evidence. Old company details are not restored during rollback. Use a compatible forward fix: earlier releases collect this data again and require invoice fields that are now empty. Isolated predecessor-image checks are not approval to reopen that collection in production.
+
 Releases before `0.18.0` do not run daily registry checks or deliver their alerts. After enabling this feature, prefer a compatible forward fix and review pending registry jobs before any application downgrade.
 
 From `0.17.0`, every user has a non-null public UUID. Earlier images do not generate it when creating users, so they are not compatible with the migrated database for normal traffic. Prefer a forward fix that preserves UUID URLs. A schema reversal removes those identifiers and breaks new bookmarks; test it only on an isolated restore and assess the impact before any production recovery.

@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  TERMS_VERSION = "2026-10-31-email-review"
-  PRIVACY_VERSION = "2026-10-31-daily-checks"
+  TERMS_VERSION = "2026-10-31-private-invoicing"
+  PRIVACY_VERSION = "2026-10-31-company-data-retired"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -51,7 +51,7 @@ class RegistrationsController < ApplicationController
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
     # Record receipt of the privacy notice, not consent as a processing basis.
     @user.accepted_privacy_version = PRIVACY_VERSION if @terms_accepted
-    models_valid = @user.valid? & @firm.valid?(:company_details) & @lawyer_profile.valid?
+    models_valid = @user.valid? & @firm.valid? & @lawyer_profile.valid?
     unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])
       @lawyer_profile.errors.add(:directory_profile_url, t("directory_onboarding.registration.invalid_profile_url"))
       models_valid = false
@@ -122,15 +122,7 @@ class RegistrationsController < ApplicationController
       password_confirmation: attributes[:password_confirmation],
       locale: locale
     )
-    @firm = Firm.new(
-      name: attributes[:firm_name],
-      enterprise_number: attributes[:enterprise_number],
-      address_line_1: attributes[:address_line_1],
-      postal_code: attributes[:postal_code],
-      city: attributes[:city],
-      billing_email: email
-    )
-    BusinessRegistry::Preview.apply(@firm, token: attributes[:kbo_lookup_token])
+    @firm = Firm.new(name: Firm::INTERNAL_WORKSPACE_NAME)
     @lawyer_profile = @user.build_lawyer_profile(
       # Existing schema requires a registry value before the official lookup.
       # Keep it opaque so a public directory UUID cannot be squatted at signup.
@@ -162,8 +154,7 @@ class RegistrationsController < ApplicationController
   def registration_params
     params.require(:registration).permit(
       :first_name, :last_name, :email_address, :password, :password_confirmation,
-      :firm_name, :enterprise_number, :directory_profile_url, :directory_preview_token,
-      :address_line_1, :postal_code, :city, :kbo_lookup_token,
+      :directory_profile_url, :directory_preview_token,
       :locale, :terms_accepted
     )
   end

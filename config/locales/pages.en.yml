@@ -49,15 +49,15 @@ en:
             - "Account and contact data, including name, professional email, preferred language, and authentication records. Email-access requests, decisions and identity-check notes are kept with your professional profile."
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
             - "At your request, we fetch your public advocaat.be name, email, languages and legal areas to fill in signup. The preview is valid for 20 minutes."
-            - "We check your advocaat.be profile and KBO enterprise number daily. The operator is alerted to an inactive business or a missing or changed profile."
-            - "Professional and billing data: your official directory profile, listed name and email, company name, enterprise/VAT number, contact details and professional-verification status. If you use the official KBO public search to look up an enterprise number, we store the returned billing fields (name, number and, where available, registered-office address) and KBO source snapshot date."
+            - "We check your advocaat.be profile daily. The operator is alerted to a missing or changed profile."
+            - "Professional identity: your official directory profile, listed name and email, and professional-verification status."
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
-            - "Per-assignment invoice recipient data, including professional name and enterprise/VAT number. Verified assignment viewers can see the recipient name and number; the requester’s firm and the selected confrater can see the full invoice address and email."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
             - "For anonymous public visits only, cookieless Umami statistics: a limited page path, referrer origin and ordinary browser-request metadata. We do not send account details, private pages, forms, queries or assignment data."
             - "For anonymous visitors outside Belgium, a local security check uses the request IP to determine the country and stores a short-lived verification record."
           paragraphs:
             - "LawRelay is not intended to receive client names, case facts, pleadings, evidence, documents, or privileged communications. Users must keep that information in systems controlled by the lawyers involved."
+            - "After acceptance, the lawyers exchange invoice-recipient and Peppol details privately."
         purposes:
           heading: "3. Why and on what basis"
           bullets:
@@ -67,7 +67,7 @@ en:
         sharing:
           heading: "4. Who receives data"
           paragraphs:
-            - "Open assignments are visible to verified members. Proposals are visible to the submitting lawyer and the requester's firm. The requester and selected lawyer receive each other's email address after acceptance."
+            - "Open assignments are visible to verified members. Proposals are visible to the submitting lawyer and members of the requester's workspace. The requester and selected lawyer receive each other's email address after acceptance."
             - "The operator and the hosting, email and backup providers below process data as needed to run the service. Data is not sold."
         transfers:
           heading: "5. Location and transfers"
@@ -77,7 +77,7 @@ en:
         retention:
           heading: "6. Retention"
           paragraphs:
-            - "The latest registry check stays with your account. Check summaries and resolved alerts: 90 days. Open alerts may remain for investigation."
+            - "The latest directory check stays with your account. Check summaries and resolved alerts: 90 days. Open alerts may remain for investigation."
             - "Unused, unconfirmed registrations: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
             - "Accounts remain until closure. You can delete your account in Profile after confirming your password. We remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Open work, investigations, disputes or legal duties may require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
@@ -115,7 +115,7 @@ en:
           bullets:
             - "Each lawyer remains responsible for authority to delegate, conflicts checks, independence, competence, deadlines, court rules, professional secrecy, insurance, client communication, and all bar obligations."
             - "A match or verification status never replaces the lawyer's own due diligence."
-            - "Users must agree the scope, professional fee, invoicing, and practical arrangements directly."
+            - "Users must agree the scope, professional fee, invoicing, and practical arrangements directly. After acceptance, they exchange invoice-recipient and Peppol details privately."
         content:
           heading: "5. Assignments and prohibited content"
           paragraphs:

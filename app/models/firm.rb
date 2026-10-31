@@ -1,4 +1,6 @@
 class Firm < ApplicationRecord
+  # A workspace groups permissions and verification without collecting a legal identity.
+  INTERNAL_WORKSPACE_NAME = "Workspace".freeze
   VERIFICATION_STATUSES = %w[pending verified rejected suspended].freeze
 
   has_many :memberships, dependent: :destroy

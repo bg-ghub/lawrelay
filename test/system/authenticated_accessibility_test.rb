@@ -36,7 +36,7 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     each_locale_and_width do |locale, width|
       visit settings_path(locale:)
       assert_accessible_document(locale, width)
-      assert_selector "fieldset legend", count: 3
+      assert_selector "fieldset legend", count: 2
       assert_selector "button.profile-import-button", text: I18n.t("profile_import.button", locale:)
       assert_pointer_target(find(".profile-import-button"))
 
@@ -52,7 +52,7 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     active_element.send_keys(:enter)
     assert_selector "form[data-unsaved-changes='true']", visible: :all
     assert_selector "[role='status']", text: "Details loaded. Review them, then save."
-      assert_field "Phone", with: ""
+    assert_no_selector "[name^='firm[']", visible: :all
     assert_nil @account.firm.reload.phone
     assert_accessible_document(:en, 1440)
   end

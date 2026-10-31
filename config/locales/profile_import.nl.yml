@@ -2,7 +2,7 @@ nl:
   profile_import:
     button: "Gegevens ophalen van advocaat.be"
     preview: "Gegevens opgehaald. Kijk ze na en sla op."
-    scope: "Haalt talen en voorkeurmateries op. Facturatiegegevens blijven apart."
+    scope: "Haalt talen en voorkeurmateries op."
     empty: "Je profiel bevat geen talen of voorkeurmateries om op te halen."
     unavailable: "Je profiel kon niet worden opgehaald. Probeer het later opnieuw."
     missing_profile: "Er is geen geldig advocaat.be-profiel gekoppeld."

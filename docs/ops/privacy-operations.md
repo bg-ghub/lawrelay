@@ -11,9 +11,9 @@ OUTPUT=/protected/private-directory/deletion-124.json bin/rails 'privacy:erasure
 
 The arguments are the request ID and the administrator ID. Export requires an `access_export` request; inventory requires `deletion`. Output is exclusive (no overwrite), mode `0600`; Windows is refused because this helper cannot establish private Windows ACLs. Only a metadata-only preparation event enters the audit trail. The request remains in review.
 
-The export contains allowlisted account/profile fields, the member's own authored assignments/proposals/reports, request history, notification status, sessions and account audit timestamps/actions. Authentication secrets, audit metadata, admin resolution notes, other users' proposals and shared firm/billing records are excluded. Review authored free text before releasing it. Assess excluded and externally held personal data separately: this is not a complete automatic access-response service.
+The export contains allowlisted account/profile fields, the member's own authored assignments/proposals/reports, request history, notification status, sessions and account audit timestamps/actions. Authentication secrets, audit metadata, admin resolution notes, other users' proposals, shared workspace records and historical billing records are excluded. Review authored free text before releasing it. Assess excluded and externally held personal data separately: this is not a complete automatic access-response service.
 
-The erasure inventory counts direct references and shared firms without changing them. Check indirect references, other participants, the retention schedule, support mail, logs and backups before deciding what may be deleted or pseudonymised. A recorded legal, security or dispute hold pauses deletion only for the necessary records; review it every 90 days. Keep the decision privately so it can be reapplied after a restore.
+The erasure inventory counts direct references and shared workspaces without changing them. Check indirect references, other participants, the retention schedule, support mail, logs and backups before deciding what may be deleted or pseudonymised. A recorded legal, security or dispute hold pauses deletion only for the necessary records; review it every 90 days. Keep the decision privately so it can be reapplied after a restore.
 
 ## Retention and erasure
 
@@ -41,9 +41,11 @@ After identity, scope and response are reviewed, erase an assigned deletion requ
 CONFIRM=ERASE bin/rails 'privacy:erase[123,1]'
 ```
 
-This requires an active MFA administrator and an assigned `in_review` member deletion request. It refuses ongoing work, holds and billing records. It removes profile, authentication and authored personal text where allowed, while retaining other lawyers’ work and minimal pseudonymous shared records for two years. It also completes the reviewed request. It is not a bulk account-delete tool.
+This requires an active MFA administrator and an assigned `in_review` member deletion request. It refuses ongoing work, holds and historical billing records. It removes profile, authentication and authored personal text where allowed, while retaining other lawyers’ work and minimal pseudonymous shared records for two years. It also completes the reviewed request. It is not a bulk account-delete tool.
 
-The protected deletion ledger is replayed before restored traffic or workers resume and is pruned daily after two years. A pending or incomplete ledger operation stops automatic erasure until it is resolved.
+Member company collection is retired. The internal `Firm` is a permission workspace; preserve its IDs, memberships and verification. `Privacy::CompanyDataCleanup` runs at application startup and daily to clear unnecessary company, invoice-recipient and KBO attribution fields. It preserves recorded holds and historical financial evidence. Preview it with `DRY_RUN=true bin/rails privacy:remove_member_company_data`; the same task without `DRY_RUN=true` applies the cleanup. Review protected records separately.
+
+The protected deletion ledger is replayed before restored traffic or workers resume and is pruned daily after two years. A pending or incomplete ledger operation stops automatic erasure until it is resolved. Apply the retired-company cleanup before restored traffic resumes as well. Normal snapshots remain for 30 days; protected backup copies or storage versions can contain deleted data for up to about 60 days.
 
 Review and transfer the response through the verified private channel. Keep working files outside GitHub and delete them according to the approved handling policy. Record actual execution separately before closing the request.
 

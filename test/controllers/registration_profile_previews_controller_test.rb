@@ -39,7 +39,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_equal %w[email_address first_name last_name name profile_attributes profile_url status token], body.keys.sort
   end
 
-  test "HTML preview prefills missing identity fields without echoing passwords or replacing billing edits" do
+  test "HTML preview prefills missing identity without echoing passwords or forged company details" do
     post registration_profile_path(locale: :en), params: { registration: {
       directory_profile_url: PROFILE_URL, password: "do-not-echo-this-password", password_confirmation: "do-not-echo-this-password",
       firm_name: "My invoice company", enterprise_number: "1234567894", address_line_1: "My invoice street",
@@ -49,13 +49,14 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_select "input[name='registration[first_name]'][value='Jane']"
     assert_select "input[name='registration[last_name]'][value='van den Berg']"
     assert_select "input[name='registration[email_address]'][value='working@example.test']"
-    assert_select "input[name='registration[firm_name]'][value='My invoice company']"
-    assert_select "input[name='registration[address_line_1]'][value='My invoice street']"
+    assert_select "input[name='registration[firm_name]'], input[name='registration[address_line_1]']", count: 0
+    assert_not_includes response.body, "My invoice company"
+    assert_not_includes response.body, "My invoice street"
     assert_not_includes response.body, "do-not-echo-this-password"
     assert_select "input[name='registration[password]'][value]", count: 0
   end
 
-  test "an imported profile still creates a pending account and retains the user invoice recipient" do
+  test "an imported profile still creates a pending account and minimal internal workspace" do
     assert_enqueued_jobs 2 do
       post registration_path(locale: :en), params: { registration: registration_attributes }
     end
@@ -68,8 +69,10 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_nil user.lawyer_profile.directory_email_verified_at
     assert_equal %w[NL FR], user.lawyer_profile.spoken_languages
     assert_equal [ "Familierecht" ], user.lawyer_profile.practice_areas
-    assert_equal "My invoice company", user.primary_firm.name
-    assert_equal "My invoice street", user.primary_firm.address_line_1
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, user.primary_firm.name
+    assert_nil user.primary_firm.enterprise_number
+    assert_nil user.primary_firm.billing_email
+    assert_nil user.primary_firm.address_line_1
     assert_not user.marketplace_verified?
   end
 
@@ -93,12 +96,12 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     end
   end
 
-  test "company details remain required after importing a public professional profile" do
-    assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
+  test "company details are unnecessary after importing a public professional profile" do
+    assert_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ], 1 do
       post registration_path(locale: :en), params: { registration: registration_attributes.merge(firm_name: "", enterprise_number: "") }
     end
-    assert_response :unprocessable_content
-    assert_includes response.body, "Enterprise number"
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, User.find_by!(email_address: "working@example.test").primary_firm.name
   end
 
   test "after an invalid preview the preserved fields can be registered through manual fallback" do
@@ -186,7 +189,6 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
   def registration_attributes
     { first_name: "Jane", last_name: "van den Berg", email_address: "working@example.test",
       password: "correct-horse-battery-staple", password_confirmation: "correct-horse-battery-staple",
-      firm_name: "My invoice company", enterprise_number: "1234567894", address_line_1: "My invoice street",
       directory_profile_url: PROFILE_URL, directory_preview_token: Directory::SignupPreview.issue(@result),
       locale: "en", terms_accepted: "1" }
   end

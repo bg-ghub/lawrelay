@@ -27,13 +27,16 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/fr/admin/mfa/setup"
   end
 
-  test "search finds firm members without duplicate rows and escapes SQL wildcard input" do
+  test "search finds member identity without duplicate rows and escapes SQL wildcard input" do
     second_firm = Firm.create!(name: "Second managed office")
     @user.memberships.create!(firm: second_firm, role: "member")
     get "/en/admin/users", params: { q: "managed" }
     assert_response :success
     assert_select "a[href='#{admin_user_path(@user, locale: :en)}']", minimum: 1
     assert_select ".admin-user-row", count: 1
+    get "/en/admin/users", params: { q: second_firm.name }
+    assert_response :success
+    assert_select ".admin-user-row", count: 0
     get "/en/admin/users", params: { q: "%" }
     assert_response :success
     assert_select "a[href='#{admin_user_path(@user, locale: :en)}']", count: 0
@@ -111,13 +114,18 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "list and account details render in all interface languages" do
+    @account.firm.update!(name: "Hidden Legal Company", enterprise_number: "0123456749",
+      address_line_1: "Hidden Company Street 123", postal_code: "4321", city: "Hidden Company City",
+      kbo_details: { "source" => "kbo", "fields" => %w[name enterprise_number], "status" => "active" })
     %w[nl fr de en].each do |locale|
       get "/#{locale}/admin/users"
       assert_response :success
       assert_not_includes response.body, "translation missing"
+      assert_company_metadata_absent
       get admin_user_path(@user, locale:)
       assert_response :success
       assert_not_includes response.body, "translation missing"
+      assert_company_metadata_absent
     end
   end
 
@@ -254,5 +262,15 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
       assert_response :not_found
     end
     assert_equal "Managed", @user.reload.first_name
+  end
+
+  private
+
+  def assert_company_metadata_absent
+    [ @account.firm.name, @account.firm.enterprise_number, @account.firm.vat_number,
+      @account.firm.address_line_1, @account.firm.city ].each do |value|
+      assert_not_includes response.body, value
+    end
+    assert_select ".business-source", count: 0
   end
 end

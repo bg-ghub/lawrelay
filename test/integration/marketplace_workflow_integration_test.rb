@@ -21,7 +21,7 @@ class MarketplaceWorkflowIntegrationTest < ActionDispatch::IntegrationTest
           practice_area: "Commercial law",
           fee_cents: "300",
           content_rules_accepted: "1"
-        }.merge(invoice_recipient_attributes)
+        }
       }
     end
 
@@ -50,7 +50,7 @@ class MarketplaceWorkflowIntegrationTest < ActionDispatch::IntegrationTest
         starts_at: 4.days.from_now,
         fee_cents: "350",
         content_rules_accepted: "1"
-      }.merge(invoice_recipient_attributes)
+      }
     }
 
     assignment = Assignment.order(:id).last

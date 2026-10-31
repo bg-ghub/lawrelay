@@ -169,7 +169,7 @@ Do not restore into the sole production volume. For corruption or loss:
 2. Select a known-good restic snapshot and calculate the expected data-loss window.
 3. Restore into a new, isolated directory/volume and run SQLite integrity checks.
 4. Extract the storage archive and point a compatible application release at the new volume.
-5. Recover the ledger from the **latest successful** restic snapshot, even if the selected database snapshot is older. Never overwrite a current/newer host ledger with an older copy. Replay it before starting writes or queue workers.
+5. Recover the ledger from the **latest successful** restic snapshot, even if the selected database snapshot is older. Never overwrite a current/newer host ledger with an older copy. Replay it before starting writes or queue workers. On releases from `0.19.0`, also run `bin/rails privacy:remove_member_company_data` before traffic resumes; ordinary application startup does this automatically. This removes retired company fields from restored copies while preserving protected evidence.
 6. Smoke-test login, permissions, assignments, attachments, mail and queues; confirm payments remain disabled before switching traffic.
 7. On a replacement host, reconcile deletion requests made since the latest successful backup (up to the backup RPO) before opening traffic. Have the incident commander approve the cutover; retain the prior volume until recovery is accepted.
 

@@ -1,13 +1,13 @@
 # Assignment notifications
 
-Solid Queue runs KBO/directory checks daily at 05:00 UTC on the existing server. New issues produce one operator summary through Migadu and appear under Registry checks in admin. Lookup outages never count as confirmed inactivity, and monitoring does not suspend accounts. Summary delivery has durable retries and is covered by generic operations health.
+Solid Queue checks members' advocaat.be profiles daily at 05:00 UTC on the existing server. KBO monitoring is retired. New issues produce one operator summary through Migadu and appear under Registry checks in admin. Directory outages remain indeterminate, and monitoring does not suspend accounts. Summary delivery has durable retries and is covered by generic operations health.
 
 | Event | Recipient |
 | --- | --- |
 | New response | Assignment creator |
 | Selected / not selected | Respective responding lawyer |
 | Response withdrawn | Assignment creator |
-| Assignment selected by another firm manager | Assignment creator |
+| Assignment selected by another workspace manager | Assignment creator |
 | Cancelled | Pending/selected participants and creator, excluding the person cancelling |
 | Completed | Selected lawyer and creator, excluding the person completing |
 | Expired at execution time | Creator and pending applicants |

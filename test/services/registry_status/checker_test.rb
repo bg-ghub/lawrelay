@@ -7,16 +7,14 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
 
   setup do
     @account = create_marketplace_account(prefix: "registry-check", verified: false, email_verified: false)
-    @account.profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}",
+    @account.profile.update!(directory_profile_url: profile_url,
       directory_name: "Persisted Directory Identity", directory_email: "expected@example.test")
     clear_enqueued_jobs
   end
 
-  test "catalog includes pending and suspended members and deduplicates valid company numbers" do
+  test "catalog checks pending and suspended members individually and excludes other identities" do
     second = users(:two)
     second.update!(suspended_at: Time.current)
-    duplicate_firm = Firm.create!(name: "Shared number", enterprise_number: "BE #{@account.firm.enterprise_number}")
-    second.memberships.create!(firm: duplicate_firm)
     second.create_lawyer_profile!(bar_association: "OVB", bar_number: "registry-duplicate",
       directory_profile_url: @account.profile.directory_profile_url.sub("www.advocaat.be", "advocaat.be"),
       directory_name: @account.profile.directory_name, directory_email: @account.profile.directory_email)
@@ -25,58 +23,52 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     erased = create_marketplace_account(prefix: "registry-erased")
     erased.profile.update!(directory_profile_url: profile_url)
     erased.user.update!(erased_at: Time.current)
-    invalid_firm = Firm.create!(name: "Invalid number", enterprise_number: "123")
-    users(:one).memberships.create!(firm: invalid_firm)
 
     targets = RegistryStatus::Targets.all
-    assert_equal 3, targets.size
-    assert_equal %w[directory directory kbo], targets.map(&:source).sort
+    assert_equal 2, targets.size
+    assert_equal [ "directory" ], targets.map(&:source).uniq
+    assert targets.all? { |target| target.firm_id.nil? }
+    assert_equal 2, targets.map(&:digest).uniq.size
     directory = targets.find { |target| target.lawyer_profile_id == @account.profile.id }
     assert_equal "Persisted Directory Identity", directory.full_name
     assert_equal "expected@example.test", directory.expected_email
-    assert_equal @account.profile.id, directory.lawyer_profile_id
-    assert_equal @account.firm.id, targets.find { |target| target.source == "kbo" }.firm_id
   end
 
   test "members sharing a canonical directory URL each have their persisted identity checked" do
-    second = users(:two)
-    second.update!(suspended_at: Time.current)
-    second_profile = second.create_lawyer_profile!(bar_association: "OVB", bar_number: "second-directory-identity",
-      directory_profile_url: @account.profile.directory_profile_url.sub("www.advocaat.be", "advocaat.be"),
-      directory_name: "Different Persisted Identity", directory_email: "second-expected@example.test")
+    second_profile = add_profile(users(:two), name: "Different Persisted Identity", email: "second-expected@example.test",
+      url: @account.profile.directory_profile_url.sub("www.advocaat.be", "advocaat.be"))
     calls = []
     outcome = ->(arguments) { result(arguments.fetch(:full_name) == @account.profile.directory_name ? :active : :changed) }
-    with_lookups(kbo: :ok, directory: outcome, calls:) do
+    with_lookup(directory: outcome, calls:) do
       run = execute_claimed_run(Time.current.utc.to_date)
       assert_equal 1, run.new_findings_count
       assert_equal second_profile.id, run.findings.sole.fetch("lawyer_profile_id")
     end
-    directory_calls = calls.select { |source, _| source == :directory }.map(&:last)
-    assert_equal 2, directory_calls.size
-    assert_equal 1, directory_calls.map { |arguments| arguments.fetch(:profile_url) }.uniq.size
+    assert_equal 2, calls.size
+    assert_equal 1, calls.map { |arguments| arguments.fetch(:profile_url) }.uniq.size
     assert_equal [ @account.profile.directory_email, second_profile.directory_email ].sort,
-      directory_calls.map { |arguments| arguments.fetch(:expected_email) }.sort
-    assert_equal 2, RegistryStatusCheck.where(source: "directory").count
+      calls.map { |arguments| arguments.fetch(:expected_email) }.sort
     assert_equal 2, RegistryStatusCheck.where(source: "directory").distinct.count(:target_digest)
     assert_equal "changed", RegistryStatusCheck.find_by!(lawyer_profile: second_profile).issue_status
   end
 
-  test "outages preserve issues unchanged findings are quiet and definitive resolution permits recurrence" do
+  test "outages preserve issues unchanged findings are quiet and resolution permits recurrence" do
     domain_records = [ @account.user, @account.firm, @account.profile, @account.user.sessions.create! ]
     before = domain_records.map(&:attributes)
     day = Time.current.utc.to_date
 
-    first = execute(day, kbo: :inactive, directory: :not_listed)
-    assert_equal 2, first.new_findings_count
+    first = execute(day, directory: :not_listed)
+    assert_equal 1, first.new_findings_count
     assert_equal "pending", first.alert_status
     assert RegistryStatusCheck.all.all? { |check| check.last_alerted_at.nil? }
-    assert_equal 0, execute(day + 1, kbo: :unavailable, directory: :unavailable).new_findings_count
-    assert_equal %w[inactive not_listed], RegistryStatusCheck.order(:source).pluck(:issue_status).sort
-    assert_equal %w[inactive not_listed], RegistryStatusCheck.order(:source).pluck(:last_definitive_status).sort
-    assert_equal 0, execute(day + 2, kbo: :inactive, directory: :not_listed).new_findings_count
-    assert_equal 0, execute(day + 3, kbo: :ok, directory: :active).new_findings_count
+    assert_equal 0, execute(day + 1, directory: :unavailable).new_findings_count
+    check = RegistryStatusCheck.sole
+    assert_equal "not_listed", check.issue_status
+    assert_equal "not_listed", check.last_definitive_status
+    assert_equal 0, execute(day + 2, directory: :not_listed).new_findings_count
+    assert_equal 0, execute(day + 3, directory: :active).new_findings_count
     assert_empty RegistryStatusCheck.issues
-    assert_equal 2, execute(day + 4, kbo: :inactive, directory: :not_listed).new_findings_count
+    assert_equal 1, execute(day + 4, directory: :not_listed).new_findings_count
     assert_equal before, domain_records.map { |record| record.reload.attributes }
     assert_enqueued_jobs 0
     state = [ RegistryStatusCheck.all.map(&:attributes), first.reload.attributes ].to_json
@@ -86,35 +78,38 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     end
   end
 
-  test "KBO missing and invalid responses never become inactive or clear a previous inactive finding" do
+  test "not listed changed and unavailable remain distinct and unexpected results are unavailable" do
     day = Time.current.utc.to_date
-    execute(day, kbo: :inactive, directory: :active)
-    [ :not_found, :invalid, :unavailable ].each_with_index do |status, index|
-      run = execute(day + index + 1, kbo: status, directory: :active)
-      assert_equal 0, run.new_findings_count
-      check = RegistryStatusCheck.find_by!(source: "kbo")
-      assert_equal status.to_s, check.status
-      assert_equal "inactive", check.issue_status
-      assert_equal "inactive", check.last_definitive_status
-    end
+    assert_equal 1, execute(day, directory: :not_listed).new_findings_count
+    assert_equal 1, execute(day + 1, directory: :changed).new_findings_count
+    assert_equal "changed", RegistryStatusCheck.sole.issue_status
+    assert_equal 0, execute(day + 2, directory: :unexpected).new_findings_count
+    assert_equal "unavailable", RegistryStatusCheck.sole.status
+    assert_equal "changed", RegistryStatusCheck.sole.last_definitive_status
   end
 
-  test "a duplicate daily invocation does not fetch again or enqueue another consolidated message" do
+  test "a duplicate daily invocation does not fetch again or enqueue another summary" do
     calls = []
-    with_lookups(kbo: :inactive, directory: :changed, calls:) do
+    with_lookup(directory: :changed, calls:) do
       DailyRegistryStatusJob.new.perform(Time.current.utc.to_date.iso8601)
       DailyRegistryStatusJob.new.perform(Time.current.utc.to_date.iso8601)
     end
-    assert_equal [ :kbo, :directory ], calls.map(&:first)
+    assert_equal 1, calls.size
     assert_equal 1, RegistryStatusRun.count
-    assert_equal 2, RegistryStatusRun.first.checked_count
+    assert_equal 1, RegistryStatusRun.first.checked_count
     assert_enqueued_with(job: RegistryStatusAlertJob, args: [ RegistryStatusRun.first.id ])
     assert_enqueued_jobs 1
   end
 
-  test "a retried partial run preserves committed findings and skips completed provider requests" do
+  test "a retried partial run preserves findings and skips completed profile requests" do
+    second_profile = add_profile(users(:two))
     calls = []
-    with_lookups(kbo: :inactive, directory: ->(*) { raise IOError, "synthetic interrupted request" }, calls:) do
+    interrupted = lambda do |arguments|
+      raise IOError, "synthetic interrupted request" if arguments[:profile_url] == second_profile.directory_profile_url
+
+      result(:changed)
+    end
+    with_lookup(directory: interrupted, calls:) do
       assert_raises(IOError) { DailyRegistryStatusJob.new.perform(Time.current.utc.to_date.iso8601) }
     end
     run = RegistryStatusRun.first
@@ -123,31 +118,54 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     assert_equal 1, run.findings.size
     assert_nil run.alert_status
 
-    with_lookups(kbo: :inactive, directory: :active, calls:) do
-      DailyRegistryStatusJob.new.perform(run.run_on.iso8601)
-    end
-    assert_equal [ :kbo, :directory, :directory ], calls.map(&:first)
+    with_lookup(directory: :active, calls:) { DailyRegistryStatusJob.new.perform(run.run_on.iso8601) }
+    assert_equal [ @account.profile.directory_profile_url, second_profile.directory_profile_url, second_profile.directory_profile_url ],
+      calls.map { |arguments| arguments[:profile_url] }
     assert_equal "completed", run.reload.status
     assert_equal 1, run.findings.size
     assert_equal "pending", run.alert_status
     assert_enqueued_jobs 1
   end
 
+  test "the first daily rerun after legacy cleanup retains completed directory dedup state" do
+    run = execute(Time.current.utc.to_date, directory: :changed)
+    check = RegistryStatusCheck.sole
+    original_check = check.attributes
+    digest = RegistryStatusCheck.digest("kbo", @account.firm.enterprise_number)
+    legacy = RegistryStatusCheck.new(source: "kbo", target_digest: digest, identity_digest: digest,
+      status: "inactive", issue_status: "inactive", issue_since: Time.current)
+    legacy.save!(validate: false)
+    run.update!(findings: run.findings + [ legacy.finding_snapshot ],
+      checked_target_digests: run.checked_target_digests + [ digest ])
+
+    RegistryStatus::Cleanup.new.call
+    with_lookup(directory: ->(*) { flunk "Completed directory targets must not be fetched again" }) do
+      DailyRegistryStatusJob.new.perform(run.run_on.iso8601)
+    end
+
+    assert_equal original_check, check.reload.attributes
+    assert_equal [ check.finding_snapshot ], run.reload.findings
+    assert_equal [ check.target_digest ], run.checked_target_digests
+    assert_equal "pending", run.alert_status
+    assert_equal "completed", run.status
+    assert_enqueued_jobs 0
+  end
+
   test "directory details changed during the fetch cannot persist obsolete evidence" do
     old_url = @account.profile.directory_profile_url
     run = nil
-    with_lookups(kbo: :ok, directory: ->(*) { @account.profile.update!(directory_profile_url: profile_url); result(:not_listed) }) do
+    with_lookup(directory: ->(*) { @account.profile.update!(directory_profile_url: profile_url); result(:not_listed) }) do
       run = execute_claimed_run(Time.current.utc.to_date)
     end
-    assert_equal 2, run.checked_count
+    assert_equal 1, run.checked_count
     assert_equal "completed", run.status
     assert_equal 0, run.new_findings_count
-    assert_not RegistryStatusCheck.exists?(source: "directory")
+    assert_empty RegistryStatusCheck.all
     assert_not_equal old_url, @account.profile.reload.directory_profile_url
   end
 
-  test "erasure during a provider request cannot persist a finding for the former member" do
-    with_lookups(kbo: ->(*) { @account.user.update!(erased_at: Time.current); result(:inactive) }, directory: :not_listed) do
+  test "erasure during a directory request cannot persist a finding for the former member" do
+    with_lookup(directory: ->(*) { @account.user.update!(erased_at: Time.current); result(:not_listed) }) do
       run = execute_claimed_run(Time.current.utc.to_date)
       assert_equal 0, run.new_findings_count
       assert_nil run.alert_status
@@ -155,16 +173,16 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     assert_empty RegistryStatusCheck.all
   end
 
-  test "requests are sequential throttled and chunked with durable same-day progress" do
+  test "requests are sequential throttled and chunked with durable same day progress" do
     51.times do |index|
-      base = 20_000_000 + index
-      firm = Firm.create!(name: "Bounded target #{index}", enterprise_number: format("%08d%02d", base, 97 - (base % 97)))
-      @account.user.memberships.create!(firm:)
+      user = User.create!(first_name: "Bounded", last_name: "Member #{index}",
+        email_address: "bounded-directory-#{index}@example.test", password: "password1234")
+      add_profile(user)
     end
     run = RegistryStatusRun.create!(run_on: Time.current.utc.to_date)
     sleeps = []
     calls = []
-    with_lookups(kbo: :ok, directory: :active, calls:) do
+    with_lookup(directory: :active, calls:) do
       first_token = run.claim!
       assert_nil run.reload.claim!
       assert_equal :continue, RegistryStatus::Checker.new(run:, token: first_token, sleeper: ->(duration) { sleeps << duration }).call
@@ -172,18 +190,18 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
       assert_equal "pending", run.status
       assert_equal :completed, RegistryStatus::Checker.new(run:, token: run.claim!, sleeper: ->(duration) { sleeps << duration }).call
     end
-    assert_equal 53, calls.size
-    assert_equal 53, run.reload.checked_target_digests.uniq.size
-    assert_equal 53, run.checked_count
-    assert_equal 51, sleeps.size
+    assert_equal 52, calls.size
+    assert_equal 52, run.reload.checked_target_digests.uniq.size
+    assert_equal 52, run.checked_count
+    assert_equal 50, sleeps.size
     assert sleeps.all? { |duration| duration == RegistryStatus::Checker::REQUEST_INTERVAL }
   end
 
-  test "reconciler closes missed old days without replaying provider requests and recovers alerts" do
+  test "reconciler closes missed old days without replaying requests and recovers alerts" do
     now = Time.current.change(hour: 9)
     old_pending = RegistryStatusRun.create!(run_on: now.utc.to_date - 2, status: "pending")
     old_running = RegistryStatusRun.create!(run_on: now.utc.to_date - 1, status: "running", lease_expires_at: now - 1.minute)
-    completed = execute(now.utc.to_date, kbo: :inactive, directory: :active)
+    completed = execute(now.utc.to_date, directory: :changed)
     ReconcileRegistryStatusJob.new.perform(now:)
     assert_enqueued_jobs 1
     assert_enqueued_with(job: RegistryStatusAlertJob, args: [ completed.id ])
@@ -193,11 +211,11 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     assert_equal 0, old_running.checked_count
   end
 
-  test "day rollover preserves already committed findings and catches up today's missed scheduler tick" do
+  test "day rollover preserves findings and catches up today's missed scheduler tick" do
     now = Time.current.change(hour: 9)
-    previous = execute(now.utc.to_date - 2, kbo: :inactive, directory: :active)
+    previous = execute(now.utc.to_date - 2, directory: :changed)
     previous.update!(status: "pending", completed_at: nil, alert_status: nil)
-    with_lookups(kbo: ->(*) { flunk "Must not replay missed old-day requests" }, directory: ->(*) { flunk "Must not replay missed old-day requests" }) do
+    with_lookup(directory: ->(*) { flunk "Must not replay missed old day requests" }) do
       DailyRegistryStatusJob.new.perform(previous.run_on.iso8601)
     end
     assert_equal "completed", previous.reload.status
@@ -211,7 +229,7 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
   end
 
   test "changed expected identity clears previous definitive evidence before an outage" do
-    target = RegistryStatus::Targets.all.find { |candidate| candidate.source == "directory" }
+    target = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == @account.profile.id }
     check = RegistryStatusCheck.new(source: target.source, target_digest: target.digest, lawyer_profile_id: target.lawyer_profile_id)
     check.record_result!(outcome: :not_listed, checked_at: Time.current, run_on: Date.current, identity_digest: target.identity_digest)
     check.record_result!(outcome: :unavailable, checked_at: Time.current, run_on: Date.current + 1, identity_digest: "changed-identity-digest")
@@ -223,8 +241,13 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
 
   private
 
-  def execute(day, kbo:, directory:)
-    with_lookups(kbo:, directory:) { execute_claimed_run(day) }
+  def add_profile(user, name: user.full_name, email: user.email_address, url: profile_url)
+    user.create_lawyer_profile!(bar_association: "OVB", bar_number: "registry-#{user.id}",
+      directory_profile_url: url, directory_name: name, directory_email: email)
+  end
+
+  def execute(day, directory:)
+    with_lookup(directory:) { execute_claimed_run(day) }
   end
 
   def execute_claimed_run(day)
@@ -241,20 +264,18 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     Struct.new(:status).new(status)
   end
 
-  def with_lookups(kbo:, directory:, calls: [])
-    originals = [ BusinessRegistry::PublicLookup.method(:call), Directory::StatusCheck.method(:call) ]
+  def with_lookup(directory:, calls: [])
+    original = Directory::StatusCheck.method(:call)
+    original_company = BusinessRegistry::PublicLookup.method(:call)
     result_factory = method(:result)
-    BusinessRegistry::PublicLookup.define_singleton_method(:call) do |**arguments|
-      calls << [ :kbo, arguments ]
-      kbo.respond_to?(:call) ? kbo.call(arguments) : result_factory.call(kbo)
-    end
+    BusinessRegistry::PublicLookup.define_singleton_method(:call) { |**| raise "Company lookup must never run" }
     Directory::StatusCheck.define_singleton_method(:call) do |**arguments|
-      calls << [ :directory, arguments ]
+      calls << arguments
       directory.respond_to?(:call) ? directory.call(arguments) : result_factory.call(directory)
     end
     yield
   ensure
-    BusinessRegistry::PublicLookup.define_singleton_method(:call, originals[0]) if originals
-    Directory::StatusCheck.define_singleton_method(:call, originals[1]) if originals
+    Directory::StatusCheck.define_singleton_method(:call, original) if original
+    BusinessRegistry::PublicLookup.define_singleton_method(:call, original_company) if original_company
   end
 end

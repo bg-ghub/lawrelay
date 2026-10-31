@@ -63,21 +63,15 @@ end
 
 nonce = SecureRandom.hex(6)
 password = "Smoke-password-#{nonce}!"
-enterprise_base = 12_345_678
-enterprise_number = format("%08d%02d", enterprise_base, 97 - (enterprise_base % 97))
-candidate_enterprise_base = 23_456_789
-candidate_enterprise_number = format("%08d%02d", candidate_enterprise_base, 97 - (candidate_enterprise_base % 97))
 member = User.create!(first_name: "Locale", last_name: "Member", email_address: "member-#{nonce}@example.invalid", password:, email_verified_at: Time.current, locale: "nl")
-firm = Firm.create!(name: "Localization smoke #{nonce}", enterprise_number:, billing_email: member.email_address, verification_status: "verified", verified_at: Time.current)
+firm = Firm.create!(name: Firm::INTERNAL_WORKSPACE_NAME, verification_status: "verified", verified_at: Time.current)
 Membership.create!(user: member, firm:, role: "owner")
 LawyerProfile.create!(user: member, bar_association: "OVB", bar_number: "SMOKE-#{nonce}", professional_email: member.email_address, directory_email: "directory-#{nonce}@example.invalid", verification_status: "verified", verified_at: Time.current, spoken_languages: LOCALES.map(&:upcase), practice_areas: [ "Civil" ])
 billing_account = BillingAccount.create!(firm:, billing_email: member.email_address, status: "active", plan_key: "founding_beta", complimentary_access_until: 1.year.from_now)
 invoice = Invoice.create!(billing_account:, status: "issued", subtotal_cents: 10_000, vat_rate_basis_points: 2100, issued_on: Date.current, due_on: 30.days.from_now)
 assignment = Assignment.create!(kind: "court_replacement", assignment_subtype: "hearing", title: "Localization hearing #{nonce}", description: "Synthetic localization rendering record.", practice_area: "Civil", starts_at: 2.days.from_now, city: "Gent", court: "Smoke court", duration_minutes: 60, fee_cents: 25_000, status: "open", content_rules_accepted_at: Time.current, firm:, creator_user: member)
-assignment.update!(invoice_name: "Synthetic invoice recipient", invoice_enterprise_number: enterprise_number,
-  invoice_email: member.email_address, invoice_address_line_1: "Synthetic street 1", invoice_postal_code: "1000", invoice_city: "Brussels")
 candidate = User.create!(first_name: "Candidate", last_name: "Locale", email_address: "candidate-#{nonce}@example.invalid", password:, email_verified_at: Time.current, locale: "nl")
-candidate_firm = Firm.create!(name: "Localization candidate #{nonce}", enterprise_number: candidate_enterprise_number, verification_status: "verified", verified_at: Time.current)
+candidate_firm = Firm.create!(name: Firm::INTERNAL_WORKSPACE_NAME, verification_status: "verified", verified_at: Time.current)
 Membership.create!(user: candidate, firm: candidate_firm, role: "owner")
 LawyerProfile.create!(user: candidate, bar_association: "OVB", bar_number: "SMOKE-CANDIDATE-#{nonce}",
   professional_email: candidate.email_address, verification_status: "verified", verified_at: Time.current)
@@ -116,7 +110,7 @@ begin
     check(document.at_css("#registration_first_name")&.[]("value") == "Signup", "#{locale} signup name is prefilled")
     check(document.at_css("#registration_email_address")&.[]("value") == signup_result.email_address, "#{locale} listed email is prefilled")
     check(document.at_css("#registration_directory_preview_token")&.[]("value").present?, "#{locale} signup preview is signed")
-    check(document.at_css("#registration_firm_name")&.[]("value").blank?, "#{locale} billing name stays separate")
+    check(document.at_css("#registration_firm_name").nil? && document.at_css("#registration_enterprise_number").nil?, "#{locale} signup collects no company details")
     check(anonymous.response.headers["Cache-Control"] == "no-store", "#{locale} signup preview is not cached")
   end
 ensure
@@ -133,12 +127,12 @@ LOCALES.each do |locale|
   redirected_visit(session, "/#{locale}/billing", "/#{locale}/dashboard")
 end
 
-# Invoice contact details stay out of the unselected candidate's HTML.
+# Invoice collection stays out of the marketplace.
 candidate_session = browser
 sign_in(candidate_session, "en", candidate, password)
 LOCALES.each do |locale|
   visit(candidate_session, "/#{locale}/assignments/#{assignment.id}")
-  check(!candidate_session.response.body.include?("Synthetic street 1"), "#{locale} unselected candidate cannot see invoice address")
+  check(!candidate_session.response.body.include?("invoice_enterprise_number"), "#{locale} assignment has no invoice-recipient fields")
 end
 
 # First MFA screen: it provisions a synthetic secret through the normal
