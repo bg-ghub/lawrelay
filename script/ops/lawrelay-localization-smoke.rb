@@ -95,6 +95,35 @@ LOCALES.each do |locale|
   redirected_visit(anonymous, "/#{locale}/pricing", "/#{locale}")
 end
 
+# Exercise the actual HTML fallback with a synthetic public-profile response.
+# The isolated container never reaches the directory or creates an applicant.
+signup_counts = [ User.count, Firm.count, LawyerProfile.count ]
+signup_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/22222222-2222-4222-8222-222222222222"
+signup_result = Directory::SignupProfile::Result.new(status: :ok, profile_url: signup_url,
+  name: "Signup Preview", first_name: "Signup", last_name: "Preview", email_address: "signup-#{nonce}@example.invalid",
+  profile_attributes: { spoken_languages: %w[NL FR], practice_areas: [ "Civil" ] })
+original_signup = Directory::SignupProfile.method(:call)
+Directory::SignupProfile.define_singleton_method(:call) { |**| signup_result }
+begin
+  LOCALES.each do |locale|
+    Rails.cache.clear
+    visit(anonymous, "/#{locale}/registration/new")
+    anonymous.post("/#{locale}/registration/profile", params: { authenticity_token: csrf(anonymous),
+      registration: { directory_profile_url: signup_url } })
+    check(anonymous.response.status == 200, "#{locale} signup preview renders")
+    document = Nokogiri::HTML(anonymous.response.body)
+    check(document.at_css("html")&.[]("lang") == locale, "#{locale} signup preview uses the requested language")
+    check(document.at_css("#registration_first_name")&.[]("value") == "Signup", "#{locale} signup name is prefilled")
+    check(document.at_css("#registration_email_address")&.[]("value") == signup_result.email_address, "#{locale} listed email is prefilled")
+    check(document.at_css("#registration_directory_preview_token")&.[]("value").present?, "#{locale} signup preview is signed")
+    check(document.at_css("#registration_firm_name")&.[]("value").blank?, "#{locale} billing name stays separate")
+    check(anonymous.response.headers["Cache-Control"] == "no-store", "#{locale} signup preview is not cached")
+  end
+ensure
+  Directory::SignupProfile.define_singleton_method(:call, original_signup)
+end
+check([ User.count, Firm.count, LawyerProfile.count ] == signup_counts, "signup preview creates no account")
+
 LOCALES.each do |locale|
   session = browser
   sign_in(session, locale, member, password)
@@ -133,7 +162,7 @@ mfa_challenge.post("/nl/admin/mfa/challenge", params: { authenticity_token: csrf
 check(mfa_challenge.response.redirect?, "MFA challenge accepts a current TOTP")
 
 LOCALES.each do |locale|
-  [ "/admin/users", "/admin/users/#{member.id}", "/admin/verifications", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
+  [ "/admin/users", "/admin/users/#{member.to_param}", "/admin/verifications", "/admin/reports", "/admin/privacy_requests" ].each do |suffix|
     visit(mfa_challenge, "/#{locale}#{suffix}")
   end
   if ENV["LAWRELAY_RELEASE_MODE"] == "paid"
@@ -259,7 +288,7 @@ profile.update!(email_review_status: "pending", email_review_email_address: memb
 LOCALES.each do |locale|
   visit(member_security, "/#{locale}/verification_status")
   visit(mfa_challenge, "/#{locale}/admin/email-reviews")
-  visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.id}")
+  visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.to_param}")
 end
 
 %w[approved rejected].each do |status|
@@ -269,7 +298,7 @@ end
   LOCALES.each do |locale|
     member.update!(locale:)
     visit(member_security, "/#{locale}/verification_status")
-    visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.id}")
+    visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.to_param}")
     message = EmailAccessReviewMailer.decision(profile.reload).message
     check(message.html_part.present? && message.text_part.present?, "#{locale} email review #{status} has both bodies")
     [ message.html_part, message.text_part ].each do |part|

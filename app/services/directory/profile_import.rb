@@ -16,6 +16,25 @@ module Directory
       new(profile_url:, full_name:, fetcher:).call
     end
 
+    def self.attributes_from(main)
+      profile = {}
+      languages = labelled_values(main, %w[talen]).map { |value| LANGUAGE_CODES.fetch(value.downcase, value) }
+      profile[:spoken_languages] = languages if languages.any?
+      areas = labelled_values(main, PRACTICE_LABELS)
+      profile[:practice_areas] = areas if areas.any?
+      profile
+    end
+
+    def self.labelled_values(main, labels)
+      heading = main.css("h2, h3").find { |element| labels.include?(element.text.squish.downcase) }
+      content = heading&.next_element
+      return [] unless content && content.name.in?(%w[p ul ol])
+
+      values = content.name == "p" ? content.text.split(/[,;\n]/) : content.css("li").map(&:text)
+      values.map { |value| value.squish.first(100) }.reject(&:blank?).uniq.first(20)
+    end
+    private_class_method :labelled_values
+
     def initialize(profile_url:, full_name:, fetcher: nil)
       @profile_url = AdvocaatBeProfileLookup.canonical_profile_url(profile_url)
       @full_name = full_name
@@ -32,11 +51,7 @@ module Directory
       return failure(:unavailable) unless main
       return failure(:identity_mismatch) unless AdvocaatBeProfileLookup.names_match?(main.at_css("h1")&.text&.squish, @full_name)
 
-      profile = {}
-      languages = labelled_values(main, %w[talen]).map { |value| LANGUAGE_CODES.fetch(value.downcase, value) }
-      profile[:spoken_languages] = languages if languages.any?
-      areas = labelled_values(main, PRACTICE_LABELS)
-      profile[:practice_areas] = areas if areas.any?
+      profile = self.class.attributes_from(main)
       return failure(:empty) if profile.empty?
 
       Result.new(status: :ok, profile_attributes: profile)
@@ -46,15 +61,6 @@ module Directory
     end
 
     private
-
-    def labelled_values(main, labels)
-      heading = main.css("h2, h3").find { |element| labels.include?(element.text.squish.downcase) }
-      content = heading&.next_element
-      return [] unless content && content.name.in?(%w[p ul ol])
-
-      values = content.name == "p" ? content.text.split(/[,;\n]/) : content.css("li").map(&:text)
-      values.map { |value| value.squish.first(100) }.reject(&:blank?).uniq.first(20)
-    end
 
     def fetch_html(uri)
       http = Net::HTTP.new(uri.host, uri.port)

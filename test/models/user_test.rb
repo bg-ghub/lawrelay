@@ -1,6 +1,44 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  test "user URLs use a stable random UUID while associations retain numeric IDs" do
+    user = User.create!(first_name: "Public", last_name: "Identifier", email_address: "public-id@example.test", password: "password1234")
+    other = User.new
+
+    assert_match User::PUBLIC_ID_FORMAT, user.public_id
+    assert_match User::PUBLIC_ID_FORMAT, other.public_id
+    assert_not_equal user.public_id, other.public_id
+    assert_equal user.public_id, user.to_param
+    assert_kind_of Integer, user.id
+    session = user.sessions.create!
+    assert_equal user.id, session.user_id
+
+    public_id = user.public_id
+    user.update!(first_name: "Updated")
+    assert_equal public_id, user.reload.public_id
+    assert_equal user, User.find_by!(public_id:)
+  end
+
+  test "persisted public UUIDs cannot be reassigned" do
+    user = users(:one)
+    public_id = user.public_id
+
+    assert_raises(ActiveRecord::ReadonlyAttributeError) { user.update!(public_id: SecureRandom.uuid) }
+    assert_equal public_id, user.reload.public_id
+  end
+
+  test "public UUIDs must be present unique and randomly generated version four identifiers" do
+    user = User.new(public_id: users(:one).public_id)
+    assert_not user.valid?
+    assert user.errors.of_kind?(:public_id, :taken)
+
+    [ nil, "", "123", SecureRandom.hex(16) ].each do |identifier|
+      user.public_id = identifier
+      assert_not user.valid?
+      assert user.errors[:public_id].present?
+    end
+  end
+
   test "long password errors are translated in all interface languages" do
     user = users(:one)
     %i[nl fr de en].each do |locale|

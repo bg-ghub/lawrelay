@@ -52,7 +52,7 @@ module Admin
     private
 
     def set_user
-      @user = User.where(system_role: "member").includes(:lawyer_profile, memberships: :firm).find(params[:id])
+      @user = find_user_resource!(User.where(system_role: "member").includes(:lawyer_profile, memberships: :firm))
     end
 
     def verification_params
