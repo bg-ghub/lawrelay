@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.16.1] - 2026-10-31
+
+### Fixed
+
+- Remove the redundant field name from KBO attribution beneath company names in admin.
+
 ## [0.16.0] - 2026-10-31
 
 ### Added
