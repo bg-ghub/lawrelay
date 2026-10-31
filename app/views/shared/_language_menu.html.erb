@@ -17,7 +17,11 @@
             <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span aria-hidden="true">✓</span>
           </span>
         <% else %>
-          <% language_destination = controller_path == "admin/users" && @user.present? ? admin_user_path(@user, locale: locale) : url_for(locale: locale) %>
+          <% language_destination = if @user.present? && controller_path.in?(%w[admin/users admin/email_reviews])
+            controller_path == "admin/users" ? admin_user_path(@user, locale: locale) : admin_email_review_path(@user, locale: locale)
+          else
+            url_for(locale: locale)
+          end %>
           <%= link_to language_destination, class: item_class, lang: locale, hreflang: locale, data: { action: "click->language-menu#confirmNavigation" } do %>
             <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span></span>
           <% end %>

@@ -56,6 +56,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+From `0.17.0`, every user has a non-null public UUID. Earlier images do not generate it when creating users, so they are not compatible with the migrated database for normal traffic. Prefer a forward fix that preserves UUID URLs. A schema reversal removes those identifiers and breaks new bookmarks; test it only on an isolated restore and assess the impact before any production recovery.
+
 Releases before `0.15.0` do not enforce email-access review decisions or process their decision emails. Once this flow is used, recover with a compatible build that preserves the review gate and pending jobs.
 
 Releases before `0.9.0` cannot run retention jobs or replay the deletion ledger. Use a compatible forward recovery build after retention is enabled; never expose an older restored database before replaying the latest reviewed erasures.

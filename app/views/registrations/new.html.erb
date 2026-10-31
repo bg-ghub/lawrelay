@@ -2,11 +2,24 @@
 <div class="new-assignment shell">
   <div class="new-assignment__intro">
     <h1><%= t("auth.registration.heading") %></h1>
-    <p><%= t("auth.registration.lede") %></p>
   </div>
 
   <div class="new-assignment__layout auth-form-layout">
-    <%= form_with scope: :registration, url: registration_path, class: "assignment-form" do |form| %>
+    <%= form_with scope: :registration, url: registration_path, class: "assignment-form", data: {
+      controller: "registration-profile",
+      registration_profile_url_value: registration_profile_path,
+      registration_profile_fetch_label_value: t("signup_profile.fetch"),
+      registration_profile_loading_value: t("signup_profile.loading"),
+      registration_profile_loaded_value: t("signup_profile.loaded"),
+      registration_profile_unavailable_value: t("signup_profile.errors.unavailable"),
+      registration_profile_stale_value: t("signup_profile.stale"),
+      registration_profile_review_value: t("signup_profile.review"),
+      registration_profile_ready_value: @registration_errors.any? || @form_values.values_at("first_name", "last_name", "email_address", "firm_name").any?(&:present?),
+      registration_profile_errors_value: @registration_errors.any?,
+      registration_profile_imported_value: @directory_preview&.success? ? { first_name: @directory_preview.first_name, last_name: @directory_preview.last_name, email_address: @directory_preview.email_address } : {},
+      registration_profile_imported_name_value: @directory_preview&.name.to_s
+    } do |form| %>
+      <%= form.hidden_field :directory_preview_token, value: @form_values["directory_preview_token"], data: { registration_profile_target: "token" } %>
       <% if @registration_errors.any? %>
         <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors">
           <strong><%= t("auth.registration.error_heading") %></strong>
@@ -15,12 +28,34 @@
       <% end %>
 
       <fieldset class="form-section">
-        <legend><%= t("auth.registration.identity") %></legend>
-        <div class="form-row">
-          <div class="field-group"><%= form.label :first_name, t("auth.fields.first_name") %><%= form.text_field :first_name, required: true, autocomplete: "given-name", value: @form_values["first_name"] %></div>
-          <div class="field-group"><%= form.label :last_name, t("auth.fields.last_name") %><%= form.text_field :last_name, required: true, autocomplete: "family-name", value: @form_values["last_name"] %></div>
+        <legend><%= t("directory_onboarding.registration.legend") %></legend>
+        <div class="field-group">
+          <%= form.label :directory_profile_url, t("directory_onboarding.registration.profile_url") %>
+          <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url", aria: { describedby: "registration-directory-hint registration-profile-status" }, data: { registration_profile_target: "url", action: "input->registration-profile#urlChanged keydown.enter->registration-profile#lookup" } %>
+          <p class="field-hint" id="registration-directory-hint"><%= t("signup_profile.hint") %></p>
+          <p class="field-hint"><%= link_to t("directory_onboarding.registration.find_profile"), "https://www.advocaat.be/nl/zoek-een-advocaat", target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
         </div>
-        <div class="field-group"><%= form.label :email_address, t("auth.fields.professional_email") %><%= form.email_field :email_address, required: true, autocomplete: "email", value: @form_values["email_address"], aria: { describedby: "registration-email-hint" } %><p class="field-hint" id="registration-email-hint"><%= t("auth.registration.email_hint") %></p></div>
+        <div class="registration-profile__actions">
+          <%= form.button t("signup_profile.fetch"), type: "submit", formaction: registration_profile_path, formmethod: "post", formnovalidate: true, class: "button button--dark", data: { registration_profile_target: "fetch", action: "click->registration-profile#lookup" } %>
+          <%= button_tag t("signup_profile.manual"), type: "button", hidden: true, class: "text-link registration-profile__manual", data: { registration_profile_target: "manual", action: "registration-profile#manual" } %>
+        </div>
+        <p class="field-hint registration-profile__status" id="registration-profile-status" role="status" aria-live="polite" data-registration-profile-target="status"></p>
+        <p hidden data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
+      </fieldset>
+
+      <fieldset class="form-section" data-registration-profile-target="details">
+        <legend><%= t("auth.registration.identity") %></legend>
+        <div class="registration-profile__summary" hidden data-registration-profile-target="summary">
+          <div><strong data-registration-profile-target="summaryName"></strong><span data-registration-profile-target="summaryEmail"></span></div>
+          <%= button_tag t("signup_profile.edit"), type: "button", class: "text-link", data: { action: "registration-profile#edit" } %>
+        </div>
+        <div data-registration-profile-target="identityFields">
+          <div class="form-row">
+            <div class="field-group"><%= form.label :first_name, t("auth.fields.first_name") %><%= form.text_field :first_name, required: true, maxlength: 100, autocomplete: "given-name", value: @form_values["first_name"], data: { registration_profile_target: "firstName", action: "input->registration-profile#identityChanged" } %></div>
+            <div class="field-group"><%= form.label :last_name, t("auth.fields.last_name") %><%= form.text_field :last_name, required: true, maxlength: 100, autocomplete: "family-name", value: @form_values["last_name"], data: { registration_profile_target: "lastName", action: "input->registration-profile#identityChanged" } %></div>
+          </div>
+          <div class="field-group"><%= form.label :email_address, t("auth.fields.professional_email") %><%= form.email_field :email_address, required: true, autocomplete: "email", value: @form_values["email_address"], aria: { describedby: "registration-email-hint" }, data: { registration_profile_target: "email", action: "input->registration-profile#identityChanged" } %><p class="field-hint" id="registration-email-hint"><%= t("auth.registration.email_hint") %></p></div>
+        </div>
         <div class="form-row">
           <div class="field-group"><%= form.label :password, t("auth.fields.password") %><%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
           <div class="field-group"><%= form.label :password_confirmation, t("auth.fields.password_confirmation") %><%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
@@ -28,17 +63,8 @@
         <%= form.hidden_field :locale, value: I18n.locale %>
       </fieldset>
 
-      <fieldset class="form-section">
-        <legend><%= t("directory_onboarding.registration.legend") %></legend>
-        <div class="field-group">
-          <%= form.label :directory_profile_url, t("directory_onboarding.registration.profile_url") %>
-          <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url", aria: { describedby: "registration-directory-hint" } %>
-          <p class="field-hint" id="registration-directory-hint"><%= t("directory_onboarding.registration.profile_url_hint") %></p>
-          <p class="field-hint"><%= link_to t("directory_onboarding.registration.find_profile"), "https://www.advocaat.be/nl/zoek-een-advocaat", target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
-        </div>
-      </fieldset>
-
       <fieldset class="form-section" data-controller="company-number business-lookup" data-company-number-locale-value="<%= I18n.locale %>"
+        data-registration-profile-target="details"
         data-business-lookup-url-value="<%= company_lookup_path %>"
         data-business-lookup-loading-value="<%= t("business_lookup.loading") %>"
         data-business-lookup-loaded-value="<%= t("business_lookup.loaded") %>"
@@ -59,7 +85,7 @@
         </div>
       </fieldset>
 
-      <fieldset class="form-section">
+      <fieldset class="form-section" data-registration-profile-target="details">
         <legend><%= t("auth.registration.agreement") %></legend>
         <label class="toggle-row">
           <%= form.check_box :terms_accepted, { required: true, checked: @terms_accepted }, "1", "0" %>
@@ -69,7 +95,7 @@
         </label>
       </fieldset>
 
-      <div class="form-actions">
+      <div class="form-actions" data-registration-profile-target="details">
         <%= link_to t("auth.actions.already_registered"), new_session_path, class: "button button--ghost" %>
         <%= form.submit t("auth.registration.submit"), class: "button button--dark" %>
       </div>

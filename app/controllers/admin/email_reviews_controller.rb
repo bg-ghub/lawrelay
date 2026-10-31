@@ -30,8 +30,11 @@ module Admin
     private
 
     def set_user
-      @user = User.where(system_role: "member", erased_at: nil).joins(:lawyer_profile)
-        .where.not(lawyer_profiles: { email_review_status: nil }).includes(:lawyer_profile, memberships: :firm).find(params[:id])
+      scope = User.where(system_role: "member", erased_at: nil).joins(:lawyer_profile)
+        .where.not(lawyer_profiles: { email_review_status: nil }).includes(:lawyer_profile, memberships: :firm)
+      @user = find_user_resource!(scope)
+      return if redirect_legacy_user_resource(@user, admin_email_review_path(@user))
+
       load_details
     end
 

@@ -5,6 +5,20 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-10-31
+
+### Added
+
+- Start signup with an advocaat.be profile and import name, listed email and professional preferences for review.
+- Keep manual entry available when the directory is unavailable, with billing details separate from the professional profile.
+- Prefix KBO company names with their recognized registered legal form, such as BV BG Legal.
+- Use NP for an explicitly registered natural person.
+- Use random UUIDs in user URLs while retaining admin authorization and MFA checks.
+
+### Fixed
+
+- Give admin user-management buttons consistent sizing, colors and flat hover states.
+
 ## [0.16.2] - 2026-10-31
 
 ### Fixed

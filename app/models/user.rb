@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   SYSTEM_ROLES = %w[member admin].freeze
   LOCALES = %w[nl fr de en].freeze
+  PUBLIC_ID_FORMAT = /\A[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\z/.freeze
+
+  attribute :public_id, default: -> { SecureRandom.uuid }
+  attr_readonly :public_id
 
   has_secure_password
   generates_token_for :email_verification, expires_in: 48.hours do
@@ -30,11 +34,16 @@ class User < ApplicationRecord
   normalizes :first_name, :last_name, with: ->(value) { value.to_s.strip }
 
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :public_id, presence: true, uniqueness: true, format: { with: PUBLIC_ID_FORMAT }
   validates :first_name, :last_name, presence: true, length: { maximum: 100 }
   validates :locale, inclusion: { in: LOCALES }
   validates :system_role, inclusion: { in: SYSTEM_ROLES }
   validates :password, length: { minimum: 12 }, allow_nil: true
   validates :suspension_reason, length: { maximum: 2_000 }, allow_nil: true
+
+  def to_param
+    public_id
+  end
 
   def suspended?
     suspended_at.present?

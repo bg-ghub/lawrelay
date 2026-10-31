@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_31_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_31_100000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -348,8 +348,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_090000) do
     t.datetime "two_factor_last_verified_at"
     t.json "two_factor_recovery_code_digests", default: [], null: false
     t.datetime "erased_at"
+    t.string "public_id", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["erased_at"], name: "index_users_on_erased_at"
+    t.index ["public_id"], name: "index_users_on_public_id", unique: true
     t.index ["suspended_at"], name: "index_users_on_suspended_at"
   end
 

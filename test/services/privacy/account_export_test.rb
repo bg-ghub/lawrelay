@@ -55,6 +55,7 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     raw = File.read(@output)
     package = JSON.parse(raw)
     assert_equal @member.user.email_address, package.dig("account", "email_address")
+    assert_equal @member.user.public_id, package.dig("account", "public_id")
     exported_profile = package.fetch("professional_profile")
     assert_equal "approved", exported_profile.fetch("email_review_status")
     assert_equal @member.user.email_address, exported_profile.fetch("email_review_email_address")

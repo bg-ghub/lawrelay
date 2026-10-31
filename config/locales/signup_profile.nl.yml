@@ -1,0 +1,18 @@
+nl:
+  signup_profile:
+    hint: "We halen je naam, e-mailadres en profielgegevens op."
+    fetch: "Gegevens ophalen"
+    manual: "Gegevens zelf invullen"
+    edit: "Gegevens aanpassen"
+    loading: "Ophalen…"
+    loaded: "Gegevens opgehaald. Kijk ze even na."
+    stale: "Je profiellink is gewijzigd. Haal de gegevens opnieuw op."
+    review: "Kijk je naam en e-mailadres na."
+    errors:
+      invalid_url: "Vul de link naar je advocaat.be-profiel in."
+      unavailable: "Advocaat.be is even niet bereikbaar. Probeer opnieuw of vul je gegevens zelf in."
+      malformed: "We konden dit profiel niet lezen. Vul je gegevens zelf in."
+      email_missing: "Dit profiel bevat geen e-mailadres. Vul je gegevens zelf in."
+      invalid_preview: "Haal je profiel opnieuw op of vul je gegevens zelf in."
+      rate_limited: "Wacht even voordat je opnieuw probeert."
+      limit_reached: "Probeer later opnieuw of vul je gegevens zelf in."

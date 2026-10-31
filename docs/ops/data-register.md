@@ -15,7 +15,13 @@ Reviewed 31 October 2026. Owner: Gauthier Berth. This records the current implem
 
 The public privacy notice distinguishes Migadu's Swiss company location from its stated French email infrastructure. It does not claim all email-related processing is confined to France. `advocaat.be` is the public verification source, not an outsourced LawRelay hosting service; the app fetches the supplied profile to compare the name and published professional email.
 
+At the applicant's request, signup fetches one public profile to suggest name, listed email, languages and practice areas. A signed, URL/name-bound preview is valid for 20 minutes and contains only the source URL, name and professional preferences; email remains an unverified form field. It creates no account or mail, and grants no verification; the normal fresh directory and email checks remain required after registration. The preview is held in the form, without persistent browser storage or a new provider. Office, address, phone and bank details are not copied into billing.
+
 Default invoice details are separate from the lawyer's directory profile. Each assignment stores its own invoice recipient; later account edits do not change that snapshot. Verified assignment viewers see the recipient name and enterprise number; only the requester's workspace and selected confrater see the invoice address and email. These fields follow assignment retention and are cleared on approved erasure of their author. Matching enterprise numbers never join accounts or grant access. A user-initiated official KBO public-source lookup may populate billing fields and stores only its attribution snapshot; LawRelay sends one targeted request and parses only the necessary billing fields.
+
+KBO names include the registered legal-form abbreviation when recognized, placed before the name. An explicit natural-person entity type receives the display designation NP. Missing or unknown types/forms do not receive an inferred prefix. This formatting does not change professional identity or existing invoice-recipient snapshots.
+
+User URLs use a random, immutable UUID, separate from the internal database key. It is an account identifier, included in the member's access export; it grants no access. Admin authorization, fresh MFA and existing review scopes apply before lookup.
 
 An inaccessible-email request stores the working address, request/decision times, reviewer and identity-check note on the professional profile. The address must be confirmed before an MFA-authenticated administrator approves it using independent professional contact details. Approval is bound to the current account and directory identity, and does not claim control of the old mailbox. Decision mail uses the existing Migadu transport. Member exports include review status, address and dates; internal review notes and reviewer details need separate assessment. Profile erasure removes these fields and scrubs its audit metadata.
 
@@ -27,6 +33,7 @@ The 29 October notice read-through clarified assignment/proposal visibility, req
 
 | Data | Current control and limitation |
 | --- | --- |
+| Signup profile preview | Signed form data expires after 20 minutes; no preview table or persistent browser storage. Normal technical-log retention still applies. |
 | Unconfirmed registration | Delete an isolated, never-activated signup after 30 days of inactivity. Preserve established accounts awaiting email reconfirmation, recent sessions/corrections, shared firms, work, financial evidence and protected requests. |
 | Active account and professional profile | Keep until closure, including the current email-access review and identity-check note. Profile erasure removes these fields. Audit history follows the one-year audit schedule. |
 | Closed assignments, proposals and shared workflow records | Keep for 2 years after closure. Pseudonymise shared work when an account is removed where possible; do not promise anonymisation. |
