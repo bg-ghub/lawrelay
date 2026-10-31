@@ -68,10 +68,10 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
 
   test "select and checkbox changes are protected and reverting them removes the warning" do
     visit new_assignment_path(locale: :en)
-    find("#assignment_practice_area option", text: "Commercial law").select_option
+    choose_searchable_option("assignment_practice_area", label: "Commercial law")
     cancel_language_change(:fr, from: :en)
     assert_select_value "assignment_practice_area", "Commercial law"
-    find("#assignment_practice_area option[value='']").select_option
+    choose_searchable_option("assignment_practice_area", value: "")
 
     find("#assignment_content_rules_accepted").check
     cancel_language_change(:fr, from: :en)
@@ -136,6 +136,6 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
   end
 
   def assert_select_value(id, value)
-    assert_equal value, find("##{id}").value
+    assert_equal value, find("##{id}", visible: :all).value
   end
 end

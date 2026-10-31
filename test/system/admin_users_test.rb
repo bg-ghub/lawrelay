@@ -40,7 +40,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     assert_nil @admin.lawyer_profile
     assert_selector "h1", text: "Users"
     assert_no_selector ".admin-user-row a[href='#{admin_user_path(@admin, locale: :en)}']"
-    assert_no_selector ".admin-users-filter-form select[name='role']"
+    assert_no_selector ".admin-users-filter-form select[name='role']", visible: :all
 
     fill_in "q", with: @account.user.email_address
     within(".admin-users-filter-form") { click_button "Search" }
@@ -49,7 +49,7 @@ class AdminUsersTest < ApplicationSystemTestCase
     assert_current_path admin_user_path(@account.user, locale: :en)
 
     within("form[action='#{admin_user_path(@account.user, locale: :en)}']") do
-      select "Français", from: "user_locale"
+      choose_searchable_option("user_locale", value: "fr")
       click_button "Save account"
     end
     assert_text "Account details saved."

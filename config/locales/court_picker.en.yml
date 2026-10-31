@@ -1,9 +1,12 @@
 en:
   court_picker:
     placeholder: "Search a court or place"
-    hint: "Another venue? Enter it yourself."
+    hint: "Not listed? Choose Other."
     result_count: "%{number} results"
-    no_results: "No results. Enter the court or venue and city yourself."
+    no_results: "No results. Choose Other to enter a venue."
+    other: "Other"
+    other_label: "Other court or venue"
+    choose: "Choose a court or Other."
     division: "division"
     first_canton: "first canton"
     second_canton: "second canton"

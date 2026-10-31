@@ -1,9 +1,12 @@
 de:
   court_picker:
     placeholder: "Gericht oder Ort suchen"
-    hint: "Anderer Ort? Geben Sie ihn selbst ein."
+    hint: "Nicht in der Liste? Wählen Sie Sonstiges."
     result_count: "%{number} Ergebnisse"
-    no_results: "Kein Ergebnis. Geben Sie Gericht oder Ort und Stadt selbst ein."
+    no_results: "Kein Ergebnis. Wählen Sie Sonstiges, um einen Ort einzugeben."
+    other: "Sonstiges"
+    other_label: "Anderes Gericht oder anderer Ort"
+    choose: "Wählen Sie ein Gericht oder Sonstiges."
     division: "Abteilung"
     first_canton: "erster Kanton"
     second_canton: "zweiter Kanton"

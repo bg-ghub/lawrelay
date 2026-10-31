@@ -15,15 +15,22 @@
     <legend><%= t("marketplace.form.details_legend") %></legend>
     <div class="field-group"><%= form.label :title, t("marketplace.form.title_label") %><%= form.text_field :title, required: true, maxlength: 160, placeholder: t("marketplace.form.title_placeholder") %></div>
     <div class="field-group"><%= form.label :description, t("marketplace.form.description_label") %><%= form.text_area :description, rows: 5, required: true, maxlength: 4000, placeholder: t("marketplace.form.description_placeholder") %></div>
-    <div class="field-group"><%= form.label :practice_area, t("marketplace.form.practice_area_label") %><%= form.select :practice_area, t("marketplace.practice_areas").map { |_key, label| [ label, label ] }, { prompt: t("marketplace.form.practice_area_prompt") }, required: true, class: "select-field" %></div>
+    <div class="field-group" data-controller="other-choice" data-other-choice-other-value="<%= Assignment::OTHER_CHOICE %>">
+      <%= form.label :practice_area, t("marketplace.form.practice_area_label") %>
+      <%= searchable_select form, :practice_area, t("marketplace.practice_areas").map { |key, label| [ label, key.to_s == "other" ? Assignment::OTHER_CHOICE : label ] }, { prompt: t("marketplace.form.practice_area_prompt"), selected: assignment_practice_area_choice(assignment) }, required: true, class: "select-field", data: { other_choice_target: "select", action: "change->other-choice#toggle" } %>
+      <div class="field-group other-choice-field" data-other-choice-target="custom">
+        <%= form.label :practice_area_other, t("assignment_other.practice_area") %>
+        <%= form.text_field :practice_area_other, value: assignment_practice_area_other_value(assignment), maxlength: 100, required: assignment_practice_area_choice(assignment) == Assignment::OTHER_CHOICE, data: { other_choice_target: "input" } %>
+      </div>
+    </div>
 
     <div class="field-group" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
       <%= form.label :assignment_subtype, t("marketplace.form.court_subtype_label"), for: "assignment_court_subtype" %>
-      <%= form.select :assignment_subtype, Assignment::SUBTYPES.fetch(:court_replacement).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.court_subtype_prompt") }, id: "assignment_court_subtype", required: assignment.court_replacement?, disabled: assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "courtInput" } %>
+      <%= searchable_select form, :assignment_subtype, Assignment::SUBTYPES.fetch(:court_replacement).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.court_subtype_prompt") }, id: "assignment_court_subtype", required: assignment.court_replacement?, disabled: assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "courtInput" } %>
     </div>
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= form.label :assignment_subtype, t("marketplace.form.legal_subtype_label"), for: "assignment_legal_subtype" %>
-      <%= form.select :assignment_subtype, Assignment::SUBTYPES.fetch(:legal_task).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.legal_subtype_prompt") }, id: "assignment_legal_subtype", required: assignment.legal_task?, disabled: !assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "legalInput" } %>
+      <%= searchable_select form, :assignment_subtype, Assignment::SUBTYPES.fetch(:legal_task).map { |subtype| [ t("marketplace.assignment_subtypes.#{subtype}"), subtype ] }, { prompt: t("marketplace.form.legal_subtype_prompt") }, id: "assignment_legal_subtype", required: assignment.legal_task?, disabled: !assignment.legal_task?, class: "select-field", data: { assignment_kind_target: "legalInput" } %>
     </div>
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= form.label :languages, t("marketplace.form.languages_label") %>
@@ -47,17 +54,22 @@
       <div class="field-group"><%= form.label :delivery_due_at, t("marketplace.form.delivery_due_label") %><%= form.datetime_local_field :delivery_due_at, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %></div>
       <div class="field-group"><%= form.label :starts_at, t("marketplace.form.execution_deadline_label"), for: "assignment_execution_deadline" %><%= form.datetime_local_field :starts_at, id: "assignment_execution_deadline", required: assignment.legal_task?, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %></div>
     </div>
-    <%= tag.div class: "form-row court-picker", hidden: assignment.legal_task?, data: { assignment_kind_target: "courtOnly", controller: "court-picker", court_picker_options_value: CourtCatalogue.options.to_json, court_picker_count_value: t("court_picker.result_count", number: "%{count}"), court_picker_empty_value: t("court_picker.no_results"), action: "focusout->court-picker#blur pointerdown@document->court-picker#outside change@document->court-picker#kindChanged turbo:before-cache@document->court-picker#close" } do %>
+    <%= tag.div class: "court-picker", hidden: assignment.legal_task?, data: { assignment_kind_target: "courtOnly", controller: "court-picker", court_picker_options_value: CourtCatalogue.options.to_json, court_picker_count_value: t("court_picker.result_count", number: "%{count}"), court_picker_empty_value: t("court_picker.no_results"), court_picker_other_value: t("court_picker.other"), court_picker_choose_value: t("court_picker.choose"), action: "focusout->court-picker#blur pointerdown@document->court-picker#outside pointerup@window->court-picker#finishPointer pointercancel@window->court-picker#finishPointer change@document->court-picker#kindChanged turbo:before-cache@document->court-picker#close" } do %>
+      <%= form.hidden_field :court_selection, disabled: true, data: { court_picker_target: "selection" } %>
       <div class="field-group court-picker__field">
         <%= form.label :court, t("marketplace.form.court_label") %>
         <div class="court-picker__control">
-          <%= form.text_field :court, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 180, placeholder: t("court_picker.placeholder"), autocomplete: "off", role: "combobox", aria: { autocomplete: "list", expanded: "false", controls: "assignment-court-options", describedby: "assignment-court-hint assignment-court-status" }, data: { assignment_kind_target: "courtInput", court_picker_target: "input", action: "input->court-picker#changed focus->court-picker#open keydown->court-picker#keydown" } %>
-          <ul class="court-picker__list" id="assignment-court-options" role="listbox" aria-label="<%= t('marketplace.form.court_label') %>" hidden data-court-picker-target="list"></ul>
+          <%= form.text_field :court, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 180, placeholder: t("court_picker.placeholder"), autocomplete: "off", role: "combobox", aria: { autocomplete: "list", expanded: "false", controls: "assignment-court-options", describedby: "assignment-court-hint assignment-court-status" }, data: { assignment_kind_target: "courtInput", court_picker_target: "input", action: "input->court-picker#changed focus->court-picker#open click->court-picker#open keydown->court-picker#keydown" } %>
+          <ul class="court-picker__list" id="assignment-court-options" role="listbox" aria-label="<%= t('marketplace.form.court_label') %>" hidden data-court-picker-target="list" data-action="pointerdown->court-picker#beginPointer"></ul>
         </div>
         <p class="court-picker__status" id="assignment-court-status" role="status" aria-live="polite" hidden data-court-picker-target="status"></p>
         <p class="field-hint" id="assignment-court-hint"><%= t("court_picker.hint") %></p>
       </div>
-      <div class="field-group"><%= form.label :city, t("marketplace.form.city_label") %><%= form.text_field :city, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 100, placeholder: t("marketplace.form.city_placeholder"), data: { assignment_kind_target: "courtInput", court_picker_target: "city" } %></div>
+      <div class="field-group court-picker__other" hidden data-court-picker-target="otherField">
+        <%= form.label :court_other, t("court_picker.other_label") %>
+        <%= form.text_field :court_other, disabled: true, maxlength: 180, data: { court_picker_target: "other" } %>
+      </div>
+      <div class="field-group court-picker__city" data-court-picker-target="cityField"><%= form.label :city, t("marketplace.form.city_label") %><%= form.text_field :city, required: assignment.court_replacement?, disabled: assignment.legal_task?, maxlength: 100, placeholder: t("marketplace.form.city_placeholder"), data: { assignment_kind_target: "courtInput", court_picker_target: "city", action: "invalid->court-picker#revealCity" } %></div>
     <% end %>
   </fieldset>
 

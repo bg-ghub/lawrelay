@@ -12,7 +12,7 @@ en:
     stale: "Your details changed. Look up the number again."
     source: "CBE · %{date}"
     fields:
-      name: "name"
+      name: "company name"
       enterprise_number: "enterprise number"
       address_line_1: "address"
       postal_code: "postcode"

@@ -88,12 +88,13 @@ class AssignmentsController < ApplicationController
 
   def assignment_params
     attributes = params.require(:assignment).permit(
-      :kind, :title, :description, :court, :city, :starts_at,
-      :duration_minutes, :practice_area, :fee_cents, :languages,
+      :kind, :title, :description, :court, :court_selection, :court_other, :city, :starts_at,
+      :duration_minutes, :practice_area, :practice_area_other, :fee_cents, :languages,
       :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at,
       :invoice_name, :invoice_enterprise_number, :invoice_email,
       :invoice_address_line_1, :invoice_postal_code, :invoice_city
     )
+    attributes.delete(:practice_area_other) unless attributes[:practice_area] == Assignment::OTHER_CHOICE
     attributes[:fee_cents] = euros_to_cents(attributes[:fee_cents])
     attributes
   end

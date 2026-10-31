@@ -1,0 +1,6 @@
+nl:
+  searchable_select:
+    placeholder: "Typ om te zoeken"
+    empty: "Geen opties gevonden."
+    choose: "Kies een optie uit de lijst."
+    results: "%{number} opties"

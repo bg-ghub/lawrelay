@@ -11,6 +11,8 @@ class CourtCatalogue
       {
         label: label(court, locale),
         city: place(court.fetch("city"), locale),
+        labels: labels.uniq,
+        cities: LOCALES.map { |language| place(court.fetch("city"), language) }.uniq,
         search: (labels + [ court.fetch("city"), court.fetch("venue"), court.fetch("district"), aliases(court) ]).join(" ")
       }
     end.sort_by { |court| I18n.transliterate(court.fetch(:label)).downcase }

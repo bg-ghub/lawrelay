@@ -10,6 +10,9 @@ class Assignment < ApplicationRecord
     legal_task: %w[advice submissions contract summons petition other]
   }.freeze
   STATUSES = %w[draft open matched completed cancelled expired].freeze
+  OTHER_CHOICE = "__other__".freeze
+
+  attr_accessor :court_selection, :court_other, :practice_area_other
 
   has_many :proposals, dependent: :destroy
   has_many :audit_events, as: :auditable, dependent: :destroy
@@ -187,6 +190,16 @@ class Assignment < ApplicationRecord
   end
 
   def normalize_structured_fields
+    if court_selection.nil?
+      self.court = custom_choice(court_other) if court == OTHER_CHOICE
+    else
+      self.court = if court_selection == OTHER_CHOICE
+        custom_choice(court_other)
+      elsif court_selection.present? && CourtCatalogue.options(locale: :nl).any? { |option| option.fetch(:labels).include?(court_selection) }
+        court_selection
+      end
+    end
+    self.practice_area = custom_choice(practice_area_other) if practice_area == OTHER_CHOICE
     self.assignment_subtype ||= court_replacement? ? "hearing" : "advice"
     self.response_deadline_at ||= starts_at&.advance(hours: -1)
 
@@ -195,6 +208,11 @@ class Assignment < ApplicationRecord
     self.languages = nil
     self.scope_indication = nil
     self.delivery_due_at = nil
+  end
+
+  def custom_choice(value)
+    text = value.to_s.strip
+    text unless text == OTHER_CHOICE
   end
 
   def assignment_subtype_matches_kind

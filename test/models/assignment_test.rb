@@ -18,6 +18,58 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_equal "Zittingsvervanging", assignment.kind_label
   end
 
+  test "other choices store the custom court and legal area rather than a menu marker" do
+    assignment = Assignment.create!(valid_attributes.merge(court_selection: Assignment::OTHER_CHOICE,
+      court_other: "  Synthetic mediation venue  ", practice_area: Assignment::OTHER_CHOICE,
+      practice_area_other: "  Sports law  "))
+
+    assignment.reload
+    assert_equal "Synthetic mediation venue", assignment.court
+    assert_equal "Sports law", assignment.practice_area
+  end
+
+  test "other choices need details and respect the existing field limits" do
+    assignment = Assignment.new(valid_attributes.merge(court_selection: Assignment::OTHER_CHOICE,
+      court_other: " ", practice_area: Assignment::OTHER_CHOICE, practice_area_other: " "))
+    assert_not assignment.valid?
+    assert_includes assignment.errors.attribute_names, :court
+    assert_includes assignment.errors.attribute_names, :practice_area
+    assert_equal Assignment::OTHER_CHOICE, assignment.court_selection
+    assert_equal " ", assignment.practice_area_other
+
+    assignment = Assignment.new(valid_attributes.merge(court_selection: Assignment::OTHER_CHOICE,
+      court_other: "x" * 181, practice_area: Assignment::OTHER_CHOICE, practice_area_other: "x" * 101))
+    assert_not assignment.valid?
+    assert_includes assignment.errors.attribute_names, :court
+    assert_includes assignment.errors.attribute_names, :practice_area
+  end
+
+  test "a selected court takes precedence over its search query in every language" do
+    %i[nl fr de en].each do |locale|
+      option = CourtCatalogue.options(locale:).first
+      assignment = Assignment.new(valid_attributes.merge(court: "unfinished query",
+        court_selection: option.fetch(:label), city: option.fetch(:city)))
+      assert assignment.valid?, assignment.errors.full_messages.join(", ")
+      assert_equal option.fetch(:label), assignment.court
+    end
+  end
+
+  test "an unfinished enhanced court search cannot silently become a manual venue" do
+    [ "", "partial query" ].each do |selection|
+      assignment = Assignment.new(valid_attributes.merge(court: "Typed query", court_selection: selection))
+      assert_not assignment.valid?
+      assert_includes assignment.errors.attribute_names, :court
+    end
+    assert Assignment.new(valid_attributes.merge(court: "Manual venue without JavaScript")).valid?
+  end
+
+  test "unused other details do not replace a normal selection" do
+    assignment = Assignment.new(valid_attributes.merge(court_other: "Unused court", practice_area_other: "Unused area"))
+    assert assignment.valid?
+    assert_equal valid_attributes[:court], assignment.court
+    assert_equal valid_attributes[:practice_area], assignment.practice_area
+  end
+
   test "requires the core matching details" do
     assignment = Assignment.new(valid_attributes.merge(title: nil, city: nil))
 

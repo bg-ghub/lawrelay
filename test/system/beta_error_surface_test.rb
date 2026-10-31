@@ -114,8 +114,8 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       title = "Synthetic legal task #{locale} #{SecureRandom.hex(4)}"
       fill_in "assignment_title", with: title
       fill_in "assignment_description", with: "A fictional bounded legal task without client or case data."
-      find("#assignment_practice_area").all("option").find { |option| option[:value].present? }.select_option
-      find("#assignment_legal_subtype option[value='advice']").select_option
+      choose_searchable_option("assignment_practice_area", value: I18n.t("marketplace.practice_areas.employment", locale:))
+      choose_searchable_option("assignment_legal_subtype", value: "advice")
       set_datetime("assignment_response_deadline_at", 3.days.from_now)
       set_datetime("assignment_execution_deadline", 2.days.from_now)
       fill_in "assignment_invoice_address_line_1", with: "Test Street 1"
@@ -174,7 +174,7 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       assert member.user.marketplace_verified?
 
       visit new_privacy_request_path(locale:)
-      find("#privacy_request_kind option[value='access_export']").select_option
+      choose_searchable_option("privacy_request_kind", value: "access_export")
       fill_in "privacy_request_details", with: "   "
       privacy_count = member.user.privacy_requests.count
       click_button I18n.t("trust.privacy_requests.new.submit", locale:)
@@ -182,7 +182,7 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       assert_equal privacy_count, member.user.privacy_requests.count
 
       visit new_assignment_report_path(assignment, locale:)
-      find("#report_category option[value='misleading']").select_option
+      choose_searchable_option("report_category", value: "misleading")
       fill_in "report_details", with: "   "
       report_count = member.user.submitted_reports.count
       click_button I18n.t("trust.reports.new.submit", locale:)

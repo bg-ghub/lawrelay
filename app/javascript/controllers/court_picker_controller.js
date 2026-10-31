@@ -1,18 +1,29 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["input", "city", "list", "status"]
-  static values = { options: Array, count: String, empty: String }
+  static targets = ["input", "selection", "other", "otherField", "city", "cityField", "list", "status"]
+  static values = { options: Array, count: String, empty: String, other: String, choose: String }
 
   connect() {
     this.options = this.optionsValue.map((option) => ({ ...option, normalized: this.normalize(option.search) }))
-    this.selected = this.options.find((option) => option.label === this.inputTarget.value && option.city === this.cityTarget.value)
+    const originalCourt = this.inputTarget.value
+    this.recognizeSelection()
+    if (this.selectionTarget.value === "__other__" || (!this.selected && originalCourt)) {
+      this.selected = null
+      this.otherSelected = true
+      if (!this.otherTarget.value && originalCourt !== "__other__") this.otherTarget.value = originalCourt
+      this.inputTarget.value = this.otherValue
+      this.selectionTarget.value = "__other__"
+      if (!this.selected && originalCourt && this.selectionTarget.disabled) {
+        this.inputTarget.defaultValue = this.otherValue
+        this.otherTarget.defaultValue = this.otherTarget.value
+      }
+    } else if (this.selected) {
+      this.selectionTarget.value = originalCourt
+    }
+    this.updateFields()
     this.active = -1
     this.close()
-  }
-
-  disconnect() {
-    clearTimeout(this.blurTimeout)
   }
 
   normalize(value) {
@@ -20,17 +31,52 @@ export default class extends Controller {
   }
 
   changed() {
-    if (this.selected && this.inputTarget.value !== this.selected.label) {
-      if (this.cityTarget.value === this.selected.city) this.cityTarget.value = ""
+    this.otherSelected = false
+    if (this.selected && this.inputTarget.value !== this.selectedLabel) {
+      if (this.cityTarget.value === this.selectedCity) this.cityTarget.value = ""
       this.selected = null
     }
+    this.recognizeSelection()
+    this.selectionTarget.value = this.selected ? this.inputTarget.value : ""
+    this.updateFields()
     this.open()
   }
 
-  open() {
+  recognizeSelection() {
+    this.selected = this.options.find((option) =>
+      (option.labels || [option.label]).includes(this.inputTarget.value) &&
+      (!this.cityTarget.value || (option.cities || [option.city]).includes(this.cityTarget.value))
+    )
+    if (!this.selected) return
+
+    if (!this.cityTarget.value) this.cityTarget.value = this.selected.city
+    this.selectedLabel = this.inputTarget.value
+    this.selectedCity = this.cityTarget.value
+  }
+
+  updateFields() {
+    const disabled = this.inputTarget.disabled
+    this.selectionTarget.disabled = disabled
+    this.otherFieldTarget.hidden = !this.otherSelected
+    this.otherTarget.disabled = disabled || !this.otherSelected
+    this.otherTarget.required = !this.otherTarget.disabled
+    this.cityFieldTarget.hidden = !this.otherSelected
+    this.cityTarget.disabled = disabled || (!this.selected && !this.otherSelected)
+    this.cityTarget.required = !this.cityTarget.disabled
+    this.inputTarget.setCustomValidity(!disabled && this.inputTarget.value && !this.selected && !this.otherSelected ? this.chooseValue : "")
+  }
+
+  revealCity() {
+    this.cityFieldTarget.hidden = false
+  }
+
+  open(event) {
     if (this.inputTarget.disabled) return
-    const words = this.normalize(this.inputTarget.value).trim().split(/\s+/).filter(Boolean)
-    this.matches = this.options.filter((option) => words.every((word) => option.normalized.includes(word)))
+    if (event?.type === "focus" && !this.listTarget.hidden) return
+    const query = this.otherSelected ? "" : this.inputTarget.value
+    const words = this.normalize(query).trim().split(/\s+/).filter(Boolean)
+    const courts = this.options.filter((option) => words.every((word) => option.normalized.includes(word)))
+    this.matches = [...courts, { label: this.otherValue, other: true }]
     this.active = -1
     this.listTarget.replaceChildren(...this.matches.map((option, index) => {
       const element = document.createElement("li")
@@ -38,14 +84,15 @@ export default class extends Controller {
       element.role = "option"
       element.setAttribute("aria-selected", "false")
       element.dataset.index = index
+      if (option.other) element.dataset.other = "true"
       element.dataset.action = "pointerdown->court-picker#keepFocus click->court-picker#choose"
       element.textContent = option.label
       return element
     }))
-    this.listTarget.hidden = this.matches.length === 0
-    this.statusTarget.textContent = this.matches.length ? this.countValue.replace("%{count}", this.matches.length) : this.emptyValue
+    this.listTarget.hidden = false
+    this.statusTarget.textContent = courts.length ? this.countValue.replace("%{count}", courts.length) : this.emptyValue
     this.statusTarget.hidden = false
-    this.inputTarget.setAttribute("aria-expanded", this.matches.length ? "true" : "false")
+    this.inputTarget.setAttribute("aria-expanded", "true")
     this.inputTarget.removeAttribute("aria-activedescendant")
   }
 
@@ -60,9 +107,26 @@ export default class extends Controller {
   select(index) {
     const option = this.matches[index]
     if (!option) return
+    if (option.other) {
+      if (this.selected && this.cityTarget.value === this.selectedCity) this.cityTarget.value = ""
+      this.selected = null
+      this.otherSelected = true
+      this.inputTarget.value = this.otherValue
+      this.selectionTarget.value = "__other__"
+      this.updateFields()
+      this.close()
+      this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }))
+      this.otherTarget.focus()
+      return
+    }
+    this.otherSelected = false
     this.inputTarget.value = option.label
+    this.selectionTarget.value = option.label
     this.cityTarget.value = option.city
     this.selected = option
+    this.selectedLabel = option.label
+    this.selectedCity = option.city
+    this.updateFields()
     this.close()
     this.inputTarget.dispatchEvent(new Event("change", { bubbles: true }))
     this.cityTarget.dispatchEvent(new Event("input", { bubbles: true }))
@@ -102,8 +166,20 @@ export default class extends Controller {
   }
 
   blur(event) {
-    if (this.element.contains(event.relatedTarget)) return
+    if (this.element.contains(event.relatedTarget) || this.listPointerDown || this.listTarget.matches(":hover")) return
     this.close()
+  }
+
+  beginPointer() {
+    this.listPointerDown = true
+  }
+
+  finishPointer() {
+    if (!this.listPointerDown) return
+    this.listPointerDown = false
+    if (!this.listTarget.hidden && document.activeElement !== this.inputTarget) {
+      this.inputTarget.focus({ preventScroll: true })
+    }
   }
 
   outside(event) {
@@ -111,10 +187,14 @@ export default class extends Controller {
   }
 
   kindChanged(event) {
-    if (event.target.matches('input[name$="[kind]"]')) this.close()
+    if (event.target.matches('input[name$="[kind]"]')) {
+      this.updateFields()
+      this.close()
+    }
   }
 
   close() {
+    this.listPointerDown = false
     this.listTarget.hidden = true
     this.statusTarget.hidden = true
     this.inputTarget.setAttribute("aria-expanded", "false")

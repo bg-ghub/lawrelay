@@ -1,0 +1,6 @@
+de:
+  searchable_select:
+    placeholder: "Zum Suchen tippen"
+    empty: "Keine Optionen gefunden."
+    choose: "Wählen Sie eine Option aus der Liste."
+    results: "%{number} Optionen"

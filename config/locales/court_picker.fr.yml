@@ -1,9 +1,12 @@
 fr:
   court_picker:
     placeholder: "Chercher un tribunal ou un lieu"
-    hint: "Autre lieu ? Saisissez-le librement."
+    hint: "Absent de la liste ? Choisissez Autre."
     result_count: "%{number} résultats"
-    no_results: "Aucun résultat. Saisissez le tribunal ou le lieu et la ville."
+    no_results: "Aucun résultat. Choisissez Autre pour saisir un lieu."
+    other: "Autre"
+    other_label: "Autre tribunal ou lieu"
+    choose: "Choisissez un tribunal ou Autre."
     division: "division"
     first_canton: "premier canton"
     second_canton: "deuxième canton"
