@@ -1,0 +1,24 @@
+de:
+  court_picker:
+    placeholder: "Gericht oder Ort suchen"
+    hint: "Anderer Ort? Geben Sie ihn selbst ein."
+    result_count: "%{number} Ergebnisse"
+    no_results: "Kein Ergebnis. Geben Sie Gericht oder Ort und Stadt selbst ein."
+    division: "Abteilung"
+    first_canton: "erster Kanton"
+    second_canton: "zweiter Kanton"
+    languages:
+      nl: "niederländischsprachig"
+      fr: "französischsprachig"
+    types:
+      peace: "Friedensgericht"
+      police: "Polizeigericht"
+      first_instance: "Gericht erster Instanz"
+      labour: "Arbeitsgericht"
+      enterprise: "Unternehmensgericht"
+      appeal: "Appellationshof"
+      labour_appeal: "Arbeitsgerichtshof"
+      assize: "Assisenhof"
+      cassation: "Kassationshof"
+      constitutional: "Verfassungsgerichtshof"
+      state: "Staatsrat"

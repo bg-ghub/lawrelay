@@ -1,0 +1,99 @@
+nl:
+  email_access:
+    link: "Ik heb geen toegang tot dit e-mailadres"
+    request:
+      title: "E-mailtoegang — LawRelay"
+      heading: "Gebruik een bereikbaar e-mailadres"
+      intro: "Bevestig een bereikbaar professioneel e-mailadres. We controleren je identiteit via de gepubliceerde contactgegevens van je kantoor."
+      form:
+        legend: "Bereikbaar e-mailadres"
+        current_email: "Huidig aanmeldadres"
+        new_email: "E-mailadres dat je kunt openen"
+        password: "Huidig wachtwoord"
+        hint: "Dit wordt je aanmeldadres. Je krijgt toegang na goedkeuring van de controle."
+        submit: "Controle aanvragen"
+        cancel: "Terug"
+    status:
+      pending:
+        heading: "E-mailcontrole in afwachting"
+        body: "We controleren je identiteit."
+        confirm_first: "Bevestig eerst je nieuwe e-mailadres. Daarna controleren we je identiteit."
+      approved:
+        heading: "E-mailcontrole goedgekeurd"
+        body: "Je bereikbare e-mailadres is goedgekeurd."
+      rejected:
+        heading: "E-mailcontrole niet goedgekeurd"
+        body: "We konden je identiteit niet bevestigen. Contacteer info@lawrelay.be of dien een nieuwe aanvraag in."
+      changed:
+        heading: "Nieuwe controle nodig"
+        body: "Je gegevens zijn gewijzigd. Vraag een nieuwe controle aan."
+      try_again: "Nieuwe controle aanvragen"
+    admin:
+      title: "E-mailcontroles"
+      intro: "Aanvragen voor een ander e-mailadres dan in de advocatenlijst."
+      empty: "Geen e-mailcontroles in afwachting"
+      review: "E-mail controleren"
+      back: "Alle e-mailcontroles"
+      details: "Accountgegevens"
+      name: "Naam"
+      company: "Onderneming"
+      working_email: "Bereikbaar e-mailadres"
+      directory_email: "E-mailadres op advocaat.be"
+      email_state: "Bereikbaar e-mailadres bevestigd"
+      directory_state: "Match met advocatenlijst"
+      state: "Controle"
+      requested_at: "Aangevraagd"
+      note: "Controlenotitie"
+      note_hint: "Bijvoorbeeld: gebeld naar het nummer op de kantoorwebsite."
+      identity_hint: "Controleer de identiteit via onafhankelijk gepubliceerde contactgegevens van het kantoor."
+      identity_checked: "Ik heb de identiteit gecontroleerd via onafhankelijk gepubliceerde contactgegevens."
+      not_ready: "Goedkeuring vereist een bevestigde e-mail, een actuele profielmatch en een account zonder blokkering."
+      approve: "Goedkeuren"
+      reject: "Afwijzen"
+      decision: "Beslissing"
+      no_request: "Geen e-mailcontrole aangevraagd."
+      use_review: "Beoordeel eerst de e-mailaanvraag voordat je dit account goedkeurt."
+      states:
+        pending: "In afwachting"
+        approved: "Goedgekeurd"
+        rejected: "Niet goedgekeurd"
+        changed: "Nieuwe controle nodig"
+      directory:
+        matched: "Komt overeen"
+        pending: "In afwachting"
+    notices:
+      requested: "Controle aangevraagd. Bevestig je e-mailadres als dat nog niet gebeurd is."
+      approved: "E-mailcontrole goedgekeurd."
+      rejected: "E-mailcontrole afgewezen."
+    errors:
+      password: "Je huidige wachtwoord is onjuist."
+      unchanged: "Vul een ander e-mailadres in."
+      unavailable: "Deze aanvraag is niet beschikbaar voor je account."
+      rate_limited: "Wacht even voordat je opnieuw probeert."
+      incomplete: "Beroepsgegevens ontbreken bij dit account."
+      directory_required: "Er is eerst een overeenkomend profiel op advocaat.be nodig."
+      email_unconfirmed: "Het lid moet eerst het bereikbare e-mailadres bevestigen."
+      identity_required: "Bevestig dat je de identiteit hebt gecontroleerd."
+      note_required: "Voeg een korte controlenotitie toe."
+      stale: "Het account is gewijzigd. Herlaad en controleer opnieuw."
+      invalid_decision: "Kies goedkeuren of afwijzen."
+      claimed: "Dit profiel is al aan een ander account gekoppeld."
+      already_reviewed: "Deze aanvraag is al beoordeeld."
+      review_required: "Beoordeel eerst de e-mailaanvraag."
+      protected: "Een geschorst of afgewezen account kan hier niet worden goedgekeurd."
+    mailer:
+      subject:
+        approved: "Je LawRelay-e-mailcontrole is goedgekeurd"
+        rejected: "Je LawRelay-e-mailcontrole"
+      heading: "Hallo %{name},"
+      body:
+        approved: "Je e-mailcontrole is goedgekeurd. Je kunt je nu aanmelden bij LawRelay."
+        rejected: "We konden je e-mailcontrole niet goedkeuren. Contacteer info@lawrelay.be als je hulp nodig hebt."
+      action: "Open LawRelay"
+  admin:
+    users:
+      audit:
+        actions:
+          email_access_requested: "E-mailcontrole aangevraagd"
+          email_access_approved: "E-mailcontrole goedgekeurd"
+          email_access_rejected: "E-mailcontrole afgewezen"

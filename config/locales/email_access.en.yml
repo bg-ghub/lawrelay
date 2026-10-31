@@ -1,0 +1,99 @@
+en:
+  email_access:
+    link: "I can’t access this email"
+    request:
+      title: "Email access — LawRelay"
+      heading: "Use an email you can access"
+      intro: "Confirm a working professional email. We’ll check your identity through your firm’s published contact details."
+      form:
+        legend: "Working email"
+        current_email: "Current sign-in email"
+        new_email: "Email you can access"
+        password: "Current password"
+        hint: "This becomes your sign-in email. Access stays pending until the review is approved."
+        submit: "Request review"
+        cancel: "Back"
+    status:
+      pending:
+        heading: "Email review pending"
+        body: "We’re checking your identity."
+        confirm_first: "Confirm your new email first. We’ll then check your identity."
+      approved:
+        heading: "Email review approved"
+        body: "Your working email has been approved."
+      rejected:
+        heading: "Email review not approved"
+        body: "We couldn’t confirm your identity. Contact info@lawrelay.be or submit another request."
+      changed:
+        heading: "New review needed"
+        body: "Your details changed. Please request another review."
+      try_again: "Request another review"
+    admin:
+      title: "Email reviews"
+      intro: "Requests to use an email different from the directory."
+      empty: "No email reviews waiting"
+      review: "Review email"
+      back: "All email reviews"
+      details: "Account details"
+      name: "Name"
+      company: "Company"
+      working_email: "Working email"
+      directory_email: "Email on advocaat.be"
+      email_state: "Working email confirmed"
+      directory_state: "Directory match"
+      state: "Review"
+      requested_at: "Requested"
+      note: "Review note"
+      note_hint: "For example: called the number on the firm’s website."
+      identity_hint: "Check identity using independently published firm contact details."
+      identity_checked: "I checked their identity using independently published contact details."
+      not_ready: "Approval needs a confirmed email, a current directory match and an unrestricted account."
+      approve: "Approve"
+      reject: "Reject"
+      decision: "Decision"
+      no_request: "No email review requested."
+      use_review: "Review the email request before approving this account."
+      states:
+        pending: "Pending"
+        approved: "Approved"
+        rejected: "Not approved"
+        changed: "New review needed"
+      directory:
+        matched: "Matched"
+        pending: "Pending"
+    notices:
+      requested: "Review requested. Confirm your email if you haven’t yet."
+      approved: "Email review approved."
+      rejected: "Email review rejected."
+    errors:
+      password: "Your current password is incorrect."
+      unchanged: "Enter a different email address."
+      unavailable: "This request is unavailable for your account."
+      rate_limited: "Please wait before trying again."
+      incomplete: "This account is missing professional details."
+      directory_required: "A matching advocaat.be profile is needed first."
+      email_unconfirmed: "The member must confirm the working email first."
+      identity_required: "Confirm that you checked their identity."
+      note_required: "Add a short review note."
+      stale: "The account changed. Reload and check it again."
+      invalid_decision: "Choose approve or reject."
+      claimed: "This directory profile is already linked to another account."
+      already_reviewed: "This request has already been reviewed."
+      review_required: "Review the email request first."
+      protected: "A suspended or rejected account cannot be approved here."
+    mailer:
+      subject:
+        approved: "Your LawRelay email review is approved"
+        rejected: "Your LawRelay email review"
+      heading: "Hello %{name},"
+      body:
+        approved: "Your email review is approved. You can now sign in to LawRelay."
+        rejected: "We couldn’t approve your email review. Contact info@lawrelay.be if you need help."
+      action: "Open LawRelay"
+  admin:
+    users:
+      audit:
+        actions:
+          email_access_requested: "Email review requested"
+          email_access_approved: "Email review approved"
+          email_access_rejected: "Email review rejected"

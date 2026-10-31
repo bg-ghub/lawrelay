@@ -1,6 +1,7 @@
 <nav class="admin-navigation shell" aria-label="<%= t("admin.navigation.label") %>">
   <% [ [t("admin.navigation.users"), admin_users_path, "admin/users"],
        [t("admin.navigation.verifications"), admin_verifications_path, "admin/verifications"],
+       [t("email_access.admin.title"), admin_email_reviews_path, "admin/email_reviews"],
        [t("admin.navigation.reports"), admin_reports_path, "admin/reports"],
        [t("admin.navigation.privacy_requests"), admin_privacy_requests_path, "admin/privacy_requests"] ].each do |label, path, section| %>
     <%= link_to label, path, aria: { current: ("page" if controller_path == section) } %>

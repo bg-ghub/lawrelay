@@ -1,0 +1,99 @@
+de:
+  email_access:
+    link: "Ich habe keinen Zugriff auf diese Adresse"
+    request:
+      title: "E-Mail-Zugriff — LawRelay"
+      heading: "Verwenden Sie eine erreichbare Adresse"
+      intro: "Bestätigen Sie eine erreichbare berufliche E-Mail-Adresse. Wir prüfen Ihre Identität über die veröffentlichten Kanzleikontaktdaten."
+      form:
+        legend: "Erreichbare E-Mail-Adresse"
+        current_email: "Bisherige Anmeldeadresse"
+        new_email: "Erreichbare E-Mail-Adresse"
+        password: "Aktuelles Passwort"
+        hint: "Dies wird Ihre Anmeldeadresse. Der Zugang bleibt bis zur Genehmigung gesperrt."
+        submit: "Prüfung anfordern"
+        cancel: "Zurück"
+    status:
+      pending:
+        heading: "E-Mail-Prüfung ausstehend"
+        body: "Wir prüfen Ihre Identität."
+        confirm_first: "Bestätigen Sie zuerst Ihre neue Adresse. Danach prüfen wir Ihre Identität."
+      approved:
+        heading: "E-Mail-Prüfung genehmigt"
+        body: "Ihre erreichbare E-Mail-Adresse wurde genehmigt."
+      rejected:
+        heading: "E-Mail-Prüfung nicht genehmigt"
+        body: "Wir konnten Ihre Identität nicht bestätigen. Kontaktieren Sie info@lawrelay.be oder stellen Sie einen neuen Antrag."
+      changed:
+        heading: "Neue Prüfung erforderlich"
+        body: "Ihre Angaben haben sich geändert. Fordern Sie eine neue Prüfung an."
+      try_again: "Neue Prüfung anfordern"
+    admin:
+      title: "E-Mail-Prüfungen"
+      intro: "Anträge für eine andere Adresse als im Anwaltsverzeichnis."
+      empty: "Keine E-Mail-Prüfungen ausstehend"
+      review: "E-Mail prüfen"
+      back: "Alle E-Mail-Prüfungen"
+      details: "Kontodaten"
+      name: "Name"
+      company: "Unternehmen"
+      working_email: "Erreichbare E-Mail-Adresse"
+      directory_email: "Adresse auf advocaat.be"
+      email_state: "Erreichbare Adresse bestätigt"
+      directory_state: "Abgleich mit dem Verzeichnis"
+      state: "Prüfung"
+      requested_at: "Beantragt am"
+      note: "Prüfvermerk"
+      note_hint: "Zum Beispiel: Anruf bei der Nummer auf der Kanzleiwebsite."
+      identity_hint: "Prüfen Sie die Identität über unabhängig veröffentlichte Kanzleikontaktdaten."
+      identity_checked: "Ich habe die Identität über unabhängig veröffentlichte Kontaktdaten geprüft."
+      not_ready: "Die Genehmigung erfordert eine bestätigte Adresse, einen aktuellen Verzeichnisabgleich und ein Konto ohne Sperre."
+      approve: "Genehmigen"
+      reject: "Ablehnen"
+      decision: "Entscheidung"
+      no_request: "Keine E-Mail-Prüfung beantragt."
+      use_review: "Prüfen Sie den E-Mail-Antrag, bevor Sie dieses Konto genehmigen."
+      states:
+        pending: "Ausstehend"
+        approved: "Genehmigt"
+        rejected: "Nicht genehmigt"
+        changed: "Neue Prüfung erforderlich"
+      directory:
+        matched: "Übereinstimmung"
+        pending: "Ausstehend"
+    notices:
+      requested: "Prüfung beantragt. Bestätigen Sie Ihre Adresse, falls noch nicht geschehen."
+      approved: "E-Mail-Prüfung genehmigt."
+      rejected: "E-Mail-Prüfung abgelehnt."
+    errors:
+      password: "Ihr aktuelles Passwort ist falsch."
+      unchanged: "Geben Sie eine andere E-Mail-Adresse ein."
+      unavailable: "Dieser Antrag ist für Ihr Konto nicht verfügbar."
+      rate_limited: "Warten Sie bitte, bevor Sie es erneut versuchen."
+      incomplete: "Für dieses Konto fehlen berufliche Angaben."
+      directory_required: "Zuerst ist ein passendes Profil auf advocaat.be erforderlich."
+      email_unconfirmed: "Das Mitglied muss zuerst die erreichbare Adresse bestätigen."
+      identity_required: "Bestätigen Sie die Identitätsprüfung."
+      note_required: "Fügen Sie einen kurzen Prüfvermerk hinzu."
+      stale: "Das Konto wurde geändert. Laden Sie es neu und prüfen Sie erneut."
+      invalid_decision: "Wählen Sie genehmigen oder ablehnen."
+      claimed: "Dieses Profil ist bereits mit einem anderen Konto verknüpft."
+      already_reviewed: "Dieser Antrag wurde bereits geprüft."
+      review_required: "Prüfen Sie zuerst den E-Mail-Antrag."
+      protected: "Ein gesperrtes oder abgelehntes Konto kann hier nicht genehmigt werden."
+    mailer:
+      subject:
+        approved: "Ihre LawRelay-E-Mail-Prüfung wurde genehmigt"
+        rejected: "Ihre LawRelay-E-Mail-Prüfung"
+      heading: "Hallo %{name},"
+      body:
+        approved: "Ihre E-Mail-Prüfung wurde genehmigt. Sie können sich nun bei LawRelay anmelden."
+        rejected: "Wir konnten Ihre E-Mail-Prüfung nicht genehmigen. Kontaktieren Sie info@lawrelay.be, wenn Sie Hilfe benötigen."
+      action: "LawRelay öffnen"
+  admin:
+    users:
+      audit:
+        actions:
+          email_access_requested: "E-Mail-Prüfung beantragt"
+          email_access_approved: "E-Mail-Prüfung genehmigt"
+          email_access_rejected: "E-Mail-Prüfung abgelehnt"

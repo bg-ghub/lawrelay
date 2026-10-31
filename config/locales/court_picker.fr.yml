@@ -1,0 +1,24 @@
+fr:
+  court_picker:
+    placeholder: "Chercher un tribunal ou un lieu"
+    hint: "Autre lieu ? Saisissez-le librement."
+    result_count: "%{number} résultats"
+    no_results: "Aucun résultat. Saisissez le tribunal ou le lieu et la ville."
+    division: "division"
+    first_canton: "premier canton"
+    second_canton: "deuxième canton"
+    languages:
+      nl: "néerlandophone"
+      fr: "francophone"
+    types:
+      peace: "Justice de paix"
+      police: "Tribunal de police"
+      first_instance: "Tribunal de première instance"
+      labour: "Tribunal du travail"
+      enterprise: "Tribunal de l’entreprise"
+      appeal: "Cour d’appel"
+      labour_appeal: "Cour du travail"
+      assize: "Cour d’assises"
+      cassation: "Cour de cassation"
+      constitutional: "Cour constitutionnelle"
+      state: "Conseil d’État"

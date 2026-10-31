@@ -1,0 +1,24 @@
+nl:
+  court_picker:
+    placeholder: "Zoek een rechtbank of plaats"
+    hint: "Andere locatie? Vul die zelf in."
+    result_count: "%{number} resultaten"
+    no_results: "Geen resultaat. Vul de rechtbank of locatie en plaats zelf in."
+    division: "afdeling"
+    first_canton: "eerste kanton"
+    second_canton: "tweede kanton"
+    languages:
+      nl: "Nederlandstalig"
+      fr: "Franstalig"
+    types:
+      peace: "Vredegerecht"
+      police: "Politierechtbank"
+      first_instance: "Rechtbank van eerste aanleg"
+      labour: "Arbeidsrechtbank"
+      enterprise: "Ondernemingsrechtbank"
+      appeal: "Hof van beroep"
+      labour_appeal: "Arbeidshof"
+      assize: "Hof van assisen"
+      cassation: "Hof van Cassatie"
+      constitutional: "Grondwettelijk Hof"
+      state: "Raad van State"

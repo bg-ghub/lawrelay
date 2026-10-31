@@ -2,6 +2,7 @@ nl:
   assignment_billing:
     heading: Facturatie voor deze opdracht
     form_hint: Aan wie moet je confrater factureren? Pas je gegevens aan als de factuur naar het kantoor moet.
+    peppol_hint: Naam, ondernemingsnummer en adres zijn nodig voor de Peppol-factuur. Je confrater factureert via eigen software; LawRelay verstuurt geen facturen.
     name: Naam op de factuur
     enterprise_number: Ondernemingsnummer
     vat_number: Btw-nummer

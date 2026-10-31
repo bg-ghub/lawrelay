@@ -1,0 +1,12 @@
+<% review_status = profile.email_review_status %>
+<% review_status = "changed" if review_status == "approved" && !profile.email_review_approved? %>
+<section class="form-section">
+  <h2><%= t("email_access.status.#{review_status}.heading") %></h2>
+  <p><%= t(review_status == "pending" && !user.email_verified? ? "email_access.status.pending.confirm_first" : "email_access.status.#{review_status}.body") %></p>
+  <% if review_status == "pending" && !profile.email_review_directory_ready? %>
+    <% failure = profile.directory_lookup_failure %>
+    <p><%= t(failure ? "directory_feedback.failures.#{failure}" : "directory_onboarding.status.pending_body") %></p>
+    <%= button_to t("directory_onboarding.status.retry"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
+  <% end %>
+  <% if review_status.in?(%w[rejected changed]) %><%= link_to t("email_access.status.try_again"), email_access_request_path, class: "button button--ghost" %><% end %>
+</section>
