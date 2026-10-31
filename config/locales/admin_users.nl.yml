@@ -134,6 +134,7 @@ nl:
           admin_mfa_challenged: Tweestapsverificatie bevestigd
           admin_mfa_reset: Tweestapsverificatie opnieuw ingesteld
           verification_directory_matched: Profiel in de lijst gevonden
+          verification_directory_lookup_failed: Profielcontrole mislukt
           verification_directory_email_confirmed: Vermeld e-mailadres bevestigd
           verification_directory_activated: Professionele toegang geverifieerd
           verification_approved: Professionele verificatie goedgekeurd
