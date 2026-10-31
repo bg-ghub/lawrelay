@@ -134,6 +134,7 @@ de:
           admin_mfa_challenged: Zwei-Faktor-Authentifizierung bestätigt
           admin_mfa_reset: Zwei-Faktor-Authentifizierung zurückgesetzt
           verification_directory_matched: Verzeichnisprofil abgeglichen
+          verification_directory_lookup_failed: Profilprüfung fehlgeschlagen
           verification_directory_email_confirmed: Eingetragene E-Mail bestätigt
           verification_directory_activated: Beruflicher Zugang geprüft
           verification_approved: Berufliche Prüfung genehmigt

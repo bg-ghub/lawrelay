@@ -134,6 +134,7 @@ fr:
           admin_mfa_challenged: Double authentification confirmée
           admin_mfa_reset: Double authentification réinitialisée
           verification_directory_matched: Profil correspondant dans l'annuaire
+          verification_directory_lookup_failed: Échec de la vérification du profil
           verification_directory_email_confirmed: E-mail répertorié confirmé
           verification_directory_activated: Accès professionnel vérifié
           verification_approved: Vérification professionnelle approuvée

@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.19.1] - 2026-10-31
+
+### Fixed
+
+- Translate earlier directory-lookup failures in the admin activity list in all four languages.
+
 ## [0.19.0] - 2026-10-31
 
 ### Changed
