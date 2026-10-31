@@ -1,5 +1,13 @@
 # Beta operations checks
 
+## 31 October 2026 — 0.15.0 email access and assignments
+
+Synthetic browser checks covered a confirmed alternative email, MFA-protected administrator approval, gated marketplace access, court search/selection and four-language mobile layouts. Internal review found no access bypass. Privacy exports and erasure include the review state; internal identity notes stay private.
+
+The assignment form has 34 legal areas, [320 sourced court options](court-catalogue.md) and a short Peppol reminder. Existing labels, manual venues and invoice privacy remain supported. The production image renders all four languages and both decision-email formats without delivery; migration down/up passed in an isolated container. CI repeats the complete suites.
+
+A fresh encrypted backup and isolated restore passed before release. No real member account, administrator credentials, external inbox or service subscription was changed during testing.
+
 ## 30 October 2026 — 0.14.0 analytics and profile
 
 Moved LawRelay's six existing pageviews into its own Umami 3.4.1 deployment, database and administrator account. Verified the retained event IDs, live collection and dashboard login, then removed only LawRelay from WetWijzer's shared instance. Its four other websites remain unchanged. Daily 90-day cleanup now runs on the LawRelay host.

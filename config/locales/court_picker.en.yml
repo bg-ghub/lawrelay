@@ -1,0 +1,24 @@
+en:
+  court_picker:
+    placeholder: "Search a court or place"
+    hint: "Another venue? Enter it yourself."
+    result_count: "%{number} results"
+    no_results: "No results. Enter the court or venue and city yourself."
+    division: "division"
+    first_canton: "first canton"
+    second_canton: "second canton"
+    languages:
+      nl: "Dutch-speaking"
+      fr: "French-speaking"
+    types:
+      peace: "Justice of the peace"
+      police: "Police court"
+      first_instance: "Court of first instance"
+      labour: "Labour court"
+      enterprise: "Enterprise court"
+      appeal: "Court of appeal"
+      labour_appeal: "Labour court of appeal"
+      assize: "Assize court"
+      cassation: "Court of Cassation"
+      constitutional: "Constitutional Court"
+      state: "Council of State"

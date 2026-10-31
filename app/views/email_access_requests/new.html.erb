@@ -1,0 +1,23 @@
+<% content_for :title, t("email_access.request.title") %>
+<div class="new-assignment shell settings-page">
+  <div class="new-assignment__intro">
+    <h1><%= t("email_access.request.heading") %></h1>
+    <p><%= t("email_access.request.intro") %></p>
+  </div>
+
+  <div class="new-assignment__layout auth-form-layout">
+    <%= form_with url: email_access_request_path, method: :post, class: "assignment-form" do |form| %>
+      <% if @errors.present? %>
+        <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><ul><% @errors.each do |message| %><li><%= message %></li><% end %></ul></div>
+      <% end %>
+      <fieldset class="form-section">
+        <legend><%= t("email_access.request.form.legend") %></legend>
+        <div class="field-group"><strong><%= t("email_access.request.form.current_email") %></strong><p><%= current_user.email_address %></p></div>
+        <div class="field-group"><%= form.label "email_access[email_address]", t("email_access.request.form.new_email") %><%= form.email_field "email_access[email_address]", value: @email_address, required: true, autocomplete: "email" %></div>
+        <div class="field-group"><%= form.label "email_access[current_password]", t("email_access.request.form.password") %><%= form.password_field "email_access[current_password]", required: true, autocomplete: "current-password" %></div>
+        <p class="field-hint"><%= t("email_access.request.form.hint") %></p>
+      </fieldset>
+      <div class="form-actions"><%= link_to t("email_access.request.form.cancel"), verification_status_path, class: "button button--ghost" %><%= form.submit t("email_access.request.form.submit"), class: "button button--dark" %></div>
+    <% end %>
+  </div>
+</div>

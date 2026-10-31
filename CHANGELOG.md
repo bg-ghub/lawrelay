@@ -5,6 +5,14 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-10-31
+
+### Added
+
+- Request a working email when the directory address is inaccessible, with email confirmation and administrator identity review.
+- An email review queue in admin, recorded decisions and short approval/rejection emails in NL/FR/DE/EN.
+- More legal areas, a searchable Belgian court list with locations, and a short Peppol note beside invoice details.
+
 ## [0.14.1] - 2026-10-30
 
 ### Fixed

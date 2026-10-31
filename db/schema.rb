@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_30_092000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_31_090000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -169,8 +169,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_092000) do
     t.datetime "directory_email_verified_at"
     t.datetime "directory_confirmation_requested_at"
     t.string "directory_identity_digest"
+    t.string "email_review_status"
+    t.string "email_review_email_address"
+    t.datetime "email_review_requested_at"
+    t.datetime "email_reviewed_at"
+    t.integer "email_reviewed_by_user_id"
+    t.text "email_review_note"
+    t.string "email_review_identity_digest"
     t.index ["bar_association", "bar_number"], name: "index_lawyer_profiles_on_bar_association_and_bar_number", unique: true
-    t.index ["directory_profile_id"], name: "index_lawyer_profiles_on_directory_profile_id", unique: true, where: "directory_profile_id IS NOT NULL AND directory_email_verified_at IS NOT NULL"
+    t.index ["directory_profile_id"], name: "index_lawyer_profiles_on_directory_profile_id", unique: true, where: "directory_profile_id IS NOT NULL AND (directory_email_verified_at IS NOT NULL OR email_review_status = 'approved')"
+    t.index ["email_review_status", "email_review_requested_at"], name: "index_lawyer_profiles_on_email_review_queue"
     t.index ["user_id"], name: "index_lawyer_profiles_on_user_id", unique: true
     t.index ["verification_status"], name: "index_lawyer_profiles_on_verification_status"
   end
@@ -369,6 +377,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_30_092000) do
   add_foreign_key "invoices", "billing_accounts"
   add_foreign_key "invoices", "subscriptions"
   add_foreign_key "lawyer_profiles", "users"
+  add_foreign_key "lawyer_profiles", "users", column: "email_reviewed_by_user_id"
   add_foreign_key "memberships", "firms"
   add_foreign_key "memberships", "users"
   add_foreign_key "notifications", "users"

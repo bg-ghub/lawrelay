@@ -251,6 +251,33 @@ LOCALES.each do |locale|
   visit(member_security, "/#{locale}/verification_status")
   label = I18n.t("directory_feedback.resend_confirmation", locale:)
   check(Nokogiri::HTML(member_security.response.body).css("button").any? { |button| button.text == label }, "#{locale} official-email resend is available")
+  visit(member_security, "/#{locale}/verification/email-access")
+end
+
+profile.update!(email_review_status: "pending", email_review_email_address: member.email_address,
+  email_review_requested_at: 1.minute.ago, directory_checked_at: Time.current)
+LOCALES.each do |locale|
+  visit(member_security, "/#{locale}/verification_status")
+  visit(mfa_challenge, "/#{locale}/admin/email-reviews")
+  visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.id}")
+end
+
+%w[approved rejected].each do |status|
+  profile.update!(email_review_status: status, email_reviewed_at: Time.current,
+    email_reviewed_by_user: admin, email_review_note: "Private synthetic identity check",
+    email_review_identity_digest: profile.email_review_current_identity_digest)
+  LOCALES.each do |locale|
+    member.update!(locale:)
+    visit(member_security, "/#{locale}/verification_status")
+    visit(mfa_challenge, "/#{locale}/admin/email-reviews/#{member.id}")
+    message = EmailAccessReviewMailer.decision(profile.reload).message
+    check(message.html_part.present? && message.text_part.present?, "#{locale} email review #{status} has both bodies")
+    [ message.html_part, message.text_part ].each do |part|
+      body = part.decoded
+      check(body.include?("https://i18n.lawrelay.invalid/#{locale}/") && !body.match?(/translation missing/i), "#{locale} email review #{status} #{part.mime_type} is localized")
+      check(!body.include?(profile.email_review_note), "#{locale} email review #{status} keeps internal notes private")
+    end
+  end
 end
 
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")

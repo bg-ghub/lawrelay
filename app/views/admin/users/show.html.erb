@@ -51,6 +51,11 @@
       <% directory_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(@profile&.directory_profile_url) %>
       <% if directory_url %><p><%= link_to t("admin.users.actions.directory"), directory_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><% end %>
       <% unless @user.system_admin? %><p><%= link_to t("admin.users.actions.review_verification"), admin_verifications_path, class: "text-link" %></p><% end %>
+      <% if @profile&.email_review_status.present? %>
+        <% review_state = @profile.email_review_status == "approved" && !@profile.email_review_approved? ? "changed" : @profile.email_review_status %>
+        <p><strong><%= t("email_access.admin.title") %>:</strong> <%= t("email_access.admin.states.#{review_state}") %></p>
+        <p><%= link_to t("email_access.admin.review"), admin_email_review_path(@user), class: "text-link" %></p>
+      <% end %>
     </section>
 
     <section class="dashboard-panel" aria-labelledby="user-account-heading">

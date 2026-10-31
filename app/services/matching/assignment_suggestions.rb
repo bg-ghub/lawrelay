@@ -81,10 +81,22 @@ module Matching
 
     def practice_area_key(value)
       normalized = normalize(value)
-      PRACTICE_AREA_ALIASES.each do |key, aliases|
-        return key if aliases.any? { |candidate| normalize(candidate) == normalized }
+      practice_area_keys.fetch(normalized, normalized)
+    end
+
+    def practice_area_keys
+      @practice_area_keys ||= begin
+        keys = {}
+        PRACTICE_AREA_ALIASES.each do |key, aliases|
+          aliases.each { |label| keys[normalize(label)] = key }
+        end
+        I18n.available_locales.each do |locale|
+          I18n.t("marketplace.practice_areas", locale: locale).each do |key, label|
+            keys[normalize(label)] = key.to_s
+          end
+        end
+        keys
       end
-      normalized
     end
   end
 end

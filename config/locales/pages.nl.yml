@@ -42,11 +42,11 @@ nl:
           heading: "1. Wie verantwoordelijk is"
           paragraphs:
             - "De hierboven vermelde uitbater van LawRelay is verwerkingsverantwoordelijke."
-            - "Privacyvragen en verzoeken over uw rechten: privacy@lawrelay.be. We vergelijken uw naam en uw professionele e-mailadres met uw openbare profiel op advocaat.be. Controle van uw profiel en e-mailadres is nodig voor toegang tot de marktplaats. Vraag support@lawrelay.be om een mislukte controle te bekijken."
+            - "Privacyvragen en verzoeken over uw rechten: privacy@lawrelay.be. We vergelijken uw naam en professionele e-mailadres met advocaat.be en bevestigen uw e-mail. Kunt u het vermelde adres niet gebruiken, dan kan een beheerder een ander bevestigd adres beoordelen via onafhankelijke professionele contactgegevens."
         scope:
           heading: "2. Welke gegevens we verwerken"
           bullets:
-            - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens."
+            - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Professionele en facturatiegegevens: uw officiële profiel, vermelde naam en e-mailadres, ondernemingsnaam, ondernemings-/btw-nummer, contactgegevens en professionele verificatiestatus. Als u via de officiële publieke KBO-zoekpagina zelf een ondernemingsnummer opzoekt, bewaren we de teruggegeven facturatiegegevens (naam, nummer en, waar beschikbaar, zeteladres) en de datum van de KBO-gegevens."
             - "Gegevens over het professionele profiel en matchvoorkeuren, waaronder rechtsdomeinen, rechtbankvoorkeuren en—waar relevant voor juridische opdrachten—gesproken talen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
@@ -102,7 +102,7 @@ nl:
         eligibility:
           heading: "2. Toegang en verificatie"
           paragraphs:
-            - "Registratie staat open voor advocaten in de officiële lijst van advocaat.be. Toegang tot de marktplaats volgt na een controle in die lijst. Gebruikers verstrekken correcte professionele gegevens, houden die actueel, beschermen hun toegang en melden compromittering onmiddellijk. Verificatie is geen aanbeveling of kwaliteitsgarantie."
+            - "Registratie staat open voor advocaten op advocaat.be. Toegang vereist controle van het profiel en e-mailadres. Is het vermelde adres onbereikbaar, dan beoordeelt een beheerder uw identiteit en bevestigde nieuwe adres. Gebruikers houden hun professionele gegevens actueel, beschermen hun toegang en melden misbruik. Verificatie is geen aanbeveling of kwaliteitsgarantie."
         role:
           heading: "3. Rol van LawRelay"
           paragraphs:

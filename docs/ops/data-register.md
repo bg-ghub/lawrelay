@@ -1,6 +1,6 @@
 # Beta data and provider register
 
-Reviewed 30 October 2026. Owner: Gauthier Berth. This records the current implementation and review gaps; it is not a completed legal assessment. Agreements and account evidence are kept privately, outside this public repository.
+Reviewed 31 October 2026. Owner: Gauthier Berth. This records the current implementation and review gaps; it is not a completed legal assessment. Agreements and account evidence are kept privately, outside this public repository.
 
 ## Data and providers
 
@@ -17,6 +17,8 @@ The public privacy notice distinguishes Migadu's Swiss company location from its
 
 Default invoice details are separate from the lawyer's directory profile. Each assignment stores its own invoice recipient; later account edits do not change that snapshot. Verified assignment viewers see the recipient name and enterprise number; only the requester's workspace and selected confrater see the invoice address and email. These fields follow assignment retention and are cleared on approved erasure of their author. Matching enterprise numbers never join accounts or grant access. A user-initiated official KBO public-source lookup may populate billing fields and stores only its attribution snapshot; LawRelay sends one targeted request and parses only the necessary billing fields.
 
+An inaccessible-email request stores the working address, request/decision times, reviewer and identity-check note on the professional profile. The address must be confirmed before an MFA-authenticated administrator approves it using independent professional contact details. Approval is bound to the current account and directory identity, and does not claim control of the old mailbox. Decision mail uses the existing Migadu transport. Member exports include review status, address and dates; internal review notes and reviewer details need separate assessment. Profile erasure removes these fields and scrubs its audit metadata.
+
 The private archive was completed on 30 October 2026, with source URLs, retrieval times and checksums. Public references, the existing account DPA and local account observations are labelled separately; some original signup acceptance dates and historical versions remain unavailable. No new agreement or account setting was submitted.
 
 The 29 October notice read-through clarified assignment/proposal visibility, required verification, retention exceptions, rights-request handling and transfer safeguards. Signup records acceptance of the terms and acknowledgement of the notice, rather than consent to all processing. Public references: [EU transparency guidance](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/obligations_en), [rights requests](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/dealing-requests-individuals_en), [adequacy decisions](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en) and [AWS's automatically applicable DPA/SCCs](https://docs.aws.amazon.com/whitepapers/latest/navigating-gdpr-compliance/aws-data-processing-addendum-dpa.html). This does not confirm account-specific contract evidence or every subprocessor location.
@@ -26,7 +28,7 @@ The 29 October notice read-through clarified assignment/proposal visibility, req
 | Data | Current control and limitation |
 | --- | --- |
 | Unconfirmed registration | Delete an isolated, never-activated signup after 30 days of inactivity. Preserve established accounts awaiting email reconfirmation, recent sessions/corrections, shared firms, work, financial evidence and protected requests. |
-| Active account and professional profile | Keep until closure, not merely based on inactivity. A verified deletion request is reviewed before account/profile data is removed. |
+| Active account and professional profile | Keep until closure, including the current email-access review and identity-check note. Profile erasure removes these fields. Audit history follows the one-year audit schedule. |
 | Closed assignments, proposals and shared workflow records | Keep for 2 years after closure. Pseudonymise shared work when an account is removed where possible; do not promise anonymisation. |
 | Notifications | Delete terminal notifications and delivery metadata after 90 days. Keep unresolved delivery investigations or held records until the review is finished. |
 | Resolved reports, privacy requests and support correspondence | Keep for 2 years after resolution or last correspondence. The daily Migadu IMAP cleanup removes eligible `Support/Resolved` conversations and linked Sent copies; open, held, flagged, draft and unrelated mail stays protected. Closure timestamps are private metadata included in encrypted backups. |

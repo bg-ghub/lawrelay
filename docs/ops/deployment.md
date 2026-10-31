@@ -56,6 +56,8 @@ After deployment and DNS propagation:
 
 Application rollback does not automatically roll back database schema or data.
 
+Releases before `0.15.0` do not enforce email-access review decisions or process their decision emails. Once this flow is used, recover with a compatible build that preserves the review gate and pending jobs.
+
 Releases before `0.9.0` cannot run retention jobs or replay the deletion ledger. Use a compatible forward recovery build after retention is enabled; never expose an older restored database before replaying the latest reviewed erasures.
 
 Releases before `0.8.6` cannot run the new verification-email jobs. Use a forward fix or a compatible recovery image while those jobs are pending.

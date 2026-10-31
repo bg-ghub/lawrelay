@@ -35,6 +35,9 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     own_proposal = create_proposal_for(other_assignment, @member, message: "My own proposal")
     @member.user.update!(two_factor_secret_ciphertext: "excluded-two-factor-secret", two_factor_recovery_code_digests: [ "excluded-recovery-digest" ])
     @member.profile.update!(verification_note: "excluded-private-verification-note", directory_identity_digest: "excluded-directory-digest")
+    @member.profile.update_columns(email_review_status: "approved", email_review_email_address: @member.user.email_address,
+      email_review_requested_at: 2.hours.ago, email_reviewed_at: 1.hour.ago, email_reviewed_by_user_id: @admin.id,
+      email_review_note: "excluded-private-email-review-note", email_review_identity_digest: "excluded-email-review-digest")
     @member.user.memberships.create!(firm: @other.firm)
     @other.firm.update!(billing_email: "excluded-billing@example.test")
     @member.user.notifications.create!(kind: "new_proposal", data: { unsafe: "excluded-notification-data" })
@@ -52,6 +55,14 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     raw = File.read(@output)
     package = JSON.parse(raw)
     assert_equal @member.user.email_address, package.dig("account", "email_address")
+    exported_profile = package.fetch("professional_profile")
+    assert_equal "approved", exported_profile.fetch("email_review_status")
+    assert_equal @member.user.email_address, exported_profile.fetch("email_review_email_address")
+    assert exported_profile.fetch("email_review_requested_at")
+    assert exported_profile.fetch("email_reviewed_at")
+    %w[email_review_note email_review_identity_digest email_reviewed_by_user_id].each do |field|
+      assert_not exported_profile.key?(field)
+    end
     assert_equal [ own_assignment.id ], package.fetch("authored_assignments").pluck("id")
     exported_assignment = package.fetch("authored_assignments").sole
     assert_equal "Own invoice firm", exported_assignment.fetch("invoice_name")

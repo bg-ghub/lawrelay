@@ -28,6 +28,7 @@ Inbox, Drafts, Open, Hold, flagged mail and unrelated mail are left alone. A fla
 - Administrator accounts are read-only in this console. Use the audited operator recovery procedure for administrator changes; never weaken MFA to make a support action easier.
 - Compare the account with the actual `advocaat.be` profile and the published professional email. A matching name alone does not prove control of that identity.
 - For an expired link, use the existing resend flow. For a wrong or inaccessible directory email, ask the lawyer to correct the official listing; do not confirm a different person's account.
+- A member who cannot access the listed email can use **I can’t access this email** on the verification page. They enter a working address and their password, then confirm that address. Review the request under **Email reviews** in admin, using independently published professional contact details and a recorded reason. Access remains blocked until approval; do not use the general verification action to skip this review.
 - Do not disclose whether another person's email or profile is registered. Handle competing claims privately using the official profile and verified contact channel.
 - Record evidence and the reason for any manual decision in the audit trail. Do not override a rejection or suspension just to clear a pending check.
 

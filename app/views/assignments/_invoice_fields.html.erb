@@ -7,6 +7,7 @@
   data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
   <legend><%= t("assignment_billing.heading") %></legend>
   <p class="field-hint"><%= t("assignment_billing.form_hint") %></p>
+  <p class="field-hint"><%= t("assignment_billing.peppol_hint") %></p>
   <div class="field-group">
     <%= form.label :invoice_name, t("assignment_billing.name") %>
     <%= form.text_field :invoice_name, required: true, maxlength: 160, autocomplete: "organization", data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %>

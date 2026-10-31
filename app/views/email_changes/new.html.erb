@@ -3,6 +3,7 @@
   <div class="new-assignment__intro">
     <h1><%= t("email_change.heading") %></h1>
     <p><%= t(current_user.system_admin? ? "email_change.admin_lede" : "email_change.lede") %></p>
+    <% unless current_user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
   </div>
 
   <div class="new-assignment__layout auth-form-layout">

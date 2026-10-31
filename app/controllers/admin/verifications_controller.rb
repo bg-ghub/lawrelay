@@ -25,6 +25,9 @@ module Admin
         return redirect_to admin_verifications_path,
           alert: t("admin.verifications.notices.incomplete_account")
       end
+      if decision == "approve" && profile.email_review_status.present? && !profile.email_review_approved?
+        return redirect_to admin_email_review_path(@user), alert: t("email_access.errors.review_required")
+      end
 
       status = decision == "approve" ? "verified" : "rejected"
       outcome = decision == "approve" ? "approved" : "rejected"

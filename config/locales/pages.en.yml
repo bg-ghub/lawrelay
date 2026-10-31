@@ -42,11 +42,11 @@ en:
           heading: "1. Who controls your data"
           paragraphs:
             - "LawRelay's operator named above is the controller."
-            - "Privacy questions and rights requests: privacy@lawrelay.be. We compare your name and professional email with your public advocaat.be profile. Directory and email verification are required for marketplace access. Ask support@lawrelay.be to review a failed check."
+            - "Privacy questions and rights requests: privacy@lawrelay.be. We compare your name and professional email with advocaat.be and confirm your email. If you cannot access the listed address, an administrator can review another confirmed address using independent professional contact details."
         scope:
           heading: "2. Data we process"
           bullets:
-            - "Account and contact data, including name, professional email, preferred language, and authentication records."
+            - "Account and contact data, including name, professional email, preferred language, and authentication records. Email-access requests, decisions and identity-check notes are kept with your professional profile."
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
             - "Professional and billing data: your official directory profile, listed name and email, company name, enterprise/VAT number, contact details and professional-verification status. If you use the official KBO public search to look up an enterprise number, we store the returned billing fields (name, number and, where available, registered-office address) and KBO source snapshot date."
             - "Professional profile and matching-preference data, including practice areas, court preferences, and—where relevant to legal tasks—spoken languages; also assignment, proposal, acceptance, cancellation, and audit-event data."
@@ -102,7 +102,7 @@ en:
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
-            - "Registration is open to lawyers listed on the official advocaat.be directory. Marketplace access follows a directory check. Users must provide accurate professional details, keep them current, protect their credentials, and promptly report compromised access. Verification does not constitute endorsement or a guarantee of competence."
+            - "Registration is open to lawyers listed on advocaat.be. Access requires directory and email verification. If the listed email is inaccessible, an administrator must review your identity and confirmed alternative address. Users keep professional details current, protect their credentials and report compromised access. Verification is not an endorsement or guarantee of competence."
         role:
           heading: "3. LawRelay's role"
           paragraphs:
