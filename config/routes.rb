@@ -68,6 +68,7 @@ Rails.application.routes.draw do
           patch :suspend
           patch :restore
           patch :revoke_sessions, path: "revoke-sessions"
+          post :resend_verification, path: "resend-verification"
         end
       end
       get "mfa/setup", to: "mfa#setup", as: :mfa_setup

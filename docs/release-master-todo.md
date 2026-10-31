@@ -11,6 +11,7 @@ Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit
 - [x] Signup, directory/email verification, firm boundaries, private-record access and suspended-account protections.
 - [x] Profile-first signup with reviewed directory prefill and manual fallback; billing stays separate.
 - [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
+- [x] Admin resend for pending member verification emails, with existing mail delivery, MFA and rate limits.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.
 - [x] Random UUID user URLs with scoped admin/MFA checks and consistent user-management buttons.
 - [x] Daily server checks of registered members' KBO numbers and advocaat.be profiles, with an admin overview and consolidated operator alerts.

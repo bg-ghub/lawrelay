@@ -1,6 +1,12 @@
 module Admin
   class UsersController < BaseController
     before_action :set_user, except: :index
+    rate_limit to: 3, within: 15.minutes, only: :resend_verification,
+      name: "verification_resend_admin", by: -> { current_user.id },
+      with: -> { redirect_to admin_user_path(@user), alert: t("admin.users.verification_delivery.throttled") }
+    rate_limit to: 3, within: 15.minutes, only: :resend_verification,
+      name: "verification_resend_target", by: -> { @user.id },
+      with: -> { redirect_to admin_user_path(@user), alert: t("admin.users.verification_delivery.throttled") }
 
     def index
       @query = params[:q].to_s.strip.first(100)
@@ -60,6 +66,17 @@ module Admin
       management_error(error.translation_key)
     end
 
+    def resend_verification
+      delivery = VerificationDelivery.new(actor: current_user, user: @user)
+      result = delivery.request
+      if result == :queued
+        message = delivery.directory_check_pending? ? "queued_directory_pending" : "queued"
+        redirect_to admin_user_path(@user), notice: t("admin.users.verification_delivery.#{message}")
+      else
+        redirect_to admin_user_path(@user), alert: t("admin.users.verification_delivery.#{result}")
+      end
+    end
+
     private
 
     def set_user
@@ -86,6 +103,7 @@ module Admin
     def load_details
       @profile = @user.lawyer_profile
       @firm = @user.primary_firm
+      @verification_delivery = VerificationDelivery.new(actor: current_user, user: @user)
       @sessions = @user.sessions.where("expires_at > ?", Time.current).order(last_seen_at: :desc).limit(20)
       events = AuditEvent.where(auditable: @user)
       events = events.or(AuditEvent.where(auditable: @profile)) if @profile

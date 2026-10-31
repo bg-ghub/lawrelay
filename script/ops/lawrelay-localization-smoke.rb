@@ -327,5 +327,16 @@ LOCALES.each do |locale|
   end
 end
 
+member.update!(email_verified_at: nil)
+profile.update!(email_review_status: nil)
+AuditEvent.create!(auditable: member, actor_user: admin, action: "user.verification_resent", metadata: { channels: [ "account_email" ] })
+LOCALES.each do |locale|
+  visit(mfa_challenge, "/#{locale}/admin/users/#{member.to_param}")
+  button = Nokogiri::HTML(mfa_challenge.response.body).css("button").find do |candidate|
+    candidate.text == I18n.t("admin.users.verification_delivery.action", locale:)
+  end
+  check(button.present?, "#{locale} pending verification has a localized admin resend button")
+end
+
 check(ActionMailer::Base.deliveries.empty?, "no email was delivered")
 puts "Localized production rendering completed with only disposable synthetic records (invoice #{invoice.id}, request #{privacy_request.id}, report #{report.id})."

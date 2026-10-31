@@ -1,0 +1,15 @@
+---
+fr:
+  admin:
+    users:
+      verification_delivery:
+        action: Renvoyer le mail de vérification
+        directory_pending_hint: Le contrôle du profil reste en attente.
+        queued: Mail de vérification demandé.
+        queued_directory_pending: Mail de vérification demandé. Le contrôle du profil reste en attente.
+        unavailable: Demande impossible. Réessayez plus tard.
+        ineligible: Aucun mail de vérification ne peut être renvoyé pour ce compte.
+        throttled: Maximum 3 fois par quart d’heure.
+      audit:
+        actions:
+          user_verification_resent: Nouvel envoi de vérification demandé
