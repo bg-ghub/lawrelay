@@ -16,6 +16,7 @@ All notable changes to LawRelay are documented here. The project follows
 
 - Remove obsolete company-check labels from verification screens.
 - Hide empty location labels on legal-task cards.
+- Update Rack to 3.2.8 for the latest request-parsing security fixes.
 
 ## [0.20.0] - 2026-10-31
 
