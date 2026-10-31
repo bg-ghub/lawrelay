@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Validate Semantic Version
         shell: bash
         run: |
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -67,7 +67,7 @@ jobs:
     env:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -89,7 +89,7 @@ jobs:
     steps:
       - name: Install runtime packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -108,7 +108,7 @@ jobs:
     steps:
       - name: Install runtime packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -129,7 +129,7 @@ jobs:
     timeout-minutes: 20
     needs: [ version, test ]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build application image
         run: docker build --tag lawrelay-ci:${{ github.sha }} .
       - name: Render localized production pages and email in isolation
