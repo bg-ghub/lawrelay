@@ -134,6 +134,7 @@ en:
           admin_mfa_challenged: Two-factor authentication confirmed
           admin_mfa_reset: Two-factor authentication reset
           verification_directory_matched: Directory profile matched
+          verification_directory_lookup_failed: Directory profile lookup failed
           verification_directory_email_confirmed: Listed email confirmed
           verification_directory_activated: Professional access verified
           verification_approved: Professional verification approved

@@ -42,6 +42,7 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
     @privacy_request = PrivacyRequest.create!(user: @member.user, kind: "access_export",
       details: "Please provide a copy of my account data.")
     AuditEvent.create!(auditable: @member.user, actor_user: @admin, action: "account.email_changed")
+    AuditEvent.create!(auditable: @member.profile, action: "verification.directory_lookup_failed")
     PrivacyRequest.create!(user: @candidate.user, kind: "deletion", status: "in_review",
       handled_by_user: @admin, details: "Please review this deletion request.")
   end
@@ -125,6 +126,9 @@ class LocalizationRenderingTest < ActionDispatch::IntegrationTest
         render_page(path, locale:)
         if path == admin_user_path(@member.user, locale:)
           assert_includes response.body, I18n.t("admin.users.audit.actions.account_email_changed", locale:)
+          directory_failure_label = I18n.t("admin.users.audit.actions.verification_directory_lookup_failed", locale:, raise: true)
+          assert_select ".admin-user-audit-heading strong", text: directory_failure_label
+          assert_no_match(/Verification\.directory lookup failed/, response.body)
         end
       end
       get admin_founding_accesses_path(locale:)
