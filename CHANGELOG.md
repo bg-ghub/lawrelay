@@ -5,6 +5,12 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.16.2] - 2026-10-31
+
+### Fixed
+
+- Remove KBO attribution from the admin user overview.
+
 ## [0.16.1] - 2026-10-31
 
 ### Fixed

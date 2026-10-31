@@ -1,6 +1,6 @@
 # LawRelay beta checklist
 
-Reviewed 31 October 2026. Current release: 0.16.1.
+Reviewed 31 October 2026. Current release: 0.16.2.
 
 Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
 
