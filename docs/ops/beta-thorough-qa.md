@@ -13,7 +13,7 @@ Browser mutations used an isolated local copy with fictitious accounts and captu
 
 Deadline/expiry jobs were also exercised on synthetic records: correct recipients, no duplicates on rerun and no failed jobs. Captured emails prove application/worker output, not external inbox delivery. New-password entry and MFA enrollment were covered by automated system tests; their final credential steps were not performed through the in-app browser.
 
-Regression checks: 750 Rails tests and 17 affected system tests passed (19,975 and 410 assertions). The Rails run skipped 17 environment-specific cases.
+Regression checks: 750 Rails tests and 68 automated browser tests passed (19,975 and 3,318 assertions). The Rails run skipped 17 environment-specific cases.
 
 The pass found and removed obsolete company-check labels and empty legal-task locations. Detailed screenshots and results stay in the private operations archive.
 
