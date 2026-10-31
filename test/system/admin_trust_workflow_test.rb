@@ -149,9 +149,9 @@ class AdminTrustWorkflowTest < ApplicationSystemTestCase
       click_link I18n.t("trust.privacy_requests.index.new", locale:)
       assert_current_path new_privacy_request_path(locale:)
       assert_member_privacy_layout(locale:)
-      assert_selector "select#privacy_request_kind"
+      assert_selector "input#privacy_request_kind-search[role='combobox']"
       assert_selector "textarea#privacy_request_details"
-      all(".assignment-form select, .assignment-form textarea").each do |field|
+      all(".assignment-form [role='combobox'], .assignment-form textarea").each do |field|
         assert field.native.accessible_name.present?
       end
 
@@ -210,7 +210,7 @@ class AdminTrustWorkflowTest < ApplicationSystemTestCase
     assert_no_text "Translation missing"
     assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, page.evaluate_script("window.innerWidth"), "Member privacy page overflows at 320px in #{locale}"
     assert page.evaluate_script(<<~JS), "Member privacy controls overflow at 320px in #{locale}"
-      Array.from(document.querySelectorAll('.trust-page .button, .trust-page select, .trust-page textarea')).every(element => {
+      Array.from(document.querySelectorAll('.trust-page .button, .trust-page [role="combobox"], .trust-page textarea')).every(element => {
         const rect = element.getBoundingClientRect();
         return rect.left >= 0 && rect.right <= window.innerWidth;
       })
