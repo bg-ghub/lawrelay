@@ -15,10 +15,12 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: I18n.t("settings.heading", locale: :en)
+    assert_select "[name^='firm['], [data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
   end
 
-  test "updates account profile and owner-managed firm details with an audit trail" do
-    assert_difference "AuditEvent.count", 3 do
+  test "updates account and personal profile with an audit trail while ignoring company details" do
+    original_firm = @account.firm.attributes
+    assert_difference "AuditEvent.count", 2 do
       patch settings_path(locale: :en), params: {
         account: { first_name: "Ada", last_name: "Byron", email_address: @account.user.email_address, locale: "fr" },
         profile: { bar_association: "OVB", bar_number: @account.profile.bar_number, professional_email: @account.profile.professional_email, bar_admission_year: "2018", spoken_languages: [ "NL, FR" ], practice_areas: [ "Commercial law, Family law" ], court_preferences: [ "Enterprise Court Brussels, Antwerp" ], availability_note: "Tuesday mornings work well." },
@@ -37,9 +39,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2018, @account.profile.bar_admission_year
     assert_equal [ "Enterprise Court Brussels", "Antwerp" ], @account.profile.court_preferences
     assert_equal "Tuesday mornings work well.", @account.profile.availability_note
-    assert_equal "Settings Legal", @account.firm.name
-    assert_equal "billing@example.test", @account.firm.billing_email
-    assert_equal "BE#{@account.firm.enterprise_number}", @account.firm.vat_number
+    assert_equal original_firm, @account.firm.attributes
     assert_equal I18n.t("settings.notices.review_required", locale: :fr), flash[:notice]
   end
 
@@ -54,46 +54,50 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal original_email, @account.user.reload.email_address
   end
 
-  test "settings requires an enterprise number when an owner saves company details" do
-    original_number = @account.firm.enterprise_number
+  test "personal settings can be saved for a minimal workspace without company details" do
+    @account.firm.update!(name: Firm::INTERNAL_WORKSPACE_NAME, enterprise_number: nil,
+      billing_email: nil, phone: nil, address_line_1: nil, postal_code: nil, city: nil)
+    original_firm = @account.firm.reload.attributes
 
-    patch settings_path(locale: :en), params: valid_params(firm: { enterprise_number: "" })
-
-    assert_response :unprocessable_content
-    assert_includes response.body, "Enterprise number"
-    assert_equal original_number, @account.firm.reload.enterprise_number
-  end
-
-  test "settings ignores a forged VAT number and keeps the derived value" do
-    patch settings_path(locale: :en), params: valid_params(firm: { vat_number: "BE0000000000" })
+    patch settings_path(locale: :en), params: valid_params(profile: { availability_note: "Available Wednesday" })
 
     assert_redirected_to settings_path(locale: :en)
-    assert_equal "BE#{@account.firm.enterprise_number}", @account.firm.reload.vat_number
+    assert_equal "Available Wednesday", @account.profile.reload.availability_note
+    assert_equal original_firm, @account.firm.reload.attributes
   end
 
-  test "formatting an unchanged enterprise number does not reset company verification" do
-    @account.firm.update!(enterprise_number: "1234567894", verification_status: "verified", verified_at: Time.current)
+  test "settings ignores all forged company and billing attributes without applying a lookup" do
+    original_firm = @account.firm.attributes
+    original = BusinessRegistry::Preview.method(:apply)
+    BusinessRegistry::Preview.define_singleton_method(:apply) { |*| raise "Settings must not apply company details" }
 
-    patch settings_path(locale: :en), params: valid_params(firm: { enterprise_number: "BE 1234.567.894" })
-
-    assert_redirected_to settings_path(locale: :en)
-    assert_equal "verified", @account.firm.reload.verification_status
-  end
-
-  test "billing recipient changes preserve professional verification and account isolation" do
-    other = create_marketplace_account(prefix: "samebilling")
-    @account.firm.update!(enterprise_number: "1234567894")
-    other.firm.update!(enterprise_number: "1234567894")
-
-    patch settings_path(locale: :en), params: valid_params(firm: { name: "My invoice recipient", enterprise_number: "2345678942" })
+    assert_no_difference "AuditEvent.where(auditable: @account.firm).count" do
+      patch settings_path(locale: :en), params: valid_params(firm: {
+        name: "Forged legal recipient", enterprise_number: "invalid", vat_number: "BE0000000000",
+        billing_email: "billing@example.test", phone: "+3225550199", address_line_1: "Private street 10",
+        postal_code: "1000", city: "Brussels", kbo_lookup_token: "forged-token",
+        verification_status: "verified", verified_at: Time.current
+      })
+    end
 
     assert_redirected_to settings_path(locale: :en)
-    assert_equal I18n.t("settings.notices.updated", locale: :en), flash[:notice]
-    assert_equal "My invoice recipient", @account.firm.reload.name
+    assert_equal original_firm, @account.firm.reload.attributes
     assert_predicate @account.user.reload, :marketplace_verified?
-    assert_equal [ @account.firm.id ], @account.user.firm_ids
-    assert_equal "1234567894", other.firm.reload.enterprise_number
-    assert_not_equal "My invoice recipient", other.firm.name
+  ensure
+    BusinessRegistry::Preview.define_singleton_method(:apply, original) if original
+  end
+
+  test "forged company details cannot join workspaces or alter another account" do
+    other = create_marketplace_account(prefix: "separateworkspace")
+    original_firm = @account.firm.attributes
+    original_other_firm = other.firm.attributes
+
+    patch settings_path(locale: :en), params: valid_params(firm: { id: other.firm.id, name: other.firm.name, enterprise_number: other.firm.enterprise_number })
+
+    assert_redirected_to settings_path(locale: :en)
+    assert_equal [ @account.firm.id ], @account.user.reload.firm_ids
+    assert_equal original_firm, @account.firm.reload.attributes
+    assert_equal original_other_firm, other.firm.reload.attributes
   end
 
   test "name changes reset directory verification and queue a fresh check" do
@@ -151,7 +155,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_nil profile.directory_identity_digest
   end
 
-  test "a suspended firm remains suspended when its details are changed" do
+  test "a suspended workspace remains suspended when company details are forged" do
     @account.firm.update!(verification_status: "suspended")
 
     patch settings_path(locale: :en), params: valid_params(firm: { name: "Changed invoice recipient", enterprise_number: "2345678942" })
@@ -159,7 +163,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "suspended", @account.firm.reload.verification_status
   end
 
-  test "a rejected firm remains rejected when its details are changed" do
+  test "a rejected workspace remains rejected when company details are forged" do
     @account.firm.update!(verification_status: "rejected")
 
     patch settings_path(locale: :en), params: valid_params(firm: { name: "Changed invoice recipient", enterprise_number: "2345678942" })
@@ -189,7 +193,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     {
       account: { first_name: @account.user.first_name, last_name: @account.user.last_name, email_address: @account.user.email_address, locale: @account.user.locale }.merge(account),
       profile: { bar_admission_year: @account.profile.bar_admission_year, spoken_languages: @account.profile.spoken_languages, practice_areas: @account.profile.practice_areas, court_preferences: @account.profile.court_preferences, availability_note: @account.profile.availability_note }.merge(profile),
-      firm: { name: @account.firm.name, enterprise_number: @account.firm.enterprise_number, vat_number: @account.firm.vat_number, billing_email: @account.firm.billing_email, phone: @account.firm.phone, address_line_1: @account.firm.address_line_1, postal_code: @account.firm.postal_code, city: @account.firm.city }.merge(firm)
+      firm: firm
     }
   end
 

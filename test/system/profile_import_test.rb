@@ -40,8 +40,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     sign_in
     visit settings_path(locale: :en)
     fill_in "Availability", with: "Keep my unsaved availability"
-    fill_in "Phone", with: "+3225550199"
-    fill_in "Address", with: "Billing Street 12"
+    original_firm = @account.firm.attributes
     click_button "Get details from advocaat.be"
     assert_selector "form[data-unsaved-changes='true']", visible: :all
     wait_for_language_menu
@@ -50,8 +49,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_nil @account.firm.reload.phone
     assert_nil @account.profile.reload.availability_note
     assert_field "Availability", with: "Keep my unsaved availability"
-    assert_field "Phone", with: "+3225550199"
-    assert_field "Address", with: "Billing Street 12"
+    assert_no_selector "[name^='firm[']", visible: :all
     assert_field "Languages", with: "NL, FR"
 
     find(".language-menu summary").click
@@ -60,14 +58,12 @@ class ProfileImportTest < ApplicationSystemTestCase
     end
     assert_current_path settings_path(locale: :en)
     assert_field "Availability", with: "Keep my unsaved availability"
-    assert_field "Phone", with: "+3225550199"
-    assert_field "Address", with: "Billing Street 12"
+    assert_no_selector "[name^='firm[']", visible: :all
 
     click_button "Save"
     assert_selector "form[data-unsaved-changes='false']", visible: :all
     assert_text "Changes saved."
-    assert_equal "+3225550199", @account.firm.reload.phone
-    assert_equal "Billing Street 12", @account.firm.address_line_1
+    assert_equal original_firm, @account.firm.reload.attributes
     assert_equal "Keep my unsaved availability", @account.profile.reload.availability_note
     assert_equal %w[NL FR], @account.profile.spoken_languages
     assert_predicate @account.profile, :verified?
@@ -82,41 +78,24 @@ class ProfileImportTest < ApplicationSystemTestCase
   test "Enter keeps the ordinary Save action instead of importing" do
     sign_in
     visit settings_path(locale: :en)
-    fill_in "Phone", with: "+3225550199"
-    find_field("Phone").send_keys(:enter)
+    fill_in "Languages", with: "NL, FR"
+    find_field("Languages").send_keys(:enter)
     assert_text "Changes saved."
-    assert_equal "+3225550199", @account.firm.reload.phone
+    assert_equal %w[NL FR], @account.profile.reload.spoken_languages
+    assert_nil @account.firm.reload.phone
     assert_empty @import_calls
   end
 
-  test "enterprise number derives a read-only VAT preview and official lookup in every language" do
+  test "settings has no company or billing fields or official lookup in any language" do
     sign_in
+    original_firm = @account.firm.attributes
     %i[nl fr de en].each do |locale|
-      visit settings_path(locale: locale)
-      fill_in I18n.t("auth.fields.enterprise_number", locale: locale), with: "BE 1234.567.894"
-      assert_field I18n.t("auth.fields.enterprise_number", locale: locale), with: "1234567894"
-      assert_field I18n.t("auth.fields.vat_number", locale: locale), with: "BE 1234567894"
-      assert_selector "input[data-company-number-target='vat'][readonly]:not([name])"
-      assert_button I18n.t("business_lookup.button", locale: locale)
-      assert_selector "fieldset[data-business-lookup-url-value='/#{locale}/company-lookup']"
-
-      fill_in I18n.t("auth.fields.enterprise_number", locale: locale), with: "12345678941"
-      assert_field I18n.t("auth.fields.vat_number", locale: locale), with: ""
-      assert_no_selector ".business-lookup__status--error"
+      visit settings_path(locale:)
+      assert_no_selector "[name^='firm[']", visible: :all
+      assert_no_selector "[data-controller*='company-number'], [data-controller*='business-lookup']", visible: :all
+      assert_no_button I18n.t("business_lookup.button", locale:)
     end
-
-    fill_in "Enterprise number", with: "1234567890"
-    click_button "Save"
-    assert_text "Enterprise number is invalid"
-    assert_selector ".form-error[role='alert']:focus"
-    fill_in "Enterprise number", with: "1234567894"
-    fill_in "Company name", with: "My default invoice recipient"
-    assert_field "Enterprise number", with: "1234567894"
-    assert_field "VAT number", with: "BE 1234567894"
-    click_button "Save"
-    assert_text "Changes saved."
-    assert_equal "BE1234567894", @account.firm.reload.vat_number
-    assert_predicate @account.user.reload, :marketplace_verified?
+    assert_equal original_firm, @account.firm.reload.attributes
   end
 
   test "the import control fits narrow settings in all four languages" do

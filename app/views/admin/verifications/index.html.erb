@@ -14,7 +14,6 @@
   <% if @users.any? %>
     <div class="assignment-list">
       <% @users.each do |user| %>
-        <% firm = user.primary_firm %>
         <% profile = user.lawyer_profile %>
         <article class="dashboard-panel">
           <div class="panel-heading">
@@ -27,13 +26,9 @@
 
           <dl class="detail-facts">
             <div><dt><%= t("admin.verifications.email") %></dt><dd><%= user.email_address %></dd></div>
-            <div><dt><%= t("admin.verifications.firm") %></dt><dd><%= firm&.name || "—" %></dd></div>
-            <div><dt><%= t("admin.verifications.enterprise_number") %></dt><dd><%= firm&.enterprise_number.presence || "—" %></dd></div>
             <div><dt><%= t("admin.verifications.bar") %></dt><dd><%= [profile&.bar_association, profile&.bar_number].compact_blank.join(" · ").presence || "—" %></dd></div>
-            <div><dt><%= t("admin.verifications.firm_status") %></dt><dd><%= firm ? t("admin.users.verification.#{firm.verification_status}") : t("admin.verifications.missing") %></dd></div>
             <div><dt><%= t("admin.verifications.lawyer_status") %></dt><dd><%= profile ? t("admin.users.verification.#{profile.verification_status}") : t("admin.verifications.missing") %></dd></div>
           </dl>
-          <%= render "shared/business_source", metadata: firm.kbo_details, fields: firm.kbo_details.fetch("fields", []) & %w[name enterprise_number] if firm %>
 
           <% if profile&.email_review_status.present? %>
             <% review_state = profile.email_review_status == "approved" && !profile.email_review_approved? ? "changed" : profile.email_review_status %>

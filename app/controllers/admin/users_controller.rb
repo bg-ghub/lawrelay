@@ -14,7 +14,7 @@ module Admin
       @verification_filter = params[:verification].presence_in(LawyerProfile::VERIFICATION_STATUSES).to_s
       @per_page = params[:per_page].to_i == 50 ? 50 : 25
 
-      scope = managed_users.left_joins(:lawyer_profile, memberships: :firm)
+      scope = managed_users.left_joins(:lawyer_profile)
       scope = apply_search(scope)
       scope = scope.where(suspended_at: nil) if @status_filter == "active"
       scope = scope.where.not(suspended_at: nil) if @status_filter == "suspended"
@@ -22,7 +22,7 @@ module Admin
       @total_count = scope.distinct.count
       @total_pages = [ (@total_count.to_f / @per_page).ceil, 1 ].max
       @page = params[:page].to_i.clamp(1, @total_pages)
-      @users = scope.distinct.includes(:lawyer_profile, memberships: :firm)
+      @users = scope.distinct.includes(:lawyer_profile)
         .order(created_at: :desc, id: :desc).offset((@page - 1) * @per_page).limit(@per_page)
     end
 
@@ -80,7 +80,7 @@ module Admin
     private
 
     def set_user
-      @user = find_user_resource!(managed_users.includes(:lawyer_profile, memberships: :firm))
+      @user = find_user_resource!(managed_users.includes(:lawyer_profile))
       redirect_legacy_user_resource(@user, admin_user_path(@user))
     end
 
@@ -102,7 +102,6 @@ module Admin
 
     def load_details
       @profile = @user.lawyer_profile
-      @firm = @user.primary_firm
       @verification_delivery = VerificationDelivery.new(actor: current_user, user: @user)
       @sessions = @user.sessions.where("expires_at > ?", Time.current).order(last_seen_at: :desc).limit(20)
       events = AuditEvent.where(auditable: @user)
@@ -122,7 +121,7 @@ module Admin
       term = "%#{User.sanitize_sql_like(@query.downcase)}%"
       scope.where(
         "LOWER(users.first_name || ' ' || users.last_name) LIKE :term OR " \
-        "LOWER(users.email_address) LIKE :term OR LOWER(firms.name) LIKE :term",
+        "LOWER(users.email_address) LIKE :term",
         term:
       )
     end

@@ -22,6 +22,9 @@ class Admin::VerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h2", @review_user.full_name
     assert_select "body", text: /#{Regexp.escape(@review_user.email_address)}/
+    assert_not_includes response.body, @review_firm.name
+    assert_not_includes response.body, @review_firm.enterprise_number
+    assert_select ".business-source", count: 0
   end
 
   test "ordinary member cannot access verification console" do

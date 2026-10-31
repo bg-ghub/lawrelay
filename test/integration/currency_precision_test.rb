@@ -17,7 +17,7 @@ class CurrencyPrecisionTest < ActionDispatch::IntegrationTest
         kind: "court_replacement", title: "Optional fee #{locale}", description: "A bounded assignment without client information.",
         city: "Brussels", court: "Enterprise Court", starts_at: 3.days.from_now,
         duration_minutes: 60, practice_area: "Commercial law", content_rules_accepted: "1"
-      }.merge(invoice_recipient_attributes)
+      }
       attributes[:fee_cents] = [ nil, "", " ", nil ][index] unless index.zero?
       assert_difference("Assignment.count", 1) do
         post assignments_path(locale:), params: { assignment: attributes }

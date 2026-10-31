@@ -41,7 +41,6 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     fill_in "assignment_title", with: "System-test court cover"
     fill_in "assignment_description", with: "A safe summary without client or matter information."
     choose_searchable_option("assignment_practice_area", label: "Commercial law")
-    choose_searchable_option("assignment_court_subtype", value: "hearing")
     set_datetime("assignment_response_deadline_at", 2.days.from_now)
     set_datetime("assignment_hearing_at", 3.days.from_now)
     fill_in "assignment_duration_minutes", with: "60"
@@ -49,16 +48,8 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     find("#assignment-court-options [role='option'][data-other='true']").click
     fill_in "assignment_court_other", with: "Enterprise Court"
     fill_in "assignment_city", with: "Brussels"
-    assert_field "assignment_invoice_name", with: account.firm.name
-    fill_in "assignment_invoice_name", with: "Firm receiving this invoice"
-    fill_in "assignment_invoice_enterprise_number", with: "BE 1234.567.894"
-    assert_field "assignment_invoice_enterprise_number", with: "1234567894"
-    assert_field "assignment_invoice_vat_number", with: "BE 1234567894"
-    assert find("#assignment_invoice_vat_number").readonly?
-    fill_in "assignment_invoice_email", with: "invoice-recipient@example.test"
-    fill_in "assignment_invoice_address_line_1", with: "Test Street 1"
-    fill_in "assignment_invoice_postal_code", with: "1000"
-    fill_in "assignment_invoice_city", with: "Brussels"
+    assert_no_selector "#assignment_court_subtype", visible: :all
+    assert_no_selector "input[name^='assignment[invoice_']", visible: :all
     find("#assignment_content_rules_accepted").check
 
     click_button "Post assignment"
@@ -67,9 +58,8 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     assert_equal 1, Assignment.where(title: "System-test court cover").count
     assert_nil Assignment.find_by!(title: "System-test court cover").fee_cents
     assert_selector ".proposal-panel__price strong", text: "To be agreed"
-    assert_selector ".assignment-invoice-recipient", text: "Firm receiving this invoice"
-    assert_selector ".assignment-invoice-recipient a[href='mailto:invoice-recipient@example.test']"
-    assert_not_equal "Firm receiving this invoice", account.firm.reload.name
+    assert_nil Assignment.find_by!(title: "System-test court cover").assignment_subtype
+    assert_text I18n.t("company_minimization.private_invoice_details", locale: :en)
   end
 
   test "an unrelated lawyer is sent back to the board for a closed assignment" do
@@ -165,8 +155,6 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     fill_in "registration_password", with: "password1234"
     fill_in "registration_password_confirmation", with: "anotherpass12"
     fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
-    fill_in "registration_firm_name", with: "System-test office"
-    fill_in "registration_enterprise_number", with: "1234567894"
     find("#registration_terms_accepted").check
     find("form.assignment-form input[type='submit']").click
 

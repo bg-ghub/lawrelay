@@ -41,17 +41,21 @@ class SearchableSelectTest < ApplicationSystemTestCase
     field.click
     assert_selector "#assignment_practice_area-options [role='option']", minimum: 2
     field.send_keys(:escape)
-    choose_searchable_option("assignment_court_subtype", value: "hearing")
+    assert_no_selector "#assignment_court_subtype", visible: :all
 
     find("label.kind-option", text: "Legal task").click
-    assert find("#assignment_court_subtype-search", visible: :all).disabled?
+    assert_no_selector "#assignment-description-hint", visible: true
+    assert_nil find("#assignment_description")["aria-describedby"]
     assert_not find("#assignment_legal_subtype-search").disabled?
     fill_in "assignment_legal_subtype-search", with: "tract"
     find("#assignment_legal_subtype-search").send_keys(:arrow_down, :enter)
     assert_native_value "assignment_legal_subtype", "contract"
     find("label.kind-option", text: "Court cover").click
-    assert_field "assignment_court_subtype-search", with: "Hearing"
+    assert_selector "#assignment-description-hint", visible: true
+    assert_equal "assignment-description-hint", find("#assignment_description")["aria-describedby"]
     assert find("#assignment_legal_subtype-search", visible: :all).disabled?
+    find("label.kind-option", text: "Legal task").click
+    assert_field "assignment_legal_subtype-search", with: I18n.t("marketplace.assignment_subtypes.contract", locale: :en)
   end
 
   test "Other legal area reveals a required custom field and predefined choices hide it" do
@@ -86,9 +90,6 @@ class SearchableSelectTest < ApplicationSystemTestCase
     fill_in "assignment_languages", with: "EN"
     set_datetime("assignment_response_deadline_at", 1.day.from_now)
     set_datetime("assignment_execution_deadline", 3.days.from_now)
-    fill_in "assignment_invoice_address_line_1", with: "Synthetic street 1"
-    fill_in "assignment_invoice_postal_code", with: "1000"
-    fill_in "assignment_invoice_city", with: "Brussels"
     find("#assignment_content_rules_accepted").check
     click_button I18n.t("marketplace.form.submit", locale: :en)
     assert_selector ".form-error[role='alert']:focus"

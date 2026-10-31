@@ -33,15 +33,10 @@
     <ul class="admin-user-list" aria-label="<%= t("admin.users.index.list_label") %>">
       <% @users.each do |user| %>
         <% profile = user.lawyer_profile %>
-        <% firm = user.primary_firm %>
         <li class="dashboard-panel admin-user-row">
           <div class="admin-user-identity">
             <h2><%= link_to user.full_name, admin_user_path(user), class: "text-link" %></h2>
             <p><%= user.email_address %></p>
-          </div>
-          <div class="admin-user-row-fact">
-            <span class="admin-user-caption"><%= t("admin.users.fields.firm") %></span>
-            <strong><%= firm&.name || t("admin.users.not_recorded") %></strong>
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.fields.status") %></span>

@@ -16,17 +16,14 @@
         <article class="dashboard-panel">
           <div class="panel-heading">
             <div>
-              <p class="eyebrow"><%= t("admin.founding_accesses.verified_firm") %></p>
-              <h2><%= firm.name %></h2>
-              <%= render "shared/business_source", metadata: firm.kbo_details, fields: firm.kbo_details.fetch("fields", []) & %w[name enterprise_number] %>
+              <p class="eyebrow"><%= t("admin.users.verification.verified") %></p>
+              <% member_names = firm.users.map(&:full_name).join(", ").presence %>
+              <% if member_names %><h2><%= member_names %></h2><% end %>
             </div>
             <span class="status-pill"><%= grant_active ? t("admin.founding_accesses.active_until", date: l(account.complimentary_access_until.to_date)) : t("admin.founding_accesses.no_access") %></span>
           </div>
 
           <dl class="detail-facts">
-            <div><dt><%= t("admin.founding_accesses.enterprise_number") %></dt><dd><%= firm.enterprise_number.presence || "—" %></dd></div>
-            <div><dt><%= t("admin.founding_accesses.vat_number") %></dt><dd><%= firm.vat_number.presence || "—" %></dd></div>
-            <div><dt><%= t("admin.founding_accesses.billing_email") %></dt><dd><%= firm.billing_email.presence || "—" %></dd></div>
             <div><dt><%= t("admin.founding_accesses.administrators") %></dt><dd><%= firm.users.select { |user| user.firm_administrator?(firm) }.map { |user| "#{user.full_name} · #{user.email_address}" }.join("; ").presence || "—" %></dd></div>
           </dl>
 

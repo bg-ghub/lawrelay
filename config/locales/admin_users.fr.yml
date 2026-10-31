@@ -27,7 +27,7 @@ fr:
       filters:
         label: Rechercher des utilisateurs
         search: Rechercher
-        search_hint: Nom, e-mail ou cabinet
+        search_hint: Nom ou e-mail
         status: Accès au compte
         verification: Vérification de l'avocat
         all: Tous

@@ -48,19 +48,18 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
     assert_select "textarea[name='profile[availability_note]']", text: "Unsaved note"
     assert_select "input[name='profile[court_preferences][]'][value='Unsaved court']"
     assert_select "input[name='profile[spoken_languages][]'][value='NL, FR']"
-    assert_select "input[name='firm[name]'][value='Unsaved office']"
-    assert_select "input[name='firm[phone]'][value='Old phone']"
+    assert_select "[name^='firm[']", count: 0
     assert_equal original, records.map { |record| record.reload.attributes }
   end
 
-  test "ordinary members cannot import shared billing details" do
+  test "ordinary members cannot import company or billing details" do
     @account.user.memberships.first.update!(role: "member")
     original = @account.firm.attributes
     with_result(import_result) do
       patch settings_path(locale: :en), params: { settings_action: "import_profile", firm: { phone: "Forged" } }
     end
     assert_response :success
-    assert_select "input[name='firm[phone]']", count: 0
+    assert_select "[name^='firm[']", count: 0
     assert_equal original, @account.firm.reload.attributes
   end
 

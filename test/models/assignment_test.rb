@@ -16,6 +16,24 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_predicate assignment, :valid?
     assert assignment.court_replacement?
     assert_equal "Zittingsvervanging", assignment.kind_label
+    assert_nil assignment.assignment_subtype
+    assert_nil assignment.subtype_label
+  end
+
+  test "legal tasks require a valid type" do
+    [ nil, "", "hearing", "unknown" ].each do |subtype|
+      assignment = Assignment.new(valid_attributes.merge(kind: "legal_task", assignment_subtype: subtype))
+
+      assert_not assignment.valid?
+      assert_includes assignment.errors.attribute_names, :assignment_subtype
+    end
+  end
+
+  test "historical court types retain their translated label" do
+    assignment = Assignment.create!(valid_attributes.merge(assignment_subtype: "plea"))
+
+    assert_equal "plea", assignment.reload.assignment_subtype
+    assert_equal I18n.t("marketplace.assignment_subtypes.plea"), assignment.subtype_label
   end
 
   test "other choices store the custom court and legal area rather than a menu marker" do
@@ -98,7 +116,7 @@ class AssignmentTest < ActiveSupport::TestCase
   end
 
   test "requires languages for legal tasks" do
-    assignment = Assignment.new(valid_attributes.merge(kind: "legal_task", languages: nil))
+    assignment = Assignment.new(valid_attributes.merge(kind: "legal_task", assignment_subtype: "advice", languages: nil))
 
     assert_not_predicate assignment, :valid?
     assert_includes assignment.errors.attribute_names, :languages
@@ -149,7 +167,7 @@ class AssignmentTest < ActiveSupport::TestCase
     assignment = Assignment.create!(valid_attributes)
 
     assert_equal assignment.starts_at - 1.hour, assignment.response_deadline_at
-    assert_equal "hearing", assignment.assignment_subtype
+    assert_nil assignment.assignment_subtype
   end
 
   test "requires legal delivery after the response deadline and before execution" do
@@ -189,18 +207,10 @@ class AssignmentTest < ActiveSupport::TestCase
     end
   end
 
-  test "invoice defaults copy KBO attribution without sharing the firm hash" do
-    details = {
-      "snapshot_date" => "2026-10-15",
-      "fields" => [ "name", "enterprise_number", "address_line_1" ]
-    }
-    firm = Firm.new(name: "KBO recipient", enterprise_number: "1234567894", kbo_details: details)
-    user = User.new(email_address: "invoice-default@example.test")
+  test "retired invoice validation context does not require company data" do
+    assignment = Assignment.new(valid_attributes)
 
-    defaults = Assignment.default_invoice_recipient(firm:, user:)
-    defaults.fetch(:invoice_kbo_details).fetch("fields") << "city"
-
-    assert_equal "2026-10-15", defaults.dig(:invoice_kbo_details, "snapshot_date")
-    assert_equal [ "name", "enterprise_number", "address_line_1" ], firm.kbo_details.fetch("fields")
+    assert assignment.valid?([ :create, :invoice_details ]), assignment.errors.full_messages.join(", ")
+    assert_empty assignment.attributes.select { |key, _| key.start_with?("invoice_") }.values.compact_blank
   end
 end

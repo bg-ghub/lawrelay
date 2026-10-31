@@ -68,7 +68,7 @@ boot_and_check() {
     --env ASSUME_SSL=true --env FORCE_SSL=true --env RAILS_LOG_LEVEL=warn \
     --env SOLID_QUEUE_IN_PUMA=false --env WEB_CONCURRENCY=0 \
     --env LAWRELAY_RELEASE_MODE=beta --env LAWRELAY_BILLING_ENFORCED=true \
-    "$image" /bin/sh -c 'set -e; unset SOLID_QUEUE_IN_PUMA; bundle exec rails db:prepare; exec ./bin/thrust ./bin/rails server' >/dev/null || fail "could not start isolated image"
+    "$image" /bin/sh -c 'set -e; unset SOLID_QUEUE_IN_PUMA; bundle exec rails db:prepare; bundle exec rails runner "Privacy::CompanyDataCleanup.new(dry_run: false).call if defined?(Privacy::CompanyDataCleanup)"; exec ./bin/thrust ./bin/rails server' >/dev/null || fail "could not start isolated image"
   ready=false
   for attempt in $(seq 1 40); do
     if docker exec "$container" curl --fail --silent --max-time 3 http://127.0.0.1:3000/ready >/dev/null 2>&1; then

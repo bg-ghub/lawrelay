@@ -48,14 +48,19 @@ class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "MFA-verified system admin can view verified firms" do
+  test "MFA-verified system admin can view verified members without company details" do
+    @firm.update!(billing_email: "retired-billing@example.test")
     sign_in_as(@admin, admin_mfa: true)
 
     get "/en/admin/founding_accesses"
 
     assert_response :success
-    assert_select "h2", @firm.name
+    assert_select "h2", @owner.full_name
     assert_select "body", text: /#{Regexp.escape(@owner.email_address)}/
+    [ @firm.name, @firm.enterprise_number, @firm.billing_email ].each do |value|
+      assert_not_includes response.body, value
+    end
+    assert_select ".business-source", count: 0
   end
 
   test "system admin must complete MFA to access founding access" do
@@ -84,6 +89,7 @@ class Admin::FoundingAccessesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/en/admin/founding_accesses"
     account = @firm.reload.billing_account
     assert_equal "founding_beta", account.plan_key
+    assert_nil account.billing_email
     assert_equal "active", account.status
     assert_equal expires_on, account.complimentary_access_until.to_date
     assert account.posting_access?

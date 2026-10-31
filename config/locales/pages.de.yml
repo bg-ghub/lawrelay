@@ -49,15 +49,15 @@ de:
             - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten. Anträge auf eine andere Adresse, Entscheidungen und Prüfvermerke werden mit Ihrem Berufsprofil gespeichert."
             - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
             - "Auf Ihren Wunsch übernehmen wir den öffentlichen Namen, die E-Mail-Adresse, Sprachen und Rechtsgebiete von advocaat.be zum Vorausfüllen der Anmeldung. Die Vorschau ist 20 Minuten gültig."
-            - "Wir prüfen Ihr advocaat.be-Profil und Ihre KBO-Unternehmensnummer täglich. Der Betreiber wird über ein inaktives Unternehmen oder ein fehlendes oder geändertes Profil informiert."
-            - "Berufs- und Rechnungsdaten: offizielles Verzeichnisprofil, veröffentlichter Name und E-Mail-Adresse, Unternehmensname, Unternehmens-/USt-Nummer, Kontaktdaten und beruflicher Prüfstatus. Wenn Sie über den offizielle öffentliche KBO-Suche selbst eine Unternehmensnummer abfragen, speichern wir die zurückgegebenen Abrechnungsdaten (Name, Nummer und, soweit verfügbar, Sitzadresse) sowie das Datum des KBO-Datenbestands."
+            - "Wir prüfen Ihr advocaat.be-Profil täglich. Der Betreiber wird über ein fehlendes oder geändertes Profil informiert."
+            - "Berufliche Identität: offizielles Verzeichnisprofil, veröffentlichter Name und E-Mail-Adresse sowie beruflicher Prüfstatus."
             - "Daten zum beruflichen Profil und zu Vermittlungspräferenzen, einschließlich Rechtsgebieten, Gerichtspräferenzen und—soweit für juristische Aufgaben relevant—gesprochenen Sprachen; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
-            - "Rechnungsdaten je Auftrag, einschließlich beruflichem Namen und Unternehmens-/USt-Nummer. Verifizierte Mitglieder mit Zugriff auf den Auftrag sehen Name und Nummer; die Kanzlei des Auftraggebers und der ausgewählte Kollege sehen die vollständige Rechnungsadresse und E-Mail-Adresse."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."
             - "Nur für nicht angemeldete öffentliche Besuche: cookielose Umami-Statistiken mit einem begrenzten Seitenpfad, der Herkunft des Referrers und gewöhnlichen Metadaten der Browseranfrage. Wir senden keine Kontodaten, privaten Seiten, Formulare, Abfragen oder Auftragsdaten."
             - "Für anonyme Besucher außerhalb Belgiens bestimmt eine lokale Sicherheitsprüfung anhand der IP-Adresse das Land und speichert kurz einen Prüfungsnachweis."
           paragraphs:
             - "LawRelay ist nicht für Mandantennamen, Sachverhalte, Schriftsätze, Beweismittel, Dokumente oder vertrauliche Kommunikation bestimmt. Diese Informationen müssen in Systemen unter Kontrolle der beteiligten Anwälte bleiben."
+            - "Nach Annahme tauschen die Anwälte die Angaben zum Rechnungsempfänger und die Peppol-Daten privat aus."
         purposes:
           heading: "3. Zwecke und Rechtsgrundlagen"
           bullets:
@@ -67,7 +67,7 @@ de:
         sharing:
           heading: "4. Empfänger"
           paragraphs:
-            - "Offene Aufträge sind für verifizierte Mitglieder sichtbar. Angebote sind für den einreichenden Anwalt und die Kanzlei des Auftraggebers sichtbar. Nach Annahme erhalten der Auftraggeber und der ausgewählte Anwalt die E-Mail-Adresse des jeweils anderen."
+            - "Offene Aufträge sind für verifizierte Mitglieder sichtbar. Angebote sind für den einreichenden Anwalt und die Mitglieder im Arbeitsbereich des Auftraggebers sichtbar. Nach Annahme erhalten der Auftraggeber und der ausgewählte Anwalt die E-Mail-Adresse des jeweils anderen."
             - "Der Betreiber und die unten genannten Hosting-, E-Mail- und Backup-Anbieter verarbeiten die für den Betrieb nötigen Daten. Daten werden nicht verkauft."
         transfers:
           heading: "5. Ort und Übermittlungen"
@@ -77,7 +77,7 @@ de:
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
-            - "Das letzte Prüfergebnis bleibt bei Ihrem Konto. Prüfübersichten und erledigte Warnungen: 90 Tage. Offene Warnungen können für Untersuchungen aufbewahrt werden."
+            - "Das letzte Ergebnis der Profilprüfung bleibt bei Ihrem Konto. Prüfübersichten und erledigte Warnungen: 90 Tage. Offene Warnungen können für Untersuchungen aufbewahrt werden."
             - "Ungenutzte, unbestätigte Registrierungen: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
             - "Konten bleiben bis zur Schließung bestehen. Sie können Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. Wir entfernen nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Offene Aufträge, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
@@ -115,7 +115,7 @@ de:
           bullets:
             - "Jeder Anwalt bleibt verantwortlich für die Befugnis zur Delegation, Konfliktprüfung, Unabhängigkeit, Kompetenz, Fristen, Gerichtsregeln, Berufsgeheimnis, Versicherung, Mandantenkommunikation und alle Kammerpflichten."
             - "Eine Vermittlung oder ein Verifizierungsstatus ersetzt nie die eigene Prüfung."
-            - "Umfang, Honorar, Abrechnung und praktische Durchführung vereinbaren die Nutzer direkt."
+            - "Umfang, Honorar, Abrechnung und praktische Durchführung vereinbaren die Nutzer direkt. Nach Annahme tauschen sie die Angaben zum Rechnungsempfänger und die Peppol-Daten privat aus."
         content:
           heading: "5. Aufträge und verbotene Inhalte"
           paragraphs:

@@ -3,7 +3,7 @@ require "test_helper"
 class ProposalTest < ActiveSupport::TestCase
   def assignment
     Assignment.create!(
-      kind: "legal_task", title: "Juridisch advies", description: "Een afgebakende adviesvraag.",
+      kind: "legal_task", assignment_subtype: "advice", title: "Juridisch advies", description: "Een afgebakende adviesvraag.",
       city: "Gent", starts_at: 3.days.from_now, duration_minutes: 90,
       practice_area: "Handelsrecht", languages: "NL", content_rules_accepted_at: Time.current
     )

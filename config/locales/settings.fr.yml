@@ -38,5 +38,5 @@ fr:
       city: "Ville"
       assignment_hint: "Vos coordonnées de facturation par défaut. Vous pouvez les adapter pour chaque mission."
     aside:
-      title: "Vos coordonnées"
-      body: "Pour la vérification et le contact. Vos coordonnées sont partagées après accord."
+      title: "Votre profil professionnel"
+      body: "Gardez votre nom, votre langue et vos préférences professionnelles à jour."

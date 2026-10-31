@@ -32,7 +32,7 @@ class BetaProductFocusTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "beta member pages hide platform billing while keeping assignment remuneration" do
+  test "beta member pages omit company data while keeping assignment remuneration" do
     owner = create_marketplace_account(prefix: "betafocusowner")
     assignment = create_assignment_for(owner)
     sign_in_as(owner.user)
@@ -44,11 +44,12 @@ class BetaProductFocusTest < ActionDispatch::IntegrationTest
 
       get settings_path(locale: locale)
       assert_response :success
-      assert_select "input[name='firm[billing_email]']", count: 1
+      assert_select "input[name^='firm[']", count: 0
 
       get new_assignment_path(locale: locale)
       assert_response :success
       assert_select "input[name='assignment[fee_cents]']"
+      assert_select "input[name^='assignment[invoice_']", count: 0
 
       get assignment_path(assignment, locale: locale)
       assert_response :success

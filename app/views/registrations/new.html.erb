@@ -14,7 +14,7 @@
       registration_profile_unavailable_value: t("signup_profile.errors.unavailable"),
       registration_profile_stale_value: t("signup_profile.stale"),
       registration_profile_review_value: t("signup_profile.review"),
-      registration_profile_ready_value: @registration_errors.any? || @form_values.values_at("first_name", "last_name", "email_address", "firm_name").any?(&:present?),
+      registration_profile_ready_value: @registration_errors.any? || @form_values.values_at("first_name", "last_name", "email_address").any?(&:present?),
       registration_profile_errors_value: @registration_errors.any?,
       registration_profile_imported_value: @directory_preview&.success? ? { first_name: @directory_preview.first_name, last_name: @directory_preview.last_name, email_address: @directory_preview.email_address } : {},
       registration_profile_imported_name_value: @directory_preview&.name.to_s
@@ -61,28 +61,6 @@
           <div class="field-group"><%= form.label :password_confirmation, t("auth.fields.password_confirmation") %><%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>
         </div>
         <%= form.hidden_field :locale, value: I18n.locale %>
-      </fieldset>
-
-      <fieldset class="form-section" data-controller="company-number business-lookup" data-company-number-locale-value="<%= I18n.locale %>"
-        data-registration-profile-target="details"
-        data-business-lookup-url-value="<%= company_lookup_path %>"
-        data-business-lookup-loading-value="<%= t("business_lookup.loading") %>"
-        data-business-lookup-loaded-value="<%= t("business_lookup.loaded") %>"
-        data-business-lookup-unavailable-value="<%= t("business_lookup.unavailable") %>"
-        data-business-lookup-invalid-value="<%= t("business_lookup.invalid") %>"
-        data-business-lookup-stale-value="<%= t("business_lookup.stale") %>">
-        <legend><%= t("auth.registration.firm_details") %></legend>
-        <div class="field-group"><%= form.label :firm_name, t("auth.fields.company_name") %><%= form.text_field :firm_name, required: true, autocomplete: "organization", value: @form_values["firm_name"], data: { business_lookup_target: "name", action: "input->business-lookup#edited" } %></div>
-        <div class="form-row">
-          <div class="field-group"><%= form.label :enterprise_number, t("auth.fields.enterprise_number") %><%= form.text_field :enterprise_number, required: true, value: @firm.enterprise_number, inputmode: "numeric", maxlength: 14, autocomplete: "off", data: { company_number_target: "enterprise", business_lookup_target: "number", action: "input->company-number#sync input->business-lookup#edited" } %></div>
-          <div class="field-group"><%= form.label :vat_number, t("auth.fields.vat_number") %><%= form.text_field :vat_number, value: @firm.vat_number, name: nil, readonly: true, autocomplete: "off", class: "company-vat-preview", data: { company_number_target: "vat" } %></div>
-        </div>
-        <%= render "shared/business_lookup", scope: "registration", enterprise_number: @firm.enterprise_number, token: @form_values["kbo_lookup_token"], kbo_snapshot_date: @firm.kbo_details["snapshot_date"], kbo_fields: @firm.kbo_details.fetch("fields", []) %>
-        <div class="field-group"><%= form.label :address_line_1, t("settings.firm.address") %><%= form.text_field :address_line_1, value: @form_values["address_line_1"], maxlength: 200, autocomplete: "street-address", data: { business_lookup_target: "address", action: "input->business-lookup#edited" } %></div>
-        <div class="form-row">
-          <div class="field-group"><%= form.label :postal_code, t("settings.firm.postal_code") %><%= form.text_field :postal_code, value: @form_values["postal_code"], maxlength: 12, autocomplete: "postal-code", data: { business_lookup_target: "postalCode", action: "input->business-lookup#edited" } %></div>
-          <div class="field-group"><%= form.label :city, t("settings.firm.city") %><%= form.text_field :city, value: @form_values["city"], maxlength: 100, autocomplete: "address-level2", data: { business_lookup_target: "city", action: "input->business-lookup#edited" } %></div>
-        </div>
       </fieldset>
 
       <fieldset class="form-section" data-registration-profile-target="details">

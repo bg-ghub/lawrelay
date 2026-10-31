@@ -52,7 +52,7 @@ class RegistryStatusRun < ApplicationRecord
   end
 
   def finding_checks
-    RegistryStatusCheck.relevant.where(id: findings.filter_map { |finding| finding["check_id"] }).includes(:firm, lawyer_profile: :user)
+    RegistryStatusCheck.relevant.where(id: findings.filter_map { |finding| finding["check_id"] }).includes(lawyer_profile: :user)
   end
 
   def discard_irrelevant_findings!
@@ -60,7 +60,7 @@ class RegistryStatusRun < ApplicationRecord
       current = finding_checks.index_by(&:id)
       remaining = findings.filter_map do |finding|
         check = current[finding["check_id"]]
-        finding.merge("firm_id" => check.firm_id, "lawyer_profile_id" => check.lawyer_profile_id) if check
+        check.sanitize_finding(finding) if check
       end
       attributes = { findings: remaining }
       attributes.merge!(alert_status: nil, alert_claimed_at: nil, alert_retry_at: nil) if remaining.empty? && alert_status != "sent"

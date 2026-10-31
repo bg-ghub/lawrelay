@@ -2,12 +2,13 @@ require "test_helper"
 
 class RegistryStatusAlertJobTest < ActiveJob::TestCase
   setup do
-    firm = Firm.create!(name: "Registry alert example", enterprise_number: "0123456749")
-    users(:one).memberships.create!(firm:, role: "member")
-    target = RegistryStatus::Targets.all.find { |candidate| candidate.firm_id == firm.id }
+    profile = users(:one).create_lawyer_profile!(bar_association: "OVB", bar_number: "registry-alert",
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}",
+      directory_name: users(:one).full_name, directory_email: users(:one).email_address)
+    target = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == profile.id }
     @check = RegistryStatusCheck.create!(source: target.source, target_digest: target.digest,
-      identity_digest: target.identity_digest, firm_id: firm.id)
-    @check.record_result!(outcome: "inactive", checked_at: Time.current,
+      identity_digest: target.identity_digest, lawyer_profile: profile)
+    @check.record_result!(outcome: "not_listed", checked_at: Time.current,
       run_on: Date.current, identity_digest: target.identity_digest)
     @run = RegistryStatusRun.create!(run_on: Date.current, status: "completed", completed_at: Time.current,
       findings: [ @check.finding_snapshot ], alert_status: "pending")

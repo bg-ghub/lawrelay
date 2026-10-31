@@ -52,14 +52,6 @@ module MarketplaceTestFactory
     )
   end
 
-  def invoice_recipient_attributes
-    {
-      invoice_name: "Synthetic recipient", invoice_enterprise_number: "1234567894",
-      invoice_email: "invoices@example.test", invoice_address_line_1: "Test Street 1",
-      invoice_postal_code: "1000", invoice_city: "Brussels"
-    }
-  end
-
   def create_proposal_for(assignment, account, message: "I am available for this assignment.", rate_cents: 250_00)
     assignment.proposals.create!(
       user: account.user,

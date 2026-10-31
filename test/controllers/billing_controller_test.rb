@@ -15,6 +15,7 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
 
       assert_response :success
       assert_select "h2", "LawRelay Office"
+      assert_nil @firm.reload.billing_account.billing_email
 
       post billing_checkout_url(locale: "en")
     end

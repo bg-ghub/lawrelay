@@ -31,11 +31,7 @@ module RegistryStatus
     private
 
     def lookup(target)
-      if target.source == "kbo"
-        BusinessRegistry::PublicLookup.call(enterprise_number: target.value, locale: :nl)
-      else
-        Directory::StatusCheck.call(profile_url: target.value, full_name: target.full_name, expected_email: target.expected_email)
-      end
+      Directory::StatusCheck.call(profile_url: target.value, full_name: target.full_name, expected_email: target.expected_email)
     end
 
     def persist_result(target, result)

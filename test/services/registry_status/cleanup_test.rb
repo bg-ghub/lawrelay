@@ -6,8 +6,8 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
   end
 
   test "erasure removes monitoring state and cancels an unsent empty alert" do
-    firm = member_firm(users(:one))
-    check = issue_check(target_for(firm))
+    profile = member_profile(users(:one))
+    check = issue_check(target_for(profile))
     run = completed_run(check:, alert_status: "pending")
     run.update!(alert_claimed_at: @now - 1.minute, alert_retry_at: @now + 1.minute)
     users(:one).update!(erased_at: @now)
@@ -22,11 +22,11 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
     assert_nil run.alert_retry_at
   end
 
-  test "changed enterprise numbers remove the old digest and scrub its run snapshot" do
-    firm = member_firm(users(:one))
-    check = issue_check(target_for(firm))
+  test "changed directory URLs remove the old digest and scrub its sent run snapshot" do
+    profile = member_profile(users(:one))
+    check = issue_check(target_for(profile))
     run = completed_run(check:, alert_status: "sent")
-    firm.update!(enterprise_number: "1234567894")
+    profile.update!(directory_profile_url: profile_url)
 
     assert_equal 1, RegistryStatus::Cleanup.new(now: @now).call
 
@@ -38,8 +38,7 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
 
   test "changed directory comparison identity removes old monitoring evidence" do
     profile = member_profile(users(:one))
-    target = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == profile.id }
-    check = issue_check(target, outcome: "changed")
+    check = issue_check(target_for(profile), outcome: "changed")
     run = completed_run(check:, alert_status: "pending")
     profile.update!(directory_email: "replacement@example.test")
 
@@ -50,12 +49,11 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
     assert_nil run.alert_status
   end
 
-  test "deleting the last representative target also scrubs persisted run references" do
-    firm = member_firm(users(:one))
-    check = issue_check(target_for(firm))
+  test "deleting a profile also scrubs cascading deleted check references" do
+    profile = member_profile(users(:one))
+    check = issue_check(target_for(profile))
     run = completed_run(check:, alert_status: "pending")
-    firm.destroy!
-    assert_nil check.reload.firm_id
+    profile.destroy!
 
     RegistryStatus::Cleanup.new(now: @now).call
 
@@ -65,64 +63,85 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
     assert_nil run.alert_status
   end
 
-  test "a duplicate enterprise number retains its issue when the representative firm loses its last member" do
-    original_firm = member_firm(users(:one))
-    replacement_firm = member_firm(users(:two), enterprise_number: "BE 0123.456.749")
-    check = issue_check(target_for(original_firm))
+  test "erasing one member sharing a directory URL preserves the other member's dedup state" do
+    original = member_profile(users(:one))
+    remaining = member_profile(users(:two), url: original.directory_profile_url)
+    old_check = issue_check(target_for(original))
+    check = issue_check(target_for(remaining))
     run = completed_run(check:, alert_status: "pending")
     issue_since = check.issue_since
-    original_firm.memberships.destroy_all
+    users(:one).update!(erased_at: @now)
 
-    assert_equal 0, RegistryStatus::Cleanup.new(now: @now).call
+    assert_equal 1, RegistryStatus::Cleanup.new(now: @now).call
 
-    assert_equal replacement_firm.id, check.reload.firm_id
-    assert_equal "inactive", check.issue_status
+    assert_not RegistryStatusCheck.exists?(old_check.id)
+    assert_equal "not_listed", check.reload.issue_status
     assert_equal issue_since, check.issue_since
-    assert_equal "inactive", check.last_definitive_status
-    assert_equal replacement_firm.id, run.reload.findings.sole.fetch("firm_id")
+    assert_equal [ check.finding_snapshot ], run.reload.findings
     assert_equal [ check.target_digest ], run.checked_target_digests
     assert_equal "pending", run.alert_status
+    assert_not check.record_result!(outcome: "not_listed", checked_at: @now, run_on: @now.to_date,
+      identity_digest: check.identity_digest)
+  end
+
+  test "legacy company evidence is removed while directory progress and pending delivery survive" do
+    profile = member_profile(users(:one))
+    check = issue_check(target_for(profile))
+    legacy = legacy_company_check
+    run = completed_run(check:, alert_status: "pending")
+    run.update!(findings: [ legacy.finding_snapshot, check.finding_snapshot.merge("firm_id" => 123, "company_name" => "Old company") ],
+      checked_target_digests: [ legacy.target_digest, check.target_digest ], checked_count: 2,
+      alert_attempts: 2, alert_retry_at: @now + 1.minute, alert_status_reason: "IOError")
+    original = check.attributes
+
+    assert_equal 1, RegistryStatus::Cleanup.new(now: @now).call
+    assert_equal 0, RegistryStatus::Cleanup.new(now: @now).call
+
+    assert_not RegistryStatusCheck.exists?(legacy.id)
+    assert_equal original, check.reload.attributes
+    assert_equal [ check.finding_snapshot ], run.reload.findings
+    assert_equal [ check.target_digest ], run.checked_target_digests
+    assert_equal 1, run.checked_count
+    assert_equal "pending", run.alert_status
+    assert_equal 2, run.alert_attempts
+    assert_equal @now + 1.minute, run.alert_retry_at
+    assert_equal "IOError", run.alert_status_reason
+  end
+
+  test "legacy company only alerts are canceled without recreating a check" do
+    legacy = legacy_company_check
+    run = completed_run(check: legacy, alert_status: "failed")
+    run.update!(alert_claimed_at: @now - 1.minute, alert_retry_at: @now + 1.minute)
+
+    assert_equal 1, RegistryStatus::Cleanup.new(now: @now).call
+
+    assert_empty RegistryStatusCheck.all
+    assert_empty run.reload.findings
+    assert_empty run.checked_target_digests
+    assert_nil run.alert_status
+    assert_nil run.alert_claimed_at
+    assert_nil run.alert_retry_at
   end
 
   test "resolved check metadata expires after ninety days while an unresolved issue remains" do
-    resolved_firm = member_firm(users(:one))
-    unresolved_firm = member_firm(users(:two), enterprise_number: "1234567894")
-    resolved = issue_check(target_for(resolved_firm), checked_at: @now - 100.days)
-    resolved.record_result!(outcome: "ok", checked_at: @now - 91.days,
+    resolved = issue_check(target_for(member_profile(users(:one))), checked_at: @now - 100.days)
+    resolved.record_result!(outcome: "active", checked_at: @now - 91.days,
       run_on: (@now - 91.days).to_date, identity_digest: resolved.identity_digest)
-    unresolved = issue_check(target_for(unresolved_firm), checked_at: @now - 100.days)
+    unresolved = issue_check(target_for(member_profile(users(:two))), checked_at: @now - 100.days)
 
     assert_equal 1, RegistryStatus::Cleanup.new(now: @now).call
 
     assert_not RegistryStatusCheck.exists?(resolved.id)
     assert RegistryStatusCheck.exists?(unresolved.id)
-    assert_equal "inactive", unresolved.reload.issue_status
-  end
-
-  test "deleting a shared number representative preserves dedup state for the remaining member" do
-    original = member_firm(users(:one))
-    replacement = member_firm(users(:two))
-    check = issue_check(target_for(original))
-    run = completed_run(check:, alert_status: "pending")
-    original.destroy!
-    assert_nil check.reload.firm_id
-
-    RegistryStatus::Cleanup.new(now: @now).call
-
-    assert_equal replacement.id, check.reload.firm_id
-    assert_equal "inactive", check.issue_status
-    assert_equal "inactive", check.last_definitive_status
-    assert_equal replacement.id, run.reload.findings.sole.fetch("firm_id")
-    assert_not check.record_result!(outcome: "inactive", checked_at: @now, run_on: @now.to_date,
-      identity_digest: check.identity_digest)
+    assert_equal "not_listed", unresolved.reload.issue_status
   end
 
   test "a finding committed before a run lock is not removed using an earlier check snapshot" do
-    firm = member_firm(users(:one))
+    profile = member_profile(users(:one))
     run = completed_run(alert_status: nil)
     injected_check = nil
     inject = -> do
-      injected_check = issue_check(target_for(firm))
+      injected_check = issue_check(target_for(profile))
       run.update!(findings: [ injected_check.finding_snapshot ],
         checked_target_digests: [ injected_check.target_digest ], alert_status: "pending")
     end
@@ -145,11 +164,10 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
 
   test "a new profile identity committed before its check lock survives cleanup" do
     profile = member_profile(users(:one))
-    target = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == profile.id }
-    check = issue_check(target, outcome: "changed")
+    check = issue_check(target_for(profile), outcome: "changed")
     inject = -> do
       profile.update!(directory_email: "updated-before-lock@example.test")
-      current = RegistryStatus::Targets.all.find { |candidate| candidate.lawyer_profile_id == profile.id }
+      current = target_for(profile)
       check.record_result!(outcome: "not_listed", checked_at: @now, run_on: @now.to_date, identity_digest: current.identity_digest)
     end
     original = RegistryStatusCheck.method(:find_each)
@@ -168,9 +186,8 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
     RegistryStatusCheck.define_singleton_method(:find_each, original) if original
   end
 
-  test "old completed run metadata expires while pending and failed alert snapshots remain recoverable" do
-    firm = member_firm(users(:one))
-    check = issue_check(target_for(firm))
+  test "old completed metadata expires while pending and failed alert snapshots remain recoverable" do
+    check = issue_check(target_for(member_profile(users(:one))))
     without_alert = completed_run(alert_status: nil, age: 91.days)
     sent = completed_run(check:, alert_status: "sent", age: 92.days)
     pending = completed_run(check:, alert_status: "pending", age: 93.days)
@@ -190,28 +207,31 @@ class RegistryStatus::CleanupTest < ActiveSupport::TestCase
 
   private
 
-  def member_firm(user, enterprise_number: "0123456749")
-    Firm.create!(name: "Monitoring cleanup example", enterprise_number:).tap do |firm|
-      user.memberships.create!(firm:, role: "member")
-    end
+  def profile_url
+    "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
   end
 
-  def member_profile(user)
+  def member_profile(user, url: profile_url)
     user.create_lawyer_profile!(bar_association: "OVB", bar_number: "cleanup-#{user.id}",
-      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/12345678-1234-1234-1234-123456789abc",
-      directory_name: user.full_name, directory_email: "original@example.test")
+      directory_profile_url: url, directory_name: user.full_name, directory_email: "original@example.test")
   end
 
-  def target_for(firm)
-    RegistryStatus::Targets.all.find { |target| target.firm_id == firm.id }
+  def target_for(profile)
+    RegistryStatus::Targets.all.find { |target| target.lawyer_profile_id == profile.id }
   end
 
-  def issue_check(target, outcome: "inactive", checked_at: @now - 1.day)
+  def issue_check(target, outcome: "not_listed", checked_at: @now - 1.day)
     RegistryStatusCheck.create!(source: target.source, target_digest: target.digest,
-      identity_digest: target.identity_digest, firm_id: target.firm_id, lawyer_profile_id: target.lawyer_profile_id).tap do |check|
+      identity_digest: target.identity_digest, lawyer_profile_id: target.lawyer_profile_id).tap do |check|
       assert check.record_result!(outcome:, checked_at:, run_on: checked_at.to_date,
         identity_digest: target.identity_digest)
     end
+  end
+
+  def legacy_company_check
+    digest = RegistryStatusCheck.digest("kbo", "0123456749")
+    RegistryStatusCheck.new(source: "kbo", target_digest: digest, identity_digest: digest,
+      status: "inactive", issue_status: "inactive", issue_since: @now - 1.day).tap { |check| check.save!(validate: false) }
   end
 
   def completed_run(check: nil, alert_status:, age: 0.days)
