@@ -1,15 +1,15 @@
 # LawRelay beta checklist
 
-Reviewed 31 October 2026. Current release: 0.19.0.
+Reviewed 31 October 2026. Release: 0.21.0.
 
-Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Directory and email verification are required. Keep client names, case facts, documents and privileged material off the platform.
+Open, free beta for lawyers listed on advocaat.be. No invitation or cohort limit. Access requires a directory match and email confirmation, or a recorded administrator approval. Keep client names, case facts, documents and privileged material off the platform.
 
 ## Completed
 
 - [x] Live HTTPS site in NL/FR/DE/EN, English URL slugs and language switching.
 - [x] Public AGPL source, SemVer releases and source/version links in the footer.
 - [x] Signup, directory/email verification, firm boundaries, private-record access and suspended-account protections.
-- [x] Profile-first signup with reviewed directory prefill and manual fallback; no member company or billing fields.
+- [x] Signup uses the email listed on advocaat.be and sends confirmation there. No email, company or billing fields; failed lookups can be retried.
 - [x] Recoverable verification-delivery failures, bounded confirmation-handoff retries and useful directory-check feedback.
 - [x] Admin resend for pending member verification emails, with existing mail delivery, MFA and rate limits.
 - [x] Separate admin password/MFA portal, member two-factor authentication, protected recovery and verified email changes.

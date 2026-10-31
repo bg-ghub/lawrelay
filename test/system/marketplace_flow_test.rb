@@ -147,19 +147,26 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
   end
 
   test "registration validation moves focus to the error summary" do
+    email = "system-invalid-#{SecureRandom.hex(5)}@example.test"
+    original = Directory::SignupProfile.instance_method(:fetch_html)
+    Directory::SignupProfile.define_method(:fetch_html) do |_uri|
+      "<main id='main'><h1>Test Lawyer</h1><a href='mailto:#{email}'>Email</a></main>"
+    end
+    Directory::SignupProfile.send(:private, :fetch_html)
     visit new_registration_path(locale: :en)
-    click_button I18n.t("signup_profile.manual", locale: :en)
-    fill_in "registration_first_name", with: "Test"
-    fill_in "registration_last_name", with: "Lawyer"
-    fill_in "registration_email_address", with: "system-invalid-#{SecureRandom.hex(5)}@example.test"
+    fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+    click_button I18n.t("signup_profile.fetch", locale: :en)
+    assert_text email
     fill_in "registration_password", with: "password1234"
     fill_in "registration_password_confirmation", with: "anotherpass12"
-    fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
     find("#registration_terms_accepted").check
     find("form.assignment-form input[type='submit']").click
 
     assert_selector ".form-error[role='alert']"
     assert_includes page.driver.browser.switch_to.active_element.attribute("class"), "form-error"
+  ensure
+    Directory::SignupProfile.define_method(:fetch_html, original) if original
+    Directory::SignupProfile.send(:private, :fetch_html)
   end
 
   private

@@ -5,6 +5,18 @@ All notable changes to LawRelay are documented here. The project follows
 
 ## [Unreleased]
 
+## [0.21.0] - 2026-10-31
+
+### Changed
+
+- Use the email published on advocaat.be for signup and send confirmation to that address, without asking users to enter it again.
+- Keep the listed email bound to the server's directory lookup; changed, expired or missing previews require a fresh lookup.
+
+### Fixed
+
+- Remove obsolete company-check labels from verification screens.
+- Hide empty location labels on legal-task cards.
+
 ## [0.20.0] - 2026-10-31
 
 ### Added
@@ -436,7 +448,8 @@ All notable changes to LawRelay are documented here. The project follows
 - Manual invoice/Peppol handoff and Mollie webhook foundations with optional posting entitlements.
 - Production hardening, CI, deployment/rollback, backup/restore, incident-response, SEO, and readiness foundations.
 
-[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/bg-ghub/lawrelay/compare/v0.21.0...HEAD
+[0.21.0]: https://github.com/bg-ghub/lawrelay/compare/v0.20.0...v0.21.0
 [0.10.0]: https://github.com/bg-ghub/lawrelay/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/bg-ghub/lawrelay/compare/v0.8.7...v0.9.0
 [0.8.7]: https://github.com/bg-ghub/lawrelay/compare/v0.8.6...v0.8.7
