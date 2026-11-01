@@ -1,0 +1,4 @@
+nl:
+  correspondence:
+    greeting: "Geachte %{name},"
+    group_greeting: "Geachte confraters,"

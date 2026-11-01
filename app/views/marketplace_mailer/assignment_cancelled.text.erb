@@ -1,3 +1,5 @@
+<%= render "shared/mail_greeting", recipient: nil %>
+
 <%= t("workflow.mailers.assignment_cancelled.body", title: @assignment.title) %>
 
 <%= assignments_url(locale: I18n.locale) %>

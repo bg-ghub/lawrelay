@@ -1,20 +1,20 @@
 nl:
   settings:
     title: "Accountinstellingen — LawRelay"
-    eyebrow: "Je account"
+    eyebrow: "Uw account"
     heading: "Instellingen"
-    lede: "Je account en profiel."
+    lede: "Uw account en profiel."
     save: "Opslaan"
     errors:
-      heading: "Controleer even:"
+      heading: "Controleer de gegevens:"
     notices:
       updated: "Wijzigingen opgeslagen."
-      email_reverification: "Adres gewijzigd. Bevestig je nieuwe e-mailadres om weer toegang te krijgen."
-      review_required: "Gegevens opgeslagen. Je toegang wordt hervat na een nieuwe controle."
+      email_reverification: "Adres gewijzigd. Bevestig uw nieuwe e-mailadres om weer toegang te krijgen."
+      review_required: "Gegevens opgeslagen. Uw toegang wordt hervat na een nieuwe controle."
     account:
       legend: "Account"
       language: "Voorkeurstaal"
-      email_hint: "Bevestig een nieuw e-mailadres voordat je weer toegang krijgt."
+      email_hint: "Bevestig een nieuw e-mailadres voordat u weer toegang krijgt."
     profile:
       legend: "Professioneel profiel"
       review_hint: "Nieuwe baliegegevens of een nieuw e-mailadres worden opnieuw gecontroleerd."
@@ -26,7 +26,7 @@ nl:
       bar_admission_year_placeholder: "Bijvoorbeeld: 2018"
       court_preferences: "Rechtbanken"
       court_preferences_placeholder: "Bijvoorbeeld: ondernemingsrechtbank Brussel, Antwerpen"
-      court_preferences_hint: "Waar kun je zittingen waarnemen?"
+      court_preferences_hint: "Waar kunt u zittingen waarnemen?"
       availability_note: "Beschikbaarheid"
       availability_note_placeholder: "Bijv. dinsdag- en donderdagochtend."
     firm:
@@ -36,7 +36,7 @@ nl:
       address: "Adres"
       postal_code: "Postcode"
       city: "Gemeente"
-      assignment_hint: "Je standaard facturatiegegevens. Je kunt ze per opdracht aanpassen."
+      assignment_hint: "Uw standaard facturatiegegevens. U kunt ze per opdracht aanpassen."
     aside:
-      title: "Je beroepsprofiel"
-      body: "Houd je naam, taal en professionele voorkeuren actueel."
+      title: "Uw beroepsprofiel"
+      body: "Houd uw naam, taal en professionele voorkeuren actueel."

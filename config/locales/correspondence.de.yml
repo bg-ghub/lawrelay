@@ -1,0 +1,4 @@
+de:
+  correspondence:
+    greeting: "Guten Tag, %{name},"
+    group_greeting: "Guten Tag,"

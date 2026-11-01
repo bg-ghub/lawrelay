@@ -1,0 +1,5 @@
+<p><%= t("confirmation_resend.body", name: professional_salutation(@member)) %></p>
+<p><%= t("confirmation_resend.domain", domain: @recipient_domain) %></p>
+<p><%= t("confirmation_resend.#{@delivery_queued ? 'queued' : 'not_queued'}") %></p>
+<p><%= t("confirmation_resend.delivery_note") %></p>
+<p><%= link_to t("confirmation_resend.review"), @review_url %></p>

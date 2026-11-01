@@ -11,7 +11,7 @@ de:
         new_email: "Erreichbare E-Mail-Adresse"
         reason: "Grund für die andere E-Mail-Adresse"
         password: "Aktuelles Passwort"
-        hint: "Dies wird Ihre Anmeldeadresse. Der Zugang bleibt bis zur Genehmigung gesperrt."
+        hint: "Dies wird Ihre Anmeldeadresse. Sie erhalten nach einer manuellen Prüfung Zugang."
         submit: "Prüfung anfordern"
         cancel: "Zurück"
     status:
@@ -92,7 +92,7 @@ de:
       subject:
         approved: "Ihre LawRelay-E-Mail-Prüfung wurde genehmigt"
         rejected: "Ihre LawRelay-E-Mail-Prüfung"
-      heading: "Hallo %{name},"
+      heading: "Guten Tag, %{name},"
       body:
         approved: "Ihre E-Mail-Prüfung wurde genehmigt. Sie können sich nun bei LawRelay anmelden."
         rejected: "Wir konnten Ihre E-Mail-Prüfung nicht genehmigen. Kontaktieren Sie info@lawrelay.be, wenn Sie Hilfe benötigen."

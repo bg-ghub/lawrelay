@@ -1,0 +1,14 @@
+nl:
+  admin:
+    users:
+      audit:
+        actions:
+          account_confirmation_resend_requested: "Bevestigingsmail opnieuw aangevraagd"
+  confirmation_resend:
+    subject: "LawRelay: bevestigingsmail opnieuw aangevraagd"
+    body: "%{name} meldt dat de bevestigingsmail niet is ontvangen en heeft een nieuwe aangevraagd."
+    domain: "E-maildomein: %{domain}."
+    queued: "De nieuwe bevestigingsmail staat in de verzendwachtrij."
+    not_queued: "De nieuwe bevestigingsmail kon niet in de verzendwachtrij worden geplaatst."
+    delivery_note: "Deze melding bewijst niet dat de ontvangende mailserver de e-mail heeft geweigerd."
+    review: "Account bekijken in beheer"

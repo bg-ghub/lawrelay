@@ -11,7 +11,7 @@ nl:
     users:
       link: Beheer
       eyebrow: Beheer
-      you: Jij
+      you: U
       not_recorded: Niet ingevuld
       manual_activation: Handmatig goedgekeurd
       timezone: 'Tijdzone: Europe/Brussels.'
@@ -88,7 +88,7 @@ nl:
         professional: Professionele gegevens
         account: Accountgegevens
         access: Toegang beheren
-        protected: Je kunt beheerdersaccounts hier bekijken, maar niet wijzigen.
+        protected: U kunt beheerdersaccounts hier bekijken, maar niet wijzigen.
         identity_hint: Een nieuwe naam of e-mail meldt alle sessies af en start een nieuwe beroepscontrole. Een nieuw e-mailadres moet worden bevestigd.
       access:
         suspend:
@@ -150,7 +150,7 @@ nl:
         page: Pagina %{current} van %{total}
       errors:
         heading: Controleer deze wijziging
-        protected_account: Je kunt beheerdersaccounts hier niet wijzigen.
+        protected_account: U kunt beheerdersaccounts hier niet wijzigen.
         reason_required: Voeg een reden toe.
         reason_too_long: Gebruik minder dan 2.000 tekens voor de reden.
         invalid_action: Kies een geldige accountactie.

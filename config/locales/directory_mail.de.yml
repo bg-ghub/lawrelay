@@ -2,11 +2,11 @@ de:
   directory_mail:
     confirm:
       subject: "Berufliche E-Mail bestätigen — LawRelay"
-      greeting: "Hallo %{name},"
+      greeting: "Guten Tag, %{name},"
       body: "Ihr advocaat.be-Profil wurde für das LawRelay-Konto %{login_email} verwendet. Bestätigen Sie nur, wenn Sie dieses Konto selbst erstellt haben und Zugriff auf diese berufliche E-Mail-Adresse haben."
       body_html: "Ihr advocaat.be-Profil wurde für das LawRelay-Konto <strong>%{login_email}</strong> verwendet. Bestätigen Sie nur, wenn Sie dieses Konto selbst erstellt haben und Zugriff auf diese berufliche E-Mail-Adresse haben."
       action: "Berufliche E-Mail bestätigen"
-      ignore: "Ignorieren Sie diese E-Mail, wenn Sie das nicht waren. Der Link läuft nach 48 Stunden ab."
+      ignore: "Ignorieren Sie diese E-Mail, wenn Sie das nicht waren. Der Link läuft nach 72 Stunden ab."
     notices:
       confirmed: "Ihre berufliche E-Mail-Adresse wurde bestätigt. Melden Sie sich an, um fortzufahren."
       invalid: "Dieser Bestätigungslink ist ungültig oder abgelaufen."

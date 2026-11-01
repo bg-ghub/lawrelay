@@ -1,0 +1,14 @@
+de:
+  admin:
+    users:
+      audit:
+        actions:
+          account_confirmation_resend_requested: "Bestätigungs-E-Mail erneut angefordert"
+  confirmation_resend:
+    subject: "LawRelay: Bestätigungs-E-Mail erneut angefordert"
+    body: "%{name} hat die Bestätigungs-E-Mail als nicht erhalten gemeldet und eine neue angefordert."
+    domain: "E-Mail-Domain: %{domain}."
+    queued: "Die neue Bestätigungs-E-Mail wartet auf den Versand."
+    not_queued: "Die neue Bestätigungs-E-Mail konnte nicht für den Versand vorgemerkt werden."
+    delivery_note: "Die Meldung belegt nicht, dass der empfangende Mailserver die E-Mail abgelehnt hat."
+    review: "Konto in der Verwaltung prüfen"

@@ -16,6 +16,10 @@ class User < ApplicationRecord
   generates_token_for :email_verification, expires_in: 48.hours do
     Digest::SHA256.hexdigest(email_address)
   end
+  # Keep the previous purpose so already-delivered links retain their original expiry.
+  generates_token_for :email_verification_v2, expires_in: 72.hours do
+    Digest::SHA256.hexdigest(email_address)
+  end
   generates_token_for :password_reset, expires_in: 15.minutes do
     [ Digest::SHA256.hexdigest(email_address), password_salt&.last(10) ]
   end
@@ -161,10 +165,12 @@ class User < ApplicationRecord
   end
 
   def email_verification_token
-    generate_token_for(:email_verification)
+    generate_token_for(:email_verification_v2)
   end
 
   def self.find_by_email_verification_token!(token)
+    find_by_token_for!(:email_verification_v2, token)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
     find_by_token_for!(:email_verification, token)
   end
 

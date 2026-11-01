@@ -1,0 +1,4 @@
+en:
+  correspondence:
+    greeting: "Dear %{name},"
+    group_greeting: "Dear Counsel,"

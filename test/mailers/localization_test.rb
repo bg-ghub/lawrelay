@@ -73,7 +73,8 @@ class MailerLocalizationTest < ActionMailer::TestCase
         assert_equal [ profile.directory_email ], email.to
         assert_equal I18n.t("directory_mail.confirm.subject", locale: locale), email.subject
         assert_mail_parts_are_localized(email) do |html, text, html_source|
-          greeting = I18n.t("directory_mail.confirm.greeting", locale: locale, name: profile.directory_name)
+          recipient_name = expected_salutation(user, locale)
+          greeting = I18n.t("directory_mail.confirm.greeting", locale: locale, name: recipient_name)
           assert_includes html, greeting
           assert_includes text, greeting
           assert_includes html, user.email_address
@@ -146,7 +147,8 @@ class MailerLocalizationTest < ActionMailer::TestCase
     assert_mail_parts_are_localized(email) do |html, text, html_source|
       rendered_keys.each do |key|
         translation = if key.end_with?("heading")
-          I18n.t(key, locale: locale, name: user.first_name)
+          name = expected_salutation(user, locale)
+          I18n.t(key, locale: locale, name: name)
         elsif key == "auth.mailers.password_reset.expiry"
           duration = I18n.t("auth.mailers.password_reset.duration_minutes", locale: locale, count: 15)
           I18n.t(key, locale: locale, duration: duration)
@@ -169,6 +171,9 @@ class MailerLocalizationTest < ActionMailer::TestCase
     assert_equal [ recipient.email_address ], email.to
     assert_equal I18n.t("workflow.mailers.#{event}.subject", locale: locale, title: assignment.title), email.subject
     assert_mail_parts_are_localized(email) do |html, text, html_source|
+      greeting = I18n.t("correspondence.greeting", locale: locale, name: expected_salutation(recipient, locale))
+      assert_includes html, greeting
+      assert_includes text, greeting
       assert_includes html, I18n.t("workflow.mailers.#{event}.heading", locale: locale)
       assert_includes html, assignment.title
       assert_includes text, assignment.title
@@ -177,6 +182,12 @@ class MailerLocalizationTest < ActionMailer::TestCase
       assert_includes html_source, "/#{locale}/#{path}"
       assert_includes text, "/#{locale}/#{path}"
     end
+  end
+
+  def expected_salutation(user, locale)
+    return user.full_name if locale == :en
+
+    "#{ { nl: 'Mr.', fr: 'Me', de: 'RA' }.fetch(locale)} #{user.last_name}"
   end
 
   def assert_localized_cancellation(email, recipient, locale, assignment)

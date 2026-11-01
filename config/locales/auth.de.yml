@@ -105,13 +105,13 @@ de:
         rejected: "Klärung nötig"
         suspended: "Gesperrt"
       check_inbox: "Postfach prüfen"
-      check_inbox_body: "Bestätigen Sie %{email} über den E-Mail-Link. Links laufen nach 48 Stunden ab."
-      resend: "Neuen Link senden"
+      check_inbox_body: "Bestätigen Sie %{email} über den E-Mail-Link. Links laufen nach 72 Stunden ab."
+      resend: "Keine Bestätigungs-E-Mail erhalten?"
       review_title: "Prüfung läuft"
       review_body: "E-Mail bestätigt. Wir prüfen Ihre beruflichen Angaben."
       resent: "Falls die Bestätigung noch nötig ist, wurde ein neuer Link angefordert."
       queue_unavailable: "Dieser Schritt konnte nicht starten. Bitte versuchen Sie es gleich erneut."
-      rate_limited: "Bitte warten Sie, bevor Sie eine weitere E-Mail anfordern."
+      rate_limited: "Sie können höchstens drei Bestätigungs-E-Mails pro Stunde anfordern."
     verification:
       marketplace_required: "Bestätigen Sie Ihre E-Mail und Ihr advocaat.be-Profil für den Zugang zu Aufträgen."
     authorization:
@@ -120,7 +120,7 @@ de:
     mailers:
       password_reset:
         subject: "LawRelay-Passwort zurücksetzen"
-        heading: "Hallo %{name},"
+        heading: "Guten Tag, %{name},"
         body: "Wählen Sie über den Link unten ein neues Passwort."
         action: "Neues Passwort wählen"
         duration_minutes:
@@ -129,10 +129,10 @@ de:
         expiry: "Der Link läuft in %{duration} ab. Ignorieren Sie diese E-Mail, wenn Sie ihn nicht angefordert haben."
       email_verification:
         subject: "LawRelay-E-Mail bestätigen"
-        heading: "Hallo %{name},"
+        heading: "Guten Tag, %{name},"
         body: "Bestätigen Sie Ihre E-Mail, um Ihr Konto fertig einzurichten."
         action: "E-Mail bestätigen"
-        expiry: "Der Link läuft nach 48 Stunden ab. Ignorieren Sie diese E-Mail, wenn Sie dieses Konto nicht erstellt haben."
+        expiry: "Der Link läuft nach 72 Stunden ab. Ignorieren Sie diese E-Mail, wenn Sie dieses Konto nicht erstellt haben."
   activerecord:
     attributes:
       user:

@@ -11,7 +11,7 @@ en:
         new_email: "Email you can access"
         reason: "Reason for using another email"
         password: "Current password"
-        hint: "This becomes your sign-in email. Access stays pending until the review is approved."
+        hint: "This becomes your sign-in email. Access follows manual review."
         submit: "Request review"
         cancel: "Back"
     status:
@@ -92,7 +92,7 @@ en:
       subject:
         approved: "Your LawRelay email review is approved"
         rejected: "Your LawRelay email review"
-      heading: "Hello %{name},"
+      heading: "Dear %{name},"
       body:
         approved: "Your email review is approved. You can now sign in to LawRelay."
         rejected: "We couldn’t approve your email review. Contact info@lawrelay.be if you need help."

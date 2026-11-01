@@ -6,7 +6,7 @@ fr:
       body: "Votre profil advocaat.be a été utilisé pour le compte LawRelay %{login_email}. Confirmez uniquement si vous avez créé ce compte et avez accès à cette adresse professionnelle."
       body_html: "Votre profil advocaat.be a été utilisé pour le compte LawRelay <strong>%{login_email}</strong>. Confirmez uniquement si vous avez créé ce compte et avez accès à cette adresse professionnelle."
       action: "Confirmer l’e-mail professionnel"
-      ignore: "Ignorez cet e-mail si ce n’était pas vous. Le lien expire dans 48 heures."
+      ignore: "Ignorez cet e-mail si ce n’était pas vous. Le lien expire dans 72 heures."
     notices:
       confirmed: "Votre adresse e-mail professionnelle est confirmée. Connectez-vous pour continuer."
       invalid: "Ce lien de confirmation est invalide ou a expiré."

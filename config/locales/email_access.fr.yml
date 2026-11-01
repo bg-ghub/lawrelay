@@ -11,7 +11,7 @@ fr:
         new_email: "Adresse e-mail accessible"
         reason: "Motif de l’autre adresse e-mail"
         password: "Mot de passe actuel"
-        hint: "Elle devient votre adresse de connexion. L’accès reste en attente de validation."
+        hint: "Elle devient votre adresse de connexion. Vous aurez accès après une vérification manuelle."
         submit: "Demander une vérification"
         cancel: "Retour"
     status:

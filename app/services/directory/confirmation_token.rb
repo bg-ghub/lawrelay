@@ -8,7 +8,7 @@ module Directory
           "identity_digest" => profile.directory_identity_digest, "directory_email" => profile.directory_email,
           "directory_name" => profile.directory_name, "directory_profile_url" => profile.directory_profile_url,
           "login_email" => profile.user.email_address, "full_name" => profile.user.full_name },
-        expires_in: 48.hours
+        expires_in: 72.hours
       )
     end
 

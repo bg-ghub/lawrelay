@@ -1,4 +1,4 @@
-<p><%= t("directory_mail.confirm.greeting", name: @profile.directory_name) %></p>
+<p><%= t("directory_mail.confirm.greeting", name: professional_salutation(@user)) %></p>
 
 <p><%= t("directory_mail.confirm.body_html", login_email: @login_email).html_safe %></p>
 

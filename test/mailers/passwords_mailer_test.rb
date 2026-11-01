@@ -26,7 +26,7 @@ class PasswordsMailerTest < ActionMailer::TestCase
   test "HTML and text expiry messages are translated in every interface language" do
     user = users(:one)
     {
-      nl: [ "Herstel je LawRelay-wachtwoord", "15 minuten" ],
+      nl: [ "Herstel uw LawRelay-wachtwoord", "15 minuten" ],
       fr: [ "Réinitialisez votre mot de passe LawRelay", "15 minutes" ],
       de: [ "LawRelay-Passwort zurücksetzen", "15 Minuten" ],
       en: [ "Reset your LawRelay password", "15 minutes" ]

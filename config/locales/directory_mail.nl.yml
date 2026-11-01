@@ -1,19 +1,19 @@
 nl:
   directory_mail:
     confirm:
-      subject: "Bevestig je professionele e-mailadres — LawRelay"
-      greeting: "Hallo %{name},"
-      body: "Je advocaat.be-profiel werd gebruikt voor het LawRelay-account %{login_email}. Bevestig alleen als je dit account zelf hebt aangemaakt en dit professionele e-mailadres beheert."
-      body_html: "Je advocaat.be-profiel werd gebruikt voor het LawRelay-account <strong>%{login_email}</strong>. Bevestig alleen als je dit account zelf hebt aangemaakt en dit professionele e-mailadres beheert."
+      subject: "Bevestig uw professionele e-mailadres — LawRelay"
+      greeting: "Geachte %{name},"
+      body: "Uw advocaat.be-profiel werd gebruikt voor het LawRelay-account %{login_email}. Bevestig alleen als u dit account zelf hebt aangemaakt en dit professionele e-mailadres beheert."
+      body_html: "Uw advocaat.be-profiel werd gebruikt voor het LawRelay-account <strong>%{login_email}</strong>. Bevestig alleen als u dit account zelf hebt aangemaakt en dit professionele e-mailadres beheert."
       action: "Professioneel e-mailadres bevestigen"
-      ignore: "Negeer deze e-mail als jij dit niet was. De link verloopt na 48 uur."
+      ignore: "Negeer deze e-mail als u dit niet hebt aangevraagd. De link verloopt na 72 uur."
     notices:
-      confirmed: "Je professionele e-mailadres is bevestigd. Meld je aan om verder te gaan."
+      confirmed: "Uw professionele e-mailadres is bevestigd. Meld u aan om verder te gaan."
       invalid: "Deze bevestigingslink is ongeldig of verlopen."
       already_claimed: "Dit profiel hoort al bij een ander bevestigd account. Contacteer support voor hulp."
     page:
       eyebrow: "Bevestiging professioneel e-mailadres"
       heading: "Bevestig dit LawRelay-account"
       body: "Account: %{name}, inlogadres %{login_email}."
-      notice: "Ga alleen verder als je dit account zelf hebt aangemaakt."
+      notice: "Ga alleen verder als u dit account zelf hebt aangemaakt."
       action: "Dit account bevestigen"

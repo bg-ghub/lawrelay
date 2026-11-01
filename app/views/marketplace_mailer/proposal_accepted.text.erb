@@ -1,3 +1,5 @@
+<%= render "shared/mail_greeting", recipient: @recipient %>
+
 <%= t("workflow.mailers.proposal_accepted.body", title: @assignment.title) %>
 
 <%= assignment_url(@assignment, locale: @recipient.locale) %>

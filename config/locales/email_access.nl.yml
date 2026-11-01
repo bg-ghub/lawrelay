@@ -8,26 +8,26 @@ nl:
       form:
         legend: "Bereikbaar e-mailadres"
         current_email: "Huidig aanmeldadres"
-        new_email: "E-mailadres dat je kunt openen"
+        new_email: "E-mailadres waartoe u toegang hebt"
         reason: "Reden voor het andere e-mailadres"
         password: "Huidig wachtwoord"
-        hint: "Dit wordt je aanmeldadres. Je krijgt toegang na goedkeuring van de controle."
+        hint: "Dit wordt uw aanmeldadres. U krijgt toegang na handmatige controle."
         submit: "Controle aanvragen"
         cancel: "Terug"
     status:
       pending:
         heading: "E-mailcontrole in afwachting"
-        body: "We controleren je identiteit."
-        confirm_first: "Bevestig eerst je nieuwe e-mailadres. Daarna controleren we je identiteit."
+        body: "We controleren uw identiteit."
+        confirm_first: "Bevestig eerst uw nieuwe e-mailadres. Daarna controleren we uw identiteit."
       approved:
         heading: "E-mailcontrole goedgekeurd"
-        body: "Je bereikbare e-mailadres is goedgekeurd."
+        body: "Uw bereikbare e-mailadres is goedgekeurd."
       rejected:
         heading: "E-mailcontrole niet goedgekeurd"
-        body: "We konden je identiteit niet bevestigen. Contacteer info@lawrelay.be of dien een nieuwe aanvraag in."
+        body: "We konden uw identiteit niet bevestigen. Contacteer info@lawrelay.be of dien een nieuwe aanvraag in."
       changed:
         heading: "Nieuwe controle nodig"
-        body: "Je gegevens zijn gewijzigd. Vraag een nieuwe controle aan."
+        body: "Uw gegevens zijn gewijzigd. Vraag een nieuwe controle aan."
       try_again: "Nieuwe controle aanvragen"
       provide_reason: "Toelichting toevoegen"
     admin:
@@ -56,7 +56,7 @@ nl:
       reject: "Afwijzen"
       decision: "Beslissing"
       no_request: "Geen e-mailcontrole aangevraagd."
-      use_review: "Beoordeel eerst de e-mailaanvraag voordat je dit account goedkeurt."
+      use_review: "Beoordeel eerst de e-mailaanvraag voordat u dit account goedkeurt."
       states:
         pending: "In afwachting"
         approved: "Goedgekeurd"
@@ -66,18 +66,18 @@ nl:
         matched: "Komt overeen"
         pending: "In afwachting"
     notices:
-      requested: "Controle aangevraagd. Bevestig je e-mailadres als dat nog niet gebeurd is."
+      requested: "Controle aangevraagd. Bevestig uw e-mailadres als dat nog niet gebeurd is."
       approved: "E-mailcontrole goedgekeurd."
       rejected: "E-mailcontrole afgewezen."
     errors:
-      password: "Je huidige wachtwoord is onjuist."
+      password: "Uw huidige wachtwoord is onjuist."
       unchanged: "Vul een ander e-mailadres in."
-      unavailable: "Deze aanvraag is niet beschikbaar voor je account."
-      rate_limited: "Wacht even voordat je opnieuw probeert."
+      unavailable: "Deze aanvraag is niet beschikbaar voor uw account."
+      rate_limited: "Wacht voordat u opnieuw probeert."
       incomplete: "Beroepsgegevens ontbreken bij dit account."
       directory_required: "Er is eerst een overeenkomend profiel op advocaat.be nodig."
       email_unconfirmed: "Het lid moet eerst het bereikbare e-mailadres bevestigen."
-      identity_required: "Bevestig dat je de identiteit hebt gecontroleerd."
+      identity_required: "Bevestig dat u de identiteit hebt gecontroleerd."
       note_required: "Voeg een korte controlenotitie toe."
       reason_required: "Vermeld de reden voor het andere e-mailadres."
       reason_too_long: "De toelichting mag maximaal 1000 tekens bevatten."
@@ -90,12 +90,12 @@ nl:
       protected: "Een geschorst of afgewezen account kan hier niet worden goedgekeurd."
     mailer:
       subject:
-        approved: "Je LawRelay-e-mailcontrole is goedgekeurd"
-        rejected: "Je LawRelay-e-mailcontrole"
-      heading: "Hallo %{name},"
+        approved: "Uw LawRelay-e-mailcontrole is goedgekeurd"
+        rejected: "Uw LawRelay-e-mailcontrole"
+      heading: "Geachte %{name},"
       body:
-        approved: "Je e-mailcontrole is goedgekeurd. Je kunt je nu aanmelden bij LawRelay."
-        rejected: "We konden je e-mailcontrole niet goedkeuren. Contacteer info@lawrelay.be als je hulp nodig hebt."
+        approved: "Uw e-mailcontrole is goedgekeurd. U kunt zich nu aanmelden bij LawRelay."
+        rejected: "We konden uw e-mailcontrole niet goedkeuren. Contacteer info@lawrelay.be als u hulp nodig hebt."
       action: "Open LawRelay"
   admin:
     users:

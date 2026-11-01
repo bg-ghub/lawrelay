@@ -1,0 +1,14 @@
+en:
+  admin:
+    users:
+      audit:
+        actions:
+          account_confirmation_resend_requested: "Confirmation email requested again"
+  confirmation_resend:
+    subject: "LawRelay: confirmation email requested again"
+    body: "%{name} reported not receiving the confirmation email and requested another."
+    domain: "Email domain: %{domain}."
+    queued: "The new confirmation email is queued for delivery."
+    not_queued: "The new confirmation email could not be queued for delivery."
+    delivery_note: "This report does not prove that the receiving mail server rejected the email."
+    review: "Review account in admin"

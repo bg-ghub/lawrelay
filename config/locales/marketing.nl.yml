@@ -2,7 +2,7 @@ nl:
   marketing:
     locale_name: Nederlands
     language_switcher: Taal kiezen
-    language_switch_warning: "Je wijzigingen gaan verloren. Van taal wisselen?"
+    language_switch_warning: "Uw wijzigingen gaan verloren. Van taal wisselen?"
     actions:
       post_assignment: Plaats een opdracht
       browse_assignments: Bekijk opdrachten
@@ -52,13 +52,13 @@ nl:
       pathways:
         eyebrow: "Voor advocaten"
         heading_before: Waarmee kunnen
-        heading_after: we je helpen?
+        heading_after: we u helpen?
         lede: "Vind een vervanger of neem zelf een opdracht op."
         requester:
           kicker: Ik zoek hulp
           heading_before: "Een opdracht"
           heading_after: "uitbesteden."
-          body: "Geef aan wat je nodig hebt, waar en wanneer."
+          body: "Geef aan wat u nodig hebt, waar en wanneer."
         responder:
           kicker: Ik heb ruimte
           heading_before: "Een opdracht"
@@ -87,7 +87,7 @@ nl:
             heading: Bekijk de reacties
             body: "Vergelijk beschikbaarheid en tarief."
           "2":
-            heading: Maak je keuze
+            heading: Maak uw keuze
             body: "Kies een confrater en spreek de details af."
       faq:
         eyebrow: vragen
@@ -106,8 +106,8 @@ nl:
             answer: "Ja. Vermeld een richttarief of doe een voorstel."
           "3":
             question: "Hoe krijg ik toegang?"
-            answer: "Registreer je met je profiel op advocaat.be. Na controle krijg je toegang. Deel geen cliëntnamen, dossierfeiten of documenten."
+            answer: "Registreer u met uw profiel op advocaat.be. Na controle krijgt u toegang. Deel geen cliëntnamen, dossierfeiten of documenten."
       cta:
         eyebrow: klaar om te beginnen?
-        heading_before: Plaats je opdracht.
+        heading_before: Plaats uw opdracht.
         heading_after: Ontvang reacties.

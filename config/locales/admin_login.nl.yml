@@ -5,7 +5,7 @@ nl:
       link: "Beheerlogin"
       eyebrow: "Beheer"
       heading: "Beheerlogin"
-      lede: "Voer je wachtwoord in, daarna je authenticatorcode."
+      lede: "Voer uw wachtwoord in, daarna uw authenticatorcode."
       form_title: "Beheerderstoegang"
       password: "Wachtwoord"
       submit: "Doorgaan"

@@ -105,13 +105,13 @@ fr:
         rejected: "Action requise"
         suspended: "Suspendu"
       check_inbox: "Consultez votre boîte mail"
-      check_inbox_body: "Confirmez %{email} via le lien reçu par e-mail. Les liens expirent après 48 heures."
-      resend: "Renvoyer un lien"
+      check_inbox_body: "Confirmez %{email} via le lien reçu par e-mail. Les liens expirent après 72 heures."
+      resend: "E-mail de confirmation non reçu ?"
       review_title: "Vérification en cours"
       review_body: "E-mail confirmé. Nous vérifions vos données professionnelles."
       resent: "Un nouveau lien a été demandé si la confirmation reste nécessaire."
       queue_unavailable: "Cette étape n’a pas pu démarrer. Réessayez dans un instant."
-      rate_limited: "Veuillez patienter avant de demander un autre e-mail."
+      rate_limited: "Vous pouvez demander au maximum trois e-mails de confirmation par heure."
     verification:
       marketplace_required: "Confirmez votre e-mail et votre profil advocaat.be pour accéder aux missions."
     authorization:
@@ -132,7 +132,7 @@ fr:
         heading: "Bonjour %{name},"
         body: "Confirmez votre e-mail pour terminer la création de votre compte."
         action: "Confirmer l’e-mail"
-        expiry: "Ce lien expire dans 48 heures. Ignorez cet e-mail si vous n’avez pas créé ce compte."
+        expiry: "Ce lien expire dans 72 heures. Ignorez cet e-mail si vous n’avez pas créé ce compte."
   activerecord:
     attributes:
       user:

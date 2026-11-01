@@ -103,4 +103,41 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     assert_equal :pending, Directory::Verification.activate_if_ready!(user: @user).status
     refute @profile.reload.verified?
   end
+
+  test "new directory confirmation tokens remain valid for seventy two hours" do
+    prepare_confirmation_identity
+    token = Directory::ConfirmationToken.generate(@profile)
+
+    travel 72.hours - 1.second do
+      assert_equal @profile, Directory::ConfirmationToken.find_profile!(token)
+    end
+    travel 72.hours + 1.second do
+      assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { Directory::ConfirmationToken.find_profile!(token) }
+    end
+  end
+
+  test "previous directory tokens retain their embedded forty eight hour expiry" do
+    prepare_confirmation_identity
+    payload = {
+      "profile_id" => @profile.id, "user_id" => @user.id, "directory_profile_id" => @profile.directory_profile_id,
+      "identity_digest" => @profile.directory_identity_digest, "directory_email" => @profile.directory_email,
+      "directory_name" => @profile.directory_name, "directory_profile_url" => @profile.directory_profile_url,
+      "login_email" => @user.email_address, "full_name" => @user.full_name
+    }
+    legacy_token = Directory::ConfirmationToken.encryptor.encrypt_and_sign(payload, expires_in: 48.hours)
+
+    travel 48.hours - 1.second do
+      assert_equal @profile, Directory::ConfirmationToken.find_profile!(legacy_token)
+    end
+    travel 48.hours + 1.second do
+      assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { Directory::ConfirmationToken.find_profile!(legacy_token) }
+    end
+  end
+
+  private
+
+  def prepare_confirmation_identity
+    @profile.update!(directory_profile_id: @evidence.profile_id, directory_profile_url: @evidence.source_url, directory_name: @evidence.name,
+      directory_email: @evidence.email, directory_checked_at: Time.current, directory_identity_digest: "digest")
+  end
 end

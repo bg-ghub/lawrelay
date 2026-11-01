@@ -105,13 +105,13 @@ en:
         rejected: "Needs attention"
         suspended: "Suspended"
       check_inbox: "Check your inbox"
-      check_inbox_body: "Confirm %{email} using the email link. Links expire after 48 hours."
-      resend: "Send a new link"
+      check_inbox_body: "Confirm %{email} using the email link. Links expire after 72 hours."
+      resend: "Didn't receive a confirmation email?"
       review_title: "Checking your details"
       review_body: "Email confirmed. We’re checking your professional details."
       resent: "A new link has been requested if confirmation is still needed."
       queue_unavailable: "This step could not start. Please try again shortly."
-      rate_limited: "Please wait before requesting another verification email."
+      rate_limited: "You can request up to three confirmation emails per hour."
     verification:
       marketplace_required: "Confirm your email and advocaat.be profile to access assignments."
     authorization:
@@ -120,7 +120,7 @@ en:
     mailers:
       password_reset:
         subject: "Reset your LawRelay password"
-        heading: "Hello %{name},"
+        heading: "Dear %{name},"
         body: "Choose a new password using the link below."
         action: "Set new password"
         duration_minutes:
@@ -129,10 +129,10 @@ en:
         expiry: "This link expires in %{duration}. Ignore this email if you didn’t request it."
       email_verification:
         subject: "Verify your LawRelay email"
-        heading: "Hello %{name},"
+        heading: "Dear %{name},"
         body: "Confirm your email to finish setting up your account."
         action: "Confirm email"
-        expiry: "This link expires in 48 hours. Ignore this email if you didn’t create this account."
+        expiry: "This link expires in 72 hours. Ignore this email if you didn’t create this account."
   activerecord:
     attributes:
       user:

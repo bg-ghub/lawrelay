@@ -7,7 +7,7 @@ class ThoroughAccessRegressionTest < ActionDispatch::IntegrationTest
   test "expired directory verification GET returns to sign in without confirming proof" do
     account, token = directory_confirmation
 
-    travel 49.hours do
+    travel 73.hours do
       get directory_verification_path(token:, locale: :fr)
 
       assert_redirected_to new_session_path(locale: :fr)
@@ -18,7 +18,7 @@ class ThoroughAccessRegressionTest < ActionDispatch::IntegrationTest
   test "expired directory verification POST cannot activate an account" do
     account, token = directory_confirmation
 
-    travel 49.hours do
+    travel 73.hours do
       assert_no_difference "AuditEvent.count" do
         post confirm_directory_verification_path(token:, locale: :de)
       end

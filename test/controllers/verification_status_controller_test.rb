@@ -69,4 +69,145 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
   ensure
     Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
   end
+
+  test "confirmation resends are limited per account across sessions addresses and page languages" do
+    user = users(:one)
+    user.update!(email_verified_at: nil)
+
+    with_memory_rate_limit_store do
+      %i[nl fr de].each_with_index do |locale, index|
+        sign_in_as(user)
+        assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+          post verification_status_path(locale:), headers: { "REMOTE_ADDR" => "198.51.100.#{index + 1}" }
+        end
+        assert_redirected_to verification_status_path(locale:)
+      end
+
+      user.update!(email_address: "changed-resend@example.test")
+      sign_in_as(user)
+      assert_no_difference "AuditEvent.count" do
+        assert_no_enqueued_jobs do
+          post verification_status_path(locale: :en),
+            params: { user_id: users(:two).id, email_address: users(:two).email_address },
+            headers: { "REMOTE_ADDR" => "198.51.100.99" }
+        end
+      end
+      assert_redirected_to verification_status_path(locale: :en)
+      assert_equal I18n.t("auth.verification_status.rate_limited", locale: :en), flash[:alert]
+
+      travel 61.minutes do
+        assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+          post verification_status_path(locale: :en)
+        end
+        assert_redirected_to verification_status_path(locale: :en)
+      end
+    end
+  end
+
+  test "lawyers sharing an office IP retain separate confirmation resend quotas" do
+    with_memory_rate_limit_store do
+      [ users(:one), users(:two) ].each do |user|
+        user.update!(email_verified_at: nil)
+        sign_in_as(user)
+        3.times do
+          assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+            post verification_status_path(locale: :en), headers: { "REMOTE_ADDR" => "198.51.100.10" }
+          end
+        end
+        assert_no_enqueued_jobs do
+          post verification_status_path(locale: :en), headers: { "REMOTE_ADDR" => "198.51.100.10" }
+        end
+        assert_equal I18n.t("auth.verification_status.rate_limited", locale: :en), flash[:alert]
+      end
+    end
+  end
+
+  test "the shared IP cap limits bulk confirmation requests across accounts" do
+    accounts = [ users(:one), users(:two) ] + 2.times.map do |index|
+      User.create!(first_name: "Resend", last_name: "Test", email_address: "bulk-resend-#{index}@example.test", password: "password1234")
+    end
+    with_memory_rate_limit_store do
+      accounts.each_with_index do |user, index|
+        user.update!(email_verified_at: nil)
+        sign_in_as(user)
+        (index == 3 ? 1 : 3).times do
+          assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+            post verification_status_path(locale: :en), headers: { "REMOTE_ADDR" => "198.51.100.11" }
+          end
+        end
+      end
+
+      assert_no_enqueued_jobs do
+        post verification_status_path(locale: :en), headers: { "REMOTE_ADDR" => "198.51.100.11" }
+      end
+      assert_equal I18n.t("auth.verification_status.rate_limited", locale: :en), flash[:alert]
+    end
+  end
+
+  test "confirmation resends require authentication and do not send for already confirmed accounts" do
+    assert_no_difference "AuditEvent.count" do
+      assert_no_enqueued_jobs { post verification_status_path(locale: :en) }
+    end
+    assert_redirected_to new_session_path(locale: :en)
+
+    sign_in_as(users(:one))
+    assert_no_difference "AuditEvent.count" do
+      assert_no_enqueued_jobs { post verification_status_path(locale: :en) }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+  end
+
+  test "eligible resend requests record domain and queue an operator alert by audit identifier" do
+    user = users(:one)
+    user.update!(email_address: "pending@advocaat.be", email_verified_at: nil)
+    sign_in_as(user)
+
+    assert_difference "AuditEvent.where(action: 'account.confirmation_resend_requested').count", 1 do
+      assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+        post verification_status_path(locale: :en)
+      end
+    end
+
+    event = AuditEvent.where(action: "account.confirmation_resend_requested").order(:id).last
+    assert_equal user, event.auditable
+    assert_equal user, event.actor_user
+    assert_equal({ "recipient_domain" => "advocaat.be", "delivery_queued" => true }, event.metadata)
+    assert_enqueued_with(job: ConfirmationResendAlertJob, args: [ event.id ])
+    assert_equal I18n.t("auth.verification_status.resent", locale: :en), flash[:notice]
+  end
+
+  test "operator alert enqueue failure does not block confirmation mail or remove the audit" do
+    user = users(:one)
+    user.update!(email_verified_at: nil)
+    sign_in_as(user)
+    original = ConfirmationResendAlertJob.method(:perform_later)
+    ConfirmationResendAlertJob.define_singleton_method(:perform_later) { |*| raise ActiveJob::EnqueueError, "private mail context" }
+
+    assert_difference "AuditEvent.where(action: 'account.confirmation_resend_requested').count", 1 do
+      assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ user ] do
+        post verification_status_path(locale: :en)
+      end
+    end
+    assert_equal I18n.t("auth.verification_status.resent", locale: :en), flash[:notice]
+    event = AuditEvent.where(action: "account.confirmation_resend_requested").order(:id).last
+    assert_equal true, event.metadata["delivery_queued"]
+    assert_not_includes response.body, "private mail context"
+  ensure
+    ConfirmationResendAlertJob.define_singleton_method(:perform_later, original) if original
+  end
+
+  private
+
+  def with_memory_rate_limit_store
+    original = VerificationStatusController.instance_method(:rate_limiting)
+    store = ActiveSupport::Cache::MemoryStore.new
+    VerificationStatusController.define_method(:rate_limiting) do |**arguments|
+      original.bind_call(self, **arguments.merge(store:))
+    end
+    VerificationStatusController.send(:private, :rate_limiting)
+    yield
+  ensure
+    VerificationStatusController.define_method(:rate_limiting, original) if original
+    VerificationStatusController.send(:private, :rate_limiting)
+  end
 end

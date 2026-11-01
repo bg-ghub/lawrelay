@@ -1,0 +1,14 @@
+fr:
+  admin:
+    users:
+      audit:
+        actions:
+          account_confirmation_resend_requested: "Nouvel e-mail de confirmation demandé"
+  confirmation_resend:
+    subject: "LawRelay : nouvel e-mail de confirmation demandé"
+    body: "%{name} signale ne pas avoir reçu l’e-mail de confirmation et en a demandé un nouveau."
+    domain: "Domaine e-mail : %{domain}."
+    queued: "Le nouvel e-mail de confirmation est en attente d’envoi."
+    not_queued: "Le nouvel e-mail de confirmation n’a pas pu être mis en attente d’envoi."
+    delivery_note: "Ce signalement ne prouve pas que le serveur destinataire a refusé l’e-mail."
+    review: "Voir le compte dans l’administration"

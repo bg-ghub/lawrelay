@@ -50,7 +50,7 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
     directory_token = Directory::ConfirmationToken.generate(account.profile)
     resize_viewport(390)
 
-    travel 49.hours do
+    travel 73.hours do
       LOCALES.each do |locale|
         visit email_verification_path(token: email_token, locale:)
         assert_current_path new_session_path(locale:)

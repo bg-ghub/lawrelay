@@ -1,0 +1,71 @@
+@media (max-width: 760px) {
+  body.site-shell .flash-stack {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+    width: calc(100% - 26px);
+    margin: 1rem auto 0;
+  }
+
+  .account-flow-page.new-assignment {
+    padding-top: 1.6rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .account-flow-page .new-assignment__intro h1 {
+    margin: .25rem 0 .75rem;
+    font-size: clamp(1.75rem, 7.5vw, 2.35rem);
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+  }
+
+  .account-flow-page .new-assignment__intro p {
+    margin-bottom: 0;
+    font-size: .9rem;
+  }
+
+  .account-flow-page .new-assignment__layout {
+    margin-top: 1.5rem;
+  }
+
+  .account-flow-page .dashboard-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem;
+    margin: 1.25rem 0 1rem;
+  }
+
+  .account-flow-page .summary-card {
+    min-width: 0;
+    align-content: start;
+    gap: .25rem;
+    padding: .85rem .8rem;
+    overflow-wrap: anywhere;
+  }
+
+  .account-flow-page .summary-card strong {
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .account-flow-page .form-section {
+    padding: 1rem;
+  }
+
+  .account-flow-page .form-section h2 {
+    margin: 0 0 .75rem;
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -.02em;
+  }
+
+  .account-flow-page .form-section p {
+    overflow-wrap: anywhere;
+  }
+
+  .account-flow-page .form-section > form + p {
+    margin-top: 1rem;
+  }
+}

@@ -3,7 +3,7 @@ nl:
     verifications:
       eyebrow: "Beheer"
       title: "Advocaten verifiëren"
-      intro: "Controleer de advocaat voor je toegang geeft."
+      intro: "Controleer de advocaat voordat u toegang geeft."
       back: "Terug naar overzicht"
       account: "Account"
       email: "E-mail"
@@ -16,7 +16,7 @@ nl:
       lawyer_status: "Status advocaat"
       missing: "Ontbreekt"
       note: "Interne controlenotitie"
-      note_placeholder: "Wat heb je gecontroleerd en waarom deze beslissing?"
+      note_placeholder: "Wat hebt u gecontroleerd en waarom deze beslissing?"
       approve: "Goedkeuren"
       reject: "Afwijzen"
       empty_title: "Niets te controleren"

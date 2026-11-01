@@ -8,8 +8,8 @@ nl:
     "422":
       title: "Dat lukte niet"
       heading: "Probeer opnieuw"
-      body: "Je verzoek kon niet worden verwerkt. Ga terug en probeer opnieuw."
+      body: "Uw verzoek kon niet worden verwerkt. Ga terug en probeer opnieuw."
     "500":
       title: "Er ging iets mis"
       heading: "Er ging iets mis"
-      body: "Probeer het straks opnieuw."
+      body: "Probeer het later opnieuw."

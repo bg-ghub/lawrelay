@@ -112,8 +112,39 @@ class UserTest < ActiveSupport::TestCase
     assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(token) }
 
     fresh_token = user.email_verification_token
-    travel 49.hours do
+    travel 72.hours - 1.second do
+      assert_equal user, User.find_by_email_verification_token!(fresh_token)
+    end
+    travel 72.hours + 1.second do
       assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(fresh_token) }
+    end
+  end
+
+  test "previously delivered email tokens retain their original forty eight hour validity" do
+    user = users(:one)
+    legacy_token = user.generate_token_for(:email_verification)
+
+    travel 48.hours - 1.second do
+      assert_equal user, User.find_by_email_verification_token!(legacy_token)
+    end
+    travel 48.hours + 1.second do
+      assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(legacy_token) }
+    end
+
+    user.update!(email_address: "replacement@example.test")
+    assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(legacy_token) }
+  end
+
+  test "a later confirmation request receives a fresh seventy two hour expiry" do
+    user = users(:one)
+    previous_token = user.email_verification_token
+
+    replacement_token = travel(1.hour) { user.email_verification_token }
+    assert_not_equal previous_token, replacement_token
+
+    travel 72.hours + 1.minute do
+      assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(previous_token) }
+      assert_equal user, User.find_by_email_verification_token!(replacement_token)
     end
   end
 

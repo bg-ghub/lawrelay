@@ -3,7 +3,7 @@ nl:
     actions:
       cancel: "Annuleren"
     errors:
-      heading: "Controleer even:"
+      heading: "Controleer:"
     statuses:
       pending: "In afwachting"
       open: "Open"
@@ -21,18 +21,18 @@ nl:
         restriction: "De verwerking beperken"
         objection: "Bezwaar maken tegen verwerking"
       notices:
-        created: "Je verzoek is ontvangen."
-        rate_limited: "Wacht even voordat je een nieuw privacyverzoek indient."
+        created: "Uw verzoek is ontvangen."
+        rate_limited: "Wacht voordat u een nieuw privacyverzoek indient."
       index:
         title: "Privacyverzoeken — LawRelay"
-        heading: "Je privacyverzoeken"
-        lede: "Volg hier je verzoeken."
+        heading: "Uw privacyverzoeken"
+        lede: "Volg hier uw verzoeken."
         new: "Nieuw verzoek"
         empty: "Nog geen privacyverzoeken."
       new:
         title: "Nieuw privacyverzoek — LawRelay"
         heading: "Nieuw privacyverzoek"
-        lede: "Vraag om inzage, correctie of verwijdering van je gegevens."
+        lede: "Vraag om inzage, correctie of verwijdering van uw gegevens."
         legend: "Verzoek"
         kind: "Type verzoek"
         kind_prompt: "Kies een verzoek"
@@ -49,10 +49,10 @@ nl:
         misconduct: "Mogelijke deontologische inbreuk"
         other: "Ander probleem"
       errors:
-        own_assignment: "Je kunt een opdracht van je eigen kantoor niet melden."
+        own_assignment: "U kunt een opdracht van uw eigen kantoor niet melden."
       notices:
-        created: "Melding ontvangen. We kijken het na."
-        rate_limited: "Je hebt de meldingslimiet bereikt. Probeer het later opnieuw."
+        created: "Melding ontvangen. We onderzoeken deze."
+        rate_limited: "U hebt de meldingslimiet bereikt. Probeer het later opnieuw."
       new:
         title: "Opdracht melden — LawRelay"
         heading: "Meld deze opdracht"
@@ -75,7 +75,7 @@ nl:
       notices:
         updated: "Opgeslagen."
         invalid_decision: "Kies een geldige actie."
-        note_required: "Voeg een afhandelingsnota toe voordat je dit dossier sluit."
+        note_required: "Voeg een afhandelingsnota toe voordat u dit dossier sluit."
       reports:
         title: "Meldingen — LawRelay-beheer"
         heading: "Meldingen over opdrachten"
@@ -86,5 +86,5 @@ nl:
         heading: "Privacyverzoeken"
         lede: "Leg de afhandeling vast."
         mark_handled: "Afgehandeld markeren"
-        action_note: "Voer het verzoek uit en antwoord de gebruiker vóór je het als afgehandeld markeert."
+        action_note: "Voer het verzoek uit en antwoord de gebruiker vóór u het als afgehandeld markeert."
         empty: "Er zijn geen privacyverzoeken te beoordelen."
