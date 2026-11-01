@@ -15,11 +15,11 @@ module Onboarding
       def deliver!(mail)
         super
       rescue *TRANSIENT_ERRORS => error
-        Rails.logger.warn("Verification mail transport unavailable: #{error.class}")
-        raise TemporaryFailure, "Verification mail transport unavailable", cause: nil
+        Rails.logger.warn("Mail transport unavailable: #{error.class}")
+        raise TemporaryFailure, "Mail transport unavailable", cause: nil
       rescue Net::SMTPError, OpenSSL::SSL::SSLError => error
-        Rails.logger.warn("Verification mail transport rejected: #{error.class}")
-        raise Rejected, "Verification mail transport rejected", cause: nil
+        Rails.logger.warn("Mail transport rejected: #{error.class}")
+        raise Rejected, "Mail transport rejected", cause: nil
       end
     end
 

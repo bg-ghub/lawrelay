@@ -28,12 +28,25 @@ class GeoChallengeSystemTest < ApplicationSystemTestCase
   end
 
   test "the challenge page has translated copy in every public locale" do
+    browser = page.driver.browser
+    browser.execute_cdp("Network.enable")
+    # Keep this rendering check on the challenge page. Automatic proof and
+    # redirect are exercised without interception in the separate happy path.
+    browser.execute_cdp("Network.setBlockedURLs", urls: [ "*altcha-challenge.json*" ])
+
     %i[nl fr de en].each do |locale|
       visit geo_challenge_path(locale:)
 
+      assert_current_path geo_challenge_path(locale:)
       assert_selector "html[lang='#{locale}']"
+      assert_selector "altcha-widget"
       assert_text I18n.t("geo_challenge.heading", locale:)
       assert_no_text "Translation missing"
+    end
+  ensure
+    if browser
+      browser.execute_cdp("Network.setBlockedURLs", urls: [])
+      browser.execute_cdp("Network.disable")
     end
   end
 end

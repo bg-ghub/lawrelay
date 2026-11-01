@@ -36,6 +36,7 @@ fr:
       heading: "Saisissez votre code d’authentification"
       sign_out: "Se déconnecter"
     notices:
+      confirm_email: "Confirmez votre e-mail avant de configurer la double authentification."
       enabled: "La double authentification est activée."
       disabled: "La double authentification est désactivée."
       verified: "Connexion réussie."

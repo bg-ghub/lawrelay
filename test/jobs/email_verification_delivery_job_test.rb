@@ -73,7 +73,7 @@ class EmailVerificationDeliveryJobTest < ActiveJob::TestCase
       clear_enqueued_jobs
       assert_no_enqueued_jobs do
         error = assert_raises(Onboarding::MailTransport::TemporaryFailure) { job.perform_now }
-        assert_equal "Verification mail transport unavailable", error.message
+        assert_equal "Mail transport unavailable", error.message
         assert_nil error.cause
       end
       assert_not_includes output.string, "private SMTP address and response"
@@ -84,7 +84,7 @@ class EmailVerificationDeliveryJobTest < ActiveJob::TestCase
     with_smtp_failure(Net::SMTPAuthenticationError) do |_settings, output|
       assert_no_enqueued_jobs do
         error = assert_raises(Onboarding::MailTransport::Rejected) { perform_verification }
-        assert_equal "Verification mail transport rejected", error.message
+        assert_equal "Mail transport rejected", error.message
         assert_nil error.cause
       end
       assert_not_includes output.string, "private SMTP address and response"

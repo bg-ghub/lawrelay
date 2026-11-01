@@ -25,9 +25,9 @@ class Proposal < ApplicationRecord
   end
 
   def contact_email
-    return if user&.erased_at
+    return user&.marketplace_contact_email if user_id.present?
 
-    user&.email_address.presence || email
+    email
   end
 
   def rate_kind_label
@@ -46,11 +46,42 @@ class Proposal < ApplicationRecord
     transition_from_pending!("declined", actor: actor, timestamp: :declined_at)
   end
 
-  def accept!(actor:)
-    transition_from_pending!("accepted", actor: actor, timestamp: :accepted_at)
+  def award!(actor:)
+    self.class.transaction do
+      # Account review and erasure take the user lock first too. Do not acquire
+      # it from inside the assignment lock or those operations can deadlock.
+      candidate = User.lock.find_by(id: user_id)
+      raise InvalidTransition, "candidate is unavailable" unless candidate
+
+      profile = LawyerProfile.lock.find_by(user_id: candidate.id)
+      candidate.association(:lawyer_profile).target = profile
+      candidate.primary_firm&.lock!
+      raise InvalidTransition, "candidate is unavailable" unless candidate.marketplace_verified?
+
+      assignment.with_lock do
+        reload
+        unless user_id == candidate.id && assignment.manageable_by?(actor) && assignment.status == "open" &&
+            assignment.starts_at > Time.current && status == "pending"
+          raise InvalidTransition, "proposal cannot be awarded"
+        end
+
+        accept!(actor:)
+        assignment.proposals.where.not(id: id).where(status: "pending").find_each do |other_proposal|
+          other_proposal.decline!(actor:)
+        end
+        assignment.update!(status: "matched")
+        assignment.audit_events.create!(actor_user: actor, firm: actor.primary_firm,
+          action: "assignment.matched", metadata: { proposal_id: id })
+        assignment.notify_creator_of_match!(actor:)
+      end
+    end
   end
 
   private
+
+  def accept!(actor:)
+    transition_from_pending!("accepted", actor: actor, timestamp: :accepted_at)
+  end
 
   def author_account_still_active
     return unless user_id

@@ -36,6 +36,7 @@ de:
       heading: "Authenticator-Code eingeben"
       sign_out: "Abmelden"
     notices:
+      confirm_email: "Bestätigen Sie Ihre E-Mail-Adresse, bevor Sie die Zwei-Faktor-Authentifizierung einrichten."
       enabled: "Die Zwei-Faktor-Authentifizierung ist aktiviert."
       disabled: "Die Zwei-Faktor-Authentifizierung ist deaktiviert."
       verified: "Angemeldet."

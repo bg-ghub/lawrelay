@@ -1,0 +1,5 @@
+en:
+  errors:
+    messages:
+      too_many_preferences: "has too many entries (maximum %{count})"
+      preference_too_long: "has an entry longer than %{count} characters"

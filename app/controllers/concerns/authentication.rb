@@ -76,6 +76,21 @@ module Authentication
       end
     end
 
+    def start_password_session_for(user, password:, admin: false)
+      return unless user
+
+      authenticated_email = user.email_address
+      user.with_lock do
+        # Credential changes and session revocation take this same user lock.
+        # Recheck the password after reloading, before issuing any new session.
+        next unless user.active? && user.email_address == authenticated_email
+        next if admin && !user.system_admin?
+        next unless user.authenticate(password.to_s)
+
+        start_new_session_for(user)
+      end
+    end
+
     def terminate_session
       Current.session.destroy
       cookies.delete(:session_id)

@@ -3,25 +3,37 @@ module TwoFactorAuthenticatable
 
   class InvalidTwoFactorCode < StandardError; end
   class InvalidTwoFactorPassword < StandardError; end
+  class UnverifiedTwoFactorOwnership < StandardError; end
 
   def two_factor_enabled?
     two_factor_enabled_at.present?
+  end
+
+  def two_factor_enrollment_allowed?
+    active? && !system_admin? && two_factor_ownership_evidence.present?
   end
 
   def begin_two_factor_setup!(password:)
     with_lock do
       raise InvalidTwoFactorCode if system_admin? || two_factor_enabled?
       raise InvalidTwoFactorPassword unless authenticate(password.to_s)
+      raise UnverifiedTwoFactorOwnership unless two_factor_enrollment_allowed?
       next two_factor_pending_secret if two_factor_pending_secret.present?
 
       secret = ROTP::Base32.random_base32
-      update!(two_factor_pending_secret_ciphertext: encrypt_two_factor_secret(secret))
+      payload = { "secret" => secret, "ownership_digest" => two_factor_ownership_digest }
+      update!(two_factor_pending_secret_ciphertext: encrypt_two_factor_secret(payload))
       secret
     end
   end
 
   def two_factor_pending_secret
-    decrypt_two_factor_secret(two_factor_pending_secret_ciphertext)
+    return unless two_factor_enrollment_allowed?
+
+    payload = decrypt_two_factor_payload(two_factor_pending_secret_ciphertext)
+    return unless payload.is_a?(Hash) && payload["ownership_digest"] == two_factor_ownership_digest
+
+    payload["secret"] if payload["secret"].is_a?(String)
   end
 
   def two_factor_provisioning_uri(secret = two_factor_pending_secret)
@@ -33,13 +45,15 @@ module TwoFactorAuthenticatable
   def enable_two_factor!(code)
     with_lock do
       raise InvalidTwoFactorCode if system_admin? || two_factor_enabled?
+      raise UnverifiedTwoFactorOwnership unless two_factor_enrollment_allowed?
 
-      verified_at = verify_two_factor_secret(two_factor_pending_secret, code)
+      secret = two_factor_pending_secret
+      verified_at = verify_two_factor_secret(secret, code)
       raise InvalidTwoFactorCode unless verified_at
 
       codes = Array.new(10) { SecureRandom.hex(10).scan(/.{5}/).join("-") }
       update!(
-        two_factor_secret_ciphertext: two_factor_pending_secret_ciphertext,
+        two_factor_secret_ciphertext: encrypt_two_factor_secret(secret),
         two_factor_pending_secret_ciphertext: nil,
         two_factor_enabled_at: Time.current,
         two_factor_last_verified_at: Time.at(verified_at),
@@ -131,7 +145,25 @@ module TwoFactorAuthenticatable
     self.class.two_factor_encryptor.encrypt_and_sign(secret)
   end
 
+  def two_factor_ownership_evidence
+    return [ "email", email_verified_at.utc.iso8601(6) ] if email_verified?
+
+    profile = LawyerProfile.find_by(user_id: id)
+    if profile&.manual_activation_valid?
+      [ "manual", profile.manual_activation_identity_digest, profile.manual_activation_approved_at.utc.iso8601(6) ]
+    end
+  end
+
+  def two_factor_ownership_digest
+    Digest::SHA256.hexdigest([ id, email_address, password_digest, two_factor_ownership_evidence ].to_json)
+  end
+
   def decrypt_two_factor_secret(ciphertext)
+    payload = decrypt_two_factor_payload(ciphertext)
+    payload if payload.is_a?(String)
+  end
+
+  def decrypt_two_factor_payload(ciphertext)
     return if ciphertext.blank?
 
     self.class.two_factor_encryptor.decrypt_and_verify(ciphertext)

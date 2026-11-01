@@ -1,0 +1,5 @@
+de:
+  errors:
+    messages:
+      too_many_preferences: "enthält zu viele Einträge (höchstens %{count})"
+      preference_too_long: "enthält einen Eintrag mit mehr als %{count} Zeichen"

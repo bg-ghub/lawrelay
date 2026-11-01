@@ -39,20 +39,7 @@ class ProposalsController < ApplicationController
   def accept
     return owner_only unless @assignment.manageable_by?(current_user)
 
-    @assignment.with_lock do
-      @proposal.reload
-      unless @assignment.status == "open" && @assignment.starts_at > Time.current && @proposal.status == "pending"
-        raise ActiveRecord::RecordInvalid, @assignment
-      end
-
-      @proposal.accept!(actor: current_user)
-      @assignment.proposals.where.not(id: @proposal.id).where(status: "pending").find_each do |other_proposal|
-        other_proposal.decline!(actor: current_user)
-      end
-      @assignment.update!(status: "matched")
-      @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.matched", metadata: { proposal_id: @proposal.id })
-      @assignment.notify_creator_of_match!(actor: current_user)
-    end
+    @proposal.award!(actor: current_user)
 
     redirect_to @assignment, notice: t("workflow.notices.proposal_accepted")
   rescue ActiveRecord::RecordInvalid, Proposal::InvalidTransition

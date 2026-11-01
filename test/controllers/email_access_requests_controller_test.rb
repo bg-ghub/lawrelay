@@ -76,8 +76,10 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "member two factor remains required before recovery" do
+    @account.user.update!(email_verified_at: Time.current)
     secret = @account.user.begin_two_factor_setup!(password: "password1234")
     @account.user.enable_two_factor!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+    @account.user.update!(email_verified_at: nil)
     sign_in_as(@account.user)
     get email_access_request_path(locale: :en)
     assert_redirected_to challenge_two_factor_authentication_path(locale: :en)

@@ -1,0 +1,5 @@
+nl:
+  errors:
+    messages:
+      too_many_preferences: "bevat te veel keuzes (maximaal %{count})"
+      preference_too_long: "bevat een keuze van meer dan %{count} tekens"

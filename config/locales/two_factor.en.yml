@@ -36,6 +36,7 @@ en:
       heading: "Enter your authenticator code"
       sign_out: "Sign out"
     notices:
+      confirm_email: "Confirm your email before setting up two-factor authentication."
       enabled: "Two-factor authentication is on."
       disabled: "Two-factor authentication is off."
       verified: "Signed in."

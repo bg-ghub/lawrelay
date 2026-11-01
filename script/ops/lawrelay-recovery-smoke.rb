@@ -133,11 +133,7 @@ if defined?(NotificationEmailDeliveryJob)
     job.destroy!
   end
   pending.each(&deliver_synthetic)
-  own_assignment.with_lock do
-    proposals.first.accept!(actor: user)
-    proposals.last.decline!(actor: user)
-    own_assignment.update!(status: "matched")
-  end
+  proposals.first.award!(actor: user)
   decisions = Notification.where(subject: proposals, kind: %w[proposal_accepted proposal_declined]).to_a
   check(decisions.size == 2, "selection and non-selection notifications persisted")
   decisions.each(&deliver_synthetic)

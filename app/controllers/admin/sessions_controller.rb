@@ -9,8 +9,7 @@ module Admin
 
     def create
       user = LoginAccount.authenticate(params[:password])
-      if user&.active?
-        start_new_session_for(user)
+      if start_password_session_for(user, password: params[:password], admin: true)
         redirect_to after_authentication_url
       else
         flash.now[:alert] = t("admin.login.invalid")

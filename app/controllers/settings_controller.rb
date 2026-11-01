@@ -28,7 +28,7 @@ class SettingsController < ApplicationController
     redirect_to settings_path(locale: destination_locale), notice: update_notice(profile_requires_review || directory_identity_changed, locale: destination_locale),
       alert: (I18n.t("auth.verification_status.queue_unavailable", locale: destination_locale) unless delivery_ready)
   rescue ActiveRecord::RecordInvalid
-    render :show, status: :unprocessable_content
+    render :show, formats: :html, status: :unprocessable_content
   end
 
   private

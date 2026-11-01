@@ -36,6 +36,7 @@ nl:
       heading: "Voer je authenticatorcode in"
       sign_out: "Afmelden"
     notices:
+      confirm_email: "Bevestig je e-mailadres voordat je tweestapsverificatie instelt."
       enabled: "Tweestapsverificatie staat aan."
       disabled: "Tweestapsverificatie staat uit."
       verified: "Aangemeld."

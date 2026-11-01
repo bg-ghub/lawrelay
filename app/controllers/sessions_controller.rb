@@ -7,8 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.authenticate_by(params.permit(:email_address, :password))
-    if user&.active?
-      start_new_session_for user
+    if start_password_session_for(user, password: params[:password])
       if !user.system_admin? && user.two_factor_enabled?
         session[:return_to_after_two_factor] = after_authentication_url
         redirect_to challenge_two_factor_authentication_path

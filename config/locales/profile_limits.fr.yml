@@ -1,0 +1,5 @@
+fr:
+  errors:
+    messages:
+      too_many_preferences: "contient trop de choix (maximum %{count})"
+      preference_too_long: "contient un choix de plus de %{count} caractères"

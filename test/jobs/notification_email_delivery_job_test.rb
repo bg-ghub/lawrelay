@@ -34,6 +34,32 @@ class NotificationEmailDeliveryJobTest < ActiveJob::TestCase
     assert_nil mail.bcc
   end
 
+  test "a valid manual approval can receive task mail without confirming the failed email link" do
+    @candidate.user.update!(email_verified_at: nil)
+    directory_id = SecureRandom.uuid
+    @candidate.profile.update!(directory_profile_id: directory_id,
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{directory_id}",
+      directory_name: @candidate.user.full_name, directory_email: @candidate.user.email_address,
+      directory_checked_at: Time.current)
+    admin = User.create!(first_name: "Mail", last_name: "Operator", email_address: "delivery-admin@example.test",
+      password: "test-password-123", system_role: "admin", email_verified_at: Time.current,
+      admin_mfa_enabled_at: Time.current, admin_mfa_secret_ciphertext: "synthetic")
+    result = Admin::ManualActivation.call(user: @candidate.user, actor: admin, note: "Synthetic independent identity check",
+      identity_digest: @candidate.profile.email_review_current_identity_digest)
+    assert result.success?
+    assert @candidate.user.reload.marketplace_verified?
+
+    assert_difference(-> { ActionMailer::Base.deliveries.length }, 1) do
+      NotificationEmailDeliveryJob.perform_now(@event.id)
+      NotificationEmailDeliveryJob.perform_now(@event.id)
+    end
+
+    assert_equal "sent", @event.reload.email_status
+    assert_equal [ @candidate.user.email_address ], ActionMailer::Base.deliveries.last.to
+    assert_nil @candidate.user.reload.email_verified_at
+    assert_nil @candidate.profile.reload.directory_email_verified_at
+  end
+
   test "delivery failures keep a durable retry without storing the error message" do
     captured_message_id = nil
     with_delivery_failure do |message|

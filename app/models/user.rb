@@ -85,6 +85,10 @@ class User < ApplicationRecord
       lawyer_profile.email_review_allows_access? && primary_firm&.verified?
   end
 
+  def marketplace_contact_email
+    email_address if marketplace_verified?
+  end
+
   def system_admin?
     system_role == "admin"
   end

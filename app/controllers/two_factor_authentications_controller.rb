@@ -3,6 +3,7 @@ class TwoFactorAuthenticationsController < ApplicationController
   class RevokedSession < StandardError; end
 
   rescue_from RevokedSession, with: :reject_revoked_session
+  rescue_from User::UnverifiedTwoFactorOwnership, with: :require_email_confirmation
 
   before_action -> { response.headers["Cache-Control"] = "no-store" }
   before_action :require_member
@@ -13,6 +14,7 @@ class TwoFactorAuthenticationsController < ApplicationController
     only: %i[begin_setup enable verify destroy], with: :rate_limited
 
   def show
+    require_email_confirmation unless current_user.two_factor_enabled? || current_user.two_factor_enrollment_allowed?
   end
 
   def begin_setup
@@ -130,6 +132,7 @@ class TwoFactorAuthenticationsController < ApplicationController
 
   def require_setup_authorization
     return redirect_to two_factor_authentication_path if current_user.two_factor_enabled?
+    raise User::UnverifiedTwoFactorOwnership unless current_user.two_factor_enrollment_allowed?
 
     authorization = session[:two_factor_setup]
     age = Time.current.to_i - authorization.to_h.fetch("authorized_at", 0).to_i
@@ -150,6 +153,14 @@ class TwoFactorAuthenticationsController < ApplicationController
 
   def after_two_factor_url
     url_from(session.delete(:return_to_after_two_factor)) || dashboard_path
+  end
+
+  def require_email_confirmation
+    session.delete(:two_factor_setup)
+    locale = params[:locale].presence_in(I18n.available_locales.map(&:to_s)) || current_user.locale
+    I18n.with_locale(locale) do
+      redirect_to verification_status_path, alert: t("two_factor.notices.confirm_email")
+    end
   end
 
   def rate_limited

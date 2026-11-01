@@ -8,6 +8,11 @@ class LawyerProfile < ApplicationRecord
     email_reviewed_by_user_id email_review_note email_review_identity_digest].freeze
   MANUAL_ACTIVATION_FIELDS = %w[manual_activation_approved_at manual_activation_approved_by_user_id manual_activation_identity_digest].freeze
   MANUAL_ACTIVATION_IDENTITY_FIELDS = %w[directory_profile_id directory_profile_url directory_name directory_email].freeze
+  PREFERENCE_LIMITS = {
+    spoken_languages: { count: 20, length: 100 },
+    practice_areas: { count: 50, length: 100 },
+    court_preferences: { count: 50, length: 180 }
+  }.freeze
 
   belongs_to :user
   belongs_to :email_reviewed_by_user, class_name: "User", optional: true
@@ -31,6 +36,7 @@ class LawyerProfile < ApplicationRecord
   validates :availability_note, length: { maximum: 500 }, allow_nil: true
   validates :email_review_status, inclusion: { in: EMAIL_REVIEW_STATUSES }, allow_nil: true
   validates :email_review_note, length: { maximum: 2_000 }, allow_nil: true
+  validate :matching_preferences_are_bounded
 
   def verified?
     verification_status == "verified" && verified_at.present?
@@ -128,10 +134,26 @@ class LawyerProfile < ApplicationRecord
   end
 
   def normalize_matching_preferences
-    self.court_preferences = Array(court_preferences)
-      .flat_map { |value| value.to_s.split(",") }
-      .map(&:strip)
-      .reject(&:blank?)
-      .uniq
+    PREFERENCE_LIMITS.each_key do |attribute|
+      values = public_send(attribute)
+      next unless values.is_a?(Array)
+
+      self[attribute] = values.flat_map do |value|
+        value.is_a?(String) ? value.split(",").map(&:strip).reject(&:blank?) : [ value ]
+      end.uniq
+    end
+  end
+
+  def matching_preferences_are_bounded
+    PREFERENCE_LIMITS.each do |attribute, limits|
+      values = public_send(attribute)
+      unless values.is_a?(Array) && values.all? { |value| value.is_a?(String) }
+        errors.add(attribute, :invalid)
+        next
+      end
+
+      errors.add(attribute, :too_many_preferences, count: limits[:count]) if values.size > limits[:count]
+      errors.add(attribute, :preference_too_long, count: limits[:length]) if values.any? { |value| value.length > limits[:length] }
+    end
   end
 end

@@ -19,22 +19,24 @@ module Admin
       decision = params[:decision].to_s
       return redirect_invalid_decision unless decision.in?(%w[approve reject])
 
-      firm = @user.primary_firm
-      profile = @user.lawyer_profile
-      unless firm && profile
-        return redirect_to admin_verifications_path,
-          alert: t("admin.verifications.notices.incomplete_account")
-      end
-      if decision == "approve" && profile.email_review_status.present? && !profile.email_review_approved?
-        return redirect_to admin_email_review_path(@user), alert: t("email_access.errors.review_required")
-      end
-
       status = decision == "approve" ? "verified" : "rejected"
       outcome = decision == "approve" ? "approved" : "rejected"
       verified_at = status == "verified" ? Time.current : nil
       note = verification_params[:note].to_s.strip.presence
 
       ApplicationRecord.transaction do
+        @user.lock!
+        profile = LawyerProfile.lock.find_by(user_id: @user.id)
+        firm = @user.primary_firm
+        firm&.lock!
+        unless firm && profile
+          return redirect_to admin_verifications_path,
+            alert: t("admin.verifications.notices.incomplete_account")
+        end
+        if decision == "approve" && profile.email_review_status.present? && !profile.email_review_approved?
+          return redirect_to admin_email_review_path(@user), alert: t("email_access.errors.review_required")
+        end
+
         firm.update!(verification_status: status, verified_at: verified_at)
         profile.update!(
           verification_status: status,

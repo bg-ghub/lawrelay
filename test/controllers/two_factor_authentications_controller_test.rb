@@ -30,6 +30,50 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "unconfirmed signup cannot see a setup key or enroll in any locale" do
+    @user.update!(email_verified_at: nil)
+    %i[nl fr de en].each do |locale|
+      get two_factor_authentication_path(locale:)
+      assert_redirected_to verification_status_path(locale:)
+      assert_equal I18n.t("two_factor.notices.confirm_email", locale:), flash[:alert]
+      post begin_setup_two_factor_authentication_path(locale:), params: { current_password: "password1234" }
+      assert_redirected_to verification_status_path(locale:)
+      get setup_two_factor_authentication_path(locale:)
+      assert_redirected_to verification_status_path(locale:)
+      assert_select "img.mfa-qr", count: 0
+      post enable_two_factor_authentication_path(locale:), params: { mfa_code: "123456" }
+      assert_redirected_to verification_status_path(locale:)
+    end
+    assert_nil @user.reload.two_factor_pending_secret_ciphertext
+    assert_not_predicate @user, :two_factor_enabled?
+  end
+
+  test "ownership lost during enrollment prevents QR rendering and factor confirmation" do
+    begin_setup
+    secret = @user.two_factor_pending_secret
+    @user.update!(email_address: "changed-enrollment@example.test")
+    get setup_two_factor_authentication_path(locale: :en)
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_select "img.mfa-qr", count: 0
+    assert_not_includes response.body, secret
+    post enable_two_factor_authentication_path(locale: :en), params: { mfa_code: ROTP::TOTP.new(secret, issuer: "LawRelay").now }
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_not_predicate @user.reload, :two_factor_enabled?
+  end
+
+  test "reconfirmed address cannot reuse an earlier enrollment authorization" do
+    begin_setup
+    secret = @user.two_factor_pending_secret
+    @user.update!(email_address: "reconfirmed-enrollment@example.test")
+    @user.update!(email_verified_at: Time.current)
+    get setup_two_factor_authentication_path(locale: :en)
+    assert_redirected_to two_factor_authentication_path(locale: :en)
+    assert_select "img.mfa-qr", count: 0
+    post enable_two_factor_authentication_path(locale: :en), params: { mfa_code: ROTP::TOTP.new(secret, issuer: "LawRelay").now }
+    assert_redirected_to two_factor_authentication_path(locale: :en)
+    assert_not_predicate @user.reload, :two_factor_enabled?
+  end
+
   test "a different session cannot see a pending enrollment QR" do
     begin_setup
     sign_in_as(@user)
@@ -151,6 +195,18 @@ class TwoFactorAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert_predicate @user.reload, :two_factor_enabled?
     assert_not Session.exists?(@session_id)
 
+    post session_path(locale: :en), params: { email_address: @user.email_address, password: "reset-password1234" }
+    assert_redirected_to challenge_two_factor_authentication_path(locale: :en)
+  end
+
+  test "password reset preserves a trusted authenticator after an email change" do
+    enable_directly
+    @user.update!(email_address: "pending-reset-mfa@example.test")
+    assert_nil @user.reload.email_verified_at
+    patch password_path(token: @user.password_reset_token, locale: :en),
+      params: { password: "reset-password1234", password_confirmation: "reset-password1234" }
+    assert_redirected_to new_session_path(locale: :en)
+    assert_predicate @user.reload, :two_factor_enabled?
     post session_path(locale: :en), params: { email_address: @user.email_address, password: "reset-password1234" }
     assert_redirected_to challenge_two_factor_authentication_path(locale: :en)
   end
