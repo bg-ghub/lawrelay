@@ -38,6 +38,9 @@ namespace :release do
   end
 
   def smtp_checks(errors)
+    unless Onboarding::MailTransport.valid_return_path_configuration?
+      errors << "MAIL_RETURN_PATH must be a single email address"
+    end
     %w[SMTP_ADDRESS SMTP_USERNAME SMTP_PASSWORD].each do |name|
       errors << "#{name} is required" if ENV[name].blank?
     end

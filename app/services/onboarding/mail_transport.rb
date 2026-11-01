@@ -5,6 +5,7 @@ module Onboarding
   class MailTransport
     class TemporaryFailure < StandardError; end
     class Rejected < StandardError; end
+    class ConfigurationError < StandardError; end
 
     TRANSIENT_ERRORS = [ Net::OpenTimeout, Net::ReadTimeout, SocketError, IOError,
       Errno::ECONNRESET, Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Errno::ETIMEDOUT, Net::SMTPServerBusy ].freeze
@@ -28,5 +29,27 @@ module Onboarding
       message.delivery_method(Smtp, transport.settings) if transport.instance_of?(::Mail::SMTP)
       message
     end
+
+    def self.return_path
+      if ENV.key?("MAIL_RETURN_PATH")
+        raise ConfigurationError, "MAIL_RETURN_PATH must be a single email address" unless valid_return_path_configuration?
+
+        ENV.fetch("MAIL_RETURN_PATH")
+      elsif mailbox_address?(ENV["SMTP_USERNAME"])
+        ENV.fetch("SMTP_USERNAME")
+      end
+    end
+
+    def self.valid_return_path_configuration?
+      !ENV.key?("MAIL_RETURN_PATH") || mailbox_address?(ENV["MAIL_RETURN_PATH"])
+    end
+
+    def self.mailbox_address?(value)
+      value.is_a?(String) && value.bytesize <= 254 && !value.match?(/[[:space:][:cntrl:]]/) &&
+        value.match?(URI::MailTo::EMAIL_REGEXP) && Mail::Address.new(value).address == value
+    rescue Mail::Field::ParseError
+      false
+    end
+    private_class_method :mailbox_address?
   end
 end

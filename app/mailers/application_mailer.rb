@@ -1,5 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV.fetch("MAIL_FROM", "LawRelay <no-reply@lawrelay.be>")
+  default from: ENV.fetch("MAIL_FROM", "LawRelay <no-reply@lawrelay.be>"),
+    return_path: -> { Onboarding::MailTransport.return_path }
   layout "mailer"
   helper ApplicationHelper
 
