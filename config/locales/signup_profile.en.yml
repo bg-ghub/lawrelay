@@ -7,7 +7,8 @@ en:
     loading: "Loading…"
     loaded: "Profile loaded."
     alternative_email: "Use another email address"
-    alternative_email_hint: "After signup, provide the address and reason. Manual approval is required."
+    alternative_email_address: "Other email address"
+    alternative_email_hint: "Manual approval is required."
     stale: "Your profile link changed. Load the details again."
     review: "The profile could not be confirmed. Load it again."
     errors:

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["url", "token", "fetch", "status", "initial", "details", "summaryName", "summaryEmail", "webmailHint", "nameQuery", "search", "searchStatus", "results", "searchTruncated"]
+  static targets = ["url", "token", "fetch", "status", "initial", "details", "summaryName", "summaryEmail", "webmailHint", "nameQuery", "search", "searchStatus", "results", "searchTruncated", "alternativeCheckbox", "alternativeEmail", "alternativeField"]
   static values = { url: String, fetchLabel: String, loading: String, loaded: String, unavailable: String, stale: String, ready: Boolean, importedName: String, listedEmail: String, searchUrl: String, searchLabel: String, searchLoading: String, searchEmpty: String, searchChoose: String, searchUse: String, searchInvalid: String, searchUnavailable: String }
 
   connect() {
@@ -148,6 +148,17 @@ export default class extends Controller {
       else element.querySelectorAll("input[type='submit'], button").forEach((button) => { button.disabled = !ready })
     })
     this.initialTargets.forEach((element) => { element.hidden = ready })
+    this.alternativeEmailChanged()
+  }
+
+  alternativeEmailChanged(event) {
+    const selected = this.alternativeCheckboxTarget.checked
+    this.alternativeFieldTarget.hidden = !selected
+    this.alternativeEmailTarget.disabled = !this.readyValue || !selected
+    this.alternativeEmailTarget.required = this.readyValue && selected
+    this.alternativeEmailTarget.autocomplete = selected ? "username" : "off"
+    this.summaryEmailTarget.autocomplete = selected ? "off" : "username"
+    if (selected && event) this.alternativeEmailTarget.focus()
   }
 
   urlChanged(event) {

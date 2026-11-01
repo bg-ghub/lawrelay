@@ -7,7 +7,8 @@ fr:
     loading: "Chargement…"
     loaded: "Profil chargé."
     alternative_email: "Utiliser une autre adresse e-mail"
-    alternative_email_hint: "Après l’inscription, indiquez l’adresse et le motif. Une approbation manuelle est requise."
+    alternative_email_address: "Autre adresse e-mail"
+    alternative_email_hint: "Une approbation manuelle est requise."
     stale: "Le lien de votre profil a changé. Rechargez les données."
     review: "Le profil n’a pas pu être confirmé. Rechargez-le."
     errors:

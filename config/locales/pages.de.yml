@@ -46,7 +46,7 @@ de:
         scope:
           heading: "2. Welche Daten wir verarbeiten"
           bullets:
-            - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten. Anträge auf eine andere Adresse, Ihre Begründung, Entscheidungen und Prüfvermerke werden mit Ihrem Berufsprofil gespeichert."
+            - "Konto- und Kontaktdaten wie Name, berufliche E-Mail-Adresse, bevorzugte Sprache und Authentifizierungsdaten. Anträge auf eine andere Adresse, Entscheidungen und Prüfvermerke werden mit Ihrem Berufsprofil gespeichert."
             - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
             - "Bei der Anmeldung können Sie Ihren Namen auf Advocaat.be suchen. Wir übernehmen Ihren öffentlichen Namen, Ihre E-Mail-Adresse, Sprachen und Rechtsgebiete. Suchergebnisse verwenden wir höchstens 10 Minuten erneut; die Profilvorschau ist 20 Minuten gültig."
             - "Wir gleichen Ihre Sprachen und Tätigkeitsbereiche täglich mit Advocaat.be ab; Sie können dies auch in den Einstellungen auslösen. Die tägliche Profilprüfung meldet fehlende oder geänderte Profile dem Betreiber."
@@ -107,7 +107,7 @@ de:
         eligibility:
           heading: "2. Zugang und Verifizierung"
           paragraphs:
-            - "Die Registrierung steht Anwälten auf advocaat.be offen. Der Zugang erfordert die Prüfung des Profils und der E-Mail-Adresse. Ein Administrator kann den Zugang nach Prüfung auch manuell genehmigen. Eine andere E-Mail-Adresse erfordert eine Begründung, Bestätigung und manuelle Genehmigung. Nutzer halten berufliche Angaben aktuell, schützen ihren Zugang und melden Missbrauch. Die Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
+            - "Die Registrierung steht Anwälten auf advocaat.be offen. Der Zugang erfordert die Prüfung des Profils und der E-Mail-Adresse. Ein Administrator kann den Zugang nach Prüfung auch manuell genehmigen. Eine andere E-Mail-Adresse erfordert Bestätigung und manuelle Genehmigung. Nutzer halten berufliche Angaben aktuell, schützen ihren Zugang und melden Missbrauch. Die Verifizierung ist weder Empfehlung noch Kompetenzgarantie."
         role:
           heading: "3. Rolle von LawRelay"
           paragraphs:

@@ -8,14 +8,12 @@ class EmailAccessRequestsController < ApplicationController
     profile = current_user.lawyer_profile
     @email_address = current_user.email_address if profile&.directory_matched? &&
       !profile.directory_email.to_s.casecmp?(current_user.email_address)
-    @reason = profile&.email_review_request_reason
   end
 
   def create
     @email_address = params.dig(:email_access, :email_address)
-    @reason = params.dig(:email_access, :reason)
     result = Accounts::RequestEmailAccess.call(user: current_user, current_session: Current.session,
-      password: params.dig(:email_access, :current_password), email_address: @email_address, reason: @reason)
+      password: params.dig(:email_access, :current_password), email_address: @email_address)
     unless result.success?
       @errors = result.errors
       return render :new, status: :unprocessable_content

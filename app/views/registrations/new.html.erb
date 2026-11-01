@@ -70,13 +70,17 @@
         </div>
         <div class="field-group">
           <%= label_tag :registration_username, t("signup_profile.listed_email") %>
-          <%= email_field_tag :username, @directory_identity&.fetch("email_address", ""), id: "registration_username", readonly: true, autocomplete: "username", class: "registration-profile__email", data: { registration_profile_target: "summaryEmail" } %>
+          <%= email_field_tag :username, @directory_identity&.fetch("email_address", ""), id: "registration_username", readonly: true, autocomplete: @request_alternative_email ? "off" : "username", class: "registration-profile__email", data: { registration_profile_target: "summaryEmail" } %>
           <p class="field-hint registration-profile__listed-email-notice"><%= t("signup_profile.confirm_email") %></p>
           <%= advocaat_webmail_hint(@directory_identity&.fetch("email_address", ""), registration: true) %>
         </div>
         <div class="field-group registration-profile__email-choice">
-          <label class="toggle-row"><%= form.check_box :request_alternative_email, { checked: @request_alternative_email }, "1", "0" %><span><%= t("signup_profile.alternative_email") %></span></label>
-          <p class="field-hint"><%= t("signup_profile.alternative_email_hint") %></p>
+          <label class="toggle-row"><%= form.check_box :request_alternative_email, { checked: @request_alternative_email, aria: { controls: "registration-alternative-email" }, data: { registration_profile_target: "alternativeCheckbox", action: "change->registration-profile#alternativeEmailChanged" } }, "1", "0" %><span><%= t("signup_profile.alternative_email") %></span></label>
+          <div class="field-group registration-profile__alternative-email" id="registration-alternative-email" data-registration-profile-target="alternativeField">
+            <%= form.label :alternative_email_address, t("signup_profile.alternative_email_address") %>
+            <%= form.email_field :alternative_email_address, value: @form_values["alternative_email_address"], required: @request_alternative_email, maxlength: 254, autocomplete: @request_alternative_email ? "username" : "off", data: { registration_profile_target: "alternativeEmail" } %>
+            <p class="field-hint"><%= t("signup_profile.alternative_email_hint") %></p>
+          </div>
         </div>
         <div class="form-row">
           <div class="field-group"><%= form.label :password, t("auth.fields.password") %><%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72 %></div>

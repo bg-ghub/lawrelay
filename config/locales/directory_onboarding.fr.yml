@@ -27,7 +27,7 @@ fr:
       ready_title: "Profil confirmé"
       ready_body: "Profil vérifié. L’accès s’ouvre une fois tous les contrôles terminés."
       review_required_title: "Autre adresse e-mail"
-      review_required_body: "Une adresse différente de celle d’Advocaat.be nécessite une explication et l’approbation de l’administrateur."
+      review_required_body: "Une adresse différente de celle d’Advocaat.be nécessite une confirmation et l’approbation de l’administrateur."
       request_review: "Demander une validation"
       retry: "Vérifier à nouveau"
       retry_queued: "Nous vérifierons votre profil à nouveau sous peu."

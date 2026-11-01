@@ -7,7 +7,8 @@ nl:
     loading: "Ophalen…"
     loaded: "Profiel opgehaald."
     alternative_email: "Ander e-mailadres gebruiken"
-    alternative_email_hint: "Geef na registratie het andere adres en de reden op. Handmatige goedkeuring vereist."
+    alternative_email_address: "Ander e-mailadres"
+    alternative_email_hint: "Handmatige goedkeuring vereist."
     stale: "Uw profiellink is gewijzigd. Haal de gegevens opnieuw op."
     review: "Het profiel kon niet worden bevestigd. Haal het opnieuw op."
     errors:

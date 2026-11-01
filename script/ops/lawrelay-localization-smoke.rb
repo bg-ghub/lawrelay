@@ -112,11 +112,22 @@ begin
     listed_email = document.at_css("[data-registration-profile-target='summaryEmail']")
     check(listed_email&.[]("value") == signup_result.email_address, "#{locale} listed email is shown")
     check(listed_email&.[]("name") == "username" && listed_email&.[]("autocomplete") == "username" && listed_email&.key?("readonly"), "#{locale} listed email identifies the read-only password-manager username")
-    check(document.at_css("input[name='registration[email_address]']").nil?, "#{locale} signup has no editable email field")
+    check(document.at_css("input[name='registration[email_address]']").nil?, "#{locale} official signup email cannot be overridden")
+    check(document.at_css("#registration_alternative_email_address")&.[]("type") == "email", "#{locale} signup offers an optional alternative email")
+    check(document.at_css("[name*='reason']").nil?, "#{locale} signup does not request a reason")
     check(document.text.include?(I18n.t("signup_profile.confirm_email", locale:)), "#{locale} signup explains email confirmation")
     check(document.at_css("#registration_directory_preview_token")&.[]("value").present?, "#{locale} signup preview is signed")
     check(document.at_css("#registration_firm_name").nil? && document.at_css("#registration_enterprise_number").nil?, "#{locale} signup collects no company details")
     check(anonymous.response.headers["Cache-Control"] == "no-store", "#{locale} signup preview is not cached")
+    anonymous.post("/#{locale}/registration/profile", params: { authenticity_token: csrf(anonymous),
+      registration: { directory_profile_url: signup_url, request_alternative_email: "1",
+        alternative_email_address: "alternative-#{nonce}@example.invalid" } })
+    check(anonymous.response.status == 200, "#{locale} alternative email preview renders")
+    alternative_document = Nokogiri::HTML(anonymous.response.body)
+    alternative_email = alternative_document.at_css("#registration_alternative_email_address")
+    check(alternative_email&.[]("value") == "alternative-#{nonce}@example.invalid" &&
+      alternative_email&.[]("autocomplete") == "username" && alternative_email&.key?("required"), "#{locale} alternative email identifies the chosen username")
+    check(alternative_document.at_css("#registration_username")&.[]("autocomplete") == "off", "#{locale} listed email is not the alternative password-manager username")
   end
 ensure
   Directory::SignupProfile.define_singleton_method(:call, original_signup)

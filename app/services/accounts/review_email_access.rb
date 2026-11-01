@@ -33,7 +33,6 @@ module Accounts
           @identity_digest.present? && @identity_digest == profile.email_review_current_identity_digest
         return failure(user, profile, :note_required) if @note.blank? || @note.length > 2_000
         if @decision == "approve"
-          return failure(user, profile, :request_reason_required) if profile.email_review_request_reason.blank?
           return failure(user, profile, :email_unconfirmed) unless user.email_verified?
           return failure(user, profile, :identity_required) unless @identity_checked
           return failure(user, profile, :directory_required) unless profile.email_review_directory_ready?

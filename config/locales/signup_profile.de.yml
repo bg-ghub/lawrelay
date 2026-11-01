@@ -7,7 +7,8 @@ de:
     loading: "Wird geladen…"
     loaded: "Profil geladen."
     alternative_email: "Andere E-Mail-Adresse verwenden"
-    alternative_email_hint: "Geben Sie nach der Registrierung Adresse und Grund an. Eine manuelle Freigabe ist erforderlich."
+    alternative_email_address: "Andere E-Mail-Adresse"
+    alternative_email_hint: "Eine manuelle Freigabe ist erforderlich."
     stale: "Ihr Profillink hat sich geändert. Laden Sie die Daten erneut."
     review: "Das Profil konnte nicht bestätigt werden. Laden Sie es erneut."
     errors:

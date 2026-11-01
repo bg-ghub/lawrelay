@@ -72,27 +72,23 @@ class Admin::EmailReviewsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_content
   end
 
-  test "missing applicant explanations disable and block approval without changing the request" do
+  test "an applicant explanation is not required for a confirmed current identity review" do
     @profile.update_columns(email_review_request_reason: nil)
-    original_profile = @profile.reload.attributes
     %w[nl fr de en].each do |locale|
       get admin_email_review_path(@account.user, locale:)
       assert_response :success
-      assert_select "button[value='approve'][disabled]"
-      assert_select ".field-hint", text: I18n.t("email_access.admin.reason_required", locale:)
+      assert_select "button[value='approve']:not([disabled])"
+      assert_select "dt", text: I18n.t("email_access.admin.request_reason", locale:), count: 0
     end
 
     parameters = review_params
-    parameters[:email_review][:email_review_request_reason] = "A posted operator value cannot supply the member’s explanation."
-    assert_no_enqueued_jobs do
-      assert_no_difference "AuditEvent.count" do
-        patch admin_email_review_path(@account.user, locale: :en), params: parameters
-      end
+    parameters[:email_review][:email_review_request_reason] = "A posted operator value must not become a member explanation."
+    assert_enqueued_with(job: EmailAccessReviewDeliveryJob) do
+      patch admin_email_review_path(@account.user, locale: :en), params: parameters
     end
-    assert_response :unprocessable_content
-    assert_includes response.body, I18n.t("email_access.errors.request_reason_required", locale: :en)
-    assert_equal original_profile, @profile.reload.attributes
-    assert_not @account.user.reload.marketplace_verified?
+    assert_redirected_to admin_email_review_path(@account.user, locale: :en)
+    assert @account.user.reload.marketplace_verified?
+    assert_nil @profile.reload.email_review_request_reason
   end
 
   test "forged approval without attestation or email confirmation remains blocked" do

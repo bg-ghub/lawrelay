@@ -5,7 +5,7 @@ class ProfileOnlySignupReviewTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
   include MarketplaceTestFactory
 
-  test "a source-only signup can use another email only after explanation confirmation and administrator approval" do
+  test "an inline alternate signup needs mailbox confirmation and administrator approval without an explanation" do
     profile_id = SecureRandom.uuid
     source_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{profile_id}"
     source = Directory::SignupProfile::Result.new(status: :ok, profile_url: source_url,
@@ -13,24 +13,22 @@ class ProfileOnlySignupReviewTest < ActionDispatch::IntegrationTest
       email_address: "listed-signup@example.test", profile_attributes: { spoken_languages: %w[NL FR] })
     password = "Synthetic-signup-password1!"
 
-    assert_no_enqueued_jobs only: EmailVerificationDeliveryJob do
+    assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
       post registration_path(locale: :en), params: { registration: {
         directory_profile_url: source_url, directory_preview_token: Directory::SignupPreview.issue(source),
-        password:, password_confirmation: password, terms_accepted: "1", request_alternative_email: "1"
+        password:, password_confirmation: password, terms_accepted: "1", request_alternative_email: "1",
+        alternative_email_address: "working-signup@example.test"
       } }
     end
-    assert_redirected_to email_access_request_path(locale: :en)
-    user = User.find_by!(email_address: source.email_address)
+    assert_redirected_to verification_status_path(locale: :en)
+    user = User.find_by!(email_address: "working-signup@example.test")
     assert_equal source.name, user.full_name
     assert_not user.marketplace_verified?
 
-    reason = "My professional correspondence uses a separate working mailbox."
-    post email_access_request_path(locale: :en), params: { email_access: {
-      email_address: "working-signup@example.test", current_password: password, reason:
-    } }
-    assert_redirected_to verification_status_path(locale: :en)
-    assert_equal reason, user.reload.lawyer_profile.email_review_request_reason
+    assert_nil user.reload.lawyer_profile.email_review_request_reason
     assert user.lawyer_profile.email_review_pending?
+    perform_enqueued_jobs(only: EmailVerificationDeliveryJob)
+    assert_equal [ "working-signup@example.test" ], ActionMailer::Base.deliveries.last.to
 
     lookup = ->(**) { Directory::AdvocaatBeProfileLookup::Result.new(status: :ok,
       profile_id:, source_url:, name: source.name, email: source.email_address, checked_at: Time.current) }
@@ -49,7 +47,7 @@ class ProfileOnlySignupReviewTest < ActionDispatch::IntegrationTest
     sign_in_as(admin, admin_mfa: true)
     get admin_email_review_path(user, locale: :en)
     assert_response :success
-    assert_select "dd", text: reason
+    assert_select "button[value='approve']:not([disabled])"
     patch admin_email_review_path(user, locale: :en), params: { decision: "approve", email_review: {
       note: "Checked the independently published professional contact.", identity_checked: "1",
       identity_digest: user.reload.lawyer_profile.email_review_current_identity_digest
@@ -58,6 +56,6 @@ class ProfileOnlySignupReviewTest < ActionDispatch::IntegrationTest
     assert user.reload.marketplace_verified?
     assert user.lawyer_profile.email_review_approved?
     assert_nil user.lawyer_profile.directory_email_verified_at
-    assert_equal reason, user.lawyer_profile.email_review_request_reason
+    assert_nil user.lawyer_profile.email_review_request_reason
   end
 end

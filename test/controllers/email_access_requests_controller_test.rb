@@ -27,7 +27,7 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "working-controller@example.test", @account.user.reload.email_address
     assert_nil @account.user.email_verified_at
     assert @account.profile.reload.email_review_pending?
-    assert_equal @reason, @account.profile.email_review_request_reason
+    assert_nil @account.profile.email_review_request_reason
     assert_nil @other.profile.reload.email_review_status
     assert_not @account.user.marketplace_verified?
   end
@@ -41,31 +41,27 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to verification_status_path(locale: :en)
   end
 
-  test "a missing explanation preserves the address and sessions without queuing messages" do
-    original_email = @account.user.email_address
-    original_sessions = @account.user.sessions.pluck(:id)
-    assert_no_enqueued_jobs do
+  test "a member can request review without an explanation" do
+    assert_enqueued_jobs 2 do
       post email_access_request_path(locale: :en), params: {
-        email_access: { email_address: "working-reason@example.test", current_password: "password1234", reason: " " }
+        email_access: { email_address: "working-no-reason@example.test", current_password: "password1234" }
       }
     end
-    assert_response :unprocessable_content
-    assert_equal original_email, @account.user.reload.email_address
-    assert_equal original_sessions, @account.user.sessions.pluck(:id)
-    assert_nil @account.profile.reload.email_review_status
-    assert_includes response.body, I18n.t("email_access.errors.reason_required", locale: :en)
-    assert_select "input[name='email_access[email_address]'][value='working-reason@example.test']"
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal "working-no-reason@example.test", @account.user.reload.email_address
+    assert @account.profile.reload.email_review_pending?
+    assert_nil @account.profile.email_review_request_reason
   end
 
-  test "an overlong explanation is rejected without persisting or mailing" do
-    assert_no_enqueued_jobs do
-      post email_access_request_path(locale: :en), params: {
-        email_access: { email_address: "working-long-reason@example.test", current_password: "password1234", reason: "x" * 1_001 }
-      }
-    end
-    assert_response :unprocessable_content
+  test "legacy explanation input is ignored and the request form does not ask for one" do
+    get email_access_request_path(locale: :en)
+    assert_response :success
+    assert_select "textarea[name='email_access[reason]']", count: 0
+    post email_access_request_path(locale: :en), params: {
+      email_access: { email_address: "working-legacy-reason@example.test", current_password: "password1234", reason: "x" * 1_001 }
+    }
+    assert_redirected_to verification_status_path(locale: :en)
     assert_nil @account.profile.reload.email_review_request_reason
-    assert_includes response.body, I18n.t("email_access.errors.reason_too_long", locale: :en)
   end
 
   test "wrong password leaves the address and sessions untouched" do
@@ -88,20 +84,19 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
       assert_equal "no-store", response.headers["Cache-Control"]
       assert_select "form[action='#{email_access_request_path(locale:)}']"
-      assert_select "label", text: I18n.t("email_access.request.form.reason", locale:)
-      assert_select "textarea[name='email_access[reason]'][required][maxlength='1000']"
+      assert_select "textarea[name='email_access[reason]']", count: 0
       assert_select "input[name='email_access[email_address]'][autocomplete='username']"
       assert_not(/translation missing/i.match?(response.body))
     end
   end
 
-  test "a pending member without an explanation can return to the request form to add it" do
+  test "a pending member is never prompted to add an explanation" do
     @account.profile.update!(email_review_status: "pending", email_review_email_address: @account.user.email_address,
       email_review_requested_at: Time.current, email_review_request_reason: nil)
     %w[nl fr de en].each do |locale|
       get verification_status_path(locale:)
       assert_response :success
-      assert_select "a[href='#{email_access_request_path(locale:)}']", text: I18n.t("email_access.status.provide_reason", locale:)
+      assert_select "a", text: I18n.t("email_access.status.provide_reason", locale:), count: 0
     end
 
     @account.profile.update!(email_review_request_reason: @reason)

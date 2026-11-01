@@ -9,7 +9,6 @@ module Accounts
     def initialize(user:, current_session:, password:, email_address:, reason: nil)
       @user, @current_session, @password = user, current_session, password
       @email_address = email_address.to_s.strip.downcase
-      @reason = reason.is_a?(String) ? reason.strip : nil
     end
 
     def call
@@ -27,29 +26,17 @@ module Accounts
         return failure(user, profile, :protected) if [ profile, firm ].any? { |record| record.verification_status.in?(%w[rejected suspended]) }
         return failure(user, profile, :directory_required) unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(profile.directory_profile_url)
         if profile.email_review_pending? && profile.email_review_email_address == @email_address && user.email_address == @email_address
-          unless profile.email_review_request_reason.present?
-            reason_error = reason_failure_key
-            return failure(user, profile, reason_error) if reason_error
-
-            profile.update!(email_review_request_reason: @reason)
-            AuditEvent.create!(auditable: profile, actor_user: user, firm: firm,
-              action: "account.updated", metadata: { changed_fields: [ "email_review_request_reason" ] })
-          end
           return Result.new(true, user, profile, [], false)
         end
         return failure(user, profile, :already_reviewed) if profile.email_review_approved? && user.email_address == @email_address
         if user.email_address == @email_address && (!profile.directory_matched? || profile.directory_email.to_s.casecmp?(@email_address))
           return failure(user, profile, :unchanged)
         end
-        reason_error = reason_failure_key
-        return failure(user, profile, reason_error) if reason_error
-
         user.update!(email_address: @email_address)
         profile.clear_email_review
         profile.assign_attributes(professional_email: user.email_address, verification_status: "pending", verified_at: nil,
           verification_note: nil, directory_email_verified_at: nil, directory_confirmation_requested_at: nil,
-          email_review_status: "pending", email_review_email_address: user.email_address, email_review_requested_at: Time.current,
-          email_review_request_reason: @reason)
+          email_review_status: "pending", email_review_email_address: user.email_address, email_review_requested_at: Time.current)
         profile.save!
         user.sessions.where.not(id: session.id).destroy_all
         AuditEvent.create!(auditable: profile, actor_user: user, firm: firm,
@@ -65,11 +52,6 @@ module Accounts
     end
 
     private
-
-    def reason_failure_key
-      return :reason_required if @reason.blank?
-      :reason_too_long if @reason.length > 1_000
-    end
 
     def failure(user, profile, key)
       Result.new(false, user, profile, [ I18n.t("email_access.errors.#{key}") ], false)

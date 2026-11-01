@@ -102,28 +102,31 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert user.reload.marketplace_verified?
   end
 
-  test "requesting another email opens the explanation form without mailing the listed address" do
+  test "another email is entered inline and receives confirmation without mailing the listed address" do
     visit_signup
     load_profile
     check I18n.t("signup_profile.alternative_email", locale: :en)
+    fill_in "registration_alternative_email_address", with: @working_email
+    assert_no_selector "textarea[name*='reason']"
     assert_no_selector ".registration-profile__listed-email-notice", visible: :visible
     assert_no_selector ".advocaat-webmail-hint", visible: :visible
     fill_credentials
 
     perform_enqueued_jobs do
       find("form.assignment-form input[type='submit']").click
-      assert_current_path email_access_request_path(locale: :en)
+      assert_current_path verification_status_path(locale: :en)
     end
 
-    user = User.find_by!(email_address: @listed_email)
+    user = User.find_by!(email_address: @working_email)
     assert_equal "Jean Pierre Example", user.full_name
     assert user.lawyer_profile.directory_matched?
     assert_not user.email_verified?
     assert_not user.marketplace_verified?
-    assert_empty ActionMailer::Base.deliveries
-    assert_field "email_access[email_address]"
-    assert_selector "input[name='email_access[email_address]'][autocomplete='username']"
-    assert_field "email_access[reason]"
+    assert_equal [ @working_email ], ActionMailer::Base.deliveries.flat_map(&:to)
+    assert user.lawyer_profile.email_review_pending?
+    assert_nil user.lawyer_profile.email_review_request_reason
+    assert_equal @listed_email, user.lawyer_profile.directory_email
+    assert_nil user.lawyer_profile.directory_email_verified_at
   end
 
   test "an unavailable directory retains the link and requires a successful retry" do

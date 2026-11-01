@@ -46,7 +46,7 @@ nl:
         scope:
           heading: "2. Welke gegevens we verwerken"
           bullets:
-            - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, uw toelichting, beslissingen en controlenotities bewaren we bij uw professionele profiel."
+            - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Bij inschrijving kunt u op naam zoeken in Advocaat.be. We nemen uw openbare naam, e-mailadres, talen en rechtsdomeinen over. Zoekresultaten hergebruiken we maximaal 10 minuten; het profielvoorbeeld is 20 minuten geldig."
             - "We synchroniseren uw talen en rechtsdomeinen dagelijks met Advocaat.be; u kunt dit ook zelf starten in instellingen. De dagelijkse profielcontrole meldt verdwenen of gewijzigde profielen aan de beheerder."
@@ -107,7 +107,7 @@ nl:
         eligibility:
           heading: "2. Toegang en verificatie"
           paragraphs:
-            - "Registratie staat open voor advocaten op advocaat.be. Toegang vereist controle van het profiel en e-mailadres. Een beheerder kan toegang na controle ook handmatig goedkeuren. Een ander e-mailadres vereist een toelichting, bevestiging en handmatige goedkeuring. Gebruikers houden hun professionele gegevens actueel, beschermen hun toegang en melden misbruik. Verificatie is geen aanbeveling of kwaliteitsgarantie."
+            - "Registratie staat open voor advocaten op advocaat.be. Toegang vereist controle van het profiel en e-mailadres. Een beheerder kan toegang na controle ook handmatig goedkeuren. Een ander e-mailadres vereist bevestiging en handmatige goedkeuring. Gebruikers houden hun professionele gegevens actueel, beschermen hun toegang en melden misbruik. Verificatie is geen aanbeveling of kwaliteitsgarantie."
         role:
           heading: "3. Rol van LawRelay"
           paragraphs:

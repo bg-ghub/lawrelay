@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  TERMS_VERSION = "2026-11-01-profile-signup"
-  PRIVACY_VERSION = "2026-11-01-directory-name-search"
+  TERMS_VERSION = "2026-11-01-inline-email-signup"
+  PRIVACY_VERSION = "2026-11-01-inline-email-signup"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -72,12 +72,20 @@ class RegistrationsController < ApplicationController
     @user.accepted_terms_version = TERMS_VERSION if @terms_accepted
     # Record receipt of the privacy notice, not consent as a processing basis.
     @user.accepted_privacy_version = PRIVACY_VERSION if @terms_accepted
+    profile_url_valid = Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])
+    # Validate the signed source identity before choosing a different sign-in email.
+    preview_valid = Directory::SignupPreview.apply(@lawyer_profile, user: @user, token: attributes[:directory_preview_token])
+    prepare_alternative_email(attributes) if @request_alternative_email
     models_valid = @user.valid? & @firm.valid? & @lawyer_profile.valid?
-    unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(attributes[:directory_profile_url])
+    if @user.email_address.length > 254
+      @user.errors.add(:email_address, :too_long, count: 254)
+      models_valid = false
+    end
+    unless profile_url_valid
       @lawyer_profile.errors.add(:directory_profile_url, t("directory_onboarding.registration.invalid_profile_url"))
       models_valid = false
     end
-    unless Directory::SignupPreview.apply(@lawyer_profile, user: @user, token: attributes[:directory_preview_token])
+    unless preview_valid
       @lawyer_profile.errors.add(:base, t("signup_profile.review"))
       models_valid = false
     end
@@ -86,11 +94,10 @@ class RegistrationsController < ApplicationController
     if @terms_accepted && models_valid
       persist_registration!
       start_new_session_for(@user)
-      destination = @request_alternative_email ? email_access_request_path : verification_status_path
-      if Onboarding::Delivery.request(@user, email: !@request_alternative_email)
-        redirect_to destination, notice: t("auth.registration.created")
+      if Onboarding::Delivery.request(@user)
+        redirect_to verification_status_path, notice: t("auth.registration.created")
       else
-        redirect_to destination, alert: t("auth.registration.delivery_delayed")
+        redirect_to verification_status_path, alert: t("auth.registration.delivery_delayed")
       end
     else
       collect_errors
@@ -200,7 +207,22 @@ class RegistrationsController < ApplicationController
       @firm.save!
       @user.memberships.create!(firm: @firm, role: "owner")
       @lawyer_profile.save!
+      if @lawyer_profile.email_review_pending?
+        AuditEvent.create!(auditable: @lawyer_profile, actor_user: @user, firm: @firm,
+          action: "email_access.requested", metadata: {})
+      end
     end
+  end
+
+  def prepare_alternative_email(attributes)
+    email = attributes[:alternative_email_address]
+    email = email.is_a?(String) ? email.strip.downcase : ""
+    @user.email_address = email
+    @lawyer_profile.professional_email = email
+    return if email == @directory_identity.fetch("email_address")
+
+    @lawyer_profile.assign_attributes(email_review_status: "pending", email_review_email_address: email,
+      email_review_requested_at: Time.current)
   end
 
   def collect_errors
@@ -211,7 +233,7 @@ class RegistrationsController < ApplicationController
 
   def registration_params
     params.require(:registration).permit(
-      :password, :password_confirmation, :request_alternative_email,
+      :password, :password_confirmation, :request_alternative_email, :alternative_email_address,
       :directory_profile_url, :directory_preview_token,
       :locale, :terms_accepted
     )

@@ -27,7 +27,7 @@ en:
       ready_title: "Profile confirmed"
       ready_body: "Directory check done. Access opens once all checks are complete."
       review_required_title: "Alternative email"
-      review_required_body: "An email that differs from Advocaat.be requires an explanation and administrator approval."
+      review_required_body: "An email that differs from Advocaat.be requires confirmation and administrator approval."
       request_review: "Request review"
       retry: "Check again"
       retry_queued: "We’ll check your profile again shortly."

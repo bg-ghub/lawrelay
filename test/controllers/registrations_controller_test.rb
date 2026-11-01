@@ -232,50 +232,101 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_not User.order(:id).last.marketplace_verified?
   end
 
-  test "choosing another email opens the review request without sending to the listed inbox or granting access" do
-    assert_no_enqueued_jobs only: EmailVerificationDeliveryJob do
+  test "another inline email becomes the sign-in address and requires confirmation and manual review" do
+    assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
       assert_enqueued_jobs 1, only: Directory::VerificationJob do
         assert_difference "User.count", 1 do
           post registration_path(locale: :en), params: { registration: valid_registration.merge(
-            request_alternative_email: "1", email_address: "forged-alternative@example.test",
+            request_alternative_email: "1", alternative_email_address: "  WORKING-ALTERNATIVE@example.test  ", email_address: "forged-alternative@example.test",
             email_review_status: "approved", email_verified_at: Time.current) }
         end
       end
     end
-    assert_redirected_to email_access_request_path(locale: :en)
+    assert_redirected_to verification_status_path(locale: :en)
     user = User.order(:id).last
-    assert_equal "ada@law.example", user.email_address
+    assert_equal "working-alternative@example.test", user.email_address
+    assert_equal user.email_address, user.lawyer_profile.professional_email
     assert_not user.email_verified?
     assert_not user.marketplace_verified?
-    assert_nil user.lawyer_profile.email_review_status
+    assert user.lawyer_profile.email_review_pending?
+    assert_equal user.email_address, user.lawyer_profile.email_review_email_address
+    assert_not_nil user.lawyer_profile.email_review_requested_at
+    assert_nil user.lawyer_profile.email_review_request_reason
+    assert_nil user.lawyer_profile.directory_email_verified_at
+    assert AuditEvent.exists?(auditable: user.lawyer_profile, actor_user: user, action: "email_access.requested")
     assert cookies[:session_id]
     follow_redirect!
     assert_response :success
-    assert_select "input[name='email_access[email_address]']"
+    assert_select "a", text: I18n.t("email_access.status.provide_reason", locale: :en), count: 0
   end
 
   test "an alternative email choice does not bypass the signed profile or legal acceptance" do
     [ valid_registration.except(:directory_preview_token), valid_registration.merge(terms_accepted: "0") ].each do |attributes|
       assert_no_difference [ "User.count", "Firm.count", "LawyerProfile.count" ] do
         assert_no_enqueued_jobs do
-          post registration_path(locale: :en), params: { registration: attributes.merge(request_alternative_email: "1") }
+          post registration_path(locale: :en), params: { registration: attributes.merge(
+            request_alternative_email: "1", alternative_email_address: "blocked-alternative@example.test") }
         end
       end
       assert_response :unprocessable_content
     end
   end
 
-  test "a failed initial directory enqueue leaves the alternative email request accessible" do
+  test "a failed directory enqueue preserves the pending inline email review and its confirmation" do
     original = Directory::VerificationJob.method(:perform_later)
     Directory::VerificationJob.define_singleton_method(:perform_later) { |*| raise ActiveJob::EnqueueError, "private adapter details" }
-    assert_no_enqueued_jobs do
-      post registration_path(locale: :en), params: { registration: valid_registration.merge(request_alternative_email: "1") }
+    assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
+      post registration_path(locale: :en), params: { registration: valid_registration.merge(
+        request_alternative_email: "1", alternative_email_address: "queued-alternative@example.test") }
     end
-    assert_redirected_to email_access_request_path(locale: :en)
+    assert_redirected_to verification_status_path(locale: :en)
     assert_equal I18n.t("auth.registration.delivery_delayed", locale: :en), flash[:alert]
     assert cookies[:session_id]
   ensure
     Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
+  end
+
+  test "alternate signup cannot reuse a signed preview for another profile or a forged token" do
+    attributes = valid_registration.merge(request_alternative_email: "1", alternative_email_address: "blocked-preview@example.test")
+    [ attributes.merge(directory_preview_token: "forged-preview"),
+      attributes.merge(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}") ].each do |parameters|
+      assert_no_difference [ "User.count", "Firm.count", "LawyerProfile.count", "AuditEvent.count" ] do
+        assert_no_enqueued_jobs do
+          post registration_path(locale: :en), params: { registration: parameters }
+        end
+      end
+      assert_response :unprocessable_content
+      assert_includes response.body, I18n.t("signup_profile.errors.invalid_preview", locale: :en)
+    end
+  end
+
+  test "invalid missing duplicate and overlong alternate addresses never create partial accounts or send mail" do
+    [ nil, " ", "invalid", users(:one).email_address, "x" * 250 + "@x.test" ].each do |email|
+      assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count", "AuditEvent.count" ] do
+        assert_no_enqueued_jobs do
+          post registration_path(locale: :en), params: { registration: valid_registration.merge(
+            request_alternative_email: "1", alternative_email_address: email) }
+        end
+      end
+      assert_response :unprocessable_content
+      assert_select "input[name='registration[alternative_email_address]']"
+    end
+  end
+
+  test "an unchecked alternate address is ignored and the listed address remains authoritative" do
+    post registration_path(locale: :en), params: { registration: valid_registration.merge(
+      request_alternative_email: "0", alternative_email_address: "ignored@example.test") }
+    assert_redirected_to verification_status_path(locale: :en)
+    user = User.order(:id).last
+    assert_equal "ada@law.example", user.email_address
+    assert_nil user.lawyer_profile.email_review_status
+  end
+
+  test "selecting the same listed address does not create a redundant review" do
+    post registration_path(locale: :en), params: { registration: valid_registration.merge(
+      request_alternative_email: "1", alternative_email_address: " ADA@LAW.EXAMPLE ") }
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_nil User.order(:id).last.lawyer_profile.email_review_status
   end
 
   test "signup cannot use an arbitrary email without a signed directory result" do

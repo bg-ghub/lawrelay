@@ -6,6 +6,8 @@
 .field-group input.registration-profile__email{min-width:0;border:0;border-radius:0;background:transparent;padding:0;color:inherit;font-size:1rem;box-shadow:none}
 .field-group input.registration-profile__email:focus{outline:2px solid var(--ink);outline-offset:4px}
 .assignment-form:has(#registration_request_alternative_email:checked) .registration-profile__listed-email-notice{display:none}
+.assignment-form:not(:has(#registration_request_alternative_email:checked)) .registration-profile__alternative-email{display:none}
+.registration-profile__alternative-email{margin-top:1rem}
 .registration-profile__status:empty{display:none}
 .field-hint.registration-profile__status{margin-top:.75rem}
 .registration-profile__status--error{color:var(--coral-dark,var(--ink))}

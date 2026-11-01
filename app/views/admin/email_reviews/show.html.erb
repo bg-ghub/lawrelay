@@ -1,5 +1,5 @@
 <% content_for :title, t("email_access.admin.title") %>
-<% approval_ready = @user.email_verified? && @profile.email_review_directory_ready? && @profile.email_review_pending? && @profile.email_review_request_reason.present? && @user.active? && !@profile.verification_status.in?(%w[rejected suspended]) && @firm && !@firm.verification_status.in?(%w[rejected suspended]) %>
+<% approval_ready = @user.email_verified? && @profile.email_review_directory_ready? && @profile.email_review_pending? && @user.active? && !@profile.verification_status.in?(%w[rejected suspended]) && @firm && !@firm.verification_status.in?(%w[rejected suspended]) %>
 <% review_state = @profile.email_review_status == "approved" && !@profile.email_review_approved? ? "changed" : @profile.email_review_status %>
 <div class="dashboard-page shell admin-users-page">
   <div class="dashboard-heading">
@@ -24,7 +24,7 @@
         <div><dt><%= t("email_access.admin.directory_state") %></dt><dd><%= t("email_access.admin.directory.#{@profile.email_review_directory_ready? ? 'matched' : 'pending'}") %></dd></div>
         <div><dt><%= t("email_access.admin.state") %></dt><dd><%= review_state ? t("email_access.admin.states.#{review_state}") : "—" %></dd></div>
         <div><dt><%= t("email_access.admin.requested_at") %></dt><dd><%= @profile.email_review_requested_at ? l(@profile.email_review_requested_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y %H:%M") : "—" %></dd></div>
-        <div><dt><%= t("email_access.admin.request_reason") %></dt><dd><%= @profile.email_review_request_reason.presence || t("admin.users.not_recorded") %></dd></div>
+        <% if @profile.email_review_request_reason.present? %><div><dt><%= t("email_access.admin.request_reason") %></dt><dd><%= @profile.email_review_request_reason %></dd></div><% end %>
       </dl>
       <% directory_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(@profile.directory_profile_url) %>
       <% if directory_url %><p><%= link_to t("admin.users.actions.directory"), directory_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><% end %>
@@ -34,9 +34,7 @@
       <% if @profile.email_review_pending? %>
         <h2><%= t("email_access.admin.review") %></h2>
         <p><%= t("email_access.admin.identity_hint") %></p>
-        <% if @profile.email_review_request_reason.blank? %>
-          <p class="field-hint"><%= t("email_access.admin.reason_required") %></p>
-        <% elsif !approval_ready %>
+        <% unless approval_ready %>
           <p class="field-hint"><%= t("email_access.admin.not_ready") %></p>
         <% end %>
         <%= form_with url: admin_email_review_path(@user), method: :patch, scope: :email_review, class: "assignment-form" do |form| %>

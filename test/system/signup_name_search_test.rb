@@ -102,6 +102,33 @@ class SignupNameSearchTest < ApplicationSystemTestCase
     assert_field "registration_username", with: "listed-0@example.test", readonly: true
   end
 
+  test "another email opens inline and becomes the password manager username without asking a reason" do
+    visit new_registration_path(locale: :en)
+    search_for("Smith")
+    find(".registration-search__candidate", text: "9000 Gent").click
+    assert_field "registration_username", with: "listed-0@example.test", readonly: true
+    assert_selector "#registration_username[autocomplete='username']"
+    assert_no_selector "#registration_alternative_email_address", visible: :visible
+    assert_selector "#registration_alternative_email_address[disabled]:not([required])", visible: :all
+
+    check "registration_request_alternative_email"
+    assert_field "registration_alternative_email_address", with: "", disabled: false
+    assert_selector "#registration_alternative_email_address[type='email'][autocomplete='username'][required]"
+    assert_selector "#registration_username[autocomplete='off']"
+    assert_no_selector "[name*='reason']", visible: :all
+    assert_text I18n.t("signup_profile.alternative_email_hint", locale: :en)
+    fill_in "registration_alternative_email_address", with: "working@example.test"
+
+    uncheck "registration_request_alternative_email"
+    assert_no_selector "#registration_alternative_email_address", visible: :visible
+    assert_selector "#registration_alternative_email_address[disabled]:not([required])", visible: :all
+    assert_selector "#registration_username[autocomplete='username']"
+    check "registration_request_alternative_email"
+    assert_field "registration_alternative_email_address", with: "working@example.test"
+    assert_empty ActionMailer::Base.deliveries
+    assert_no_enqueued_jobs
+  end
+
   test "a late name search cannot display results after the query changes" do
     visit new_registration_path(locale: :en)
     @gate[:hold] = true
@@ -127,6 +154,11 @@ class SignupNameSearchTest < ApplicationSystemTestCase
       find(".registration-search__candidate", text: "9000 Gent").click
       assert_current_path registration_profile_path(locale: :en)
       assert_field "registration_username", with: "listed-0@example.test", readonly: true
+      assert_no_selector "#registration_alternative_email_address", visible: :visible
+      check "registration_request_alternative_email"
+      assert_field "registration_alternative_email_address", disabled: false
+      fill_in "registration_alternative_email_address", with: "working-nojs@example.test"
+      assert_no_selector "[name*='reason']", visible: :all
     end
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     assert_empty ActionMailer::Base.deliveries
@@ -174,6 +206,10 @@ class SignupNameSearchTest < ApplicationSystemTestCase
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       find(".registration-search__candidate", text: "2000 Antwerpen").click
       assert_field "registration_username", with: "listed-1@example.test", readonly: true
+      assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
+      check "registration_request_alternative_email"
+      assert_field "registration_alternative_email_address", disabled: false
+      assert_selector "#registration_alternative_email_address[autocomplete='username'][required]"
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       assert_no_text(/translation missing/i)
     end
