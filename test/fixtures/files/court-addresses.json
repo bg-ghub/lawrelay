@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-01T12:00:00Z",
+  "records": {
+    "https://www.tribunaux-rechtbanken.be/nl/fixture-one": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-one",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-one",
+      "status": "ok",
+      "addresses": ["Example Street 13 1000 Brussel"],
+      "fetched_at": "2026-11-01T12:00:00Z"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/fixture-two": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-two",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-two",
+      "status": "ambiguous",
+      "addresses": ["Example Street 13 1000 Brussel", "Other Street 2 1000 Brussel"],
+      "fetched_at": "2026-11-01T12:00:00Z"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/fixture-three": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-three",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/fixture-three",
+      "status": "ok",
+      "addresses": ["Unmapped Street 99 1000 Brussel"],
+      "fetched_at": "2026-11-01T12:00:00Z"
+    }
+  }
+}

@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     get "verification/email-access", to: "email_access_requests#new", as: :email_access_request
     post "verification/email-access", to: "email_access_requests#create"
     resource :settings, only: %i[show update]
+    resource :language_preference, path: "language", only: :update
     resource :account_deletion, path: "settings/delete-account", only: %i[show destroy]
     resource :two_factor_authentication, path: "settings/two-factor", only: %i[show destroy] do
       post :begin_setup, path: "begin-setup"
@@ -90,6 +91,7 @@ Rails.application.routes.draw do
       end
 
       resources :proposals, only: :create do
+        resource :travel_estimate, only: :show
         member do
           patch :accept
           patch :decline

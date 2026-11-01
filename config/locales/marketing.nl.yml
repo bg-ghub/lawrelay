@@ -3,6 +3,7 @@ nl:
     locale_name: Nederlands
     language_switcher: Taal kiezen
     language_switch_warning: "Uw wijzigingen gaan verloren. Van taal wisselen?"
+    language_switch_failed: "Uw taalvoorkeur kon niet worden opgeslagen. Probeer opnieuw."
     actions:
       post_assignment: Plaats een opdracht
       browse_assignments: Bekijk opdrachten

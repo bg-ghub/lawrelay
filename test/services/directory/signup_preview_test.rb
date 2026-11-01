@@ -61,7 +61,9 @@ class DirectorySignupPreviewTest < ActiveSupport::TestCase
 
   test "signed attributes outside the allowlist or unbounded lists are rejected" do
     [ { "verification_status" => "verified" }, { "spoken_languages" => "NL" },
-      { "practice_areas" => [ "x" * 101 ] }, { "practice_areas" => Array.new(21, "Civil") } ].each do |attributes|
+      { "practice_areas" => [ "x" * 101 ] }, { "practice_areas" => Array.new(21, "Civil") },
+      { "directory_bar_name" => "x" * 201 }, { "directory_professional_address" => "x" * 501 },
+      { "directory_bar_name" => [ "not a string" ] } ].each do |attributes|
       token = verifier.generate(payload.merge("profile_attributes" => attributes), purpose: Directory::SignupPreview::PURPOSE, expires_in: 20.minutes)
       assert_not Directory::SignupPreview.apply(@profile, user: @user, token:)
     end

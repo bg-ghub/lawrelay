@@ -11,6 +11,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
     @account = create_marketplace_account(prefix: "importmember")
     @account.profile.update!(directory_profile_url: PROFILE_URL, directory_name: @account.user.full_name,
       directory_email: "directory@advocaat.be",
+      directory_professional_address: "Example Street 10, 1000 Brussels", directory_bar_name: "Example Bar",
       spoken_languages: [ "NL" ], practice_areas: [ "Existing area" ], court_preferences: [ "Existing court" ],
       availability_note: "Existing availability")
     sign_in_as(@account.user)
@@ -42,6 +43,10 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
           assert_select "dd", text: @account.profile.directory_name
           assert_select "dt", text: I18n.t("profile_import.fields.email", locale: locale)
           assert_select ".directory-profile__email", text: "directory@advocaat.be"
+          assert_select "dt", text: I18n.t("directory_location.bar", locale: locale)
+          assert_select "dd", text: "Example Bar"
+          assert_select "dt", text: I18n.t("directory_location.address", locale: locale)
+          assert_select "dd", text: "Example Street 10, 1000 Brussels"
           assert_select "dt", text: I18n.t("settings.profile.languages", locale: locale)
           assert_select "li.directory-profile__tag", text: I18n.t("profile_import.language_names.nl", locale: locale)
           assert_select "dt", text: I18n.t("settings.profile.practice_areas", locale: locale)
@@ -68,13 +73,14 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
   end
 
   test "GET renders explicit localized empty values" do
-    @account.profile.update!(directory_name: nil, directory_email: nil, spoken_languages: [], practice_areas: [])
+    @account.profile.update!(directory_name: nil, directory_email: nil, spoken_languages: [], practice_areas: [],
+      directory_professional_address: nil, directory_bar_name: nil)
 
     %i[nl fr de en].each do |locale|
       get settings_path(locale: locale)
       assert_response :success
       assert_select ".directory-profile__data" do
-        assert_select "dd", text: /#{Regexp.escape(I18n.t("profile_import.not_available", locale: locale))}/, count: 4
+        assert_select "dd", text: /#{Regexp.escape(I18n.t("profile_import.not_available", locale: locale))}/, count: 6
       end
     end
   end

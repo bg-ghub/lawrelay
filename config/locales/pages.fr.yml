@@ -50,6 +50,7 @@ fr:
             - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
             - "À votre demande, nous reprenons votre nom, e-mail, langues et domaines juridiques publics sur advocaat.be pour préremplir l’inscription. L’aperçu est valable 20 minutes."
             - "Nous synchronisons chaque jour vos langues et matières avec Advocaat.be ; vous pouvez aussi les actualiser dans les paramètres. Le contrôle quotidien signale les profils disparus ou modifiés à l’exploitant."
+            - "Votre adresse professionnelle et votre barreau publiés sur Advocaat.be sont présentés au donneur d’ordre avec votre proposition. Pour les remplacements d’audience au tarif horaire, nous estimons la distance et la durée du trajet sur notre serveur avec OpenStreetMap et les adresses BeSt. Nous n’utilisons pas votre position en temps réel."
             - "Identité professionnelle : profil officiel, nom et e-mail publiés et statut de vérification professionnelle."
             - "Données de profil professionnel, notamment langues et domaines de pratique ; ainsi que données de mission, candidature, acceptation, annulation et audit."
             - "Échanges avec l'assistance et données techniques ou de sécurité, comme l'adresse IP, l'identifiant de requête, l'appareil et les événements de sécurité."

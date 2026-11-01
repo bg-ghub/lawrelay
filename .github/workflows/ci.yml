@@ -56,6 +56,8 @@ jobs:
           python3 script/ops/test-external-uptime.py
           python3 script/ops/test-mailbox-retention.py
           python3 script/ops/test-health-mail-retention.py
+          python3 script/ops/test-osm-address-index.py
+          python3 script/ops/test-best-addresses.py
           sh script/ops/test-notify-no-send
           sh -n script/ops/lawrelay-backup
           sh -n script/ops/prepare-retention-host

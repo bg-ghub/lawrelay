@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-11-01-profile-signup"
-  PRIVACY_VERSION = "2026-11-01-email-review-reason"
+  PRIVACY_VERSION = "2026-11-01-directory-travel"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,

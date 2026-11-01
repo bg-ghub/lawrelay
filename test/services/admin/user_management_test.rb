@@ -87,6 +87,7 @@ class Admin::UserManagementTest < ActiveSupport::TestCase
       directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
       directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
       directory_name: @user.full_name, directory_email: @user.email_address,
+      directory_professional_address: "Zavelstraat 13, 1000 Brussel", directory_bar_name: "Balie Brussel",
       directory_checked_at: Time.current, directory_email_verified_at: Time.current,
       directory_identity_digest: "synthetic-directory-evidence"
     )
@@ -105,6 +106,8 @@ class Admin::UserManagementTest < ActiveSupport::TestCase
     assert_nil profile.directory_profile_id
     assert_nil profile.directory_identity_digest
     assert_nil profile.directory_email_verified_at
+    assert_nil profile.directory_professional_address
+    assert_nil profile.directory_bar_name
     assert profile.directory_profile_url.present?
     assert_equal "pending", profile.verification_status
     assert @account.firm.reload.verified?

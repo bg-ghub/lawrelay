@@ -16,8 +16,12 @@ class ProductBarTest < ActionDispatch::IntegrationTest
         assert_response :success
         assert_select "nav.product-bar[aria-label='#{I18n.t('products.navigation_label', locale:)}']", count: 1 do
           assert_select ".product-bar__label", text: I18n.t("products.label", locale:)
-          assert_select "a[href='#{research_url}'][hreflang='#{locale}'][target='_blank'][rel='noopener noreferrer']", text: research_name
-          assert_select "a[href='#{praxis_url}'][hreflang='#{locale}'][target='_blank'][rel='noopener noreferrer']", text: "Praxis"
+          assert_select "a[href='#{research_url}'][hreflang='#{locale}'][target='_blank'][rel='noopener noreferrer']", text: research_name do
+            assert_select "img.product-bar__research-logo[alt=''][src*='research-#{locale}'][src^='/assets/products/']", count: 1
+          end
+          assert_select "a[href='#{praxis_url}'][hreflang='#{locale}'][target='_blank'][rel='noopener noreferrer']" do
+            assert_select "img.product-bar__praxis-logo[alt='Praxis'][src^='/assets/products/']", count: 1
+          end
           assert_select "a", count: 2
         end
         assert_select "nav.product-bar + header.site-header", count: 1

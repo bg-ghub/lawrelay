@@ -13,6 +13,8 @@ module Directory
     TIMEOUT_SECONDS = 15
     LANGUAGE_CODES = { "nederlands" => "NL", "frans" => "FR", "duits" => "DE", "engels" => "EN" }.freeze
     PRACTICE_LABELS = %w[voorkeurmateries rechtsdomeinen vakgebieden].freeze
+    BAR_LABELS = %w[balies balie barreaux barreau anwaltskammer anwaltskammern bars].freeze
+    LOCATION_FIELDS = %i[directory_professional_address directory_bar_name].freeze
 
     def self.call(profile_url:, full_name:, fetcher: nil)
       new(profile_url:, full_name:, fetcher:).call
@@ -24,6 +26,8 @@ module Directory
       profile[:spoken_languages] = languages if languages.any?
       areas = labelled_values(main, PRACTICE_LABELS)
       profile[:practice_areas] = areas if areas.any?
+      profile[:directory_bar_name] = labelled_value(main, BAR_LABELS)
+      profile[:directory_professional_address] = professional_address(main)
       profile
     end
 
@@ -36,6 +40,27 @@ module Directory
       values.map { |value| value.squish.first(100) }.reject(&:blank?).uniq.first(20)
     end
     private_class_method :labelled_values
+
+    def self.labelled_value(main, labels)
+      heading = main.css("h2, h3").find { |element| labels.include?(element.text.squish.downcase) }
+      value = heading&.next_element
+      return unless value && value.name.in?(%w[p ul ol])
+
+      text = value.name == "p" ? value.text : value.css("li").map(&:text).join(", ")
+      text.squish.first(200).presence
+    end
+    private_class_method :labelled_value
+
+    def self.professional_address(main)
+      address = main.css("address").find { |element| element.text.squish.present? }
+      return unless address
+
+      # Preserve the separator in directory markup such as `Street 10<br>1000 City`.
+      address = address.dup
+      address.css("br").each { |break_node| break_node.replace("\n") }
+      address.text.squish.first(500).presence
+    end
+    private_class_method :professional_address
 
     def initialize(profile_url:, full_name:, fetcher: nil)
       @profile_url = AdvocaatBeProfileLookup.canonical_profile_url(profile_url)
@@ -54,7 +79,10 @@ module Directory
       return failure(:identity_mismatch) unless AdvocaatBeProfileLookup.names_match?(main.at_css("h1")&.text&.squish, @full_name)
 
       profile = self.class.attributes_from(main)
-      return failure(:empty) if profile.empty?
+      # Location keys are intentionally present as nil when the page is valid but
+      # no longer publishes them, so a sync can clear stale saved values. A page
+      # with no supported data at all is still treated as empty.
+      return failure(:empty) if profile.empty? || profile.values.all?(&:blank?)
 
       Result.new(status: :ok, profile_attributes: profile)
     rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error, SocketError, IOError, SystemCallError,

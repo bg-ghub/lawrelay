@@ -50,6 +50,7 @@ en:
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
             - "At your request, we fetch your public advocaat.be name, email, languages and legal areas to fill in signup. The preview is valid for 20 minutes."
             - "We sync your languages and practice areas with Advocaat.be daily; you can also refresh them in settings. The daily profile check alerts the operator to missing or changed profiles."
+            - "Your professional address and bar association published on Advocaat.be are shown to the assignment owner with your proposal. For hourly court replacements, we estimate driving distance and time on our own server using OpenStreetMap and BeSt address data. We do not use your live location."
             - "Professional identity: your official directory profile, listed name and email, and professional-verification status."
             - "Professional profile data, including languages and practice areas; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."

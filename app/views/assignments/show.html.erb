@@ -58,6 +58,7 @@
                 <div><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.status}") %></span></div>
                 <p><%= proposal.message %></p>
                 <p><strong>€ <%= euro_amount(proposal.rate_cents) %></strong> · <%= proposal.rate_kind_label %></p>
+                <%= render "proposal_location", proposal: proposal %>
                 <% if proposal.status == "accepted" && (contact_email = proposal.contact_email).present? %>
                   <p class="contact-card"><%= mail_to contact_email %></p>
                 <% elsif proposal.status == "pending" && @assignment.status == "open" && @assignment.starts_at > Time.current %>

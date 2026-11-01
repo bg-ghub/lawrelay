@@ -1,0 +1,34 @@
+.candidate-location {
+  display: grid;
+  gap: .6rem;
+  margin: .9rem 0;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.candidate-location dt {
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.candidate-location dd {
+  margin: .15rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.candidate-travel {
+  display: grid;
+  gap: .25rem;
+  border-left: 3px solid var(--mint);
+  padding-left: .65rem;
+  font-size: .82rem;
+}
+
+.candidate-travel small {
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+.candidate-travel small a:hover {
+  text-decoration: underline;
+}

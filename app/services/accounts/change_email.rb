@@ -63,6 +63,7 @@ module Accounts
       profile.clear_email_review
       profile.assign_attributes(
         directory_profile_id: nil, directory_name: nil, directory_email: nil,
+        directory_professional_address: nil, directory_bar_name: nil,
         directory_checked_at: nil, directory_email_verified_at: nil,
         directory_confirmation_requested_at: nil, directory_identity_digest: nil
       )

@@ -30,6 +30,7 @@ module AdminHostRouting
     return redirect_to admin_login_path, status: :see_other if controller_path == "passwords"
     return redirect_to admin_users_path, status: :see_other if controller_path == "email_changes"
     return if controller_path == "email_verifications"
+    return if controller_path == "language_preferences"
     return if controller_path == "sessions" && action_name == "destroy"
 
     if controller_path == "home" && action_name == "index"

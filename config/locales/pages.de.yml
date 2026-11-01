@@ -50,6 +50,7 @@ de:
             - "Bei aktivierter Zwei-Faktor-Authentifizierung speichern wir Authenticator-Schlüssel verschlüsselt und Wiederherstellungscodes als Hashwerte."
             - "Auf Ihren Wunsch übernehmen wir den öffentlichen Namen, die E-Mail-Adresse, Sprachen und Rechtsgebiete von advocaat.be zum Vorausfüllen der Anmeldung. Die Vorschau ist 20 Minuten gültig."
             - "Wir gleichen Ihre Sprachen und Tätigkeitsbereiche täglich mit Advocaat.be ab; Sie können dies auch in den Einstellungen auslösen. Die tägliche Profilprüfung meldet fehlende oder geänderte Profile dem Betreiber."
+            - "Ihre auf Advocaat.be veröffentlichte Geschäftsanschrift und Anwaltskammer werden dem Auftraggeber mit Ihrem Vorschlag angezeigt. Bei Gerichtsvertretungen zum Stundensatz schätzen wir Fahrstrecke und Fahrzeit auf unserem Server mit OpenStreetMap und BeSt-Adressdaten. Wir verwenden keinen Live-Standort."
             - "Berufliche Identität: offizielles Verzeichnisprofil, veröffentlichter Name und E-Mail-Adresse sowie beruflicher Prüfstatus."
             - "Berufliche Profildaten, darunter Sprachen und Rechtsgebiete; außerdem Auftrags-, Bewerbungs-, Annahme-, Stornierungs- und Auditdaten."
             - "Supportkommunikation und technische oder sicherheitsbezogene Daten wie IP-Adresse, Anfragekennung, Geräteinformation und Sicherheitsereignisse."

@@ -205,6 +205,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       directory_email: @account.user.email_address,
       directory_checked_at: Time.current,
       directory_email_verified_at: Time.current,
+      directory_professional_address: "Zavelstraat 13, 1000 Brussel", directory_bar_name: "Balie Brussel",
       directory_confirmation_requested_at: Time.current,
       directory_identity_digest: "directory-proof",
       verification_status:,

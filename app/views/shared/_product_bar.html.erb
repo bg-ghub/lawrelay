@@ -2,8 +2,13 @@
   <div class="shell product-bar__inner">
     <span class="product-bar__label"><%= t("products.label") %></span>
     <div class="product-bar__links">
-      <%= link_to t("products.research_name"), t("products.research_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale %>
-      <%= link_to "Praxis", t("products.praxis_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale %>
+      <%= link_to t("products.research_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale do %>
+        <%= image_tag "products/research-#{I18n.locale}.svg", alt: "", width: 22, height: 22, class: "product-bar__research-logo", aria: { hidden: true } %>
+        <span><%= t("products.research_name") %></span>
+      <% end %>
+      <%= link_to t("products.praxis_url"), target: "_blank", rel: "noopener noreferrer", hreflang: I18n.locale do %>
+        <%= image_tag "products/praxis.png", alt: "Praxis", width: 74, height: 24, class: "product-bar__praxis-logo" %>
+      <% end %>
     </div>
   </div>
 </nav>

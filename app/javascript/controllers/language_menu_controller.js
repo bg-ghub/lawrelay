@@ -1,15 +1,43 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { warning: String }
+  static values = { warning: String, preferenceUrl: String, failure: String }
 
-  confirmNavigation(event) {
+  async confirmNavigation(event) {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-    if (!this.hasWarningValue || !this.hasUnsavedChanges()) return
-    if (window.confirm(this.warningValue)) return
+    if (this.hasWarningValue && this.hasUnsavedChanges() && !window.confirm(this.warningValue)) {
+      event.preventDefault()
+      event.stopImmediatePropagation()
+      return
+    }
+    if (!this.preferenceUrlValue) return
 
     event.preventDefault()
     event.stopImmediatePropagation()
+    if (this.saving) return
+
+    const link = event.currentTarget
+    const destination = new URL(link.href)
+    if (!destination.hash) destination.hash = window.location.hash
+    const headers = { "Content-Type": "application/json", "Accept": "application/json" }
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+    if (csrfToken) headers["X-CSRF-Token"] = csrfToken
+
+    this.saving = true
+    try {
+      const response = await fetch(this.preferenceUrlValue, {
+        method: "PATCH", credentials: "same-origin", headers,
+        body: JSON.stringify({ preferred_locale: link.hreflang })
+      })
+      if (!response.ok || response.redirected) throw new Error("Language preference was not saved")
+
+      if (window.Turbo) window.Turbo.visit(destination.href)
+      else window.location.assign(destination.href)
+    } catch {
+      window.alert(this.failureValue)
+    } finally {
+      this.saving = false
+    }
   }
 
   hasUnsavedChanges() {

@@ -1,0 +1,6 @@
+de:
+  travel:
+    summary: "Ca. %{distance} km · %{minutes} Min. einfache Fahrt"
+    pending: "Entfernung wird berechnet…"
+    unavailable: "Route nicht verfügbar"
+    not_applicable: ""

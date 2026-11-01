@@ -42,6 +42,7 @@ function Get-EnvNames {
 
 $workspace = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $composePath = Join-Path $workspace 'compose.production.yml'
+$routingComposePath = Join-Path $workspace 'compose.routing.yml'
 $caddyPath = Join-Path $workspace 'config/Caddyfile'
 $versionPath = Join-Path $workspace 'VERSION'
 
@@ -132,6 +133,9 @@ try {
     $remote = "deploy@$Server"
     Invoke-Checked { & ssh @sshArguments $remote "mkdir -p $RemotePath && chmod 700 $RemotePath && docker compose version >/dev/null" } 'Remote preflight failed. Confirm Docker Compose v2 is installed for deploy.'
     Invoke-Checked { & scp @sshArguments $composePath $caddyPath $archivePath "${remote}:$RemotePath/" } 'Secure copy of deployment assets to the server failed.'
+    if (Test-Path -LiteralPath $routingComposePath -PathType Leaf) {
+      Invoke-Checked { & scp @sshArguments $routingComposePath "${remote}:$RemotePath/" } 'Secure copy of the routing overlay failed.'
+    }
     Invoke-Checked { & scp @sshArguments $resolvedProductionEnvPath "${remote}:$RemotePath/production.env" } 'Secure copy of the production environment failed.'
     Invoke-Checked { & scp @sshArguments $umamiEnvPath $umamiDbEnvPath "${remote}:$RemotePath/" } 'Secure copy of the analytics environment failed.'
 
@@ -144,7 +148,18 @@ printf '%s\n' 'LAWRELAY_IMAGE=$image' > release.env
 docker volume inspect lawrelay_storage >/dev/null 2>&1 || docker volume create lawrelay_storage >/dev/null
 docker volume inspect lawrelay_umami_db >/dev/null 2>&1 || docker volume create lawrelay_umami_db >/dev/null
 docker load --input '$remoteArchive' >/dev/null
-docker compose --env-file release.env -f compose.production.yml up --detach --remove-orphans
+if [ -f routing.enabled ]; then
+  test -f compose.routing.yml
+  test -s /var/lib/lawrelay-routing/addresses.sqlite3
+  set -- -f compose.production.yml -f compose.routing.yml
+else
+  if docker container inspect lawrelay-routing >/dev/null 2>&1; then
+    echo 'Routing container exists without routing.enabled; refusing to remove it.' >&2
+    exit 1
+  fi
+  set -- -f compose.production.yml
+fi
+docker compose --env-file release.env "`$@" up --detach --remove-orphans
 for container in lawrelay-umami-db lawrelay-umami lawrelay-app; do
   status=starting
   for attempt in `$(seq 1 24); do

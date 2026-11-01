@@ -4,7 +4,7 @@ module Directory
       def success? = status.in?(%i[updated unchanged])
     end
 
-    IMPORTED_FIELDS = %w[spoken_languages practice_areas].freeze
+    IMPORTED_FIELDS = %w[spoken_languages practice_areas directory_professional_address directory_bar_name].freeze
     USER_IDENTITY_FIELDS = %w[id first_name last_name email_address system_role suspended_at erased_at].freeze
     PROFILE_IDENTITY_FIELDS = %w[id user_id directory_profile_url directory_profile_id directory_name
       directory_email directory_checked_at verification_status].freeze

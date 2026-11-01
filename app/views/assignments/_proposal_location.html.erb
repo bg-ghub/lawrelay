@@ -1,0 +1,16 @@
+<% candidate = proposal.user %>
+<% if candidate&.marketplace_verified? && (profile = candidate.lawyer_profile)&.directory_matched? %>
+  <% if profile.directory_bar_name.present? || profile.directory_professional_address.present? %>
+    <dl class="candidate-location">
+      <% if profile.directory_bar_name.present? %><div><dt><%= t("directory_location.bar") %></dt><dd><%= profile.directory_bar_name %></dd></div><% end %>
+      <% if profile.directory_professional_address.present? %><div><dt><%= t("directory_location.address") %></dt><dd><%= profile.directory_professional_address %></dd></div><% end %>
+    </dl>
+  <% end %>
+  <% if proposal.rate_kind == "hourly" && proposal.assignment.court_replacement? %>
+    <% estimate = Travel::Estimate.call(proposal:) %>
+    <p class="candidate-travel" data-controller="travel-estimate" data-travel-estimate-url-value="<%= assignment_proposal_travel_estimate_path(proposal.assignment, proposal) %>" data-travel-estimate-pending-value="<%= estimate.status == :pending %>" data-travel-estimate-unavailable-value="<%= t('travel.unavailable') %>">
+      <span data-travel-estimate-target="text" role="status"><%= travel_estimate_text(estimate) %></span>
+      <small data-travel-estimate-target="attribution" <%= "hidden" unless estimate.ready? %>><%= link_to "© OpenStreetMap", "https://www.openstreetmap.org/copyright", target: "_blank", rel: "noopener noreferrer" %><% if Travel::AddressIndex.new.best_available? %> · <%= link_to "BeSt Address", "https://opendata.bosa.be/index.nl.html", target: "_blank", rel: "noopener noreferrer" %><% end %></small>
+    </p>
+  <% end %>
+<% end %>

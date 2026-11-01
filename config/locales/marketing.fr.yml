@@ -3,6 +3,7 @@ fr:
     locale_name: Français
     language_switcher: Choisir la langue
     language_switch_warning: "Vos modifications seront perdues. Changer de langue ?"
+    language_switch_failed: "Votre préférence de langue n’a pas pu être enregistrée. Réessayez."
     actions:
       post_assignment: Publier une mission
       browse_assignments: Voir les missions

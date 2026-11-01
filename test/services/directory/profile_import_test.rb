@@ -7,7 +7,8 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
     result = lookup(profile_html)
 
     assert result.success?
-    assert_equal({ spoken_languages: %w[NL EN FR], practice_areas: [ "Familierecht", "Handelsrecht" ] }, result.profile_attributes)
+    assert_equal({ spoken_languages: %w[NL EN FR], practice_areas: [ "Familierecht", "Handelsrecht" ],
+      directory_bar_name: "Do not change bar evidence", directory_professional_address: "Example Street 10 , 1000 Brussel" }, result.profile_attributes)
     assert_empty(result.profile_attributes.keys & %i[bar_number bar_association directory_email directory_profile_id professional_email])
     refute_respond_to result, :firm_attributes
   end
@@ -16,7 +17,7 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
     result = lookup('<main id="main"><h1>Jane Lawyer</h1><div><h2>Talen</h2><p>Frans</p></div></main>')
 
     assert result.success?
-    assert_equal({ spoken_languages: [ "FR" ] }, result.profile_attributes)
+    assert_equal({ spoken_languages: [ "FR" ], directory_bar_name: nil, directory_professional_address: nil }, result.profile_attributes)
   end
 
   test "only requests the canonical official stored-profile URL" do
@@ -53,10 +54,28 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
   end
 
   test "returns empty when a valid profile has no supported professional fields" do
-    result = lookup('<main id="main"><h1>Jane Lawyer</h1><h2>Contact</h2><address>Example Street 10<br>1000 Brussel</address><a href="tel:+3225550101">Phone</a></main>')
+    result = lookup('<main id="main"><h1>Jane Lawyer</h1><h2>Contact</h2><p>No structured address</p><a href="tel:+3225550101">Phone</a></main>')
 
     assert_equal :empty, result.status
     assert_empty result.profile_attributes
+  end
+
+  test "imports only structured address and bar content within the main profile" do
+    html = <<~HTML
+      <main id="main"><h1>Jane Lawyer</h1>
+        <h2>Balies</h2><p>Balie Brussel Nederlandse Orde</p>
+        <h2>Contact</h2><address>Zavelstraat 13<br>1000 Brussel</address>
+        <div data-address="ignore">Injected text</div>
+        <h2>Derdenrekening</h2><p>BE00 0000 0000 0000</p>
+      </main>
+    HTML
+
+    result = lookup(html)
+
+    assert_equal "Balie Brussel Nederlandse Orde", result.profile_attributes[:directory_bar_name]
+    assert_equal "Zavelstraat 13 1000 Brussel", result.profile_attributes[:directory_professional_address]
+    assert_not_includes result.profile_attributes[:directory_professional_address], "Injected"
+    assert_not_includes result.profile_attributes[:directory_professional_address], "BE00"
   end
 
   test "a total request timeout fails without retaining provider details" do

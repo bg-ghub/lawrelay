@@ -1,0 +1,6 @@
+en:
+  travel:
+    summary: "Approx. %{distance} km · %{minutes} min one way"
+    pending: "Calculating distance…"
+    unavailable: "Route unavailable"
+    not_applicable: ""

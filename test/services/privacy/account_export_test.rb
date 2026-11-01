@@ -35,6 +35,7 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     own_proposal = create_proposal_for(other_assignment, @member, message: "My own proposal")
     @member.user.update!(two_factor_secret_ciphertext: "excluded-two-factor-secret", two_factor_recovery_code_digests: [ "excluded-recovery-digest" ])
     @member.profile.update!(verification_note: "excluded-private-verification-note", directory_identity_digest: "excluded-directory-digest")
+    @member.profile.update_columns(directory_professional_address: "Zavelstraat 13, 1000 Brussel", directory_bar_name: "Balie Brussel")
     @member.profile.update_columns(email_review_status: "approved", email_review_email_address: @member.user.email_address,
       email_review_requested_at: 2.hours.ago, email_reviewed_at: 1.hour.ago, email_reviewed_by_user_id: @admin.id,
       email_review_request_reason: "I use a different professional mailbox.",
@@ -69,6 +70,8 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     assert_not exported_check.key?("lawyer_profile_id")
     exported_profile = package.fetch("professional_profile")
     assert_equal "approved", exported_profile.fetch("email_review_status")
+    assert_equal "Zavelstraat 13, 1000 Brussel", exported_profile.fetch("directory_professional_address")
+    assert_equal "Balie Brussel", exported_profile.fetch("directory_bar_name")
     assert_equal @member.user.email_address, exported_profile.fetch("email_review_email_address")
     assert_equal "I use a different professional mailbox.", exported_profile.fetch("email_review_request_reason")
     assert exported_profile.fetch("email_review_requested_at")

@@ -50,6 +50,7 @@ nl:
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Op uw verzoek halen we uw openbare naam, e-mailadres, talen en rechtsdomeinen van advocaat.be op om het registratieformulier in te vullen. Het voorbeeld is 20 minuten geldig."
             - "We synchroniseren uw talen en rechtsdomeinen dagelijks met Advocaat.be; u kunt dit ook zelf starten in instellingen. De dagelijkse profielcontrole meldt verdwenen of gewijzigde profielen aan de beheerder."
+            - "Uw openbare beroepsadres en balie van Advocaat.be worden bij uw voorstel getoond aan de opdrachtgever. Bij een uurtarief voor zittingsvervanging berekenen we op onze eigen server de geschatte rijafstand en reistijd met OpenStreetMap en BeSt-adresgegevens. We gebruiken geen live locatie."
             - "Professionele identiteit: uw officiële profiel, vermelde naam en e-mailadres en professionele verificatiestatus."
             - "Professionele profielgegevens, waaronder talen en rechtsdomeinen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."

@@ -21,6 +21,12 @@
       <dt><%= t("profile_import.fields.email") %></dt>
       <dd><% if profile.directory_email.present? %><span class="directory-profile__email"><%= profile.directory_email %></span><%= advocaat_webmail_hint(profile.directory_email) %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
     </div>
+    <% { bar: profile.directory_bar_name, address: profile.directory_professional_address }.each do |field, value| %>
+      <div class="directory-profile__field">
+        <dt><%= t("directory_location.#{field}") %></dt>
+        <dd><% if value.present? %><%= value %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
+      </div>
+    <% end %>
     <div class="directory-profile__field">
       <dt><%= t("settings.profile.languages") %></dt>
       <dd>

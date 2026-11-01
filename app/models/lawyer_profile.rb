@@ -22,6 +22,7 @@ class LawyerProfile < ApplicationRecord
   normalizes :professional_email, with: ->(value) { value.to_s.strip.downcase.presence }
   normalizes :directory_profile_url, with: ->(value) { value.to_s.strip.presence }
   normalizes :directory_email, with: ->(value) { value.to_s.strip.downcase.presence }
+  normalizes :directory_professional_address, :directory_bar_name, with: ->(value) { value.to_s.squish.presence }
   normalizes :availability_note, with: ->(value) { value.to_s.strip.presence }
   normalizes :email_review_request_reason, with: ->(value) { value.to_s.strip.presence }
 
@@ -35,6 +36,8 @@ class LawyerProfile < ApplicationRecord
     numericality: { only_integer: true, greater_than_or_equal_to: 1900, less_than_or_equal_to: -> { Time.current.year } },
     allow_nil: true
   validates :availability_note, length: { maximum: 500 }, allow_nil: true
+  validates :directory_professional_address, length: { maximum: 500 }, allow_nil: true
+  validates :directory_bar_name, length: { maximum: 200 }, allow_nil: true
   validates :email_review_status, inclusion: { in: EMAIL_REVIEW_STATUSES }, allow_nil: true
   validates :email_review_note, length: { maximum: 2_000 }, allow_nil: true
   validates :email_review_request_reason, length: { maximum: 1_000 }, allow_nil: true

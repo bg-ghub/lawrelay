@@ -11,6 +11,7 @@ class Accounts::ChangeEmailTest < ActiveSupport::TestCase
       directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
       directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a", directory_name: @account.user.full_name,
       directory_email: @account.user.email_address, directory_checked_at: Time.current,
+      directory_professional_address: "Zavelstraat 13, 1000 Brussel", directory_bar_name: "Balie Brussel",
       directory_email_verified_at: Time.current, directory_identity_digest: "old-proof"
     )
     @current_session = @account.user.sessions.create!
@@ -31,6 +32,8 @@ class Accounts::ChangeEmailTest < ActiveSupport::TestCase
     assert_equal "pending", @profile.verification_status
     assert_nil @profile.directory_profile_id
     assert_nil @profile.directory_email
+    assert_nil @profile.directory_professional_address
+    assert_nil @profile.directory_bar_name
     assert_nil @profile.directory_identity_digest
     assert_equal "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a", @profile.directory_profile_url
     assert_equal @account.firm, @account.user.primary_firm

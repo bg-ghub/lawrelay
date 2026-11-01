@@ -1,5 +1,5 @@
 <nav class="language-nav" aria-label="<%= t("marketing.language_switcher") %>">
-  <details class="language-menu" data-controller="language-menu" data-language-menu-warning-value="<%= t("marketing.language_switch_warning") %>" data-action="keydown.esc@window->language-menu#close click@window->language-menu#closeOutside focusout->language-menu#closeOnFocusOut turbo:before-cache@document->language-menu#close">
+  <details class="language-menu" data-controller="language-menu" data-language-menu-warning-value="<%= t("marketing.language_switch_warning") %>" data-language-menu-preference-url-value="<%= language_preference_path if authenticated? %>" data-language-menu-failure-value="<%= t("marketing.language_switch_failed") %>" data-action="keydown.esc@window->language-menu#close click@window->language-menu#closeOutside focusout->language-menu#closeOnFocusOut turbo:before-cache@document->language-menu#close">
     <summary aria-label="<%= t("marketing.language_switcher") %>">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8">
         <circle cx="12" cy="12" r="9"></circle>
@@ -22,6 +22,11 @@
           else
             url_for(locale: locale)
           end %>
+          <% if request.query_string.present? %>
+            <% destination = URI.parse(language_destination) %>
+            <% destination.query = request.query_string %>
+            <% language_destination = destination.to_s %>
+          <% end %>
           <%= link_to language_destination, class: item_class, lang: locale, hreflang: locale, data: { action: "click->language-menu#confirmNavigation" } do %>
             <strong><%= locale.to_s.upcase %></strong><span><%= locale_names.fetch(locale) %></span><span></span>
           <% end %>

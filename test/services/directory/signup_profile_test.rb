@@ -3,7 +3,7 @@ require "test_helper"
 class DirectorySignupProfileTest < ActiveSupport::TestCase
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111"
 
-  test "previews only the name email and supported professional preferences" do
+  test "previews the name email and supported public professional data" do
     calls = []
     result = Directory::SignupProfile.call(profile_url: PROFILE_URL.sub("www.", ""), fetcher: ->(uri) { calls << uri.to_s; profile_html })
 
@@ -13,7 +13,8 @@ class DirectorySignupProfileTest < ActiveSupport::TestCase
     assert_equal "Jane", result.first_name
     assert_equal "van den Berg", result.last_name
     assert_equal "listed@example.test", result.email_address
-    assert_equal({ spoken_languages: %w[NL EN FR], practice_areas: %w[Familierecht Handelsrecht] }, result.profile_attributes)
+    assert_equal({ spoken_languages: %w[NL EN FR], practice_areas: %w[Familierecht Handelsrecht],
+      directory_bar_name: "Unverified public bar details", directory_professional_address: "Do not use as billing address 1000 Brussels" }, result.profile_attributes)
     assert_equal %i[status profile_url name first_name last_name email_address profile_attributes], result.members
     assert_empty(result.profile_attributes.keys & %i[name address_line_1 postal_code city phone iban bar_number verification_status directory_email_verified_at])
   end
@@ -40,7 +41,7 @@ class DirectorySignupProfileTest < ActiveSupport::TestCase
   test "missing optional preferences do not prevent a basic identity preview" do
     result = lookup('<main id="main"><h1>Jane Lawyer</h1><a href="mailto:listed@example.test">Email</a></main>')
     assert result.success?
-    assert_empty result.profile_attributes
+    assert_equal({ directory_bar_name: nil, directory_professional_address: nil }, result.profile_attributes)
   end
 
   test "unusual given and family names stay editable without truncated identity evidence" do

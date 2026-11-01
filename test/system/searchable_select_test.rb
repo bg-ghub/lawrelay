@@ -58,9 +58,10 @@ class SearchableSelectTest < ApplicationSystemTestCase
     assert_field "assignment_legal_subtype-search", with: I18n.t("marketplace.assignment_subtypes.contract", locale: :en)
   end
 
-  test "Other legal area reveals a required custom field and predefined choices hide it" do
+  test "Other legal area enables its custom field and predefined choices disable it" do
     visit new_assignment_path(locale: :en)
-    assert_no_selector "#assignment_practice_area_other", visible: true
+    assert_field "assignment_practice_area_other", disabled: true
+    assert_no_selector "#assignment_practice_area_other[required]"
     field = find("#assignment_practice_area-search")
     field.set("oth")
     field.send_keys(:arrow_down, :enter)
@@ -69,13 +70,13 @@ class SearchableSelectTest < ApplicationSystemTestCase
     assert_equal "assignment_practice_area_other", page.driver.browser.switch_to.active_element.attribute("id")
     fill_in "assignment_practice_area_other", with: "Synthetic specialist field"
     choose_searchable_option("assignment_practice_area", label: "Employment law")
-    assert_no_selector "#assignment_practice_area_other", visible: true
-    assert find("#assignment_practice_area_other", visible: :all).disabled?
+    assert_field "assignment_practice_area_other", disabled: true
+    assert_no_selector "#assignment_practice_area_other[required]"
     choose_searchable_option("assignment_practice_area", value: Assignment::OTHER_CHOICE)
     assert_field "assignment_practice_area_other", with: "Synthetic specialist field"
     page.execute_script("document.querySelector('form.assignment-form').reset()")
-    assert_no_selector "#assignment_practice_area_other", visible: true
-    assert find("#assignment_practice_area_other", visible: :all).disabled?
+    assert_field "assignment_practice_area_other", disabled: true
+    assert_no_selector "#assignment_practice_area_other[required]"
   end
 
   test "a custom legal area survives validation errors and saves its entered name" do

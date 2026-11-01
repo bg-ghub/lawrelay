@@ -1,0 +1,6 @@
+fr:
+  travel:
+    summary: "Env. %{distance} km · %{minutes} min à l’aller"
+    pending: "Calcul de la distance…"
+    unavailable: "Itinéraire indisponible"
+    not_applicable: ""

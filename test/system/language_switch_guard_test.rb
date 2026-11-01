@@ -37,6 +37,7 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
     assert_field "assignment_description", with: "A synthetic description that must stay in this browser."
     assert_field "assignment_languages", with: "NL FR"
     assert_nil URI(page.current_url).query
+    assert_equal "en", @account.user.reload.locale
   end
 
   test "untouched defaults and ignored hidden or disabled fields allow switching without a prompt" do
@@ -54,6 +55,7 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
 
     assert_current_path new_assignment_path(locale: :fr)
     assert_field "assignment_duration_minutes", with: "60"
+    assert_equal "fr", @account.user.reload.locale
   end
 
   test "changing only the assignment kind triggers the warning" do
@@ -64,6 +66,18 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
 
     assert_current_path new_assignment_path(locale: :en)
     assert_selector "#assignment_kind_legal_task:checked", visible: :all
+  end
+
+  test "a header choice persists to settings and keeps the current query and fragment" do
+    visit assignments_path(locale: :en, q: "Synthetic", anchor: "main-content")
+
+    switch_language(:fr)
+
+    assert_current_path assignments_path(locale: :fr, q: "Synthetic"), ignore_query: false
+    assert_equal "main-content", URI(page.current_url).fragment
+    assert_equal "fr", @account.user.reload.locale
+    visit settings_path(locale: :fr)
+    assert_equal "fr", find("select[name='account[locale]']", visible: :all).value
   end
 
   test "select and checkbox changes are protected and reverting them removes the warning" do
@@ -111,6 +125,7 @@ class LanguageSwitchGuardTest < ApplicationSystemTestCase
         find(".language-menu a[hreflang='fr']").click
       end
       assert_current_path new_assignment_path(locale: :fr)
+      assert_equal "fr", @account.user.reload.locale
     end
 
     assert_nil URI(page.current_url).query

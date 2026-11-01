@@ -1,0 +1,6 @@
+nl:
+  travel:
+    summary: "Ca. %{distance} km · %{minutes} min enkele reis"
+    pending: "Afstand berekenen…"
+    unavailable: "Route niet beschikbaar"
+    not_applicable: ""
