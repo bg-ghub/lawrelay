@@ -124,6 +124,7 @@ en:
           admin_user_restored: Account access restored
           admin_user_sessions_revoked: Sessions signed out
           account_updated: Account details updated
+          profile_directory_synced: Profile details refreshed from Advocaat.be
           admin_bootstrapped: Administrator account created
           account_email_changed: Email address changed
           account_two_factor_enabled: Two-factor authentication enabled

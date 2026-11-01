@@ -7,25 +7,23 @@ class SettingsController < ApplicationController
   end
 
   def update
-    return preview_directory_profile if profile_import_request?
+    return refresh_directory_profile if profile_import_request?
 
-    profile_requires_review = profile_review_required?
     directory_identity_changed = directory_identity_changed?
 
     ApplicationRecord.transaction do
       @user.assign_attributes(user_params)
-      @profile.assign_attributes(profile_params)
       clear_directory_evidence! if directory_identity_changed
-      reset_profile_verification! if profile_requires_review || directory_identity_changed
+      reset_profile_verification! if directory_identity_changed
 
       @user.save!
       @profile.save!
-      record_changes!(profile_requires_review:)
+      record_changes!(profile_requires_review: directory_identity_changed)
     end
 
     delivery_ready = Onboarding::Delivery.request(@user, email: false, directory: directory_identity_changed && !protected_profile?(@profile))
     destination_locale = @user.locale
-    redirect_to settings_path(locale: destination_locale), notice: update_notice(profile_requires_review || directory_identity_changed, locale: destination_locale),
+    redirect_to settings_path(locale: destination_locale), notice: update_notice(directory_identity_changed, locale: destination_locale),
       alert: (I18n.t("auth.verification_status.queue_unavailable", locale: destination_locale) unless delivery_ready)
   rescue ActiveRecord::RecordInvalid
     render :show, formats: :html, status: :unprocessable_content
@@ -34,43 +32,25 @@ class SettingsController < ApplicationController
   private
 
   def profile_import_request?
-    params[:settings_action] == "import_profile"
+    params[:settings_action].in?(%w[refresh_profile import_profile])
   end
 
-  def preview_directory_profile
+  def refresh_directory_profile
     return head :forbidden if @user.system_admin?
 
-    result = Directory::ProfileImport.call(
-      profile_url: @profile.directory_profile_url,
-      full_name: @profile.directory_name.presence || @user.full_name
-    )
-    assign_preview_values
-    imported = result.success? && result.profile_attributes.any?
-    if imported
-      @profile.assign_attributes(result.profile_attributes)
-      flash.now[:notice] = t("profile_import.preview")
-    else
-      key = result.status.in?(%i[missing_profile empty]) ? result.status : :unavailable
-      flash.now[:alert] = t("profile_import.#{key}")
+    result = Directory::ProfileSync.call(user: @user, actor: @user)
+    if result.success?
+      return redirect_to settings_path, notice: t("profile_import.updated")
     end
-    mark_profile_import_preview
-    render :show, status: imported ? :ok : :unprocessable_content
+
+    key = result.status.in?(%i[missing_profile empty]) ? result.status : :unavailable
+    flash.now[:alert] = t("profile_import.#{key}")
+    render :show, formats: :html, status: :unprocessable_content
   end
 
   def profile_import_rate_limited
-    assign_preview_values
     flash.now[:alert] = t("profile_import.rate_limited")
-    mark_profile_import_preview
-    render :show, status: :too_many_requests
-  end
-
-  def mark_profile_import_preview
-    @profile_import_preview = [ @user, @profile ].any?(&:changed?)
-  end
-
-  def assign_preview_values
-    @user.assign_attributes(user_params)
-    @profile.assign_attributes(profile_params)
+    render :show, formats: :html, status: :too_many_requests
   end
 
   def load_records
@@ -81,25 +61,6 @@ class SettingsController < ApplicationController
 
   def user_params
     params.fetch(:account, {}).permit(:first_name, :last_name, :locale)
-  end
-
-  def profile_params
-    permitted = params.fetch(:profile, {}).permit(
-      :bar_admission_year, :availability_note,
-      spoken_languages: [], practice_areas: [], court_preferences: []
-    )
-    permitted[:spoken_languages] = list_values(permitted[:spoken_languages]) if permitted.key?(:spoken_languages)
-    permitted[:practice_areas] = list_values(permitted[:practice_areas]) if permitted.key?(:practice_areas)
-    permitted[:court_preferences] = list_values(permitted[:court_preferences]) if permitted.key?(:court_preferences)
-    permitted
-  end
-
-  def profile_review_required?
-    return false if @profile.new_record?
-
-    profile_params.to_h.slice("professional_email").any? do |attribute, value|
-      @profile.public_send(attribute).to_s != value.to_s.strip
-    end
   end
 
   def directory_identity_changed?
@@ -150,9 +111,5 @@ class SettingsController < ApplicationController
     return I18n.t("settings.notices.review_required", locale:) if profile_requires_review
 
     I18n.t("settings.notices.updated", locale:)
-  end
-
-  def list_values(values)
-    Array(values).flat_map { |value| value.to_s.split(",") }.map(&:strip).reject(&:blank?).uniq
   end
 end

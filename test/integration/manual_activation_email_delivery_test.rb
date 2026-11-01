@@ -44,12 +44,12 @@ class ManualActivationEmailDeliveryTest < ActionDispatch::IntegrationTest
     assert_not @user.reload.email_verified?
   end
 
-  test "saving preferences keeps access and does not send a verification email" do
+  test "retired profile inputs are ignored without changing manually approved access or sending email" do
     assert_no_enqueued_jobs do
       patch settings_path(locale: :en), params: { profile: { availability_note: "Available on Wednesdays" } }
     end
     assert_redirected_to settings_path(locale: :en)
-    assert_equal "Available on Wednesdays", @profile.reload.availability_note
+    assert_nil @profile.reload.availability_note
     assert @user.reload.marketplace_verified?
     assert_not @user.email_verified?
   end

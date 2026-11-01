@@ -1,9 +1,11 @@
 en:
   profile_import:
-    button: "Get details from advocaat.be"
-    preview: "Details loaded. Review them, then save."
-    scope: "Imports languages and practice areas."
-    empty: "Your profile has no languages or practice areas to import."
+    button: "Refresh from Advocaat.be"
+    refreshing: "Refreshing…"
+    updated: "Profile details refreshed."
+    scope: "Details are synced daily with Advocaat.be."
+    manual_hint: "Details incorrect? Refresh them manually with this button."
+    empty: "No languages or practice areas are available on Advocaat.be."
     unavailable: "We couldn’t load your profile. Try again later."
     missing_profile: "No valid advocaat.be profile is linked."
     rate_limited: "Wait a moment before fetching the details again."

@@ -18,8 +18,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[name^='firm['], [data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
   end
 
-  test "updates account and personal profile with an audit trail while ignoring company details" do
+  test "updates account while ignoring profile and company details" do
     original_firm = @account.firm.attributes
+    original_profile = @account.profile.attributes.slice("spoken_languages", "practice_areas", "court_preferences", "availability_note")
     assert_difference "AuditEvent.count", 2 do
       patch settings_path(locale: :en), params: {
         account: { first_name: "Ada", last_name: "Byron", email_address: @account.user.email_address, locale: "fr" },
@@ -34,11 +35,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     @account.firm.reload
     assert_equal "Ada", @account.user.first_name
     assert_equal "fr", @account.user.locale
-    assert_equal [ "NL", "FR" ], @account.profile.spoken_languages
-    assert_equal [ "Commercial law", "Family law" ], @account.profile.practice_areas
-    assert_equal 2018, @account.profile.bar_admission_year
-    assert_equal [ "Enterprise Court Brussels", "Antwerp" ], @account.profile.court_preferences
-    assert_equal "Tuesday mornings work well.", @account.profile.availability_note
+    assert_equal original_profile, @account.profile.attributes.slice("spoken_languages", "practice_areas", "court_preferences", "availability_note")
+    assert_equal "pending", @account.profile.verification_status
+    assert_nil @account.profile.directory_profile_id
     assert_equal original_firm, @account.firm.attributes
     assert_equal I18n.t("settings.notices.review_required", locale: :fr), flash[:notice]
   end
@@ -54,15 +53,16 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal original_email, @account.user.reload.email_address
   end
 
-  test "personal settings can be saved for a minimal workspace without company details" do
+  test "personal profile fields remain unchanged when posted directly" do
     @account.firm.update!(name: Firm::INTERNAL_WORKSPACE_NAME, enterprise_number: nil,
       billing_email: nil, phone: nil, address_line_1: nil, postal_code: nil, city: nil)
     original_firm = @account.firm.reload.attributes
 
-    patch settings_path(locale: :en), params: valid_params(profile: { availability_note: "Available Wednesday" })
+    original_profile = @account.profile.attributes
+    patch settings_path(locale: :en), params: valid_params(profile: { availability_note: "Forged availability" })
 
     assert_redirected_to settings_path(locale: :en)
-    assert_equal "Available Wednesday", @account.profile.reload.availability_note
+    assert_equal original_profile, @account.profile.reload.attributes
     assert_equal original_firm, @account.firm.reload.attributes
   end
 

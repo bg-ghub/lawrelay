@@ -13,6 +13,9 @@ production:
   daily_registry_status:
     class: DailyRegistryStatusJob
     schedule: "0 5 * * * UTC"
+  daily_directory_profile_sync:
+    class: DailyDirectoryProfileSyncJob
+    schedule: "30 5 * * * UTC"
   reconcile_registry_status:
     class: ReconcileRegistryStatusJob
     schedule: every 5 minutes

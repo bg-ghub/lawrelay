@@ -12,16 +12,15 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
       @account.user.notifications.create!(kind: "assignment_completed", subject: @assignment,
         data: { assignment_id: @assignment.id }, read_at: (Time.current unless index.zero?))
     end
-    @original_import = Directory::ProfileImport.method(:call)
-    Directory::ProfileImport.define_singleton_method(:call) do |**|
-      Directory::ProfileImport::Result.new(status: :ok,
-        profile_attributes: { spoken_languages: %w[NL FR] })
+    @original_sync = Directory::ProfileSync.method(:call)
+    Directory::ProfileSync.define_singleton_method(:call) do |**|
+      Data.define(:status, :changed_fields) { def success? = true }.new(status: :updated, changed_fields: %w[spoken_languages])
     end
     sign_in
   end
 
   teardown do
-    Directory::ProfileImport.define_singleton_method(:call, @original_import)
+    Directory::ProfileSync.define_singleton_method(:call, @original_sync)
     page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
     page.current_window.resize_to(1400, 1400)
     Capybara.reset_sessions!
@@ -32,28 +31,27 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     @account.firm.reload.destroy!
   end
 
-  test "settings import is keyboard reachable and labelled at narrow and desktop widths" do
+  test "settings refresh is keyboard reachable and labelled at narrow and desktop widths" do
     each_locale_and_width do |locale, width|
       visit settings_path(locale:)
       assert_accessible_document(locale, width)
-      assert_selector "fieldset legend", count: 2
+      assert_selector "fieldset legend", count: 1
       assert_selector "button.profile-import-button", text: I18n.t("profile_import.button", locale:)
       assert_pointer_target(find(".profile-import-button"))
 
       find("a[href='#{@account.profile.directory_profile_url}']").send_keys(:tab)
-      assert_equal "import_profile", active_element.attribute("value"), "#{locale} #{width}: import follows the profile link"
+      assert_equal "refresh_profile", active_element.attribute("value"), "#{locale} #{width}: refresh follows the profile link"
       assert_keyboard_focus_visible
       active_element.send_keys(:tab)
-      assert_equal "profile[bar_admission_year]", active_element.attribute("id")
+      assert_equal two_factor_authentication_path(locale:), URI(active_element.attribute("href")).path
     end
 
     visit settings_path(locale: :en)
     find("a[href='#{@account.profile.directory_profile_url}']").send_keys(:tab)
     active_element.send_keys(:enter)
-    assert_selector "form[data-unsaved-changes='true']", visible: :all
-    assert_selector "[role='status']", text: "Details loaded. Review them, then save."
+    assert_text I18n.t("profile_import.updated", locale: :en)
     assert_no_selector "[name^='firm[']", visible: :all
-    assert_nil @account.firm.reload.phone
+    assert_no_selector "input[name^='profile['], textarea[name^='profile[']", visible: :all
     assert_accessible_document(:en, 1440)
   end
 

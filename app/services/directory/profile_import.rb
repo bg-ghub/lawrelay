@@ -1,5 +1,6 @@
 require "net/http"
 require "nokogiri"
+require "timeout"
 
 module Directory
   class ProfileImport
@@ -9,6 +10,7 @@ module Directory
     end
 
     MAX_BODY_BYTES = 1.megabyte
+    TIMEOUT_SECONDS = 15
     LANGUAGE_CODES = { "nederlands" => "NL", "frans" => "FR", "duits" => "DE", "engels" => "EN" }.freeze
     PRACTICE_LABELS = %w[voorkeurmateries rechtsdomeinen vakgebieden].freeze
 
@@ -44,7 +46,7 @@ module Directory
     def call
       return failure(:missing_profile) unless @profile_url
 
-      html = @fetcher.call(URI(@profile_url))
+      html = Timeout.timeout(TIMEOUT_SECONDS) { @fetcher.call(URI(@profile_url)) }
       return failure(:unavailable) if html.blank? || html.bytesize > MAX_BODY_BYTES
 
       main = Nokogiri::HTML(html).at_css("main#main")
@@ -55,7 +57,7 @@ module Directory
       return failure(:empty) if profile.empty?
 
       Result.new(status: :ok, profile_attributes: profile)
-    rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, IOError, SystemCallError,
+    rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error, SocketError, IOError, SystemCallError,
       OpenSSL::SSL::SSLError, Net::HTTPBadResponse, Net::ProtocolError, Nokogiri::XML::SyntaxError, ResponseTooLarge
       failure(:unavailable)
     end

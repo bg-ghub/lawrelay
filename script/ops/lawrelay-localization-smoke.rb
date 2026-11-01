@@ -238,7 +238,8 @@ member_security.post("/en/settings/two-factor/verify", params: { authenticity_to
 check(member_security.response.redirect?, "member recovery code verifies sign-in")
 check(member.reload.two_factor_recovery_codes_remaining == 9, "member recovery code is consumed")
 
-member.lawyer_profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111", directory_name: member.full_name)
+member.lawyer_profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111",
+  directory_profile_id: "11111111-1111-4111-8111-111111111111", directory_name: member.full_name, directory_checked_at: Time.current)
 original_import = Directory::ProfileImport.method(:call)
 Directory::ProfileImport.define_singleton_method(:call) do |**|
   Directory::ProfileImport::Result.new(status: :ok, profile_attributes: { spoken_languages: %w[NL FR] })
@@ -248,11 +249,16 @@ begin
     # Independent render cases must not share the account's import rate limit.
     Rails.cache.clear
     visit(member_security, "/#{locale}/settings")
-    check(Nokogiri::HTML(member_security.response.body).at_css("button[value='import_profile']"), "#{locale} linked profile import button renders")
+    document = Nokogiri::HTML(member_security.response.body)
+    check(document.at_css("button[value='refresh_profile']"), "#{locale} linked profile refresh button renders")
+    check(document.css("input[name^='profile['], textarea[name^='profile[']").empty?, "#{locale} professional profile is read-only")
     member_security.patch("/#{locale}/settings", params: { authenticity_token: csrf(member_security),
-      settings_action: "import_profile", profile: { availability_note: "Synthetic unsaved note" } })
-    check(member_security.response.status == 200, "#{locale} profile import preview renders (got #{member_security.response.status})")
-    check(member.lawyer_profile.reload.availability_note != "Synthetic unsaved note" && member.primary_firm.phone.nil?, "#{locale} profile import did not save changes")
+      settings_action: "refresh_profile", profile: { availability_note: "Synthetic ignored note" } })
+    check(member_security.response.redirect?, "#{locale} profile refresh redirects after saving")
+    member_security.follow_redirect!
+    check(member_security.response.status == 200 && member_security.response.body.include?(I18n.t("profile_import.updated", locale:)), "#{locale} saved profile refresh renders")
+    check(member.lawyer_profile.reload.spoken_languages == %w[NL FR], "#{locale} directory languages were saved")
+    check(member.lawyer_profile.availability_note != "Synthetic ignored note" && member.primary_firm.phone.nil?, "#{locale} profile refresh ignores posted professional and company details")
   end
 ensure
   Directory::ProfileImport.define_singleton_method(:call, original_import)

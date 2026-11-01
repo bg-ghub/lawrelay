@@ -59,6 +59,28 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
     assert_empty result.profile_attributes
   end
 
+  test "a total request timeout fails without retaining provider details" do
+    result = Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer",
+      fetcher: ->(_) { raise Timeout::Error, "Private provider transport detail" })
+
+    assert_equal :unavailable, result.status
+    assert_empty result.profile_attributes
+  end
+
+  test "provider fetches run inside the bounded total timeout" do
+    budgets = []
+    original = Timeout.method(:timeout)
+    Timeout.define_singleton_method(:timeout) do |seconds, &block|
+      budgets << seconds
+      block.call
+    end
+
+    assert lookup(profile_html).success?
+    assert_equal [ 15 ], budgets
+  ensure
+    Timeout.define_singleton_method(:timeout, original) if original
+  end
+
   private
 
   def lookup(html)

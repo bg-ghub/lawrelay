@@ -5,9 +5,8 @@
   </div>
 
   <div class="new-assignment__layout">
-    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: @profile_import_preview || false } do |form| %>
-      <%# Enter keeps saving the form even though the import button appears first. %>
-      <%= form.button t("settings.save"), name: "settings_action", value: "save", hidden: true, tabindex: -1 %>
+    <div class="assignment-form settings-panels">
+    <%= form_with url: settings_path, method: :patch, class: "assignment-form", data: { unsaved_changes: false } do |form| %>
       <% errors = [@user, @profile].flat_map { |record| record.errors.full_messages }.uniq %>
       <% if errors.any? %>
         <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors">
@@ -26,26 +25,32 @@
         <div class="field-group"><%= form.label "account[locale]", t("settings.account.language") %><%= searchable_select form, "account[locale]", [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], { selected: @user.locale }, class: "select-field" %></div>
       </fieldset>
 
-      <fieldset class="form-section">
-        <legend><%= t("settings.profile.legend") %></legend>
-        <% if @profile.directory_profile_url.present? %>
-          <div class="field-group"><strong><%= t("directory_onboarding.settings.directory_profile") %></strong><p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p><p class="field-hint"><%= t("directory_onboarding.settings.directory_profile_hint") %></p></div>
-          <% unless @user.system_admin? %><%= form.button t("profile_import.button"), name: "settings_action", value: "import_profile", formnovalidate: true, class: "button button--ghost profile-import-button", data: { turbo: false } %><p class="field-hint"><%= t("profile_import.scope") %></p><% end %>
-        <% end %>
-        <div class="field-group"><%= form.label "profile[bar_admission_year]", t("settings.profile.bar_admission_year") %><%= form.number_field "profile[bar_admission_year]", value: @profile.bar_admission_year, min: 1900, max: Date.current.year, placeholder: t("settings.profile.bar_admission_year_placeholder") %></div>
-        <p class="field-hint"><%= t("directory_onboarding.settings.identity_hint") %></p>
-        <div class="form-row">
-          <div class="field-group"><%= form.label "profile[spoken_languages][]", t("settings.profile.languages") %><%= form.text_field "profile[spoken_languages][]", value: @profile.spoken_languages.join(", "), name: "profile[spoken_languages][]", placeholder: t("settings.profile.languages_placeholder") %></div>
-          <div class="field-group"><%= form.label "profile[practice_areas][]", t("settings.profile.practice_areas") %><%= form.text_field "profile[practice_areas][]", value: @profile.practice_areas.join(", "), name: "profile[practice_areas][]", placeholder: t("settings.profile.practice_areas_placeholder") %></div>
-        </div>
-        <div class="field-group"><%= form.label "profile[court_preferences][]", t("settings.profile.court_preferences") %><%= form.text_field "profile[court_preferences][]", value: @profile.court_preferences.join(", "), name: "profile[court_preferences][]", placeholder: t("settings.profile.court_preferences_placeholder") %><p class="field-hint"><%= t("settings.profile.court_preferences_hint") %></p></div>
-        <div class="field-group"><%= form.label "profile[availability_note]", t("settings.profile.availability_note") %><%= form.text_area "profile[availability_note]", value: @profile.availability_note, rows: 3, maxlength: 500, placeholder: t("settings.profile.availability_note_placeholder") %></div>
-      </fieldset>
-
       <div class="form-actions"><%= link_to t("trust.privacy_requests.index.heading"), privacy_requests_path, class: "button button--ghost" %><%= form.submit t("settings.save"), class: "button button--dark" %></div>
     <% end %>
 
-    <aside class="posting-aside"><span class="posting-aside__number">01</span><h2><%= t("settings.aside.title") %></h2><p><%= t("settings.aside.body") %></p></aside>
+    <section class="form-section directory-profile" aria-labelledby="directory-profile-heading">
+      <h2 id="directory-profile-heading"><%= t("settings.profile.legend") %></h2>
+      <p class="field-hint"><%= t("profile_import.scope") %></p>
+      <% if @profile.spoken_languages.any? || @profile.practice_areas.any? %>
+        <dl class="detail-facts directory-profile__facts">
+          <% if @profile.spoken_languages.any? %><div><dt><%= t("settings.profile.languages") %></dt><dd><%= @profile.spoken_languages.join(", ") %></dd></div><% end %>
+          <% if @profile.practice_areas.any? %><div><dt><%= t("settings.profile.practice_areas") %></dt><dd><%= @profile.practice_areas.join(", ") %></dd></div><% end %>
+        </dl>
+      <% end %>
+      <% if @profile.directory_profile_url.present? %>
+        <p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
+        <% unless @user.system_admin? %>
+          <p class="field-hint" id="profile-refresh-hint"><%= t("profile_import.manual_hint") %></p>
+          <%= form_with url: settings_path, method: :patch, class: "profile-refresh-form" do |form| %>
+            <%= form.button t("profile_import.button"), name: "settings_action", value: "refresh_profile", class: "button button--dark profile-import-button", aria: { describedby: "profile-refresh-hint" }, data: { turbo_submits_with: t("profile_import.refreshing") } %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p><%= t("profile_import.missing_profile") %></p>
+      <% end %>
+    </section>
+    </div>
+
   </div>
 
   <% unless @user.system_admin? %>

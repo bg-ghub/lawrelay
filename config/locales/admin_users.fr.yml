@@ -124,6 +124,7 @@ fr:
           admin_user_restored: Accès au compte rétabli
           admin_user_sessions_revoked: Sessions déconnectées
           account_updated: Données du compte modifiées
+          profile_directory_synced: Profil actualisé depuis Advocaat.be
           admin_bootstrapped: Compte administrateur créé
           account_email_changed: Adresse e-mail modifiée
           account_two_factor_enabled: Double authentification activée

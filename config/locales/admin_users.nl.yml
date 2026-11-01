@@ -124,6 +124,7 @@ nl:
           admin_user_restored: Accounttoegang hersteld
           admin_user_sessions_revoked: Sessies afgemeld
           account_updated: Accountgegevens gewijzigd
+          profile_directory_synced: Profielgegevens vernieuwd via Advocaat.be
           admin_bootstrapped: Beheerdersaccount aangemaakt
           account_email_changed: E-mailadres gewijzigd
           account_two_factor_enabled: Tweestapsverificatie ingeschakeld
