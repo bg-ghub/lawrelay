@@ -88,4 +88,22 @@ class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
 
     assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
   end
+
+  test "court and city preferences match assignments in another interface language" do
+    candidate = create_marketplace_account(prefix: "courtlocale")
+    owner = create_marketplace_account(prefix: "courtlocaleowner")
+    court = CourtCatalogue.options(locale: :fr).find { |option| option.fetch(:labels).length == 4 && option.fetch(:cities).length > 1 }
+    assignment = create_assignment_for(owner, title: "Court language match")
+    assignment.update!(court: court.fetch(:label), city: court.fetch(:city), practice_area: "Tax law")
+
+    candidate.profile.update!(practice_areas: [], court_preferences: [ court.fetch(:labels).first ])
+    assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+
+    candidate.profile.update!(court_preferences: [ court.fetch(:cities).first ])
+    assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+
+    candidate.profile.update!(court_preferences: [ "Namur" ])
+    assignment.update!(court: "Unrelated court", city: "Antwerpen")
+    assert_not_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+  end
 end

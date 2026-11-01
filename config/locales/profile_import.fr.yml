@@ -19,5 +19,6 @@ fr:
     contact_support: "Contactez l’assistance"
     empty: "Aucune langue ni matière préférentielle disponible sur Advocaat.be."
     unavailable: "Impossible de récupérer votre profil. Réessayez plus tard."
+    directory_unavailable: "Advocaat.be est momentanément indisponible. Réessayez plus tard."
     missing_profile: "Aucun profil advocaat.be valide n’est lié."
     rate_limited: "Patientez avant de réimporter les données."

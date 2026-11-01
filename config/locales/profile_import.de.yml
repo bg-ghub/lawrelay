@@ -19,5 +19,6 @@ de:
     contact_support: "Support kontaktieren"
     empty: "Auf Advocaat.be sind keine Sprachen oder Tätigkeitsbereiche verfügbar."
     unavailable: "Ihr Profil konnte nicht abgerufen werden. Versuchen Sie es später erneut."
+    directory_unavailable: "Advocaat.be ist derzeit nicht erreichbar. Versuchen Sie es später erneut."
     missing_profile: "Es ist kein gültiges advocaat.be-Profil verknüpft."
     rate_limited: "Warten Sie kurz, bevor Sie die Daten erneut abrufen."

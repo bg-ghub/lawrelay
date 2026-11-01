@@ -1,0 +1,13 @@
+fr:
+  settings:
+    preferences:
+      legend: "Complément de profil (facultatif)"
+      introduction: "Visible avec vos propositions. Vos juridictions préférées permettent de trouver des missions pertinentes."
+      courts: "Juridictions et villes préférées"
+      courts_hint: "Saisissez une juridiction ou une ville."
+      court_label: "Juridiction ou ville"
+      court_placeholder: "Par exemple : Gand"
+      add_court: "Ajouter une préférence"
+      remove_court: "Supprimer"
+      availability_hint: "Par exemple des jours fixes ou des régions. Maximum 500 caractères. Ne mentionnez aucune donnée de client ou de dossier."
+      self_reported: "Informations fournies par l’avocat."

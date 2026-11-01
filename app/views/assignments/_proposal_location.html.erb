@@ -14,3 +14,13 @@
     </p>
   <% end %>
 <% end %>
+<% if candidate&.marketplace_verified? && (profile = candidate.lawyer_profile) && (proposal.assignment.owned_by?(current_user) || proposal.owned_by?(current_user)) %>
+  <% if profile.bar_admission_year.present? || profile.court_preferences.any? || profile.availability_note.present? %>
+    <dl class="candidate-location candidate-profile">
+      <% if profile.bar_admission_year.present? %><div><dt><%= t("settings.profile.bar_admission_year") %></dt><dd><%= profile.bar_admission_year %></dd></div><% end %>
+      <% if profile.court_preferences.any? %><div><dt><%= t("settings.preferences.courts") %></dt><dd><%= profile.court_preferences.join(" · ") %></dd></div><% end %>
+      <% if profile.availability_note.present? %><div><dt><%= t("settings.profile.availability_note") %></dt><dd><%= profile.availability_note %></dd></div><% end %>
+    </dl>
+    <p class="candidate-profile__note"><%= t("settings.preferences.self_reported") %></p>
+  <% end %>
+<% end %>

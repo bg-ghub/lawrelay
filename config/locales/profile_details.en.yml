@@ -1,0 +1,13 @@
+en:
+  settings:
+    preferences:
+      legend: "Additional profile (optional)"
+      introduction: "Shown with your proposals. Court preferences help you find relevant assignments."
+      courts: "Preferred courts and cities"
+      courts_hint: "Type a court or city."
+      court_label: "Court or city"
+      court_placeholder: "For example: Ghent"
+      add_court: "Add preference"
+      remove_court: "Remove"
+      availability_hint: "For example, regular days or regions. Up to 500 characters. Do not include client or case details."
+      self_reported: "Details provided by the lawyer."

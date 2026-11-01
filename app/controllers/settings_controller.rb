@@ -13,6 +13,7 @@ class SettingsController < ApplicationController
 
     ApplicationRecord.transaction do
       @user.assign_attributes(user_params)
+      @profile.assign_attributes(preference_params)
       clear_directory_evidence! if directory_identity_changed
       reset_profile_verification! if directory_identity_changed
 
@@ -44,12 +45,13 @@ class SettingsController < ApplicationController
     end
 
     key = result.status.in?(%i[missing_profile empty]) ? result.status : :unavailable
-    flash.now[:alert] = t("profile_import.#{key}")
+    key = :directory_unavailable if result.status == :unavailable
+    @directory_refresh_error = t("profile_import.#{key}")
     render :show, formats: :html, status: :unprocessable_content
   end
 
   def profile_import_rate_limited
-    flash.now[:alert] = t("profile_import.rate_limited")
+    @directory_refresh_error = t("profile_import.rate_limited")
     render :show, formats: :html, status: :too_many_requests
   end
 
@@ -60,7 +62,21 @@ class SettingsController < ApplicationController
   end
 
   def user_params
-    params.fetch(:account, {}).permit(:first_name, :last_name, :locale)
+    parameter_group(:account).permit(:first_name, :last_name, :locale)
+  end
+
+  def preference_params
+    return {} if @user.system_admin?
+
+    parameter_group(:preferences).permit(:bar_admission_year, :availability_note, court_preferences: [])
+  end
+
+  def parameter_group(name)
+    value = params[name]
+    return ActionController::Parameters.new if value.nil?
+    raise ActionController::ParameterMissing, name unless value.is_a?(ActionController::Parameters)
+
+    value
   end
 
   def directory_identity_changed?

@@ -35,7 +35,8 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     each_locale_and_width do |locale, width|
       visit settings_path(locale:)
       assert_accessible_document(locale, width)
-      assert_selector "fieldset legend", count: 1
+      assert_selector "fieldset legend", text: I18n.t("settings.account.legend", locale:), exact_text: true
+      assert_selector "fieldset legend", text: I18n.t("settings.preferences.legend", locale:), exact_text: true
       assert_selector "button.profile-import-button", text: I18n.t("profile_import.button", locale:)
       assert_pointer_target(find(".profile-import-button"))
 
@@ -50,6 +51,10 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     end
 
     visit settings_path(locale: :en)
+    find("button[data-action='preferred-courts#add']").click
+    court_ids = all(".preferred-courts__rows input").map { |input| input[:id] }
+    assert court_ids.all?(&:present?), "Each court preference needs an accessible control identifier"
+    assert_equal court_ids.uniq, court_ids
     find("a[href='#{@account.profile.directory_profile_url}']").send_keys(:tab)
     active_element.send_keys(:enter)
     assert_text I18n.t("profile_import.updated", locale: :en)

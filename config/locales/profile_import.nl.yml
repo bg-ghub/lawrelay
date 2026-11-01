@@ -19,5 +19,6 @@ nl:
     contact_support: "Contacteer support"
     empty: "Geen talen of voorkeurmateries beschikbaar op Advocaat.be."
     unavailable: "Uw profiel kon niet worden opgehaald. Probeer het later opnieuw."
+    directory_unavailable: "Advocaat.be is momenteel niet bereikbaar. Probeer later opnieuw."
     missing_profile: "Er is geen geldig advocaat.be-profiel gekoppeld."
     rate_limited: "Wacht voordat u de gegevens opnieuw ophaalt."

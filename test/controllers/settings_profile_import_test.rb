@@ -143,13 +143,17 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
 
   test "failed refresh preserves stored data and renders a localized error" do
     original = @account.profile.attributes
-    with_sync(sync_result(:unavailable, [])) do
-      patch settings_path(locale: :en), params: { settings_action: "refresh_profile" }
-    end
+    %i[nl fr de en].each do |locale|
+      with_sync(sync_result(:unavailable, [])) do
+        patch settings_path(locale:), params: { settings_action: "refresh_profile" }
+      end
 
-    assert_response :unprocessable_content
-    assert_includes response.body, I18n.t("profile_import.unavailable", locale: :en)
-    assert_equal original, @account.profile.reload.attributes
+      assert_response :unprocessable_content
+      assert_select ".directory-profile #directory-refresh-error[role='alert']", text: I18n.t("profile_import.directory_unavailable", locale:)
+      assert_select ".directory-profile__data dd", text: "Example Street 10, 1000 Brussels"
+      assert_select "button[value='refresh_profile']:not([disabled])"
+      assert_equal original, @account.profile.reload.attributes
+    end
   end
 
   test "legacy import action remains accepted as a refresh alias" do

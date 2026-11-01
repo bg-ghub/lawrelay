@@ -1,0 +1,34 @@
+<fieldset class="form-section profile-preferences">
+  <legend><%= t("settings.preferences.legend") %></legend>
+  <p class="field-hint"><%= t("settings.preferences.introduction") %></p>
+  <div class="field-group">
+    <%= form.label "preferences[bar_admission_year]", t("settings.profile.bar_admission_year") %>
+    <%= form.number_field "preferences[bar_admission_year]", value: profile.bar_admission_year, min: 1900, max: Time.current.year, step: 1, placeholder: t("settings.profile.bar_admission_year_placeholder"), class: "profile-preferences__year" %>
+  </div>
+  <div class="field-group preferred-courts" data-controller="preferred-courts" data-preferred-courts-limit-value="<%= LawyerProfile::PREFERENCE_LIMITS.fetch(:court_preferences).fetch(:count) %>">
+    <p class="preferred-courts__label" id="preferred-courts-label"><%= t("settings.preferences.courts") %></p>
+    <p class="field-hint" id="preferred-courts-hint"><%= t("settings.preferences.courts_hint") %></p>
+    <%= hidden_field_tag "preferences[court_preferences][]", "" %>
+    <div class="preferred-courts__rows" data-preferred-courts-target="rows" role="group" aria-labelledby="preferred-courts-label" aria-describedby="preferred-courts-hint">
+      <% (profile.court_preferences.presence || [""]).each_with_index do |preference, index| %>
+        <div class="preferred-courts__row" data-preferred-courts-target="row">
+          <%= text_field_tag "preferences[court_preferences][]", preference, id: "preferred-court-#{index}", list: "preferred-court-options", maxlength: 180, placeholder: t("settings.preferences.court_placeholder"), aria: { label: t("settings.preferences.court_label") } %>
+          <button type="button" class="button button--ghost button--small" data-action="preferred-courts#remove" data-preferred-courts-target="remove" hidden><%= t("settings.preferences.remove_court") %></button>
+        </div>
+      <% end %>
+    </div>
+    <datalist id="preferred-court-options"><% preferred_court_options.each do |option| %><option value="<%= option %>"></option><% end %></datalist>
+    <template data-preferred-courts-target="template">
+      <div class="preferred-courts__row" data-preferred-courts-target="row">
+        <%= text_field_tag "preferences[court_preferences][]", "", id: "preferred-court-template", list: "preferred-court-options", maxlength: 180, placeholder: t("settings.preferences.court_placeholder"), aria: { label: t("settings.preferences.court_label") } %>
+        <button type="button" class="button button--ghost button--small" data-action="preferred-courts#remove" data-preferred-courts-target="remove"><%= t("settings.preferences.remove_court") %></button>
+      </div>
+    </template>
+    <button type="button" class="button button--ghost button--small preferred-courts__add" data-action="preferred-courts#add" data-preferred-courts-target="add" hidden><%= t("settings.preferences.add_court") %></button>
+  </div>
+  <div class="field-group">
+    <%= form.label "preferences[availability_note]", t("settings.profile.availability_note") %>
+    <%= form.text_area "preferences[availability_note]", value: profile.availability_note, rows: 3, maxlength: 500, placeholder: t("settings.profile.availability_note_placeholder"), aria: { describedby: "availability-hint" } %>
+    <p class="field-hint" id="availability-hint"><%= t("settings.preferences.availability_hint") %></p>
+  </div>
+</fieldset>

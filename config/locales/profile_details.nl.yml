@@ -1,0 +1,13 @@
+nl:
+  settings:
+    preferences:
+      legend: "Aanvullend profiel (optioneel)"
+      introduction: "Zichtbaar bij uw voorstellen. Voorkeursrechtbanken helpen u passende opdrachten te vinden."
+      courts: "Voorkeursrechtbanken en steden"
+      courts_hint: "Typ een rechtbank of stad."
+      court_label: "Rechtbank of stad"
+      court_placeholder: "Bijvoorbeeld: Gent"
+      add_court: "Voorkeur toevoegen"
+      remove_court: "Verwijderen"
+      availability_hint: "Bijvoorbeeld vaste dagen of regio’s. Maximaal 500 tekens. Vermeld geen cliënt- of dossiergegevens."
+      self_reported: "Door de advocaat opgegeven."

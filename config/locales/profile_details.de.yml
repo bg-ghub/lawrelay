@@ -1,0 +1,13 @@
+de:
+  settings:
+    preferences:
+      legend: "Zusätzliche Profilangaben (freiwillig)"
+      introduction: "Wird mit Ihren Angeboten angezeigt. Bevorzugte Gerichte helfen Ihnen, passende Aufträge zu finden."
+      courts: "Bevorzugte Gerichte und Städte"
+      courts_hint: "Geben Sie ein Gericht oder eine Stadt ein."
+      court_label: "Gericht oder Stadt"
+      court_placeholder: "Zum Beispiel: Gent"
+      add_court: "Präferenz hinzufügen"
+      remove_court: "Entfernen"
+      availability_hint: "Zum Beispiel feste Tage oder Regionen. Höchstens 500 Zeichen. Keine Mandanten- oder Aktenangaben eintragen."
+      self_reported: "Vom Anwalt selbst angegeben."

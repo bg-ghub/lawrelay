@@ -53,6 +53,7 @@ nl:
             - "Uw openbare beroepsadres en balie van Advocaat.be worden bij uw voorstel getoond aan de opdrachtgever. Bij een uurtarief voor zittingsvervanging berekenen we op onze eigen server de geschatte rijafstand en reistijd met OpenStreetMap en BeSt-adresgegevens. We gebruiken geen live locatie."
             - "Professionele identiteit: uw officiële profiel, vermelde naam en e-mailadres en professionele verificatiestatus."
             - "Professionele profielgegevens, waaronder talen en rechtsdomeinen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
+            - "Optioneel kunt u uw jaar van toetreding tot de balie, voorkeursrechtbanken of steden en beschikbaarheid toevoegen. Deze gegevens zijn zichtbaar bij uw voorstellen voor de opdrachtgever; uw rechtbankvoorkeuren helpen ons relevante opdrachten voor te stellen. U kunt ze in instellingen aanpassen of wissen."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
             - "Alleen voor niet-aangemelde openbare bezoeken: cookieless Umami-statistieken met een beperkt paginapad, de oorsprong van de verwijzer en gewone metadata van het browserverzoek. We sturen geen accountgegevens, private pagina's, formulieren, zoekopdrachten of opdrachtdetails door."
             - "Voor anonieme bezoekers buiten België gebruikt een lokale beveiligingscontrole het IP-adres om het land te bepalen en bewaart zij kort een verificatierecord."

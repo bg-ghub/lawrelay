@@ -60,4 +60,7 @@
   <% elsif source_url.nil? %>
     <p class="field-hint"><%= t("profile_import.missing_profile") %></p>
   <% end %>
+  <% if @directory_refresh_error.present? %>
+    <p id="directory-refresh-error" class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><%= @directory_refresh_error %></p>
+  <% end %>
 </section>
