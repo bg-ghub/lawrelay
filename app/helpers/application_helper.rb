@@ -1,6 +1,25 @@
 module ApplicationHelper
   SOCIAL_LOCALES = { nl: "nl_BE", fr: "fr_BE", de: "de_BE", en: "en_GB" }.freeze
 
+  def advocaat_webmail_address?(email)
+    email.to_s.strip.match?(/\A[^@\s]+@advocaat\.be\z/i)
+  end
+
+  def advocaat_webmail_hint(email, registration: false)
+    matches = advocaat_webmail_address?(email)
+    return unless registration || matches
+
+    options = { class: "field-hint advocaat-webmail-hint" }
+    if registration
+      options[:class] += " registration-profile__listed-email-notice"
+      options[:hidden] = !matches
+      options[:data] = { registration_profile_target: "webmailHint" }
+    end
+    destination = link_to "webmail.advocaat.be", "https://webmail.advocaat.be/",
+      target: "_blank", rel: "noopener noreferrer", class: "text-link"
+    tag.p t("directory_onboarding.webmail_hint_html", link: destination), **options
+  end
+
   def searchable_select(form, method, choices, options = {}, html_options = {})
     tag.div(class: "searchable-select", data: {
       controller: "searchable-select",

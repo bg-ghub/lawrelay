@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["url", "token", "fetch", "status", "initial", "details", "summaryName", "summaryEmail"]
+  static targets = ["url", "token", "fetch", "status", "initial", "details", "summaryName", "summaryEmail", "webmailHint"]
   static values = { url: String, fetchLabel: String, loading: String, loaded: String, unavailable: String, stale: String, ready: Boolean, importedName: String, listedEmail: String }
 
   connect() {
@@ -102,6 +102,7 @@ export default class extends Controller {
   updateSummary() {
     this.summaryNameTarget.textContent = this.importedName
     this.summaryEmailTarget.textContent = this.listedEmail
+    this.webmailHintTarget.hidden = !/^[^@\s]+@advocaat\.be$/i.test(this.listedEmail.trim())
   }
 
   showStatus(message, error = false) {

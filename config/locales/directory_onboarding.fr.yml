@@ -38,3 +38,4 @@ fr:
       open_directory_profile: "Ouvrir votre profil Advocaat.be"
       directory_profile_hint: "Ce lien sert à confirmer votre identité professionnelle."
       identity_hint: "Un changement de nom lance une nouvelle vérification. Contactez le support pour changer de profil officiel."
+    webmail_hint_html: "Connectez-vous à %{link} pour lire votre e-mail."

@@ -8,7 +8,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
   setup do
     @original_call = Directory::SignupProfile.method(:call)
     @result = Directory::SignupProfile::Result.new(status: :ok, profile_url: PROFILE_URL, name: "Jane van den Berg",
-      first_name: "Jane", last_name: "van den Berg", email_address: "listed@example.test",
+      first_name: "Jane", last_name: "van den Berg", email_address: "listed@advocaat.be",
       profile_attributes: { spoken_languages: %w[NL FR], practice_areas: [ "Familierecht" ] })
     result = @result
     calls = @calls = []
@@ -32,7 +32,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     body = response.parsed_body
     assert_equal "ok", body["status"]
     assert_equal "Jane van den Berg", body["name"]
-    assert_equal "listed@example.test", body["email_address"]
+    assert_equal "listed@advocaat.be", body["email_address"]
     assert body["token"].present?
     assert_equal [ { profile_url: PROFILE_URL } ], @calls
     assert_equal "no-store", response.headers["Cache-Control"]
@@ -49,7 +49,8 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_select "input[name='registration[first_name]'], input[name='registration[last_name]']", count: 0
     assert_select "[data-registration-profile-target='summaryName']", text: "Jane van den Berg"
     assert_select "input[name='registration[email_address]']", count: 0
-    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@example.test"
+    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@advocaat.be"
+    assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be"
     assert_includes response.body, I18n.t("signup_profile.confirm_email", locale: :en)
     assert_not_includes response.body, "working@example.test"
     assert_select "input[name='registration[firm_name]'], input[name='registration[address_line_1]']", count: 0
@@ -76,7 +77,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: registration_attributes }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    user = User.find_by!(email_address: "listed@example.test")
+    user = User.find_by!(email_address: "listed@advocaat.be")
     assert_nil user.email_verified_at
     assert_equal "pending", user.lawyer_profile.verification_status
     assert_nil user.lawyer_profile.directory_profile_id
@@ -115,7 +116,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: registration_attributes.merge(firm_name: "", enterprise_number: "") }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    assert_equal Firm::INTERNAL_WORKSPACE_NAME, User.find_by!(email_address: "listed@example.test").primary_firm.name
+    assert_equal Firm::INTERNAL_WORKSPACE_NAME, User.find_by!(email_address: "listed@advocaat.be").primary_firm.name
   end
 
   test "an invalid preview retains the link and requires a new lookup" do
@@ -135,7 +136,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: registration_attributes }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    assert_equal %w[NL FR], User.find_by!(email_address: "listed@example.test").lawyer_profile.spoken_languages
+    assert_equal %w[NL FR], User.find_by!(email_address: "listed@advocaat.be").lawyer_profile.spoken_languages
   end
 
   test "posted names cannot replace the signed directory identity" do
@@ -144,7 +145,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
       post registration_path(locale: :en), params: { registration: attributes }
     end
     assert_redirected_to verification_status_path(locale: :en)
-    user = User.find_by!(email_address: "listed@example.test")
+    user = User.find_by!(email_address: "listed@advocaat.be")
     assert_equal "Jane", user.first_name
     assert_equal "van den Berg", user.last_name
     assert_not user.email_verified?

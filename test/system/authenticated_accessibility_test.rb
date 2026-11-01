@@ -43,6 +43,9 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
       assert_equal "refresh_profile", active_element.attribute("value"), "#{locale} #{width}: refresh follows the profile link"
       assert_keyboard_focus_visible
       active_element.send_keys(:tab)
+      assert_equal "mailto:support@lawrelay.be", active_element.attribute("href")
+      assert_keyboard_focus_visible
+      active_element.send_keys(:tab)
       assert_equal two_factor_authentication_path(locale:), URI(active_element.attribute("href")).path
     end
 

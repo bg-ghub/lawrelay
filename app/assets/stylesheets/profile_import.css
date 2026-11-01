@@ -128,6 +128,25 @@ a.directory-profile__source:hover {
   margin: 0;
 }
 
+.directory-profile .directory-profile__support {
+  margin: .8rem 0 0;
+  font-size: .8rem;
+}
+
+.directory-profile__support .text-link {
+  font-size: inherit;
+}
+
+.field-hint.advocaat-webmail-hint {
+  margin: .5rem 0 0;
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+.advocaat-webmail-hint .text-link {
+  font-size: inherit;
+}
+
 @media (max-width: 520px) {
   .directory-profile__data {
     grid-template-columns: minmax(0, 1fr);

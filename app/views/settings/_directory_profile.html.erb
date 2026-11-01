@@ -19,7 +19,7 @@
     </div>
     <div class="directory-profile__field">
       <dt><%= t("profile_import.fields.email") %></dt>
-      <dd><% if profile.directory_email.present? %><%= profile.directory_email %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
+      <dd><% if profile.directory_email.present? %><span class="directory-profile__email"><%= profile.directory_email %></span><%= advocaat_webmail_hint(profile.directory_email) %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
     </div>
     <div class="directory-profile__field">
       <dt><%= t("settings.profile.languages") %></dt>
@@ -50,6 +50,7 @@
         <%= form.button t("profile_import.button"), name: "settings_action", value: "refresh_profile", class: "button button--dark profile-import-button", aria: { describedby: "profile-refresh-hint" }, data: { turbo_submits_with: t("profile_import.refreshing") } %>
       <% end %>
     </div>
+    <p class="field-hint directory-profile__support"><%= t("profile_import.still_wrong") %> <%= mail_to "support@lawrelay.be", t("profile_import.contact_support"), class: "text-link" %>.</p>
   <% elsif source_url.nil? %>
     <p class="field-hint"><%= t("profile_import.missing_profile") %></p>
   <% end %>

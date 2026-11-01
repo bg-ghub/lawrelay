@@ -9,15 +9,18 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
 
   test "shows the current verification states" do
     user = users(:one)
+    user.update!(email_address: "pending@advocaat.be", email_verified_at: nil)
     firm = Firm.create!(name: "Example Legal", verification_status: "pending")
     user.memberships.create!(firm: firm, role: "owner")
-    user.create_lawyer_profile!(bar_association: "BRUSSELS", bar_number: "ONE-1", verification_status: "pending")
+    user.create_lawyer_profile!(bar_association: "BRUSSELS", bar_number: "ONE-1", verification_status: "pending",
+      directory_email: "directory@example.test")
     sign_in_as(user)
 
     get verification_status_path(locale: :en)
 
     assert_response :success
-    assert_select "h2", text: I18n.t("directory_onboarding.status.pending_title", locale: :en)
+    assert_select "h2", text: I18n.t("auth.verification_status.check_inbox", locale: :en)
+    assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be"
   end
 
   test "queues a directory retry without looking up the provider in the request" do

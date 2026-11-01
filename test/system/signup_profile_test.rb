@@ -7,7 +7,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     @nonce = SecureRandom.hex(5)
     @profile_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
     @second_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
-    @listed_email = "listed-#{@nonce}@example.test"
+    @listed_email = "listed-#{@nonce}@advocaat.be"
     @working_email = "working-#{@nonce}@example.test"
     @registered_emails = [ @listed_email, @working_email ]
     @pages = {
@@ -64,6 +64,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_empty ActionMailer::Base.deliveries
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
     assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_selector ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be", visible: :visible
     assert_text I18n.t("signup_profile.confirm_email", locale: :en)
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_no_selector "[name='registration[firm_name]'], [name='registration[enterprise_number]']", visible: :all
@@ -105,6 +106,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     load_profile
     check I18n.t("signup_profile.alternative_email", locale: :en)
     assert_no_selector ".registration-profile__listed-email-notice", visible: :visible
+    assert_no_selector ".advocaat-webmail-hint", visible: :visible
     fill_credentials
 
     perform_enqueued_jobs do
@@ -155,6 +157,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_text I18n.t("signup_profile.loaded", locale: :en)
     assert_selector ".registration-profile__summary", text: "Grace Example"
     assert_selector "[data-registration-profile-target='summaryEmail']", text: "second-#{@nonce}@example.test"
+    assert_no_selector ".advocaat-webmail-hint", visible: :visible
     assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
 
@@ -205,6 +208,7 @@ class SignupProfileTest < ApplicationSystemTestCase
       load_profile(locale:)
       assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
       assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+      assert_selector ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be", visible: :visible
       assert_text I18n.t("signup_profile.confirm_email", locale:)
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       assert_no_text(/translation missing/i)

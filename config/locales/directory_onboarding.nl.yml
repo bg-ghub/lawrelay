@@ -38,3 +38,4 @@ nl:
       open_directory_profile: "Open je profiel op Advocaat.be"
       directory_profile_hint: "We gebruiken deze link om je professionele identiteit te bevestigen."
       identity_hint: "Bij een naamswijziging controleren we opnieuw. Contacteer support voor een ander officieel profiel."
+    webmail_hint_html: "Meld je aan op %{link} om je e-mail te lezen."

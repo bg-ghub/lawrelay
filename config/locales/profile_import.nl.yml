@@ -15,6 +15,8 @@ nl:
     updated: "Profielgegevens vernieuwd."
     scope: "Gegevens worden dagelijks gesynchroniseerd met Advocaat.be."
     manual_hint: "Gegevens incorrect? Ververs manueel via deze knop."
+    still_wrong: "Nog steeds incorrect?"
+    contact_support: "Contacteer support"
     empty: "Geen talen of voorkeurmateries beschikbaar op Advocaat.be."
     unavailable: "Je profiel kon niet worden opgehaald. Probeer het later opnieuw."
     missing_profile: "Er is geen geldig advocaat.be-profiel gekoppeld."

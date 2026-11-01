@@ -10,7 +10,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
   setup do
     @account = create_marketplace_account(prefix: "importmember")
     @account.profile.update!(directory_profile_url: PROFILE_URL, directory_name: @account.user.full_name,
-      directory_email: "directory@example.test",
+      directory_email: "directory@advocaat.be",
       spoken_languages: [ "NL" ], practice_areas: [ "Existing area" ], court_preferences: [ "Existing court" ],
       availability_note: "Existing availability")
     sign_in_as(@account.user)
@@ -25,6 +25,8 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
         assert_select "input[name^='profile['], textarea[name^='profile[']", count: 0
         assert_select ".field-hint", text: I18n.t("profile_import.scope", locale: locale)
         assert_includes response.body, I18n.t("profile_import.manual_hint", locale: locale)
+        assert_select ".directory-profile__support a[href='mailto:support@lawrelay.be']", text: I18n.t("profile_import.contact_support", locale: locale)
+        assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be"
       end
     end
   end
@@ -39,7 +41,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
           assert_select "dt", text: I18n.t("profile_import.fields.name", locale: locale)
           assert_select "dd", text: @account.profile.directory_name
           assert_select "dt", text: I18n.t("profile_import.fields.email", locale: locale)
-          assert_select "dd", text: "directory@example.test"
+          assert_select ".directory-profile__email", text: "directory@advocaat.be"
           assert_select "dt", text: I18n.t("settings.profile.languages", locale: locale)
           assert_select "li.directory-profile__tag", text: I18n.t("profile_import.language_names.nl", locale: locale)
           assert_select "dt", text: I18n.t("settings.profile.practice_areas", locale: locale)
@@ -92,8 +94,22 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
   test "GET keeps the source card email separate from the account email" do
     get settings_path(locale: :en)
     assert_response :success
-    assert_select ".directory-profile__data dd", text: "directory@example.test"
+    assert_select ".directory-profile__email", text: "directory@advocaat.be"
     assert_select ".directory-profile__data dd", text: @account.user.email_address, count: 0
+  end
+
+  test "webmail hint only accepts the exact advocaat.be domain" do
+    [ " Directory@ADVOCAAT.BE ", "directory@notadvocaat.be", "directory@advocaat.be.evil" ].each do |email|
+      @account.profile.update!(directory_email: email)
+      get settings_path(locale: :en)
+      assert_response :success
+
+      if email.casecmp(" Directory@ADVOCAAT.BE ").zero?
+        assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be"
+      else
+        assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", count: 0
+      end
+    end
   end
 
   test "refresh persists only directory fields and ignores posted account, profile and company values" do

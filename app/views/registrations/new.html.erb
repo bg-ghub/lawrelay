@@ -49,6 +49,7 @@
           <strong><%= t("signup_profile.listed_email") %></strong>
           <p data-registration-profile-target="summaryEmail"><%= @directory_identity&.fetch("email_address", "") %></p>
           <p class="field-hint registration-profile__listed-email-notice"><%= t("signup_profile.confirm_email") %></p>
+          <%= advocaat_webmail_hint(@directory_identity&.fetch("email_address", ""), registration: true) %>
         </div>
         <div class="field-group registration-profile__email-choice">
           <label class="toggle-row"><%= form.check_box :request_alternative_email, { checked: @request_alternative_email }, "1", "0" %><span><%= t("signup_profile.alternative_email") %></span></label>
