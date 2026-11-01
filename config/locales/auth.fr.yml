@@ -21,6 +21,7 @@ fr:
       heading: "Connexion"
       lede: "Connectez-vous avec votre adresse e-mail professionnelle."
       form_title: "Connexion"
+      email_hint: "(en principe, l’adresse e-mail indiquée sur votre profil advocaat.be)"
       submit: "Se connecter"
       forgot_password: "Mot de passe oublié ?"
       new_here: "Nouveau sur LawRelay ?"

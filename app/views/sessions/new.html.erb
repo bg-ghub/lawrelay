@@ -9,7 +9,8 @@
       <fieldset class="form-section" aria-label="<%= t("auth.sessions.form_title") %>">
         <div class="field-group">
           <%= form.label :email_address, t("auth.fields.professional_email") %>
-          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+          <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address], aria: { describedby: "session-email-hint" } %>
+          <p class="field-hint" id="session-email-hint"><%= t("auth.sessions.email_hint") %></p>
         </div>
         <div class="field-group">
           <%= form.label :password, t("auth.fields.password") %>

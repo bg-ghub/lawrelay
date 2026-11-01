@@ -21,6 +21,7 @@ nl:
       heading: "Aanmelden"
       lede: "Meld u aan met uw professionele e-mailadres."
       form_title: "Aanmelden"
+      email_hint: "(in principe het e-mailadres vermeld bij uw profiel op advocaat.be)"
       submit: "Aanmelden"
       forgot_password: "Wachtwoord vergeten?"
       new_here: "Nieuw bij LawRelay?"

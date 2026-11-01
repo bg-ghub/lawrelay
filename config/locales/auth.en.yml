@@ -21,6 +21,7 @@ en:
       heading: "Sign in"
       lede: "Sign in with your professional email address."
       form_title: "Sign in"
+      email_hint: "(normally the email address listed on your advocaat.be profile)"
       submit: "Sign in"
       forgot_password: "Forgot password?"
       new_here: "New to LawRelay?"
