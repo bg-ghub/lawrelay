@@ -2,7 +2,7 @@ fr:
   settings:
     preferences:
       legend: "Complément de profil (facultatif)"
-      introduction: "Visible avec vos propositions. Vos juridictions préférées permettent de trouver des missions pertinentes."
+      introduction: "Votre expérience est visible avec vos propositions."
       courts: "Juridictions et villes préférées"
       courts_hint: "Saisissez une juridiction ou une ville."
       court_label: "Juridiction ou ville"

@@ -2,7 +2,7 @@ de:
   settings:
     preferences:
       legend: "Zusätzliche Profilangaben (freiwillig)"
-      introduction: "Wird mit Ihren Angeboten angezeigt. Bevorzugte Gerichte helfen Ihnen, passende Aufträge zu finden."
+      introduction: "Ihre Erfahrung wird mit Ihren Angeboten angezeigt."
       courts: "Bevorzugte Gerichte und Städte"
       courts_hint: "Geben Sie ein Gericht oder eine Stadt ein."
       court_label: "Gericht oder Stadt"

@@ -2,7 +2,7 @@ en:
   settings:
     preferences:
       legend: "Additional profile (optional)"
-      introduction: "Shown with your proposals. Court preferences help you find relevant assignments."
+      introduction: "Your experience is shown with your proposals."
       courts: "Preferred courts and cities"
       courts_hint: "Type a court or city."
       court_label: "Court or city"

@@ -4,7 +4,7 @@ require_relative "../../support/marketplace_test_factory"
 class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
   include MarketplaceTestFactory
 
-  test "ranks open assignments by court, practice area and legal-task language" do
+  test "ranks open assignments by practice area and legal-task language" do
     candidate = create_marketplace_account(prefix: "suggestioncandidate")
     candidate.profile.update!(
       practice_areas: [ "Commercial law" ],
@@ -89,7 +89,7 @@ class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
     assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
   end
 
-  test "court and city preferences match assignments in another interface language" do
+  test "legacy court and city preferences do not suggest unrelated assignments" do
     candidate = create_marketplace_account(prefix: "courtlocale")
     owner = create_marketplace_account(prefix: "courtlocaleowner")
     court = CourtCatalogue.options(locale: :fr).find { |option| option.fetch(:labels).length == 4 && option.fetch(:cities).length > 1 }
@@ -97,13 +97,29 @@ class Matching::AssignmentSuggestionsTest < ActiveSupport::TestCase
     assignment.update!(court: court.fetch(:label), city: court.fetch(:city), practice_area: "Tax law")
 
     candidate.profile.update!(practice_areas: [], court_preferences: [ court.fetch(:labels).first ])
-    assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+    assert_not_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
 
     candidate.profile.update!(court_preferences: [ court.fetch(:cities).first ])
-    assert_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+    assert_not_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
 
     candidate.profile.update!(court_preferences: [ "Namur" ])
     assignment.update!(court: "Unrelated court", city: "Antwerpen")
     assert_not_includes Matching::AssignmentSuggestions.new(user: candidate.user).call, assignment
+  end
+
+  test "legacy preferences cannot change the order of relevant assignments" do
+    candidate = create_marketplace_account(prefix: "legacyranking")
+    candidate.profile.update!(practice_areas: [ "Commercial law" ])
+    owner = create_marketplace_account(prefix: "legacyrankingowner")
+    earlier = create_assignment_for(owner, title: "Earlier practice match")
+    earlier.update!(court: "Unrelated court", city: "Gent", starts_at: 1.day.from_now, response_deadline_at: 23.hours.from_now)
+    later = create_assignment_for(owner, title: "Later practice match")
+    later.update!(court: "Legacy preferred court", city: "Antwerpen", starts_at: 2.days.from_now)
+    baseline = Matching::AssignmentSuggestions.new(user: candidate.user).call
+    assert_equal [ earlier, later ], baseline
+
+    candidate.profile.update!(court_preferences: [ "Legacy preferred court", "Antwerpen" ], availability_note: "Antwerpen only")
+
+    assert_equal baseline, Matching::AssignmentSuggestions.new(user: candidate.user).call
   end
 end

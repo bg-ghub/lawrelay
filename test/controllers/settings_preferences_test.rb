@@ -15,9 +15,10 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     sign_in_as(@account.user)
   end
 
-  test "members save only their optional details without email or another identity check" do
+  test "members save their admission year and ignore removed fields without another identity check" do
     @account.user.memberships.first.update!(role: "member")
-    original = @account.profile.attributes.except("bar_admission_year", "court_preferences", "availability_note", "updated_at")
+    @account.profile.update!(court_preferences: [ "Existing court" ], availability_note: "Existing note")
+    original = @account.profile.attributes.except("bar_admission_year", "updated_at")
 
     assert_difference "AuditEvent.count", 1 do
       assert_no_enqueued_jobs do
@@ -33,17 +34,19 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_path(locale: :en)
     profile = @account.profile.reload
     assert_equal 2018, profile.bar_admission_year
-    assert_equal [ "Gent", "Antwerpen" ], profile.court_preferences
-    assert_equal "Tuesday mornings.", profile.availability_note
-    assert_equal original, profile.attributes.except("bar_admission_year", "court_preferences", "availability_note", "updated_at")
+    assert_equal [ "Existing court" ], profile.court_preferences
+    assert_equal "Existing note", profile.availability_note
+    assert_equal original, profile.attributes.except("bar_admission_year", "updated_at")
     assert_predicate @account.user.reload, :marketplace_verified?
     event = AuditEvent.order(:id).last
     assert_equal profile, event.auditable
     assert_equal false, event.metadata.fetch("profile_requires_review")
-    assert_includes event.metadata.fetch("changed_fields"), "court_preferences"
+    assert_includes event.metadata.fetch("changed_fields"), "bar_admission_year"
+    assert_not_includes event.metadata.fetch("changed_fields"), "court_preferences"
+    assert_not_includes event.metadata.fetch("changed_fields"), "availability_note"
   end
 
-  test "members can clear all optional details" do
+  test "members can clear their admission year without clearing retained historical fields" do
     @account.profile.update!(bar_admission_year: 2018, court_preferences: [ "Gent" ], availability_note: "Tuesdays")
 
     patch settings_path(locale: :en), params: { preferences: {
@@ -52,8 +55,8 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to settings_path(locale: :en)
     assert_nil @account.profile.reload.bar_admission_year
-    assert_empty @account.profile.court_preferences
-    assert_nil @account.profile.availability_note
+    assert_equal [ "Gent" ], @account.profile.court_preferences
+    assert_equal "Tuesdays", @account.profile.availability_note
   end
 
   test "invalid admission year rolls back account and profile changes" do
@@ -73,7 +76,7 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     assert_equal original_profile, @account.profile.reload.attributes
   end
 
-  test "oversized courts and availability are rejected atomically" do
+  test "removed courts and availability parameters cannot change stored fields" do
     original_user = @account.user.attributes
     original_profile = @account.profile.attributes
 
@@ -82,10 +85,10 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
       { availability_note: "x" * 501 } ].each do |preferences|
       assert_no_difference "AuditEvent.count" do
         assert_no_enqueued_jobs do
-          patch settings_path(locale: :en), params: { account: { locale: "fr" }, preferences: preferences }
+          patch settings_path(locale: :en), params: { preferences: preferences }
         end
       end
-      assert_response :unprocessable_content
+      assert_redirected_to settings_path(locale: :en)
       assert_equal original_user, @account.user.reload.attributes
       assert_equal original_profile, @account.profile.reload.attributes
     end
@@ -134,15 +137,15 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     assert_equal "en", @account.user.reload.locale
   end
 
-  test "all languages offer typed court and city choices while directory details stay read only" do
+  test "all languages offer only admission year while directory details stay read only" do
     %i[nl fr de en].each do |locale|
       get settings_path(locale:)
       assert_response :success
       assert_select ".profile-preferences legend", text: I18n.t("settings.preferences.legend", locale:)
       assert_select "input[name='preferences[bar_admission_year]'][max='#{Time.current.year}']"
-      assert_select "input[list='preferred-court-options'][name='preferences[court_preferences][]']"
-      assert_select "datalist#preferred-court-options option", minimum: 50
-      assert_select "textarea[name='preferences[availability_note]'][maxlength='500']"
+      assert_select "[name='preferences[court_preferences][]']", count: 0
+      assert_select "datalist#preferred-court-options", count: 0
+      assert_select "[name='preferences[availability_note]']", count: 0
       assert_select "input[name^='profile['], textarea[name^='profile[']", count: 0
       assert_select ".directory-profile__tag", text: "Commercial law"
       assert_not_includes response.body, "translation missing"

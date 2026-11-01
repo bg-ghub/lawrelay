@@ -14,14 +14,15 @@ class ProposalProfileDetailsTest < ActionDispatch::IntegrationTest
     @proposal = create_proposal_for(@assignment, @candidate)
   end
 
-  test "owner sees optional candidate details as lawyer supplied context in all languages" do
+  test "owner sees admission year but no retired candidate preferences in all languages" do
     sign_in_as(@owner.user)
     %i[nl fr de en].each do |locale|
       get assignment_path(@assignment, locale:)
       assert_response :success
       assert_select ".candidate-profile dd", text: "2014"
-      assert_select ".candidate-profile dd", text: "Gent · Antwerpen"
-      assert_select ".candidate-profile dd", text: "Tuesday mornings <script>private</script>"
+      assert_select ".candidate-profile dd", count: 1
+      assert_not_includes response.body, "Gent · Antwerpen"
+      assert_not_includes response.body, "Tuesday mornings"
       assert_select ".candidate-profile__note", text: I18n.t("settings.preferences.self_reported", locale:)
       assert_select "script", text: "private", count: 0
     end
@@ -37,7 +38,7 @@ class ProposalProfileDetailsTest < ActionDispatch::IntegrationTest
 
   test "an empty or suspended candidate profile has no optional context" do
     sign_in_as(@owner.user)
-    @candidate.profile.update!(bar_admission_year: nil, court_preferences: [], availability_note: nil)
+    @candidate.profile.update!(bar_admission_year: nil)
     get assignment_path(@assignment, locale: :en)
     assert_select ".candidate-profile", count: 0
     @candidate.profile.update!(bar_admission_year: 2014)

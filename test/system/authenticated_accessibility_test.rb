@@ -51,10 +51,6 @@ class AuthenticatedAccessibilityTest < ApplicationSystemTestCase
     end
 
     visit settings_path(locale: :en)
-    find("button[data-action='preferred-courts#add']").click
-    court_ids = all(".preferred-courts__rows input").map { |input| input[:id] }
-    assert court_ids.all?(&:present?), "Each court preference needs an accessible control identifier"
-    assert_equal court_ids.uniq, court_ids
     find("a[href='#{@account.profile.directory_profile_url}']").send_keys(:tab)
     active_element.send_keys(:enter)
     assert_text I18n.t("profile_import.updated", locale: :en)

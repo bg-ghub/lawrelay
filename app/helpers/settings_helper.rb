@@ -1,8 +1,4 @@
 module SettingsHelper
-  def preferred_court_options
-    CourtCatalogue.options.flat_map { |court| [ court.fetch(:label), court.fetch(:city) ] }.uniq
-  end
-
   def directory_profile_language_name(value)
     code = value.to_s.downcase
     return value unless code.in?(%w[nl fr de en])

@@ -1,14 +1,4 @@
 .profile-preferences__year { max-width: 12rem; }
-.preferred-courts__label { margin: 0; color: var(--ink); font-size: .8rem; font-weight: 700; }
-.preferred-courts__rows { display: grid; gap: .6rem; }
-.preferred-courts__row { display: flex; align-items: center; gap: .5rem; min-width: 0; }
-.preferred-courts__row input { flex: 1; min-width: 0; }
-.preferred-courts__row .button { flex: 0 0 auto; }
-.preferred-courts__add { margin-top: .7rem; }
 .candidate-profile { border-top: 1px solid var(--line); padding-top: .7rem; }
 .candidate-profile__note { color: var(--muted); font-size: .7rem; }
 .candidate-profile dd { white-space: pre-line; }
-@media (max-width: 520px) {
-  .preferred-courts__row { align-items: stretch; flex-direction: column; }
-  .preferred-courts__row .button { align-self: flex-end; }
-}

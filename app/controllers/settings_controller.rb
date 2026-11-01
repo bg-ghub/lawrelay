@@ -68,7 +68,7 @@ class SettingsController < ApplicationController
   def preference_params
     return {} if @user.system_admin?
 
-    parameter_group(:preferences).permit(:bar_admission_year, :availability_note, court_preferences: [])
+    parameter_group(:preferences).permit(:bar_admission_year)
   end
 
   def parameter_group(name)

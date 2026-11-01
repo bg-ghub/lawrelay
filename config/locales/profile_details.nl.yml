@@ -2,7 +2,7 @@ nl:
   settings:
     preferences:
       legend: "Aanvullend profiel (optioneel)"
-      introduction: "Zichtbaar bij uw voorstellen. Voorkeursrechtbanken helpen u passende opdrachten te vinden."
+      introduction: "Uw ervaring is zichtbaar bij uw voorstellen."
       courts: "Voorkeursrechtbanken en steden"
       courts_hint: "Typ een rechtbank of stad."
       court_label: "Rechtbank of stad"

@@ -39,42 +39,9 @@ module Matching
 
     def score_for(assignment)
       score = 0
-      score += 4 if court_coverage_matches?(assignment)
       score += 3 if practice_area_matches?(assignment)
       score += 2 if assignment.legal_task? && language_matches?(assignment)
       score
-    end
-
-    def court_coverage_matches?(assignment)
-      coverage = @profile.court_preferences.map { |value| normalize(value) }.reject(&:blank?)
-      location = normalize([ assignment.court, assignment.city ].compact.join(" "))
-      return false if coverage.empty? || location.blank?
-
-      assigned = Array(courts_by_label[normalize(assignment.court)]).select { |court| court.fetch(:cities).include?(normalize(assignment.city)) }
-      coverage.any? do |preference|
-        preferred = Array(courts_by_label[preference])
-        if preferred.any?
-          (preferred & assigned).any?
-        elsif (cities = city_aliases[preference])
-          cities.include?(normalize(assignment.city))
-        else
-          location.include?(preference) || preference.include?(location)
-        end
-      end
-    end
-
-    def courts_by_label
-      @courts_by_label ||= CourtCatalogue.options(locale: :nl).each_with_index.each_with_object({}) do |(court, index), labels|
-        record = { id: index, cities: court.fetch(:cities).map { |city| normalize(city) } }
-        court.fetch(:labels).each { |label| (labels[normalize(label)] ||= []) << record }
-      end
-    end
-
-    def city_aliases
-      @city_aliases ||= CourtCatalogue::DATA.fetch("places").each_with_object({}) do |(name, translations), aliases|
-        variants = [ name, *translations.values ].map { |value| normalize(value) }.uniq
-        variants.each { |variant| aliases[variant] = (Array(aliases[variant]) + variants).uniq }
-      end
     end
 
     def practice_area_matches?(assignment)

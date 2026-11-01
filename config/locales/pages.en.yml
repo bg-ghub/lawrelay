@@ -53,7 +53,7 @@ en:
             - "Your professional address and bar association published on Advocaat.be are shown to the assignment owner with your proposal. For court-replacement proposals, we estimate driving distance and time on our own server using OpenStreetMap and BeSt address data. We do not use your live location."
             - "Professional identity: your official directory profile, listed name and email, and professional-verification status."
             - "Professional profile data, including languages and practice areas; also assignment, proposal, acceptance, cancellation, and audit-event data."
-            - "You may add your year of admission to the bar, preferred courts or cities and availability. These optional details are shown to the assignment owner with your proposals; your court preferences help us suggest relevant assignments. You can edit or clear them in settings."
+            - "You may add your year of admission to the bar. This optional detail is shown to the assignment owner with your proposals. You can edit or clear it in settings."
             - "Support correspondence and technical/security data such as IP address, request identifiers, device information, and security events."
             - "For anonymous public visits only, cookieless Umami statistics: a limited page path, referrer origin and ordinary browser-request metadata. We do not send account details, private pages, forms, queries or assignment data."
             - "For anonymous visitors outside Belgium, a local security check uses the request IP to determine the country and stores a short-lived verification record."
