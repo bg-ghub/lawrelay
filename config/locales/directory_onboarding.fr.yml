@@ -3,7 +3,7 @@ fr:
     registration:
       legend: "Votre inscription officielle"
       profile_url: "Lien vers votre profil advocaat.be"
-      profile_url_hint: "Nous vérifions votre nom et l’e-mail publié. S’il diffère de votre adresse de connexion, nous vous demanderons aussi de le confirmer."
+      profile_url_hint: "Nous vérifions votre profil public. Une autre adresse nécessite une validation manuelle."
       invalid_profile_url: "doit être un lien vers votre profil public d’avocat sur Advocaat.be"
       find_profile: "Trouver votre profil sur Advocaat.be"
       firm_hint: "Votre cabinet ou votre activité indépendante."
@@ -26,6 +26,9 @@ fr:
       confirmation_not_sent_body: "L’e-mail de confirmation vers %{email} n’a pas encore été envoyé. Vous pouvez réessayer ci-dessous."
       ready_title: "Profil confirmé"
       ready_body: "Profil vérifié. L’accès s’ouvre une fois tous les contrôles terminés."
+      review_required_title: "Autre adresse e-mail"
+      review_required_body: "Une adresse différente de celle d’Advocaat.be nécessite une explication et l’approbation de l’administrateur."
+      request_review: "Demander une validation"
       retry: "Vérifier à nouveau"
       retry_queued: "Nous vérifierons votre profil à nouveau sous peu."
       retry_rate_limited: "Patientez avant de relancer la vérification."

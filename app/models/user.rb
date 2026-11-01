@@ -82,7 +82,12 @@ class User < ApplicationRecord
 
   def marketplace_verified?
     !system_admin? && active? && (email_verified? || lawyer_profile&.manual_activation_valid?) && lawyer_profile&.verified? &&
-      lawyer_profile.email_review_allows_access? && primary_firm&.verified?
+      lawyer_profile.email_review_allows_access? && !directory_email_review_required? && primary_firm&.verified?
+  end
+
+  def directory_email_review_required?
+    profile = lawyer_profile
+    profile&.directory_matched? && !profile.directory_email.to_s.casecmp?(email_address.to_s) && !profile.email_review_approved?
   end
 
   def marketplace_contact_email

@@ -62,21 +62,14 @@ class Admin::VerificationDeliveriesControllerTest < ActionDispatch::IntegrationT
     end
   end
 
-  test "a confirmed account with a distinct pending official address queues only its confirmation" do
+  test "a confirmed account with a distinct official address needs manual review instead of another inbox confirmation" do
     @user.update!(email_verified_at: Time.current)
     match_directory!(email: "official-confirmation@example.test")
     assert @account.profile.directory_confirmation_required?
     original_profile = @account.profile.attributes
 
-    assert_enqueued_with(job: Directory::ConfirmationJob, args: [ @account.profile.id ]) do
-      assert_no_enqueued_jobs only: [ EmailVerificationDeliveryJob, Directory::VerificationJob ] do
-        post resend_verification_admin_user_path(@user, locale: :en)
-      end
-    end
-    assert_redirected_to admin_user_path(@user, locale: :en)
-    assert_equal I18n.t("admin.users.verification_delivery.queued", locale: :en), flash[:notice]
+    assert_ineligible_resend
     assert_equal original_profile, @account.profile.reload.attributes
-    assert_equal [ "directory_email" ], AuditEvent.find_by!(auditable: @user, action: "user.verification_resent").metadata.fetch("channels")
   end
 
   test "an account without a directory match can resend its account mail while showing the outstanding check" do
@@ -196,26 +189,22 @@ class Admin::VerificationDeliveriesControllerTest < ActionDispatch::IntegrationT
     EmailVerificationMailer.define_singleton_method(:verify, original) if original
   end
 
-  test "a directory-mail queue rejection reports failure without a success notice" do
+  test "manual review does not invoke a legacy directory-mail adapter" do
     @user.update!(email_verified_at: Time.current)
     match_directory!(email: "official-unavailable@example.test")
     original = Directory::ConfirmationJob.method(:perform_later)
-    Directory::ConfirmationJob.define_singleton_method(:perform_later) { |*| false }
+    Directory::ConfirmationJob.define_singleton_method(:perform_later) { |*| raise "Legacy directory mail must not be requested" }
 
-    assert_no_difference "AuditEvent.where(action: 'user.verification_resent').count" do
-      assert_no_enqueued_jobs { post resend_verification_admin_user_path(@user, locale: :en) }
-    end
-    assert_equal I18n.t("admin.users.verification_delivery.unavailable", locale: :en), flash[:alert]
-    assert_nil flash[:notice]
+    assert_ineligible_resend
     assert_nil @account.profile.reload.directory_confirmation_requested_at
   ensure
     Directory::ConfirmationJob.define_singleton_method(:perform_later, original) if original
   end
 
-  test "a partial queue failure audits only the account mail that was queued" do
+  test "an unconfirmed alternative address resends only working-address mail without invoking the legacy directory adapter" do
     match_directory!(email: "official-partial-failure@example.test")
     original = Directory::ConfirmationJob.method(:perform_later)
-    Directory::ConfirmationJob.define_singleton_method(:perform_later) { |*| false }
+    Directory::ConfirmationJob.define_singleton_method(:perform_later) { |*| raise "Legacy directory mail must not be requested" }
 
     assert_difference "AuditEvent.where(action: 'user.verification_resent').count", 1 do
       assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
@@ -224,8 +213,8 @@ class Admin::VerificationDeliveriesControllerTest < ActionDispatch::IntegrationT
         end
       end
     end
-    assert_equal I18n.t("admin.users.verification_delivery.unavailable", locale: :en), flash[:alert]
-    assert_nil flash[:notice]
+    assert_equal I18n.t("admin.users.verification_delivery.queued", locale: :en), flash[:notice]
+    assert_nil flash[:alert]
     event = AuditEvent.find_by!(auditable: @user, action: "user.verification_resent")
     assert_equal({ "channels" => [ "account_email" ] }, event.metadata)
     assert_not @user.reload.email_verified?

@@ -57,7 +57,9 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
     assert_current_path email_access_request_path(locale: :en)
 
     working_email = "working-#{SecureRandom.hex(5)}@example.test"
+    reason = "The listed mailbox is obsolete; this is my current professional email."
     fill_in "Email you can access", with: working_email
+    fill_in "Reason for using another email", with: reason
     fill_in "Current password", with: "password1234"
     perform_enqueued_jobs do
       click_button "Request review"
@@ -67,6 +69,7 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
     assert_text "Email review pending"
     assert_equal working_email, @account.user.reload.email_address
     assert @account.profile.reload.email_review_pending?
+    assert_equal reason, @account.profile.email_review_request_reason
     assert @account.profile.directory_matched?
     assert_not @account.user.marketplace_verified?
     assert_equal [ working_email ], ActionMailer::Base.deliveries.flat_map(&:to)
@@ -88,6 +91,7 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
       assert_current_path admin_email_review_path(@account.user, locale: :en)
       assert_text working_email
       assert_text @directory_email
+      assert_text reason
       fill_in "Review note", with: "Synthetic independent firm contact check."
       check I18n.t("email_access.admin.identity_checked", locale: :en)
       perform_enqueued_jobs do
@@ -101,6 +105,7 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
     decision = ActionMailer::Base.deliveries.find { |mail| mail.subject == I18n.t("email_access.mailer.subject.approved", locale: :en) }
     assert_equal [ working_email ], decision&.to
     assert_not_includes decision.body.to_s, "Synthetic independent firm contact check."
+    assert_not_includes decision.body.to_s, reason
     visit dashboard_path(locale: :en)
     assert_current_path dashboard_path(locale: :en)
   end
@@ -115,11 +120,13 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, page.evaluate_script("window.innerWidth")
       assert_field I18n.t("email_access.request.form.new_email", locale:)
       assert_field I18n.t("email_access.request.form.password", locale:)
+      assert_field I18n.t("email_access.request.form.reason", locale:)
       page.save_screenshot(Rails.root.join("tmp/screenshots/email-access-member-320.png").to_s) if locale == :nl
     end
 
     @account.profile.update!(email_review_status: "pending", email_review_email_address: @account.user.email_address,
-      email_review_requested_at: 1.minute.ago, directory_checked_at: Time.current)
+      email_review_requested_at: 1.minute.ago, directory_checked_at: Time.current,
+      email_review_request_reason: "The published mailbox is obsolete.")
     Capybara.using_session(:email_access_admin) do
       sign_in_admin
       %i[nl fr de en].each do |locale|

@@ -45,13 +45,12 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "must accept"
   end
 
-  test "registration collects personal identity without company or billing fields in every locale" do
+  test "registration asks only for the profile link as professional information in every locale" do
     %i[nl fr de en].each do |locale|
       get new_registration_path(locale:)
 
       assert_response :success
-      assert_select "input#registration_first_name"
-      assert_select "input#registration_last_name"
+      assert_select "input#registration_first_name, input#registration_last_name", count: 0
       assert_select "input[name='registration[email_address]']", count: 0
       assert_select "input#registration_directory_profile_url"
       assert_select "[data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
@@ -212,6 +211,71 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "ada@law.example", User.order(:id).last.email_address
     assert_nil User.find_by(email_address: "forged@example.test")
     assert_not User.order(:id).last.email_verified?
+  end
+
+  test "the signed directory identity is authoritative without posted names" do
+    attributes = valid_registration.except(:first_name, :last_name)
+    assert_difference "User.count", 1 do
+      post registration_path(locale: :en), params: { registration: attributes }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal "Ada Lovelace", User.order(:id).last.full_name
+  end
+
+  test "forged names cannot override the signed directory identity" do
+    attributes = valid_registration.merge(first_name: "Forged", last_name: "Identity")
+    assert_difference "User.count", 1 do
+      post registration_path(locale: :en), params: { registration: attributes }
+    end
+    assert_redirected_to verification_status_path(locale: :en)
+    assert_equal "Ada Lovelace", User.order(:id).last.full_name
+    assert_not User.order(:id).last.marketplace_verified?
+  end
+
+  test "choosing another email opens the review request without sending to the listed inbox or granting access" do
+    assert_no_enqueued_jobs only: EmailVerificationDeliveryJob do
+      assert_enqueued_jobs 1, only: Directory::VerificationJob do
+        assert_difference "User.count", 1 do
+          post registration_path(locale: :en), params: { registration: valid_registration.merge(
+            request_alternative_email: "1", email_address: "forged-alternative@example.test",
+            email_review_status: "approved", email_verified_at: Time.current) }
+        end
+      end
+    end
+    assert_redirected_to email_access_request_path(locale: :en)
+    user = User.order(:id).last
+    assert_equal "ada@law.example", user.email_address
+    assert_not user.email_verified?
+    assert_not user.marketplace_verified?
+    assert_nil user.lawyer_profile.email_review_status
+    assert cookies[:session_id]
+    follow_redirect!
+    assert_response :success
+    assert_select "input[name='email_access[email_address]']"
+  end
+
+  test "an alternative email choice does not bypass the signed profile or legal acceptance" do
+    [ valid_registration.except(:directory_preview_token), valid_registration.merge(terms_accepted: "0") ].each do |attributes|
+      assert_no_difference [ "User.count", "Firm.count", "LawyerProfile.count" ] do
+        assert_no_enqueued_jobs do
+          post registration_path(locale: :en), params: { registration: attributes.merge(request_alternative_email: "1") }
+        end
+      end
+      assert_response :unprocessable_content
+    end
+  end
+
+  test "a failed initial directory enqueue leaves the alternative email request accessible" do
+    original = Directory::VerificationJob.method(:perform_later)
+    Directory::VerificationJob.define_singleton_method(:perform_later) { |*| raise ActiveJob::EnqueueError, "private adapter details" }
+    assert_no_enqueued_jobs do
+      post registration_path(locale: :en), params: { registration: valid_registration.merge(request_alternative_email: "1") }
+    end
+    assert_redirected_to email_access_request_path(locale: :en)
+    assert_equal I18n.t("auth.registration.delivery_delayed", locale: :en), flash[:alert]
+    assert cookies[:session_id]
+  ensure
+    Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
   end
 
   test "signup cannot use an arbitrary email without a signed directory result" do

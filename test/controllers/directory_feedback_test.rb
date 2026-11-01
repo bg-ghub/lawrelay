@@ -29,35 +29,34 @@ class DirectoryFeedbackTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "official-email confirmation offers the existing retry route in each locale" do
+  test "a matched email mismatch offers manual review in each locale" do
     @profile.update!(directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
       directory_name: @user.full_name, directory_email: "professional@example.test", directory_checked_at: Time.current)
 
     %w[nl fr de en].each do |locale|
       get verification_status_path(locale:)
       assert_response :success
-      assert_select "button", text: I18n.t("directory_feedback.resend_confirmation", locale:)
-      assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 1
+      assert_select "h2", text: I18n.t("directory_onboarding.status.review_required_title", locale:)
+      assert_select "p", text: I18n.t("directory_onboarding.status.review_required_body", locale:)
+      assert_select "a[href='#{email_access_request_path(locale:)}']", text: I18n.t("directory_onboarding.status.request_review", locale:)
+      assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 0
     end
   end
 
-  test "official-email confirmation only claims sent after delivery is recorded" do
+  test "historical directory confirmation still requires manual review and never claims ready" do
     @profile.update!(directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
-      directory_name: @user.full_name, directory_email: "professional@example.test", directory_checked_at: Time.current)
+      directory_name: @user.full_name, directory_email: "professional@example.test", directory_checked_at: Time.current,
+      directory_confirmation_requested_at: Time.current, directory_email_verified_at: Time.current,
+      verification_status: "verified", verified_at: Time.current)
 
     %w[nl fr de en].each do |locale|
       get verification_status_path(locale:)
       assert_response :success
-      assert_select "p", text: I18n.t("directory_onboarding.status.confirmation_not_sent_body", locale:, email: @profile.directory_email)
+      assert_select "h2", text: I18n.t("directory_onboarding.status.review_required_title", locale:)
+      assert_select "a[href='#{email_access_request_path(locale:)}']", text: I18n.t("directory_onboarding.status.request_review", locale:)
+      assert_select "h2", text: I18n.t("directory_onboarding.status.ready_title", locale:), count: 0
       assert_not_includes response.body, I18n.t("directory_onboarding.status.confirmation_body", locale:, email: @profile.directory_email)
-    end
-
-    @profile.update!(directory_confirmation_requested_at: Time.current)
-    %w[nl fr de en].each do |locale|
-      get verification_status_path(locale:)
-      assert_response :success
-      assert_select "p", text: I18n.t("directory_onboarding.status.confirmation_body", locale:, email: @profile.directory_email)
-      assert_not_includes response.body, I18n.t("directory_onboarding.status.confirmation_not_sent_body", locale:, email: @profile.directory_email)
+      assert_not @user.reload.marketplace_verified?
     end
   end
 end

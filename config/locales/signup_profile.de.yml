@@ -1,14 +1,15 @@
 de:
   signup_profile:
-    hint: "Wir laden Ihren Namen, Ihre E-Mail-Adresse und Ihre Profilangaben."
+    hint: "Profilangaben werden von Advocaat.be übernommen."
     fetch: "Profil laden"
-    edit: "Namen bearbeiten"
     listed_email: "E-Mail auf advocaat.be"
     confirm_email: "Wir senden einen Bestätigungslink an diese Adresse."
     loading: "Wird geladen…"
-    loaded: "Daten geladen. Bitte kurz prüfen."
+    loaded: "Profil geladen."
+    alternative_email: "Andere E-Mail-Adresse verwenden"
+    alternative_email_hint: "Geben Sie nach der Registrierung Adresse und Grund an. Eine manuelle Freigabe ist erforderlich."
     stale: "Ihr Profillink hat sich geändert. Laden Sie die Daten erneut."
-    review: "Prüfen Sie, ob Ihr Name Ihrem advocaat.be-Profil entspricht."
+    review: "Das Profil konnte nicht bestätigt werden. Laden Sie es erneut."
     errors:
       invalid_url: "Geben Sie den Link zu Ihrem advocaat.be-Profil ein."
       unavailable: "Advocaat.be ist nicht erreichbar. Versuchen Sie es später erneut."

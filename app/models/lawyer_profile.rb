@@ -5,7 +5,7 @@ class LawyerProfile < ApplicationRecord
   DIRECTORY_LOOKUP_FAILURES = %w[invalid_url unavailable malformed name_mismatch email_missing already_claimed].freeze
   EMAIL_REVIEW_STATUSES = %w[pending approved rejected].freeze
   EMAIL_REVIEW_FIELDS = %w[email_review_status email_review_email_address email_review_requested_at email_reviewed_at
-    email_reviewed_by_user_id email_review_note email_review_identity_digest].freeze
+    email_reviewed_by_user_id email_review_note email_review_request_reason email_review_identity_digest].freeze
   MANUAL_ACTIVATION_FIELDS = %w[manual_activation_approved_at manual_activation_approved_by_user_id manual_activation_identity_digest].freeze
   MANUAL_ACTIVATION_IDENTITY_FIELDS = %w[directory_profile_id directory_profile_url directory_name directory_email].freeze
   PREFERENCE_LIMITS = {
@@ -23,6 +23,7 @@ class LawyerProfile < ApplicationRecord
   normalizes :directory_profile_url, with: ->(value) { value.to_s.strip.presence }
   normalizes :directory_email, with: ->(value) { value.to_s.strip.downcase.presence }
   normalizes :availability_note, with: ->(value) { value.to_s.strip.presence }
+  normalizes :email_review_request_reason, with: ->(value) { value.to_s.strip.presence }
 
   before_validation :normalize_matching_preferences
   before_validation :invalidate_changed_manual_activation
@@ -36,6 +37,7 @@ class LawyerProfile < ApplicationRecord
   validates :availability_note, length: { maximum: 500 }, allow_nil: true
   validates :email_review_status, inclusion: { in: EMAIL_REVIEW_STATUSES }, allow_nil: true
   validates :email_review_note, length: { maximum: 2_000 }, allow_nil: true
+  validates :email_review_request_reason, length: { maximum: 1_000 }, allow_nil: true
   validate :matching_preferences_are_bounded
 
   def verified?
@@ -99,7 +101,8 @@ class LawyerProfile < ApplicationRecord
     return unless email_review_status == "approved" && !email_review_approved?
 
     assign_attributes(email_review_status: "pending", email_review_requested_at: Time.current,
-      email_reviewed_at: nil, email_reviewed_by_user_id: nil, email_review_note: nil, email_review_identity_digest: nil)
+      email_reviewed_at: nil, email_reviewed_by_user_id: nil, email_review_note: nil, email_review_request_reason: nil,
+      email_review_identity_digest: nil)
     assign_attributes(verification_status: "pending", verified_at: nil) unless verification_status.in?(%w[rejected suspended])
   end
 

@@ -69,7 +69,7 @@ en:
       privacy: "privacy notice"
       submit: "Create account"
       error_heading: "Please check:"
-      created: "Account created. Check your inbox to confirm your email."
+      created: "Account created."
       delivery_delayed: "Account created. A confirmation step could not start. Please try again below."
       aside_one_title: "Email first"
       aside_one_body: "We verify that you control your professional email address."

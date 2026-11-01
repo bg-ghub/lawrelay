@@ -1,6 +1,8 @@
 require "test_helper"
 
 class DirectoryVerificationTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   def setup
     @user = users(:one)
     @user.update!(first_name: "Jane", last_name: "Lawyer", email_address: "login@example.test", email_verified_at: nil)
@@ -15,8 +17,10 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     @lookup = Struct.new(:result) { def call(**) = result }.new(@evidence)
   end
 
-  test "different login and directory emails require both verifications" do
-    Directory::Verification.request!(user: @user, lookup: @lookup)
+  test "different login and directory emails require manual approval even after both inboxes are confirmed" do
+    assert_no_enqueued_jobs only: Directory::ConfirmationJob do
+      Directory::Verification.request!(user: @user, lookup: @lookup)
+    end
     @profile.reload
     refute @profile.directory_email_verified?
     refute @profile.verified?
@@ -24,9 +28,11 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     Directory::Verification.confirm!(@profile)
     refute @profile.reload.verified?
     @user.update!(email_verified_at: Time.current)
-    assert_equal :activated, Directory::Verification.activate_if_ready!(user: @user).status
-    assert @profile.reload.verified?
-    assert @firm.reload.verified?
+    assert_equal :pending, Directory::Verification.activate_if_ready!(user: @user).status
+    assert_not @profile.reload.verified?
+    assert_not @firm.reload.verified?
+    assert @user.reload.directory_email_review_required?
+    assert_not @user.marketplace_verified?
   end
 
   test "same authoritative email is accepted only after login email verification" do

@@ -3,6 +3,9 @@
 <section class="form-section">
   <h2><%= t("email_access.status.#{review_status}.heading") %></h2>
   <p><%= t(review_status == "pending" && !user.email_verified? ? "email_access.status.pending.confirm_first" : "email_access.status.#{review_status}.body") %></p>
+  <% if review_status == "pending" && profile.email_review_request_reason.blank? %>
+    <%= link_to t("email_access.status.provide_reason"), email_access_request_path, class: "button button--ghost" %>
+  <% end %>
   <% if review_status == "pending" && !profile.email_review_directory_ready? %>
     <% failure = profile.directory_lookup_failure %>
     <p><%= t(failure ? "directory_feedback.failures.#{failure}" : "directory_onboarding.status.pending_body") %></p>

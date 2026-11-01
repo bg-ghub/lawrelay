@@ -56,6 +56,7 @@ class PrivacyAccountErasureTest < ActiveSupport::TestCase
     profile_id = @member.profile.id
     @member.profile.update_columns(email_review_status: "approved", email_review_email_address: @user.email_address,
       email_review_requested_at: 2.hours.ago, email_reviewed_at: 1.hour.ago, email_reviewed_by_user_id: @admin.id,
+      email_review_request_reason: "My professional mailbox has changed.",
       email_review_note: "Private identity review", email_review_identity_digest: "private-review-digest")
     review_event = AuditEvent.create!(auditable: @member.profile, actor_user: @admin, firm: @member.firm,
       action: "email_access.approved", metadata: { note: "Private independent contact evidence" })

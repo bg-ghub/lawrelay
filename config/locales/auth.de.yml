@@ -69,7 +69,7 @@ de:
       privacy: "Datenschutzerklärung"
       submit: "Konto erstellen"
       error_heading: "Bitte prüfen:"
-      created: "Konto erstellt. Bestätigen Sie Ihre E-Mail über den Link im Postfach."
+      created: "Konto erstellt."
       delivery_delayed: "Konto erstellt. Ein Bestätigungsschritt konnte nicht starten. Bitte versuchen Sie es unten erneut."
       aside_one_title: "Zuerst die E-Mail"
       aside_one_body: "Wir prüfen den Zugriff auf Ihre berufliche E-Mail-Adresse."

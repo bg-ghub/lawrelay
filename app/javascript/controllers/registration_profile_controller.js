@@ -1,30 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["url", "token", "fetch", "status", "initial", "details", "identityFields", "summary", "summaryName", "summaryEmail", "firstName", "lastName"]
-  static values = { url: String, fetchLabel: String, loading: String, loaded: String, unavailable: String, stale: String, review: String, ready: Boolean, errors: Boolean, imported: Object, importedName: String }
+  static targets = ["url", "token", "fetch", "status", "initial", "details", "summaryName", "summaryEmail"]
+  static values = { url: String, fetchLabel: String, loading: String, loaded: String, unavailable: String, stale: String, ready: Boolean, importedName: String, listedEmail: String }
 
   connect() {
     this.revision = 0
-    this.lastImported = this.importedValue
     this.importedName = this.importedNameValue
-    this.listedEmail = this.lastImported.email_address || ""
+    this.listedEmail = this.listedEmailValue
     this.fetchTarget.type = "button"
     this.fetchTarget.disabled = false
     this.fetchTarget.textContent = this.fetchLabelValue
     this.fetchTarget.removeAttribute("aria-busy")
-    this.showDetails(this.readyValue)
+    this.showDetails(this.readyValue && Boolean(this.tokenTarget.value))
     this.updateSummary()
-    if (this.readyValue) {
-      this.showIdentity(!this.tokenTarget.value || this.errorsValue || !this.identityValid())
-      this.element.dataset.unsavedChanges = "true"
-    }
+    if (this.readyValue) this.element.dataset.unsavedChanges = "true"
   }
 
   disconnect() { this.request?.abort() }
 
   showDetails(ready) {
-    this.ready = ready
     this.readyValue = ready
     this.detailsTargets.forEach((element) => {
       element.hidden = !ready
@@ -34,33 +29,18 @@ export default class extends Controller {
     this.initialTargets.forEach((element) => { element.hidden = ready })
   }
 
-  showIdentity(editable) {
-    this.identityFieldsTarget.hidden = !editable
-    this.summaryTarget.hidden = editable
-  }
-
-  edit(event) {
-    event.preventDefault()
-    this.showIdentity(true)
-    this.firstNameTarget.focus()
-  }
-
   urlChanged() {
-    if (this.applying) return
     const hadPreview = Boolean(this.tokenTarget.value || this.request)
     this.revision += 1
     this.request?.abort()
     this.tokenTarget.value = ""
+    this.importedName = ""
     this.listedEmail = ""
+    this.importedNameValue = ""
+    this.listedEmailValue = ""
     this.showDetails(false)
     this.updateSummary()
     this.showStatus(hadPreview ? this.staleValue : "")
-  }
-
-  identityChanged() {
-    if (this.applying) return
-    this.revision += 1
-    this.updateSummary()
   }
 
   async lookup(event) {
@@ -71,11 +51,9 @@ export default class extends Controller {
       this.urlTarget.reportValidity()
       return
     }
-    const before = this.identityValues()
     const revision = this.revision
     const request = new AbortController()
     const timeout = setTimeout(() => request.abort(), 20000)
-    const buttonLabel = this.fetchTarget.textContent
     this.request = request
     this.fetchTarget.disabled = true
     this.fetchTarget.textContent = this.loadingValue
@@ -91,60 +69,41 @@ export default class extends Controller {
       })
       const result = await response.json()
       if (!this.element.isConnected) return
-      if (revision !== this.revision || profileUrl !== this.urlTarget.value.trim() || JSON.stringify(before) !== JSON.stringify(this.identityValues())) {
+      if (revision !== this.revision || profileUrl !== this.urlTarget.value.trim()) {
         this.showStatus(this.staleValue, true)
         return
       }
-      const validResult = ["name", "first_name", "last_name", "email_address", "profile_url", "token"].every((key) => typeof result[key] === "string")
-      if (!response.ok || result.status !== "ok" || !validResult || !result.token) {
+      const validResult = ["name", "email_address", "profile_url", "token"].every((key) => typeof result[key] === "string" && result[key].length > 0)
+      if (!response.ok || result.status !== "ok" || !validResult) {
         this.showStatus(typeof result.message === "string" ? result.message : this.unavailableValue, true)
         return
       }
-      this.applying = true
-      try {
-        for (const [attribute, field] of Object.entries(this.identityFields())) {
-          const value = result[attribute]
-          if (typeof value === "string" && (!field.value.trim() || field.value === this.lastImported[attribute])) {
-            field.value = value
-            field.dispatchEvent(new Event("input", { bubbles: true }))
-          }
-        }
-        if (typeof result.profile_url === "string") this.urlTarget.value = result.profile_url
-        this.lastImported = { first_name: result.first_name, last_name: result.last_name, email_address: result.email_address }
-        this.importedName = result.name
-        this.importedValue = this.lastImported
-        this.importedNameValue = this.importedName
-        const matches = this.normalizedName(this.fullName()) === this.normalizedName(result.name)
-        this.listedEmail = result.email_address
-        this.tokenTarget.value = result.token
-        this.showDetails(true)
-        this.updateSummary()
-        this.showIdentity(!matches || !this.identityValid())
-        this.element.dataset.unsavedChanges = "true"
-        this.showStatus(matches ? this.loadedValue : this.reviewValue)
-      } finally {
-        this.applying = false
-      }
+      this.urlTarget.value = result.profile_url
+      this.importedName = result.name
+      this.listedEmail = result.email_address
+      this.importedNameValue = this.importedName
+      this.listedEmailValue = this.listedEmail
+      this.tokenTarget.value = result.token
+      this.showDetails(true)
+      this.updateSummary()
+      this.element.dataset.unsavedChanges = "true"
+      this.showStatus(this.loadedValue)
     } catch (error) {
       if (this.element.isConnected && revision === this.revision) this.showStatus(this.unavailableValue, true)
     } finally {
       clearTimeout(timeout)
       if (this.request === request) this.request = null
       this.fetchTarget.disabled = false
-      this.fetchTarget.textContent = buttonLabel
+      this.fetchTarget.textContent = this.fetchLabelValue
       this.fetchTarget.removeAttribute("aria-busy")
     }
   }
 
-  identityFields() { return { first_name: this.firstNameTarget, last_name: this.lastNameTarget } }
-  identityValues() { return Object.fromEntries(Object.entries(this.identityFields()).map(([key, field]) => [key, field.value])) }
-  fullName() { return `${this.firstNameTarget.value.trim()} ${this.lastNameTarget.value.trim()}`.trim() }
-  normalizedName(value) { return value.toString().normalize("NFKD").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "") }
-  identityValid() { return Object.values(this.identityFields()).every((field) => field.checkValidity()) }
   updateSummary() {
-    this.summaryNameTarget.textContent = this.fullName()
+    this.summaryNameTarget.textContent = this.importedName
     this.summaryEmailTarget.textContent = this.listedEmail
   }
+
   showStatus(message, error = false) {
     this.statusTarget.textContent = message
     this.statusTarget.classList.toggle("registration-profile__status--error", error)

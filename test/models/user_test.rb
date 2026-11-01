@@ -68,6 +68,31 @@ class UserTest < ActiveSupport::TestCase
     assert_equal("downcased@example.com", user.email_address)
   end
 
+  test "a matched alternate email requires current manual review even when both inboxes were confirmed" do
+    user = users(:one)
+    user.update!(email_verified_at: Time.current)
+    firm = Firm.create!(name: "Email review office", verification_status: "verified", verified_at: Time.current)
+    user.memberships.create!(firm:, role: "owner")
+    profile = user.create_lawyer_profile!(bar_association: "OVB", bar_number: "USER-EMAIL-REVIEW",
+      verification_status: "verified", verified_at: Time.current,
+      directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
+      directory_name: user.full_name, directory_email: "listed-user@example.test", directory_checked_at: Time.current,
+      directory_email_verified_at: Time.current)
+
+    assert user.directory_email_review_required?
+    assert_not user.marketplace_verified?
+
+    profile.update!(email_review_status: "approved", email_review_email_address: user.email_address,
+      email_review_identity_digest: profile.email_review_current_identity_digest)
+    assert_not user.reload.directory_email_review_required?
+    assert user.marketplace_verified?
+
+    profile.update!(directory_email: "different-listing@example.test")
+    assert user.reload.directory_email_review_required?
+    assert_not user.marketplace_verified?
+  end
+
   test "email change clears verification even with a stale unverified object" do
     user = users(:one)
     user.update!(email_verified_at: nil)

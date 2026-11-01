@@ -37,6 +37,7 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     @member.profile.update!(verification_note: "excluded-private-verification-note", directory_identity_digest: "excluded-directory-digest")
     @member.profile.update_columns(email_review_status: "approved", email_review_email_address: @member.user.email_address,
       email_review_requested_at: 2.hours.ago, email_reviewed_at: 1.hour.ago, email_reviewed_by_user_id: @admin.id,
+      email_review_request_reason: "I use a different professional mailbox.",
       email_review_note: "excluded-private-email-review-note", email_review_identity_digest: "excluded-email-review-digest")
     @member.user.memberships.create!(firm: @other.firm)
     @other.firm.update!(billing_email: "excluded-billing@example.test")
@@ -69,6 +70,7 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     exported_profile = package.fetch("professional_profile")
     assert_equal "approved", exported_profile.fetch("email_review_status")
     assert_equal @member.user.email_address, exported_profile.fetch("email_review_email_address")
+    assert_equal "I use a different professional mailbox.", exported_profile.fetch("email_review_request_reason")
     assert exported_profile.fetch("email_review_requested_at")
     assert exported_profile.fetch("email_reviewed_at")
     %w[email_review_note email_review_identity_digest email_reviewed_by_user_id].each do |field|

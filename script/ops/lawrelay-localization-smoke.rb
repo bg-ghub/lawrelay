@@ -107,7 +107,8 @@ begin
     check(anonymous.response.status == 200, "#{locale} signup preview renders")
     document = Nokogiri::HTML(anonymous.response.body)
     check(document.at_css("html")&.[]("lang") == locale, "#{locale} signup preview uses the requested language")
-    check(document.at_css("#registration_first_name")&.[]("value") == "Signup", "#{locale} signup name is prefilled")
+    check(document.at_css("[data-registration-profile-target='summaryName']")&.text&.strip == "Signup Preview", "#{locale} signup shows the official name")
+    check(document.css("input[name='registration[first_name]'], input[name='registration[last_name]']").empty?, "#{locale} signup does not request a name")
     listed_email = document.at_css("[data-registration-profile-target='summaryEmail']")
     check(listed_email&.text&.strip == signup_result.email_address, "#{locale} listed email is shown")
     check(document.at_css("input[name='registration[email_address]']").nil?, "#{locale} signup has no editable email field")
@@ -281,13 +282,15 @@ profile.reload.update!(directory_profile_id: "11111111-1111-4111-8111-1111111111
   directory_email: "official-#{nonce}@example.invalid", directory_checked_at: Time.current)
 LOCALES.each do |locale|
   visit(member_security, "/#{locale}/verification_status")
-  label = I18n.t("directory_feedback.resend_confirmation", locale:)
-  check(Nokogiri::HTML(member_security.response.body).css("button").any? { |button| button.text == label }, "#{locale} official-email resend is available")
+  label = I18n.t("directory_onboarding.status.request_review", locale:)
+  review_link = Nokogiri::HTML(member_security.response.body).at_css("a[href='/#{locale}/verification/email-access']")
+  check(review_link&.text == label, "#{locale} differing emails require a manual-review request")
   visit(member_security, "/#{locale}/verification/email-access")
 end
 
 profile.update!(email_review_status: "pending", email_review_email_address: member.email_address,
-  email_review_requested_at: 1.minute.ago, directory_checked_at: Time.current)
+  email_review_requested_at: 1.minute.ago, directory_checked_at: Time.current,
+  email_review_request_reason: "The listed mailbox is no longer used for professional correspondence.")
 LOCALES.each do |locale|
   visit(member_security, "/#{locale}/verification_status")
   visit(mfa_challenge, "/#{locale}/admin/email-reviews")
@@ -308,6 +311,7 @@ end
       body = part.decoded
       check(body.include?("https://i18n.lawrelay.invalid/#{locale}/") && !body.match?(/translation missing/i), "#{locale} email review #{status} #{part.mime_type} is localized")
       check(!body.include?(profile.email_review_note), "#{locale} email review #{status} keeps internal notes private")
+      check(!body.include?(profile.email_review_request_reason), "#{locale} email review #{status} keeps the applicant explanation private")
     end
   end
 end

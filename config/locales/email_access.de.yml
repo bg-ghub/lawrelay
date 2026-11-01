@@ -4,11 +4,12 @@ de:
     request:
       title: "E-Mail-Zugriff — LawRelay"
       heading: "Verwenden Sie eine erreichbare Adresse"
-      intro: "Bestätigen Sie eine erreichbare berufliche E-Mail-Adresse. Wir prüfen Ihre Identität über die veröffentlichten Kanzleikontaktdaten."
+      intro: "Eine andere E-Mail-Adresse erfordert eine manuelle Genehmigung. Bestätigen Sie zuerst die neue Adresse."
       form:
         legend: "Erreichbare E-Mail-Adresse"
         current_email: "Bisherige Anmeldeadresse"
         new_email: "Erreichbare E-Mail-Adresse"
+        reason: "Grund für die andere E-Mail-Adresse"
         password: "Aktuelles Passwort"
         hint: "Dies wird Ihre Anmeldeadresse. Der Zugang bleibt bis zur Genehmigung gesperrt."
         submit: "Prüfung anfordern"
@@ -28,6 +29,7 @@ de:
         heading: "Neue Prüfung erforderlich"
         body: "Ihre Angaben haben sich geändert. Fordern Sie eine neue Prüfung an."
       try_again: "Neue Prüfung anfordern"
+      provide_reason: "Begründung hinzufügen"
     admin:
       title: "E-Mail-Prüfungen"
       intro: "Anträge für eine andere Adresse als im Anwaltsverzeichnis."
@@ -43,11 +45,13 @@ de:
       directory_state: "Abgleich mit dem Verzeichnis"
       state: "Prüfung"
       requested_at: "Beantragt am"
+      request_reason: "Begründung des Antragstellers"
       note: "Prüfvermerk"
       note_hint: "Zum Beispiel: Anruf bei der Nummer auf der Kanzleiwebsite."
       identity_hint: "Prüfen Sie die Identität über unabhängig veröffentlichte Kanzleikontaktdaten."
       identity_checked: "Ich habe die Identität über unabhängig veröffentlichte Kontaktdaten geprüft."
       not_ready: "Die Genehmigung erfordert eine bestätigte Adresse, einen aktuellen Verzeichnisabgleich und ein Konto ohne Sperre."
+      reason_required: "Der Antragsteller muss zuerst die andere E-Mail-Adresse begründen."
       approve: "Genehmigen"
       reject: "Ablehnen"
       decision: "Entscheidung"
@@ -75,6 +79,9 @@ de:
       email_unconfirmed: "Das Mitglied muss zuerst die erreichbare Adresse bestätigen."
       identity_required: "Bestätigen Sie die Identitätsprüfung."
       note_required: "Fügen Sie einen kurzen Prüfvermerk hinzu."
+      reason_required: "Begründen Sie die Verwendung einer anderen E-Mail-Adresse."
+      reason_too_long: "Die Begründung darf höchstens 1000 Zeichen enthalten."
+      request_reason_required: "Der Antragsteller muss die andere E-Mail-Adresse begründen."
       stale: "Das Konto wurde geändert. Laden Sie es neu und prüfen Sie erneut."
       invalid_decision: "Wählen Sie genehmigen oder ablehnen."
       claimed: "Dieses Profil ist bereits mit einem anderen Konto verknüpft."
@@ -97,3 +104,7 @@ de:
           email_access_requested: "E-Mail-Prüfung beantragt"
           email_access_approved: "E-Mail-Prüfung genehmigt"
           email_access_rejected: "E-Mail-Prüfung abgelehnt"
+  activerecord:
+    attributes:
+      lawyer_profile:
+        email_review_request_reason: "Begründung für die andere E-Mail-Adresse"

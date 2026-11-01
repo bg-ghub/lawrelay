@@ -11,6 +11,9 @@ class ProfileImportTest < ApplicationSystemTestCase
       directory_name: @account.user.full_name, directory_email: "listed@example.test",
       directory_checked_at: Time.current, directory_email_verified_at: Time.current,
       directory_identity_digest: "directory-proof", spoken_languages: [ "NL" ], practice_areas: [ "Existing area" ])
+    @account.profile.update!(email_review_status: "approved", email_review_email_address: @account.user.email_address,
+      email_review_requested_at: 1.minute.ago, email_reviewed_at: Time.current,
+      email_review_identity_digest: @account.profile.email_review_current_identity_digest)
     @original_fetch = Directory::ProfileImport.instance_method(:fetch_html)
     @sync_calls = []
     calls = @sync_calls

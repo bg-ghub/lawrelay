@@ -3,7 +3,7 @@ nl:
     registration:
       legend: "Je officiële vermelding"
       profile_url: "Link naar je advocaat.be-profiel"
-      profile_url_hint: "We controleren je naam en het vermelde e-mailadres. Verschilt dat van je inlogadres, dan vragen we ook daar een bevestiging."
+      profile_url_hint: "We controleren uw openbare profiel. Een ander e-mailadres vereist handmatige beoordeling."
       invalid_profile_url: "moet een link zijn naar je openbare advocatenprofiel op Advocaat.be"
       find_profile: "Zoek je profiel op Advocaat.be"
       firm_hint: "Je kantoor of zelfstandige praktijk."
@@ -26,6 +26,9 @@ nl:
       confirmation_not_sent_body: "De bevestigingsmail naar %{email} is nog niet verstuurd. Je kunt hieronder opnieuw proberen."
       ready_title: "Profiel bevestigd"
       ready_body: "De profielcontrole is klaar. Je krijgt toegang zodra alle controles rond zijn."
+      review_required_title: "Ander e-mailadres"
+      review_required_body: "Een afwijkend e-mailadres vereist een toelichting en goedkeuring door de beheerder."
+      request_review: "Toelichting indienen"
       retry: "Opnieuw controleren"
       retry_queued: "We controleren je profiel binnenkort opnieuw."
       retry_rate_limited: "Wacht even voor je opnieuw controleert."

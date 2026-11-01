@@ -3,7 +3,7 @@ en:
     registration:
       legend: "Your official listing"
       profile_url: "Your advocaat.be profile link"
-      profile_url_hint: "We check your name and listed email. If that email differs from your sign-in address, we’ll ask you to confirm it too."
+      profile_url_hint: "We check your public profile. Another email requires manual review."
       invalid_profile_url: "must be a link to your public Advocaat.be lawyer profile"
       find_profile: "Find your profile on Advocaat.be"
       firm_hint: "Your firm or own practice."
@@ -26,6 +26,9 @@ en:
       confirmation_not_sent_body: "The confirmation email to %{email} has not been sent yet. You can try again below."
       ready_title: "Profile confirmed"
       ready_body: "Directory check done. Access opens once all checks are complete."
+      review_required_title: "Alternative email"
+      review_required_body: "An email that differs from Advocaat.be requires an explanation and administrator approval."
+      request_review: "Request review"
       retry: "Check again"
       retry_queued: "We’ll check your profile again shortly."
       retry_rate_limited: "Please wait before checking again."

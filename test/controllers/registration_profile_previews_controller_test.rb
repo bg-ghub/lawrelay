@@ -39,15 +39,15 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_equal %w[email_address first_name last_name name profile_attributes profile_url status token], body.keys.sort
   end
 
-  test "HTML preview prefills missing identity without echoing passwords or forged company details" do
+  test "HTML preview shows read-only identity without echoing passwords or forged company details" do
     post registration_profile_path(locale: :en), params: { registration: {
       directory_profile_url: PROFILE_URL, password: "do-not-echo-this-password", password_confirmation: "do-not-echo-this-password",
       firm_name: "My invoice company", enterprise_number: "1234567894", address_line_1: "My invoice street",
       email_address: "working@example.test"
     } }
     assert_response :success
-    assert_select "input[name='registration[first_name]'][value='Jane']"
-    assert_select "input[name='registration[last_name]'][value='van den Berg']"
+    assert_select "input[name='registration[first_name]'], input[name='registration[last_name]']", count: 0
+    assert_select "[data-registration-profile-target='summaryName']", text: "Jane van den Berg"
     assert_select "input[name='registration[email_address]']", count: 0
     assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@example.test"
     assert_includes response.body, I18n.t("signup_profile.confirm_email", locale: :en)
@@ -57,6 +57,18 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_not_includes response.body, "My invoice street"
     assert_not_includes response.body, "do-not-echo-this-password"
     assert_select "input[name='registration[password]'][value]", count: 0
+  end
+
+  test "HTML preview preserves the alternative-email choice without asking for another address" do
+    post registration_profile_path(locale: :en), params: { registration: {
+      directory_profile_url: PROFILE_URL, request_alternative_email: "1"
+    } }
+
+    assert_response :success
+    assert_select "input[name='registration[request_alternative_email]'][checked]", count: 1
+    assert_select "input[name='registration[email_address]'], input[name='registration[first_name]'], input[name='registration[last_name]']", count: 0
+    assert_select "[data-registration-profile-target='summaryName']", text: "Jane van den Berg"
+    assert_includes response.body, I18n.t("signup_profile.alternative_email_hint", locale: :en)
   end
 
   test "an imported profile still creates a pending account and minimal internal workspace" do
@@ -110,7 +122,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     attributes = registration_attributes.merge(directory_preview_token: "expired-or-invalid")
     post registration_path(locale: :en), params: { registration: attributes }
     assert_response :unprocessable_content
-    assert_select "input[name='registration[first_name]'][value='Jane']"
+    assert_select "input[name='registration[first_name]'], input[name='registration[last_name]']", count: 0
     assert_select "input[name='registration[directory_profile_url]'][value='#{PROFILE_URL}']"
     assert_select "input[name='registration[email_address]']", count: 0
 
@@ -126,16 +138,17 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_equal %w[NL FR], User.find_by!(email_address: "listed@example.test").lawyer_profile.spoken_languages
   end
 
-  test "a corrected name keeps the signed listed email available without granting access" do
-    attributes = registration_attributes.merge(last_name: "Another identity")
-    assert_no_difference "User.count" do
+  test "posted names cannot replace the signed directory identity" do
+    attributes = registration_attributes.merge(first_name: "Forged", last_name: "Another identity")
+    assert_difference "User.count", 1 do
       post registration_path(locale: :en), params: { registration: attributes }
     end
-    assert_response :unprocessable_content
-    assert_includes response.body, I18n.t("signup_profile.review", locale: :en)
-    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@example.test"
-    assert_select "input[name='registration[directory_preview_token]'][value='#{attributes[:directory_preview_token]}']"
-    assert_select "input[name='registration[email_address]']", count: 0
+    assert_redirected_to verification_status_path(locale: :en)
+    user = User.find_by!(email_address: "listed@example.test")
+    assert_equal "Jane", user.first_name
+    assert_equal "van den Berg", user.last_name
+    assert_not user.email_verified?
+    assert_not user.marketplace_verified?
   end
 
   test "preview errors are localized and do not create accounts or jobs" do
@@ -207,7 +220,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
   end
 
   def registration_attributes
-    { first_name: "Jane", last_name: "van den Berg", email_address: "working@example.test",
+    { email_address: "working@example.test",
       password: "correct-horse-battery-staple", password_confirmation: "correct-horse-battery-staple",
       directory_profile_url: PROFILE_URL, directory_preview_token: Directory::SignupPreview.issue(@result),
       locale: "en", terms_accepted: "1" }

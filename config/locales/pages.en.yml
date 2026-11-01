@@ -46,7 +46,7 @@ en:
         scope:
           heading: "2. Data we process"
           bullets:
-            - "Account and contact data, including name, professional email, preferred language, and authentication records. Email-access requests, decisions and identity-check notes are kept with your professional profile."
+            - "Account and contact data, including name, professional email, preferred language, and authentication records. Email-access requests, your explanation, decisions and identity-check notes are kept with your professional profile."
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
             - "At your request, we fetch your public advocaat.be name, email, languages and legal areas to fill in signup. The preview is valid for 20 minutes."
             - "We sync your languages and practice areas with Advocaat.be daily; you can also refresh them in settings. The daily profile check alerts the operator to missing or changed profiles."
@@ -105,7 +105,7 @@ en:
         eligibility:
           heading: "2. Eligibility and verification"
           paragraphs:
-            - "Registration is open to lawyers listed on advocaat.be. Access requires directory and email checks. An administrator can also approve access manually after review. If the listed email is inaccessible, an administrator must review your identity and confirmed alternative address. Users keep professional details current, protect their credentials and report compromised access. Verification is not an endorsement or guarantee of competence."
+            - "Registration is open to lawyers listed on advocaat.be. Access requires directory and email checks. An administrator can also approve access manually after review. Using another email requires an explanation, confirmation and manual approval. Users keep professional details current, protect their credentials and report compromised access. Verification is not an endorsement or guarantee of competence."
         role:
           heading: "3. LawRelay's role"
           paragraphs:

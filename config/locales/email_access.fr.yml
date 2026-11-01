@@ -4,11 +4,12 @@ fr:
     request:
       title: "Accès e-mail — LawRelay"
       heading: "Utilisez une adresse accessible"
-      intro: "Confirmez une adresse professionnelle accessible. Nous vérifierons votre identité via les coordonnées publiques du cabinet."
+      intro: "Une autre adresse nécessite une approbation manuelle. Confirmez d’abord la nouvelle adresse."
       form:
         legend: "Adresse accessible"
         current_email: "Adresse de connexion actuelle"
         new_email: "Adresse e-mail accessible"
+        reason: "Motif de l’autre adresse e-mail"
         password: "Mot de passe actuel"
         hint: "Elle devient votre adresse de connexion. L’accès reste en attente de validation."
         submit: "Demander une vérification"
@@ -28,6 +29,7 @@ fr:
         heading: "Nouvelle vérification nécessaire"
         body: "Vos coordonnées ont changé. Demandez une nouvelle vérification."
       try_again: "Demander une nouvelle vérification"
+      provide_reason: "Ajouter une explication"
     admin:
       title: "Vérifications e-mail"
       intro: "Demandes pour utiliser une autre adresse que celle de l’annuaire."
@@ -43,11 +45,13 @@ fr:
       directory_state: "Correspondance avec l’annuaire"
       state: "Vérification"
       requested_at: "Demandée le"
+      request_reason: "Explication du demandeur"
       note: "Note de vérification"
       note_hint: "Par exemple : appel au numéro publié sur le site du cabinet."
       identity_hint: "Vérifiez l’identité via des coordonnées du cabinet publiées indépendamment."
       identity_checked: "J’ai vérifié l’identité via des coordonnées publiées indépendamment."
       not_ready: "L’approbation nécessite une adresse confirmée, une correspondance actuelle et un compte sans restriction."
+      reason_required: "Le demandeur doit d’abord expliquer l’utilisation d’une autre adresse."
       approve: "Approuver"
       reject: "Refuser"
       decision: "Décision"
@@ -75,6 +79,9 @@ fr:
       email_unconfirmed: "Le membre doit d’abord confirmer l’adresse accessible."
       identity_required: "Confirmez que vous avez vérifié l’identité."
       note_required: "Ajoutez une courte note de vérification."
+      reason_required: "Indiquez pourquoi vous souhaitez utiliser une autre adresse e-mail."
+      reason_too_long: "L’explication ne peut pas dépasser 1000 caractères."
+      request_reason_required: "Le demandeur doit expliquer l’utilisation d’une autre adresse."
       stale: "Le compte a changé. Rechargez et vérifiez à nouveau."
       invalid_decision: "Choisissez approuver ou refuser."
       claimed: "Ce profil est déjà lié à un autre compte."
@@ -97,3 +104,7 @@ fr:
           email_access_requested: "Vérification e-mail demandée"
           email_access_approved: "Vérification e-mail approuvée"
           email_access_rejected: "Vérification e-mail refusée"
+  activerecord:
+    attributes:
+      lawyer_profile:
+        email_review_request_reason: "Motif de l’autre adresse e-mail"

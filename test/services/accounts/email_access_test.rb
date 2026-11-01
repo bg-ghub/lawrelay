@@ -17,6 +17,7 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     secret = @admin.begin_admin_mfa_setup!
     @admin.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
     @working_email = "working-#{SecureRandom.hex(5)}@example.test"
+    @reason = "The directory lists an old mailbox; this address is used for professional correspondence."
   end
 
   test "request changes sign-in email and keeps only the current session without granting access" do
@@ -31,10 +32,48 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert_equal [ @session.id ], @user.sessions.pluck(:id)
     assert_equal "pending", @profile.reload.email_review_status
     assert_equal @working_email, @profile.professional_email
+    assert_equal @reason, @profile.email_review_request_reason
     assert_nil @profile.directory_email_verified_at
     assert_not @profile.directory_confirmation_required?
     assert_not @user.marketplace_verified?
     assert_equal 1, AuditEvent.where(auditable: @profile, action: "email_access.requested").count
+    assert_not_includes AuditEvent.where(auditable: @profile).pluck(:metadata).to_json, @reason
+  end
+
+  test "missing malformed and overlong explanations leave all records and sessions unchanged" do
+    original_user = @user.attributes
+    original_profile = @profile.attributes
+    original_sessions = @user.sessions.pluck(:id)
+
+    [ nil, " ", { text: "Not a string" }, "x" * 1_001 ].each do |reason|
+      assert_no_difference "AuditEvent.count" do
+        result = request_review(reason:)
+        assert_not result.success?
+        assert_not result.request_created
+      end
+      assert_equal original_user, @user.reload.attributes
+      assert_equal original_profile, @profile.reload.attributes
+      assert_equal original_sessions, @user.sessions.pluck(:id)
+    end
+  end
+
+  test "an explanation is trimmed and may contain up to one thousand characters" do
+    reason = "x" * 1_000
+    assert request_review(reason: "  #{reason}  ").success?
+    assert_equal reason, @profile.reload.email_review_request_reason
+  end
+
+  test "invalid addresses roll back the explanation and preserve sessions" do
+    original_user = @user.attributes
+    original_profile = @profile.attributes
+    original_sessions = @user.sessions.pluck(:id)
+
+    assert_no_difference "AuditEvent.count" do
+      assert_not request_review(email_address: "not-an-email").success?
+    end
+    assert_equal original_user, @user.reload.attributes
+    assert_equal original_profile, @profile.reload.attributes
+    assert_equal original_sessions, @user.sessions.pluck(:id)
   end
 
   test "wrong password foreign session and administrator requests cannot mutate the account" do
@@ -62,10 +101,11 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
   test "duplicate pending submission is idempotent and rejected requests can be resubmitted" do
     assert request_review.success?
     created_at = @profile.reload.email_review_requested_at
-    result = request_review
+    result = request_review(reason: "A replacement explanation must not overwrite the pending request.")
     assert result.success?
     assert_not result.request_created
     assert_equal created_at, @profile.reload.email_review_requested_at
+    assert_equal @reason, @profile.email_review_request_reason
     assert_equal 1, AuditEvent.where(auditable: @profile, action: "email_access.requested").count
     assert review(decision: "reject").success?
     assert_equal @profile.email_review_current_identity_digest, @profile.reload.email_review_identity_digest
@@ -73,6 +113,31 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert_equal "pending", @profile.reload.email_review_status
     assert_nil @profile.email_reviewed_at
     assert_nil @profile.email_review_note
+  end
+
+  test "a legacy pending request needs an explanation without resetting its identity or confirmation" do
+    assert request_review.success?
+    @user.update!(email_verified_at: Time.current)
+    @profile.update_columns(email_review_request_reason: nil)
+    original = @profile.reload.attributes.except("email_review_request_reason", "updated_at")
+    confirmation_time = @user.reload.email_verified_at
+
+    result = request_review(reason: " ")
+    assert_not result.success?
+    assert_includes result.errors, I18n.t("email_access.errors.reason_required")
+    assert_nil @profile.reload.email_review_request_reason
+
+    assert_no_difference "AuditEvent.where(action: 'email_access.requested').count" do
+      result = request_review(reason: "  #{@reason}  ")
+      assert result.success?
+      assert_not result.request_created
+    end
+    assert_equal @reason, @profile.reload.email_review_request_reason
+    assert_equal original, @profile.attributes.except("email_review_request_reason", "updated_at")
+    assert_equal confirmation_time, @user.reload.email_verified_at
+    assert request_review(reason: nil).success?
+    event = AuditEvent.where(auditable: @profile, action: "account.updated").sole
+    assert_equal({ "changed_fields" => [ "email_review_request_reason" ] }, event.metadata)
   end
 
   test "an already confirmed working sign-in address can request review without losing its email proof" do
@@ -117,6 +182,50 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert_equal 1, AuditEvent.where(auditable: @profile, action: "email_access.approved").count
     assert_not review.success?
     assert_equal 1, AuditEvent.where(auditable: @profile, action: "email_access.approved").count
+  end
+
+  test "a pending request without an explanation cannot be approved but can be rejected" do
+    prepare_review
+    @profile.update_columns(email_review_request_reason: nil)
+    original_user = @user.reload.attributes
+    original_profile = @profile.reload.attributes
+    original_firm = @account.firm.reload.attributes
+
+    assert_no_difference "AuditEvent.count" do
+      result = review
+      assert_not result.success?
+      assert_includes result.errors, I18n.t("email_access.errors.request_reason_required")
+    end
+    assert_equal original_user, @user.reload.attributes
+    assert_equal original_profile, @profile.reload.attributes
+    assert_equal original_firm, @account.firm.reload.attributes
+    assert_not @user.marketplace_verified?
+
+    assert review(decision: "reject").success?
+    assert_equal "rejected", @profile.reload.email_review_status
+    assert_not @user.reload.marketplace_verified?
+  end
+
+  test "a historical approved request remains valid without a stored explanation" do
+    prepare_review
+    assert review.success?
+    @profile.update_columns(email_review_request_reason: nil)
+
+    assert @profile.reload.email_review_approved?
+    assert @user.reload.marketplace_verified?
+    assert_equal :activated, Directory::Verification.activate_if_ready!(user: @user).status
+    assert @profile.reload.email_review_approved?
+    assert @user.reload.marketplace_verified?
+  end
+
+  test "reviewed explanations and reviewer notes cannot be replaced by another submission" do
+    prepare_review
+    assert review.success?
+    original = @profile.reload.attributes
+
+    assert_not request_review(reason: "Replace the reason after approval.").success?
+    assert_not request_review(password: "wrong", reason: "Replace it with a wrong password.").success?
+    assert_equal original, @profile.reload.attributes
   end
 
   test "stale review forms and member actors cannot approve" do
@@ -173,6 +282,7 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert @profile.reload.email_review_pending?
     assert_not @user.reload.marketplace_verified?
     assert_nil @profile.email_review_identity_digest
+    assert_nil @profile.email_review_request_reason
   end
 
   test "ordinary email changes clear a manual decision" do
@@ -183,6 +293,7 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert result.success?
     assert_nil @profile.reload.email_review_status
     assert_nil @profile.email_review_note
+    assert_nil @profile.email_review_request_reason
     assert_nil @profile.email_reviewed_by_user_id
     assert_not @user.reload.marketplace_verified?
   end
@@ -199,7 +310,7 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
 
   def request_review(**options)
     Accounts::RequestEmailAccess.call(**{ user: @user, current_session: @session,
-      password: "password1234", email_address: @working_email }.merge(options))
+      password: "password1234", email_address: @working_email, reason: @reason }.merge(options))
   end
 
   def review(**options)

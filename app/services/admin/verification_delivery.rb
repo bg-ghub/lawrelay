@@ -13,7 +13,7 @@ module Admin
       return false if profile&.verification_status.in?(%w[rejected suspended]) || profile&.email_review_status == "rejected"
       return false if @user.primary_firm&.verification_status.in?(%w[rejected suspended])
 
-      @user.email_verification_required? || profile&.directory_confirmation_required? || false
+      @user.email_verification_required?
     end
 
     def directory_check_pending?
@@ -26,18 +26,15 @@ module Admin
 
       channels = []
       email_needed = @user.email_verification_required?
-      directory_needed = profile&.directory_confirmation_required?
       email_ready = !email_needed || Onboarding::Delivery.request(@user, directory: false)
       channels << "account_email" if email_needed && email_ready
-      directory_ready = !directory_needed || Onboarding::Delivery.enqueue { Directory::ConfirmationJob.perform_later(profile.id) }
-      channels << "directory_email" if directory_needed && directory_ready
 
       if channels.any?
         AuditEvent.create!(auditable: @user, actor_user: @actor, firm: @user.primary_firm,
           action: "user.verification_resent", metadata: { channels: channels & CHANNELS })
       end
 
-      email_ready && directory_ready ? :queued : :unavailable
+      email_ready ? :queued : :unavailable
     end
 
     private

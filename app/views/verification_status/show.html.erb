@@ -21,7 +21,7 @@
   <% else %>
     <% if @lawyer_profile&.email_review_status.present? %>
       <%= render "shared/email_access_status", user: @user, profile: @lawyer_profile %>
-    <% else %>
+    <% elsif !@user.directory_email_review_required? %>
     <section class="form-section">
       <% if @lawyer_profile&.directory_confirmation_required? %>
         <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
@@ -41,5 +41,12 @@
       <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to("info@lawrelay.be")) %></p>
     </section>
     <% end %>
+  <% end %>
+  <% if @user.directory_email_review_required? && @lawyer_profile.email_review_status.nil? %>
+    <section class="form-section">
+      <h2><%= t("directory_onboarding.status.review_required_title") %></h2>
+      <p><%= t("directory_onboarding.status.review_required_body") %></p>
+      <%= link_to t("directory_onboarding.status.request_review"), email_access_request_path, class: "button button--dark" %>
+    </section>
   <% end %>
 </section>

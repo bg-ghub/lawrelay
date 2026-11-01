@@ -1,14 +1,15 @@
 nl:
   signup_profile:
-    hint: "We halen je naam, e-mailadres en profielgegevens op."
+    hint: "Profielgegevens worden overgenomen van Advocaat.be."
     fetch: "Gegevens ophalen"
-    edit: "Naam aanpassen"
     listed_email: "E-mailadres op advocaat.be"
     confirm_email: "We sturen een bevestigingslink naar dit adres."
     loading: "Ophalen…"
-    loaded: "Gegevens opgehaald. Kijk ze even na."
+    loaded: "Profiel opgehaald."
+    alternative_email: "Ander e-mailadres gebruiken"
+    alternative_email_hint: "Geef na registratie het andere adres en de reden op. Handmatige goedkeuring vereist."
     stale: "Je profiellink is gewijzigd. Haal de gegevens opnieuw op."
-    review: "Controleer of je naam overeenkomt met je advocaat.be-profiel."
+    review: "Het profiel kon niet worden bevestigd. Haal het opnieuw op."
     errors:
       invalid_url: "Vul de link naar je advocaat.be-profiel in."
       unavailable: "Advocaat.be is even niet bereikbaar. Probeer later opnieuw."

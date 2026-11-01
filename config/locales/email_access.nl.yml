@@ -4,11 +4,12 @@ nl:
     request:
       title: "E-mailtoegang — LawRelay"
       heading: "Gebruik een bereikbaar e-mailadres"
-      intro: "Bevestig een bereikbaar professioneel e-mailadres. We controleren je identiteit via de gepubliceerde contactgegevens van je kantoor."
+      intro: "Een ander e-mailadres vereist handmatige goedkeuring. Bevestig eerst het nieuwe adres."
       form:
         legend: "Bereikbaar e-mailadres"
         current_email: "Huidig aanmeldadres"
         new_email: "E-mailadres dat je kunt openen"
+        reason: "Reden voor het andere e-mailadres"
         password: "Huidig wachtwoord"
         hint: "Dit wordt je aanmeldadres. Je krijgt toegang na goedkeuring van de controle."
         submit: "Controle aanvragen"
@@ -28,6 +29,7 @@ nl:
         heading: "Nieuwe controle nodig"
         body: "Je gegevens zijn gewijzigd. Vraag een nieuwe controle aan."
       try_again: "Nieuwe controle aanvragen"
+      provide_reason: "Toelichting toevoegen"
     admin:
       title: "E-mailcontroles"
       intro: "Aanvragen voor een ander e-mailadres dan in de advocatenlijst."
@@ -43,11 +45,13 @@ nl:
       directory_state: "Match met advocatenlijst"
       state: "Controle"
       requested_at: "Aangevraagd"
+      request_reason: "Toelichting van de aanvrager"
       note: "Controlenotitie"
       note_hint: "Bijvoorbeeld: gebeld naar het nummer op de kantoorwebsite."
       identity_hint: "Controleer de identiteit via onafhankelijk gepubliceerde contactgegevens van het kantoor."
       identity_checked: "Ik heb de identiteit gecontroleerd via onafhankelijk gepubliceerde contactgegevens."
       not_ready: "Goedkeuring vereist een bevestigde e-mail, een actuele profielmatch en een account zonder blokkering."
+      reason_required: "De aanvrager moet eerst het andere e-mailadres toelichten."
       approve: "Goedkeuren"
       reject: "Afwijzen"
       decision: "Beslissing"
@@ -75,6 +79,9 @@ nl:
       email_unconfirmed: "Het lid moet eerst het bereikbare e-mailadres bevestigen."
       identity_required: "Bevestig dat je de identiteit hebt gecontroleerd."
       note_required: "Voeg een korte controlenotitie toe."
+      reason_required: "Vermeld de reden voor het andere e-mailadres."
+      reason_too_long: "De toelichting mag maximaal 1000 tekens bevatten."
+      request_reason_required: "De aanvrager moet het andere e-mailadres toelichten."
       stale: "Het account is gewijzigd. Herlaad en controleer opnieuw."
       invalid_decision: "Kies goedkeuren of afwijzen."
       claimed: "Dit profiel is al aan een ander account gekoppeld."
@@ -97,3 +104,7 @@ nl:
           email_access_requested: "E-mailcontrole aangevraagd"
           email_access_approved: "E-mailcontrole goedgekeurd"
           email_access_rejected: "E-mailcontrole afgewezen"
+  activerecord:
+    attributes:
+      lawyer_profile:
+        email_review_request_reason: "Toelichting voor het andere e-mailadres"

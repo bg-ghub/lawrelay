@@ -1,14 +1,15 @@
 en:
   signup_profile:
-    hint: "We’ll fetch your name, email and profile details."
+    hint: "Profile details are taken from Advocaat.be."
     fetch: "Get profile details"
-    edit: "Edit name"
     listed_email: "Email on advocaat.be"
     confirm_email: "We’ll send a confirmation link to this address."
     loading: "Loading…"
-    loaded: "Details loaded. Take a quick look."
+    loaded: "Profile loaded."
+    alternative_email: "Use another email address"
+    alternative_email_hint: "After signup, provide the address and reason. Manual approval is required."
     stale: "Your profile link changed. Load the details again."
-    review: "Check that your name matches your advocaat.be profile."
+    review: "The profile could not be confirmed. Load it again."
     errors:
       invalid_url: "Enter the link to your advocaat.be profile."
       unavailable: "Advocaat.be is unavailable. Please try again later."

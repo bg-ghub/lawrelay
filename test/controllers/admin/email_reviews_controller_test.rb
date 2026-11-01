@@ -12,7 +12,7 @@ class Admin::EmailReviewsControllerTest < ActionDispatch::IntegrationTest
       directory_profile_id: SecureRandom.uuid, directory_name: @account.user.full_name,
       directory_email: "listed@example.test", directory_checked_at: 1.minute.ago,
       email_review_status: "pending", email_review_email_address: @account.user.email_address,
-      email_review_requested_at: 2.minutes.ago)
+      email_review_requested_at: 2.minutes.ago, email_review_request_reason: "The old mailbox is no longer used for professional correspondence.")
     @admin = create_marketplace_account(prefix: "review-console-admin", system_role: "admin").user
     secret = @admin.begin_admin_mfa_setup!
     @admin.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
@@ -27,8 +27,22 @@ class Admin::EmailReviewsControllerTest < ActionDispatch::IntegrationTest
       get admin_email_review_path(@account.user, locale:)
       assert_response :success
       assert_equal "no-store", response.headers["Cache-Control"]
+      assert_select "dt", text: I18n.t("email_access.admin.request_reason", locale:)
+      assert_select "dd", text: @profile.email_review_request_reason
       assert_not(/translation missing/i.match?(response.body))
     end
+  end
+
+  test "the applicant explanation is escaped and remains separate from the reviewer note" do
+    explanation = "<script>Applicant explanation</script>"
+    @profile.update!(email_review_request_reason: explanation, email_review_note: "Separate operator note")
+    get admin_email_review_path(@account.user, locale: :en)
+    assert_response :success
+    assert_select "dd", text: explanation
+    assert_select "dd script", count: 0
+    assert_includes response.body, "&lt;script&gt;Applicant explanation&lt;/script&gt;"
+    assert_select "textarea[name='email_review[note]']", text: ""
+    assert_equal "Separate operator note", @profile.reload.email_review_note
   end
 
   test "approval requires MFA and member accounts never see the console" do
@@ -56,6 +70,29 @@ class Admin::EmailReviewsControllerTest < ActionDispatch::IntegrationTest
       patch admin_email_review_path(@account.user, locale: :en), params: review_params
     end
     assert_response :unprocessable_content
+  end
+
+  test "missing applicant explanations disable and block approval without changing the request" do
+    @profile.update_columns(email_review_request_reason: nil)
+    original_profile = @profile.reload.attributes
+    %w[nl fr de en].each do |locale|
+      get admin_email_review_path(@account.user, locale:)
+      assert_response :success
+      assert_select "button[value='approve'][disabled]"
+      assert_select ".field-hint", text: I18n.t("email_access.admin.reason_required", locale:)
+    end
+
+    parameters = review_params
+    parameters[:email_review][:email_review_request_reason] = "A posted operator value cannot supply the member’s explanation."
+    assert_no_enqueued_jobs do
+      assert_no_difference "AuditEvent.count" do
+        patch admin_email_review_path(@account.user, locale: :en), params: parameters
+      end
+    end
+    assert_response :unprocessable_content
+    assert_includes response.body, I18n.t("email_access.errors.request_reason_required", locale: :en)
+    assert_equal original_profile, @profile.reload.attributes
+    assert_not @account.user.reload.marketplace_verified?
   end
 
   test "forged approval without attestation or email confirmation remains blocked" do

@@ -54,7 +54,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     ActionMailer::Base.deliveries.clear
   end
 
-  test "the directory supplies a read-only email and access waits for its confirmation" do
+  test "the directory supplies read-only identity and access waits for email confirmation" do
     visit_signup
     assert_no_selector "#registration_first_name", visible: :visible
     assert find("#registration_password", visible: :all).disabled?
@@ -68,9 +68,8 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_no_selector "[name='registration[firm_name]'], [name='registration[enterprise_number]']", visible: :all
 
-    click_button "Edit name"
-    fill_in "registration_first_name", with: "Jean Pierre"
-    fill_in "registration_last_name", with: "Example"
+    assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
+    assert_no_selector "[data-action='registration-profile#edit']", visible: :all
     assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     fill_credentials
@@ -79,8 +78,8 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_current_path verification_status_path(locale: :en)
     end
     user = User.find_by!(email_address: @listed_email)
-    assert_equal "Jean Pierre", user.first_name
-    assert_equal "Example", user.last_name
+    assert_equal "Jean", user.first_name
+    assert_equal "Pierre Example", user.last_name
     assert_equal %w[NL FR], user.lawyer_profile.spoken_languages
     assert_equal [ "Family law" ], user.lawyer_profile.practice_areas
     assert user.lawyer_profile.directory_matched?
@@ -99,6 +98,28 @@ class SignupProfileTest < ApplicationSystemTestCase
     click_button I18n.t("auth.email_verifications.review.submit", locale: :en)
     assert_current_path dashboard_path(locale: :en)
     assert user.reload.marketplace_verified?
+  end
+
+  test "requesting another email opens the explanation form without mailing the listed address" do
+    visit_signup
+    load_profile
+    check I18n.t("signup_profile.alternative_email", locale: :en)
+    assert_no_selector ".registration-profile__listed-email-notice", visible: :visible
+    fill_credentials
+
+    perform_enqueued_jobs do
+      find("form.assignment-form input[type='submit']").click
+      assert_current_path email_access_request_path(locale: :en)
+    end
+
+    user = User.find_by!(email_address: @listed_email)
+    assert_equal "Jean Pierre Example", user.full_name
+    assert user.lawyer_profile.directory_matched?
+    assert_not user.email_verified?
+    assert_not user.marketplace_verified?
+    assert_empty ActionMailer::Base.deliveries
+    assert_field "email_access[email_address]"
+    assert_field "email_access[reason]"
   end
 
   test "an unavailable directory retains the link and requires a successful retry" do
@@ -140,9 +161,7 @@ class SignupProfileTest < ApplicationSystemTestCase
   test "Turbo back retains the listed email and clears typed passwords" do
     visit_signup
     load_profile
-    click_button "Edit name"
-    fill_in "registration_first_name", with: "Jean Pierre"
-    fill_in "registration_last_name", with: "Example"
+    check I18n.t("signup_profile.alternative_email", locale: :en)
     fill_in "registration_password", with: "Keep-this-password1!"
     find("a[href='#{new_session_path(locale: :en)}']", text: I18n.t("auth.actions.already_registered", locale: :en)).click
     assert_current_path new_session_path(locale: :en)
@@ -152,8 +171,9 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_field "registration_password", with: ""
     click_button "Get profile details"
     assert_text I18n.t("signup_profile.loaded", locale: :en)
-    click_button "Edit name"
-    assert_field "registration_first_name", with: "Jean Pierre"
+    assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
+    assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
+    assert_checked_field I18n.t("signup_profile.alternative_email", locale: :en)
     assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
 
@@ -188,8 +208,9 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_text I18n.t("signup_profile.confirm_email", locale:)
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       assert_no_text(/translation missing/i)
-      click_button I18n.t("signup_profile.edit", locale:)
-      assert_field "registration_first_name", with: "Jean"
+      assert_no_selector "[data-action='registration-profile#edit']", visible: :all
+      assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
+      assert_unchecked_field I18n.t("signup_profile.alternative_email", locale:)
       assert_no_selector "input[name='registration[email_address]']", visible: :all
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
     end
@@ -203,9 +224,9 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_no_difference [ "User.count", "Firm.count" ] do
       click_button "Get profile details"
       assert_current_path registration_profile_path(locale: :en)
-      assert_field "registration_first_name", with: "Jean"
+      assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
     end
-    assert_field "registration_last_name", with: "Pierre Example"
+    assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
     assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
@@ -226,6 +247,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     visit new_registration_path(locale:)
     assert_button I18n.t("signup_profile.fetch", locale:)
     assert_no_selector "input[name='registration[email_address]']", visible: :all
+    assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
   end
 
   def load_profile(locale: :en, expect_success: true)

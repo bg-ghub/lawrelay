@@ -69,7 +69,7 @@ fr:
       privacy: "déclaration de confidentialité"
       submit: "Créer le compte"
       error_heading: "À vérifier :"
-      created: "Compte créé. Confirmez votre adresse via le lien reçu par e-mail."
+      created: "Compte créé."
       delivery_delayed: "Compte créé. Une étape de confirmation n’a pas pu démarrer. Réessayez ci-dessous."
       aside_one_title: "D’abord l’e-mail"
       aside_one_body: "Nous vérifions que vous contrôlez votre adresse professionnelle."

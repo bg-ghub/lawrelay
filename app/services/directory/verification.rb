@@ -61,10 +61,6 @@ module Directory
         @profile.save!
         audit!("verification.directory_matched", profile_id: @profile.id, directory_profile_id: evidence.profile_id)
       end
-      if @profile.directory_confirmation_required?
-        queued = Onboarding::Delivery.enqueue { ConfirmationJob.perform_later(@profile.id) }
-        raise ConfirmationUnavailable, "Directory confirmation delivery unavailable" unless queued
-      end
       activate_if_ready!
       Result.new(status: :matched, profile: @profile)
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => error
@@ -108,6 +104,7 @@ module Directory
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
         return Result.new(status: :pending, profile: @profile) unless identity_current?(@profile)
         return Result.new(status: :pending, profile: @profile) unless @profile.email_review_allows_access?
+        return Result.new(status: :pending, profile: @profile) unless same_email?(@user.email_address, @profile.directory_email) || @profile.email_review_approved?
         if @user.email_verified? && !@profile.directory_email_verified? && same_email?(@user.email_address, @profile.directory_email)
           @profile.update!(directory_email_verified_at: Time.current)
         end

@@ -69,7 +69,7 @@ nl:
       privacy: "privacyverklaring"
       submit: "Account aanmaken"
       error_heading: "Kijk dit even na:"
-      created: "Account aangemaakt. Bevestig je e-mailadres via de link in je inbox."
+      created: "Account aangemaakt."
       delivery_delayed: "Account aangemaakt. Een bevestigingsstap kon niet starten. Probeer hieronder opnieuw."
       aside_one_title: "Eerst je e-mail"
       aside_one_body: "We controleren of je toegang hebt tot je professionele e-mailadres."

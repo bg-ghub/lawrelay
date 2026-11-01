@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
-  TERMS_VERSION = "2026-10-31-manual-approval"
-  PRIVACY_VERSION = "2026-10-31-manual-approval"
+  TERMS_VERSION = "2026-11-01-profile-signup"
+  PRIVACY_VERSION = "2026-11-01-email-review-reason"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -28,9 +28,6 @@ class RegistrationsController < ApplicationController
       end
       format.html do
         attributes = preview_form_attributes
-        { first_name: result.first_name, last_name: result.last_name }.each do |key, value|
-          attributes[key] = value if attributes[key].blank?
-        end
         attributes[:directory_profile_url] = result.profile_url
         attributes[:directory_preview_token] = token
         @terms_accepted = ActiveModel::Type::Boolean.new.cast(attributes[:terms_accepted])
@@ -70,10 +67,11 @@ class RegistrationsController < ApplicationController
     if @terms_accepted && models_valid
       persist_registration!
       start_new_session_for(@user)
-      if Onboarding::Delivery.request(@user)
-        redirect_to verification_status_path, notice: t("auth.registration.created")
+      destination = @request_alternative_email ? email_access_request_path : verification_status_path
+      if Onboarding::Delivery.request(@user, email: !@request_alternative_email)
+        redirect_to destination, notice: t("auth.registration.created")
       else
-        redirect_to verification_status_path, alert: t("auth.registration.delivery_delayed")
+        redirect_to destination, alert: t("auth.registration.delivery_delayed")
       end
     else
       collect_errors
@@ -116,12 +114,13 @@ class RegistrationsController < ApplicationController
 
   def prepare_form(attributes = {})
     locale = attributes[:locale].presence_in(User::LOCALES) || I18n.locale.to_s
+    @request_alternative_email = ActiveModel::Type::Boolean.new.cast(attributes[:request_alternative_email]) || false
     @directory_identity = Directory::SignupPreview.read(token: attributes[:directory_preview_token], profile_url: attributes[:directory_profile_url])
     email = @directory_identity&.fetch("email_address", nil)
 
     @user = User.new(
-      first_name: attributes[:first_name].presence || @directory_identity&.fetch("first_name", nil),
-      last_name: attributes[:last_name].presence || @directory_identity&.fetch("last_name", nil),
+      first_name: @directory_identity&.fetch("first_name", nil),
+      last_name: @directory_identity&.fetch("last_name", nil),
       email_address: email,
       password: attributes[:password],
       password_confirmation: attributes[:password_confirmation],
@@ -160,7 +159,7 @@ class RegistrationsController < ApplicationController
 
   def registration_params
     params.require(:registration).permit(
-      :first_name, :last_name, :password, :password_confirmation,
+      :password, :password_confirmation, :request_alternative_email,
       :directory_profile_url, :directory_preview_token,
       :locale, :terms_accepted
     )

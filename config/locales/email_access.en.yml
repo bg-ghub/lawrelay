@@ -4,11 +4,12 @@ en:
     request:
       title: "Email access — LawRelay"
       heading: "Use an email you can access"
-      intro: "Confirm a working professional email. We’ll check your identity through your firm’s published contact details."
+      intro: "Another email requires manual approval. Confirm the new address first."
       form:
         legend: "Working email"
         current_email: "Current sign-in email"
         new_email: "Email you can access"
+        reason: "Reason for using another email"
         password: "Current password"
         hint: "This becomes your sign-in email. Access stays pending until the review is approved."
         submit: "Request review"
@@ -28,6 +29,7 @@ en:
         heading: "New review needed"
         body: "Your details changed. Please request another review."
       try_again: "Request another review"
+      provide_reason: "Add explanation"
     admin:
       title: "Email reviews"
       intro: "Requests to use an email different from the directory."
@@ -43,11 +45,13 @@ en:
       directory_state: "Directory match"
       state: "Review"
       requested_at: "Requested"
+      request_reason: "Applicant’s explanation"
       note: "Review note"
       note_hint: "For example: called the number on the firm’s website."
       identity_hint: "Check identity using independently published firm contact details."
       identity_checked: "I checked their identity using independently published contact details."
       not_ready: "Approval needs a confirmed email, a current directory match and an unrestricted account."
+      reason_required: "The applicant must first explain the different email address."
       approve: "Approve"
       reject: "Reject"
       decision: "Decision"
@@ -75,6 +79,9 @@ en:
       email_unconfirmed: "The member must confirm the working email first."
       identity_required: "Confirm that you checked their identity."
       note_required: "Add a short review note."
+      reason_required: "Explain why you want to use another email address."
+      reason_too_long: "The explanation must be 1000 characters or fewer."
+      request_reason_required: "The applicant must explain the different email address."
       stale: "The account changed. Reload and check it again."
       invalid_decision: "Choose approve or reject."
       claimed: "This directory profile is already linked to another account."
@@ -97,3 +104,7 @@ en:
           email_access_requested: "Email review requested"
           email_access_approved: "Email review approved"
           email_access_rejected: "Email review rejected"
+  activerecord:
+    attributes:
+      lawyer_profile:
+        email_review_request_reason: "Reason for using another email"
