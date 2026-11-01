@@ -39,6 +39,7 @@ export default class extends Controller {
     this.showSearchStatus("")
     this.urlTarget.value = ""
     this.urlChanged()
+    this.showStatus("")
   }
 
   async search(event) {

@@ -67,6 +67,10 @@ class SignupNameSearchTest < ApplicationSystemTestCase
     fill_in "registration_name_query", with: "Another name"
     assert_equal "", find("#registration_directory_preview_token", visible: :all).value
     assert_no_selector "#registration_password", visible: :visible
+    assert_no_text I18n.t("signup_profile.stale", locale: :en)
+    search_for("Smith")
+    assert_selector ".registration-search__candidate", count: 2
+    assert_no_text I18n.t("signup_profile.stale", locale: :en)
   end
 
   test "empty and failed searches retain name and allow the independent profile link fallback" do
