@@ -1,5 +1,15 @@
 nl:
   profile_import:
+    source: "Bron"
+    not_available: "Niet beschikbaar"
+    fields:
+      name: "Naam"
+      email: "Vermeld e-mailadres"
+    language_names:
+      nl: "Nederlands"
+      fr: "Frans"
+      de: "Duits"
+      en: "Engels"
     button: "Verversen via Advocaat.be"
     refreshing: "Verversen…"
     updated: "Profielgegevens vernieuwd."

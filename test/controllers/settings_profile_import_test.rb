@@ -10,6 +10,7 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
   setup do
     @account = create_marketplace_account(prefix: "importmember")
     @account.profile.update!(directory_profile_url: PROFILE_URL, directory_name: @account.user.full_name,
+      directory_email: "directory@example.test",
       spoken_languages: [ "NL" ], practice_areas: [ "Existing area" ], court_preferences: [ "Existing court" ],
       availability_note: "Existing availability")
     sign_in_as(@account.user)
@@ -26,6 +27,73 @@ class SettingsProfileImportTest < ActionDispatch::IntegrationTest
         assert_includes response.body, I18n.t("profile_import.manual_hint", locale: locale)
       end
     end
+  end
+
+  test "GET shows the read-only directory source data with localized language labels" do
+    without_sync do
+      %i[nl fr de en].each do |locale|
+        get settings_path(locale: locale)
+        assert_response :success
+
+        assert_select ".directory-profile__data" do
+          assert_select "dt", text: I18n.t("profile_import.fields.name", locale: locale)
+          assert_select "dd", text: @account.profile.directory_name
+          assert_select "dt", text: I18n.t("profile_import.fields.email", locale: locale)
+          assert_select "dd", text: "directory@example.test"
+          assert_select "dt", text: I18n.t("settings.profile.languages", locale: locale)
+          assert_select "li.directory-profile__tag", text: I18n.t("profile_import.language_names.nl", locale: locale)
+          assert_select "dt", text: I18n.t("settings.profile.practice_areas", locale: locale)
+          assert_select "li.directory-profile__tag", text: "Existing area"
+        end
+        assert_select ".directory-profile", text: /#{Regexp.escape(I18n.t("profile_import.source", locale: locale))}/
+        assert_select ".directory-profile__data", count: 1 do
+          assert_select "dd", text: @account.user.email_address, count: 0
+        end
+      end
+    end
+  end
+
+  test "GET renders all imported language labels in the selected locale" do
+    @account.profile.update!(spoken_languages: %w[NL FR DE EN])
+
+    %i[nl fr de en].each do |locale|
+      get settings_path(locale: locale)
+      assert_response :success
+      %i[nl fr de en].each do |language|
+        assert_select ".directory-profile__data li.directory-profile__tag", text: I18n.t("profile_import.language_names.#{language}", locale: locale)
+      end
+    end
+  end
+
+  test "GET renders explicit localized empty values" do
+    @account.profile.update!(directory_name: nil, directory_email: nil, spoken_languages: [], practice_areas: [])
+
+    %i[nl fr de en].each do |locale|
+      get settings_path(locale: locale)
+      assert_response :success
+      assert_select ".directory-profile__data" do
+        assert_select "dd", text: /#{Regexp.escape(I18n.t("profile_import.not_available", locale: locale))}/, count: 4
+      end
+    end
+  end
+
+  test "GET escapes imported source data" do
+    @account.profile.update!(directory_name: "<strong>Directory name</strong>", directory_email: "<script>alert@example.test</script>")
+
+    get settings_path(locale: :en)
+    assert_response :success
+    assert_select ".directory-profile__data dd", text: "<strong>Directory name</strong>"
+    assert_select ".directory-profile__data dd", text: "<script>alert@example.test</script>"
+    assert_select ".directory-profile__data dd strong, .directory-profile__data dd script", count: 0
+    assert_includes response.body, "&lt;strong&gt;Directory name&lt;/strong&gt;"
+    assert_includes response.body, "&lt;script&gt;alert@example.test&lt;/script&gt;"
+  end
+
+  test "GET keeps the source card email separate from the account email" do
+    get settings_path(locale: :en)
+    assert_response :success
+    assert_select ".directory-profile__data dd", text: "directory@example.test"
+    assert_select ".directory-profile__data dd", text: @account.user.email_address, count: 0
   end
 
   test "refresh persists only directory fields and ignores posted account, profile and company values" do

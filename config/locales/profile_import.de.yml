@@ -1,5 +1,15 @@
 de:
   profile_import:
+    source: "Quelle"
+    not_available: "Nicht verfügbar"
+    fields:
+      name: "Name"
+      email: "Veröffentlichte E-Mail"
+    language_names:
+      nl: "Niederländisch"
+      fr: "Französisch"
+      de: "Deutsch"
+      en: "Englisch"
     button: "Über Advocaat.be aktualisieren"
     refreshing: "Wird aktualisiert…"
     updated: "Profildaten aktualisiert."

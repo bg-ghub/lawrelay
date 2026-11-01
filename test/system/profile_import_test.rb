@@ -8,7 +8,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     @account = create_marketplace_account(prefix: "profileimportbrowser")
     profile_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
     @account.profile.update!(directory_profile_url: profile_url, directory_profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a",
-      directory_name: @account.user.full_name, directory_email: @account.user.email_address,
+      directory_name: @account.user.full_name, directory_email: "listed@example.test",
       directory_checked_at: Time.current, directory_email_verified_at: Time.current,
       directory_identity_digest: "directory-proof", spoken_languages: [ "NL" ], practice_areas: [ "Existing area" ])
     @original_fetch = Directory::ProfileImport.instance_method(:fetch_html)
@@ -50,13 +50,19 @@ class ProfileImportTest < ApplicationSystemTestCase
     assert_equal %w[NL FR], @account.profile.reload.spoken_languages
     assert_equal [ "Family law" ], @account.profile.reload.practice_areas
     within ".directory-profile" do
-      assert_text "NL, FR"
+      assert_text I18n.t("profile_import.language_names.nl", locale: :en)
+      assert_text I18n.t("profile_import.language_names.fr", locale: :en)
       assert_text "Family law"
+      assert_text I18n.t("profile_import.source", locale: :en)
+      assert_text @account.profile.directory_name
+      assert_text "listed@example.test"
     end
     page.refresh
     within ".directory-profile" do
-      assert_text "NL, FR"
+      assert_text I18n.t("profile_import.language_names.nl", locale: :en)
+      assert_text I18n.t("profile_import.language_names.fr", locale: :en)
       assert_text "Family law"
+      assert_text "listed@example.test"
     end
     assert_equal 1, @sync_calls.length
     assert_equal @account.user.email_address, @account.user.reload.email_address

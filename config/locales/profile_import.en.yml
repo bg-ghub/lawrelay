@@ -1,5 +1,15 @@
 en:
   profile_import:
+    source: "Source"
+    not_available: "Not available"
+    fields:
+      name: "Name"
+      email: "Listed email"
+    language_names:
+      nl: "Dutch"
+      fr: "French"
+      de: "German"
+      en: "English"
     button: "Refresh from Advocaat.be"
     refreshing: "Refreshing…"
     updated: "Profile details refreshed."

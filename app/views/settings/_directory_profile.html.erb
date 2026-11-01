@@ -1,0 +1,56 @@
+<% source_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(profile.directory_profile_url) %>
+<section class="form-section directory-profile" aria-labelledby="directory-profile-heading">
+  <div class="directory-profile__heading">
+    <h2 id="directory-profile-heading"><%= t("settings.profile.legend") %></h2>
+    <% if source_url %>
+      <%= link_to source_url, target: "_blank", rel: "noopener noreferrer", class: "directory-profile__source", aria: { label: t("directory_onboarding.settings.open_directory_profile") } do %>
+        <span><%= t("profile_import.source") %>: Advocaat.be</span><span aria-hidden="true">↗</span>
+      <% end %>
+    <% else %>
+      <span class="directory-profile__source"><%= t("profile_import.source") %>: Advocaat.be</span>
+    <% end %>
+  </div>
+  <p class="field-hint directory-profile__scope"><%= t("profile_import.scope") %></p>
+
+  <dl class="directory-profile__data">
+    <div class="directory-profile__field">
+      <dt><%= t("profile_import.fields.name") %></dt>
+      <dd class="directory-profile__name"><% if profile.directory_name.present? %><%= profile.directory_name %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
+    </div>
+    <div class="directory-profile__field">
+      <dt><%= t("profile_import.fields.email") %></dt>
+      <dd><% if profile.directory_email.present? %><%= profile.directory_email %><% else %><span class="directory-profile__empty"><%= t("profile_import.not_available") %></span><% end %></dd>
+    </div>
+    <div class="directory-profile__field">
+      <dt><%= t("settings.profile.languages") %></dt>
+      <dd>
+        <% if profile.spoken_languages.any? %>
+          <ul class="directory-profile__tags"><% profile.spoken_languages.each do |language| %><li class="directory-profile__tag"><%= directory_profile_language_name(language) %></li><% end %></ul>
+        <% else %>
+          <span class="directory-profile__empty"><%= t("profile_import.not_available") %></span>
+        <% end %>
+      </dd>
+    </div>
+    <div class="directory-profile__field">
+      <dt><%= t("settings.profile.practice_areas") %></dt>
+      <dd>
+        <% if profile.practice_areas.any? %>
+          <ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= area %></li><% end %></ul>
+        <% else %>
+          <span class="directory-profile__empty"><%= t("profile_import.not_available") %></span>
+        <% end %>
+      </dd>
+    </div>
+  </dl>
+
+  <% if source_url && !user.system_admin? %>
+    <div class="directory-profile__controls">
+      <p class="field-hint" id="profile-refresh-hint"><%= t("profile_import.manual_hint") %></p>
+      <%= form_with url: settings_path, method: :patch, class: "profile-refresh-form" do |form| %>
+        <%= form.button t("profile_import.button"), name: "settings_action", value: "refresh_profile", class: "button button--dark profile-import-button", aria: { describedby: "profile-refresh-hint" }, data: { turbo_submits_with: t("profile_import.refreshing") } %>
+      <% end %>
+    </div>
+  <% elsif source_url.nil? %>
+    <p class="field-hint"><%= t("profile_import.missing_profile") %></p>
+  <% end %>
+</section>

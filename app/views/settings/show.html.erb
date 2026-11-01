@@ -28,27 +28,7 @@
       <div class="form-actions"><%= link_to t("trust.privacy_requests.index.heading"), privacy_requests_path, class: "button button--ghost" %><%= form.submit t("settings.save"), class: "button button--dark" %></div>
     <% end %>
 
-    <section class="form-section directory-profile" aria-labelledby="directory-profile-heading">
-      <h2 id="directory-profile-heading"><%= t("settings.profile.legend") %></h2>
-      <p class="field-hint"><%= t("profile_import.scope") %></p>
-      <% if @profile.spoken_languages.any? || @profile.practice_areas.any? %>
-        <dl class="detail-facts directory-profile__facts">
-          <% if @profile.spoken_languages.any? %><div><dt><%= t("settings.profile.languages") %></dt><dd><%= @profile.spoken_languages.join(", ") %></dd></div><% end %>
-          <% if @profile.practice_areas.any? %><div><dt><%= t("settings.profile.practice_areas") %></dt><dd><%= @profile.practice_areas.join(", ") %></dd></div><% end %>
-        </dl>
-      <% end %>
-      <% if @profile.directory_profile_url.present? %>
-        <p><%= link_to t("directory_onboarding.settings.open_directory_profile"), @profile.directory_profile_url, target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
-        <% unless @user.system_admin? %>
-          <p class="field-hint" id="profile-refresh-hint"><%= t("profile_import.manual_hint") %></p>
-          <%= form_with url: settings_path, method: :patch, class: "profile-refresh-form" do |form| %>
-            <%= form.button t("profile_import.button"), name: "settings_action", value: "refresh_profile", class: "button button--dark profile-import-button", aria: { describedby: "profile-refresh-hint" }, data: { turbo_submits_with: t("profile_import.refreshing") } %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <p><%= t("profile_import.missing_profile") %></p>
-      <% end %>
-    </section>
+    <%= render "directory_profile", profile: @profile, user: @user %>
     </div>
 
   </div>
