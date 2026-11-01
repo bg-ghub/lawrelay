@@ -13,7 +13,7 @@ de:
     errors:
       invalid_url: "Geben Sie den Link zu Ihrem advocaat.be-Profil ein."
       unavailable: "Advocaat.be ist nicht erreichbar. Versuchen Sie es später erneut."
-      malformed: "Dieses Profil konnte nicht gelesen werden. Prüfen Sie den Link oder kontaktieren Sie info@lawrelay.be."
+      malformed: "Dieses Profil konnte nicht gelesen werden. Prüfen Sie den Link oder kontaktieren Sie support@lawrelay.be."
       email_missing: "Ergänzen Sie eine E-Mail-Adresse in Ihrem advocaat.be-Profil und versuchen Sie es erneut."
       invalid_preview: "Laden Sie Ihr advocaat.be-Profil erneut, um fortzufahren."
       rate_limited: "Warten Sie kurz, bevor Sie es erneut versuchen."

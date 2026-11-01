@@ -1,0 +1,15 @@
+de:
+  signup_search:
+    name: "Ihr Name"
+    submit: "Auf Advocaat.be suchen"
+    loading: "Suche…"
+    choose: "Wählen Sie Ihr Profil aus."
+    use_profile: "Profil verwenden"
+    profile_link: "Ich habe bereits einen Profillink"
+    empty: "Kein Profil gefunden. Prüfen Sie Ihren Namen oder verwenden Sie Ihren Profillink."
+    truncated: "Präzisieren Sie Ihren Namen, um weitere Ergebnisse zu finden."
+    errors:
+      invalid_query: "Geben Sie einen Namen mit 3 bis 100 Zeichen ein."
+      unavailable: "Advocaat.be ist nicht erreichbar. Bitte versuchen Sie es später erneut."
+      rate_limited: "Bitte warten Sie vor einer erneuten Suche."
+      limit_reached: "Die Suche ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut."

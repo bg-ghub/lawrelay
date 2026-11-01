@@ -1,0 +1,15 @@
+nl:
+  signup_search:
+    name: "Uw naam"
+    submit: "Zoeken op Advocaat.be"
+    loading: "Zoeken…"
+    choose: "Selecteer uw profiel."
+    use_profile: "Profiel gebruiken"
+    profile_link: "Ik heb al een profiellink"
+    empty: "Geen profiel gevonden. Controleer uw naam of gebruik uw profiellink."
+    truncated: "Verfijn uw naam om andere resultaten te vinden."
+    errors:
+      invalid_query: "Vul een naam van 3 tot 100 tekens in."
+      unavailable: "Advocaat.be is momenteel niet bereikbaar. Probeer later opnieuw."
+      rate_limited: "Wacht even voor u opnieuw zoekt."
+      limit_reached: "Zoeken is tijdelijk niet beschikbaar. Probeer later opnieuw."

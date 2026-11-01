@@ -13,7 +13,7 @@ fr:
     errors:
       invalid_url: "Indiquez le lien de votre profil advocaat.be."
       unavailable: "Advocaat.be est indisponible. Réessayez plus tard."
-      malformed: "Ce profil est illisible. Vérifiez le lien ou contactez info@lawrelay.be."
+      malformed: "Ce profil est illisible. Vérifiez le lien ou contactez support@lawrelay.be."
       email_missing: "Ajoutez un e-mail à votre profil advocaat.be, puis réessayez."
       invalid_preview: "Rechargez votre profil advocaat.be pour continuer."
       rate_limited: "Patientez avant de réessayer."

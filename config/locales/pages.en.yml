@@ -48,9 +48,9 @@ en:
           bullets:
             - "Account and contact data, including name, professional email, preferred language, and authentication records. Email-access requests, your explanation, decisions and identity-check notes are kept with your professional profile."
             - "If you enable two-factor authentication, we store authenticator keys encrypted and recovery codes hashed."
-            - "At your request, we fetch your public advocaat.be name, email, languages and legal areas to fill in signup. The preview is valid for 20 minutes."
+            - "During signup, you can search Advocaat.be by name. We retrieve your public name, email, languages and practice areas. Search results are reused for up to 10 minutes; the profile preview is valid for 20 minutes."
             - "We sync your languages and practice areas with Advocaat.be daily; you can also refresh them in settings. The daily profile check alerts the operator to missing or changed profiles."
-            - "Your professional address and bar association published on Advocaat.be are shown to the assignment owner with your proposal. For hourly court replacements, we estimate driving distance and time on our own server using OpenStreetMap and BeSt address data. We do not use your live location."
+            - "Your professional address and bar association published on Advocaat.be are shown to the assignment owner with your proposal. For court-replacement proposals, we estimate driving distance and time on our own server using OpenStreetMap and BeSt address data. We do not use your live location."
             - "Professional identity: your official directory profile, listed name and email, and professional-verification status."
             - "Professional profile data, including languages and practice areas; also assignment, proposal, acceptance, cancellation, and audit-event data."
             - "You may add your year of admission to the bar, preferred courts or cities and availability. These optional details are shown to the assignment owner with your proposals; your court preferences help us suggest relevant assignments. You can edit or clear them in settings."

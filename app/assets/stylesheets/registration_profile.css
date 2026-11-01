@@ -9,4 +9,16 @@
 .registration-profile__status:empty{display:none}
 .field-hint.registration-profile__status{margin-top:.75rem}
 .registration-profile__status--error{color:var(--coral-dark,var(--ink))}
+.registration-search__submit{margin-top:1rem}
+.registration-search__results{display:grid;gap:.65rem;list-style:none;padding:0;margin:0;min-width:0}
+.registration-search__results:empty{display:none}
+.registration-search__candidate{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;border:1px solid var(--line);border-radius:10px;background:var(--white);padding:1rem;text-align:left;color:var(--ink);cursor:pointer;box-shadow:none;overflow-wrap:anywhere}
+.registration-search__candidate:hover,.registration-search__candidate:focus-visible{border-color:var(--ink);background:var(--paper-deep);outline:2px solid var(--ink);outline-offset:2px}
+.registration-search__candidate strong,.registration-search__location{display:block}
+.registration-search__location{margin-top:.25rem;color:var(--muted);font-size:.85rem;font-weight:400}
+.registration-search__choose{flex-shrink:0;font-size:.8rem;font-weight:750}
+.registration-search__fallback{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)}
+.registration-search__fallback summary{font-weight:750;cursor:pointer;color:var(--ink)}
+.registration-search__fallback[open] summary{margin-bottom:1rem}
+@media(max-width:480px){.registration-search__candidate{align-items:flex-start;flex-direction:column;gap:.6rem}.registration-search__choose{flex-shrink:1}}
 @media(max-width:480px){.registration-profile__summary{flex-direction:column}.registration-profile__actions{align-items:stretch;flex-direction:column}}

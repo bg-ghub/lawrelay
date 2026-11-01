@@ -225,6 +225,7 @@ class SignupProfileTest < ApplicationSystemTestCase
   test "without JavaScript the preview supplies the listed email before signup" do
     page.driver.browser.execute_cdp("Emulation.setScriptExecutionDisabled", value: true)
     visit new_registration_path(locale: :en)
+    find(".registration-search__fallback summary").click
     assert_no_selector "#registration_first_name", visible: :visible
     fill_in "registration_directory_profile_url", with: @profile_url
     assert_no_difference [ "User.count", "Firm.count" ] do
@@ -251,6 +252,7 @@ class SignupProfileTest < ApplicationSystemTestCase
 
   def visit_signup(locale: :en)
     visit new_registration_path(locale:)
+    find(".registration-search__fallback summary").click
     assert_button I18n.t("signup_profile.fetch", locale:)
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all

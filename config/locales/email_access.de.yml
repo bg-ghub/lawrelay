@@ -24,7 +24,7 @@ de:
         body: "Ihre erreichbare E-Mail-Adresse wurde genehmigt."
       rejected:
         heading: "E-Mail-Prüfung nicht genehmigt"
-        body: "Wir konnten Ihre Identität nicht bestätigen. Kontaktieren Sie info@lawrelay.be oder stellen Sie einen neuen Antrag."
+        body: "Wir konnten Ihre Identität nicht bestätigen. Kontaktieren Sie support@lawrelay.be oder stellen Sie einen neuen Antrag."
       changed:
         heading: "Neue Prüfung erforderlich"
         body: "Ihre Angaben haben sich geändert. Fordern Sie eine neue Prüfung an."
@@ -95,7 +95,7 @@ de:
       heading: "Guten Tag, %{name},"
       body:
         approved: "Ihre E-Mail-Prüfung wurde genehmigt. Sie können sich nun bei LawRelay anmelden."
-        rejected: "Wir konnten Ihre E-Mail-Prüfung nicht genehmigen. Kontaktieren Sie info@lawrelay.be, wenn Sie Hilfe benötigen."
+        rejected: "Wir konnten Ihre E-Mail-Prüfung nicht genehmigen. Kontaktieren Sie support@lawrelay.be, wenn Sie Hilfe benötigen."
       action: "LawRelay öffnen"
   admin:
     users:

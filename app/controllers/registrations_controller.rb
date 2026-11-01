@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-11-01-profile-signup"
-  PRIVACY_VERSION = "2026-11-01-profile-preferences"
+  PRIVACY_VERSION = "2026-11-01-directory-name-search"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,
@@ -10,9 +10,28 @@ class RegistrationsController < ApplicationController
     with: -> { render_preview_failure(:rate_limited, status: :too_many_requests) }
   rate_limit to: 500, within: 1.day, name: "directory_daily", by: -> { "all" }, only: :preview, if: :preview_lookup_request?,
     with: -> { render_preview_failure(:limit_reached, status: :too_many_requests) }
+  rate_limit to: 5, within: 1.minute, name: "directory_name_search", only: :search,
+    with: -> { render_search_failure(:rate_limited, status: :too_many_requests) }
+  rate_limit to: 200, within: 1.day, name: "directory_name_daily", by: -> { "all" }, only: :search, if: :name_search_request?,
+    with: -> { render_search_failure(:limit_reached, status: :too_many_requests) }
 
   def new
     prepare_form
+  end
+
+  def search
+    result = Directory::AdvocaatBeNameSearch.call(name_query: name_search_query)
+    return render_search_failure(result.status, status: result.status == :unavailable ? :service_unavailable : :unprocessable_content) unless result.success?
+
+    respond_to do |format|
+      format.json { render json: { status: "ok", candidates: result.candidates, truncated: result.truncated } }
+      format.html do
+        prepare_search_form
+        @name_search_results = result.candidates
+        @name_search_truncated = result.truncated
+        render :new
+      end
+    end
   end
 
   def preview
@@ -87,7 +106,40 @@ class RegistrationsController < ApplicationController
 
   def preview_profile_url
     values = params[:registration]
-    values[:directory_profile_url] if values.is_a?(ActionController::Parameters) && values[:directory_profile_url].is_a?(String)
+    return unless values.is_a?(ActionController::Parameters)
+
+    selected = values[:selected_profile_url]
+    return selected if selected.is_a?(String) && selected.present?
+
+    values[:directory_profile_url] if values[:directory_profile_url].is_a?(String)
+  end
+
+  def name_search_query
+    values = params[:registration]
+    values[:name_query] if values.is_a?(ActionController::Parameters) && values[:name_query].is_a?(String)
+  end
+
+  def name_search_request?
+    Directory::AdvocaatBeNameSearch.normalized_query(name_search_query).present?
+  end
+
+  def prepare_search_form
+    prepare_form(preview_form_attributes.except(:directory_preview_token))
+    @name_query = Directory::AdvocaatBeNameSearch.normalized_query(name_search_query).to_s
+    @name_search_results = []
+    @name_search_truncated = false
+  end
+
+  def render_search_failure(error, status:)
+    message = t("signup_search.errors.#{error}")
+    respond_to do |format|
+      format.json { render json: { status: error, message: }, status: }
+      format.html do
+        prepare_search_form
+        @registration_errors << message
+        render :new, status:
+      end
+    end
   end
 
   def preview_lookup_request?

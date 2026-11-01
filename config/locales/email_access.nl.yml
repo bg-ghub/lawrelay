@@ -24,7 +24,7 @@ nl:
         body: "Uw bereikbare e-mailadres is goedgekeurd."
       rejected:
         heading: "E-mailcontrole niet goedgekeurd"
-        body: "We konden uw identiteit niet bevestigen. Contacteer info@lawrelay.be of dien een nieuwe aanvraag in."
+        body: "We konden uw identiteit niet bevestigen. Contacteer support@lawrelay.be of dien een nieuwe aanvraag in."
       changed:
         heading: "Nieuwe controle nodig"
         body: "Uw gegevens zijn gewijzigd. Vraag een nieuwe controle aan."
@@ -95,7 +95,7 @@ nl:
       heading: "Geachte %{name},"
       body:
         approved: "Uw e-mailcontrole is goedgekeurd. U kunt zich nu aanmelden bij LawRelay."
-        rejected: "We konden uw e-mailcontrole niet goedkeuren. Contacteer info@lawrelay.be als u hulp nodig hebt."
+        rejected: "We konden uw e-mailcontrole niet goedkeuren. Contacteer support@lawrelay.be als u hulp nodig hebt."
       action: "Open LawRelay"
   admin:
     users:

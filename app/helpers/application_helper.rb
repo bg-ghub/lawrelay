@@ -2,7 +2,7 @@ module ApplicationHelper
   SOCIAL_LOCALES = { nl: "nl_BE", fr: "fr_BE", de: "de_BE", en: "en_GB" }.freeze
 
   def professional_salutation(user)
-    return user.full_name if user.system_admin? || I18n.locale == :en
+    return user.full_name if user.system_admin?
 
     t("lawyer_titles.salutation", name: user.last_name.presence || user.full_name)
   end

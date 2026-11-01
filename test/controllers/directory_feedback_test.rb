@@ -22,7 +22,7 @@ class DirectoryFeedbackTest < ActionDispatch::IntegrationTest
         assert_select "h2", text: I18n.t("directory_feedback.attention_title", locale:)
         assert_select "p", text: I18n.t("directory_feedback.failures.#{code}", locale:)
         assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 1
-        assert_select "a[href='mailto:info@lawrelay.be']"
+        assert_select "section.form-section a[href='mailto:support@lawrelay.be']"
         assert_select "section.form-section a[href='#{settings_path(locale:)}']", text: I18n.t("directory_feedback.check_name", locale:), count: 1 if code == "name_mismatch"
         assert_not_includes response.body, "Translation missing"
       end

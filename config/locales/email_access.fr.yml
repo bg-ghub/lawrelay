@@ -24,7 +24,7 @@ fr:
         body: "Votre adresse accessible a été approuvée."
       rejected:
         heading: "Vérification e-mail non approuvée"
-        body: "Nous n’avons pas pu confirmer votre identité. Contactez info@lawrelay.be ou faites une nouvelle demande."
+        body: "Nous n’avons pas pu confirmer votre identité. Contactez support@lawrelay.be ou faites une nouvelle demande."
       changed:
         heading: "Nouvelle vérification nécessaire"
         body: "Vos coordonnées ont changé. Demandez une nouvelle vérification."
@@ -95,7 +95,7 @@ fr:
       heading: "Bonjour %{name},"
       body:
         approved: "Votre vérification e-mail est approuvée. Vous pouvez vous connecter à LawRelay."
-        rejected: "Nous n’avons pas pu approuver votre vérification e-mail. Contactez info@lawrelay.be si vous avez besoin d’aide."
+        rejected: "Nous n’avons pas pu approuver votre vérification e-mail. Contactez support@lawrelay.be si vous avez besoin d’aide."
       action: "Ouvrir LawRelay"
   admin:
     users:

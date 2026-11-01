@@ -1,4 +1,4 @@
 <% if advocaat_webmail_address?(email) %>
-  <p class="confirmation-delivery-note"><%= t("auth.verification_status.advocaat_delivery_notice") %></p>
+  <p class="confirmation-delivery-note"><%= t("auth.verification_status.advocaat_delivery_notice", email: email) %></p>
 <% end %>
-<p class="confirmation-support"><%= t("auth.verification_status.confirmation_support_html", link: mail_to("support@lawrelay.be", t("auth.verification_status.confirmation_support_link"))) %></p>
+<p class="confirmation-support"><%= t("auth.verification_status.confirmation_support_html", email: email, link: mail_to("support@lawrelay.be", t("auth.verification_status.confirmation_support_link"))) %></p>

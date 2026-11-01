@@ -9,6 +9,7 @@ Rails.application.config.filter_parameters += [
   :email_address,
   :phone,
   :name,
+  :name_query,
   :address,
   :enterprise_number,
   :postal_code,

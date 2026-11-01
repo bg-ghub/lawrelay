@@ -24,7 +24,7 @@ en:
         body: "Your working email has been approved."
       rejected:
         heading: "Email review not approved"
-        body: "We couldn’t confirm your identity. Contact info@lawrelay.be or submit another request."
+        body: "We couldn’t confirm your identity. Contact support@lawrelay.be or submit another request."
       changed:
         heading: "New review needed"
         body: "Your details changed. Please request another review."
@@ -95,7 +95,7 @@ en:
       heading: "Dear %{name},"
       body:
         approved: "Your email review is approved. You can now sign in to LawRelay."
-        rejected: "We couldn’t approve your email review. Contact info@lawrelay.be if you need help."
+        rejected: "We couldn’t approve your email review. Contact support@lawrelay.be if you need help."
       action: "Open LawRelay"
   admin:
     users:

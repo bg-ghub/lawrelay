@@ -41,7 +41,7 @@
         <%= link_to t("directory_feedback.check_name"), settings_path, class: "text-link" if failure == "name_mismatch" %>
         <%= button_to t("directory_onboarding.status.retry"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
       <% end %>
-      <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to("info@lawrelay.be")) %></p>
+      <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to("support@lawrelay.be")) %></p>
     </section>
     <% end %>
   <% end %>

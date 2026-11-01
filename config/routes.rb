@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :passwords, param: :token, only: %i[new create edit update]
     resource :registration, only: %i[new create]
     post "registration/profile", to: "registrations#preview", as: :registration_profile
+    post "registration/search", to: "registrations#search", as: :registration_search
     get "email-verification/:token", to: "email_verifications#show", as: :email_verification
     post "email-verification/:token", to: "email_verifications#confirm", as: :confirm_email_verification
     get "directory-verification/:token", to: "directory_verifications#show", as: :directory_verification

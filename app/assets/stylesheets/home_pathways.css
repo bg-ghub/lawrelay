@@ -1,0 +1,45 @@
+.pathways-section .pathway-card {
+  --pathway-highlight-transform: translateY(-4px);
+  outline: 3px solid transparent;
+  outline-offset: 4px;
+  transition: transform .18s, box-shadow .18s, outline-color .18s, background-color .18s;
+}
+
+.pathway-card-paper {
+  --pathway-highlight-surface: #fff7ee;
+}
+
+.pathway-card-ink {
+  --pathway-highlight-surface: #205247;
+}
+
+.pathways-section .pathway-card-paper .card-link {
+  color: var(--ink);
+}
+
+.pathways-section .pathway-card-ink .card-link {
+  color: var(--paper);
+}
+
+/* Pointer hover wins over keyboard focus, then the last click/tap destination. */
+:is(
+  .pathways-section .pathway-card:hover,
+  body:not(:has(.hero-actions a:hover, .pathway-card:hover)) .pathway-card:focus-visible,
+  body:not(:has(.hero-actions a:is(:hover, :focus-visible), .pathway-card:is(:hover, :focus-visible))) .pathway-card:target,
+  body:has(.hero-actions a[href="#outsource-assignment"]:hover) #outsource-assignment,
+  body:has(.hero-actions a[href="#find-assignments"]:hover) #find-assignments,
+  body:not(:has(.hero-actions a:hover, .pathway-card:hover)):has(.hero-actions a[href="#outsource-assignment"]:focus-visible) #outsource-assignment,
+  body:not(:has(.hero-actions a:hover, .pathway-card:hover)):has(.hero-actions a[href="#find-assignments"]:focus-visible) #find-assignments
+) {
+  outline-color: var(--coral);
+  background-color: var(--pathway-highlight-surface);
+  box-shadow: 0 10px 30px rgba(19, 63, 54, .12);
+  transform: var(--pathway-highlight-transform);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pathways-section .pathway-card {
+    --pathway-highlight-transform: none;
+    transition: none;
+  }
+}

@@ -13,6 +13,14 @@
       registration_profile_loaded_value: t("signup_profile.loaded"),
       registration_profile_unavailable_value: t("signup_profile.errors.unavailable"),
       registration_profile_stale_value: t("signup_profile.stale"),
+      registration_profile_search_url_value: registration_search_path,
+      registration_profile_search_label_value: t("signup_search.submit"),
+      registration_profile_search_loading_value: t("signup_search.loading"),
+      registration_profile_search_empty_value: t("signup_search.empty"),
+      registration_profile_search_choose_value: t("signup_search.choose"),
+      registration_profile_search_use_value: t("signup_search.use_profile"),
+      registration_profile_search_invalid_value: t("signup_search.errors.invalid_query"),
+      registration_profile_search_unavailable_value: t("signup_search.errors.unavailable"),
       registration_profile_ready_value: @directory_identity.present?,
       registration_profile_imported_name_value: @directory_identity&.fetch("name", "").to_s,
       registration_profile_listed_email_value: @directory_identity&.fetch("email_address", "").to_s
@@ -28,6 +36,20 @@
       <fieldset class="form-section">
         <legend><%= t("directory_onboarding.registration.legend") %></legend>
         <div class="field-group">
+          <%= form.label :name_query, t("signup_search.name") %>
+          <%= form.search_field :name_query, value: @name_query.to_s, maxlength: 100, autocomplete: "off", aria: { describedby: "registration-search-status" }, data: { registration_profile_target: "nameQuery", action: "input->registration-profile#nameChanged keydown.enter->registration-profile#search" } %>
+        </div>
+        <%= form.button t("signup_search.submit"), type: "submit", formaction: registration_search_path, formmethod: "post", formnovalidate: true, class: "button button--dark registration-search__submit", data: { registration_profile_target: "search", action: "click->registration-profile#search" } %>
+        <p class="field-hint registration-profile__status" id="registration-search-status" role="status" aria-live="polite" data-registration-profile-target="searchStatus"><% if @name_search_results %><%= t(@name_search_results.empty? ? "signup_search.empty" : "signup_search.choose") %><% end %></p>
+        <ul class="registration-search__results" data-registration-profile-target="results">
+          <% Array(@name_search_results).each do |candidate| %>
+            <li><%= form.button type: "submit", name: "registration[selected_profile_url]", value: candidate.fetch("profile_url"), formaction: registration_profile_path, formmethod: "post", formnovalidate: true, class: "registration-search__candidate", data: { action: "click->registration-profile#chooseProfile", profile_url: candidate.fetch("profile_url") } do %><span><strong><%= candidate.fetch("name") %></strong><% if candidate["location"].present? %><span class="registration-search__location"><%= candidate.fetch("location") %></span><% end %></span><span class="registration-search__choose"><%= t("signup_search.use_profile") %></span><% end %></li>
+          <% end %>
+        </ul>
+        <p class="field-hint" <%= "hidden" unless @name_search_truncated %> data-registration-profile-target="searchTruncated"><%= t("signup_search.truncated") %></p>
+        <details class="registration-search__fallback" <%= "open" if @form_values["directory_profile_url"].present? %>>
+          <summary><%= t("signup_search.profile_link") %></summary>
+        <div class="field-group">
           <%= form.label :directory_profile_url, t("directory_onboarding.registration.profile_url") %>
           <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url", autocomplete: "off", aria: { describedby: "registration-directory-hint registration-profile-status" }, data: { registration_profile_target: "url", action: "input->registration-profile#urlChanged keydown.enter->registration-profile#lookup" } %>
           <p class="field-hint" id="registration-directory-hint"><%= t("signup_profile.hint") %></p>
@@ -35,9 +57,10 @@
         </div>
         <div class="registration-profile__actions">
           <%= form.button t("signup_profile.fetch"), type: "submit", formaction: registration_profile_path, formmethod: "post", formnovalidate: true, class: "button button--dark", data: { registration_profile_target: "fetch", action: "click->registration-profile#lookup" } %>
-          <p class="registration-profile__signin" <%= "hidden" if @directory_identity %> data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
         </div>
+        </details>
         <p class="field-hint registration-profile__status" id="registration-profile-status" role="status" aria-live="polite" data-registration-profile-target="status"></p>
+        <p class="registration-profile__signin" <%= "hidden" if @directory_identity %> data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
       </fieldset>
 
       <fieldset class="form-section" <%= 'hidden disabled' unless @directory_identity %> data-registration-profile-target="details">

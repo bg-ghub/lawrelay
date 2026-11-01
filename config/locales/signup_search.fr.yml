@@ -1,0 +1,15 @@
+fr:
+  signup_search:
+    name: "Votre nom"
+    submit: "Rechercher sur Advocaat.be"
+    loading: "Recherche…"
+    choose: "Sélectionnez votre profil."
+    use_profile: "Utiliser ce profil"
+    profile_link: "J’ai déjà un lien de profil"
+    empty: "Aucun profil trouvé. Vérifiez votre nom ou utilisez votre lien de profil."
+    truncated: "Précisez votre nom pour trouver d’autres résultats."
+    errors:
+      invalid_query: "Saisissez un nom de 3 à 100 caractères."
+      unavailable: "Advocaat.be est indisponible. Veuillez réessayer plus tard."
+      rate_limited: "Veuillez patienter avant de relancer la recherche."
+      limit_reached: "La recherche est temporairement indisponible. Veuillez réessayer plus tard."

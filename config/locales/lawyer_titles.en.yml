@@ -1,4 +1,4 @@
 en:
   lawyer_titles:
-    salutation: "%{name}"
-    display_name: "%{name}"
+    salutation: "Mr. %{name}"
+    display_name: "Mr. %{name}"

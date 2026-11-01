@@ -48,10 +48,11 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
       assert_select ".confirmation-support a[href='mailto:support@lawrelay.be']",
         text: I18n.t("auth.verification_status.confirmation_support_link", locale:), count: 1
       assert_select ".confirmation-delivery-note",
-        text: I18n.t("auth.verification_status.advocaat_delivery_notice", locale:), count: 1
+        text: I18n.t("auth.verification_status.advocaat_delivery_notice", email: user.email_address, locale:), count: 1
       assert_select "form[action='#{verification_status_path(locale:)}']", count: 1
       assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", count: 1
-      assert_select ".confirmation-support", text: "Still haven’t received a confirmation e-mail after multiple tries? Send Support an e-mail manually from the address above to support@lawrelay.be." if locale == :en
+      assert_select ".confirmation-support", text: /#{Regexp.escape(user.email_address)}/
+      assert_select ".confirmation-support", text: "Still haven’t received a confirmation e-mail after multiple tries? Send Support an e-mail manually from pending@advocaat.be to support@lawrelay.be." if locale == :en
       assert_not_includes response.body, "Translation missing"
     end
   end

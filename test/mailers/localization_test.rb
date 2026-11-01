@@ -185,9 +185,7 @@ class MailerLocalizationTest < ActionMailer::TestCase
   end
 
   def expected_salutation(user, locale)
-    return user.full_name if locale == :en
-
-    "#{ { nl: 'Mr.', fr: 'Me', de: 'RA' }.fetch(locale)} #{user.last_name}"
+    "#{ { nl: 'Mr.', fr: 'Me', de: 'RA', en: 'Mr.' }.fetch(locale)} #{user.last_name}"
   end
 
   def assert_localized_cancellation(email, recipient, locale, assignment)

@@ -4,7 +4,7 @@ require_relative "../support/marketplace_test_factory"
 class LawyerHeaderTitleTest < ActionDispatch::IntegrationTest
   include MarketplaceTestFactory
 
-  TITLES = { nl: "Mr.", fr: "Me", de: "RA", en: nil }.freeze
+  TITLES = { nl: "Mr.", fr: "Me", de: "RA", en: "Mr." }.freeze
 
   test "the selected page language determines the lawyer title without changing their name" do
     account = create_marketplace_account(prefix: "headertitle")

@@ -32,6 +32,7 @@ class Admin::RegistryStatusesControllerTest < ActionDispatch::IntegrationTest
       get admin_registry_statuses_path(locale:)
       assert_response :success
       assert_select "h2", text: I18n.t("registry_status.empty_title", locale:)
+      assert_select ".admin-navigation a[href='#{admin_registry_statuses_path(locale:)}'][aria-current='page']", text: I18n.t("registry_status.title", locale:)
       assert_not_includes response.body, "translation missing"
     end
 

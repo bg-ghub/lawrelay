@@ -152,6 +152,7 @@ class BetaJourneyTest < ApplicationSystemTestCase
     HTML
 
     visit new_registration_path(locale: :en)
+    find(".registration-search__fallback summary").click
     fill_in "registration_directory_profile_url", with: source_url
     click_button I18n.t("signup_profile.fetch", locale: :en)
     assert_field "registration_username", with: listed_email, readonly: true
