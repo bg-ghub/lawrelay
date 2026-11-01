@@ -49,7 +49,9 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_select "input[name='registration[first_name]'], input[name='registration[last_name]']", count: 0
     assert_select "[data-registration-profile-target='summaryName']", text: "Jane van den Berg"
     assert_select "input[name='registration[email_address]']", count: 0
-    assert_select "[data-registration-profile-target='summaryEmail']", text: "listed@advocaat.be"
+    assert_select "label[for='registration_username']", text: I18n.t("signup_profile.listed_email", locale: :en)
+    assert_select "input[name='username'][type='email'][readonly][autocomplete='username'][value='listed@advocaat.be'][data-registration-profile-target='summaryEmail']"
+    assert_select "input[name='registration[directory_profile_url]'][autocomplete='off']"
     assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be"
     assert_includes response.body, I18n.t("signup_profile.confirm_email", locale: :en)
     assert_not_includes response.body, "working@example.test"
@@ -139,15 +141,16 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_equal %w[NL FR], User.find_by!(email_address: "listed@advocaat.be").lawyer_profile.spoken_languages
   end
 
-  test "posted names cannot replace the signed directory identity" do
+  test "posted names and password-manager username cannot replace the signed directory identity" do
     attributes = registration_attributes.merge(first_name: "Forged", last_name: "Another identity")
     assert_difference "User.count", 1 do
-      post registration_path(locale: :en), params: { registration: attributes }
+      post registration_path(locale: :en), params: { registration: attributes, username: "forged-password-manager@example.test" }
     end
     assert_redirected_to verification_status_path(locale: :en)
     user = User.find_by!(email_address: "listed@advocaat.be")
     assert_equal "Jane", user.first_name
     assert_equal "van den Berg", user.last_name
+    assert_nil User.find_by(email_address: "forged-password-manager@example.test")
     assert_not user.email_verified?
     assert_not user.marketplace_verified?
   end

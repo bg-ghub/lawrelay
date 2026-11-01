@@ -1,3 +1,4 @@
 de:
   lawyer_titles:
+    salutation: "RA %{name}"
     display_name: "RA %{name}"

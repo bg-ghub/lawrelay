@@ -63,7 +63,8 @@ class SignupProfileTest < ApplicationSystemTestCase
     end
     assert_empty ActionMailer::Base.deliveries
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_field "registration_username", with: @listed_email, readonly: true
+    assert_selector "input[name='username'][autocomplete='username']"
     assert_selector ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be", visible: :visible
     assert_text I18n.t("signup_profile.confirm_email", locale: :en)
     assert_no_selector "input[name='registration[email_address]']", visible: :all
@@ -71,7 +72,7 @@ class SignupProfileTest < ApplicationSystemTestCase
 
     assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
     assert_no_selector "[data-action='registration-profile#edit']", visible: :all
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_field "registration_username", with: @listed_email, readonly: true
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     fill_credentials
     perform_enqueued_jobs do
@@ -121,6 +122,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_not user.marketplace_verified?
     assert_empty ActionMailer::Base.deliveries
     assert_field "email_access[email_address]"
+    assert_selector "input[name='email_access[email_address]'][autocomplete='username']"
     assert_field "email_access[reason]"
   end
 
@@ -137,7 +139,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     @gate[:unavailable] = false
     click_button "Get profile details"
     assert_text I18n.t("signup_profile.loaded", locale: :en)
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_field "registration_username", with: @listed_email, readonly: true
   end
 
   test "a late response cannot bind the email from a changed profile link" do
@@ -156,7 +158,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     click_button "Get profile details"
     assert_text I18n.t("signup_profile.loaded", locale: :en)
     assert_selector ".registration-profile__summary", text: "Grace Example"
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: "second-#{@nonce}@example.test"
+    assert_field "registration_username", with: "second-#{@nonce}@example.test", readonly: true
     assert_no_selector ".advocaat-webmail-hint", visible: :visible
     assert_no_selector "input[name='registration[email_address]']", visible: :all
   end
@@ -170,7 +172,7 @@ class SignupProfileTest < ApplicationSystemTestCase
     assert_current_path new_session_path(locale: :en)
     page.go_back
     assert_current_path new_registration_path(locale: :en)
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_field "registration_username", with: @listed_email, readonly: true
     assert_field "registration_password", with: ""
     click_button "Get profile details"
     assert_text I18n.t("signup_profile.loaded", locale: :en)
@@ -207,7 +209,7 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
       load_profile(locale:)
       assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
-      assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+      assert_field "registration_username", with: @listed_email, readonly: true
       assert_selector ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", text: "webmail.advocaat.be", visible: :visible
       assert_text I18n.t("signup_profile.confirm_email", locale:)
       assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
@@ -231,7 +233,7 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
     end
     assert_no_selector "input[name='registration[first_name]'], input[name='registration[last_name]']", visible: :all
-    assert_selector "[data-registration-profile-target='summaryEmail']", text: @listed_email
+    assert_field "registration_username", with: @listed_email, readonly: true
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     assert_not_empty find("#registration_directory_preview_token", visible: :all).value
     assert_empty ActionMailer::Base.deliveries

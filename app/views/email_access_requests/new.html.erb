@@ -13,7 +13,7 @@
       <fieldset class="form-section">
         <legend><%= t("email_access.request.form.legend") %></legend>
         <div class="field-group"><strong><%= t("email_access.request.form.current_email") %></strong><p><%= current_user.email_address %></p></div>
-        <div class="field-group"><%= form.label "email_access[email_address]", t("email_access.request.form.new_email") %><%= form.email_field "email_access[email_address]", value: @email_address, required: true, autocomplete: "email" %></div>
+        <div class="field-group"><%= form.label "email_access[email_address]", t("email_access.request.form.new_email") %><%= form.email_field "email_access[email_address]", value: @email_address, required: true, autocomplete: "username" %></div>
         <div class="field-group"><%= form.label "email_access[reason]", t("email_access.request.form.reason") %><%= form.text_area "email_access[reason]", value: @reason, required: true, rows: 3, maxlength: 1_000 %></div>
         <div class="field-group"><%= form.label "email_access[current_password]", t("email_access.request.form.password") %><%= form.password_field "email_access[current_password]", required: true, autocomplete: "current-password" %></div>
         <p class="field-hint"><%= t("email_access.request.form.hint") %></p>

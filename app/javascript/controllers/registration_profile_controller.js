@@ -101,7 +101,7 @@ export default class extends Controller {
 
   updateSummary() {
     this.summaryNameTarget.textContent = this.importedName
-    this.summaryEmailTarget.textContent = this.listedEmail
+    this.summaryEmailTarget.value = this.listedEmail
     this.webmailHintTarget.hidden = !/^[^@\s]+@advocaat\.be$/i.test(this.listedEmail.trim())
   }
 

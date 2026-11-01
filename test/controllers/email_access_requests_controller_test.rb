@@ -90,6 +90,7 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
       assert_select "form[action='#{email_access_request_path(locale:)}']"
       assert_select "label", text: I18n.t("email_access.request.form.reason", locale:)
       assert_select "textarea[name='email_access[reason]'][required][maxlength='1000']"
+      assert_select "input[name='email_access[email_address]'][autocomplete='username']"
       assert_not(/translation missing/i.match?(response.body))
     end
   end

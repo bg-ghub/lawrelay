@@ -1,3 +1,7 @@
+.pathways-section .pathway-card {
+  scroll-margin-top: 6rem;
+}
+
 .pathways-section .pathway-card h2 {
   max-width: 24rem;
   margin: 1.4rem 0 .85rem;

@@ -154,7 +154,7 @@ class BetaJourneyTest < ApplicationSystemTestCase
     visit new_registration_path(locale: :en)
     fill_in "registration_directory_profile_url", with: source_url
     click_button I18n.t("signup_profile.fetch", locale: :en)
-    assert_text listed_email
+    assert_field "registration_username", with: listed_email, readonly: true
     assert_no_selector "input[name='registration[email_address]']", visible: :all
     fill_in "registration_password", with: "password1234"
     fill_in "registration_password_confirmation", with: "password1234"

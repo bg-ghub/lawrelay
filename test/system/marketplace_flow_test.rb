@@ -156,7 +156,7 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     visit new_registration_path(locale: :en)
     fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
     click_button I18n.t("signup_profile.fetch", locale: :en)
-    assert_text email
+    assert_field "registration_username", with: email, readonly: true
     fill_in "registration_password", with: "password1234"
     fill_in "registration_password_confirmation", with: "anotherpass12"
     find("#registration_terms_accepted").check

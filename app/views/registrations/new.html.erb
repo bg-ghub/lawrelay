@@ -29,15 +29,15 @@
         <legend><%= t("directory_onboarding.registration.legend") %></legend>
         <div class="field-group">
           <%= form.label :directory_profile_url, t("directory_onboarding.registration.profile_url") %>
-          <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url", aria: { describedby: "registration-directory-hint registration-profile-status" }, data: { registration_profile_target: "url", action: "input->registration-profile#urlChanged keydown.enter->registration-profile#lookup" } %>
+          <%= form.url_field :directory_profile_url, required: true, value: @form_values["directory_profile_url"], placeholder: "https://www.advocaat.be/...", inputmode: "url", autocomplete: "off", aria: { describedby: "registration-directory-hint registration-profile-status" }, data: { registration_profile_target: "url", action: "input->registration-profile#urlChanged keydown.enter->registration-profile#lookup" } %>
           <p class="field-hint" id="registration-directory-hint"><%= t("signup_profile.hint") %></p>
           <p class="field-hint"><%= link_to t("directory_onboarding.registration.find_profile"), "https://www.advocaat.be/nl/zoek-een-advocaat", target: "_blank", rel: "noopener noreferrer", class: "text-link" %></p>
         </div>
         <div class="registration-profile__actions">
           <%= form.button t("signup_profile.fetch"), type: "submit", formaction: registration_profile_path, formmethod: "post", formnovalidate: true, class: "button button--dark", data: { registration_profile_target: "fetch", action: "click->registration-profile#lookup" } %>
+          <p class="registration-profile__signin" <%= "hidden" if @directory_identity %> data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
         </div>
         <p class="field-hint registration-profile__status" id="registration-profile-status" role="status" aria-live="polite" data-registration-profile-target="status"></p>
-        <p <%= "hidden" if @directory_identity %> data-registration-profile-target="initial"><%= link_to t("auth.actions.already_registered"), new_session_path, class: "text-link" %></p>
       </fieldset>
 
       <fieldset class="form-section" <%= 'hidden disabled' unless @directory_identity %> data-registration-profile-target="details">
@@ -46,8 +46,8 @@
           <strong data-registration-profile-target="summaryName"><%= @directory_identity&.fetch("name", "") %></strong>
         </div>
         <div class="field-group">
-          <strong><%= t("signup_profile.listed_email") %></strong>
-          <p data-registration-profile-target="summaryEmail"><%= @directory_identity&.fetch("email_address", "") %></p>
+          <%= label_tag :registration_username, t("signup_profile.listed_email") %>
+          <%= email_field_tag :username, @directory_identity&.fetch("email_address", ""), id: "registration_username", readonly: true, autocomplete: "username", class: "registration-profile__email", data: { registration_profile_target: "summaryEmail" } %>
           <p class="field-hint registration-profile__listed-email-notice"><%= t("signup_profile.confirm_email") %></p>
           <%= advocaat_webmail_hint(@directory_identity&.fetch("email_address", ""), registration: true) %>
         </div>

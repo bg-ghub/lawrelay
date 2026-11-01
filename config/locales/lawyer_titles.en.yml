@@ -1,3 +1,4 @@
 en:
   lawyer_titles:
+    salutation: "Adv. %{name}"
     display_name: "Adv. %{name}"

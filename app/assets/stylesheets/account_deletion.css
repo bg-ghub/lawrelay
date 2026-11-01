@@ -1,0 +1,16 @@
+.account-deletion-page .form-actions {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.account-deletion-page .form-actions .button {
+  width: auto;
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .account-deletion-page .form-actions .button {
+    width: 100%;
+  }
+}

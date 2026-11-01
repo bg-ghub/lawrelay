@@ -1,7 +1,7 @@
 <% content_for :title, t("auth.verification_status.title") %>
 <section class="new-assignment shell">
   <div class="new-assignment__intro">
-    <h1><%= t("auth.verification_status.heading", name: @user.first_name) %></h1>
+    <h1><%= t("auth.verification_status.heading", name: @user.system_admin? ? @user.full_name : t("lawyer_titles.salutation", name: @user.last_name)) %></h1>
     <p><%= t("directory_onboarding.status.lede") %></p>
   </div>
 
