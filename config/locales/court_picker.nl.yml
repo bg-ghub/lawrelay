@@ -8,6 +8,18 @@ nl:
     other_label: "Andere rechtbank of instantie"
     choose: "Kies een rechtbank of Andere."
     division: "afdeling"
+    brussels_assize: "Hof van assisen van het administratief arrondissement Brussel-Hoofdstad"
+    hearing_place: "zittingsplaats %{place}"
+    hearing_unconfirmed: "zittingsplaats te bevestigen"
+    hearing_subjects:
+      civil_and_family: "burgerlijk en familie"
+      criminal: "correctioneel"
+      youth_protection: "jeugdbescherming"
+      employment_accidents: "arbeidsovereenkomsten, arbeidsongevallen, beroepsziekten en kort geding"
+      social_security: "sociale zekerheid"
+      ordinary: "gewone zittingen"
+      urgent_presidential: "kort geding en voorzitterszaken"
+      amicable_settlement: "minnelijke schikking"
     first_canton: "eerste kanton"
     second_canton: "tweede kanton"
     languages:

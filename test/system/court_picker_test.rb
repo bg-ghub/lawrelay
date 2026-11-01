@@ -29,7 +29,7 @@ class CourtPickerTest < ApplicationSystemTestCase
   test "court list filters by partial type place and accents and fills a real division" do
     assert_no_selector "#assignment_city", visible: :visible
     find("#assignment_court").click
-    assert_selector "#assignment-court-options [role='option']:not([data-other])", count: 320
+    assert_selector "#assignment-court-options [role='option']:not([data-other])", count: CourtCatalogue.options.length
     assert_selector "#assignment-court-options [role='option'][data-other='true']", text: "Other"
     fill_in "assignment_court", with: "antwerpen"
     assert_selector "#assignment-court-options [role='option']", minimum: 10
@@ -59,6 +59,23 @@ class CourtPickerTest < ApplicationSystemTestCase
     fill_in "assignment_court", with: "Politierechtbank Brussel (Nederlandstalig)"
     assert_field "assignment_city", with: "Brussels", visible: :all
     assert_no_selector "#assignment_city", visible: :visible
+  end
+
+  test "a shared historical court name requires choosing its hearing building" do
+    entries = CourtCatalogue::DATA.fetch("courts").select { |entry| entry["source"].end_with?("tribunal-de-premiere-instance-du-brabant-wallon") }
+    choices = entries.map { |entry| CourtCatalogue.option_for(entry, locale: :en) }
+    legacy = choices.first.fetch(:labels).find { |label| !choices.first.fetch(:current_labels).include?(label) }
+
+    fill_in "assignment_court", with: legacy
+    assert_field "assignment_city", with: "", visible: :all, disabled: true
+    assert_selector "#assignment-court-options [role='option']:not([data-other])", count: 3
+    assert_not page.evaluate_script("document.querySelector('#assignment_court').checkValidity()")
+
+    expected = choices.find { |choice| choice.fetch(:label).include?("Jean Monnet") }
+    find("#assignment-court-options [role='option']", text: expected.fetch(:label), exact_text: true).click
+    assert_field "assignment_court", with: expected.fetch(:label)
+    assert_field "assignment_city", with: "Nivelles", visible: :all
+    assert page.evaluate_script("document.querySelector('#assignment_court').checkValidity()")
   end
 
   test "a held native scrollbar stays open and permits selection after dragging" do

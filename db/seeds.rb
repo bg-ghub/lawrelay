@@ -75,13 +75,23 @@ candidate = verified_user!(
 owner_firm.assignments.destroy_all
 candidate_firm.assignments.destroy_all
 
+court_choice = lambda do |type, venue, language = nil|
+  entry = CourtCatalogue::DATA.fetch("courts").find do |court|
+    court["type"] == type && court["venue"] == venue && court["language"] == language
+  end
+  CourtCatalogue.option_for(entry, locale: :nl)
+end
+antwerp_enterprise = court_choice.call("enterprise", "Antwerpen")
+brussels_first_instance = court_choice.call("first_instance", "Brussel", "nl")
+hasselt_police = court_choice.call("police", "Hasselt")
+
 assignments = [
   {
     kind: "court_replacement",
     title: "Demo · Pleiten op inleidingszitting",
     description: "Korte verschijning voor een dossier huurrecht. Volledige briefing en stukken worden buiten LawRelay gedeeld.",
-    court: "Ondernemingsrechtbank Antwerpen",
-    city: "Antwerpen",
+    court: antwerp_enterprise.fetch(:label),
+    city: antwerp_enterprise.fetch(:city),
     starts_at: Date.current.advance(days: 2).to_time.change(hour: 9, min: 30),
     duration_minutes: 45,
     practice_area: "Huurrecht",
@@ -107,8 +117,8 @@ assignments = [
     kind: "court_replacement",
     title: "Demo · Verschijning voor de familierechtbank",
     description: "Dossier is voorbereid; enkel vervanging ter zitting nodig. Details worden rechtstreeks gedeeld.",
-    court: "Familierechtbank Brussel",
-    city: "Brussel",
+    court: brussels_first_instance.fetch(:label),
+    city: brussels_first_instance.fetch(:city),
     starts_at: Date.current.advance(days: 4).to_time.change(hour: 14),
     duration_minutes: 60,
     practice_area: "Familierecht",
@@ -134,8 +144,8 @@ assignments = [
     kind: "court_replacement",
     title: "Demo · Debat over verkeersinbreuk",
     description: "Pleitduur voorzien op 20 minuten. De briefing volgt rechtstreeks na de match.",
-    court: "Politierechtbank Hasselt",
-    city: "Hasselt",
+    court: hasselt_police.fetch(:label),
+    city: hasselt_police.fetch(:city),
     starts_at: Date.current.advance(days: 6).to_time.change(hour: 11),
     duration_minutes: 45,
     practice_area: "Verkeersrecht",

@@ -45,10 +45,8 @@ fr:
       product:
         aria_label: Exemple de mission sur LawRelay
         example_label: Exemple de mission
-        title: Remplacement au tribunal de la famille d’Anvers
+        title: Remplacement à l’audience à Anvers
         description: Recherche d’un confrère pour une courte audience en droit familial.
-        court: Tribunal de la famille d’Anvers
-        city: Anvers
         practice_area: Droit familial
       pathways:
         eyebrow: "Pour les avocats"

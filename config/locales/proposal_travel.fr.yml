@@ -1,0 +1,15 @@
+fr:
+  proposal_travel:
+    question: "Frais de déplacement compris ?"
+    "yes": "Oui"
+    "no": "Non"
+    cost_label: "Frais de déplacement (€)"
+    cost_hint: "Montant supplémentaire pour cette mission."
+    included: "Déplacements compris"
+    additional: "+ %{amount} € de déplacement"
+    not_specified: "Frais de déplacement non précisés"
+  activerecord:
+    attributes:
+      proposal:
+        travel_included: "Déplacements compris"
+        travel_cost_cents: "Frais de déplacement"

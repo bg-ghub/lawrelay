@@ -86,6 +86,71 @@ class MarketplaceWorkflowIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal "new_proposal", Notification.order(:id).last.kind
   end
 
+  test "court details separate the court and location in every locale" do
+    owner = create_marketplace_account(prefix: "courtlocation")
+    assignment = create_assignment_for(owner)
+    assignment.update!(court: "Justice of the peace Aalst 1", city: "Aalst")
+    sign_in_as(owner.user)
+    court_names = { nl: "Vredegerecht Aalst 1", fr: "Justice de paix Aalst 1", de: "Friedensgericht Aalst 1", en: "Justice of the peace Aalst 1" }
+
+    %i[nl fr de en].each do |locale|
+      get assignment_path(assignment, locale:)
+
+      assert_response :success
+      assert_select ".detail-facts > div", text: "#{I18n.t('marketplace.show.court', locale:)}#{court_names.fetch(locale)}", count: 1
+      assert_select ".detail-facts > div", text: "#{I18n.t('marketplace.show.location', locale:)}Dr. André Sierensstraat 16, 9300 Aalst", count: 1
+      assert_select ".detail-facts dd", text: "Justice of the peace Aalst 1 · Aalst", count: 0
+    end
+  end
+
+  test "a qualified hearing displays the institution separately from its full address" do
+    owner = create_marketplace_account(prefix: "nivellesdetails")
+    assignment = create_assignment_for(owner)
+    choice = CourtCatalogue.options(locale: :en).find { |option| option.fetch(:label).include?("Rue de Soignies 8") }
+    assignment.update!(court: choice.fetch(:label), city: choice.fetch(:city))
+    sign_in_as(owner.user)
+
+    get assignment_path(assignment, locale: :en)
+
+    assert_response :success
+    assert_select ".detail-facts > div", text: "CourtCourt of first instance Walloon Brabant — Nivelles", count: 1
+    assert_select ".detail-facts > div", text: "LocationRue de Soignies 8, 1400 Nivelles", count: 1
+    assert_select ".detail-facts dd", text: /hearing venue/, count: 0
+  end
+
+  test "legal tasks do not gain an empty court or location row" do
+    owner = create_marketplace_account(prefix: "remotedetails")
+    assignment = create_assignment_for(owner)
+    assignment.update!(kind: "legal_task", assignment_subtype: "advice", languages: "EN")
+    sign_in_as(owner.user)
+
+    get assignment_path(assignment, locale: :en)
+
+    assert_response :success
+    assert_select ".detail-facts dt", text: "Court", count: 0
+    assert_select ".detail-facts dt", text: "Location", count: 0
+  end
+
+  test "legacy court records omit only their missing detail" do
+    owner = create_marketplace_account(prefix: "partialcourtlocation")
+    assignment = create_assignment_for(owner)
+    assignment.update_columns(court: nil)
+    sign_in_as(owner.user)
+
+    get assignment_path(assignment, locale: :en)
+
+    assert_response :success
+    assert_select ".detail-facts dt", text: "Court", count: 0
+    assert_select ".detail-facts > div", text: "LocationBrussels", count: 1
+
+    assignment.update_columns(court: "Enterprise Court", city: nil)
+    get assignment_path(assignment, locale: :en)
+
+    assert_response :success
+    assert_select ".detail-facts > div", text: "CourtEnterprise Court", count: 1
+    assert_select ".detail-facts dt", text: "Location", count: 0
+  end
+
   test "owner acceptance selects one proposal, declines others, and records audit and notification" do
     owner = create_marketplace_account(prefix: "acceptowner")
     accepted_candidate = create_marketplace_account(prefix: "acceptedcandidate")

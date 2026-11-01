@@ -4,8 +4,6 @@ abort "Local OSM address index is unavailable." unless index.available?
 
 options = CourtCatalogue.options(locale: :nl)
 matched = options.count do |court|
-  court.fetch(:labels).any? do |label|
-    court.fetch(:cities).any? { |city| index.court(name: label, city:) }
-  end
+  index.court(name: court.fetch(:label), city: court.fetch(:city))
 end
 puts({ courts: options.length, mapped_courts: matched, unmapped_courts: options.length - matched }.to_json)

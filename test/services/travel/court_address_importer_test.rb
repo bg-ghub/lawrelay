@@ -14,6 +14,25 @@ class CourtAddressImporterTest < ActiveSupport::TestCase
     end
   end
 
+  class HearingCatalogue < Catalogue
+    def self.option_for(entry, locale:)
+      { labels: [ label(entry, locale), "Legacy #{entry.fetch('id')}" ],
+        cities: [ "Brussel", "Old Judicial City" ], hearing_verified: entry.fetch("id") != "two" }
+    end
+  end
+
+  class SectionCatalogue < Catalogue
+    DATA = Catalogue::DATA.merge("courts" => Catalogue::DATA.fetch("courts").map do |entry|
+      entry.fetch("id") == "two" ? entry.merge("hearing_address" => "Example Street 13") : entry
+    end).freeze
+  end
+
+  class MultiVenueCatalogue < Catalogue
+    DATA = Catalogue::DATA.merge("courts" => Catalogue::DATA.fetch("courts") + [
+      Catalogue::DATA.fetch("courts").last.merge("id" => "antwerp", "city" => "Antwerpen")
+    ]).freeze
+  end
+
   setup do
     @directory = Dir.mktmpdir("lawrelay-court-import", Rails.root.join("tmp"))
     @input = File.join(@directory, "input.sqlite3")
@@ -147,6 +166,128 @@ class CourtAddressImporterTest < ActiveSupport::TestCase
     File.write(@sources, JSON.generate(collection))
     assert_equal 1, importer.call[:counts]["matched"]
     assert_equal 50.86, Travel::AddressIndex.new(path: @output).court(name: "nl Test court one", city: "Brussel").latitude
+  end
+
+  test "qualified catalogue aliases are imported while unconfirmed hearing venues remain blocked" do
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: HearingCatalogue, overrides_path: nil).call
+    assert_equal 1, result[:counts]["unconfirmed"]
+    index = Travel::AddressIndex.new(path: @output)
+    assert_equal 50.86, index.court(name: "Legacy one", city: "Old Judicial City").latitude
+    assert_nil index.court(name: "Legacy two", city: "Old Judicial City")
+    SQLite3::Database.new(@output, readonly: true) do |database|
+      assert_equal [ "unconfirmed" ], database.execute("SELECT DISTINCT status FROM court_sources WHERE name_key='legacytwo'").flatten
+    end
+  end
+
+  test "a qualified section selects its exact premise from multiple hearing addresses in the same city" do
+    collection = JSON.parse(File.read(@sources))
+    collection["records"].values[1]["addresses"] = [ "Other Street 9 1000 Brussel", "Example Street 13 1000 Brussel" ]
+    File.write(@sources, JSON.generate(collection))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: SectionCatalogue, overrides_path: nil).call
+    assert_equal 2, result[:counts]["matched"]
+    assert_equal 50.86, Travel::AddressIndex.new(path: @output).court(name: "nl Test court two", city: "Brussel").latitude
+  end
+
+  test "a reviewed public courthouse point requires a versioned override and matching PBF provenance" do
+    source = Catalogue::DATA.fetch("courts")[2].fetch("source")
+    path = File.join(@directory, "point.json")
+    record = { source_url: source, final_url: source, status: "ok", addresses: [ "Example Square 1000 Brussel" ],
+      reviewed_point: { latitude: 50.87, longitude: 4.37, osm_type: "way", osm_id: 123, pbf_sha256: "a" * 64 } }
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 2, result[:counts]["matched"]
+    assert_equal 50.87, Travel::AddressIndex.new(path: @output).court(name: "nl Test court three", city: "Brussel").latitude
+  end
+
+  test "an unreviewed or wrong-source public point cannot manufacture a court destination" do
+    collection = JSON.parse(File.read(@sources))
+    record = collection["records"].values[2]
+    record["reviewed_point"] = { latitude: 50.87, longitude: 4.37, osm_type: "way", osm_id: 123, pbf_sha256: "a" * 64 }
+    File.write(@sources, JSON.generate(collection))
+    assert_equal 1, importer.call[:counts]["invalid"]
+    assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court three", city: "Brussel")
+    FileUtils.rm(@output)
+    source = record.fetch("source_url")
+    record["reviewed_point"][:pbf_sha256] = "b" * 64
+    path = File.join(@directory, "point.json")
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 1, result[:counts]["invalid"]
+    assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court three", city: "Brussel")
+  end
+
+  test "a reviewed municipal destination is allowed only on the curated HTTPS host" do
+    source = Catalogue::DATA.fetch("courts").first.fetch("source")
+    path = File.join(@directory, "municipal.json")
+    record = { source_url: source, final_url: "https://www.st.vith.be/directory?key=public-court", status: "ok",
+      addresses: [ "Example Street 13 1000 Brussel" ] }
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 1, result[:counts]["matched"]
+    FileUtils.rm(@output)
+    record[:final_url] = "https://www.st.vith.be.evil.example/directory?key=public-court"
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 1, result[:counts]["invalid"]
+  end
+
+  test "reviewed points are bound to the exact selected address of a multi-site source" do
+    source = Catalogue::DATA.fetch("courts").last.fetch("source")
+    path = File.join(@directory, "multi-site.json")
+    record = { source_url: source, final_url: source, status: "ok",
+      addresses: [ "Unmapped Street 777 1000 Brussel", "Other Street 9, 2000 Antwerpen" ],
+      reviewed_points: [ { address: "Other Street 9, 2000 Antwerpen", latitude: 51.22, longitude: 4.4,
+        osm_type: "way", osm_id: 123, pbf_sha256: "a" * 64 } ] }
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: MultiVenueCatalogue, overrides_path: path).call
+    assert_equal 2, result[:counts]["matched"]
+    assert_equal 1, result[:counts]["unmapped"]
+    index = Travel::AddressIndex.new(path: @output)
+    assert_nil index.court(name: "nl Test court three", city: "Brussel")
+    assert_equal 51.22, index.court(name: "nl Test court antwerp", city: "Antwerpen").latitude
+    FileUtils.rm(@output)
+    record[:reviewed_points].first[:address] = "Other Street 9 2000 Antwerpen"
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: MultiVenueCatalogue, overrides_path: path).call
+    assert_equal 2, result[:counts]["invalid"]
+  end
+
+  test "a single reviewed point is refused on a multi-address source" do
+    source = Catalogue::DATA.fetch("courts").last.fetch("source")
+    path = File.join(@directory, "multi-site.json")
+    record = { source_url: source, final_url: source, status: "ok",
+      addresses: [ "Unmapped Street 777 1000 Brussel", "Other Street 9 2000 Antwerpen" ],
+      reviewed_point: { latitude: 51.22, longitude: 4.4, osm_type: "way", osm_id: 123, pbf_sha256: "a" * 64 } }
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: MultiVenueCatalogue, overrides_path: path).call
+    assert_equal 2, result[:counts]["invalid"]
+  end
+
+  test "a reviewed relation requires complete multipolygon interior provenance" do
+    source = Catalogue::DATA.fetch("courts").last.fetch("source")
+    path = File.join(@directory, "relation.json")
+    record = { source_url: source, final_url: source, status: "ok", addresses: [ "Example Square 1000 Brussel" ],
+      reviewed_point: { latitude: 50.87, longitude: 4.37, osm_type: "relation", osm_id: 123, pbf_sha256: "a" * 64 } }
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 1, result[:counts]["invalid"]
+    FileUtils.rm(@output)
+    record[:reviewed_point].merge!(geometry_complete: true, geometry_valid: true, point_in_building_geometry: true,
+      geometry_method: "multipolygon_interior_point", geometry_sha256: "c" * 64)
+    File.write(path, JSON.generate(reviewed_on: "2026-11-01", records: { source => record }))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: Catalogue, overrides_path: path).call
+    assert_equal 2, result[:counts]["matched"]
   end
 
   private

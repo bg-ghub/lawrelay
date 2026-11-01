@@ -43,6 +43,35 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_not Session.exists?(expired_session.id)
   end
 
+  test "a session whose user is missing is revoked without an error" do
+    orphaned_session = @user.sessions.create!
+    Session.connection.disable_referential_integrity do
+      orphaned_session.update_columns(user_id: User.maximum(:id) + 1)
+    end
+    cookie_jar = ActionDispatch::TestRequest.create.cookie_jar
+    cookie_jar.signed[:session_id] = orphaned_session.id
+    cookies["session_id"] = cookie_jar[:session_id]
+
+    get dashboard_path(locale: :en)
+
+    assert_redirected_to new_session_path(locale: :en)
+    assert_not Session.exists?(orphaned_session.id)
+    assert_empty cookies[:session_id]
+  end
+
+  test "a cookie for a removed session is cleared" do
+    removed_session = @user.sessions.create!
+    cookie_jar = ActionDispatch::TestRequest.create.cookie_jar
+    cookie_jar.signed[:session_id] = removed_session.id
+    cookies["session_id"] = cookie_jar[:session_id]
+    removed_session.destroy!
+
+    get dashboard_path(locale: :en)
+
+    assert_redirected_to new_session_path(locale: :en)
+    assert_empty cookies[:session_id]
+  end
+
   test "suspended accounts cannot sign in even with the correct password" do
     @user.update!(suspended_at: Time.current)
     assert_no_difference "Session.count" do

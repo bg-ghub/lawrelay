@@ -1,0 +1,15 @@
+en:
+  proposal_travel:
+    question: "Price includes travel?"
+    "yes": "Yes"
+    "no": "No"
+    cost_label: "Travel costs (€)"
+    cost_hint: "Additional amount for this assignment."
+    included: "Travel included"
+    additional: "+ € %{amount} travel"
+    not_specified: "Travel costs not specified"
+  activerecord:
+    attributes:
+      proposal:
+        travel_included: "Travel included"
+        travel_cost_cents: "Travel costs"

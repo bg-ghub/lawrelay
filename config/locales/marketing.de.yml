@@ -45,10 +45,8 @@ de:
       product:
         aria_label: Beispielauftrag auf LawRelay
         example_label: Beispielauftrag
-        title: Sitzungsvertretung am Familiengericht Antwerpen
+        title: Terminsvertretung in Antwerpen
         description: "Gesucht: ein Kollege für eine kurze familienrechtliche Verhandlung."
-        court: Familiengericht Antwerpen
-        city: Antwerpen
         practice_area: Familienrecht
       pathways:
         eyebrow: "Für Anwälte"

@@ -71,6 +71,7 @@ input,select,textarea{border-color:#7c8c84}
 .company-lookup[aria-disabled="true"]{opacity:.55;pointer-events:none;cursor:default}
 
 /* Public hero: show the same assignment card used in the marketplace. */
+.assignment-facts div{min-width:0;grid-template-columns:84px minmax(0,1fr)}.assignment-facts dd{min-width:0;overflow-wrap:anywhere}
 .hero-product{min-width:0;padding:0}.hero-product__label{margin:0 0 .55rem;color:var(--mint);font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.hero-assignment-preview{max-width:540px;margin-left:auto}.hero-assignment-preview .assignment-card{box-shadow:0 24px 56px rgba(0,0,0,.2)}.hero-assignment-preview .assignment-card:hover{box-shadow:0 24px 56px rgba(0,0,0,.2)}
 @media(max-width:760px){.hero-assignment-preview{max-width:none}.hero-assignment-preview .assignment-card__body{grid-template-columns:1fr;gap:1.2rem}.hero-assignment-preview .assignment-facts{grid-template-columns:repeat(3,1fr)}.hero-assignment-preview .assignment-facts div{display:block}.hero-assignment-preview .assignment-facts dd{margin-top:.15rem}}
 @media(max-width:520px){.hero-assignment-preview .assignment-facts{grid-template-columns:1fr}.hero-assignment-preview .assignment-facts div{display:grid;grid-template-columns:84px 1fr}}
@@ -97,7 +98,14 @@ input,select,textarea{border-color:#7c8c84}
 .analytics-preference__status{color:var(--muted)}
 .analytics-preference__controls{display:grid;gap:.5rem;min-width:0}
 .analytics-preference__actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+.analytics-preference__actions [aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.analytics-preference__actions [aria-pressed="true"]::before{content:"✓";font-weight:900}
+.analytics-preference__actions [aria-pressed="true"]:hover{border-color:var(--ink-deep);background:var(--ink-deep)}
 .analytics-preference__controls .button{min-height:42px;justify-content:center;white-space:nowrap}
+.proposal-travel-terms{min-width:0;margin:0;padding:0;border:0}
+.proposal-travel-terms__choices{display:flex;gap:1.25rem}
+.proposal-travel-terms .choice-row{margin:0}
+.proposal-travel-summary{margin:.35rem 0;color:var(--muted);font-size:.8rem}
 .footer-preference{border:0;background:transparent;padding:0;color:inherit;text-align:left;font-size:.84rem}.footer-preference:hover{color:var(--coral)}
 @media(max-width:760px){.analytics-preference{bottom:10px;width:calc(100% - 20px);border-radius:14px}.analytics-preference__inner{grid-template-columns:1fr;gap:.75rem;padding:.85rem}.analytics-preference__controls,.analytics-preference__actions{width:100%;min-width:0}.analytics-preference__controls .button{min-width:0;min-height:44px;white-space:normal;font-size:.875rem;line-height:1.3}}
 

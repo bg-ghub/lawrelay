@@ -39,4 +39,72 @@ class ProposalTest < ActiveSupport::TestCase
     assert_not_predicate proposal, :valid?
     assert_includes proposal.errors.attribute_names, :rate_kind
   end
+
+  test "separate travel costs are required and stored as nonnegative integer cents" do
+    proposal = court_proposal(travel_included: false)
+    assert_not_predicate proposal, :valid?
+    assert_includes proposal.errors.attribute_names, :travel_cost_cents
+
+    [ nil, -1, "12.5", "NaN", "Infinity", Proposal::MAX_RATE_CENTS + 1 ].each do |amount|
+      proposal.travel_cost_cents = amount
+      assert_not_predicate proposal, :valid?, "Unexpected valid travel amount #{amount.inspect}"
+    end
+    [ 0, 2_450, Proposal::MAX_RATE_CENTS ].each do |amount|
+      proposal.travel_cost_cents = amount
+      assert_predicate proposal, :valid?
+    end
+    proposal.travel_cost_cents = 2_450
+    proposal.save!
+    assert_equal false, proposal.reload.travel_included
+    assert_equal 2_450, proposal.travel_cost_cents
+    assert_predicate proposal, :valid?
+  end
+
+  test "included or unspecified travel never retains an additional charge" do
+    [ true, nil ].each do |included|
+      proposal = court_proposal(travel_included: included, travel_cost_cents: 2_500)
+      assert_predicate proposal, :valid?
+      assert_nil proposal.travel_cost_cents
+      proposal.save!
+      if included.nil?
+        assert_nil proposal.reload.travel_included
+      else
+        assert_equal true, proposal.reload.travel_included
+      end
+      proposal.update!(status: "declined")
+      if included.nil?
+        assert_nil proposal.reload.travel_included
+      else
+        assert_equal true, proposal.reload.travel_included
+      end
+      assert_nil proposal.travel_cost_cents
+    end
+  end
+
+  test "unknown travel choices are rejected instead of silently interpreted as included" do
+    proposal = court_proposal(travel_included: "unknown")
+    assert_not_predicate proposal, :valid?
+    assert_includes proposal.errors.attribute_names, :travel_included
+    [ true, false, "true", "false", "1", "0" ].each do |choice|
+      proposal.assign_attributes(travel_included: choice, travel_cost_cents: 0)
+      assert_predicate proposal, :valid?
+    end
+  end
+
+  test "legal tasks ignore stale travel fields" do
+    proposal = assignment.proposals.build(name: "Lena Janssens", email: "lena@example.test", rate_cents: 250_00,
+      message: "A bounded legal task.", travel_included: false, travel_cost_cents: "invalid")
+    assert_predicate proposal, :valid?
+    assert_nil proposal.travel_included
+    assert_nil proposal.travel_cost_cents
+  end
+
+  private
+
+  def court_proposal(**attributes)
+    task = assignment
+    task.update!(kind: "court_replacement", assignment_subtype: nil, court: "Enterprise Court", city: "Brussels")
+    task.proposals.build(name: "Lena Janssens", email: "lena@example.test", rate_cents: 250_00,
+      message: "A bounded court appearance.", **attributes)
+  end
 end

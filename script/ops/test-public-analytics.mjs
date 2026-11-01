@@ -17,11 +17,17 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
   const body = { dataset: { lawrelayAnalyticsWebsiteId: "website-id" } }
   const status = { hidden: true }
   const actions = { hidden: true }
-  const allowButton = { focus: () => { allowButton.focused = true } }
+  const choiceButtons = ["deny", "allow"].map((choice) => ({
+    dataset: { analyticsPreference: choice },
+    attributes: {},
+    setAttribute(name, value) { this.attributes[name] = value },
+    focus() { this.focused = true }
+  }))
   const panel = {
     dataset: { analyticsPrivacySignalMessage: "Browser preference keeps statistics off." },
     hidden: false,
-    querySelector: (selector) => selector.includes("status") ? status : selector.includes("actions") ? actions : allowButton
+    querySelector: (selector) => selector.includes("status") ? status : selector.includes("actions") ? actions : choiceButtons.find((button) => button.attributes["aria-pressed"] === "true"),
+    querySelectorAll: () => choiceButtons
   }
   const document = {
     body,
@@ -72,6 +78,7 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
     pageviews,
     panel,
     actions,
+    choiceButtons,
     script: () => script,
     cookie: (name = "lawrelay_statistics") => cookies.has(name) ? `${name}=${cookies.get(name)}` : "",
     expirePreference: () => { cookies.delete("lawrelay_statistics") },
@@ -251,6 +258,43 @@ test("the informational notice stays dismissed while public statistics keep work
   assert.equal(tracker.panel.hidden, true)
   tracker.script().onload()
   assert.equal(tracker.pageviews.length, 1)
+})
+
+test("the preference buttons show the current effective setting and refresh after a choice", () => {
+  const tracker = createTracker()
+  const [off, on] = tracker.choiceButtons
+
+  tracker.emitTurboLoad()
+  tracker.openPreferences()
+  assert.equal(on.attributes["aria-pressed"], "true")
+  assert.equal(off.attributes["aria-pressed"], "false")
+  assert.equal(on.focused, true)
+
+  tracker.choose("deny")
+  assert.equal(off.attributes["aria-pressed"], "true")
+  assert.equal(on.attributes["aria-pressed"], "false")
+  tracker.openPreferences()
+  assert.equal(off.focused, true)
+  tracker.emitTurboLoad()
+  tracker.openPreferences()
+  assert.equal(off.attributes["aria-pressed"], "true")
+
+  tracker.choose("allow")
+  assert.equal(on.attributes["aria-pressed"], "true")
+  assert.equal(off.attributes["aria-pressed"], "false")
+})
+
+test("privacy signals highlight Off even when the stored choice permits statistics", () => {
+  for (const options of [{ dnt: true }, { gpc: true }]) {
+    const tracker = createTracker({ ...options, preference: validPreference("allow") })
+    tracker.emitTurboLoad()
+    tracker.openPreferences()
+    assert.equal(tracker.choiceButtons[0].attributes["aria-pressed"], "true")
+    assert.equal(tracker.choiceButtons[1].attributes["aria-pressed"], "false")
+    tracker.choose("allow")
+    assert.equal(tracker.choiceButtons[0].attributes["aria-pressed"], "true")
+    assert.equal(tracker.script(), undefined)
+  }
 })
 
 test("malformed and future-dated preference cookies are ignored", () => {

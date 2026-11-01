@@ -9,6 +9,7 @@ class Proposal < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :firm, optional: true
   has_many :audit_events, as: :auditable, dependent: :destroy
+  before_validation :normalize_travel_terms
   after_create :notify_assignment_owner
 
   validates :message, presence: true, length: { maximum: 2_000 }
@@ -18,6 +19,10 @@ class Proposal < ApplicationRecord
   validates :rate_kind, inclusion: { in: RATE_KINDS }
   validates :status, inclusion: { in: STATUSES }
   validates :user_id, uniqueness: { scope: :assignment_id }, allow_nil: true
+  validates :travel_cost_cents,
+    numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: MAX_RATE_CENTS },
+    if: :separate_travel_cost?
+  validate :travel_inclusion_choice_is_valid
   validate :author_account_still_active, on: :create
 
   def display_name
@@ -78,6 +83,24 @@ class Proposal < ApplicationRecord
   end
 
   private
+
+  def normalize_travel_terms
+    unless assignment&.court_replacement?
+      self.travel_included = nil
+    end
+    self.travel_cost_cents = nil unless separate_travel_cost?
+  end
+
+  def separate_travel_cost?
+    assignment&.court_replacement? && travel_included == false
+  end
+
+  def travel_inclusion_choice_is_valid
+    return if travel_included_before_type_cast.nil?
+    return if [ true, false, "true", "false", "1", "0", 1, 0 ].include?(travel_included_before_type_cast)
+
+    errors.add(:travel_included, :inclusion)
+  end
 
   def accept!(actor:)
     transition_from_pending!("accepted", actor: actor, timestamp: :accepted_at)

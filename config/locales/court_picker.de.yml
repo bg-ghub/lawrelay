@@ -8,6 +8,18 @@ de:
     other_label: "Anderes Gericht oder anderer Ort"
     choose: "Wählen Sie ein Gericht oder Sonstiges."
     division: "Abteilung"
+    brussels_assize: "Assisenhof des Verwaltungsbezirks Brüssel-Hauptstadt"
+    hearing_place: "Sitzungsort %{place}"
+    hearing_unconfirmed: "Sitzungsort zu bestätigen"
+    hearing_subjects:
+      civil_and_family: "Zivil- und Familiensachen"
+      criminal: "Strafsachen"
+      youth_protection: "Jugendschutz"
+      employment_accidents: "Arbeitsverträge, Arbeitsunfälle, Berufskrankheiten und Eilverfahren"
+      social_security: "soziale Sicherheit"
+      ordinary: "ordentliche Sitzungen"
+      urgent_presidential: "Eilverfahren und Präsidialsachen"
+      amicable_settlement: "gütliche Einigung"
     first_canton: "erster Kanton"
     second_canton: "zweiter Kanton"
     languages:

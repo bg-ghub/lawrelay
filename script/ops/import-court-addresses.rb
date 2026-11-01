@@ -12,7 +12,37 @@ require_relative "collect-court-addresses"
 # No public geocoder, page request, nearest-court guess or input mutation occurs.
 class CourtAddressImporter
   MAX_SOURCE_BYTES = 8 * 1024 * 1024
+  REVIEWED_DESTINATION_HOSTS = %w[st.vith.be www.st.vith.be].freeze
   PublishedAddress = Data.define(:value, :city, :municipality)
+
+  def self.parse_published_address(address)
+    return unless address.is_a?(String)
+    match = address.squish.match(/\A.+?\s*,?\s+[1-9]\d{3}\s+([^\d].*)\z/)
+    return unless match
+
+    city = match[1].sub(/,?\s+(?:Belgi[eë]|Belgique|Belgien|Belgium)\z/i, "").strip
+    municipality = nil
+    if (qualified = city.match(/\A([\p{L}\p{M}'’ .-]+?)\s*\(([\p{L}\p{M}'’ .-]+)\)\z/u))
+      city = qualified[1].strip
+      municipality = qualified[2].strip
+    end
+    return unless city.match?(/\A[\p{L}\p{M}'’ .-]+\z/u)
+
+    value = address.squish.sub(/#{Regexp.escape(match[1])}\z/, city)
+    PublishedAddress.new(value:, city:, municipality:)
+  end
+
+  def self.valid_final_url?(source, final_url, reviewed: false)
+    return true if CourtAddressCollector.safe_url?(final_url)
+    return false unless reviewed && final_url.is_a?(String)
+
+    uri = URI(final_url)
+    original = URI(source)
+    approved_host = uri.host == original.host || REVIEWED_DESTINATION_HOSTS.include?(uri.host)
+    uri.is_a?(URI::HTTPS) && uri.port == 443 && approved_host && uri.userinfo.nil? && uri.fragment.nil?
+  rescue URI::InvalidURIError
+    false
+  end
 
   def initialize(input_path:, output_path:, sources_path:, catalogue: CourtCatalogue,
     overrides_path: Rails.root.join("config/court_address_overrides.be.json"))
@@ -66,7 +96,7 @@ class CourtAddressImporter
             "official_court_sources_sha256" => @collection_sha,
             "official_court_sources_updated_at" => @collection["updated_at"].to_s,
             "official_court_base_index_sha256" => @input_sha,
-            "official_court_address_rule" => "exact-source-unique-venue-address-v3"
+            "official_court_address_rule" => "exact-source-qualified-hearing-address-v4"
           }
           if @overrides_sha
             metadata["official_court_overrides_sha256"] = @overrides_sha
@@ -95,11 +125,21 @@ class CourtAddressImporter
   def import_entry(database, entry, index)
     source = entry.fetch("source")
     record = @records[source]
-    status, point = resolve(source, record, entry)
-    selected = record.is_a?(Hash) ? record.slice("source_url", "final_url", "status", "addresses", "fetched_at", "address_role") : { "source_url" => source, "status" => "missing" }
+    option = if @catalogue.respond_to?(:option_for)
+      @catalogue.option_for(entry, locale: :nl)
+    else
+      { labels: @catalogue::LOCALES.map { |locale| @catalogue.send(:label, entry, locale) }.uniq,
+        cities: [ entry.fetch("city"), *@catalogue::DATA.fetch("places").fetch(entry.fetch("city"), {}).values ].uniq,
+        hearing_verified: entry["hearing_verified"] != false }
+    end
+    status, point = option[:hearing_verified] == false ? [ "unconfirmed", nil ] : resolve(source, record, entry)
+    selected = record.is_a?(Hash) ? record.slice("source_url", "final_url", "status", "addresses", "fetched_at", "address_role", "reviewed_point", "reviewed_points") : { "source_url" => source, "status" => "missing" }
+    selected["venue_city"] = entry.fetch("city")
+    selected["hearing_address"] = entry["hearing_address"]
+    selected["hearing_verified"] = option[:hearing_verified] != false
     source_sha = Digest::SHA256.hexdigest(JSON.generate(selected))
-    labels = @catalogue::LOCALES.map { |locale| @catalogue.send(:label, entry, locale) }.uniq
-    cities = [ entry.fetch("city"), *@catalogue::DATA.fetch("places").fetch(entry.fetch("city"), {}).values ].uniq
+    labels = option.fetch(:labels)
+    cities = option.fetch(:cities)
     source_id = Digest::SHA256.hexdigest([ source, index ].join("\0")).first(15).to_i(16)
     labels.each do |label|
       cities.each do |city|
@@ -139,6 +179,15 @@ class CourtAddressImporter
           (address.municipality && cities.include?(normalize(address.municipality))) ||
           @index.official_city_alias?(address.value, city: entry.fetch("city"))
       end
+      if entry["hearing_address"]
+        expected = entry["hearing_address"]
+        return [ "invalid", nil ] unless expected.is_a?(String) && expected.present? && expected.length <= 200
+
+        matching.select! do |address|
+          premise = address.value.match(/\A(.+?)\s*,?\s+[1-9]\d{3}\s/)&.captures&.first
+          premise && normalize(premise) == normalize(expected)
+        end
+      end
       return [ "venue_mismatch", nil ] if matching.empty?
       return [ "ambiguous", nil ] unless matching.one?
       selected_address = matching.first
@@ -150,7 +199,53 @@ class CourtAddressImporter
     end
     points = candidates.filter_map { |address| @index.address(address) }.uniq
     point = points.first if points.one?
+    if record.key?("reviewed_point") || record.key?("reviewed_points")
+      reviewed = selected_reviewed_point(source, record, addresses, selected_address)
+      return [ "invalid", nil ] if reviewed == :invalid
+      point ||= reviewed if points.empty?
+    end
     point ? [ "matched", point ] : [ "unmapped", nil ]
+  end
+
+  def selected_reviewed_point(source, record, addresses, selected_address)
+    return :invalid if record.key?("reviewed_point") && record.key?("reviewed_points")
+    if record.key?("reviewed_point")
+      # A single point must never silently apply to multiple hearing buildings.
+      return :invalid unless addresses.one?
+
+      return reviewed_point(source, record.fetch("reviewed_point")) || :invalid
+    end
+
+    values = record.fetch("reviewed_points")
+    return :invalid unless values.is_a?(Array) && values.any? && values.length <= addresses.length
+    return :invalid unless values.all? { |value| value.is_a?(Hash) && addresses.include?(value["address"]) }
+    return :invalid unless values.map { |value| value["address"] }.uniq.length == values.length
+
+    mapped = {}
+    values.each do |value|
+      point = reviewed_point(source, value)
+      return :invalid unless point
+      mapped[value.fetch("address")] = point
+    end
+    original = addresses.find { |address| published_address(address) == selected_address }
+    mapped[original]
+  end
+
+  def reviewed_point(source, value)
+    return unless @verified_overrides.include?(source) && value.is_a?(Hash)
+    return unless value["pbf_sha256"] == @index.source_sha256 && value["osm_type"].in?(%w[node way relation])
+    return unless value["osm_id"].is_a?(Integer) && value["osm_id"].positive? && value["osm_id"] < 2**63
+    if value["osm_type"] == "relation"
+      return unless value["geometry_complete"] == true && value["geometry_valid"] == true && value["point_in_building_geometry"] == true &&
+        value["geometry_method"] == "multipolygon_interior_point" &&
+        value["geometry_sha256"].is_a?(String) && value["geometry_sha256"].match?(/\A[0-9a-f]{64}\z/)
+    end
+
+    latitude, longitude = value.values_at("latitude", "longitude")
+    return unless [ latitude, longitude ].all? { |number| number.is_a?(Numeric) && number.finite? }
+    return unless latitude.between?(49.3, 51.7) && longitude.between?(2.3, 6.7)
+
+    Travel::AddressIndex::Point.new(latitude:, longitude:)
   end
 
   def normalize(value)
@@ -158,19 +253,7 @@ class CourtAddressImporter
   end
 
   def published_address(address)
-    match = address.squish.match(/\A.+?\s*,?\s+[1-9]\d{3}\s+([^\d].*)\z/)
-    return unless match
-
-    city = match[1].sub(/,?\s+(?:Belgi[eë]|Belgique|Belgien|Belgium)\z/i, "").strip
-    municipality = nil
-    if (qualified = city.match(/\A([\p{L}\p{M}'’ .-]+?)\s*\(([\p{L}\p{M}'’ .-]+)\)\z/u))
-      city = qualified[1].strip
-      municipality = qualified[2].strip
-    end
-    return unless city.match?(/\A[\p{L}\p{M}'’ .-]+\z/u)
-
-    value = address.squish.sub(/#{Regexp.escape(match[1])}\z/, city)
-    PublishedAddress.new(value:, city:, municipality:)
+    self.class.parse_published_address(address)
   end
 
   def apply_reviewed_overrides
@@ -197,14 +280,7 @@ class CourtAddressImporter
   end
 
   def valid_final_url?(source, final_url)
-    return true if CourtAddressCollector.safe_url?(final_url)
-    return false unless @verified_overrides.include?(source) && final_url.is_a?(String)
-
-    uri = URI(final_url)
-    original = URI(source)
-    uri.is_a?(URI::HTTPS) && uri.port == 443 && uri.host == original.host && uri.userinfo.nil? && uri.fragment.nil?
-  rescue URI::InvalidURIError
-    false
+    self.class.valid_final_url?(source, final_url, reviewed: @verified_overrides.include?(source))
   end
 end
 

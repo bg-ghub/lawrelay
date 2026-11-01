@@ -17,6 +17,7 @@ export default class extends Controller {
 
   toggle(event) {
     const active = this.selectTarget.value === this.otherValue
+    this.customTarget.hidden = !active
     this.inputTarget.disabled = !active
     this.inputTarget.required = active
     if (event && active) this.inputTarget.focus()

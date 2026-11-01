@@ -1,5 +1,5 @@
 {
-  "checked_on": "2026-10-31",
+  "checked_on": "2026-11-01",
   "overview_sources": [
     "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/vredegerecht",
     "https://www.tribunaux-rechtbanken.be/nl/rechtbanken/politierechtbank",
@@ -229,10 +229,13 @@
       "type": "peace",
       "district": "Brussel",
       "venue": "Oudergem",
-      "city": "Oudergem",
+      "city": "Etterbeek",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem",
+      "judicial_city": "Oudergem",
+      "hearing_place": "Etterbeek",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem"
     },
     {
       "type": "peace",
@@ -526,10 +529,13 @@
       "type": "peace",
       "district": "Luik",
       "venue": "Limbourg",
-      "city": "Limbourg",
+      "city": "Eupen",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg",
+      "judicial_city": "Limbourg",
+      "hearing_place": "Eupen",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg"
     },
     {
       "type": "peace",
@@ -580,10 +586,13 @@
       "type": "peace",
       "district": "Luik",
       "venue": "Visé",
-      "city": "Visé",
+      "city": "Cheratte",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+      "judicial_city": "Visé",
+      "hearing_place": "Cheratte",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise"
     },
     {
       "type": "peace",
@@ -742,19 +751,25 @@
       "type": "peace",
       "district": "Henegouwen",
       "venue": "Boussu-Colfontaine I",
-      "city": "Boussu-Colfontaine",
+      "city": "Boussu",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+      "judicial_city": "Boussu-Colfontaine",
+      "hearing_place": "Boussu",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i"
     },
     {
       "type": "peace",
       "district": "Henegouwen",
       "venue": "Boussu-Colfontaine II",
-      "city": "Boussu-Colfontaine",
+      "city": "Boussu",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+      "judicial_city": "Boussu-Colfontaine",
+      "hearing_place": "Boussu",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii"
     },
     {
       "type": "peace",
@@ -1039,10 +1054,13 @@
       "type": "peace",
       "district": "Antwerpen",
       "venue": "eerste kanton Mol-Geel",
-      "city": "Mol-Geel",
+      "city": "Mol",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel",
+      "judicial_city": "Mol-Geel",
+      "hearing_place": "Mol",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel"
     },
     {
       "type": "peace",
@@ -1111,10 +1129,13 @@
       "type": "peace",
       "district": "Antwerpen",
       "venue": "tweede kanton Mol-Geel",
-      "city": "Mol-Geel",
+      "city": "Mol",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel",
+      "judicial_city": "Mol-Geel",
+      "hearing_place": "Mol",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel"
     },
     {
       "type": "peace",
@@ -1336,10 +1357,13 @@
       "type": "peace",
       "district": "Oost-Vlaanderen",
       "venue": "Beveren-Kruibeke-Zwijndrecht",
-      "city": "Beveren-Kruibeke-Zwijndrecht",
+      "city": "Beveren",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+      "judicial_city": "Beveren-Kruibeke-Zwijndrecht",
+      "hearing_place": "Beveren",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht"
     },
     {
       "type": "peace",
@@ -1417,10 +1441,13 @@
       "type": "peace",
       "district": "Oost-Vlaanderen",
       "venue": "Geraardsbergen",
-      "city": "Geraardsbergen",
+      "city": "Brakel",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+      "judicial_city": "Geraardsbergen",
+      "hearing_place": "Brakel",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen"
     },
     {
       "type": "peace",
@@ -1453,10 +1480,13 @@
       "type": "peace",
       "district": "Oost-Vlaanderen",
       "venue": "Merelbeke-Melle",
-      "city": "Merelbeke-Melle",
+      "city": "Merelbeke",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle",
+      "judicial_city": "Merelbeke-Melle",
+      "hearing_place": "Merelbeke",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle"
     },
     {
       "type": "peace",
@@ -1723,10 +1753,13 @@
       "type": "police",
       "district": "Limburg",
       "venue": "Genk",
-      "city": "Genk",
+      "city": "Tongeren-Borgloon",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+      "judicial_city": "Genk",
+      "hearing_place": "Tongeren-Borgloon",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk"
     },
     {
       "type": "police",
@@ -1870,7 +1903,8 @@
       "city": "Saint-Vith",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
+      "hearing_verified": false
     },
     {
       "type": "police",
@@ -2185,7 +2219,40 @@
       "city": "Nivelles",
       "division": false,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "judicial_city": "Nivelles",
+      "hearing_place": "Nivelles",
+      "hearing_address": "Rue de Soignies 8",
+      "hearing_subject": "civil_and_family",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf"
+    },
+    {
+      "type": "first_instance",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "judicial_city": "Nivelles",
+      "hearing_place": "Nivelles",
+      "hearing_address": "Place Albert Ier 17",
+      "hearing_subject": "criminal",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf"
+    },
+    {
+      "type": "first_instance",
+      "district": "Waals-Brabant",
+      "venue": "Waals-Brabant",
+      "city": "Nivelles",
+      "division": false,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "judicial_city": "Nivelles",
+      "hearing_place": "Nivelles",
+      "hearing_address": "Avenue Jean Monnet 12",
+      "hearing_subject": "youth_protection",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf"
     },
     {
       "type": "first_instance",
@@ -2362,10 +2429,13 @@
       "type": "labour",
       "district": "Gent",
       "venue": "Roeselare",
-      "city": "Roeselare",
+      "city": "Kortrijk",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare"
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare",
+      "judicial_city": "Roeselare",
+      "hearing_place": "Kortrijk",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/contact"
     },
     {
       "type": "labour",
@@ -2497,10 +2567,27 @@
       "type": "labour",
       "district": "Henegouwen",
       "venue": "Binche",
-      "city": "Binche",
+      "city": "Charleroi",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+      "judicial_city": "Binche",
+      "hearing_place": "Charleroi",
+      "hearing_subject": "employment_accidents",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Binche",
+      "city": "La Louvière",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+      "judicial_city": "Binche",
+      "hearing_place": "La Louvière",
+      "hearing_subject": "social_security",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
     },
     {
       "type": "labour",
@@ -2533,10 +2620,40 @@
       "type": "labour",
       "district": "Henegouwen",
       "venue": "Mouscron",
-      "city": "Mouscron",
+      "city": "Tournai",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "judicial_city": "Mouscron",
+      "hearing_place": "Tournai",
+      "hearing_subject": "ordinary",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Mouscron",
+      "city": "Mons",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "judicial_city": "Mouscron",
+      "hearing_place": "Mons",
+      "hearing_subject": "urgent_presidential",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "type": "labour",
+      "district": "Henegouwen",
+      "venue": "Mouscron",
+      "city": "Charleroi",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "judicial_city": "Mouscron",
+      "hearing_place": "Charleroi",
+      "hearing_subject": "amicable_settlement",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
     },
     {
       "type": "labour",

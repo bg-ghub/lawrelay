@@ -18,8 +18,10 @@
           <div><dt><%= @assignment.court_replacement? ? t("marketplace.show.hearing_at") : t("marketplace.show.execution_deadline") %></dt><dd><%= l @assignment.starts_at, format: "%d/%m/%Y · %H:%M" %></dd></div>
           <div><dt><%= t("marketplace.show.response_deadline") %></dt><dd><%= l @assignment.response_deadline_at, format: "%d/%m/%Y · %H:%M" %></dd></div>
           <% if @assignment.court_replacement? %>
+            <% hearing_details = assignment_hearing_details(@assignment) %>
             <div><dt><%= t("marketplace.show.duration") %></dt><dd><%= t("marketplace.show.duration_value", count: @assignment.duration_minutes) %></dd></div>
-            <div><dt><%= t("marketplace.show.location") %></dt><dd><%= @assignment.court %><%= " · #{@assignment.city}" if @assignment.city.present? %></dd></div>
+            <% if hearing_details[:court].present? %><div><dt><%= t("marketplace.show.court") %></dt><dd><%= hearing_details[:court] %></dd></div><% end %>
+            <% if hearing_details[:location].present? %><div><dt><%= t("marketplace.show.location") %></dt><dd><%= hearing_details[:location] %><% if hearing_details[:address_unavailable] %><small class="field-hint"><%= t("marketplace.show.address_unavailable") %></small><% end %></dd></div><% end %>
           <% elsif @assignment.delivery_due_at.present? %>
             <div><dt><%= t("marketplace.show.delivery_due") %></dt><dd><%= l @assignment.delivery_due_at, format: "%d/%m/%Y · %H:%M" %></dd></div>
           <% end %>
@@ -58,6 +60,7 @@
                 <div><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.status}") %></span></div>
                 <p><%= proposal.message %></p>
                 <p><strong>€ <%= euro_amount(proposal.rate_cents) %></strong> · <%= proposal.rate_kind_label %></p>
+                <%= render "assignments/proposal_travel_terms", proposal: proposal %>
                 <%= render "proposal_location", proposal: proposal %>
                 <% if proposal.status == "accepted" && (contact_email = proposal.contact_email).present? %>
                   <p class="contact-card"><%= mail_to contact_email %></p>
@@ -77,6 +80,9 @@
         <h2><%= t("workflow.ui.your_proposal") %></h2>
         <p><span class="status-pill"><%= t("marketplace.status.#{@existing_proposal.status}") %></span></p>
         <p><%= @existing_proposal.message %></p>
+        <p><strong>€ <%= euro_amount(@existing_proposal.rate_cents) %></strong> · <%= @existing_proposal.rate_kind_label %></p>
+        <%= render "assignments/proposal_travel_terms", proposal: @existing_proposal %>
+        <%= render "proposal_location", proposal: @existing_proposal %>
         <% if @existing_proposal.status == "accepted" %>
           <% if (contact_email = @assignment.creator_user&.marketplace_contact_email).present? %>
             <p class="contact-card"><%= mail_to contact_email %></p>
@@ -90,6 +96,7 @@
         <%= form_with model: [@assignment, @proposal], class: "proposal-form" do |form| %>
           <% if @proposal.errors.any? %><div class="form-error" role="alert" tabindex="-1" data-controller="form-errors"><strong><%= t("marketplace.show.proposal_error_heading") %></strong><ul><% @proposal.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div><% end %>
           <div class="form-row"><div class="field-group"><%= form.label :rate_kind, t("marketplace.show.rate_kind_label") %><%= searchable_select form, :rate_kind, Proposal::RATE_KINDS.map { |kind| [ t("marketplace.rate_kinds.#{kind}"), kind ] }, {}, class: "select-field" %></div><div class="field-group"><%= form.label :rate_cents, t("marketplace.show.rate_label") %><%= form.number_field :rate_cents, min: 0, step: 0.01, value: euro_amount(@proposal.rate_cents || @assignment.fee_cents, field: true), required: true %><p class="field-hint"><%= t("marketplace.show.rate_hint") %></p></div></div>
+          <%= render "assignments/proposal_travel_fields", form: form, proposal: @proposal if @assignment.court_replacement? %>
           <div class="field-group"><%= form.label :message, t("marketplace.show.message_label") %><%= form.text_area :message, rows: 4, required: true, maxlength: 2000, placeholder: t("marketplace.show.message_placeholder") %></div>
           <%= form.submit t("marketplace.show.submit"), class: "button button--coral button--full" %>
         <% end %>

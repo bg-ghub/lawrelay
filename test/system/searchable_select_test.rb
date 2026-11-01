@@ -58,10 +58,12 @@ class SearchableSelectTest < ApplicationSystemTestCase
     assert_field "assignment_legal_subtype-search", with: I18n.t("marketplace.assignment_subtypes.contract", locale: :en)
   end
 
-  test "Other legal area enables its custom field and predefined choices disable it" do
+  test "Other legal area shows its custom field and predefined choices hide it" do
     visit new_assignment_path(locale: :en)
-    assert_field "assignment_practice_area_other", disabled: true
-    assert_no_selector "#assignment_practice_area_other[required]"
+    assert_field "assignment_practice_area_other", disabled: true, visible: :all
+    assert_no_selector "#assignment_practice_area_other"
+    assert_no_selector "label[for='assignment_practice_area_other']"
+    assert_no_selector "#assignment_practice_area_other[required]", visible: :all
     field = find("#assignment_practice_area-search")
     field.set("oth")
     field.send_keys(:arrow_down, :enter)
@@ -70,13 +72,36 @@ class SearchableSelectTest < ApplicationSystemTestCase
     assert_equal "assignment_practice_area_other", page.driver.browser.switch_to.active_element.attribute("id")
     fill_in "assignment_practice_area_other", with: "Synthetic specialist field"
     choose_searchable_option("assignment_practice_area", label: "Employment law")
-    assert_field "assignment_practice_area_other", disabled: true
-    assert_no_selector "#assignment_practice_area_other[required]"
+    assert_field "assignment_practice_area_other", disabled: true, visible: :all
+    assert_no_selector "#assignment_practice_area_other"
+    assert_no_selector "label[for='assignment_practice_area_other']"
+    assert_no_selector "#assignment_practice_area_other[required]", visible: :all
     choose_searchable_option("assignment_practice_area", value: Assignment::OTHER_CHOICE)
     assert_field "assignment_practice_area_other", with: "Synthetic specialist field"
+    find("label.kind-option", text: "Legal task").click
+    assert_field "assignment_practice_area_other", with: "Synthetic specialist field"
+    find("label.kind-option", text: "Court cover").click
+    assert_field "assignment_practice_area_other", with: "Synthetic specialist field"
     page.execute_script("document.querySelector('form.assignment-form').reset()")
-    assert_field "assignment_practice_area_other", disabled: true
-    assert_no_selector "#assignment_practice_area_other[required]"
+    assert_field "assignment_practice_area_other", disabled: true, visible: :all
+    assert_no_selector "#assignment_practice_area_other"
+    assert_no_selector "#assignment_practice_area_other[required]", visible: :all
+  end
+
+  test "Other legal area visibility follows the selected value in every language" do
+    %i[nl fr de en].each do |locale|
+      visit new_assignment_path(locale:)
+      assert_no_selector "#assignment_practice_area_other"
+      choose_searchable_option("assignment_practice_area", value: Assignment::OTHER_CHOICE)
+      assert_field I18n.t("assignment_other.practice_area", locale:), disabled: false
+      assert_selector "#assignment_practice_area_other[required]"
+      choice = I18n.t("marketplace.practice_areas", locale:).except(:other).values.first
+      choose_searchable_option("assignment_practice_area", label: choice)
+      assert_no_selector "#assignment_practice_area_other"
+      assert_no_selector "label[for='assignment_practice_area_other']"
+      assert_field "assignment_practice_area_other", disabled: true, visible: :all
+      assert_no_selector "#assignment_practice_area_other[required]", visible: :all
+    end
   end
 
   test "a custom legal area survives validation errors and saves its entered name" do
@@ -236,6 +261,54 @@ class SearchableSelectTest < ApplicationSystemTestCase
     fill_in "user_locale-search", with: "deut"
     find("#user_locale-search").send_keys(:arrow_down, :enter)
     assert_native_value "user_locale", "de"
+  end
+
+  test "travel cost is required only when excluded and choices survive toggles and reset" do
+    owner = account("travel-form-owner")
+    assignment = create_assignment_for(owner)
+
+    %i[nl fr de en].each do |locale|
+      visit assignment_path(assignment, locale:)
+      assert_selector ".proposal-travel-terms legend", text: I18n.t("proposal_travel.question", locale:)
+      assert find("#proposal_travel_included_true").checked?
+      assert_no_selector "#proposal_travel_cost_cents"
+      assert_field "proposal_travel_cost_cents", disabled: true, visible: :all
+      find("#proposal_travel_included_false").choose
+      assert_selector "#proposal_travel_cost_cents[required]"
+      assert_field I18n.t("proposal_travel.cost_label", locale:), disabled: false
+      fill_in "proposal_travel_cost_cents", with: "25.50"
+      find("#proposal_travel_included_true").choose
+      assert_no_selector "#proposal_travel_cost_cents"
+      assert_no_selector "#proposal_travel_cost_cents[required]", visible: :all
+      find("#proposal_travel_included_false").choose
+      assert_field "proposal_travel_cost_cents", with: "25.50"
+      page.execute_script("document.querySelector('form.proposal-form').reset()")
+      assert find("#proposal_travel_included_true").checked?
+      assert_no_selector "#proposal_travel_cost_cents"
+      assert_field "proposal_travel_cost_cents", disabled: true, visible: :all
+    end
+
+    assignment.update!(kind: "legal_task", assignment_subtype: "advice", languages: "EN", court: nil, city: nil)
+    visit assignment_path(assignment, locale: :en)
+    assert_no_selector ".proposal-travel-terms", visible: :all
+  end
+
+  test "a court offer saves the separate flat travel amount shown to the bidder" do
+    owner = account("travel-price-owner")
+    assignment = create_assignment_for(owner)
+    visit assignment_path(assignment, locale: :en)
+    fill_in "proposal_rate_cents", with: "180.50"
+    find("#proposal_travel_included_false").choose
+    fill_in "proposal_travel_cost_cents", with: "25.50"
+    fill_in "proposal_message", with: "A fictional fixed offer including a separate flat travel charge."
+    click_button I18n.t("marketplace.show.submit", locale: :en)
+
+    assert_text I18n.t("notices.proposal_created", locale: :en)
+    assert_selector ".proposal-travel-summary", text: "+ € 25.50 travel"
+    assert_selector ".proposal-panel p strong", text: "€ 180.50"
+    proposal = assignment.proposals.find_by!(user: @member.user)
+    assert_equal false, proposal.travel_included
+    assert_equal 2_550, proposal.travel_cost_cents
   end
 
   private

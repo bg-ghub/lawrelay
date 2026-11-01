@@ -37,6 +37,52 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to verification_status_path(locale: :en)
   end
 
+  test "pending confirmation offers localized email support without replacing the resend action" do
+    user = users(:one)
+    user.update!(email_address: "pending@advocaat.be", email_verified_at: nil)
+    sign_in_as(user)
+
+    %i[nl fr de en].each do |locale|
+      assert_no_enqueued_jobs { get verification_status_path(locale:) }
+      assert_response :success
+      assert_select ".confirmation-support a[href='mailto:support@lawrelay.be']",
+        text: I18n.t("auth.verification_status.confirmation_support_link", locale:), count: 1
+      assert_select ".confirmation-delivery-note",
+        text: I18n.t("auth.verification_status.advocaat_delivery_notice", locale:), count: 1
+      assert_select "form[action='#{verification_status_path(locale:)}']", count: 1
+      assert_select ".advocaat-webmail-hint a[href='https://webmail.advocaat.be/']", count: 1
+      assert_select ".confirmation-support", text: "Still haven’t received a confirmation e-mail after multiple tries? Send Support an e-mail manually from the address above to support@lawrelay.be." if locale == :en
+      assert_not_includes response.body, "Translation missing"
+    end
+  end
+
+  test "confirmed email does not show confirmation support" do
+    user = users(:one)
+    user.update!(email_address: "confirmed@advocaat.be")
+    user.update!(email_verified_at: Time.current)
+    sign_in_as(user)
+
+    get verification_status_path(locale: :en)
+
+    assert_response :success
+    assert_select ".confirmation-support", count: 0
+    assert_select ".confirmation-delivery-note", count: 0
+  end
+
+  test "other email domains keep generic confirmation support without an Advocaat be delivery notice" do
+    user = users(:one)
+    user.update!(email_verified_at: nil)
+    sign_in_as(user)
+
+    %i[nl fr de en].each do |locale|
+      get verification_status_path(locale:)
+
+      assert_response :success
+      assert_select ".confirmation-support", count: 1
+      assert_select ".confirmation-delivery-note", count: 0
+    end
+  end
+
   test "a failed email resend stays on the retryable status page without exposing the error" do
     user = users(:one)
     user.update!(email_verified_at: nil)

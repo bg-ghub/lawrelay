@@ -69,10 +69,15 @@ class TravelEstimateTest < ActiveSupport::TestCase
     assert_equal :pending, call.status
   end
 
-  test "fixed legal-task unverified and suspended proposals never request a route" do
+  test "fixed court offers request the same route as hourly offers" do
     @proposal.update!(rate_kind: "fixed")
-    assert_equal :not_applicable, call.status
-    @proposal.update!(rate_kind: "hourly")
+    assert_enqueued_with(job: TravelEstimateJob, args: [ @proposal.id ]) { assert_equal :pending, call.status }
+    assert_equal :ready, compute.status
+    assert_equal 38_000, call.distance_meters
+    assert_equal 1, @router.calls
+  end
+
+  test "legal-task unverified and suspended proposals never request a route" do
     @assignment.update!(kind: "legal_task", assignment_subtype: "advice", languages: "EN", court: nil, city: nil)
     @proposal.reload
     assert_equal :not_applicable, call.status

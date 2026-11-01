@@ -49,6 +49,35 @@ class IndexTest(unittest.TestCase):
         self.assertEqual([("10/2",), ("102",), ("10-12",), ("1012",)],
                          self.database.execute("SELECT number_key FROM addresses ORDER BY osm_id").fetchall())
 
+    def test_a_way_requires_a_complete_closed_building_and_uses_an_interior_point(self):
+        tags = {"building": "yes", "addr:street": "Example Street", "addr:housenumber": "13", "addr:postcode": "1000"}
+        square = [(50.85,4.35),(50.85,4.3502),(50.8502,4.3502),(50.8502,4.35),(50.85,4.35)]
+        self.writer.add(tags, 50.85, 4.35, "way", 1)
+        self.writer.add(tags, 50.85, 4.35, "way", 2, footprint=square[:-1])
+        self.writer.add(tags | {"building": "no"}, 50.85, 4.35, "way", 3, footprint=square)
+        self.writer.add(tags | {"highway": "service"}, 50.85, 4.35, "way", 4, footprint=square)
+        self.assertEqual(0, self.database.execute("SELECT COUNT(*) FROM addresses").fetchone()[0])
+        self.writer.add(tags, 50.85, 4.35, "way", 5, footprint=square)
+        latitude, longitude = self.database.execute("SELECT latitude,longitude FROM addresses").fetchone()
+        self.assertTrue(50.85 < latitude < 50.8502)
+        self.assertTrue(4.35 < longitude < 4.3502)
+
+    def test_concave_self_crossing_degenerate_and_outside_buildings_are_rejected(self):
+        tags = {"building": "yes"}
+        shapes = [
+            [(50.85,4.35),(50.85,4.3504),(50.8501,4.3501),(50.8504,4.35),(50.85,4.35)],
+            [(50.85,4.35),(50.8504,4.3504),(50.85,4.3504),(50.8504,4.35),(50.85,4.35)],
+            [(50.85,4.35),(50.85,4.3501),(50.85,4.3502),(50.85,4.35)],
+            [(50.85,4.35),(50.85,4.3501),(90,4.3501),(50.85,4.35)],
+        ]
+        for shape in shapes:
+            self.assertIsNone(index.building_point(tags, shape))
+
+    def test_a_road_address_node_cannot_become_a_premise(self):
+        self.writer.add({"highway": "traffic_signals", "addr:street": "Example Street", "addr:housenumber": "13",
+                         "addr:postcode": "1000"}, 50.85, 4.35, "node", 1)
+        self.assertEqual(0, self.database.execute("SELECT COUNT(*) FROM addresses").fetchone()[0])
+
 
 if __name__ == "__main__":
     unittest.main()

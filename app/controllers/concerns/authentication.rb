@@ -41,9 +41,12 @@ module Authentication
       return unless session_id
 
       resumed_session = Session.includes(:user).find_by(id: session_id)
-      return unless resumed_session
+      unless resumed_session
+        cookies.delete(:session_id)
+        return
+      end
 
-      if resumed_session.expired? || !resumed_session.user.active?
+      if resumed_session.expired? || !resumed_session.user&.active?
         resumed_session.destroy!
         cookies.delete(:session_id)
         return

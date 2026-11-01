@@ -43,13 +43,15 @@ export default class extends Controller {
   }
 
   recognizeSelection() {
-    this.selected = this.options.find((option) =>
-      (option.labels || [option.label]).includes(this.inputTarget.value) &&
+    const exact = this.options.filter((option) => (option.current_labels || [option.label]).includes(this.inputTarget.value))
+    const candidates = exact.length ? exact : this.options.filter((option) => (option.labels || [option.label]).includes(this.inputTarget.value))
+    const matches = candidates.filter((option) =>
       (!this.cityTarget.value || (option.cities || [option.city]).includes(this.cityTarget.value))
     )
+    this.selected = matches.length === 1 ? matches[0] : null
     if (!this.selected) return
 
-    if (!this.cityTarget.value) this.cityTarget.value = this.selected.city
+    this.cityTarget.value = this.selected.city
     this.selectedLabel = this.inputTarget.value
     this.selectedCity = this.cityTarget.value
   }

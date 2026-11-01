@@ -60,7 +60,7 @@ module Travel
     private
 
     def applicable?
-      @proposal.persisted? && @proposal.rate_kind == "hourly" && @proposal.assignment.court_replacement? &&
+      @proposal.persisted? && @proposal.assignment.court_replacement? &&
         @proposal.user&.marketplace_verified? && @proposal.user.lawyer_profile&.directory_matched?
     end
 

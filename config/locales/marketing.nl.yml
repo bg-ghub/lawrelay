@@ -45,10 +45,8 @@ nl:
       product:
         aria_label: Voorbeeldopdracht op LawRelay
         example_label: Voorbeeldopdracht
-        title: Zittingsvervanging bij de Familierechtbank Antwerpen
+        title: Zittingsvervanging in Antwerpen
         description: "Gezocht: een confrater voor een korte zitting in familierecht."
-        court: Familierechtbank Antwerpen
-        city: Antwerpen
         practice_area: Familierecht
       pathways:
         eyebrow: "Voor advocaten"

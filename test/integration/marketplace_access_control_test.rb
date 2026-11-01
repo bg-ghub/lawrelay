@@ -3,6 +3,7 @@ require_relative "../support/marketplace_test_factory"
 
 class MarketplaceAccessControlTest < ActionDispatch::IntegrationTest
   include MarketplaceTestFactory
+  self.fixture_table_names = []
 
   test "anonymous marketplace access redirects to a locale-preserving login" do
     get "/fr/assignments"
@@ -40,6 +41,56 @@ class MarketplaceAccessControlTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, own_assignment.title
     assert_not_includes response.body, "Other firm's private dashboard item"
+  end
+
+  test "next hearing combines current firm posts with the signed in lawyers accepted work" do
+    candidate = create_marketplace_account(prefix: "next-hearing-candidate")
+    owner = create_marketplace_account(prefix: "next-hearing-owner")
+    posted = create_assignment_for(candidate)
+    posted.update!(starts_at: 8.days.from_now)
+    accepted = create_assignment_for(owner, status: "matched")
+    accepted.update!(starts_at: 5.days.from_now)
+    create_proposal_for(accepted, candidate).update!(status: "accepted")
+    sign_in_as(candidate.user)
+
+    get dashboard_path(locale: :en)
+    assert_response :success
+    assert_select ".dashboard-summary .summary-card:nth-child(3) strong", text: accepted.starts_at.strftime("%d/%m")
+
+    posted.update!(starts_at: 3.days.from_now)
+    get dashboard_path(locale: :en)
+    assert_response :success
+    assert_select ".dashboard-summary .summary-card:nth-child(3) strong", text: posted.starts_at.strftime("%d/%m")
+  end
+
+  test "next hearing excludes unaccepted other bidder inactive past and legal task assignments" do
+    candidate = create_marketplace_account(prefix: "next-filter-candidate")
+    owner = create_marketplace_account(prefix: "next-filter-owner")
+    other_bidder = create_marketplace_account(prefix: "next-filter-other")
+    %w[pending declined withdrawn].each do |status|
+      assignment = create_assignment_for(owner)
+      create_proposal_for(assignment, candidate).update!(status:)
+    end
+    accepted_by_other = create_assignment_for(owner, status: "matched")
+    create_proposal_for(accepted_by_other, other_bidder).update!(status: "accepted")
+    %w[cancelled completed expired].each do |status|
+      create_assignment_for(candidate, status:)
+      assignment = create_assignment_for(owner, status:)
+      create_proposal_for(assignment, candidate).update!(status: "accepted")
+    end
+    past = create_assignment_for(owner, status: "matched")
+    create_proposal_for(past, candidate).update!(status: "accepted")
+    past.update!(starts_at: 1.day.ago, response_deadline_at: 2.days.ago)
+    [ candidate, owner ].each do |account|
+      legal_task = create_assignment_for(account, status: "matched")
+      legal_task.update!(kind: "legal_task", assignment_subtype: "contract", languages: "EN")
+      create_proposal_for(legal_task, candidate).update!(status: "accepted") if account == owner
+    end
+    sign_in_as(candidate.user)
+
+    get dashboard_path(locale: :en)
+    assert_response :success
+    assert_select ".dashboard-summary .summary-card:nth-child(3) strong", text: "—"
   end
 
   test "non-owner cannot cancel another firm's assignment" do

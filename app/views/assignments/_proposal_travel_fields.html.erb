@@ -1,0 +1,19 @@
+<% additional_travel_cost = proposal.travel_included == false %>
+<fieldset class="field-group proposal-travel-terms" data-controller="proposal-travel">
+  <legend><%= t("proposal_travel.question") %></legend>
+  <div class="proposal-travel-terms__choices">
+    <%= form.label :travel_included_true, class: "choice-row" do %>
+      <%= form.radio_button :travel_included, true, checked: !additional_travel_cost, data: { proposal_travel_target: "choice", action: "change->proposal-travel#toggle" } %>
+      <span><%= t("proposal_travel.yes") %></span>
+    <% end %>
+    <%= form.label :travel_included_false, class: "choice-row" do %>
+      <%= form.radio_button :travel_included, false, checked: additional_travel_cost, data: { proposal_travel_target: "choice", action: "change->proposal-travel#toggle" } %>
+      <span><%= t("proposal_travel.no") %></span>
+    <% end %>
+  </div>
+  <%= tag.div class: "field-group", hidden: !additional_travel_cost, data: { proposal_travel_target: "cost" } do %>
+    <%= form.label :travel_cost_cents, t("proposal_travel.cost_label") %>
+    <%= form.number_field :travel_cost_cents, min: 0, step: 0.01, value: euro_amount(proposal.travel_cost_cents, field: true), required: additional_travel_cost, disabled: !additional_travel_cost, aria: { describedby: "proposal-travel-cost-hint" }, data: { proposal_travel_target: "input" } %>
+    <p class="field-hint" id="proposal-travel-cost-hint"><%= t("proposal_travel.cost_hint") %></p>
+  <% end %>
+</fieldset>

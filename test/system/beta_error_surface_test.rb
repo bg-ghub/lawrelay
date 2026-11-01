@@ -103,6 +103,45 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
     end
   end
 
+  test "pending confirmation remains readable and evenly spaced on narrow and desktop screens" do
+    pending = surface_account("confirmation-spacing", verified: false, email_verified: false)
+    pending.user.update!(email_address: "pending-confirmation-#{'x' * 40}@advocaat.be")
+
+    LOCALES.each do |locale|
+      Capybara.reset_sessions!
+      sign_in_member(pending.user, locale:)
+      [ 320, 1440 ].each do |width|
+        resize_viewport(width)
+        visit verification_status_path(locale:)
+        assert_localized_layout(locale)
+        assert_selector ".confirmation-support a[href='mailto:support@lawrelay.be']",
+          text: I18n.t("auth.verification_status.confirmation_support_link", locale:)
+        assert_selector "button", text: I18n.t("auth.verification_status.resend", locale:)
+        metrics = page.evaluate_script(<<~JS)
+          (() => {
+            const card = document.querySelector('.verification-status-page .form-section');
+            const heading = card.querySelector('h2');
+            const support = card.querySelector('.confirmation-support');
+            return {
+              headingSize: parseFloat(getComputedStyle(heading).fontSize),
+              supportSize: parseFloat(getComputedStyle(support).fontSize),
+              headingGap: heading.nextElementSibling.getBoundingClientRect().top - heading.getBoundingClientRect().bottom,
+              supportGap: support.getBoundingClientRect().top - support.previousElementSibling.getBoundingClientRect().bottom,
+              alternativeGap: support.nextElementSibling.getBoundingClientRect().top - support.getBoundingClientRect().bottom
+            };
+          })()
+        JS
+        assert_operator metrics.fetch("headingSize"), :<=, 32
+        assert_operator metrics.fetch("headingSize"), :>=, 20
+        assert_operator metrics.fetch("supportSize"), :>=, 14
+        %w[headingGap supportGap alternativeGap].each do |gap|
+          assert_operator metrics.fetch(gap), :>=, 12, "#{locale} #{width}: #{gap}"
+          assert_operator metrics.fetch(gap), :<=, 24, "#{locale} #{width}: #{gap}"
+        end
+      end
+    end
+  end
+
   test "legal tasks validate required language and deadline order while the indicative price stays optional" do
     LOCALES.each do |locale|
       Capybara.reset_sessions!

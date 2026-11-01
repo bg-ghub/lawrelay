@@ -22,7 +22,7 @@ en:
       languages_placeholder: "For example: NL, FR, EN"
       practice_areas: "Practice areas"
       practice_areas_placeholder: "For example: commercial law, family law"
-      bar_admission_year: "Admitted to the bar since"
+      bar_admission_year: "Year of bar admission"
       bar_admission_year_placeholder: "For example: 2018"
       court_preferences: "Courts"
       court_preferences_placeholder: "For example: Enterprise Court Brussels, Antwerp"

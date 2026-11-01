@@ -71,6 +71,10 @@ function updatePreferencePanel() {
   const alreadyInformed = timedCookie(noticeCookie, ["seen"]) || preference()
   panel.hidden = !preferencesOpen && (Boolean(alreadyInformed) || !publicAnalyticsPage())
   if (actions) actions.hidden = !preferencesOpen
+  const currentChoice = statisticsAllowed() ? "allow" : "deny"
+  panel.querySelectorAll("[data-analytics-preference]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.analyticsPreference === currentChoice))
+  })
   if (status) {
     status.hidden = !privacySignalEnabled()
     status.textContent = privacySignalEnabled() ? panel.dataset.analyticsPrivacySignalMessage : ""
@@ -174,6 +178,6 @@ document.addEventListener("click", (event) => {
 
     preferencesOpen = true
     updatePreferencePanel()
-    panel.querySelector("[data-analytics-preference]")?.focus()
+    panel.querySelector('[data-analytics-preference][aria-pressed="true"]')?.focus()
   }
 })

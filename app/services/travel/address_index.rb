@@ -17,6 +17,7 @@ module Travel
       return @available if @availability_stamp == stamp
 
       @availability_stamp = stamp
+      @canonical_streets = {}
       SQLite3::Database.new(@path, readonly: true) do |database|
         database.busy_timeout = 100
         @metadata = database.execute("SELECT key, value FROM metadata").to_h
@@ -35,6 +36,10 @@ module Travel
       [ File.size(@path), File.mtime(@path).to_i ].join("-")
     end
 
+    def source_sha256
+      @metadata["source_sha256"] if available?
+    end
+
     def best_available?
       available? && sha256?(@metadata["best_source_sha256"])
     end
@@ -44,18 +49,38 @@ module Travel
       cities = city_aliases(parts.fetch(:city))
       sources = []
       sources << "best" if best_available?
+      if @metadata["osm_exact_number_key_format"] == "preserve-separators-v1" && @metadata["osm_exact_source_sha256"] == @metadata["source_sha256"]
+        sources << "osm_exact"
+      end
       sources.concat(%w[node way]) if @metadata["osm_number_key_format"] == "preserve-separators-v1"
       return if sources.empty?
 
-      query(<<~SQL, [ parts.fetch(:street), parts.fetch(:number), parts.fetch(:postcode), *cities, *sources ], preferred_source: "best")
+      canonical = canonical_street(parts, cities)
+
+      sql = <<~SQL
         SELECT DISTINCT a.latitude, a.longitude, a.osm_type
         FROM addresses a JOIN street_aliases s ON s.street_key = a.street_key
         WHERE s.alias_key = ? AND a.number_key = ? AND a.postcode = ?
           AND (a.city_key = '' OR a.city_key IN (#{([ "?" ] * cities.length).join(',')}))
           AND a.osm_type IN (#{([ "?" ] * sources.length).join(',')})
+          #{'AND a.street_key = ?' if canonical}
         ORDER BY CASE WHEN a.osm_type = 'best' THEN 0 ELSE 1 END
         LIMIT 8
       SQL
+      bindings = [ parts.fetch(:street), parts.fetch(:number), parts.fetch(:postcode), *cities, *sources, *Array(canonical) ]
+      point = query(sql, bindings, preferred_source: "best")
+      if parts[:box].present?
+        # Explicit bus/boîte notation already identifies the house separately;
+        # an indexed unit can refine it without reinterpreting a house code.
+        return official_unit(parts, cities) || point
+      end
+      return point if point
+      # A literal slash house code has priority, including when its official
+      # points are ambiguous. Only an absent literal code may be interpreted as
+      # a unit, through the explicitly retained BeSt house/box relationship.
+      return if rows_exist?(sql, bindings)
+
+      official_unit(parts, cities) || official_range(parts, cities)
     rescue SQLite3::Exception, SystemCallError
       nil
     end
@@ -82,11 +107,18 @@ module Travel
       # A catalogue label and a mapped court must describe the same place.
       # There is deliberately no fallback to a city's centre or nearest court.
       cities = city_aliases(city)
-      catalogue_court = (@court_options ||= CourtCatalogue.options(locale: :nl)).find do |court|
-        court.fetch(:labels).any? { |label| normalize(label) == names.first } &&
-          court.fetch(:cities).any? { |place| cities.include?(normalize(place)) }
+      options = (@court_options ||= CourtCatalogue.options(locale: :nl)).select do |court|
+        court.fetch(:cities).any? { |place| cities.include?(normalize(place)) }
       end
-      names.concat(catalogue_court.fetch(:labels).map { |label| normalize(label) }) if catalogue_court
+      current = options.select { |court| court.fetch(:current_labels, []).any? { |label| normalize(label) == names.first } }
+      if current.any?
+        return if current.any? { |court| court[:hearing_verified] == false }
+        names.concat(current.flat_map { |court| court.fetch(:current_labels) }.map { |label| normalize(label) })
+      else
+        legacy = options.select { |court| court.fetch(:labels).any? { |label| normalize(label) == names.first } }
+        return if legacy.any? { |court| court[:hearing_verified] == false }
+        names.concat(legacy.flat_map { |court| court.fetch(:labels) }.map { |label| normalize(label) })
+      end
       names.uniq!
       bindings = [ *names, *cities ]
       return if court_blocked?(names, cities)
@@ -110,22 +142,39 @@ module Travel
       return unless parts
 
       street_number = parts[1].strip.sub(/[,\s]+\z/, "")
-        .sub(/\s+(?:bus|bte|bo[iî]te|box)\s+.*\z/i, "")
-      street = street_number.match(/\A(.+?)\s*,?\s+(\d+\s*[a-zA-Z]?(?:\s*[\/-]\s*\d+\s*[a-zA-Z]?)?)\z/)
+      street_number = street_number.sub(/(?<=\d)\s*\/\s*(?=(?:bus|bte|bo[iî]te|box)\b)/i, " ")
+      # Floor information changes neither the entrance nor the house number.
+      floor = /(?:\d+(?:er|e|ème|de|ste)?|premier|eerste)\s+(?:étage|verdieping)/i
+      street_number = street_number.sub(/\s*\(\s*#{floor}\s*\)\z/i, "").sub(/\s+-\s+#{floor}\z/i, "")
+      street_number = street_number.sub(/\s+n[°º]\s*(?=\d)/i, " ")
+      box = street_number.match(/\s+(?:bus|bte|bo[iî]te|box)\s*([a-zA-Z0-9\/-]+)\z/i)
+      street_number = street_number[0...box.begin(0)] if box
+      compact_box = street_number.match(/\s+b(\d+[a-zA-Z]?)\z/i) unless box
+      street_number = street_number[0...compact_box.begin(0)] if compact_box
+      street = street_number.match(/\A(.+?)\s*,?\s+(\d+\s*[a-zA-Z]?(?:\s*\/\s*[a-zA-Z0-9]+|\s*-\s*\d+\s*[a-zA-Z]?)?)\z/)
       return unless street
 
       { street: normalize(street[1]), number: number_key(street[2]), postcode: parts[2],
-        city: parts[3].sub(/,?\s+(?:Belgi[eë]|Belgique|Belgien|Belgium)\z/i, "") }
+        city: parts[3].sub(/,?\s+(?:Belgi[eë]|Belgique|Belgien|Belgium)\z/i, ""),
+        box: (box || compact_box)&.captures&.first&.then { |value| number_key(value) } }
     end
 
     def official_point(parts, cities)
-      query(<<~SQL, [ parts.fetch(:street), parts.fetch(:number), parts.fetch(:postcode), *cities ], preferred_source: "best")
+      canonical = canonical_street(parts, cities)
+      sql = <<~SQL
         SELECT DISTINCT a.latitude, a.longitude, a.osm_type
         FROM addresses a JOIN street_aliases s ON s.street_key = a.street_key
         WHERE s.alias_key = ? AND a.number_key = ? AND a.postcode = ? AND a.osm_type = 'best'
           AND a.city_key IN (#{([ "?" ] * cities.length).join(',')})
+          #{'AND a.street_key = ?' if canonical}
         LIMIT 8
       SQL
+      bindings = [ parts.fetch(:street), parts.fetch(:number), parts.fetch(:postcode), *cities, *Array(canonical) ]
+      point = query(sql, bindings, preferred_source: "best")
+      return point if point
+      return if rows_exist?(sql, bindings)
+
+      official_unit(parts, cities)
     end
 
     def query(sql, bindings, preferred_source: nil)
@@ -147,6 +196,77 @@ module Travel
       return unless rows.all? { |latitude, longitude| (latitude - first[0]).abs <= 0.00015 && (longitude - first[1]).abs <= 0.00025 }
 
       Point.new(latitude: first[0], longitude: first[1])
+    end
+
+    def rows_exist?(sql, bindings)
+      found = false
+      SQLite3::Database.new(@path, readonly: true) do |database|
+        database.busy_timeout = 100
+        found = database.get_first_value("SELECT EXISTS(SELECT 1 FROM (#{sql}))", bindings) == 1
+      end
+      found
+    end
+
+    def official_unit(parts, cities)
+      return unless best_available? && @metadata["best_unit_source_sha256"] == @metadata["best_source_sha256"]
+      number, box = parts.values_at(:number, :box)
+      number, box = number.split("/", 2) if box.blank? && number.include?("/")
+      return if box.blank?
+
+      numeric_box = box.match?(/\A\d{1,9}\z/)
+      box_clause = if numeric_box
+        "(a.box_key = ? OR (length(a.box_key) BETWEEN 1 AND 9 AND a.box_key NOT GLOB '*[^0-9]*' AND CAST(a.box_key AS INTEGER) = ?))"
+      else
+        "a.box_key = ?"
+      end
+      boxes = numeric_box ? [ box, box.to_i ] : [ box ]
+      canonical = canonical_street(parts, cities)
+
+      query(<<~SQL, [ parts.fetch(:street), number, *boxes, parts.fetch(:postcode), *cities, *Array(canonical) ], preferred_source: "best")
+        SELECT DISTINCT a.latitude, a.longitude, 'best'
+        FROM best_units a JOIN street_aliases s ON s.street_key = a.street_key
+        WHERE s.alias_key = ? AND a.number_key = ? AND #{box_clause} AND a.postcode = ?
+          AND a.city_key IN (#{([ "?" ] * cities.length).join(',')})
+          #{'AND a.street_key = ?' if canonical}
+        LIMIT 8
+      SQL
+    end
+
+    def official_range(parts, cities)
+      return unless best_available? && parts[:box].blank?
+      range = parts.fetch(:number).match(/\A(\d+[a-z]?)-(\d+[a-z]?)\z/)
+      return unless range
+
+      endpoints = range.captures.map { |number| official_point(parts.merge(number:), cities) }
+      return unless endpoints.all?
+      first, last = endpoints
+      return unless (first.latitude - last.latitude).abs <= 0.00015 && (first.longitude - last.longitude).abs <= 0.00025
+
+      # The result is one actual official premise point, never an interpolated
+      # coordinate between different buildings or an assumed missing endpoint.
+      first
+    end
+
+    # Street aliases are shared across the country. A historical OSM alias in
+    # another town must not add a different official street's address points.
+    # Scope the canonical name to the requested postcode/municipality, including
+    # when that official street lacks the requested house number.
+    def canonical_street(parts, cities)
+      return unless best_available?
+      key = [ parts.fetch(:street), parts.fetch(:postcode), cities ]
+      return @canonical_streets[key] if @canonical_streets.key?(key)
+
+      found = false
+      SQLite3::Database.new(@path, readonly: true) do |database|
+        database.busy_timeout = 100
+        found = database.get_first_value(<<~SQL, [ parts.fetch(:street), parts.fetch(:postcode), *cities ]).present?
+          SELECT 1 FROM addresses
+          WHERE street_key = ? AND postcode = ? AND osm_type = 'best'
+            AND city_key IN (#{([ "?" ] * cities.length).join(',')})
+          LIMIT 1
+        SQL
+      end
+      @canonical_streets[key] = found ? parts.fetch(:street) : nil
     end
 
     def court_blocked?(names, cities)

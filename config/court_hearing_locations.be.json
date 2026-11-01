@@ -1,0 +1,2307 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-11-01",
+  "catalogue_hash_format": "parsed-json-v1",
+  "catalogue_sha256": "6c3ec3acc946a76924c7404603b36d2929aaad3a7cf6eb78d2ee25c7eebda3ac",
+  "official_sources_sha256": "5b8d4670705d98cb7e23b8a1400d8b9835c27375cdf791cda6917c2c5865953a",
+  "official_sources_updated_at": "2026-11-01T12:10:40Z",
+  "reviewed_overrides_sha256": "4068e2387de33fbe8be8da1e11442a170e8d65c7a2c9602c3fc41d5bb24268b1",
+  "official_address_index_sha256": "956a05812ed434a26a3f086cd42247f24a51212cc0a717e11a7e3019e0cace78",
+  "selection_rule": "exact-source-city-qualified-hearing-address-v1",
+  "records": [
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-premier-canton-deupen-saint-vith",
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-premier-canton-deupen-saint-vith"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-second-canton-deupen-saint-vith",
+      "city": "Saint-Vith",
+      "status": "available",
+      "address": "Major-Long-Straße 36, 4780 Sankt Vith",
+      "source_url": "https://www.st.vith.be/fr/tourist-info/annuaire/friedensgericht-des-zweiten-kantons-eupen-sankt?u=e7a0d6e31337454ea3043d018f42ee6f"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-1e-kanton",
+      "city": "Anderlecht",
+      "status": "available",
+      "address": "Verzetsplein 3, 1070 Anderlecht",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-1e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-2e-kanton",
+      "city": "Anderlecht",
+      "status": "available",
+      "address": "Verzetsplein 3, 1070 Anderlecht",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-anderlecht-2e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem",
+      "city": "Etterbeek",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem",
+      "status": "available",
+      "address": "Vijverstraat 4, 1040 Etterbeek",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-etterbeek",
+      "city": "Etterbeek",
+      "status": "available",
+      "address": "Vijverstraat 4, 1040 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-etterbeek"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-elsene",
+      "city": "Elsene",
+      "status": "available",
+      "address": "Poelaertplein, 3, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-elsene"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ukkel",
+      "city": "Ukkel",
+      "status": "available",
+      "address": "Jean Vander Elstplein, 29, 1180 Ukkel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ukkel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-1e-kanton",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 3 bus 5, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-1e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-2e-kanton",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 3 bus 5, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-2e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-3e-kanton",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Fransmanstraat 89, 1020 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-3e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-4e-kanton",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Fransmanstraat 89, 1020 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brussel-4e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vorst",
+      "city": "Vorst",
+      "status": "available",
+      "address": "Alsembergsesteenweg 296, 1190 Vorst",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vorst"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ganshoren",
+      "city": "Ganshoren",
+      "status": "available",
+      "address": "Fransmanstraat 89, 1020 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ganshoren"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette",
+      "city": "Jette",
+      "status": "available",
+      "address": "Kardinaal Mercierplein 11, 1090 Jette",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-meise",
+      "city": "Meise",
+      "status": "available",
+      "address": "Gemeenteplein 15, 1861 Meise",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-meise"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-jans-molenbeek",
+      "city": "Sint-Jans-Molenbeek",
+      "status": "available",
+      "address": "Waterpasstraat 7, 1080 Sint-Jans-Molenbeek",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-jans-molenbeek"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-genesius-rode",
+      "city": "Sint-Genesius-Rode",
+      "status": "available",
+      "address": "Zoniënwoudlaan 83, 1640 Sint-Genesius-Rode",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-genesius-rode"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-gillis",
+      "city": "Sint-Gillis",
+      "status": "available",
+      "address": "Sint-Gillisvoorplein 1, 1060 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-gillis"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-joost-ten-node",
+      "city": "Sint-Joost-ten-Node",
+      "status": "available",
+      "address": "Sterrenkundelaan 30, 1210 Sint-Joost-ten-Node",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-joost-ten-node"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-1e-kanton",
+      "city": "Schaarbeek",
+      "status": "available",
+      "address": "Koningsstraat 271-273, 1030 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-1e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton",
+      "city": "Schaarbeek",
+      "status": "available",
+      "address": "Koningsstraat 271-273, 1030 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-pieters-woluwe",
+      "city": "Sint-Pieters-Woluwe",
+      "status": "available",
+      "address": "Grootveldlaan 147, 1150 Sint-Pieters-Woluwe",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-pieters-woluwe"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-asse",
+      "city": "Asse",
+      "status": "available",
+      "address": "Neerstraat 11, 1730 Asse",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-asse"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-halle",
+      "city": "Halle",
+      "status": "available",
+      "address": "Zuster Bernardastraat 76, 1500 Halle",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-halle"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lennik",
+      "city": "Lennik",
+      "status": "available",
+      "address": "Alfred Algoetstraat 31, 1750 Lennik",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lennik"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vilvoorde",
+      "city": "Vilvoorde",
+      "status": "available",
+      "address": "Luchthavenlaan 4, 1800 Vilvoorde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-vilvoorde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zaventem",
+      "city": "Zaventem",
+      "status": "available",
+      "address": "Leuvensesteenweg 510/bus 36, 1930 Zaventem",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zaventem"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fleron",
+      "city": "Fléron",
+      "status": "available",
+      "address": "Rue du Bay-Bonnet 15, 4620 Fléron",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fleron"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne",
+      "city": "Grâce-Hollogne",
+      "status": "available",
+      "address": "Rue de l’Hôtel Communal 30, 4460 Grâce-Hollogne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-herstal",
+      "city": "Herstal",
+      "status": "available",
+      "address": "Large Voie 49, 4040 Herstal",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-herstal"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-i",
+      "city": "Huy",
+      "status": "available",
+      "address": "Quai d'Arona 4, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-ii",
+      "city": "Huy",
+      "status": "available",
+      "address": "Quai d'Arona 4, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-huy-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue de Bruxelles 2, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue de Bruxelles 2, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue de Bruxelles 2, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue de Bruxelles 2, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg",
+      "city": "Eupen",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seraing",
+      "city": "Seraing",
+      "status": "available",
+      "address": "Rue de l'Ecureuil 74, 4100 Seraing",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seraing"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-spa",
+      "city": "Spa",
+      "status": "available",
+      "address": "Avenue Reine Astrid 77a, 4900 Spa",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-spa"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-sprimont",
+      "city": "Sprimont",
+      "status": "available",
+      "address": "Rue du Pérréon 34, 4141 Louveigné",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-sprimont"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-i",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 9, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-ii",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 9, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-verviers-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+      "city": "Cheratte",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+      "status": "available",
+      "address": "Place Jean Donnay 1, 4602 Cheratte",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme",
+      "city": "Waremme",
+      "status": "available",
+      "address": "Avenue Emile Vandervelde 31, 4300 Waremme",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dandenne",
+      "city": "Andenne",
+      "status": "available",
+      "address": "Place du Perron 17, 5300 Andenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dandenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney",
+      "city": "Ciney",
+      "status": "available",
+      "address": "Rue Courtejoie 17 ( 3ème étage ), 5590 Ciney",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant",
+      "city": "Dinant",
+      "status": "available",
+      "address": "Rue Arthur Defoin 215 A, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fosses-la-ville",
+      "city": "Fosses-la-Ville",
+      "status": "available",
+      "address": "Rue Delmotte-Lemaître 6, 5070 Fosses-la-Ville",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-fosses-la-ville"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-gembloux",
+      "city": "Gembloux",
+      "status": "available",
+      "address": "Chaussée de Wavre 46, 5030 Gembloux",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-gembloux"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-couvin",
+      "city": "Couvin",
+      "status": "available",
+      "address": "Rue du Bercet 12, 5660 Couvin",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-couvin"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-florennes",
+      "city": "Florennes",
+      "status": "available",
+      "address": "Rue de Mettet 21, 5620 Florennes",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-philippeville-siege-florennes"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-braine-lalleud",
+      "city": "Braine-l'Alleud",
+      "status": "available",
+      "address": "Rue Pierre Flamand 64 (1er étage), 1420 Braine-l'Alleud",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-braine-lalleud"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-jodoigne",
+      "city": "Jodoigne",
+      "status": "available",
+      "address": "Avenue des Commandants Borlée 42, 1370 Jodoigne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-jodoigne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles",
+      "city": "Nivelles",
+      "status": "available",
+      "address": "Rue Clarisse 115, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i",
+      "city": "Wavre",
+      "status": "available",
+      "address": "Place de l'Hôtel de Ville 1, 1300 Wavre",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii",
+      "city": "Wavre",
+      "status": "available",
+      "address": "Chaussée de Bruxelles 8, 1300 Wavre",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath",
+      "city": "Ath",
+      "status": "available",
+      "address": "Place des Capucins 1, 7800 Ath",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche",
+      "city": "Binche",
+      "status": "available",
+      "address": "Avenue Charles Deliège 54, 7130 Binche",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+      "city": "Boussu",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+      "status": "available",
+      "address": "Rue Grande Campagne 34, 7301 Boussu",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+      "city": "Boussu",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+      "status": "available",
+      "address": "Rue Grande Campagne 34, 7301 Boussu",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Avenue Général Michel 2 boîte 3, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Avenue Général Michel 2 boîte 3, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iii",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Rue de Beaumont 28, 6030 Marchienne-au-Pont",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iv",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Rue de Beaumont 28, 6030 Marchienne-au-Pont",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-iv"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet",
+      "city": "Châtelet",
+      "status": "available",
+      "address": "Place de l'Hôtel de Ville 9, 6200 Châtelet",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chimay",
+      "city": "Chimay",
+      "status": "available",
+      "address": "Grand’Place 13, 6460 Chimay",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chimay"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-la-louviere",
+      "city": "La Louvière",
+      "status": "available",
+      "address": "Rue des Carrelages 16, 7100 La Louvière",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-la-louviere"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-leuze-en-hainaut",
+      "city": "Leuze-en-Hainaut",
+      "status": "available",
+      "address": "Rue d'Ath 33, 7900 Leuze-en-Hainaut",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-leuze-en-hainaut"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue de Nimy 16/1, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue de Nimy 16/2, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron",
+      "city": "Mouscron",
+      "status": "available",
+      "address": "Place Lamartine 1 (Bâtiment du SPF Finances), 7700 Mouscron",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe",
+      "city": "Seneffe",
+      "status": "available",
+      "address": "Rue de la Rouge Croix 3, 7180 Seneffe",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-soignies",
+      "city": "Soignies",
+      "status": "available",
+      "address": "Rue de la Station 82, 7060 Soignies",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-soignies"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-thuin",
+      "city": "Thuin",
+      "status": "available",
+      "address": "Grand'Rue 46, 6530 Thuin",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-thuin"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-i",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Boulevard Léopold 72, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-ii",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Boulevard Léopold 72, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-tournai-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment A, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-bastogne",
+      "city": "Bastogne",
+      "status": "available",
+      "address": "Rue des Récollets 6, 6600 Bastogne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-bastogne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne",
+      "city": "Marche-en-Famenne",
+      "status": "available",
+      "address": "Rue Victor Libert 7, 6900 Marche-en-Famenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-neufchateau",
+      "city": "Neufchâteau",
+      "status": "available",
+      "address": "Place Charles Bergh 7, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-virton",
+      "city": "Virton",
+      "status": "available",
+      "address": "Avenue Bouvier 27, 6760 Virton",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-virton"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-1",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-1"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-2",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-2"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-3",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-3"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-4",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-4"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-5",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-5"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-6",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-6"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-7",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 b19, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-antwerpen-7"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom",
+      "city": "Boom",
+      "status": "available",
+      "address": "Jozef Van Cleemputplein 8, 2850 Boom",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat",
+      "city": "Brasschaat",
+      "status": "available",
+      "address": "Hemelakkers 65, 2930 Brasschaat",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deurne",
+      "city": "Deurne",
+      "status": "available",
+      "address": "Cogelsplein 46, 2100 Deurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel",
+      "city": "Mol",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel",
+      "status": "available",
+      "address": "Molderdijk 7, 2400 Mol",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Kasteelplein 11, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-heist-op-den-berg",
+      "city": "Heist-op-den-Berg",
+      "status": "available",
+      "address": "Kerkhofstraat 2, 2220 Heist-op-den-Berg",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-heist-op-den-berg"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kapellen",
+      "city": "Kapellen",
+      "status": "available",
+      "address": "Dennenburgdreef 8, 2950 Kapellen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kapellen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kontich",
+      "city": "Kontich",
+      "status": "available",
+      "address": "Mechelsesteenweg 83, 2550 Kontich",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kontich"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier",
+      "city": "Lier",
+      "status": "available",
+      "address": "Kruisbogenhofstraat 24, 2500 Lier",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen",
+      "city": "Mechelen",
+      "status": "available",
+      "address": "Voochtstraat 7, 2800 Mechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merksem",
+      "city": "Merksem",
+      "status": "available",
+      "address": "Maantjessteenweg 133, 2170 Merksem",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merksem"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel",
+      "city": "Mol",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel",
+      "status": "available",
+      "address": "Molderdijk 7, 2400 Mol",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Kasteelplein 11, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-westerlo",
+      "city": "Westerlo",
+      "status": "available",
+      "address": "Bistplein 13, 2260 Westerlo",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-westerlo"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-willebroek",
+      "city": "Willebroek",
+      "status": "available",
+      "address": "Kloosterstraat 18, 2830 Willebroek",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-willebroek"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zandhoven",
+      "city": "Zandhoven",
+      "status": "available",
+      "address": "Amelbergastraat 13, 2240 Zandhoven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zandhoven"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aarschot",
+      "city": "Aarschot",
+      "status": "available",
+      "address": "Statiestraat 3, 3200 Aarschot",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aarschot"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-diest",
+      "city": "Diest",
+      "status": "available",
+      "address": "Koning Albertstraat 12, 3290 Diest",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-diest"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-1",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Vaartstraat 24, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-1"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-2",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Vaartstraat 24, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-2"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-3",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Vaartstraat 24, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-leuven-3"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tienen",
+      "city": "Tienen",
+      "status": "available",
+      "address": "Grote Markt 6A, 3300 Tienen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tienen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zoutleeuw",
+      "city": "Zoutleeuw",
+      "status": "available",
+      "address": "Aen den Hoorn 15, 3440 Zoutleeuw",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zoutleeuw"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tongeren-borgloon",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Kielenstraat 22 bus 5, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tongeren-borgloon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beringen",
+      "city": "Beringen",
+      "status": "available",
+      "address": "Pieter Bruegelstraat 8, 3580 Beringen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beringen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bilzen-hoeselt",
+      "city": "Bilzen-Hoeselt",
+      "status": "available",
+      "address": "Brugstraat 2, 3740 Bilzen - Hoeselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bilzen-hoeselt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree",
+      "city": "Bree",
+      "status": "available",
+      "address": "Kloosterpoort 1 A000, 3960 Bree",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk",
+      "city": "Genk",
+      "status": "available",
+      "address": "Stadsplein 1, 3600 Genk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-1",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25 bus 7, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-1"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-2",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25 bus 8, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hasselt-2"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren",
+      "city": "Houthalen - Helchteren",
+      "status": "available",
+      "address": "Pastorijstraat 30, 3530 Houthalen-Helchteren",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-maasmechelen",
+      "city": "Maasmechelen",
+      "status": "available",
+      "address": "Binnenhof 3, 3630 Maasmechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-maasmechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-pelt",
+      "city": "Pelt",
+      "status": "available",
+      "address": "Justitielaan 31, 3910 Pelt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-pelt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-truiden",
+      "city": "Sint-Truiden",
+      "status": "available",
+      "address": "Kazernevest 10, 3800 Sint-Truiden",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-truiden"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1",
+      "city": "Aalst",
+      "status": "available",
+      "address": "Dr. André Sierensstraat 16, 9300 Aalst",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2",
+      "city": "Aalst",
+      "status": "available",
+      "address": "Dr. André Sierensstraat 16, 9300 Aalst",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+      "city": "Beveren",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+      "status": "available",
+      "address": "Gravendreef 3, 9120 Beveren",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deinze",
+      "city": "Deinze",
+      "status": "available",
+      "address": "Emiel Clausplein 4, 9800 Deinze",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-deinze"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde",
+      "city": "Dendermonde",
+      "status": "available",
+      "address": "Noordlaan 31, 9200 Dendermonde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eeklo",
+      "city": "Eeklo",
+      "status": "available",
+      "address": "Stationsstraat, 21, 9900 Eeklo",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eeklo"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+      "city": "Brakel",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+      "status": "available",
+      "address": "Kasteelstraat 58, 9660 Brakel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hamme",
+      "city": "Hamme",
+      "status": "available",
+      "address": "Meulenbroekstraat 20, 9220 Hamme",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-hamme"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-herzele",
+      "city": "Herzele",
+      "status": "available",
+      "address": "Stationsstraat 6, 9550 Herzele",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-herzele"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lokeren",
+      "city": "Lokeren",
+      "status": "available",
+      "address": "Markt 8, 9160 Lokeren",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lokeren"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle",
+      "city": "Merelbeke",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle",
+      "status": "available",
+      "address": "Hundelgemsesteenweg 622-624, 9820 Merelbeke",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ninove",
+      "city": "Ninove",
+      "status": "available",
+      "address": "Onderwijslaan 71, 9400 Ninove",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ninove"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde",
+      "city": "Oudenaarde",
+      "status": "available",
+      "address": "Beverstraat 7B (eerste verdieping), 9700 Oudenaarde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-niklaas",
+      "city": "Sint-Niklaas",
+      "status": "available",
+      "address": "Kazernestraat 4, 9100 Sint-Niklaas",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-sint-niklaas"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-wetteren",
+      "city": "Wetteren",
+      "status": "available",
+      "address": "Rode Heuvel 4, 9230 Wetteren",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-wetteren"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zelzate",
+      "city": "Zelzate",
+      "status": "available",
+      "address": "Suikerkaai 10, 9060 Zelzate",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-zelzate"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-i",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 4, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-ii",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 4, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iii",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 4, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iv",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 4, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brugge-iv"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ieper",
+      "city": "Ieper",
+      "status": "available",
+      "address": "Korte Meersstraat 18, 8900 Ieper",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-ieper"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-izegem",
+      "city": "Izegem",
+      "status": "available",
+      "address": "Kasteelstraat 15, 8870 Izegem",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-izegem"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-i",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-ii",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-kortrijk-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-menen",
+      "city": "Menen",
+      "status": "available",
+      "address": "Volkslaan 302/0101, 8930 Menen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-menen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i",
+      "city": "Oostende",
+      "status": "available",
+      "address": "Canadaplein 1, 8400 Oostende",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii",
+      "city": "Oostende",
+      "status": "available",
+      "address": "Canadaplein 1, 8400 Oostende",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-poperinge",
+      "city": "Poperinge",
+      "status": "available",
+      "address": "Burgemeester Bertenplein 21, 8970 Poperinge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-poperinge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-roeselare",
+      "city": "Roeselare",
+      "status": "available",
+      "address": "Rondekomstraat 22, 8800 Roeselare",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-roeselare"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tielt",
+      "city": "Tielt",
+      "status": "available",
+      "address": "Tramstraat 48, 8700 Tielt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tielt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout",
+      "city": "Torhout",
+      "status": "available",
+      "address": "Elisabethlaan 29, 8820 Torhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-veurne",
+      "city": "Veurne",
+      "status": "available",
+      "address": "Peter Benoitlaan 2, 8630 Veurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-veurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem",
+      "city": "Waregem",
+      "status": "available",
+      "address": "Stationsstraat 127, 8790 Waregem",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Regentschapsstraat 63, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-mechelen",
+      "city": "Mechelen",
+      "status": "available",
+      "address": "Keizerstraat 20, 2800 Mechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Kasteelstraat 2, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-halle",
+      "city": "Halle",
+      "status": "available",
+      "address": "Zuster Bernardastraat 76, 1500 Halle",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-halle"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Ferdinand Smoldersplein 5, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-beringen",
+      "city": "Beringen",
+      "status": "available",
+      "address": "Pieter Bruegelstraat 8, 3580 Beringen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-beringen/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+      "city": "Tongeren-Borgloon",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+      "status": "available",
+      "address": "Kielenstraat 22/2, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-hasselt",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25 bus 4, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-hasselt/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik",
+      "city": "Maaseik",
+      "status": "available",
+      "address": "Sionstraat 24, 3680 Maaseik",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden",
+      "city": "Sint-Truiden",
+      "status": "available",
+      "address": "Kazernevest 10, 3800 Sint-Truiden",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-tongeren-borgloon",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Kielenstraat 22/3, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-tongeren-borgloon/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst",
+      "city": "Aalst",
+      "status": "available",
+      "address": "Dr. André Sierensstraat 16, 9300 Aalst",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde",
+      "city": "Dendermonde",
+      "status": "available",
+      "address": "Noordlaan 31, 9200 Dendermonde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401M, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-oudenaarde",
+      "city": "Oudenaarde",
+      "status": "available",
+      "address": "Tacambaroplein 5, 9700 Oudenaarde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-oudenaarde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-sint-niklaas",
+      "city": "Sint-Niklaas",
+      "status": "available",
+      "address": "Kazernestraat 8, 9100 Sint-Niklaas",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-sint-niklaas"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-vilvoorde",
+      "city": "Vilvoorde",
+      "status": "available",
+      "address": "Luchthavenlaan 4, 1800 Vilvoorde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-vilvoorde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-brugge",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-brugge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-ieper",
+      "city": "Ieper",
+      "status": "available",
+      "address": "Korte Meersstraat 18, 8900 Ieper",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-ieper"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-kortrijk",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-kortrijk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-veurne",
+      "city": "Veurne",
+      "status": "available",
+      "address": "Peter Benoitlaan 2, 8630 Veurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-west-vlaanderen-afdeling-veurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-eupen",
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-eupen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
+      "city": "Saint-Vith",
+      "status": "unconfirmed"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-huy",
+      "city": "Huy",
+      "status": "available",
+      "address": "Quai d'Arona 4, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-huy"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue Saint-Gilles 87, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 4, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant",
+      "city": "Dinant",
+      "status": "available",
+      "address": "Rue A. Defoin 215 C, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "rue général Michel, 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles",
+      "city": "Nivelles",
+      "status": "available",
+      "address": "Rue Clarisse, 115, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre",
+      "city": "Wavre",
+      "status": "available",
+      "address": "Place de l'Hôtel de Ville, 1300 Wavre",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Avenue Général Michel 2 boîte 4, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-mons",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue de Nimy 28, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-tournai",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Rue Childéric 22, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-tournai"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment A, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-marche-en-famenne",
+      "city": "Marche-en-Famenne",
+      "status": "available",
+      "address": "Rue Victor Libert 7, 6900 Marche-en-Famenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-marche-en-famenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-neufchateau",
+      "city": "Neufchâteau",
+      "status": "available",
+      "address": "Place Charles Bergh 7/3, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-francophone-de-bruxelles",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Rue de la Régence 63, 1000 Bruxelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-francophone-de-bruxelles"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-deupen",
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-deupen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-rechtbank-van-eerste-aanleg-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Quatre Brasstraat 13, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-rechtbank-van-eerste-aanleg-brussel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 bus 1, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-mechelen",
+      "city": "Mechelen",
+      "status": "available",
+      "address": "Keizerstraat 20, 2800 Mechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-mechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Kasteelplein 1, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-antwerpen-afdeling-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-leuven",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Ferdinand Smoldersplein 5, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-leuven"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-tongeren-borgloon",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Piepelpoel 10, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-tongeren-borgloon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-dendermonde",
+      "city": "Dendermonde",
+      "status": "available",
+      "address": "Justitieplein 1, 9200 Dendermonde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-dendermonde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401A, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-oudenaarde",
+      "city": "Oudenaarde",
+      "status": "available",
+      "address": "Bourgondiëstraat 5, 9700 Oudenaarde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-oost-vlaanderen-afdeling-oudenaarde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-brugge",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-brugge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-ieper",
+      "city": "Ieper",
+      "status": "available",
+      "address": "Grote Markt 1, 8900 Ieper",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-ieper"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-kortrijk",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Burgemeester Nolfstraat 10a, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-kortrijk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-veurne",
+      "city": "Veurne",
+      "status": "available",
+      "address": "Peter Benoitlaan 2, 8630 Veurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-west-vlaanderen-afdeling-veurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy",
+      "city": "Huy",
+      "status": "available",
+      "address": "Palais de Justice de Huy, Quai d'Arona, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Rue de Bruxelles 2 - 3, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-verviers",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 4, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-verviers"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-dinant",
+      "city": "Dinant",
+      "status": "available",
+      "address": "Place du Palais de Justice 6, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-dinant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "city": "Nivelles",
+      "hearing_address": "Rue de Soignies 8",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf",
+      "status": "available",
+      "address": "Rue de Soignies 8, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon/info?page=n1164"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "city": "Nivelles",
+      "hearing_address": "Place Albert Ier 17",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf",
+      "status": "available",
+      "address": "Place Albert Ier 17, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon/info?page=n1164"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "city": "Nivelles",
+      "hearing_address": "Avenue Jean Monnet 12",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf",
+      "status": "available",
+      "address": "Avenue Jean Monnet 12, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon/info?page=n1164"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Avenue Général Michel 2 Boîte 1, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-mons",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue de Nimy 35, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Place du Palais de Justice 5, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment B, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-marche-en-famenne",
+      "city": "Marche-en-Famenne",
+      "status": "available",
+      "address": "Rue Victor Libert 9, 6900 Marche-en-Famenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-marche-en-famenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "city": "Neufchâteau",
+      "status": "ambiguous"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-francophone-de-bruxelles",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Place Poelaert 1, 1000 Bruxelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-francophone-de-bruxelles/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen",
+      "city": "Mechelen",
+      "status": "available",
+      "address": "Voochtstraat 7, 2800 Mechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-tongeren-borgloon",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Kielenstraat 22/2, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-tongeren-borgloon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Kasteelplein 11, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst",
+      "city": "Aalst",
+      "status": "available",
+      "address": "Dr. André Sierensstraat 16, 9300 Aalst",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-brugge",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-brugge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde",
+      "city": "Dendermonde",
+      "status": "available",
+      "address": "Noordlaan 31, 9200 Dendermonde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401 C, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-ieper",
+      "city": "Ieper",
+      "status": "available",
+      "address": "Korte Meersstraat 18, 8900 Ieper",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-ieper"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-kortrijk",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-kortrijk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-oudenaarde",
+      "city": "Oudenaarde",
+      "status": "available",
+      "address": "Bekstraat 14, 9700 Oudenaarde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-oudenaarde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare",
+      "city": "Kortrijk",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/contact",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-sint-niklaas",
+      "city": "Sint-Niklaas",
+      "status": "available",
+      "address": "Kazernestraat 6, 9100 Sint-Niklaas",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-sint-niklaas"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-veurne",
+      "city": "Veurne",
+      "status": "available",
+      "address": "Peter Benoitlaan 2, 8630 Veurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-veurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-leuven",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Ferdinand Smoldersplein 5, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-leuven"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-deupen",
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-deupen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-arbeidsrechtbank-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 3 bus 4, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-arbeidsrechtbank-brussel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment A, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-dinant",
+      "city": "Dinant",
+      "status": "available",
+      "address": "Place du Palais de Justice 8, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-dinant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-huy",
+      "city": "Huy",
+      "status": "available",
+      "address": "Quai d'Arona n°4, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-huy"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Place Saint Lambert 30, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-marche-en-famenne",
+      "city": "Marche-en-Famenne",
+      "status": "available",
+      "address": "Rue Victor Libert 9, 6900 Marche-en-Famenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-marche-en-famenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-neufchateau",
+      "city": "Neufchâteau",
+      "status": "available",
+      "address": "Place Charles Bergh 7, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-verviers",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 9, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-verviers"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon",
+      "city": "Nivelles",
+      "status": "available",
+      "address": "Rue Clarisse 115, 1400 NIVELLES",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+      "city": "Charleroi",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "status": "available",
+      "address": "Boulevard de Fontaine 10/3, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+      "city": "La Louvière",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "status": "available",
+      "address": "Rue des Carrelages 16, 7100 La Louvière",
+      "source_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Boulevard de Fontaine 10/3, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere",
+      "city": "La Louvière",
+      "status": "available",
+      "address": "Rue des Carrelages 16, 7100 La Louvière",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue des Trois Boudins 10, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "city": "Tournai",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "status": "available",
+      "address": "Rue Saint-Jacques 41, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "city": "Mons",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "status": "available",
+      "address": "Rue des Trois Boudins 10, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "city": "Charleroi",
+      "hearing_source": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "status": "available",
+      "address": "Boulevard de Fontaine 10/3, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-tournai",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Rue Saint-Jacques 41, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-tournai"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-francophone-de-bruxelles",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Place Poelaert 3 bte 3, 1000 Bruxelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-francophone-de-bruxelles"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Waterloolaan 70, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel/contact"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Bolivarplaats 20 bus 7, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen",
+      "city": "Mechelen",
+      "status": "available",
+      "address": "Voochtstraat 7, 2800 Mechelen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-tongeren-borgloon",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Kielenstraat 22, 3700 Tongeren-Borgloon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-tongeren-borgloon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout",
+      "city": "Turnhout",
+      "status": "available",
+      "address": "Wezenstraat 7, 2300 Turnhout",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-brugge",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-brugge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde",
+      "city": "Dendermonde",
+      "status": "available",
+      "address": "Noordlaan 31, 9200 Dendermonde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401E, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-ieper",
+      "city": "Ieper",
+      "status": "available",
+      "address": "Grote Markt 1, 8900 Ieper",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-ieper"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-kortrijk",
+      "city": "Kortrijk",
+      "status": "available",
+      "address": "Beheerstraat 41, 8500 Kortrijk",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-kortrijk"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende",
+      "city": "Oostende",
+      "status": "available",
+      "address": "Gerechtsgebouw, Canadaplein, 8400 Oostende",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oudenaarde",
+      "city": "Oudenaarde",
+      "status": "available",
+      "address": "Bekstraat 14, 9700 Oudenaarde",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oudenaarde"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-veurne",
+      "city": "Veurne",
+      "status": "available",
+      "address": "Peter Benoitlaan 2, 8630 Veurne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-gent-afdeling-veurne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-leuven",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Vaartstraat 5, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-leuven"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-deupen",
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-deupen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment A, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant",
+      "city": "Dinant",
+      "status": "available",
+      "address": "Rue Arthur Defoin 215B, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy",
+      "city": "Huy",
+      "status": "available",
+      "address": "Quai d’Arona 4, 4500 Huy",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Place Saint-Lambert 30, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne",
+      "city": "Marche-en-Famenne",
+      "status": "available",
+      "address": "Rue Victor Libert 9, 6900 Marche-en-Famenne",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau",
+      "city": "Neufchâteau",
+      "status": "available",
+      "address": "Place Charles Bergh 7, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-verviers",
+      "city": "Verviers",
+      "status": "available",
+      "address": "Rue du Tribunal 4, 4800 Verviers",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-verviers"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon",
+      "city": "Nivelles",
+      "status": "available",
+      "address": "Rue Clarisse 115, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi",
+      "city": "Charleroi",
+      "status": "available",
+      "address": "Boulevard A. de Fontaine 10, 6000 Charleroi",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-mons",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue des Droits de l'Homme 1, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai",
+      "city": "Tournai",
+      "status": "available",
+      "address": "Rue du Château 47, 7500 Tournai",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Boulevard de Waterloo 70, 1000 Bruxelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles/info?page=n529"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 1, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-brussel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-liege",
+      "city": "Luik",
+      "status": "available",
+      "address": "Place Saint Lambert 16, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-mons",
+      "city": "Bergen",
+      "status": "available",
+      "address": "Rue des Droits de l'Homme 1, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dappel-de-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Britselei 55, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Koophandelsplein 23, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-beroep-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Britselei 55, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt",
+      "city": "Hasselt",
+      "status": "available",
+      "address": "Parklaan 25, 3500 Hasselt",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-brussel",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 3 bus 1, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-brussel"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-brugge",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-brugge"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-gent",
+      "city": "Gent",
+      "status": "available",
+      "address": "Savaanstraat 11/201, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-gent-afdeling-gent"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Place Saint Lambert 30, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "Rue Général Michel 10, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-neufchateau",
+      "city": "Neufchâteau",
+      "status": "available",
+      "address": "Place Charles Bergh 7, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-mons",
+      "city": "Bergen",
+      "status": "available",
+      "address": "Rue des Droits de l'Homme 1, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-mons"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-van-het-administratief-arrondissement-brussel-hoofdstad",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 1, 1000 Brussel",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-van-het-administratief-arrondissement-brussel-hoofdstad"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-liege",
+      "city": "Liège",
+      "status": "available",
+      "address": "Place Saint-Lambert 16, 4000 Liège",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-liege"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-namur",
+      "city": "Namur",
+      "status": "available",
+      "address": "Place du Palais de Justice 4, 5000 Namur",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-de-namur"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon",
+      "city": "Nivelles",
+      "status": "available",
+      "address": "Rue Clarisse 115, 1400 Nivelles",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut",
+      "city": "Mons",
+      "status": "available",
+      "address": "Rue des Droits de l’Homme 1, 7000 Mons",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg",
+      "city": "Arlon",
+      "status": "available",
+      "address": "Place Schalbert, Bâtiment B, 6700 Arlon",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-antwerpen",
+      "city": "Antwerpen",
+      "status": "available",
+      "address": "Britselei 55, 2000 Antwerpen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-antwerpen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-limburg",
+      "city": "Tongeren-Borgloon",
+      "status": "available",
+      "address": "Vrijthof 2, 3700 Tongeren",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-limburg"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen",
+      "city": "Gent",
+      "status": "available",
+      "address": "Opgeëistenlaan 401F, 9000 Gent",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant",
+      "city": "Leuven",
+      "status": "available",
+      "address": "Ferdinand Smoldersplein 5, 3000 Leuven",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-west-vlaanderen",
+      "city": "Brugge",
+      "status": "available",
+      "address": "Kazernevest 3, 8000 Brugge",
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-west-vlaanderen"
+    },
+    {
+      "source": "https://www.courdecassation.be/nl/Acces-Toegang.html",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Poelaertplein 1, 1000 Brussel",
+      "source_url": "https://www.courdecassation.be/nl/Acces-Toegang.html"
+    },
+    {
+      "source": "https://fr.const-court.be/footer/contacts",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Place Royale 7, 1000 Bruxelles",
+      "source_url": "https://fr.const-court.be/footer/contacts"
+    },
+    {
+      "source": "https://www.raadvst-consetat.be/?lang=nl&page=contact",
+      "city": "Brussel",
+      "status": "available",
+      "address": "Wetenschapsstraat 35, 1040 Brussel",
+      "source_url": "https://www.raadvst-consetat.be/nl/contact/"
+    }
+  ]
+}

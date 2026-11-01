@@ -20,12 +20,13 @@
       <p class="field-hint" id="assignment-description-hint" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>><%= t("assignment_hints.court_description") %></p>
     </div>
     <div class="field-group" data-controller="other-choice" data-other-choice-other-value="<%= Assignment::OTHER_CHOICE %>">
+      <% custom_practice_area = assignment_practice_area_choice(assignment) == Assignment::OTHER_CHOICE %>
       <%= form.label :practice_area, t("marketplace.form.practice_area_label") %>
       <%= searchable_select form, :practice_area, t("marketplace.practice_areas").map { |key, label| [ label, key.to_s == "other" ? Assignment::OTHER_CHOICE : label ] }, { prompt: t("marketplace.form.practice_area_prompt"), selected: assignment_practice_area_choice(assignment) }, required: true, class: "select-field", data: { other_choice_target: "select", action: "change->other-choice#toggle" } %>
-      <div class="field-group other-choice-field" data-other-choice-target="custom">
+      <%= tag.div class: "field-group other-choice-field", hidden: !custom_practice_area, data: { other_choice_target: "custom" } do %>
         <%= form.label :practice_area_other, t("assignment_other.practice_area") %>
-        <%= form.text_field :practice_area_other, value: assignment_practice_area_other_value(assignment), maxlength: 100, required: assignment_practice_area_choice(assignment) == Assignment::OTHER_CHOICE, data: { other_choice_target: "input" } %>
-      </div>
+        <%= form.text_field :practice_area_other, value: assignment_practice_area_other_value(assignment), maxlength: 100, required: custom_practice_area, disabled: !custom_practice_area, data: { other_choice_target: "input" } %>
+      <% end %>
     </div>
 
     <div class="field-group" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>

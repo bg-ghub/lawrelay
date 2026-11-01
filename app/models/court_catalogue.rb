@@ -3,32 +3,60 @@ class CourtCatalogue
   LOCALES = %i[nl fr de en].freeze
 
   def self.options(locale: I18n.locale)
+    DATA.fetch("courts").map { |court| option_for(court, locale:) }
+      .sort_by { |court| I18n.transliterate(court.fetch(:label)).downcase }
+  end
+
+  def self.court_name(court, locale: I18n.locale)
+    locale = locale.to_sym
+    label(court, LOCALES.include?(locale) ? locale : :en, hearing: false)
+  end
+
+  def self.option_for(court, locale: I18n.locale)
     locale = locale.to_sym
     locale = :en unless locale.in?(LOCALES)
 
-    DATA.fetch("courts").map do |court|
-      labels = LOCALES.map { |language| label(court, language) }
-      {
-        label: label(court, locale),
-        city: place(court.fetch("city"), locale),
-        labels: labels.uniq,
-        cities: LOCALES.map { |language| place(court.fetch("city"), language) }.uniq,
-        search: (labels + [ court.fetch("city"), court.fetch("venue"), court.fetch("district"), aliases(court) ]).join(" ")
-      }
-    end.sort_by { |court| I18n.transliterate(court.fetch(:label)).downcase }
+    current_labels = LOCALES.map { |language| label(court, language) }.uniq
+    labels = (current_labels + LOCALES.flat_map do |language|
+      [ label(court, language, hearing: false), label(court, language, hearing: false, official: false) ]
+    end).uniq
+    city_names = [ court.fetch("city"), court["judicial_city"] ].compact.uniq
+    cities = city_names.flat_map { |name| LOCALES.map { |language| place(name, language) } }.uniq
+    {
+      label: label(court, locale),
+      city: place(court.fetch("city"), locale),
+      labels:,
+      current_labels:,
+      cities:,
+      hearing_verified: court.fetch("hearing_verified", true),
+      search: (labels + cities + city_names + [ court.fetch("venue"), court.fetch("district"), aliases(court) ]).join(" ")
+    }
   end
 
-  def self.label(court, locale)
+  def self.label(court, locale, hearing: true, official: true)
     type = I18n.t("court_picker.types.#{court.fetch('type')}", locale:)
+    return type if official && %w[cassation constitutional state].include?(court.fetch("type"))
+    if official && court.fetch("type") == "assize" && court.fetch("district") == "Brussel"
+      return I18n.t("court_picker.brussels_assize", locale:)
+    end
+
     name = court.fetch("type") == "peace" ? venue(court.fetch("venue"), locale) : place(court.fetch("district"), locale)
     name += " (#{I18n.t("court_picker.languages.#{court['language']}", locale:)})" if court["language"]
     text = "#{type} #{name}"
+    judicial_city = court.fetch("judicial_city", court.fetch("city"))
     if court.fetch("division")
       text += " — #{I18n.t('court_picker.division', locale:)} #{place(court.fetch('venue'), locale)}"
-    elsif court.fetch("type") == "assize" && name != place(court.fetch("city"), locale)
-      text += " — #{place(court.fetch('city'), locale)}"
-    elsif !court.fetch("division") && court.fetch("district") != court.fetch("city") && court.fetch("type") != "peace"
-      text += " — #{place(court.fetch('city'), locale)}"
+    elsif court.fetch("type") == "assize" && name != place(judicial_city, locale)
+      text += " — #{place(judicial_city, locale)}"
+    elsif court.fetch("district") != judicial_city && court.fetch("type") != "peace"
+      text += " — #{place(judicial_city, locale)}"
+    end
+    if hearing && court["hearing_verified"] == false
+      text += " — #{I18n.t('court_picker.hearing_unconfirmed', locale:)}"
+    elsif hearing && court["hearing_place"]
+      text += " — #{I18n.t('court_picker.hearing_place', locale:, place: place(court.fetch('hearing_place'), locale))}"
+      text += " — #{court.fetch('hearing_address')}" if court["hearing_address"]
+      text += " (#{I18n.t("court_picker.hearing_subjects.#{court.fetch('hearing_subject')}", locale:)})" if court["hearing_subject"]
     end
     text
   end

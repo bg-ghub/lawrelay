@@ -146,6 +146,37 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
   end
 
+  test "official court facts fit the homepage preview at narrow and desktop widths" do
+    %i[nl fr de en].each do |locale|
+      [ 320, 1440 ].each do |width|
+        page.current_window.resize_to(width, 1000)
+        page.driver.browser.execute_cdp("Emulation.setDeviceMetricsOverride", width:, height: 1000, deviceScaleFactor: 1, mobile: false)
+        visit root_path(locale:)
+
+        within ".hero-assignment-preview .assignment-facts" do
+          assert_text I18n.t("court_picker.division", locale:)
+          assert_text "Bolivarplaats 20 bus 1, 2000 Antwerpen"
+          assert_selector "dt", text: I18n.t("marketplace.show.court", locale:), exact_text: true
+          assert_selector "dt", text: I18n.t("marketplace.show.location", locale:), exact_text: true
+        end
+        assert_equal width, page.evaluate_script("window.innerWidth")
+        assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, width
+        assert page.evaluate_script(<<~JS), "Homepage court facts overflow in #{locale} at #{width}px"
+          (() => {
+            const card = document.querySelector('.hero-assignment-preview .assignment-card').getBoundingClientRect();
+            return Array.from(document.querySelectorAll('.hero-assignment-preview .assignment-facts dd')).every(node => {
+              const box = node.getBoundingClientRect();
+              return box.left >= card.left && box.right <= card.right && node.scrollWidth <= node.clientWidth;
+            });
+          })()
+        JS
+      end
+    end
+  ensure
+    page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
+    page.current_window.resize_to(1400, 1400)
+  end
+
   test "registration validation moves focus to the error summary" do
     email = "system-invalid-#{SecureRandom.hex(5)}@example.test"
     original = Directory::SignupProfile.instance_method(:fetch_html)

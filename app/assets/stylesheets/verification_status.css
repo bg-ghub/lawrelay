@@ -1,0 +1,44 @@
+.verification-status-page .form-section {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.verification-status-page.account-flow-page .form-section h2 {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+.verification-status-page.account-flow-page .form-section p,
+.verification-status-page .form-section > form {
+  margin: 0;
+}
+
+.verification-status-page .form-section p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.verification-status-page .confirmation-support {
+  color: var(--muted);
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.verification-status-page .confirmation-support a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.verification-status-page .form-section .button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

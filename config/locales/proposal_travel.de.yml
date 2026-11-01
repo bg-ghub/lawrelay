@@ -1,0 +1,15 @@
+de:
+  proposal_travel:
+    question: "Fahrtkosten im Preis enthalten?"
+    "yes": "Ja"
+    "no": "Nein"
+    cost_label: "Fahrtkosten (€)"
+    cost_hint: "Zusätzlicher Betrag für diesen Auftrag."
+    included: "Fahrtkosten enthalten"
+    additional: "+ %{amount} € Fahrtkosten"
+    not_specified: "Fahrtkosten nicht angegeben"
+  activerecord:
+    attributes:
+      proposal:
+        travel_included: "Fahrtkosten enthalten"
+        travel_cost_cents: "Fahrtkosten"

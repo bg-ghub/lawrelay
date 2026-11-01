@@ -45,10 +45,8 @@ en:
       product:
         aria_label: Example assignment on LawRelay
         example_label: Example assignment
-        title: Court cover at the Antwerp Family Court
+        title: Court cover in Antwerp
         description: Looking for a confrater to cover a short family-law hearing.
-        court: Antwerp Family Court
-        city: Antwerp
         practice_area: Family law
       pathways:
         eyebrow: "For lawyers"

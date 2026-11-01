@@ -8,6 +8,18 @@ fr:
     other_label: "Autre tribunal ou lieu"
     choose: "Choisissez un tribunal ou Autre."
     division: "division"
+    brussels_assize: "Cour d’assises de l’arrondissement administratif de Bruxelles-Capitale"
+    hearing_place: "lieu d’audience %{place}"
+    hearing_unconfirmed: "lieu d’audience à confirmer"
+    hearing_subjects:
+      civil_and_family: "civil et famille"
+      criminal: "correctionnel"
+      youth_protection: "jeunesse protectionnelle"
+      employment_accidents: "contrats, accidents du travail, maladies professionnelles et référés"
+      social_security: "sécurité sociale"
+      ordinary: "audiences ordinaires"
+      urgent_presidential: "référés et affaires du président"
+      amicable_settlement: "règlement amiable"
     first_canton: "premier canton"
     second_canton: "deuxième canton"
     languages:

@@ -1,0 +1,15 @@
+nl:
+  proposal_travel:
+    question: "Prijs inclusief verplaatsingskosten?"
+    "yes": "Ja"
+    "no": "Nee"
+    cost_label: "Verplaatsingskosten (€)"
+    cost_hint: "Bijkomend bedrag voor deze opdracht."
+    included: "Verplaatsing inbegrepen"
+    additional: "+ € %{amount} verplaatsingskosten"
+    not_specified: "Verplaatsingskosten niet vermeld"
+  activerecord:
+    attributes:
+      proposal:
+        travel_included: "Verplaatsing inbegrepen"
+        travel_cost_cents: "Verplaatsingskosten"

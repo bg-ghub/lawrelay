@@ -1,5 +1,5 @@
 <% content_for :title, t("auth.verification_status.title") %>
-<section class="new-assignment shell account-flow-page">
+<section class="new-assignment shell account-flow-page verification-status-page">
   <div class="new-assignment__intro">
     <h1><%= t("auth.verification_status.heading", name: professional_salutation(@user)) %></h1>
     <p><%= t("directory_onboarding.status.lede") %></p>
@@ -16,6 +16,7 @@
       <p><%= t("auth.verification_status.check_inbox_body", email: @user.email_address) %></p>
       <%= advocaat_webmail_hint(@user.email_address) %>
       <%= button_to t("auth.verification_status.resend"), verification_status_path, method: :post, class: "button button--dark" %>
+      <%= render "shared/confirmation_support", email: @user.email_address %>
       <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
     </section>
     <%= render "shared/email_access_status", user: @user, profile: @lawyer_profile if @lawyer_profile&.email_review_status.present? %>
@@ -28,6 +29,7 @@
         <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
         <p><%= t(@lawyer_profile.directory_confirmation_requested_at.present? ? "directory_onboarding.status.confirmation_body" : "directory_onboarding.status.confirmation_not_sent_body", email: @lawyer_profile.directory_email) %></p>
         <%= button_to t("directory_feedback.resend_confirmation"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
+        <%= render "shared/confirmation_support", email: @lawyer_profile.directory_email %>
         <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
       <% elsif @lawyer_profile&.directory_email_verified? %>
         <h2><%= t("directory_onboarding.status.ready_title") %></h2>

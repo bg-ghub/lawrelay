@@ -8,6 +8,18 @@ en:
     other_label: "Other court or venue"
     choose: "Choose a court or Other."
     division: "division"
+    brussels_assize: "Assize court of the administrative district of Brussels-Capital"
+    hearing_place: "hearing venue %{place}"
+    hearing_unconfirmed: "hearing venue to confirm"
+    hearing_subjects:
+      civil_and_family: "civil and family"
+      criminal: "criminal"
+      youth_protection: "youth protection"
+      employment_accidents: "employment, work injuries and diseases, urgent matters"
+      social_security: "social security"
+      ordinary: "ordinary hearings"
+      urgent_presidential: "urgent and presidential matters"
+      amicable_settlement: "amicable settlement"
     first_canton: "first canton"
     second_canton: "second canton"
     languages:

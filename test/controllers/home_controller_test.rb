@@ -36,4 +36,41 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.body, assignment.title
   end
+
+  test "the homepage example uses the full catalogued court and its official address" do
+    names = {
+      nl: "Rechtbank van eerste aanleg Antwerpen — afdeling Antwerpen",
+      fr: "Tribunal de première instance Anvers — division Anvers",
+      de: "Gericht erster Instanz Antwerpen — Abteilung Antwerpen",
+      en: "Court of first instance Antwerp — division Antwerp"
+    }
+    names.each do |locale, name|
+      get root_path(locale:)
+
+      assert_response :success
+      assert_select ".hero-assignment-preview .assignment-facts" do
+        assert_select "div", text: "#{I18n.t('marketplace.show.court', locale:)}#{name}", count: 1
+        assert_select "div", text: "#{I18n.t('marketplace.show.location', locale:)}Bolivarplaats 20 bus 1, 2000 Antwerpen", count: 1
+        assert_select "dd", text: /Familierechtbank|Family Court|Familiengericht|tribunal de la famille/i, count: 0
+      end
+    end
+  end
+
+  test "board cards display the court separately from the full hearing address" do
+    account = create_marketplace_account(prefix: "board-court-address")
+    assignment = create_assignment_for(account, title: "Canonical court card")
+    assignment.update!(court: "Rechtbank van eerste aanleg Antwerpen — afdeling Antwerpen", city: "Antwerpen")
+    sign_in_as(account.user)
+
+    get assignments_path(locale: :en)
+
+    assert_response :success
+    card = css_select("article.assignment-card").find { |node| node.at_css("h2 a")&.text == assignment.title }
+    assert_not_nil card
+    assert_select card, ".assignment-facts" do
+      assert_select "div", text: "CourtCourt of first instance Antwerp — division Antwerp", count: 1
+      assert_select "div", text: "LocationBolivarplaats 20 bus 1, 2000 Antwerpen", count: 1
+      assert_select "dd", text: /· Antwerpen\z/, count: 0
+    end
+  end
 end

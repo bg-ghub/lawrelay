@@ -81,8 +81,9 @@ class ProposalsController < ApplicationController
   end
 
   def proposal_params
-    attributes = params.require(:proposal).permit(:rate_cents, :rate_kind, :message)
+    attributes = params.require(:proposal).permit(:rate_cents, :rate_kind, :message, :travel_included, :travel_cost_cents)
     attributes[:rate_cents] = euros_to_cents(attributes[:rate_cents])
+    attributes[:travel_cost_cents] = euros_to_cents(attributes[:travel_cost_cents])
     attributes
   end
 

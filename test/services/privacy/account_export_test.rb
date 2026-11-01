@@ -130,6 +130,20 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
     assert_not_includes package.to_json, "excluded-manual-approval-digest"
   end
 
+  test "travel terms are exported only for the members own proposals" do
+    own_assignment = create_assignment_for(@other)
+    own_proposal = create_proposal_for(own_assignment, @member)
+    own_proposal.update!(travel_included: false, travel_cost_cents: 1_250)
+    counterpart_assignment = create_assignment_for(@member)
+    create_proposal_for(counterpart_assignment, @other).update!(travel_included: false, travel_cost_cents: 9_750)
+
+    package = Privacy::AccountExport.new(request: @request, actor: @admin).send(:package)
+    proposals = package.fetch(:authored_proposals)
+    assert_equal [ own_proposal.id ], proposals.pluck("id")
+    assert_equal false, proposals.sole.fetch("travel_included")
+    assert_equal 1_250, proposals.sole.fetch("travel_cost_cents")
+  end
+
   test "member, suspended and MFA-unconfigured operators are refused" do
     assert_rejected(actor: @member.user)
     @admin.update!(suspended_at: Time.current)

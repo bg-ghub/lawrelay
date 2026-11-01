@@ -16,7 +16,11 @@
     </div>
     <dl class="assignment-facts">
       <div><dt><%= t("marketplace.index.when") %></dt><dd><%= l assignment.starts_at, format: "%d/%m · %H:%M" %></dd></div>
-      <% if assignment.court.present? || assignment.city.present? %>
+      <% if assignment.court_replacement? %>
+        <% hearing_details = assignment_hearing_details(assignment) %>
+        <% if hearing_details[:court].present? %><div><dt><%= t("marketplace.show.court") %></dt><dd><%= hearing_details[:court] %></dd></div><% end %>
+        <% if hearing_details[:location].present? %><div><dt><%= t("marketplace.show.location") %></dt><dd><%= hearing_details[:location] %><% if hearing_details[:address_unavailable] %><small class="field-hint"><%= t("marketplace.show.address_unavailable") %></small><% end %></dd></div><% end %>
+      <% elsif assignment.court.present? || assignment.city.present? %>
         <div><dt><%= t("marketplace.index.where") %></dt><dd><%= [assignment.court, assignment.city].compact_blank.join(" · ") %></dd></div>
       <% end %>
       <div><dt><%= t("marketplace.index.practice_area") %></dt><dd><%= assignment.practice_area %></dd></div>

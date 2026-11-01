@@ -1,0 +1,11 @@
+<% if proposal.assignment.court_replacement? %>
+  <p class="proposal-travel-summary">
+    <% if proposal.travel_included == true %>
+      <%= t("proposal_travel.included") %>
+    <% elsif proposal.travel_included == false && proposal.travel_cost_cents.present? %>
+      <%= t("proposal_travel.additional", amount: euro_amount(proposal.travel_cost_cents)) %>
+    <% else %>
+      <%= t("proposal_travel.not_specified") %>
+    <% end %>
+  </p>
+<% end %>

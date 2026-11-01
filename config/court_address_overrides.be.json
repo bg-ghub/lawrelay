@@ -5,30 +5,2249 @@
       "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven",
       "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven/contact",
       "title": "Politierechtbank Leuven — Adresgegevens",
-      "addresses": ["Ferdinand Smoldersplein 5, 3000 Leuven"],
+      "addresses": [
+        "Ferdinand Smoldersplein 5, 3000 Leuven"
+      ],
       "status": "ok"
     },
     "https://fr.const-court.be/footer/contacts": {
       "source_url": "https://fr.const-court.be/footer/contacts",
       "final_url": "https://fr.const-court.be/footer/contacts",
       "title": "Cour constitutionnelle — Siège",
-      "addresses": ["Place Royale 7, 1000 Bruxelles"],
+      "addresses": [
+        "Place Royale 7, 1000 Bruxelles"
+      ],
       "status": "ok"
     },
     "https://www.courdecassation.be/nl/Acces-Toegang.html": {
       "source_url": "https://www.courdecassation.be/nl/Acces-Toegang.html",
       "final_url": "https://www.courdecassation.be/nl/Acces-Toegang.html",
       "title": "Hof van Cassatie — Toegang tot het Hof",
-      "addresses": ["Poelaertplein 1, 1000 Brussel"],
+      "addresses": [
+        "Poelaertplein 1, 1000 Brussel"
+      ],
       "status": "ok"
     },
     "https://www.raadvst-consetat.be/?lang=nl&page=contact": {
       "source_url": "https://www.raadvst-consetat.be/?lang=nl&page=contact",
       "final_url": "https://www.raadvst-consetat.be/nl/contact/",
       "title": "Raad van State — Adres voor zittingen",
-      "addresses": ["Wetenschapsstraat 35, 1040 Brussel"],
+      "addresses": [
+        "Wetenschapsstraat 35, 1040 Brussel"
+      ],
       "status": "ok",
       "address_role": "hearing"
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii",
+      "title": "Justice de paix de Liège II",
+      "addresses": [
+        "Rue de Bruxelles 2, 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-ii"
+      ],
+      "source_html_sha256": "4e51dabee1a7388f9dba9a1e8863a5f73cb60ad2a196ff99dd064090167d98c0"
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii",
+      "title": "Justice de paix de Liège III",
+      "addresses": [
+        "Rue de Bruxelles 2, 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iii"
+      ],
+      "source_html_sha256": "796a23554637a886a765f1f9ba7e40b918bdfea0cd2f687dfe4174cae35f10c0"
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme",
+      "title": "Justice de paix de Waremme",
+      "addresses": [
+        "Avenue Emile Vandervelde 31, 4300 Waremme"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-waremme"
+      ],
+      "source_html_sha256": "90cd453f59c4800032225061cbc9e1c849f398f4d07030c833ea9b6b62345f6e"
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath",
+      "title": "Justice de paix d'Ath",
+      "addresses": [
+        "Place des Capucins 1, 7800 Ath"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-dath"
+      ],
+      "source_html_sha256": "fc0bbb632e1a915ba9349aa25e2df0180ce6712cef9fc90c9d4466de67765010"
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne",
+      "title": "Justice de paix de Marche-en-Famenne",
+      "addresses": [
+        "Rue Victor Libert 7, 6900 Marche-en-Famenne"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-marche-en-famenne"
+      ],
+      "source_html_sha256": "0d96b349cef017a87d25bd74a71b2aec7427a0525fe96716e555693dfcf16e14"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren",
+      "title": "Vredegerecht Houthalen - Helchteren",
+      "addresses": [
+        "Pastorijstraat 30, 3530 Houthalen-Helchteren"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-houthalen-helchteren"
+      ],
+      "source_html_sha256": "c070bef0f66a8c4881c1ba472d87cf11ae6a7b152960f3fc68f8063e32840cb3"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i",
+      "title": "Vredegerecht Oostende I",
+      "addresses": [
+        "Canadaplein 1, 8400 Oostende"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-i"
+      ],
+      "source_html_sha256": "57f593b78091c00930897585c3aead87496583bad5ecb43caaaca88a77288cf0"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii",
+      "title": "Vredegerecht Oostende II",
+      "addresses": [
+        "Canadaplein 1, 8400 Oostende"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oostende-ii"
+      ],
+      "source_html_sha256": "c26c98867936fe952f580671d75504470eb247ddee6776de20014325ea8142d3"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel",
+      "title": "Nederlandstalige politierechtbank Brussel",
+      "addresses": [
+        "Regentschapsstraat 63, 1000 Brussel"
+      ],
+      "status": "ok",
+      "address_role": "official_map_destination",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-politierechtbank-brussel"
+      ],
+      "source_html_sha256": "1f5e8f4a2daa04091f25c1c5cbc453bb4d50e7e87138c39573fadb26b9a22deb"
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2/contact",
+      "title": "Vredegerecht Aalst 2",
+      "addresses": [
+        "Dr. André Sierensstraat 16, 9300 Aalst"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-2/contact"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel/contact",
+      "title": "Nederlandstalige Ondernemingsrechtbank Brussel",
+      "addresses": [
+        "Waterloolaan 70, 1000 Brussel"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/nederlandstalige-ondernemingsrechtbank-brussel/contact",
+        "https://www.rechtbanken-tribunaux.be/sites/default/files/media/orte/brussel/documents/norb-leidraad-eerste-kamer.pdf"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne",
+      "title": "Tribunal de l'entreprise de Liège - division Marche-en-Famenne",
+      "addresses": [
+        "Rue Victor Libert 9, 6900 Marche-en-Famenne"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-marche-en-famenne"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau",
+      "title": "Tribunal de l'entreprise de Liège - division Neufchâteau",
+      "addresses": [
+        "Place Charles Bergh 7, 6840 Neufchâteau"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-neufchateau"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles/info?page=n529",
+      "title": "Tribunal de l'entreprise Francophone de Bruxelles",
+      "addresses": [
+        "Boulevard de Waterloo 70, 1000 Bruxelles"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles/info?page=n529",
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-francophone-de-bruxelles"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-second-canton-deupen-saint-vith": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-second-canton-deupen-saint-vith",
+      "final_url": "https://www.st.vith.be/fr/tourist-info/annuaire/friedensgericht-des-zweiten-kantons-eupen-sankt?u=e7a0d6e31337454ea3043d018f42ee6f",
+      "title": "Justice de paix du second canton d'Eupen-Saint Vith",
+      "addresses": [
+        "Major-Long-Straße 36, 4780 Sankt Vith"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-du-second-canton-deupen-saint-vith",
+        "https://www.st.vith.be/fr/tourist-info/annuaire/friedensgericht-des-zweiten-kantons-eupen-sankt?u=e7a0d6e31337454ea3043d018f42ee6f"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem",
+      "title": "Vredegerecht Oudergem",
+      "addresses": [
+        "Vijverstraat 4, 1040 Etterbeek"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudergem"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne",
+      "title": "Justice de paix de Grâce-Hollogne",
+      "addresses": [
+        "Rue de l’Hôtel Communal 30, 4460 Grâce-Hollogne"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-grace-hollogne"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg",
+      "title": "Justice de paix de Limbourg",
+      "addresses": [
+        "Rathausplatz 4, 4700 Eupen"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-limbourg"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+      "title": "Justice de paix de Visé",
+      "addresses": [
+        "Place Jean Donnay 1, 4602 Cheratte"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-vise",
+        "https://www.openstreetmap.org/way/1086515473"
+      ],
+      "reviewed_point": {
+        "latitude": 50.683746494916214,
+        "longitude": 5.670359647713214,
+        "osm_type": "way",
+        "osm_id": 1086515473,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Named Tribunal de paix de Cheratte building on the published Place Jean Donnay,postcode4602. Court source identifies the Visé peace court in Cheratte. OSM tags building3 while the court publishes1; source-bound institutional building point, not a global house alias."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+      "title": "Justice de paix de Boussu-Colfontaine I",
+      "addresses": [
+        "Rue Grande Campagne 34, 7301 Boussu"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-i",
+        "https://www.openstreetmap.org/node/2137978110"
+      ],
+      "reviewed_point": {
+        "latitude": 50.4335667,
+        "longitude": 3.8385088,
+        "osm_type": "node",
+        "osm_id": 2137978110,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Boussu peace-court POI on Rue de la Grande Campagne in Boussu. OSM tags the premise32 while the court publishes34; use the named institutional POI rather than claiming an exact registered house34 point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+      "title": "Justice de paix de Boussu-Colfontaine II",
+      "addresses": [
+        "Rue Grande Campagne 34, 7301 Boussu"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-boussu-colfontaine-ii",
+        "https://www.openstreetmap.org/node/2137978110"
+      ],
+      "reviewed_point": {
+        "latitude": 50.4335667,
+        "longitude": 3.8385088,
+        "osm_type": "node",
+        "osm_id": 2137978110,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Boussu peace-court POI on Rue de la Grande Campagne in Boussu. OSM tags the premise32 while the court publishes34; use the named institutional POI rather than claiming an exact registered house34 point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel",
+      "title": "Vredegerecht eerste kanton Mol-Geel",
+      "addresses": [
+        "Molderdijk 7, 2400 Mol"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-eerste-kanton-mol-geel"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel",
+      "title": "Vredegerecht tweede kanton Mol-Geel",
+      "addresses": [
+        "Molderdijk 7, 2400 Mol"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-tweede-kanton-mol-geel"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk",
+      "title": "Vredegerecht Genk",
+      "addresses": [
+        "Stadsplein 1, 3600 Genk"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-genk"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+      "title": "Vredegerecht Beveren-Kruibeke-Zwijndrecht",
+      "addresses": [
+        "Gravendreef 3, 9120 Beveren"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-beveren-kruibeke-zwijndrecht",
+        "https://www.openstreetmap.org/way/1007792329"
+      ],
+      "reviewed_point": {
+        "latitude": 51.21263518235294,
+        "longitude": 4.259047264705882,
+        "osm_type": "way",
+        "osm_id": 1007792329,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+      "title": "Vredegerecht Geraardsbergen",
+      "addresses": [
+        "Kasteelstraat 58, 9660 Brakel"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen",
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-geraardsbergen/info?page=n772",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/vgjp-prtp/oost-vlaanderen/files/bijzonder-reglement-vgpr-ovl-2026v2.pdf"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle",
+      "title": "Vredegerecht Merelbeke-Melle",
+      "addresses": [
+        "Hundelgemsesteenweg 622-624, 9820 Merelbeke"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-merelbeke-melle"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+      "title": "Politierechtbank Limburg",
+      "addresses": [
+        "Kielenstraat 22/2, 3700 Tongeren-Borgloon"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk",
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-genk/contact"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden",
+      "title": "Politierechtbank Limburg",
+      "addresses": [
+        "Kazernevest 10, 3800 Sint-Truiden"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-sint-truiden"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/contact",
+      "title": "Arbeidsrechtbank Gent",
+      "addresses": [
+        "Beheerstraat 41, 8500 Kortrijk"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare",
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/contact",
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-roeselare/info?page=n3163"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+      "final_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "title": "Tribunal du travail du Hainaut",
+      "addresses": [
+        "Boulevard de Fontaine 10/3, 6000 Charleroi",
+        "Rue des Carrelages 16, 7100 La Louvière"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche",
+        "https://www.regiedesbatiments.be/fr/projects/extension-du-palais-de-justice-le-palais-du-verre",
+        "https://www.openstreetmap.org/way/318728095",
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-binche/info?page=n1118",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/grilles-des-audiences-division-de-binche_an-judic-2026-2027.pdf",
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi"
+      ],
+      "reviewed_points": [
+        {
+          "address": "Boulevard de Fontaine 10/3, 6000 Charleroi",
+          "latitude": 50.41231699787234,
+          "longitude": 4.4506809382978725,
+          "osm_type": "way",
+          "osm_id": 318728095,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        }
+      ],
+      "match_basis": "Federal building manager identifies the Palais du Verre as housing both labour and enterprise courts; exact named labour-court footprint. Point applies only to the matching Charleroi address, never another city/site."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+      "final_url": "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+      "title": "Tribunal du travail du Hainaut",
+      "addresses": [
+        "Rue Saint-Jacques 41, 7500 Tournai",
+        "Rue des Trois Boudins 10, 7000 Mons",
+        "Boulevard de Fontaine 10/3, 6000 Charleroi"
+      ],
+      "published_addresses": [
+        "Rue Saint-Jacques 41, 7500 Tournai",
+        "Rue des 3 Boudins 10, 7000 Mons",
+        "Boulevard de Fontaine 10/3, 6000 Charleroi"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mouscron",
+        "https://www.regiedesbatiments.be/fr/projects/extension-du-palais-de-justice-le-palais-du-verre",
+        "https://www.openstreetmap.org/way/318728095",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/ordonnance-2026.2771-reglant-le-service-des-audiences-aj-2026-2027.pdf",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/artt/hainaut/files/grille-des-audiences-division-de-mouscron_an.-judic.-2026-2027.pdf",
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons",
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi"
+      ],
+      "match_basis": "Federal building manager identifies the Palais du Verre as housing both labour and enterprise courts; exact named labour-court footprint. Point applies only to the matching Charleroi address, never another city/site.",
+      "reviewed_points": [
+        {
+          "address": "Boulevard de Fontaine 10/3, 6000 Charleroi",
+          "latitude": 50.41231699787234,
+          "longitude": 4.4506809382978725,
+          "osm_type": "way",
+          "osm_id": 318728095,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        }
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy",
+      "title": "Tribunal de l'entreprise de Liège",
+      "addresses": [
+        "Quai d’Arona 4, 4500 Huy"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-huy"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut",
+      "title": "Cour d'assises du Hainaut",
+      "addresses": [
+        "Rue des Droits de l’Homme 1, 7000 Mons"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-hainaut"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-brabant-wallon/info?page=n1164",
+      "title": "Tribunal de première instance du Brabant Wallon",
+      "addresses": [
+        "Rue de Soignies 8, 1400 Nivelles",
+        "Place Albert Ier 17, 1400 Nivelles",
+        "Avenue Jean Monnet 12, 1400 Nivelles"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/reglement_particulier_tpi_brabant_wallon-2016.pdf",
+        "https://www.tribunaux-rechtbanken.be/sites/default/files/media/reatpi/brabant_wallon/documents/reglement/ordonnance-corona-9.pdf"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy",
+      "title": "Palais de justice de Huy",
+      "addresses": [
+        "Palais de Justice de Huy, Quai d'Arona, 4500 Huy"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.528098948,
+        "longitude": 5.243874111999999,
+        "osm_type": "way",
+        "osm_id": 132407399,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-huy",
+        "https://www.openstreetmap.org/way/132407399"
+      ],
+      "match_basis": "Exact named courthouse identity and its published street; manually reviewed, not proximity."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre",
+      "title": "Tribunal de police Brabant-Wallon - division Wavre",
+      "addresses": [
+        "Place de l'Hôtel de Ville, 1300 Wavre"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.7163665,
+        "longitude": 4.6081477,
+        "osm_type": "node",
+        "osm_id": 5817611051,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-wavre",
+        "https://www.openstreetmap.org/node/5817611051"
+      ],
+      "match_basis": "Exact named courthouse identity and its published street; manually reviewed, not proximity."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende",
+      "title": "Gerechtsgebouw - Rechtbank van Koophandel - Handelsregister",
+      "addresses": [
+        "Gerechtsgebouw, Canadaplein, 8400 Oostende"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 51.22740734736842,
+        "longitude": 2.9167008605263156,
+        "osm_type": "way",
+        "osm_id": 89562100,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-oostende",
+        "https://www.openstreetmap.org/way/89562100"
+      ],
+      "match_basis": "Exact named courthouse identity and its published street; manually reviewed, not proximity."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i",
+      "title": "Justice de paix de Liège I",
+      "addresses": [
+        "Rue de Bruxelles 2, 4000 Liège"
+      ],
+      "published_addresses": [
+        "Rue de Bruxelles 2/0005 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-i",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv",
+      "title": "Justice de paix de Liège IV",
+      "addresses": [
+        "Rue de Bruxelles 2, 4000 Liège"
+      ],
+      "published_addresses": [
+        "Rue de Bruxelles 2/0005 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-liege-iv",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe",
+      "title": "Justice de paix de Seneffe",
+      "addresses": [
+        "Rue de la Rouge Croix 3, 7180 Seneffe"
+      ],
+      "published_addresses": [
+        "Rue Rouge Croix 3 7180 Seneffe"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-seneffe",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom",
+      "title": "Vredegerecht Boom",
+      "addresses": [
+        "Jozef Van Cleemputplein 8, 2850 Boom"
+      ],
+      "published_addresses": [
+        "Jozef V. Cleemputplein 8 2850 Boom"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-boom",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1",
+      "title": "Vredegerecht Aalst 1",
+      "addresses": [
+        "Dr. André Sierensstraat 16, 9300 Aalst"
+      ],
+      "published_addresses": [
+        "Dr. André Sierenstraat 16 bus 3/C 9300 Aalst"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-aalst-1",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde",
+      "title": "Vredegerecht Dendermonde",
+      "addresses": [
+        "Noordlaan 31, 9200 Dendermonde"
+      ],
+      "published_addresses": [
+        "Noordlaan 31/2 9200 Dendermonde"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-dendermonde",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout",
+      "title": "Vredegerecht Torhout",
+      "addresses": [
+        "Elisabethlaan 29, 8820 Torhout"
+      ],
+      "published_addresses": [
+        "Elisabetlaan 29 8820 Torhout"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-torhout",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem",
+      "title": "Vredegerecht Waregem",
+      "addresses": [
+        "Stationsstraat 127, 8790 Waregem"
+      ],
+      "published_addresses": [
+        "Stationstraat 127 8790 Waregem"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-waregem",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen",
+      "title": "Politierechtbank Antwerpen",
+      "addresses": [
+        "Bolivarplaats 20, 2000 Antwerpen"
+      ],
+      "published_addresses": [
+        "Bolivarplaats 20/3 2000 Antwerpen"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-antwerpen-afdeling-antwerpen",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik/contact",
+      "title": "Politierechtbank Limburg",
+      "addresses": [
+        "Sionstraat 24, 3680 Maaseik"
+      ],
+      "published_addresses": [
+        "Sionstraat 24/2 3680 Maaseik"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-limburg-afdeling-maaseik",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst",
+      "title": "Politierechtbank Oost-Vlaanderen",
+      "addresses": [
+        "Dr. André Sierensstraat 16, 9300 Aalst"
+      ],
+      "published_addresses": [
+        "Dr. André Sierenstraat 16 bus 3/B 9300 Aalst"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-aalst",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde",
+      "title": "Politierechtbank Oost-Vlaanderen",
+      "addresses": [
+        "Noordlaan 31, 9200 Dendermonde"
+      ],
+      "published_addresses": [
+        "Noordlaan 31/3 9200 Dendermonde"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-dendermonde",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers",
+      "title": "Tribunal de police de l'arrondissement de Liège",
+      "addresses": [
+        "Rue du Tribunal 4, 4800 Verviers"
+      ],
+      "published_addresses": [
+        "Rue de Tribunal 4 4800 Verviers"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-verviers",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt",
+      "title": "Rechtbank eerste aanleg Limburg",
+      "addresses": [
+        "Parklaan 25, 3500 Hasselt"
+      ],
+      "published_addresses": [
+        "Parklaan 25/2 3500 Hasselt"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/rechtbank-eerste-aanleg-limburg-afdeling-hasselt",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen",
+      "title": "Arbeidsrechtbank Antwerpen",
+      "addresses": [
+        "Bolivarplaats 20, 2000 Antwerpen"
+      ],
+      "published_addresses": [
+        "Bolivarplaats 20/5 2000 Antwerpen"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-antwerpen",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt",
+      "title": "Arbeidsrechtbank Antwerpen",
+      "addresses": [
+        "Parklaan 25, 3500 Hasselt"
+      ],
+      "published_addresses": [
+        "Parklaan 25/5 3500 Hasselt"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-hasselt",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst",
+      "title": "Arbeidsrechtbank Gent",
+      "addresses": [
+        "Dr. André Sierensstraat 16, 9300 Aalst"
+      ],
+      "published_addresses": [
+        "Dokter André Sierensstraat 16/3A 9300 Aalst"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-aalst",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde",
+      "title": "Arbeidsrechtbank Gent",
+      "addresses": [
+        "Noordlaan 31, 9200 Dendermonde"
+      ],
+      "published_addresses": [
+        "Noordlaan 31/5 9200 Dendermonde"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-gent-afdeling-dendermonde",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege",
+      "title": "Tribunal du travail de Liège",
+      "addresses": [
+        "Place Saint Lambert 30, 4000 Liège"
+      ],
+      "published_addresses": [
+        "Place Saint-Lambert 30/0004 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-liege",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere",
+      "title": "Tribunal du travail du Hainaut",
+      "addresses": [
+        "Rue des Carrelages 16, 7100 La Louvière"
+      ],
+      "published_addresses": [
+        "Rue de Carrelages 16 7100 La Louvière"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-la-louviere",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons",
+      "title": "Tribunal du travail du Hainaut",
+      "addresses": [
+        "Rue des Trois Boudins 10, 7000 Mons"
+      ],
+      "published_addresses": [
+        "rue des 3 Boudins, 10 7000 Mons"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-mons",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt",
+      "title": "Ondernemings­rechtbank Antwerpen",
+      "addresses": [
+        "Parklaan 25, 3500 Hasselt"
+      ],
+      "published_addresses": [
+        "Parklaan 25/6 3500 Hasselt"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-hasselt",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde",
+      "title": "Ondernemings­rechtbank Gent",
+      "addresses": [
+        "Noordlaan 31, 9200 Dendermonde"
+      ],
+      "published_addresses": [
+        "Noordlaan 31/1 9200 Dendermonde"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-dendermonde",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt",
+      "title": "Arbeidshof Antwerpen",
+      "addresses": [
+        "Parklaan 25, 3500 Hasselt"
+      ],
+      "published_addresses": [
+        "Parklaan 25/1 3500 Hasselt"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidshof-antwerpen-afdeling-hasselt",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege",
+      "title": "Cour du travail de Liège",
+      "addresses": [
+        "Place Saint Lambert 30, 4000 Liège"
+      ],
+      "published_addresses": [
+        "Place Saint-Lambert 30/002 4000 Liège"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-liege",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant",
+      "title": "Hof van assisen Vlaams-Brabant",
+      "addresses": [
+        "Ferdinand Smoldersplein 5, 3000 Leuven"
+      ],
+      "published_addresses": [
+        "Smoldersplein 5 3000 Leuven"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-vlaams-brabant",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Reviewed canonical street spelling or named courthouse building, with unique official house/postcode/city point."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1",
+      "title": "Vredegerecht Gent 1",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/F 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-1",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2",
+      "title": "Vredegerecht Gent 2",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/F 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-2",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3",
+      "title": "Vredegerecht Gent 3",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/F 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-3",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4",
+      "title": "Vredegerecht Gent 4",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/F 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-4",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5",
+      "title": "Vredegerecht Gent 5",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/F 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-gent-5",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent",
+      "title": "Ondernemings­rechtbank Gent",
+      "addresses": [
+        "Opgeëistenlaan 401E, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/E 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemings-rechtbank-gent-afdeling-gent",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen",
+      "title": "Hof van assisen Oost-Vlaanderen",
+      "addresses": [
+        "Opgeëistenlaan 401F, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/hof-van-assisen-oost-vlaanderen",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent",
+      "title": "Politierechtbank Oost-Vlaanderen",
+      "addresses": [
+        "Opgeëistenlaan 401M, 9000 Gent"
+      ],
+      "published_addresses": [
+        "Opgeëistenlaan 401/M - lokaal 524 9000 Gent"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-oost-vlaanderen-afdeling-gent",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "Registered 401F, 401E and 401M building codes; their official premise coordinates coincide."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles",
+      "title": "Justice de paix de Nivelles",
+      "addresses": [
+        "Rue Clarisse 115 1400 Nivelles"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:37Z",
+      "reviewed_point": {
+        "latitude": 50.598519835000005,
+        "longitude": 4.3451162475,
+        "osm_type": "way",
+        "osm_id": 43327293,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-nivelles",
+        "https://www.openstreetmap.org/way/43327293"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles",
+      "title": "Tribunal de police du Brabant wallon",
+      "addresses": [
+        "Rue Clarisse, 115 1400 Nivelles"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:57:55Z",
+      "reviewed_point": {
+        "latitude": 50.598519835000005,
+        "longitude": 4.3451162475,
+        "osm_type": "way",
+        "osm_id": 43327293,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-brabant-wallon-division-nivelles",
+        "https://www.openstreetmap.org/way/43327293"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon",
+      "title": "Tribunal du travail du Brabant Wallon",
+      "addresses": [
+        "Rue Clarisse 115 1400 NIVELLES"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:58Z",
+      "reviewed_point": {
+        "latitude": 50.598519835000005,
+        "longitude": 4.3451162475,
+        "osm_type": "way",
+        "osm_id": 43327293,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-brabant-wallon",
+        "https://www.openstreetmap.org/way/43327293"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon",
+      "title": "Tribunal de l'entreprise du Brabant wallon",
+      "addresses": [
+        "Rue Clarisse 115 1400 Nivelles"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:31Z",
+      "reviewed_point": {
+        "latitude": 50.598519835000005,
+        "longitude": 4.3451162475,
+        "osm_type": "way",
+        "osm_id": 43327293,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-brabant-wallon",
+        "https://www.openstreetmap.org/way/43327293"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon",
+      "title": "Cour d'assises du Brabant wallon",
+      "addresses": [
+        "Rue Clarisse 115 1400 Nivelles"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:52Z",
+      "reviewed_point": {
+        "latitude": 50.598519835000005,
+        "longitude": 4.3451162475,
+        "osm_type": "way",
+        "osm_id": 43327293,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-brabant-wallon",
+        "https://www.openstreetmap.org/way/43327293"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai",
+      "title": "Tribunal de l'entreprise du Hainaut",
+      "addresses": [
+        "Rue du Château 47 7500 Tournai"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:34Z",
+      "reviewed_point": {
+        "latitude": 50.6125161,
+        "longitude": 3.3899221,
+        "osm_type": "node",
+        "osm_id": 12653323455,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-tournai",
+        "https://www.openstreetmap.org/node/12653323455"
+      ],
+      "match_basis": "Reviewed exact courthouse identity, published street and house; city is explicit in the object name or corroborated by the official address record."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon",
+      "title": "Palais de Justice d'Arlon — bâtiment A",
+      "addresses": [
+        "Place Schalbert, Bâtiment A, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "reviewed_point": {
+        "latitude": 49.68599979988936,
+        "longitude": 5.809405808796238,
+        "osm_type": "way",
+        "osm_id": 514340645,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-darlon",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/514340645",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The published A/campus address is the adjoining courthouse. Its actual footprint coincides with the official Place Schalbert 3 premise; B is independently identified by the federal building manager and circular footprint."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon",
+      "title": "Palais de Justice d'Arlon — bâtiment A",
+      "addresses": [
+        "Place Schalbert, Bâtiment A, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "reviewed_point": {
+        "latitude": 49.68599979988936,
+        "longitude": 5.809405808796238,
+        "osm_type": "way",
+        "osm_id": 514340645,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-luxembourg-division-arlon",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/514340645",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The published A/campus address is the adjoining courthouse. Its actual footprint coincides with the official Place Schalbert 3 premise; B is independently identified by the federal building manager and circular footprint."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon",
+      "title": "Palais de Justice d'Arlon — bâtiment B",
+      "addresses": [
+        "Place Schalbert, Bâtiment B, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 49.68587559815594,
+        "longitude": 5.808686797250044,
+        "osm_type": "way",
+        "osm_id": 114238232,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-arlon",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/114238232",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The federal building manager identifies the circular building B and its assize/first-instance hearing rooms; official photograph and actual OSM footprint agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon",
+      "title": "Palais de Justice d'Arlon — bâtiment A",
+      "addresses": [
+        "Place Schalbert, Bâtiment A, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "reviewed_point": {
+        "latitude": 49.68599979988936,
+        "longitude": 5.809405808796238,
+        "osm_type": "way",
+        "osm_id": 514340645,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-arlon",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/514340645",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The published A/campus address is the adjoining courthouse. Its actual footprint coincides with the official Place Schalbert 3 premise; B is independently identified by the federal building manager and circular footprint."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon",
+      "title": "Palais de Justice d'Arlon — bâtiment A",
+      "addresses": [
+        "Place Schalbert, Bâtiment A, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "court_published_address",
+      "reviewed_point": {
+        "latitude": 49.68599979988936,
+        "longitude": 5.809405808796238,
+        "osm_type": "way",
+        "osm_id": 514340645,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-arlon",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/514340645",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The published A/campus address is the adjoining courthouse. Its actual footprint coincides with the official Place Schalbert 3 premise; B is independently identified by the federal building manager and circular footprint."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg",
+      "title": "Palais de Justice d'Arlon — bâtiment B",
+      "addresses": [
+        "Place Schalbert, Bâtiment B, 6700 Arlon"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 49.68587559815594,
+        "longitude": 5.808686797250044,
+        "osm_type": "way",
+        "osm_id": 114238232,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/cour-dassises-du-luxembourg",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-batiment-b",
+        "https://www.regiedesbatiments.be/sites/default/files/arlon_1.jpg",
+        "https://www.openstreetmap.org/way/114238232",
+        "https://opendata.bosa.be/index.nl.html"
+      ],
+      "match_basis": "The federal building manager identifies the circular building B and its assize/first-instance hearing rooms; official photograph and actual OSM footprint agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i",
+      "title": "Justice de paix de Charleroi I",
+      "addresses": [
+        "Avenue Général Michel 2 boîte 3 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:45Z",
+      "reviewed_point": {
+        "latitude": 50.4110841,
+        "longitude": 4.447960929793107,
+        "osm_type": "relation",
+        "osm_id": 8174152,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a",
+        "geometry_complete": true,
+        "geometry_valid": true,
+        "point_in_building_geometry": true,
+        "geometry_method": "multipolygon_interior_point",
+        "geometry_sha256": "3483dcca830b6be879297e4998c5be381d071a6822d423850213bade63a09486"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-i",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-8",
+        "https://www.openstreetmap.org/relation/8174152"
+      ],
+      "match_basis": "Federal building manager confirms Avenue Général Michel 2; exact named OSM multipolygon has that street/house. Interior point excludes the courtyard hole."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii",
+      "title": "Justice de paix de Charleroi II",
+      "addresses": [
+        "Avenue Général Michel 2 boîte 3 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:45Z",
+      "reviewed_point": {
+        "latitude": 50.4110841,
+        "longitude": 4.447960929793107,
+        "osm_type": "relation",
+        "osm_id": 8174152,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a",
+        "geometry_complete": true,
+        "geometry_valid": true,
+        "point_in_building_geometry": true,
+        "geometry_method": "multipolygon_interior_point",
+        "geometry_sha256": "3483dcca830b6be879297e4998c5be381d071a6822d423850213bade63a09486"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-charleroi-ii",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-8",
+        "https://www.openstreetmap.org/relation/8174152"
+      ],
+      "match_basis": "Federal building manager confirms Avenue Général Michel 2; exact named OSM multipolygon has that street/house. Interior point excludes the courtyard hole."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi",
+      "title": "Tribunal de police du Hainaut",
+      "addresses": [
+        "Avenue Général Michel 2 boîte 4 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:57:57Z",
+      "reviewed_point": {
+        "latitude": 50.4110841,
+        "longitude": 4.447960929793107,
+        "osm_type": "relation",
+        "osm_id": 8174152,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a",
+        "geometry_complete": true,
+        "geometry_valid": true,
+        "point_in_building_geometry": true,
+        "geometry_method": "multipolygon_interior_point",
+        "geometry_sha256": "3483dcca830b6be879297e4998c5be381d071a6822d423850213bade63a09486"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-du-hainaut-division-charleroi",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-8",
+        "https://www.openstreetmap.org/relation/8174152"
+      ],
+      "match_basis": "Federal building manager confirms Avenue Général Michel 2; exact named OSM multipolygon has that street/house. Interior point excludes the courtyard hole."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi",
+      "title": "Tribunal de première instance du Hainaut",
+      "addresses": [
+        "Avenue Général Michel 2 Boîte 1 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:25Z",
+      "reviewed_point": {
+        "latitude": 50.4110841,
+        "longitude": 4.447960929793107,
+        "osm_type": "relation",
+        "osm_id": 8174152,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a",
+        "geometry_complete": true,
+        "geometry_valid": true,
+        "point_in_building_geometry": true,
+        "geometry_method": "multipolygon_interior_point",
+        "geometry_sha256": "3483dcca830b6be879297e4998c5be381d071a6822d423850213bade63a09486"
+      },
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-charleroi",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-8",
+        "https://www.openstreetmap.org/relation/8174152"
+      ],
+      "match_basis": "Federal building manager confirms Avenue Général Michel 2; exact named OSM multipolygon has that street/house. Interior point excludes the courtyard hole."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi",
+      "title": "Tribunal du travail du Hainaut",
+      "addresses": [
+        "Boulevard de Fontaine 10/3 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:00Z",
+      "reviewed_points": [
+        {
+          "address": "Boulevard de Fontaine 10/3 6000 Charleroi",
+          "latitude": 50.41231699787234,
+          "longitude": 4.4506809382978725,
+          "osm_type": "way",
+          "osm_id": 318728095,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        }
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-du-hainaut-division-charleroi",
+        "https://www.regiedesbatiments.be/fr/projects/extension-du-palais-de-justice-le-palais-du-verre",
+        "https://www.openstreetmap.org/way/318728095"
+      ],
+      "match_basis": "Federal building manager identifies the Palais du Verre as housing both labour and enterprise courts; exact named labour-court footprint. Point applies only to the matching Charleroi address, never another city/site."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi",
+      "title": "Tribunal de l'entreprise du Hainaut",
+      "addresses": [
+        "Boulevard A. de Fontaine 10 6000 Charleroi"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:32Z",
+      "reviewed_points": [
+        {
+          "address": "Boulevard A. de Fontaine 10 6000 Charleroi",
+          "latitude": 50.41231699787234,
+          "longitude": 4.4506809382978725,
+          "osm_type": "way",
+          "osm_id": 318728095,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        }
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-du-hainaut-division-de-charleroi",
+        "https://www.regiedesbatiments.be/fr/projects/extension-du-palais-de-justice-le-palais-du-verre",
+        "https://www.openstreetmap.org/way/318728095"
+      ],
+      "match_basis": "Federal building manager identifies the Palais du Verre as housing both labour and enterprise courts; exact named labour-court footprint. Point applies only to the matching Charleroi address, never another city/site."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i",
+      "title": "Justice de paix de Namur I",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:31Z",
+      "published_addresses": [
+        "Boulevard Général Michel, 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-i",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii",
+      "title": "Justice de paix de Namur II",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:32Z",
+      "published_addresses": [
+        "Boulevard Général Michel, 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-namur-ii",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur",
+      "title": "Tribunal de première instance de Namur",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:23Z",
+      "published_addresses": [
+        "rue Général Michel 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-namur-division-namur",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur",
+      "title": "Tribunal du travail de Liège",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:55Z",
+      "published_addresses": [
+        "rue Général Michel, 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-du-travail-de-liege-division-namur",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur",
+      "title": "Tribunal de l'entreprise de Liège",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:27Z",
+      "published_addresses": [
+        "Rue Général Michel 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-namur",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur",
+      "title": "Cour du travail de Liège",
+      "addresses": [
+        "Rue Général Michel 10, 5000 Namur"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:47Z",
+      "published_addresses": [
+        "Rue Général Michel 10 5000 Namur"
+      ],
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/cour-du-travail-de-liege-division-namur",
+        "https://opendata.bosa.be/index.nl.html",
+        "https://www.openstreetmap.org/way/1163418539"
+      ],
+      "match_basis": "Same named Namur courthouse and house 10; official address-register street type and explicit courthouse OSM address agree."
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche",
+      "title": "Justice de paix de Binche",
+      "addresses": [
+        "Avenue Charles Deliège 54 7130 Binche"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:41Z",
+      "reviewed_point": {
+        "latitude": 50.4128869,
+        "longitude": 4.1662722,
+        "osm_type": "node",
+        "osm_id": 12246829691,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Binche peace court within the complete Binche municipality boundary.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-binche",
+        "https://www.openstreetmap.org/node/12246829691"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree",
+      "title": "Vredegerecht Bree",
+      "addresses": [
+        "Kloosterpoort 1 A000 3960 Bree"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:56:39Z",
+      "reviewed_point": {
+        "latitude": 51.139518,
+        "longitude": 5.5967711,
+        "osm_type": "node",
+        "osm_id": 5443170740,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Peace-court POI within the complete Bree municipality boundary; source identifies the Bree peace court.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-bree",
+        "https://www.openstreetmap.org/node/5443170740"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen",
+      "title": "Vredegerecht Mechelen",
+      "addresses": [
+        "Voochtstraat 7 2800 Mechelen"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:56:22Z",
+      "reviewed_point": {
+        "latitude": 51.02872959904785,
+        "longitude": 4.487218658541012,
+        "osm_type": "way",
+        "osm_id": 322896922,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Literal street and house match; complete Mechelen municipality polygon proves locality without inventing a postcode.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-mechelen",
+        "https://www.openstreetmap.org/way/322896922"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen",
+      "title": "Arbeidsrechtbank Antwerpen",
+      "addresses": [
+        "Voochtstraat 7 2800 Mechelen"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:34Z",
+      "reviewed_point": {
+        "latitude": 51.02872959904785,
+        "longitude": 4.487218658541012,
+        "osm_type": "way",
+        "osm_id": 322896922,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Literal street and house match; complete Mechelen municipality polygon proves locality without inventing a postcode.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/arbeidsrechtbank-antwerpen-afdeling-mechelen",
+        "https://www.openstreetmap.org/way/322896922"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen",
+      "title": "Ondernemings­rechtbank Antwerpen",
+      "addresses": [
+        "Voochtstraat 7 2800 Mechelen"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:09Z",
+      "reviewed_point": {
+        "latitude": 51.02872959904785,
+        "longitude": 4.487218658541012,
+        "osm_type": "way",
+        "osm_id": 322896922,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Literal street and house match; complete Mechelen municipality polygon proves locality without inventing a postcode.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-mechelen",
+        "https://www.openstreetmap.org/way/322896922"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i",
+      "title": "Justice de paix de Mons I",
+      "addresses": [
+        "Rue de Nimy 16/1 7000 Mons"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:53Z",
+      "reviewed_point": {
+        "latitude": 50.45547031330259,
+        "longitude": 3.95378333654408,
+        "osm_type": "way",
+        "osm_id": 110466948,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Mons peace-court building at Rue de Nimy 16; the two published postal units identify this same building.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-i",
+        "https://www.openstreetmap.org/way/110466948"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii",
+      "title": "Justice de paix de Mons II",
+      "addresses": [
+        "Rue de Nimy 16/2 7000 Mons"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:54Z",
+      "reviewed_point": {
+        "latitude": 50.45547031330259,
+        "longitude": 3.95378333654408,
+        "osm_type": "way",
+        "osm_id": 110466948,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Mons peace-court building at Rue de Nimy 16; the two published postal units identify this same building.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mons-ii",
+        "https://www.openstreetmap.org/way/110466948"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai",
+      "title": "Tribunal de première instance du Hainaut",
+      "addresses": [
+        "Place du Palais de Justice 5 7500 Tournai"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:27Z",
+      "reviewed_point": {
+        "latitude": 50.60164465,
+        "longitude": 3.392174055499251,
+        "osm_type": "relation",
+        "osm_id": 19733480,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a",
+        "geometry_complete": true,
+        "geometry_valid": true,
+        "point_in_building_geometry": true,
+        "geometry_method": "multipolygon_interior_point",
+        "geometry_sha256": "2467901fbc57962485ff476fce6a475afc87967a9aa2968470366ccd370e952d"
+      },
+      "match_basis": "Federal building manager confirms the square-shaped Tournai Palais de Justice at Place du Palais de Justice 5. Complete named courthouse multipolygon is within Tournai; interior point excludes the courtyard.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-hainaut-division-tournai",
+        "https://www.openstreetmap.org/relation/19733480",
+        "https://www.regiedesbatiments.be/fr/projects/palais-de-justice-9"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout",
+      "title": "Ondernemings­rechtbank Antwerpen",
+      "addresses": [
+        "Wezenstraat 7 2300 Turnhout"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:11Z",
+      "reviewed_point": {
+        "latitude": 51.3246032,
+        "longitude": 4.9423816,
+        "osm_type": "node",
+        "osm_id": 12320159263,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Ondernemingsrechtbank Antwerpen - Afdeling Turnhout within complete Turnhout municipality boundary.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/ondernemingsrechtbank-antwerpen-afdeling-turnhout",
+        "https://www.openstreetmap.org/node/12320159263"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii",
+      "title": "Justice de paix de Wavre II",
+      "addresses": [
+        "Chaussée de Bruxelles 8 1300 Wavre"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:39Z",
+      "reviewed_point": {
+        "latitude": 50.71915273969187,
+        "longitude": 4.612267568508734,
+        "osm_type": "way",
+        "osm_id": 704369018,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Literal Chaussée de Bruxelles 8; complete Wavre municipality polygon proves locality. Rue de Bruxelles is a separate street and is not substituted.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-ii",
+        "https://www.openstreetmap.org/way/704369018"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier",
+      "title": "Vredegerecht Lier",
+      "addresses": [
+        "Kruisbogenhofstraat 24, 2500 Lier"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:56:21Z",
+      "published_addresses": [
+        "Kruisbogenstraat 24 2500 Lier"
+      ],
+      "match_basis": "Published abbreviated street corrected to the unique official registered street with exact house, postcode and city.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-lier",
+        "https://opendata.bosa.be/index.nl.html"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton",
+      "title": "Vredegerecht Schaarbeek 2e kanton",
+      "addresses": [
+        "Koningsstraat 271-273 1030 Brussel (Schaarbeek)"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:02Z",
+      "published_addresses": [
+        "Koningstraat 271-273 1030 Brussel (Schaarbeek)"
+      ],
+      "match_basis": "Published Koningstraat is corrected to registered Koningsstraat. Both current range endpoints exist and their precise building points are colocated.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-schaarbeek-2e-kanton",
+        "https://opendata.bosa.be/index.nl.html"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat",
+      "title": "Vredegerecht Brasschaat",
+      "addresses": [
+        "Hemelakkers 65, 2930 Brasschaat"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:56:14Z",
+      "published_addresses": [
+        "Hemelakkers 65 - 67 2930 Brasschaat"
+      ],
+      "match_basis": "Published range 65–67 includes current registered house 65. Former registered house 67 was retired; its recorded point is within one metre of current 65. Use current actual house 65, not a retired address or interpolated point.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-brasschaat",
+        "https://opendata.bosa.be/index.nl.html"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i",
+      "title": "Justice de paix de Wavre I",
+      "addresses": [
+        "Place de l'Hôtel de Ville 1, 1300 Wavre"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:39Z",
+      "published_addresses": [
+        "Place de l'Hôtel de Ville 1300 Wavre"
+      ],
+      "match_basis": "Municipal complaint form explicitly directs civil matters to Justice de Paix at number1. This supplements the court page which names only the square. Do not substitute the labour/police court at number3.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-wavre-i",
+        "https://www.wavre.be/sites/wavre/files/2021-10/formulaire%20de%20plainte%20infraction%202021.pdf"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege",
+      "title": "Tribunal de police de l'arrondissement de Liège",
+      "addresses": [
+        "Rue Saint-Gilles 87, 4000 Liège"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:57:51Z",
+      "published_addresses": [
+        "Rue Saint Gilles 87-89 4000 Liège"
+      ],
+      "match_basis": "Court publishes range87–89. Use its actual current registered endpoint87, not a fabricated midpoint; endpoint89 is about30metres away.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-liege",
+        "https://opendata.bosa.be/index.nl.html"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege",
+      "title": "Tribunal de première instance de Liège",
+      "addresses": [
+        "Rue de Bruxelles 2 - 3 4000 Liège"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:58:20Z",
+      "reviewed_point": {
+        "latitude": 50.64652593969921,
+        "longitude": 5.5719175250080095,
+        "osm_type": "way",
+        "osm_id": 133353872,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Court contact/accessibility page explicitly locates the tribunal in Annexe NORD. Named OSM Annexe Nord buildingD has Rue de Bruxelles2 and precise building geometry; use that actual hearing entrance complex rather than an ambiguous numeric range.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-de-liege-division-liege",
+        "https://www.rechtbanken-tribunaux.be/fr/tribunal-de-premiere-instance-de-liege-division-liege/contact",
+        "https://www.openstreetmap.org/way/133353872"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant",
+      "title": "Tribunal de l'entreprise de Liège",
+      "addresses": [
+        "Rue Arthur Defoin 215B 5500 Dinant"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:59:23Z",
+      "reviewed_point": {
+        "latitude": 50.241480148174595,
+        "longitude": 4.920268138751875,
+        "osm_type": "way",
+        "osm_id": 250311309,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Exact named Dinant commercial/enterprise court, Complexe ERSO BâtimentB, at Rue Arthur Defoin215. BuildingB explicitly matches the court’s published215B address.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-lentreprise-de-liege-division-dinant",
+        "https://www.openstreetmap.org/way/250311309"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant",
+      "title": "Justice de paix de Dinant",
+      "addresses": [
+        "Rue Arthur Defoin 215 A 5500 Dinant"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:28Z",
+      "reviewed_point": {
+        "latitude": 50.24137844266638,
+        "longitude": 4.920805358830331,
+        "osm_type": "way",
+        "osm_id": 250311310,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Current SPF Justice-operated building explicitly named Justice de Paix de Dinant-Beauraing-Gedinne. OSM house217 differs from the published215A; use the reviewed named institutional building, not a generic215 plot or automatic suffix stripping.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant",
+        "https://www.openstreetmap.org/way/250311310"
+      ]
     }
   }
 }
