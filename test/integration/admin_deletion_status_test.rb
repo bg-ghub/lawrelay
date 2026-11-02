@@ -53,16 +53,47 @@ class AdminDeletionStatusTest < ActionDispatch::IntegrationTest
     assert_select ".admin-user-row .status-pill", text: I18n.t("admin.users.status.active", locale: :en), count: 0
   end
 
-  test "suspended filter excludes deletion requests and includes erased records" do
-    assert_filtered_accounts "suspended", [ @suspended, @erased ]
+  test "suspended filter excludes deletion requests and erased records" do
+    assert_filtered_accounts "suspended", [ @suspended ]
   end
 
   test "pending deletion keeps priority over suspension without changing access controls" do
     @pending.update!(suspended_at: Time.current)
     assert_filtered_accounts "deletion_pending", [ @pending, @partial ]
-    assert_filtered_accounts "suspended", [ @suspended, @erased ]
+    assert_filtered_accounts "suspended", [ @suspended ]
     assert_not @pending.reload.active?
     assert_not @pending.marketplace_verified?
+  end
+
+  test "erased accounts are absent from the overview search verification filters and totals" do
+    assert_filtered_accounts "", [ @active, @pending, @partial, @suspended ]
+
+    [ {}, { verification: "verified" }, { verification: "pending" }, { status: "suspended" } ].each do |filters|
+      get admin_users_path(locale: :en), params: filters.merge(q: @erased.email_address)
+      assert_response :success
+      assert_select ".admin-user-row", count: 0
+      assert_select ".admin-users-total", text: I18n.t("admin.users.index.total", count: 0, locale: :en)
+    end
+    assert User.exists?(@erased.id), "The erased identity must remain available to protected internal references"
+  end
+
+  test "erased accounts cannot be opened or changed through old admin links" do
+    original = @erased.reload.attributes
+    assert_no_difference "AuditEvent.count" do
+      [ @erased.public_id, @erased.id ].each do |identifier|
+        get admin_user_path(identifier, locale: :en)
+        assert_response :not_found
+        patch admin_user_path(identifier, locale: :en), params: { user: { first_name: "Revived" } }
+        assert_response :not_found
+        %w[suspend restore revoke_sessions].each do |action|
+          patch public_send("#{action}_admin_user_path", identifier, locale: :en), params: { user_management: { reason: "Old bookmark" } }
+          assert_response :not_found
+        end
+        post resend_verification_admin_user_path(identifier, locale: :en)
+        assert_response :not_found
+      end
+    end
+    assert_equal original, @erased.reload.attributes
   end
 
   private

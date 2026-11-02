@@ -111,10 +111,14 @@ class Admin::VerificationDeliveriesControllerTest < ActionDispatch::IntegrationT
   end
 
   test "suspended and erased accounts cannot receive verification mail" do
-    [ { suspended_at: Time.current }, { suspended_at: nil, erased_at: Time.current } ].each do |attributes|
-      @user.update!(attributes)
-      assert_ineligible_resend
+    @user.update!(suspended_at: Time.current)
+    assert_ineligible_resend
+
+    @user.update!(suspended_at: nil, erased_at: Time.current)
+    assert_no_difference "AuditEvent.count" do
+      assert_no_enqueued_jobs { post resend_verification_admin_user_path(@user, locale: :en) }
     end
+    assert_response :not_found
   end
 
   test "protected professional profiles and firms cannot receive verification mail" do

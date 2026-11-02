@@ -84,7 +84,7 @@ module Admin
     end
 
     def managed_users
-      User.where(system_role: "member")
+      User.where(system_role: "member", erased_at: nil)
     end
 
     def manager
@@ -130,9 +130,7 @@ module Admin
       when "active"
         scope.where(suspended_at: nil, erased_at: nil, deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
       when "suspended"
-        scope.where.not(erased_at: nil).or(
-          scope.where.not(suspended_at: nil).where(deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
-        )
+        scope.where.not(suspended_at: nil).where(deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
       when "deletion_pending"
         scope.where(erased_at: nil).where(
           "users.deletion_requested_at IS NOT NULL OR users.deletion_scheduled_at IS NOT NULL OR users.deletion_request_id IS NOT NULL"
