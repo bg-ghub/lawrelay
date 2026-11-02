@@ -43,6 +43,7 @@ de:
         activation: Aktivierung
         mfa: Administrator-MFA
         created_at: Registriert
+        deletion_scheduled_at: Endgültige Löschung
         suspension_reason: Grund der Sperrung
         firm_status: Unternehmensprüfung
         lawyer_status: Anwaltsprüfung
@@ -57,6 +58,7 @@ de:
       status:
         active: Aktiv
         suspended: Gesperrt
+        deletion_pending: Löschung geplant
       verification:
         pending: Ausstehend
         verified: Geprüft

@@ -1,16 +1,32 @@
 <% content_for :title, t("account_deletion.title") %>
 <div class="new-assignment shell settings-page account-deletion-page">
-  <div class="new-assignment__intro"><h1><%= t("account_deletion.heading") %></h1></div>
+  <div class="new-assignment__intro"><h1><%= t(current_user.deletion_pending? ? "account_deletion.pending.heading" : "account_deletion.heading") %></h1></div>
   <div class="new-assignment__layout">
-    <%= form_with url: account_deletion_path, method: :delete, class: "assignment-form", data: { turbo: false } do |form| %>
-      <fieldset class="form-section">
-        <legend><%= t("account_deletion.form.legend") %></legend>
-        <p><%= t("account_deletion.warning") %></p>
-        <div class="field-group"><%= form.label :current_password, t("account_deletion.form.password") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
-        <div class="field-group"><label class="toggle-row"><%= form.check_box :confirm_delete_account, required: true %><span><%= t("account_deletion.form.confirm") %></span></label></div>
-      </fieldset>
-      <div class="form-actions"><%= link_to t("account_deletion.form.cancel"), settings_path, class: "button button--ghost" %><%= form.submit t("account_deletion.form.submit"), class: "button button--dark" %></div>
+    <% if current_user.deletion_pending? %>
+      <%= form_with url: cancel_account_deletion_path, method: :post, class: "assignment-form", data: { turbo: false } do |form| %>
+        <fieldset class="form-section">
+          <legend><%= t("account_deletion.pending.legend") %></legend>
+          <% if @deletion_request.nil? || @deletion_request.paused? || current_user.deletion_scheduled_at.nil? %>
+            <p><%= t("account_deletion.pending.paused") %> <%= mail_to "support@lawrelay.be", "support@lawrelay.be", class: "text-link" %>.</p>
+          <% else %>
+            <p><%= t("account_deletion.pending.body", date: l(current_user.deletion_scheduled_at.in_time_zone("Europe/Brussels").to_date, format: :long)) %></p>
+          <% end %>
+          <div class="field-group"><%= form.label :current_password, t("account_deletion.form.password") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
+        </fieldset>
+        <div class="form-actions"><%= form.submit t("account_deletion.pending.cancel"), class: "button button--dark" %></div>
+      <% end %>
+      <aside class="posting-aside"><h2><%= t("account_deletion.pending.privacy_heading") %></h2><p><%= t("account_deletion.pending.privacy_body") %></p><%= link_to t("trust.privacy_requests.index.heading"), privacy_requests_path, class: "text-link" %></aside>
+    <% else %>
+      <%= form_with url: account_deletion_path, method: :delete, class: "assignment-form", data: { turbo: false } do |form| %>
+        <fieldset class="form-section">
+          <legend><%= t("account_deletion.form.legend") %></legend>
+          <p><%= t("account_deletion.warning") %></p>
+          <div class="field-group"><%= form.label :current_password, t("account_deletion.form.password") %><%= form.password_field :current_password, required: true, autocomplete: "current-password", maxlength: 72 %></div>
+          <div class="field-group"><label class="toggle-row"><%= form.check_box :confirm_delete_account, required: true %><span><%= t("account_deletion.form.confirm") %></span></label></div>
+        </fieldset>
+        <div class="form-actions"><%= link_to t("account_deletion.form.cancel"), settings_path, class: "button button--ghost" %><%= form.submit t("account_deletion.form.submit"), class: "button button--dark" %></div>
+      <% end %>
+      <aside class="posting-aside"><span class="posting-aside__number">!</span><h2><%= t("account_deletion.aside.title") %></h2><p><%= t("account_deletion.aside.body") %></p></aside>
     <% end %>
-    <aside class="posting-aside"><span class="posting-aside__number">!</span><h2><%= t("account_deletion.aside.title") %></h2><p><%= t("account_deletion.aside.body") %></p></aside>
   </div>
 </div>

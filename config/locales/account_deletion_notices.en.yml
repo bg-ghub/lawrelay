@@ -1,0 +1,22 @@
+en:
+  account_deletion:
+    pending:
+      heading: "Deletion scheduled"
+      legend: "Account disabled"
+      body: "Your account is disabled. Permanent deletion is scheduled for %{date}. You can cancel the request until the account is deleted."
+      paused: "Your account is disabled. Automatic deletion is paused. Contact"
+      cancel: "Cancel deletion"
+      privacy_heading: "Your privacy rights"
+      privacy_body: "For immediate erasure, you can submit a privacy request."
+    notices:
+      scheduled: "Your account is disabled. Deletion is scheduled in 30 days. You will receive an email confirmation."
+      cancelled: "Deletion cancelled. You can sign in again."
+  account_deletion_mail:
+    requested:
+      subject: "Your account deletion is scheduled"
+      body: "Your LawRelay account is disabled. Permanent deletion is scheduled for %{date}. Sign in if you want to cancel the deletion."
+      link: "Sign in to cancel"
+    cancelled:
+      subject: "Your account deletion is cancelled"
+      body: "The deletion of your LawRelay account is cancelled. You can use your account again."
+      link: "Sign in"

@@ -70,6 +70,7 @@ fr:
       approved: "Vérification e-mail approuvée."
       rejected: "Vérification e-mail refusée."
     errors:
+      support_required: "Contactez notre service d’assistance pour modifier votre adresse e-mail confirmée."
       password: "Votre mot de passe actuel est incorrect."
       unchanged: "Saisissez une autre adresse e-mail."
       unavailable: "Cette demande n’est pas disponible pour votre compte."

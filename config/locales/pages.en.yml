@@ -81,12 +81,13 @@ en:
           paragraphs:
             - "The latest directory check stays with your account. Check summaries and resolved alerts: 90 days. Open alerts may remain for investigation."
             - "Unused registrations without email confirmation or manual approval: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
-            - "Accounts remain until closure. You can delete your account in Profile after confirming your password. We remove data that is no longer needed. Shared assignment data may remain pseudonymised for 2 years, alongside minimal deletion records. Open work, investigations, disputes or legal duties may require longer retention."
+            - "When you request account deletion, your account is disabled immediately and permanently deleted after 30 days. You can cancel by signing in before deletion takes place. We confirm the request and any cancellation by email."
+            - "Shared assignment data may remain pseudonymised for 2 years, alongside minimal erasure records and closed deletion requests. Open work, investigations, disputes or legal duties may prevent deletion or require longer retention."
             - "Backups are kept for 30 days. Deleted data may temporarily remain in encrypted backups or storage versions, for up to about 60 days."
         rights:
           heading: "7. Your rights"
           paragraphs:
-            - "Depending on the legal basis and circumstances, you may request access, correction, deletion, restriction or portability, or object to processing. Write to privacy@lawrelay.be. We normally reply within one month; if a lawful extension is needed, we tell you within that month."
+            - "Exercise your rights through Your privacy requests or privacy@lawrelay.be: access, correction, erasure, restriction, portability or objection, where applicable. The 30-day grace period does not apply to these requests. We normally reply within one month and notify you within that month of any lawful extension."
             - "You may lodge a complaint with the Belgian Data Protection Authority. LawRelay may need to verify your identity before fulfilling a request."
         security:
           heading: "8. Security, incidents, and changes"
@@ -151,7 +152,7 @@ en:
         liability:
           heading: "12. Liability, termination, and law"
           paragraphs:
-            - "You may stop using the beta and delete your account in Profile after confirming your password. LawRelay may end beta access on reasonable notice or immediately where needed for security, law, or these terms."
+            - "You can close your account in Profile after confirming your password. It is disabled immediately and deleted after 30 days; you can cancel by signing in before deletion takes place. LawRelay may end access on reasonable notice, or immediately for security, legal requirements or these terms."
             - "Belgian law governs these terms. Any mandatory rights that apply to you remain unaffected. Nothing in these terms excludes liability that cannot legally be excluded."
     cookies:
       meta_title: "Cookie notice — LawRelay"

@@ -203,9 +203,11 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       resize_viewport(390)
       visit settings_path(locale:)
       original_name = member.user.first_name
-      fill_in "account[first_name]", with: "   "
+      assert_nil member.profile.bar_admission_year
+      fill_in "preferences[bar_admission_year]", with: (Time.current.year + 1).to_s
       click_button I18n.t("settings.save", locale:), match: :first
-      assert_error_summary(locale)
+      assert_selector "input[name='preferences[bar_admission_year]']:invalid"
+      assert_nil member.profile.reload.bar_admission_year
       assert_equal original_name, member.user.reload.first_name
       assert member.user.marketplace_verified?
 

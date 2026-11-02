@@ -81,12 +81,13 @@ fr:
           paragraphs:
             - "Le dernier contrôle du profil reste lié à votre compte. Résumés des contrôles et alertes traitées : 90 jours. Les alertes ouvertes peuvent être conservées pour examen."
             - "Inscriptions inutilisées sans confirmation de l’e-mail ni approbation manuelle : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
-            - "Les comptes restent jusqu’à leur clôture. Vous pouvez supprimer votre compte dans Profil après avoir confirmé votre mot de passe. Nous supprimons les données devenues inutiles. Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi qu’une trace minimale de suppression. Des missions en cours, enquêtes, litiges ou obligations légales peuvent justifier une conservation plus longue."
+            - "Lors d’une demande de suppression, votre compte est immédiatement désactivé et définitivement supprimé après 30 jours. Vous pouvez annuler la demande en vous connectant avant sa mise en œuvre. La demande et son éventuelle annulation sont confirmées par e-mail."
+            - "Les données de missions partagées peuvent rester pseudonymisées pendant 2 ans, ainsi que les traces minimales d’effacement et les demandes de suppression clôturées. Des missions en cours, enquêtes, litiges ou obligations légales peuvent empêcher la suppression ou justifier une conservation plus longue."
             - "Les sauvegardes sont conservées 30 jours. Des données supprimées peuvent rester temporairement dans des sauvegardes chiffrées ou versions de stockage, pendant environ 60 jours au maximum."
         rights:
           heading: "7. Vos droits"
           paragraphs:
-            - "Selon la base juridique et les circonstances, vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité, ou vous opposer au traitement. Écrivez à privacy@lawrelay.be. Nous répondons normalement dans un mois ; si une prolongation légale est nécessaire, nous vous en informons dans ce même délai."
+            - "Exercez vos droits via Vos demandes de confidentialité ou privacy@lawrelay.be : accès, rectification, effacement, limitation, portabilité ou opposition, selon les cas. Le délai de réflexion de 30 jours ne s’applique pas à ces demandes. Nous répondons normalement sous un mois et vous informons dans ce délai de toute prolongation légale."
             - "Vous pouvez introduire une plainte auprès de l'Autorité de protection des données. LawRelay peut vérifier votre identité avant d'exécuter une demande."
         security:
           heading: "8. Sécurité, incidents et modifications"
@@ -151,7 +152,7 @@ fr:
         liability:
           heading: "12. Responsabilité, fin et droit applicable"
           paragraphs:
-            - "Vous pouvez cesser d’utiliser la bêta et supprimer votre compte dans Profil après avoir confirmé votre mot de passe. LawRelay peut mettre fin à l’accès bêta avec un préavis raisonnable ou immédiatement si nécessaire pour la sécurité, la loi ou ces conditions."
+            - "Vous pouvez clôturer votre compte dans Profil après confirmation du mot de passe. Il est immédiatement désactivé et supprimé après 30 jours ; vous pouvez annuler la demande en vous connectant avant sa mise en œuvre. LawRelay peut mettre fin à l’accès avec un préavis raisonnable, ou immédiatement pour la sécurité, la loi ou ces conditions."
             - "Le droit belge régit ces conditions. Les droits impératifs qui vous sont applicables restent préservés. Rien dans ces conditions n'exclut une responsabilité qui ne peut légalement l'être."
     cookies:
       meta_title: "Déclaration relative aux cookies — LawRelay"

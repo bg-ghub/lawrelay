@@ -29,45 +29,23 @@ class EmailChangeTest < ApplicationSystemTestCase
     Firm.where(id: firm_id).delete_all
   end
 
-  test "a member changes email from settings after password validation and stays signed in" do
+  test "settings sends email changes to support and the old page has no editable form" do
     sign_in_member
-
-    visit settings_path(locale: :en)
-    click_link "Change email"
-    assert_current_path email_change_path(locale: :en)
-    assert_text @account.user.email_address
-
-    fill_in "New email", with: "changed-#{SecureRandom.hex(5)}@example.test"
-    fill_in "Current password", with: "not-the-password"
-    assert_no_enqueued_emails do
-      click_button "Change email"
-      assert_selector ".form-error[role='alert']", text: "Your current password is incorrect."
-    end
-
-    assert_selector ".form-error[role='alert']", text: "Your current password is incorrect."
-    assert_equal @account.user.email_address, @account.user.reload.email_address
-
-    changed_email = "changed-#{SecureRandom.hex(5)}@example.test"
-    fill_in "New email", with: changed_email
-    fill_in "Current password", with: "password1234"
-    assert_enqueued_email_with EmailVerificationMailer, :verify, args: [ @account.user ] do
-      assert_no_enqueued_jobs(only: Directory::VerificationJob) do
-        click_button "Change email"
-        assert_current_path verification_status_path(locale: :en)
+    original_user = @account.user.attributes
+    original_profile = @account.profile.attributes
+    %i[nl fr de en].each do |locale|
+      assert_no_enqueued_jobs do
+        visit settings_path(locale:)
+        assert_link I18n.t("email_change.link", locale:), href: /\Amailto:support@lawrelay\.be\?/
+        assert_no_selector "input[name='account[first_name]'], input[name='account[last_name]']", visible: :all
+        visit email_change_path(locale:)
+        assert_text I18n.t("email_change.lede", locale:)
+        assert_link "support@lawrelay.be", href: /\Amailto:support@lawrelay\.be\?/
+        assert_no_selector ".settings-page form", visible: :all
       end
     end
-
-    assert_current_path verification_status_path(locale: :en)
-    assert_text "Check your inbox"
-    assert_text changed_email
-    assert_equal changed_email, @account.user.reload.email_address
-    assert_nil @account.user.email_verified_at
-
-    # The current browser session remains usable so the member can finish
-    # the confirmation flow without authenticating again.
-    visit settings_path(locale: :en)
-    assert_current_path settings_path(locale: :en)
-    assert_text changed_email
+    assert_equal original_user, @account.user.reload.attributes
+    assert_equal original_profile, @account.profile.reload.attributes
   end
 
   private

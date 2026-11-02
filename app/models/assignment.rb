@@ -288,7 +288,8 @@ class Assignment < ApplicationRecord
 
   def creator_account_still_active
     return unless creator_user_id
-    return if User.where(id: creator_user_id, erased_at: nil, suspended_at: nil).exists?
+    return if User.where(id: creator_user_id, erased_at: nil, suspended_at: nil,
+      deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil).exists?
 
     errors.add(:base, I18n.t("workflow.errors.assignment_not_available"))
   end

@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   allow_unauthenticated_access
 
-  LEGAL_VERSION = Date.new(2026, 11, 1)
+  LEGAL_VERSION = Date.new(2026, 11, 2)
   OPERATOR_ENV = PlatformOperator::ENVIRONMENT_FIELDS
   REQUIRED_OPERATOR_FIELDS = PlatformOperator::REQUIRED_FIELDS
 

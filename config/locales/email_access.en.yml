@@ -70,6 +70,7 @@ en:
       approved: "Email review approved."
       rejected: "Email review rejected."
     errors:
+      support_required: "Contact Support to change your confirmed email address."
       password: "Your current password is incorrect."
       unchanged: "Enter a different email address."
       unavailable: "This request is unavailable for your account."

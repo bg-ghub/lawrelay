@@ -1,5 +1,6 @@
 class EmailAccessRequestsController < ApplicationController
   before_action :require_member
+  before_action :require_support_for_established_member
   before_action -> { response.headers["Cache-Control"] = "no-store" }
   rate_limit to: 3, within: 1.hour, only: :create, by: -> { current_user&.id },
     with: -> { redirect_to email_access_request_path, alert: t("email_access.errors.rate_limited") }
@@ -31,5 +32,13 @@ class EmailAccessRequestsController < ApplicationController
 
   def require_member
     head :forbidden if current_user.system_admin?
+  end
+
+  def require_support_for_established_member
+    profile = current_user.lawyer_profile
+    return unless current_user.email_verified? || profile&.manual_activation_valid?
+    return if current_user.directory_email_review_required? && !profile&.email_review_approved? && !profile&.manual_activation_valid?
+
+    redirect_to email_change_path
   end
 end

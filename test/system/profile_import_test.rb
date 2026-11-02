@@ -81,10 +81,11 @@ class ProfileImportTest < ApplicationSystemTestCase
   test "Enter keeps the ordinary Save action instead of importing" do
     sign_in
     visit settings_path(locale: :en)
-    fill_in "First name", with: @account.user.first_name
-    find_field("First name").send_keys(:enter)
+    fill_in I18n.t("settings.profile.bar_admission_year", locale: :en), with: "2018"
+    find_field(I18n.t("settings.profile.bar_admission_year", locale: :en)).send_keys(:enter)
     assert_text "Changes saved."
     assert_equal @account.user.first_name, @account.user.reload.first_name
+    assert_equal 2018, @account.profile.reload.bar_admission_year
     assert_nil @account.firm.reload.phone
     assert_empty @sync_calls
   end
@@ -95,6 +96,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     %i[nl fr de en].each do |locale|
       visit settings_path(locale:)
       assert_no_selector "[name^='firm[']", visible: :all
+      assert_no_selector "input[name='account[first_name]'], input[name='account[last_name]']", visible: :all
       assert_no_selector "[data-controller*='company-number'], [data-controller*='business-lookup']", visible: :all
       assert_no_button I18n.t("business_lookup.button", locale:)
     end

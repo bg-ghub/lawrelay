@@ -9,23 +9,16 @@ class SettingsController < ApplicationController
   def update
     return refresh_directory_profile if profile_import_request?
 
-    directory_identity_changed = directory_identity_changed?
-
     ApplicationRecord.transaction do
       @user.assign_attributes(user_params)
       @profile.assign_attributes(preference_params)
-      clear_directory_evidence! if directory_identity_changed
-      reset_profile_verification! if directory_identity_changed
-
       @user.save!
       @profile.save!
-      record_changes!(profile_requires_review: directory_identity_changed)
+      record_changes!
     end
 
-    delivery_ready = Onboarding::Delivery.request(@user, email: false, directory: directory_identity_changed && !protected_profile?(@profile))
     destination_locale = @user.locale
-    redirect_to settings_path(locale: destination_locale), notice: update_notice(directory_identity_changed, locale: destination_locale),
-      alert: (I18n.t("auth.verification_status.queue_unavailable", locale: destination_locale) unless delivery_ready)
+    redirect_to settings_path(locale: destination_locale), notice: I18n.t("settings.notices.updated", locale: destination_locale)
   rescue ActiveRecord::RecordInvalid
     render :show, formats: :html, status: :unprocessable_content
   end
@@ -62,7 +55,7 @@ class SettingsController < ApplicationController
   end
 
   def user_params
-    parameter_group(:account).permit(:first_name, :last_name, :locale)
+    parameter_group(:account).permit(:locale)
   end
 
   def preference_params
@@ -79,40 +72,7 @@ class SettingsController < ApplicationController
     value
   end
 
-  def directory_identity_changed?
-    return false if @profile.new_record?
-
-    user_params.to_h.slice("first_name", "last_name").any? do |attribute, value|
-      @user.public_send(attribute).to_s != value.to_s.strip
-    end
-  end
-
-  def reset_profile_verification!
-    return if protected_profile?(@profile)
-
-    @profile.assign_attributes(verification_status: "pending", verified_at: nil, verification_note: nil)
-  end
-
-  def clear_directory_evidence!
-    @profile.clear_email_review
-    @profile.assign_attributes(
-      directory_profile_id: nil,
-      directory_name: nil,
-      directory_email: nil,
-      directory_professional_address: nil,
-      directory_bar_name: nil,
-      directory_checked_at: nil,
-      directory_email_verified_at: nil,
-      directory_confirmation_requested_at: nil,
-      directory_identity_digest: nil
-    )
-  end
-
-  def protected_profile?(profile)
-    profile.verification_status.in?(%w[rejected suspended])
-  end
-
-  def record_changes!(profile_requires_review:)
+  def record_changes!
     changed_models = [ @user, @profile ].select(&:saved_changes?)
     changed_models.each do |record|
       AuditEvent.create!(
@@ -120,14 +80,8 @@ class SettingsController < ApplicationController
         actor_user: @user,
         firm: @firm,
         action: "account.updated",
-        metadata: { changed_fields: record.saved_changes.keys, profile_requires_review: }
+        metadata: { changed_fields: record.saved_changes.keys, profile_requires_review: false }
       )
     end
-  end
-
-  def update_notice(profile_requires_review, locale: I18n.locale)
-    return I18n.t("settings.notices.review_required", locale:) if profile_requires_review
-
-    I18n.t("settings.notices.updated", locale:)
   end
 end

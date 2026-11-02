@@ -1,10 +1,11 @@
 fr:
   email_change:
     link: "Modifier l’e-mail"
+    back: "Retour au profil"
     title: "Modifier l’e-mail — LawRelay"
     eyebrow: "Sécurité du compte"
     heading: "Modifier votre e-mail de connexion"
-    lede: "Modifiez d’abord votre e-mail sur advocaat.be. Nous confirmerons la nouvelle adresse et revérifierons votre profil. Pas encore à jour ? Réessayez plus tard."
+    lede: "Contactez notre service d’assistance pour modifier votre adresse e-mail."
     admin_lede: "Nous enverrons un lien de confirmation à la nouvelle adresse."
     notices:
       updated: "Adresse e-mail mise à jour."

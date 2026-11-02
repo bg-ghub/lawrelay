@@ -162,11 +162,8 @@ class MarketplaceEligibilityTest < ActionDispatch::IntegrationTest
   end
 
   def change_email(account, email)
-    sign_in_as(account.user)
-    post email_change_path(locale: :en), params: {
-      email_change: { email_address: email, current_password: "password1234" }
-    }
-    assert_response :redirect
+    result = Admin::UserManagement.new(actor: administrator, user: account.user).update!(email_address: email)
+    assert result.email_changed
     assert_equal email, account.user.reload.email_address
     assert_not account.user.email_verified?
     assert_not account.user.marketplace_verified?

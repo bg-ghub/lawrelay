@@ -21,6 +21,9 @@ module Authentication
       return request_authentication unless resume_session
 
       require_two_factor_authentication
+      return if performed?
+
+      require_deletion_recovery_scope
     end
 
     def require_two_factor_authentication
@@ -46,7 +49,7 @@ module Authentication
         return
       end
 
-      if resumed_session.expired? || !resumed_session.user&.active?
+      if resumed_session.expired? || !session_user_available?(resumed_session.user)
         resumed_session.destroy!
         cookies.delete(:session_id)
         return
@@ -63,6 +66,11 @@ module Authentication
     end
 
     def after_authentication_url
+      if current_user.deletion_pending?
+        session.delete(:return_to_after_authenticating)
+        return account_deletion_path
+      end
+
       url_from(session.delete(:return_to_after_authenticating)) || (current_user.system_admin? ? admin_users_path : dashboard_path)
     end
 
@@ -86,7 +94,7 @@ module Authentication
       user.with_lock do
         # Credential changes and session revocation take this same user lock.
         # Recheck the password after reloading, before issuing any new session.
-        next unless user.active? && user.email_address == authenticated_email
+        next unless session_user_available?(user) && user.email_address == authenticated_email
         next if admin && !user.system_admin?
         next unless user.authenticate(password.to_s)
 
@@ -97,5 +105,19 @@ module Authentication
     def terminate_session
       Current.session.destroy
       cookies.delete(:session_id)
+    end
+
+    def session_user_available?(user)
+      user && (user.active? || user.deletion_recoverable?)
+    end
+
+    def require_deletion_recovery_scope
+      return unless current_user.deletion_pending?
+      return if controller_path == "account_deletions" && action_name.in?(%w[show cancel])
+      return if controller_path == "privacy_requests" && action_name.in?(%w[index new create])
+      return if controller_path == "two_factor_authentications" && action_name.in?(%w[challenge verify])
+      return if controller_path == "sessions" && action_name == "destroy"
+
+      redirect_to account_deletion_path, status: :see_other
     end
 end

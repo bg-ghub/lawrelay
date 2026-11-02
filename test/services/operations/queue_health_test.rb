@@ -12,6 +12,7 @@ class Operations::QueueHealthTest < ActiveSupport::TestCase
         [ :ready, "created_at < ?", now - 15.minutes ],
         [ :scheduled, "scheduled_at < ?", now - 15.minutes ],
         [ :outbox, { now: now } ],
+        [ :account_deletions, { now: now } ],
         [ :registry_alerts, { now: now } ]
       ], queries
     end
@@ -50,18 +51,25 @@ class Operations::QueueHealthTest < ActiveSupport::TestCase
     end
   end
 
+  test "failed or stale account deletion processing makes the generic queue check unhealthy" do
+    with_queue_queries(account_deletions: true) do |queries|
+      assert_not Operations::QueueHealth.healthy?
+      assert_equal :account_deletions, queries.last.first
+    end
+  end
+
   test "database failures at each query fail closed and log only the class" do
     original_logger = Rails.logger
     output = StringIO.new
     Rails.logger = ActiveSupport::Logger.new(output)
 
-    %i[failed ready scheduled outbox registry_alerts].each do |query|
+    %i[failed ready scheduled outbox account_deletions registry_alerts].each do |query|
       with_queue_queries(error_at: query) do
         assert_not Operations::QueueHealth.healthy?
       end
     end
 
-    assert_equal 5, output.string.scan("Operational queue health check failed: ActiveRecord::StatementInvalid").length
+    assert_equal 6, output.string.scan("Operational queue health check failed: ActiveRecord::StatementInvalid").length
     assert_not_includes output.string, "sensitive SQL and credentials"
   ensure
     Rails.logger = original_logger
@@ -69,23 +77,24 @@ class Operations::QueueHealthTest < ActiveSupport::TestCase
 
   private
 
-  def with_queue_queries(failed: false, ready: false, scheduled: false, outbox: false, registry_alerts: false, error_at: nil)
+  def with_queue_queries(failed: false, ready: false, scheduled: false, outbox: false, account_deletions: false, registry_alerts: false, error_at: nil)
     queries = []
     originals = {
       failed: [ SolidQueue::FailedExecution, :exists?, SolidQueue::FailedExecution.method(:exists?) ],
       ready: [ SolidQueue::ReadyExecution, :where, SolidQueue::ReadyExecution.method(:where) ],
       scheduled: [ SolidQueue::ScheduledExecution, :where, SolidQueue::ScheduledExecution.method(:where) ],
       outbox: [ Notification, :email_delivery_unhealthy?, Notification.method(:email_delivery_unhealthy?) ],
+      account_deletions: [ AccountDeletionRequest, :unhealthy?, AccountDeletionRequest.method(:unhealthy?) ],
       registry_alerts: [ RegistryStatusRun, :alert_delivery_unhealthy?, RegistryStatusRun.method(:alert_delivery_unhealthy?) ]
     }
-    outcomes = { failed:, ready:, scheduled:, outbox:, registry_alerts: }
+    outcomes = { failed:, ready:, scheduled:, outbox:, account_deletions:, registry_alerts: }
 
     originals.each do |query, (model, method)|
       model.define_singleton_method(method) do |*arguments|
         queries << [ query, *arguments ]
         raise ActiveRecord::StatementInvalid, "sensitive SQL and credentials" if query == error_at
 
-        if query.in?(%i[failed outbox registry_alerts])
+        if query.in?(%i[failed outbox account_deletions registry_alerts])
           outcomes.fetch(query)
         else
           Object.new.tap do |relation|

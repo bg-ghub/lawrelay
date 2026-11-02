@@ -78,6 +78,25 @@ class EmailAccessRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_nil @account.profile.reload.email_review_status
   end
 
+  test "a confirmed member must use support instead of changing email through onboarding" do
+    @account.user.update!(email_verified_at: Time.current)
+    original_user = @account.user.reload.attributes
+    original_profile = @account.profile.attributes
+    session_ids = @account.user.sessions.pluck(:id)
+
+    assert_no_enqueued_jobs do
+      get email_access_request_path(locale: :en)
+      assert_redirected_to email_change_path(locale: :en)
+      post email_access_request_path(locale: :en), params: {
+        email_access: { email_address: "bypass-confirmed@example.test", current_password: "password1234" }
+      }
+      assert_redirected_to email_change_path(locale: :en)
+    end
+    assert_equal original_user, @account.user.reload.attributes
+    assert_equal original_profile, @account.profile.reload.attributes
+    assert_equal session_ids, @account.user.sessions.pluck(:id)
+  end
+
   test "request forms render in all supported languages with no cache" do
     %w[nl fr de en].each do |locale|
       get email_access_request_path(locale:)

@@ -154,16 +154,16 @@ en:
   account_deletion:
     title: "Delete account — LawRelay"
     heading: "Delete account"
-    warning: "This removes your account and signs you out. Closed work is kept without your personal details where required."
+    warning: "Your account is disabled immediately and permanently deleted after 30 days. You can sign in during this period to cancel the deletion."
     request_details: "Self-service account deletion."
     settings:
       heading: "Delete account"
-      body: "Permanently close your account."
+      body: "Disable your account, with 30 days to reconsider before permanent deletion."
       link: "Delete account"
     form:
       legend: "Confirm deletion"
       password: "Current password"
-      confirm: "I understand that my account will be deleted."
+      confirm: "I understand that my account will be disabled and deleted after 30 days."
       cancel: "Back to profile"
       submit: "Delete account"
     aside:

@@ -154,16 +154,16 @@ nl:
   account_deletion:
     title: "Account verwijderen — LawRelay"
     heading: "Account verwijderen"
-    warning: "Uw account wordt verwijderd en u wordt afgemeld. Afgesloten opdrachten blijven waar nodig zonder uw persoonsgegevens bewaard."
+    warning: "Uw account wordt meteen uitgeschakeld en na 30 dagen definitief verwijderd. U kunt de verwijdering in die periode annuleren door opnieuw aan te melden."
     request_details: "Zelfbediende accountverwijdering."
     settings:
       heading: "Account verwijderen"
-      body: "Sluit uw account definitief."
+      body: "Schakel uw account uit, met 30 dagen bedenktijd voor definitieve verwijdering."
       link: "Account verwijderen"
     form:
       legend: "Verwijdering bevestigen"
       password: "Huidig wachtwoord"
-      confirm: "Ik begrijp dat mijn account wordt verwijderd."
+      confirm: "Ik begrijp dat mijn account wordt uitgeschakeld en na 30 dagen wordt verwijderd."
       cancel: "Terug naar profiel"
       submit: "Account verwijderen"
     aside:

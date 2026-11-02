@@ -61,6 +61,18 @@ def sign_in(session, locale, user, password, admin: false)
   check(session.response.redirect?, "#{locale} #{admin ? 'admin' : 'member'} can sign in")
 end
 
+def check_deletion_notice(message, user, locale, kind)
+  check(message.to == [ user.email_address ] && message.subject == I18n.t("account_deletion_mail.#{kind}.subject", locale:),
+    "#{locale} deletion #{kind} addresses the professional email")
+  check(message.html_part.present? && message.text_part.present?, "#{locale} deletion #{kind} has both bodies")
+  salutation = I18n.with_locale(locale) { ApplicationController.helpers.professional_salutation(user) }
+  [ message.html_part, message.text_part ].each do |part|
+    body = part.decoded
+    check(body.include?("https://i18n.lawrelay.invalid/#{locale}/session/new") && body.include?(salutation) &&
+      !body.match?(/translation missing/i), "#{locale} deletion #{kind} #{part.mime_type} uses the professional salutation and localized login")
+  end
+end
+
 nonce = SecureRandom.hex(6)
 password = "Smoke-password-#{nonce}!"
 member = User.create!(first_name: "Locale", last_name: "Member", email_address: "member-#{nonce}@example.invalid", password:, email_verified_at: Time.current, locale: "nl")
@@ -141,6 +153,20 @@ LOCALES.each do |locale|
     visit(session, "/#{locale}#{suffix}")
   end
   redirected_visit(session, "/#{locale}/billing", "/#{locale}/dashboard")
+  visit(session, "/#{locale}/settings")
+  document = Nokogiri::HTML(session.response.body)
+  check(document.css("input[name='account[first_name]'], input[name='account[last_name]']").empty?, "#{locale} settings do not request directory names")
+  check(document.css("a").any? { |link| link["href"].to_s.start_with?("mailto:support@lawrelay.be") }, "#{locale} email changes contact Support")
+  session.patch("/#{locale}/settings", params: { authenticity_token: csrf(session),
+    account: { locale:, first_name: "Ignored", last_name: "Ignored" } })
+  check(session.response.redirect? && member.reload.first_name == "Locale" && member.last_name == "Member", "#{locale} settings ignore posted names")
+  visit(session, "/#{locale}/settings/email")
+  document = Nokogiri::HTML(session.response.body)
+  check(document.css("input[type='email'], input[type='password']").empty? &&
+    document.css("a").any? { |link| link["href"].to_s.start_with?("mailto:support@lawrelay.be") }, "#{locale} legacy email form is Support-only")
+  session.post("/#{locale}/settings/email", params: { authenticity_token: csrf(session),
+    email_change: { email_address: "ignored-#{nonce}@example.invalid", current_password: password } })
+  check(session.response.status == 303 && member.reload.email_address == "member-#{nonce}@example.invalid", "#{locale} legacy email submission does not change credentials")
 end
 
 # Invoice collection stays out of the marketplace.
@@ -227,6 +253,58 @@ LOCALES.each do |locale|
       check(body.include?("https://i18n.lawrelay.invalid/#{locale}/") && !body.match?(/translation missing/i), "#{locale} #{name} #{part.mime_type} is localized")
     end
   end
+end
+
+# Account closure is reversible for thirty days. These synthetic accounts have
+# no open work, and the isolated queue adapter never runs their erasure jobs.
+original_queue_adapter = ActiveJob::Base.queue_adapter
+ActiveJob::Base.queue_adapter = :test
+begin
+  LOCALES.each do |locale|
+    Rails.cache.clear
+    closing_member = User.create!(first_name: "Grace", last_name: "Period", email_address: "grace-#{locale}-#{nonce}@example.invalid",
+      password:, email_verified_at: Time.current, locale:)
+    closing_firm = Firm.create!(name: Firm::INTERNAL_WORKSPACE_NAME, verification_status: "verified", verified_at: Time.current)
+    Membership.create!(user: closing_member, firm: closing_firm, role: "owner")
+    LawyerProfile.create!(user: closing_member, bar_association: "OVB", bar_number: "SMOKE-GRACE-#{locale}-#{nonce}", professional_email: closing_member.email_address,
+      verification_status: "verified", verified_at: Time.current)
+    closing_session = browser
+    sign_in(closing_session, locale, closing_member, password)
+    visit(closing_session, "/#{locale}/settings/delete-account")
+    document = Nokogiri::HTML(closing_session.response.body)
+    check(document.at_css("input[name='current_password'][autocomplete='current-password']") &&
+      document.at_css("input[name='confirm_delete_account'][type='checkbox'][required]"), "#{locale} deletion requires password and confirmation")
+    closing_session.delete("/#{locale}/settings/delete-account", params: { authenticity_token: csrf(closing_session),
+      current_password: password, confirm_delete_account: "1" })
+    closing_member.reload
+    deletion = closing_member.deletion_request
+    check(closing_session.response.redirect? && deletion && closing_member.deletion_pending? && !closing_member.active? &&
+      closing_member.erased_at.nil? && closing_member.sessions.empty? &&
+      deletion.scheduled_at == deletion.requested_at + 30.days, "#{locale} deletion disables and signs out without erasure")
+    requested_notice = AccountDeletionMailer.requested(deletion).message
+    check_deletion_notice(requested_notice, closing_member, locale, "requested")
+
+    sign_in(closing_session, locale, closing_member, password)
+    check(URI.parse(closing_session.response.location).path == "/#{locale}/settings/delete-account", "#{locale} pending login enters recovery")
+    visit(closing_session, "/#{locale}/settings/delete-account")
+    document = Nokogiri::HTML(closing_session.response.body)
+    cancellation_form = document.at_css("form[action='/#{locale}/settings/delete-account/cancel']")
+    check(cancellation_form&.at_css("input[type='submit']")&.[]("value") == I18n.t("account_deletion.pending.cancel", locale:), "#{locale} recovery offers cancellation")
+    %w[dashboard settings assignments].each do |path|
+      redirected_visit(closing_session, "/#{locale}/#{path}", "/#{locale}/settings/delete-account")
+    end
+    visit(closing_session, "/#{locale}/privacy_requests")
+    visit(closing_session, "/#{locale}/privacy_requests/new")
+    closing_session.post("/#{locale}/settings/delete-account/cancel", params: { authenticity_token: csrf(closing_session), current_password: password })
+    check(closing_session.response.redirect? && closing_member.reload.active? && closing_member.sessions.empty? &&
+      deletion.reload.cancelled_at && deletion.completed_at.nil?, "#{locale} cancellation restores access and revokes recovery sessions")
+    cancelled_notice = AccountDeletionMailer.cancelled(deletion).message
+    check_deletion_notice(cancelled_notice, closing_member, locale, "cancelled")
+    sign_in(closing_session, locale, closing_member, password)
+    visit(closing_session, "/#{locale}/dashboard")
+  end
+ensure
+  ActiveJob::Base.queue_adapter = original_queue_adapter
 end
 
 member_security = browser

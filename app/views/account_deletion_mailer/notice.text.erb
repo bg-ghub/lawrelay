@@ -1,0 +1,7 @@
+<%= professional_salutation(@user) %>,
+
+<%= t("account_deletion_mail.#{@kind}.body", date: @date) %>
+
+<%= t("account_deletion_mail.#{@kind}.link") %>: <%= @login_url %>
+
+LawRelay

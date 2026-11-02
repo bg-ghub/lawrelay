@@ -154,16 +154,16 @@ de:
   account_deletion:
     title: "Konto löschen — LawRelay"
     heading: "Konto löschen"
-    warning: "Ihr Konto wird gelöscht und Sie werden abgemeldet. Abgeschlossene Aufträge bleiben, soweit nötig, ohne Ihre personenbezogenen Daten erhalten."
+    warning: "Ihr Konto wird sofort deaktiviert und nach 30 Tagen endgültig gelöscht. Innerhalb dieser Frist können Sie sich erneut anmelden und die Löschung abbrechen."
     request_details: "Selbstständige Kontolöschung."
     settings:
       heading: "Konto löschen"
-      body: "Ihr Konto dauerhaft schließen."
+      body: "Deaktivieren Sie Ihr Konto, mit 30 Tagen Bedenkzeit vor der endgültigen Löschung."
       link: "Konto löschen"
     form:
       legend: "Löschung bestätigen"
       password: "Aktuelles Passwort"
-      confirm: "Ich verstehe, dass mein Konto gelöscht wird."
+      confirm: "Ich verstehe, dass mein Konto deaktiviert und nach 30 Tagen gelöscht wird."
       cancel: "Zurück zum Profil"
       submit: "Konto löschen"
     aside:

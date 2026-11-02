@@ -37,7 +37,9 @@ Rails.application.routes.draw do
     post "verification/email-access", to: "email_access_requests#create"
     resource :settings, only: %i[show update]
     resource :language_preference, path: "language", only: :update
-    resource :account_deletion, path: "settings/delete-account", only: %i[show destroy]
+    resource :account_deletion, path: "settings/delete-account", only: %i[show destroy] do
+      post :cancel
+    end
     resource :two_factor_authentication, path: "settings/two-factor", only: %i[show destroy] do
       post :begin_setup, path: "begin-setup"
       get :setup

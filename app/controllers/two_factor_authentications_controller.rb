@@ -107,7 +107,8 @@ class TwoFactorAuthenticationsController < ApplicationController
     session_id = Current.session.id
     user.with_lock do
       active_session = user.sessions.lock.find_by(id: session_id)
-      raise RevokedSession unless user.active? && !user.system_admin? && active_session && !active_session.expired?
+      allowed = user.active? || (action_name == "verify" && user.deletion_recoverable?)
+      raise RevokedSession unless allowed && !user.system_admin? && active_session && !active_session.expired?
 
       active_session.user = user
       Current.session = active_session
@@ -152,6 +153,11 @@ class TwoFactorAuthenticationsController < ApplicationController
   end
 
   def after_two_factor_url
+    if current_user.deletion_pending?
+      session.delete(:return_to_after_two_factor)
+      return account_deletion_path
+    end
+
     url_from(session.delete(:return_to_after_two_factor)) || dashboard_path
   end
 

@@ -1,15 +1,32 @@
+/* Keep fragment scrolling separate from focus on the actionable card. */
+.pathway-destination {
+  display: flex;
+  min-width: 0;
+  scroll-margin-top: 6rem;
+}
+
 .pathways-section .pathway-card {
   --pathway-highlight-transform: translateY(-4px);
-  outline: 3px solid transparent;
+  --pathway-outline: transparent;
+  --pathway-surface: var(--pathway-base-surface);
+  --pathway-shadow: none;
+  --pathway-transform: none;
+  width: 100%;
+  outline: 3px solid var(--pathway-outline);
   outline-offset: 4px;
+  background-color: var(--pathway-surface);
+  box-shadow: var(--pathway-shadow);
+  transform: var(--pathway-transform);
   transition: transform .18s, box-shadow .18s, outline-color .18s, background-color .18s;
 }
 
 .pathway-card-paper {
+  --pathway-base-surface: var(--white);
   --pathway-highlight-surface: #fff7ee;
 }
 
 .pathway-card-ink {
+  --pathway-base-surface: var(--ink);
   --pathway-highlight-surface: #205247;
 }
 
@@ -21,20 +38,34 @@
   color: var(--paper);
 }
 
-/* Pointer hover wins over keyboard focus, then the last click/tap destination. */
-:is(
-  .pathways-section .pathway-card:hover,
-  body:not(:has(.hero-actions a:hover, .pathway-card:hover)) .pathway-card:focus-visible,
-  body:not(:has(.hero-actions a:is(:hover, :focus-visible), .pathway-card:is(:hover, :focus-visible))) .pathway-card:target,
-  body:has(.hero-actions a[href="#outsource-assignment"]:hover) #outsource-assignment,
-  body:has(.hero-actions a[href="#find-assignments"]:hover) #find-assignments,
-  body:not(:has(.hero-actions a:hover, .pathway-card:hover)):has(.hero-actions a[href="#outsource-assignment"]:focus-visible) #outsource-assignment,
-  body:not(:has(.hero-actions a:hover, .pathway-card:hover)):has(.hero-actions a[href="#find-assignments"]:focus-visible) #find-assignments
-) {
-  outline-color: var(--coral);
-  background-color: var(--pathway-highlight-surface);
-  box-shadow: 0 10px 30px rgba(19, 63, 54, .12);
-  transform: var(--pathway-highlight-transform);
+/* Keyboard focus remains visible on both the control and its destination. */
+.pathways-section .pathway-card:where(:focus-visible),
+:where(body:has(.hero-actions a[href="#outsource-assignment"]:focus-visible)) .pathways-section :where(#outsource-assignment) .pathway-card,
+:where(body:has(.hero-actions a[href="#find-assignments"]:focus-visible)) .pathways-section :where(#find-assignments) .pathway-card {
+  --pathway-outline: var(--coral);
+  --pathway-surface: var(--pathway-highlight-surface);
+  --pathway-shadow: 0 10px 30px rgba(19, 63, 54, .12);
+  --pathway-transform: var(--pathway-highlight-transform);
+}
+
+/* Touch browsers can retain :hover after a tap, so use it only for pointers. */
+@media (hover: hover) and (pointer: fine) {
+  /* A hovered choice takes priority over a different retained keyboard focus. */
+  :where(body:has(.hero-actions a:hover, .pathway-card:hover)) .pathways-section .pathway-card {
+    --pathway-outline: transparent;
+    --pathway-surface: var(--pathway-base-surface);
+    --pathway-shadow: none;
+    --pathway-transform: none;
+  }
+
+  .pathways-section .pathway-card:where(:hover),
+  :where(body:has(.hero-actions a[href="#outsource-assignment"]:hover)) .pathways-section :where(#outsource-assignment) .pathway-card,
+  :where(body:has(.hero-actions a[href="#find-assignments"]:hover)) .pathways-section :where(#find-assignments) .pathway-card {
+    --pathway-outline: var(--coral);
+    --pathway-surface: var(--pathway-highlight-surface);
+    --pathway-shadow: 0 10px 30px rgba(19, 63, 54, .12);
+    --pathway-transform: var(--pathway-highlight-transform);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

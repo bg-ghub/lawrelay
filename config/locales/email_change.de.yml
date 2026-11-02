@@ -1,10 +1,11 @@
 de:
   email_change:
     link: "E-Mail-Adresse ändern"
+    back: "Zurück zum Profil"
     title: "E-Mail-Adresse ändern — LawRelay"
     eyebrow: "Kontosicherheit"
     heading: "Ihre Anmelde-E-Mail ändern"
-    lede: "Ändern Sie Ihre E-Mail zuerst auf advocaat.be. Wir bestätigen die neue Adresse und prüfen Ihr Profil erneut. Noch nicht aktualisiert? Versuchen Sie es später erneut."
+    lede: "Kontaktieren Sie unseren Support, um Ihre E-Mail-Adresse zu ändern."
     admin_lede: "Wir senden einen Bestätigungslink an die neue Adresse."
     notices:
       updated: "E-Mail-Adresse aktualisiert."

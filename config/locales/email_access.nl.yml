@@ -70,6 +70,7 @@ nl:
       approved: "E-mailcontrole goedgekeurd."
       rejected: "E-mailcontrole afgewezen."
     errors:
+      support_required: "Neem contact op met onze Dienst Ondersteuning om uw bevestigde e-mailadres te wijzigen."
       password: "Uw huidige wachtwoord is onjuist."
       unchanged: "Vul een ander e-mailadres in."
       unavailable: "Deze aanvraag is niet beschikbaar voor uw account."

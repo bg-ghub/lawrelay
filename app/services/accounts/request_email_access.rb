@@ -23,6 +23,9 @@ module Accounts
         profile = LawyerProfile.lock.find_by(user_id: user.id)
         firm = user.primary_firm
         return failure(user, profile, :incomplete) unless profile && firm
+        if user.email_address != @email_address && (user.email_verified? || profile.manual_activation_valid? || profile.email_review_approved?)
+          return failure(user, profile, :support_required)
+        end
         return failure(user, profile, :protected) if [ profile, firm ].any? { |record| record.verification_status.in?(%w[rejected suspended]) }
         return failure(user, profile, :directory_required) unless Directory::AdvocaatBeProfileLookup.valid_profile_url?(profile.directory_profile_url)
         if profile.email_review_pending? && profile.email_review_email_address == @email_address && user.email_address == @email_address

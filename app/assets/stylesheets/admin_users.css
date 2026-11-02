@@ -6,7 +6,7 @@
 .admin-users-page .button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:none}
 .admin-users-page .button--dark{background:var(--ink);color:var(--white)}
 .admin-users-page .button--dark:hover{background:var(--ink-deep)}
-.admin-users-page .button--ghost{border-color:rgba(21,63,54,.3);background:transparent;color:var(--ink)}
+.admin-users-page .button--ghost{border-color:var(--ink);background:var(--white);color:var(--ink)}
 .admin-users-page .button--ghost:hover{border-color:var(--ink);background:var(--mint)}
 .admin-user-detail-grid .form-actions .button{width:100%}
 .admin-users-total{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:var(--white);padding:.5rem .85rem;color:var(--ink);font-size:.85rem;font-weight:700}

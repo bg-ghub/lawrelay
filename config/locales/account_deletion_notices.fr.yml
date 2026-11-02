@@ -1,0 +1,22 @@
+fr:
+  account_deletion:
+    pending:
+      heading: "Suppression planifiée"
+      legend: "Compte désactivé"
+      body: "Votre compte est désactivé. Sa suppression définitive est prévue le %{date}. Vous pouvez annuler la demande jusqu’à sa suppression."
+      paused: "Votre compte est désactivé. La suppression automatique est suspendue. Contactez"
+      cancel: "Annuler la suppression"
+      privacy_heading: "Vos droits sur vos données"
+      privacy_body: "Pour une suppression immédiate, vous pouvez introduire une demande relative à vos données."
+    notices:
+      scheduled: "Votre compte est désactivé. Sa suppression est prévue dans 30 jours. Vous recevrez une confirmation par e-mail."
+      cancelled: "La suppression est annulée. Vous pouvez vous reconnecter."
+  account_deletion_mail:
+    requested:
+      subject: "La suppression de votre compte est planifiée"
+      body: "Votre compte LawRelay est désactivé. Sa suppression définitive est prévue le %{date}. Connectez-vous si vous souhaitez annuler la suppression."
+      link: "Se connecter pour annuler"
+    cancelled:
+      subject: "La suppression de votre compte est annulée"
+      body: "La suppression de votre compte LawRelay est annulée. Vous pouvez à nouveau utiliser votre compte."
+      link: "Se connecter"

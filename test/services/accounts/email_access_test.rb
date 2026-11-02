@@ -123,6 +123,36 @@ class Accounts::EmailAccessTest < ActiveSupport::TestCase
     assert_not @user.marketplace_verified?
   end
 
+  test "a confirmed address cannot be replaced through the onboarding service" do
+    @user.update!(email_verified_at: Time.current)
+    original_user = @user.attributes
+    original_profile = @profile.attributes
+    session_ids = @user.sessions.pluck(:id)
+    assert_no_difference "AuditEvent.count" do
+      result = request_review
+      assert_not result.success?
+      assert_includes result.errors, I18n.t("email_access.errors.support_required")
+    end
+    assert_equal original_user, @user.reload.attributes
+    assert_equal original_profile, @profile.reload.attributes
+    assert_equal session_ids, @user.sessions.pluck(:id)
+  end
+
+  test "a manually activated address cannot be replaced through the onboarding service" do
+    activation = Admin::ManualActivation.call(user: @user, actor: @admin,
+      note: "Synthetic review completed through independent professional contact details.",
+      identity_digest: @profile.email_review_current_identity_digest)
+    assert activation.success?, activation.status.to_s
+    original_user = @user.reload.attributes
+    original_profile = @profile.reload.attributes
+
+    result = request_review
+    assert_not result.success?
+    assert_includes result.errors, I18n.t("email_access.errors.support_required")
+    assert_equal original_user, @user.reload.attributes
+    assert_equal original_profile, @profile.reload.attributes
+  end
+
   test "confirmation alone and legacy verified flags do not bypass a pending review" do
     assert request_review.success?
     @user.update!(email_verified_at: Time.current)

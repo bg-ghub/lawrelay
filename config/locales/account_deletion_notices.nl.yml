@@ -1,0 +1,22 @@
+nl:
+  account_deletion:
+    pending:
+      heading: "Verwijdering gepland"
+      legend: "Account uitgeschakeld"
+      body: "Uw account is uitgeschakeld. Definitieve verwijdering is gepland op %{date}. Tot de verwijdering kunt u de aanvraag annuleren."
+      paused: "Uw account is uitgeschakeld. De automatische verwijdering is gepauzeerd. Contacteer"
+      cancel: "Verwijdering annuleren"
+      privacy_heading: "Uw privacyrechten"
+      privacy_body: "Voor onmiddellijke verwijdering kunt u een privacyverzoek indienen."
+    notices:
+      scheduled: "Uw account is uitgeschakeld. De verwijdering is gepland over 30 dagen. U ontvangt een bevestiging per e-mail."
+      cancelled: "De verwijdering is geannuleerd. U kunt opnieuw aanmelden."
+  account_deletion_mail:
+    requested:
+      subject: "Uw accountverwijdering is gepland"
+      body: "Uw LawRelay-account is uitgeschakeld. Definitieve verwijdering is gepland op %{date}. Meld u aan als u de verwijdering wilt annuleren."
+      link: "Aanmelden om te annuleren"
+    cancelled:
+      subject: "Uw accountverwijdering is geannuleerd"
+      body: "De verwijdering van uw LawRelay-account is geannuleerd. U kunt uw account opnieuw gebruiken."
+      link: "Aanmelden"

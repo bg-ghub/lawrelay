@@ -16,7 +16,7 @@
       </div>
       <div class="field-group">
         <%= form.label :status, t("admin.users.filters.status") %>
-        <%= searchable_select form, :status, [[t("admin.users.filters.all"), ""], [t("admin.users.status.active"), "active"], [t("admin.users.status.suspended"), "suspended"]], selected: @status_filter %>
+        <%= searchable_select form, :status, [[t("admin.users.filters.all"), ""], *%w[active suspended deletion_pending].map { |status| [t("admin.users.status.#{status}"), status] }], selected: @status_filter %>
       </div>
       <div class="field-group">
         <%= form.label :verification, t("admin.users.filters.verification") %>
@@ -40,7 +40,7 @@
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.fields.status") %></span>
-            <span class="status-pill <%= "admin-user-status--suspended" if user.suspended? %>"><%= t("admin.users.status.#{user.suspended? ? 'suspended' : 'active'}") %></span>
+            <span class="status-pill <%= "admin-user-status--suspended" unless user.active? %>"><%= t("admin.users.status.#{admin_user_account_status(user)}") %></span>
           </div>
           <div class="admin-user-row-fact">
             <span class="admin-user-caption"><%= t("admin.users.filters.verification") %></span>

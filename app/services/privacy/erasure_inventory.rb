@@ -38,6 +38,7 @@ module Privacy
           professional_status_checks: user.lawyer_profile ? RegistryStatusCheck.where(lawyer_profile: user.lawyer_profile).count : 0,
           sessions: user.sessions.count,
           privacy_requests: user.privacy_requests.count,
+          account_deletion_requests: user.account_deletion_requests.count,
           submitted_reports: user.submitted_reports.count,
           handled_privacy_requests: PrivacyRequest.where(handled_by_user_id: user.id).count,
           reviewed_reports: Report.where(reviewed_by_user_id: user.id).count,

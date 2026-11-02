@@ -43,6 +43,7 @@ nl:
         activation: Activering
         mfa: MFA voor beheerders
         created_at: Geregistreerd
+        deletion_scheduled_at: Definitieve verwijdering
         suspension_reason: Reden van schorsing
         firm_status: Controle onderneming
         lawyer_status: Advocatencontrole
@@ -57,6 +58,7 @@ nl:
       status:
         active: Actief
         suspended: Geschorst
+        deletion_pending: Verwijdering gepland
       verification:
         pending: In afwachting
         verified: Geverifieerd

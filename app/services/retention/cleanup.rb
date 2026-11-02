@@ -1,6 +1,6 @@
 module Retention
   class Cleanup
-    Result = Data.define(:unverified_users, :assignments, :notifications, :reports, :privacy_requests, :audit_events, :erased_users, :retention_holds) do
+    Result = Data.define(:unverified_users, :assignments, :notifications, :reports, :privacy_requests, :account_deletion_requests, :audit_events, :erased_users, :retention_holds) do
       def to_h = members.zip(deconstruct).to_h
     end
 
@@ -16,6 +16,7 @@ module Retention
       purge_notifications
       purge_terminal_records(Report, :reports)
       purge_terminal_records(PrivacyRequest, :privacy_requests)
+      purge_account_deletion_requests
       purge_audit_events
       purge_erased_users
       purge_expired_holds
@@ -25,7 +26,9 @@ module Retention
     private
 
     def purge_unverified_users
-      User.where(system_role: "member", email_verified_at: nil, erased_at: nil).where(updated_at: ..Policy.before(Policy::UNVERIFIED_REGISTRATION, now: @now)).find_each do |user|
+      User.where(system_role: "member", email_verified_at: nil, erased_at: nil,
+        deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
+        .where(updated_at: ..Policy.before(Policy::UNVERIFIED_REGISTRATION, now: @now)).find_each do |user|
         next unless stale_unverified?(user)
 
         destroy(user, :unverified_users) do
@@ -40,6 +43,7 @@ module Retention
     def stale_unverified?(user)
       cutoff = Policy.before(Policy::UNVERIFIED_REGISTRATION, now: @now)
       return false unless user.system_role == "member" && user.email_verified_at.nil? && user.erased_at.nil?
+      return false if user.deletion_pending?
       return false unless user.updated_at <= cutoff
       profile = user.lawyer_profile
       return false if profile&.manual_activation_valid?
@@ -188,6 +192,30 @@ module Retention
           event.lock!
           event.destroy! if removable_audit_event?(event)
         end
+      end
+    end
+
+    def purge_account_deletion_requests
+      cutoff = Policy.before(Policy::RESOLVED_REQUEST, now: @now)
+      terminal = AccountDeletionRequest.where("completed_at <= :cutoff OR cancelled_at <= :cutoff", cutoff:)
+      terminal.find_each do |record|
+        next unless removable_account_deletion_request?(record, cutoff:)
+
+        destroy(record, :account_deletion_requests) do
+          record.lock!
+          record.destroy! if removable_account_deletion_request?(record, cutoff:)
+        end
+      end
+    end
+
+    def removable_account_deletion_request?(record, cutoff:)
+      resolved_at = record.completed_at || record.cancelled_at
+      return false unless resolved_at && resolved_at <= cutoff
+      return false if User.where(deletion_request_id: record.id).exists?
+      return false if Protection.held?(record, now: @now) || Protection.held?(record.user, now: @now)
+
+      AccountDeletionRequest::NOTICE_KINDS.all? do |kind|
+        record.public_send("#{kind}_email_status").in?([ nil, "sent", "skipped" ])
       end
     end
 

@@ -147,6 +147,9 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
       assert_select "datalist#preferred-court-options", count: 0
       assert_select "[name='preferences[availability_note]']", count: 0
       assert_select "input[name^='profile['], textarea[name^='profile[']", count: 0
+      assert_select "input[name='account[first_name]'], input[name='account[last_name]']", count: 0
+      assert_select "a[href^='mailto:support@lawrelay.be']", text: I18n.t("email_change.link", locale:)
+      assert_select "a[href='#{email_change_path(locale:)}']", count: 0
       assert_select ".directory-profile__tag", text: I18n.t("marketplace.practice_areas.commercial", locale:)
       assert_not_includes response.body, "translation missing"
     end

@@ -10,44 +10,45 @@ class EmailChangesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@account.user)
   end
 
-  test "changes a member email only with the current password and sends new-address verification" do
-    @account.profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a")
+  test "the legacy page offers support by email without an editable form in all languages" do
+    %i[nl fr de en].each do |locale|
+      get email_change_path(locale:)
+      assert_response :success
+      assert_equal "no-store", response.headers["Cache-Control"]
+      assert_select "a[href^='mailto:support@lawrelay.be']", text: "support@lawrelay.be"
+      assert_select ".settings-page form", count: 0
+      assert_select "input[name^='email_change[']", count: 0
+      assert_no_match(/translation missing/i, response.body)
+    end
+  end
 
-    assert_enqueued_emails 1 do
-      assert_enqueued_with(job: Directory::VerificationJob, args: [ @account.user.id ]) do
-        post email_change_path(locale: :en), params: { email_change: { email_address: "changed@example.test", current_password: "password1234", system_role: "admin", email_verified_at: Time.current } }
+  test "legacy submissions preserve account profile sessions and email proof without sending mail" do
+    original_user = @account.user.attributes
+    original_profile = @account.profile.attributes
+    session_ids = @account.user.sessions.pluck(:id).sort
+    [ "password1234", "wrong" ].each do |password|
+      assert_no_difference "AuditEvent.count" do
+        assert_no_enqueued_jobs do
+          post email_change_path(locale: :en), params: { email_change: {
+            email_address: "changed@example.test", current_password: password, system_role: "admin", email_verified_at: nil
+          } }
+        end
       end
+      assert_response :see_other
+      assert_redirected_to email_change_path(locale: :en)
+      assert_equal original_user, @account.user.reload.attributes
+      assert_equal original_profile, @account.profile.reload.attributes
+      assert_equal session_ids, @account.user.sessions.pluck(:id).sort
     end
-
-    assert_redirected_to verification_status_path(locale: :en)
-    assert_equal "changed@example.test", @account.user.reload.email_address
-    assert_not @account.user.system_admin?
-    assert_nil @account.user.email_verified_at
   end
 
-  test "wrong password neither changes email nor queues email" do
-    assert_no_enqueued_emails do
-      post email_change_path(locale: :en), params: { email_change: { email_address: "changed@example.test", current_password: "wrong" } }
-    end
-
-    assert_response :unprocessable_content
-    assert_equal @account.user.email_address, @account.user.reload.email_address
-  end
-
-  test "a saved email change survives mail enqueue failure and still requests the directory check" do
-    @account.profile.update!(directory_profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a")
-    original = EmailVerificationMailer.method(:verify)
-    EmailVerificationMailer.define_singleton_method(:verify) { |*| raise ActiveJob::EnqueueError, "private mail failure" }
-    assert_enqueued_jobs 1, only: Directory::VerificationJob do
-      post email_change_path(locale: :en), params: { email_change: { email_address: "retry-change@example.test", current_password: "password1234" } }
-    end
-    assert_redirected_to verification_status_path(locale: :en)
-    assert_equal "retry-change@example.test", @account.user.reload.email_address
-    assert_not @account.user.email_verified?
-    assert_equal I18n.t("email_change.notices.updated", locale: :en), flash[:notice]
-    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+  test "support mailbox configuration is used for the contact link" do
+    previous = ENV["LAWRELAY_SUPPORT_EMAIL"]
+    ENV["LAWRELAY_SUPPORT_EMAIL"] = "support-alias@example.test"
+    get email_change_path(locale: :en)
+    assert_select "a[href^='mailto:support-alias@example.test']", text: "support-alias@example.test"
   ensure
-    EmailVerificationMailer.define_singleton_method(:verify, original) if original
+    previous.nil? ? ENV.delete("LAWRELAY_SUPPORT_EMAIL") : ENV["LAWRELAY_SUPPORT_EMAIL"] = previous
   end
 
   test "administrators cannot view or submit an email change regardless of MFA" do

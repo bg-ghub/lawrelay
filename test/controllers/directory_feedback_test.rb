@@ -23,7 +23,10 @@ class DirectoryFeedbackTest < ActionDispatch::IntegrationTest
         assert_select "p", text: I18n.t("directory_feedback.failures.#{code}", locale:)
         assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 1
         assert_select "section.form-section a[href='mailto:support@lawrelay.be']"
-        assert_select "section.form-section a[href='#{settings_path(locale:)}']", text: I18n.t("directory_feedback.check_name", locale:), count: 1 if code == "name_mismatch"
+        if code == "name_mismatch"
+          assert_select "section.form-section a[href='mailto:support@lawrelay.be']", text: I18n.t("directory_feedback.check_name", locale:), count: 1
+          assert_select "section.form-section a[href='#{settings_path(locale:)}']", count: 0
+        end
         assert_not_includes response.body, "Translation missing"
       end
     end
@@ -40,6 +43,20 @@ class DirectoryFeedbackTest < ActionDispatch::IntegrationTest
       assert_select "p", text: I18n.t("directory_onboarding.status.review_required_body", locale:)
       assert_select "a[href='#{email_access_request_path(locale:)}']", text: I18n.t("directory_onboarding.status.request_review", locale:)
       assert_select "form[action='#{retry_directory_verification_status_path(locale:)}']", count: 0
+    end
+  end
+
+  test "a name mismatch during pending email review links to support rather than editable settings" do
+    @profile.update!(email_review_status: "pending", email_review_email_address: @user.email_address,
+      email_review_requested_at: Time.current)
+    AuditEvent.create!(auditable: @profile, action: "verification.directory_lookup_failed",
+      metadata: { status: "name_mismatch", identity_digest: @profile.directory_lookup_identity_digest })
+
+    %w[nl fr de en].each do |locale|
+      get verification_status_path(locale:)
+      assert_response :success
+      assert_select "section.form-section a[href='mailto:support@lawrelay.be']", text: I18n.t("directory_feedback.check_name", locale:), count: 1
+      assert_select "section.form-section a[href='#{settings_path(locale:)}']", count: 0
     end
   end
 

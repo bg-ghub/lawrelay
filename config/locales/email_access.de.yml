@@ -70,6 +70,7 @@ de:
       approved: "E-Mail-Prüfung genehmigt."
       rejected: "E-Mail-Prüfung abgelehnt."
     errors:
+      support_required: "Kontaktieren Sie unseren Support, um Ihre bestätigte E-Mail-Adresse zu ändern."
       password: "Ihr aktuelles Passwort ist falsch."
       unchanged: "Geben Sie eine andere E-Mail-Adresse ein."
       unavailable: "Dieser Antrag ist für Ihr Konto nicht verfügbar."

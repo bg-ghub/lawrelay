@@ -18,10 +18,11 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[name^='firm['], [data-controller*='business-lookup'], [data-controller*='company-number']", count: 0
   end
 
-  test "updates account while ignoring profile and company details" do
+  test "updates language while preserving imported identity profile and company details" do
     original_firm = @account.firm.attributes
-    original_profile = @account.profile.attributes.slice("spoken_languages", "practice_areas", "court_preferences", "availability_note")
-    assert_difference "AuditEvent.count", 2 do
+    original_profile = @account.profile.attributes
+    original_identity = @account.user.attributes.slice("first_name", "last_name", "email_address", "email_verified_at")
+    assert_difference "AuditEvent.count", 1 do
       patch settings_path(locale: :en), params: {
         account: { first_name: "Ada", last_name: "Byron", email_address: @account.user.email_address, locale: "fr" },
         profile: { bar_association: "OVB", bar_number: @account.profile.bar_number, professional_email: @account.profile.professional_email, bar_admission_year: "2018", spoken_languages: [ "NL, FR" ], practice_areas: [ "Commercial law, Family law" ], court_preferences: [ "Enterprise Court Brussels, Antwerp" ], availability_note: "Tuesday mornings work well." },
@@ -33,13 +34,11 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     @account.user.reload
     @account.profile.reload
     @account.firm.reload
-    assert_equal "Ada", @account.user.first_name
+    assert_equal original_identity, @account.user.attributes.slice(*original_identity.keys)
     assert_equal "fr", @account.user.locale
-    assert_equal original_profile, @account.profile.attributes.slice("spoken_languages", "practice_areas", "court_preferences", "availability_note")
-    assert_equal "pending", @account.profile.verification_status
-    assert_nil @account.profile.directory_profile_id
+    assert_equal original_profile, @account.profile.attributes
     assert_equal original_firm, @account.firm.attributes
-    assert_equal I18n.t("settings.notices.review_required", locale: :fr), flash[:notice]
+    assert_equal I18n.t("settings.notices.updated", locale: :fr), flash[:notice]
   end
 
   test "settings ignores a forged direct email update" do
@@ -100,59 +99,59 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal original_other_firm, other.firm.reload.attributes
   end
 
-  test "name changes reset directory verification and queue a fresh check" do
+  test "forged names leave the imported identity directory evidence and sessions unchanged" do
     profile = verified_directory_profile!
+    original_user = @account.user.attributes
+    original_profile = profile.attributes
+    session_ids = @account.user.sessions.pluck(:id)
 
-    assert_enqueued_with(job: Directory::VerificationJob, args: [ @account.user.id ]) do
-      patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
+    assert_no_enqueued_jobs do
+      assert_no_difference "AuditEvent.count" do
+        patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed", last_name: "", email_address: "forged@example.test" })
+      end
     end
 
-    profile.reload
-    assert_equal "pending", profile.verification_status
-    assert_nil profile.verified_at
-    assert_nil profile.directory_profile_id
-    assert_nil profile.directory_email
-    assert_nil profile.directory_identity_digest
+    assert_equal original_user, @account.user.reload.attributes
+    assert_equal original_profile, profile.reload.attributes
+    assert_equal session_ids, @account.user.sessions.pluck(:id)
   end
 
   test "a suspended profile remains suspended when identity details are changed" do
     profile = verified_directory_profile!(verification_status: "suspended")
+    original_profile = profile.attributes
 
     assert_no_enqueued_jobs only: Directory::VerificationJob do
       patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
     end
 
-    profile.reload
-    assert_equal "suspended", profile.verification_status
-    assert_nil profile.directory_profile_id
-    assert_nil profile.directory_identity_digest
+    assert_equal original_profile, profile.reload.attributes
   end
 
-  test "a saved name correction remains recoverable when its directory check cannot be queued" do
-    verified_directory_profile!
+  test "ignored identity input cannot trigger an unavailable directory queue" do
+    profile = verified_directory_profile!
+    original_name = @account.user.first_name
+    original_profile = profile.attributes
     original = Directory::VerificationJob.method(:perform_later)
     Directory::VerificationJob.define_singleton_method(:perform_later) { |*| raise SolidQueue::Job::EnqueueError, "private adapter details" }
     patch settings_path(locale: :en), params: valid_params(account: { first_name: "Corrected" })
     assert_redirected_to settings_path(locale: :en)
-    assert_equal "Corrected", @account.user.reload.first_name
-    assert_equal "pending", @account.profile.reload.verification_status
-    assert flash[:notice].present?
-    assert_equal I18n.t("auth.verification_status.queue_unavailable", locale: :en), flash[:alert]
+    assert_equal original_name, @account.user.reload.first_name
+    assert_equal original_profile, @account.profile.reload.attributes
+    assert_equal I18n.t("settings.notices.updated", locale: :en), flash[:notice]
+    assert_nil flash[:alert]
   ensure
     Directory::VerificationJob.define_singleton_method(:perform_later, original) if original
   end
 
   test "a rejected profile remains rejected when identity details are changed" do
     profile = verified_directory_profile!(verification_status: "rejected")
+    original_profile = profile.attributes
 
     assert_no_enqueued_jobs only: Directory::VerificationJob do
       patch settings_path(locale: :en), params: valid_params(account: { first_name: "Changed" })
     end
 
-    profile.reload
-    assert_equal "rejected", profile.verification_status
-    assert_nil profile.directory_profile_id
-    assert_nil profile.directory_identity_digest
+    assert_equal original_profile, profile.reload.attributes
   end
 
   test "a suspended workspace remains suspended when company details are forged" do

@@ -23,7 +23,8 @@
     <section class="dashboard-panel admin-user-overview" aria-labelledby="user-overview-heading">
       <h2 id="user-overview-heading"><%= t("admin.users.show.overview") %></h2>
       <dl class="detail-facts">
-        <div><dt><%= t("admin.users.fields.status") %></dt><dd><span class="status-pill <%= "admin-user-status--suspended" if @user.suspended? %>"><%= t("admin.users.status.#{@user.suspended? ? 'suspended' : 'active'}") %></span></dd></div>
+        <div><dt><%= t("admin.users.fields.status") %></dt><dd><span class="status-pill <%= "admin-user-status--suspended" unless @user.active? %>"><%= t("admin.users.status.#{admin_user_account_status(@user)}") %></span></dd></div>
+        <% if @user.deletion_pending? && @user.deletion_scheduled_at %><div><dt><%= t("admin.users.fields.deletion_scheduled_at") %></dt><dd><time datetime="<%= @user.deletion_scheduled_at.iso8601 %>"><%= l(@user.deletion_scheduled_at.in_time_zone("Europe/Brussels"), format: "%d/%m/%Y") %></time></dd></div><% end %>
         <div><dt><%= t("admin.users.fields.email_status") %></dt><dd><%= t("admin.users.email.#{@user.email_verified? ? 'verified' : 'pending'}") %></dd></div>
         <div><dt><%= t("admin.users.fields.marketplace_access") %></dt><dd><%= t("admin.users.marketplace.#{@user.marketplace_verified? ? 'available' : 'unavailable'}") %></dd></div>
         <% if @profile&.manual_activation_valid? %>

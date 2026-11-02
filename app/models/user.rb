@@ -33,6 +33,8 @@ class User < ApplicationRecord
   has_many :proposals, dependent: :restrict_with_error
   has_many :notifications, dependent: :destroy
   has_many :privacy_requests, dependent: :restrict_with_error
+  has_many :account_deletion_requests, dependent: :destroy
+  belongs_to :deletion_request, class_name: "AccountDeletionRequest", optional: true
   has_many :submitted_reports, class_name: "Report", foreign_key: :reporter_user_id, inverse_of: :reporter_user, dependent: :restrict_with_error
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
@@ -55,7 +57,15 @@ class User < ApplicationRecord
   end
 
   def active?
-    !suspended? && erased_at.nil?
+    !suspended? && erased_at.nil? && !deletion_pending?
+  end
+
+  def deletion_pending?
+    erased_at.nil? && (deletion_requested_at.present? || deletion_scheduled_at.present? || deletion_request_id.present?)
+  end
+
+  def deletion_recoverable?
+    deletion_pending? && !system_admin? && !suspended? && erased_at.nil?
   end
 
   def full_name

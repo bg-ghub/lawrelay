@@ -81,12 +81,13 @@ de:
           paragraphs:
             - "Das letzte Ergebnis der Profilprüfung bleibt bei Ihrem Konto. Prüfübersichten und erledigte Warnungen: 90 Tage. Offene Warnungen können für Untersuchungen aufbewahrt werden."
             - "Ungenutzte Registrierungen ohne E-Mail-Bestätigung oder manuelle Genehmigung: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
-            - "Konten bleiben bis zur Schließung bestehen. Sie können Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. Wir entfernen nicht mehr benötigte Daten. Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke. Offene Aufträge, Untersuchungen, Streitfälle oder gesetzliche Pflichten können eine längere Aufbewahrung erfordern."
+            - "Bei einem Löschantrag wird Ihr Konto sofort deaktiviert und nach 30 Tagen endgültig gelöscht. Bis zur Durchführung können Sie den Antrag durch Anmeldung zurücknehmen. Antrag und Rücknahme bestätigen wir per E-Mail."
+            - "Gemeinsame Auftragsdaten können 2 Jahre pseudonymisiert bleiben, ebenso minimale Löschvermerke und abgeschlossene Löschanträge. Offene Aufträge, Untersuchungen, Streitfälle oder gesetzliche Pflichten können die Löschung verhindern oder eine längere Aufbewahrung erfordern."
             - "Backups werden 30 Tage aufbewahrt. Gelöschte Daten können vorübergehend noch in verschlüsselten Backups oder Speicherversionen vorhanden sein, höchstens etwa 60 Tage."
         rights:
           heading: "7. Ihre Rechte"
           paragraphs:
-            - "Je nach Rechtsgrundlage und Umständen können Sie Auskunft, Berichtigung, Löschung, Einschränkung oder Übertragbarkeit verlangen oder der Verarbeitung widersprechen. Schreiben Sie an privacy@lawrelay.be. Wir antworten in der Regel innerhalb eines Monats. Ist eine zulässige Verlängerung nötig, informieren wir Sie innerhalb dieses Monats."
+            - "Üben Sie Ihre Rechte über Ihre Datenschutzanfragen oder privacy@lawrelay.be aus: Auskunft, Berichtigung, Löschung, Einschränkung, Übertragbarkeit oder Widerspruch, soweit anwendbar. Die Bedenkzeit von 30 Tagen gilt nicht für diese Anfragen. Wir antworten normalerweise innerhalb eines Monats und informieren Sie innerhalb dieser Frist über eine zulässige Verlängerung."
             - "Sie können sich bei der belgischen Datenschutzbehörde beschweren. LawRelay darf Ihre Identität vor Bearbeitung eines Antrags prüfen."
         security:
           heading: "8. Sicherheit, Vorfälle und Änderungen"
@@ -151,7 +152,7 @@ de:
         liability:
           heading: "12. Haftung, Beendigung und Recht"
           paragraphs:
-            - "Sie können die Beta jederzeit nicht mehr nutzen und Ihr Konto in Profil nach Bestätigung Ihres Passworts löschen. LawRelay kann den Beta-Zugang mit angemessener Frist oder sofort beenden, wenn dies für Sicherheit, Gesetz oder diese Bedingungen erforderlich ist."
+            - "Sie können Ihr Konto in Profil nach Passwortbestätigung schließen. Es wird sofort deaktiviert und nach 30 Tagen gelöscht; bis zur Durchführung können Sie den Antrag durch Anmeldung zurücknehmen. LawRelay kann den Zugang mit angemessener Frist oder sofort aus Sicherheitsgründen, aufgrund gesetzlicher Vorgaben oder dieser Bedingungen beenden."
             - "Diese Bedingungen unterliegen belgischem Recht. Zwingende Rechte, die auf Sie anwendbar sind, bleiben unberührt. Diese Bedingungen schließen keine Haftung aus, die gesetzlich nicht ausgeschlossen werden darf."
     cookies:
       meta_title: "Cookie-Hinweise — LawRelay"

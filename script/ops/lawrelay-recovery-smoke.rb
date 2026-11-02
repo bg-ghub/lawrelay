@@ -22,6 +22,9 @@ restored_users = User.count
 restored_assignments = Assignment.count
 puts "Restored records readable: users=#{restored_users}, assignments=#{restored_assignments}"
 check(ActiveRecord::Base.connection_pool.migration_context.needs_migration? == false, "current schema is prepared")
+if defined?(AccountDeletionRequest)
+  check(AccountDeletionRequest.pending.where.not(finalization_status: "paused").none?, "restored deletion schedules are paused")
+end
 ReadinessController.database_ready?
 ReadinessController.storage_ready?
 check(true, "all databases and storage are readable/writable")

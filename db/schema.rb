@@ -10,7 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_02_060000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_080000) do
+  create_table "account_deletion_requests", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "privacy_request_id"
+    t.datetime "requested_at", null: false
+    t.datetime "scheduled_at", null: false
+    t.datetime "cancelled_at"
+    t.datetime "completed_at"
+    t.string "email_identity_digest"
+    t.string "finalization_status", default: "pending", null: false
+    t.integer "finalization_attempts", default: 0, null: false
+    t.datetime "finalization_claimed_at"
+    t.datetime "finalization_enqueued_for"
+    t.datetime "finalization_retry_at"
+    t.string "finalization_reason"
+    t.string "requested_email_status"
+    t.integer "requested_email_attempts", default: 0, null: false
+    t.datetime "requested_email_claimed_at"
+    t.datetime "requested_email_enqueued_at"
+    t.datetime "requested_email_retry_at"
+    t.datetime "requested_email_sent_at"
+    t.string "requested_email_reason"
+    t.string "cancelled_email_status"
+    t.integer "cancelled_email_attempts", default: 0, null: false
+    t.datetime "cancelled_email_claimed_at"
+    t.datetime "cancelled_email_enqueued_at"
+    t.datetime "cancelled_email_retry_at"
+    t.datetime "cancelled_email_sent_at"
+    t.string "cancelled_email_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["privacy_request_id"], name: "index_account_deletion_requests_on_privacy_request_id"
+    t.index ["scheduled_at"], name: "index_account_deletion_requests_on_scheduled_at"
+    t.index ["user_id"], name: "index_account_deletion_requests_on_user_id"
+    t.index ["user_id"], name: "one_pending_account_deletion_per_user", unique: true, where: "cancelled_at IS NULL AND completed_at IS NULL"
+  end
+
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -405,6 +441,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_060000) do
     t.json "two_factor_recovery_code_digests", default: [], null: false
     t.datetime "erased_at"
     t.string "public_id", null: false
+    t.integer "deletion_request_id"
+    t.datetime "deletion_requested_at"
+    t.datetime "deletion_scheduled_at"
+    t.index ["deletion_request_id"], name: "index_users_on_deletion_request_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
     t.index ["erased_at"], name: "index_users_on_erased_at"
     t.index ["public_id"], name: "index_users_on_public_id", unique: true
@@ -425,6 +465,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_060000) do
     t.index ["status"], name: "index_webhook_events_on_status"
   end
 
+  add_foreign_key "account_deletion_requests", "privacy_requests", on_delete: :nullify
+  add_foreign_key "account_deletion_requests", "users"
   add_foreign_key "assignments", "firms"
   add_foreign_key "assignments", "users", column: "creator_user_id"
   add_foreign_key "audit_events", "firms"
@@ -452,4 +494,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_060000) do
   add_foreign_key "retention_holds", "users", column: "actor_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "subscriptions", "billing_accounts"
+  add_foreign_key "users", "account_deletion_requests", column: "deletion_request_id", on_delete: :nullify
 end

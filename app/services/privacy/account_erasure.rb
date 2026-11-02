@@ -4,12 +4,12 @@ module Privacy
   class AccountErasure
     class ProtectedAccount < StandardError; end
 
-    def initialize(request:, actor:, ledger: ErasureLedger.new, self_service: false)
+    def initialize(request:, actor:, ledger: ErasureLedger.new, self_service: false, scheduled_deletion_request_id: nil)
       @request = request
       @actor = actor
       @ledger = ledger
       @self_service = self_service
-      @context = RequestContext.new(request:, actor:, kind: "deletion", self_service:)
+      @context = RequestContext.new(request:, actor:, kind: "deletion", self_service:, scheduled_deletion_request_id:)
     end
 
     def call
@@ -18,9 +18,9 @@ module Privacy
       operation = nil
       User.transaction do
         @request.lock!
-        @context.validate!
         user = @context.user
         user.lock!
+        @context.validate!
         raise ProtectedAccount, "This member account has already been erased" if user.erased_at
         self.class.check_protection!(user, ignored_privacy_request_id: @request.id)
         erased_at = Time.current
@@ -82,6 +82,7 @@ module Privacy
       subjects = { "User" => [ user.id ], "LawyerProfile" => [ profile_id ].compact,
         "Assignment" => user.created_assignments.pluck(:id), "Proposal" => user.proposals.pluck(:id),
         "PrivacyRequest" => user.privacy_requests.pluck(:id), "Report" => user.submitted_reports.pluck(:id), "Firm" => sole_firm_ids }
+      subjects["AccountDeletionRequest"] = user.account_deletion_requests.pluck(:id)
       subjects.each { |type, ids| AuditEvent.where(auditable_type: type, auditable_id: ids).update_all(metadata: {}) }
       AuditEvent.where(actor_user_id: user.id).update_all(metadata: {})
 
@@ -103,13 +104,23 @@ module Privacy
         verification_status: "pending", verified_at: nil, kbo_details: {})
       BillingAccount.where(firm_id: sole_firm_ids).update_all(billing_email: nil, peppol_id: nil, provider_customer_id: nil)
       user.memberships.destroy_all
+      user.account_deletion_requests.pending.update_all(completed_at: erased_at, finalization_status: "completed",
+        finalization_claimed_at: nil, finalization_enqueued_for: nil, finalization_retry_at: nil, finalization_reason: nil)
+      user.account_deletion_requests.update_all(email_identity_digest: nil)
+      AccountDeletionRequest::NOTICE_KINDS.each do |kind|
+        status_column = AccountDeletionRequest.arel_table[AccountDeletionRequest.notice_columns(kind).fetch(:status)]
+        user.account_deletion_requests.where(status_column.in(%w[pending sending failed])).update_all(
+          "#{kind}_email_status" => "skipped", "#{kind}_email_claimed_at" => nil,
+          "#{kind}_email_enqueued_at" => nil, "#{kind}_email_retry_at" => nil, "#{kind}_email_reason" => "erased")
+      end
       user.update_columns(first_name: "", last_name: "", email_address: "erased-#{SecureRandom.uuid}@lawrelay.invalid",
         password_digest: BCrypt::Password.create(SecureRandom.hex(40)), email_verified_at: nil,
         suspended_at: erased_at, suspension_reason: nil, erased_at:, updated_at: erased_at,
         admin_mfa_secret_ciphertext: nil, admin_mfa_pending_secret_ciphertext: nil, admin_mfa_enabled_at: nil, admin_mfa_last_verified_at: nil,
         two_factor_secret_ciphertext: nil, two_factor_pending_secret_ciphertext: nil, two_factor_enabled_at: nil,
         two_factor_last_verified_at: nil, two_factor_recovery_code_digests: [],
-        accepted_terms_at: nil, accepted_terms_version: nil, accepted_privacy_version: nil)
+        accepted_terms_at: nil, accepted_terms_version: nil, accepted_privacy_version: nil,
+        deletion_request_id: nil, deletion_requested_at: nil, deletion_scheduled_at: nil)
       RegistryStatus::Cleanup.new.call
     end
   end

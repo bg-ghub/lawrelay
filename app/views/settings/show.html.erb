@@ -17,11 +17,7 @@
 
       <fieldset class="form-section">
         <legend><%= t("settings.account.legend") %></legend>
-        <div class="form-row">
-          <div class="field-group"><%= form.label "account[first_name]", t("auth.fields.first_name") %><%= form.text_field "account[first_name]", value: @user.first_name, required: true, autocomplete: "given-name" %></div>
-          <div class="field-group"><%= form.label "account[last_name]", t("auth.fields.last_name") %><%= form.text_field "account[last_name]", value: @user.last_name, required: true, autocomplete: "family-name" %></div>
-        </div>
-        <div class="field-group"><strong><%= t("auth.fields.professional_email") %></strong><p><%= @user.email_address %></p><% unless @user.system_admin? %><p><%= link_to t("email_change.link"), email_change_path, class: "text-link" %></p><% end %></div>
+        <div class="field-group"><strong><%= t("auth.fields.professional_email") %></strong><p><%= @user.email_address %></p><% unless @user.system_admin? %><p><%= mail_to email_change_support_address, t("email_change.link"), subject: t("email_change.link"), class: "text-link" %></p><% end %></div>
         <div class="field-group"><%= form.label "account[locale]", t("settings.account.language") %><%= searchable_select form, "account[locale]", [["Nederlands", "nl"], ["Français", "fr"], ["Deutsch", "de"], ["English", "en"]], { selected: @user.locale }, class: "select-field" %></div>
       </fieldset>
 

@@ -1,0 +1,22 @@
+de:
+  account_deletion:
+    pending:
+      heading: "Löschung geplant"
+      legend: "Konto deaktiviert"
+      body: "Ihr Konto ist deaktiviert. Die endgültige Löschung ist für den %{date} geplant. Bis zur Löschung können Sie den Antrag zurücknehmen."
+      paused: "Ihr Konto ist deaktiviert. Die automatische Löschung ist ausgesetzt. Kontaktieren Sie"
+      cancel: "Löschung abbrechen"
+      privacy_heading: "Ihre Datenschutzrechte"
+      privacy_body: "Für eine sofortige Löschung können Sie einen Datenschutzantrag stellen."
+    notices:
+      scheduled: "Ihr Konto ist deaktiviert. Die Löschung ist in 30 Tagen geplant. Sie erhalten eine Bestätigung per E-Mail."
+      cancelled: "Die Löschung wurde abgebrochen. Sie können sich wieder anmelden."
+  account_deletion_mail:
+    requested:
+      subject: "Ihre Kontolöschung ist geplant"
+      body: "Ihr LawRelay-Konto ist deaktiviert. Die endgültige Löschung ist für den %{date} geplant. Melden Sie sich an, wenn Sie die Löschung abbrechen möchten."
+      link: "Anmelden und Löschung abbrechen"
+    cancelled:
+      subject: "Ihre Kontolöschung wurde abgebrochen"
+      body: "Die Löschung Ihres LawRelay-Kontos wurde abgebrochen. Sie können Ihr Konto wieder nutzen."
+      link: "Anmelden"

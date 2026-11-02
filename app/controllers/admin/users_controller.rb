@@ -10,14 +10,13 @@ module Admin
 
     def index
       @query = params[:q].to_s.strip.first(100)
-      @status_filter = params[:status].presence_in(%w[active suspended]).to_s
+      @status_filter = params[:status].presence_in(%w[active suspended deletion_pending]).to_s
       @verification_filter = params[:verification].presence_in(LawyerProfile::VERIFICATION_STATUSES).to_s
       @per_page = params[:per_page].to_i == 50 ? 50 : 25
 
       scope = managed_users.left_joins(:lawyer_profile)
       scope = apply_search(scope)
-      scope = scope.where(suspended_at: nil) if @status_filter == "active"
-      scope = scope.where.not(suspended_at: nil) if @status_filter == "suspended"
+      scope = apply_account_status_filter(scope)
       scope = apply_verification_filter(scope)
       @total_count = scope.distinct.count
       @total_pages = [ (@total_count.to_f / @per_page).ceil, 1 ].max
@@ -124,6 +123,23 @@ module Admin
         "LOWER(users.email_address) LIKE :term",
         term:
       )
+    end
+
+    def apply_account_status_filter(scope)
+      case @status_filter
+      when "active"
+        scope.where(suspended_at: nil, erased_at: nil, deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
+      when "suspended"
+        scope.where.not(erased_at: nil).or(
+          scope.where.not(suspended_at: nil).where(deletion_requested_at: nil, deletion_scheduled_at: nil, deletion_request_id: nil)
+        )
+      when "deletion_pending"
+        scope.where(erased_at: nil).where(
+          "users.deletion_requested_at IS NOT NULL OR users.deletion_scheduled_at IS NOT NULL OR users.deletion_request_id IS NOT NULL"
+        )
+      else
+        scope
+      end
     end
 
     def apply_verification_filter(scope)

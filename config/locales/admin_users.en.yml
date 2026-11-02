@@ -43,6 +43,7 @@ en:
         activation: Activation
         mfa: Administrator MFA
         created_at: Registered
+        deletion_scheduled_at: Permanent deletion
         suspension_reason: Suspension reason
         firm_status: Company check
         lawyer_status: Lawyer check
@@ -57,6 +58,7 @@ en:
       status:
         active: Active
         suspended: Suspended
+        deletion_pending: Deletion scheduled
       verification:
         pending: Pending
         verified: Verified

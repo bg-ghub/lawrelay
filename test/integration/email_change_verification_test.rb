@@ -5,7 +5,7 @@ class EmailChangeVerificationTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
   include MarketplaceTestFactory
 
-  test "a changed official listing and new mailbox restore access without the old mailbox" do
+  test "a support-reviewed change needs the updated official listing and new mailbox" do
     account = create_marketplace_account(prefix: "updated-directory")
     user = account.user
     profile = account.profile
@@ -18,11 +18,8 @@ class EmailChangeVerificationTest < ActionDispatch::IntegrationTest
     sign_in_as(user)
 
     assert_enqueued_emails 1 do
-      post email_change_path(locale: :en), params: {
-        email_change: { email_address: "updated-directory@example.test", current_password: "password1234" }
-      }
+      support_change_email(user, "updated-directory@example.test")
     end
-    assert_redirected_to verification_status_path(locale: :en)
     assert_not user.reload.marketplace_verified?
     assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { User.find_by_email_verification_token!(old_email_token) }
     assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { Directory::ConfirmationToken.find_profile!(old_directory_token) }
@@ -54,10 +51,7 @@ class EmailChangeVerificationTest < ActionDispatch::IntegrationTest
       directory_email_verified_at: Time.current, directory_identity_digest: "previous-proof")
     sign_in_as(user)
 
-    post email_change_path(locale: :en), params: {
-      email_change: { email_address: "different-signin@example.test", current_password: "password1234" }
-    }
-    assert_redirected_to verification_status_path(locale: :en)
+    support_change_email(user, "different-signin@example.test")
     user.reload
     evidence = Directory::AdvocaatBeProfileLookup::Result.new(status: :ok,
       profile_id: "63fee2a5-637a-4839-a5a6-c833482f1e3a", source_url:,
@@ -85,5 +79,17 @@ class EmailChangeVerificationTest < ActionDispatch::IntegrationTest
       post assignments_path(locale: :en), params: { assignment: { title: "Must remain blocked" } }
     end
     assert_redirected_to verification_status_path(locale: :en)
+  end
+
+  private
+
+  def support_change_email(user, email)
+    administrator = create_marketplace_account(prefix: "support-email-reviewer", system_role: "admin").user
+    secret = administrator.begin_admin_mfa_setup!
+    administrator.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+    sign_in_as(administrator, admin_mfa: true)
+    patch admin_user_path(user, locale: :en), params: { user: { email_address: email } }
+    assert_redirected_to admin_user_path(user, locale: :en)
+    sign_in_as(user)
   end
 end
