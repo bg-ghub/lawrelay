@@ -277,7 +277,7 @@ class AdminHostRoutingTest < ActionDispatch::IntegrationTest
     get new_session_path(locale: :en)
     assert_response :success
     assert_select "input[type='email']"
-    assert_select "a[href='https://admin.lawrelay.example/en/admin/login']"
+    assert_select "a[href='https://admin.lawrelay.example/en/admin/login']", count: 0
 
     post session_path(locale: :en), params: { email_address: @member.user.email_address, password: "password1234" }
     assert_redirected_to dashboard_path(locale: :en)

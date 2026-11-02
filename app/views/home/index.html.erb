@@ -48,7 +48,7 @@
         <% @featured_assignments.each do |assignment| %>
           <%= link_to assignment_path(assignment), class: "opportunity-card" do %>
             <div class="opportunity-meta"><span class="tag <%= assignment.kind == "court_replacement" ? "tag-coral" : "tag-mint" %>"><%= assignment.kind_label %></span><span><%= assignment.starts_at ? l(assignment.starts_at, format: :short) : t("marketing.home.opportunities.by_arrangement") %></span></div>
-            <h3><%= assignment.title %></h3><p><span aria-hidden="true">◎</span> <%= [assignment.court, assignment.city].compact_blank.join(" · ").presence || t("marketing.home.opportunities.belgium") %></p><div class="opportunity-bottom"><span><%= assignment.practice_area %></span><strong><%= t("marketing.actions.view") %> <span aria-hidden="true">→</span></strong></div>
+            <h3><%= assignment.title %></h3><p><span aria-hidden="true">◎</span> <%= [assignment.court, assignment.city].compact_blank.join(" · ").presence || t("marketing.home.opportunities.belgium") %></p><div class="opportunity-bottom"><span><%= practice_area_label(assignment.practice_area) %></span><strong><%= t("marketing.actions.view") %> <span aria-hidden="true">→</span></strong></div>
           <% end %>
         <% end %>
       <% else %>

@@ -21,7 +21,7 @@ de:
       heading: "Anmelden"
       lede: "Melden Sie sich mit Ihrer beruflichen E-Mail-Adresse an."
       form_title: "Anmelden"
-      email_hint: "(in der Regel die in Ihrem Profil auf advocaat.be angegebene E-Mail-Adresse)"
+      email_hint: "(standardmäßig die in Ihrem advocaat.be-Profil angegebene E-Mail-Adresse, sofern Sie bei der Erstellung Ihres LawRelay-Profils keine andere E-Mail-Adresse angegeben haben)"
       submit: "Anmelden"
       forgot_password: "Passwort vergessen?"
       new_here: "Neu bei LawRelay?"

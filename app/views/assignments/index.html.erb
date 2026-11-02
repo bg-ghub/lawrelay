@@ -39,7 +39,7 @@
 
         <div class="field-group">
           <%= form.label :practice_area, t("marketplace.index.practice_area_label") %>
-          <%= searchable_select form, :practice_area, options_for_select([[t("marketplace.index.all_practice_areas"), ""]] + @practice_areas.map { |area| [area, area] }, params[:practice_area]), {}, class: "select-field" %>
+          <%= searchable_select form, :practice_area, options_for_select([[t("marketplace.index.all_practice_areas"), ""]] + PracticeAreaCatalogue.filter_options(@practice_areas, selected: params[:practice_area]), params[:practice_area]), {}, class: "select-field" %>
         </div>
 
         <noscript><%= form.submit t("marketplace.index.apply_filters"), class: "button button--dark button--full" %></noscript>

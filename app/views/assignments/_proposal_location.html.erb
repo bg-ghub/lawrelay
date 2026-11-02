@@ -11,7 +11,7 @@
           <div><dt><%= t("settings.profile.languages") %></dt><dd><ul class="directory-profile__tags"><% profile.spoken_languages.each do |language| %><li class="directory-profile__tag"><%= directory_profile_language_name(language) %></li><% end %></ul></dd></div>
         <% end %>
         <% if profile.practice_areas.any? %>
-          <div><dt><%= t("settings.profile.practice_areas") %></dt><dd><ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= area %></li><% end %></ul></dd></div>
+          <div><dt><%= t("settings.profile.practice_areas") %></dt><dd><ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= practice_area_label(area) %></li><% end %></ul></dd></div>
         <% end %>
         <% if source_url %><div><dt><%= t("profile_import.source") %></dt><dd><%= link_to t("directory_location.profile_link"), source_url, target: "_blank", rel: "noopener noreferrer" %></dd></div><% end %>
       </dl>

@@ -133,15 +133,16 @@ class PrivacyAccountExportTest < ActiveSupport::TestCase
   test "travel terms are exported only for the members own proposals" do
     own_assignment = create_assignment_for(@other)
     own_proposal = create_proposal_for(own_assignment, @member)
-    own_proposal.update!(travel_included: false, travel_cost_cents: 1_250)
+    own_proposal.update!(travel_included: false, travel_cost_cents: 45, travel_cost_kind: "per_km")
     counterpart_assignment = create_assignment_for(@member)
-    create_proposal_for(counterpart_assignment, @other).update!(travel_included: false, travel_cost_cents: 9_750)
+    create_proposal_for(counterpart_assignment, @other).update!(travel_included: false, travel_cost_cents: 9_750, travel_cost_kind: "fixed")
 
     package = Privacy::AccountExport.new(request: @request, actor: @admin).send(:package)
     proposals = package.fetch(:authored_proposals)
     assert_equal [ own_proposal.id ], proposals.pluck("id")
     assert_equal false, proposals.sole.fetch("travel_included")
-    assert_equal 1_250, proposals.sole.fetch("travel_cost_cents")
+    assert_equal 45, proposals.sole.fetch("travel_cost_cents")
+    assert_equal "per_km", proposals.sole.fetch("travel_cost_kind")
   end
 
   test "member, suspended and MFA-unconfigured operators are refused" do

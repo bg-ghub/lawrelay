@@ -25,7 +25,7 @@
           <% elsif @assignment.delivery_due_at.present? %>
             <div><dt><%= t("marketplace.show.delivery_due") %></dt><dd><%= l @assignment.delivery_due_at, format: "%d/%m/%Y · %H:%M" %></dd></div>
           <% end %>
-          <div><dt><%= t("marketplace.show.practice_area") %></dt><dd><%= @assignment.practice_area %></dd></div>
+          <div><dt><%= t("marketplace.show.practice_area") %></dt><dd><%= practice_area_label(@assignment.practice_area) %></dd></div>
           <% if @assignment.legal_task? %>
             <div><dt><%= t("marketplace.show.languages") %></dt><dd><%= @assignment.languages.presence || t("marketplace.show.languages_fallback") %></dd></div>
             <% if @assignment.scope_indication.present? %><div><dt><%= t("marketplace.show.scope_indication") %></dt><dd><%= @assignment.scope_indication %></dd></div><% end %>

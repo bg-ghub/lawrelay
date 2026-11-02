@@ -3,6 +3,7 @@ require_relative "../support/marketplace_test_factory"
 
 class ProposalTravelTermsViewTest < ActionDispatch::IntegrationTest
   include MarketplaceTestFactory
+  include ActiveJob::TestHelper
   self.fixture_table_names = []
 
   setup do
@@ -26,6 +27,8 @@ class ProposalTravelTermsViewTest < ActionDispatch::IntegrationTest
       assert_select "input[name='proposal[travel_included]'][value='true'][checked]"
       assert_select "input[name='proposal[travel_included]'][value='false']:not([checked])"
       assert_select "[data-proposal-travel-target='cost'][hidden]"
+      assert_select "input[name='proposal[travel_cost_kind]'][value='fixed'][checked][disabled]"
+      assert_select "input[name='proposal[travel_cost_kind]'][value='per_km']:not([checked])[disabled]"
       assert_select "input[name='proposal[travel_cost_cents]'][disabled]:not([required])"
       assert_select "input[name='proposal[travel_cost_cents]'][value]", count: 0
       assert_select "input[name='proposal[travel_cost_cents]'][placeholder]", count: 0
@@ -38,15 +41,21 @@ class ProposalTravelTermsViewTest < ActionDispatch::IntegrationTest
     ready = Travel::Estimate::Result.new(status: :ready, distance_meters: 38_000, duration_seconds: 2100)
     with_estimate(ready) do
       %w[fixed hourly].each do |rate_kind|
-        [ true, false ].each do |included|
-          proposal.update!(rate_kind:, travel_included: included, travel_cost_cents: included ? nil : 2_550)
+        [ [ true, nil ], [ false, "fixed" ], [ false, "per_km" ] ].each do |included, travel_cost_kind|
+          amount_cents = travel_cost_kind == "per_km" ? 45 : 2_550
+          proposal.update!(rate_kind:, travel_included: included, travel_cost_kind:, travel_cost_cents: included ? nil : amount_cents)
           [ @owner.user, @candidate.user ].each do |user|
             sign_in_as(user)
             %i[nl fr de en].each do |locale|
               get assignment_path(@assignment, locale:)
               assert_response :success
-              expected = included ? I18n.t("proposal_travel.included", locale:) :
+              expected = if included
+                I18n.t("proposal_travel.included", locale:)
+              elsif travel_cost_kind == "per_km"
+                I18n.t("proposal_travel.additional_per_km", locale:, amount: locale == :en ? "0.45" : "0,45")
+              else
                 I18n.t("proposal_travel.additional", locale:, amount: locale == :en ? "25.50" : "25,50")
+              end
               assert_select ".proposal-travel-summary", text: expected
               assert_select ".candidate-travel [data-travel-estimate-target='text']", text: /38 km.*35/
               assert_select ".candidate-travel a[href='https://www.openstreetmap.org/copyright']"
@@ -111,15 +120,36 @@ class ProposalTravelTermsViewTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "a failed proposal preserves the additional travel selection and entered amount" do
+  test "a failed proposal preserves the travel basis entered amount and matching label" do
     sign_in_as(@candidate.user)
-    post assignment_proposals_path(@assignment, locale: :en), params: {
-      proposal: { rate_kind: "fixed", rate_cents: "150", travel_included: "false", travel_cost_cents: "25.50", message: "" }
-    }
-    assert_response :unprocessable_content
-    assert_select "input[name='proposal[travel_included]'][value='false'][checked]"
-    assert_select "[data-proposal-travel-target='cost']:not([hidden])"
-    assert_select "input[name='proposal[travel_cost_cents]'][value='25.5'][required]:not([disabled])"
+    { "fixed" => [ "25.50", "25.5", "fixedLabel" ], "per_km" => [ "0.45", "0.45", "perKmLabel" ] }.each do |kind, (amount, field_value, label_target)|
+      post assignment_proposals_path(@assignment, locale: :en), params: {
+        proposal: { rate_kind: "fixed", rate_cents: "150", travel_included: "false", travel_cost_kind: kind, travel_cost_cents: amount, message: "" }
+      }
+      assert_response :unprocessable_content
+      assert_select "input[name='proposal[travel_included]'][value='false'][checked]"
+      assert_select "[data-proposal-travel-target='cost']:not([hidden])"
+      assert_select "input[name='proposal[travel_cost_kind]'][value='#{kind}'][checked]:not([disabled])"
+      assert_select "input[name='proposal[travel_cost_cents]'][value='#{field_value}'][required]:not([disabled])"
+      assert_select "label[for='proposal_travel_cost_cents'] [data-proposal-travel-target='#{label_target}']:not([hidden])"
+    end
+  end
+
+  test "a Dutch offer submission keeps its redirect and notice while English notification mail is delivered inline" do
+    assert_equal "en", @candidate.user.locale
+    assert_equal "en", @owner.user.locale
+    sign_in_as(@candidate.user)
+
+    perform_enqueued_jobs(only: NotificationEmailDeliveryJob) do
+      post assignment_proposals_path(@assignment, locale: :nl), params: {
+        proposal: { rate_kind: "fixed", rate_cents: "150", travel_included: "false", travel_cost_kind: "per_km", travel_cost_cents: "0,45", message: "A fictional offer with a separate kilometre rate." }
+      }
+    end
+
+    assert_redirected_to assignment_path(@assignment, locale: :nl)
+    assert_equal I18n.t("notices.proposal_created", locale: :nl), flash[:notice]
+    assert_equal "sent", Notification.find_by!(user: @owner.user, kind: "new_proposal").email_status
+    assert_equal "en", @candidate.user.reload.locale
   end
 
   private

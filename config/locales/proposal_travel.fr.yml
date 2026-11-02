@@ -3,13 +3,21 @@ fr:
     question: "Frais de déplacement compris ?"
     "yes": "Oui"
     "no": "Non"
+    kind_label: "Frais de déplacement"
+    kinds:
+      fixed: "Montant forfaitaire"
+      per_km: "Par kilomètre"
     cost_label: "Frais de déplacement (€)"
     cost_hint: "Montant supplémentaire pour cette mission."
+    per_km_label: "Tarif de déplacement (€/km)"
+    per_km_hint: "Indiquez le tarif convenu par kilomètre."
     included: "Déplacements compris"
     additional: "+ %{amount} € de déplacement"
+    additional_per_km: "+ %{amount} €/km de déplacement"
     not_specified: "Frais de déplacement non précisés"
   activerecord:
     attributes:
       proposal:
         travel_included: "Déplacements compris"
         travel_cost_cents: "Frais de déplacement"
+        travel_cost_kind: "Mode de calcul des frais de déplacement"

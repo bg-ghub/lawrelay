@@ -273,19 +273,31 @@ class SearchableSelectTest < ApplicationSystemTestCase
       assert find("#proposal_travel_included_true").checked?
       assert_no_selector "#proposal_travel_cost_cents"
       assert_field "proposal_travel_cost_cents", disabled: true, visible: :all
+      assert find("#proposal_travel_cost_kind_fixed", visible: :all).checked?
+      assert_field "proposal_travel_cost_kind_fixed", disabled: true, visible: :all
+      assert_field "proposal_travel_cost_kind_per_km", disabled: true, visible: :all
       find("#proposal_travel_included_false").choose
       assert_selector "#proposal_travel_cost_cents[required]"
-      assert_field I18n.t("proposal_travel.cost_label", locale:), disabled: false
+      assert_field "proposal_travel_cost_cents", disabled: false
+      assert_selector "label[for='proposal_travel_cost_cents'] [data-proposal-travel-target='fixedLabel']:not([hidden])", text: I18n.t("proposal_travel.cost_label", locale:)
       fill_in "proposal_travel_cost_cents", with: "25.50"
+      find("#proposal_travel_cost_kind_per_km").choose
+      assert_field "proposal_travel_cost_cents", disabled: false
+      assert_selector "label[for='proposal_travel_cost_cents'] [data-proposal-travel-target='perKmLabel']:not([hidden])", text: I18n.t("proposal_travel.per_km_label", locale:)
+      fill_in "proposal_travel_cost_cents", with: "0.45"
       find("#proposal_travel_included_true").choose
       assert_no_selector "#proposal_travel_cost_cents"
       assert_no_selector "#proposal_travel_cost_cents[required]", visible: :all
+      assert_field "proposal_travel_cost_kind_per_km", disabled: true, visible: :all
       find("#proposal_travel_included_false").choose
-      assert_field "proposal_travel_cost_cents", with: "25.50"
+      assert find("#proposal_travel_cost_kind_per_km").checked?
+      assert_field "proposal_travel_cost_cents", with: "0.45"
       page.execute_script("document.querySelector('form.proposal-form').reset()")
       assert find("#proposal_travel_included_true").checked?
       assert_no_selector "#proposal_travel_cost_cents"
       assert_field "proposal_travel_cost_cents", disabled: true, visible: :all
+      assert find("#proposal_travel_cost_kind_fixed", visible: :all).checked?
+      assert_field "proposal_travel_cost_kind_fixed", disabled: true, visible: :all
     end
 
     assignment.update!(kind: "legal_task", assignment_subtype: "advice", languages: "EN", court: nil, city: nil)
@@ -293,22 +305,32 @@ class SearchableSelectTest < ApplicationSystemTestCase
     assert_no_selector ".proposal-travel-terms", visible: :all
   end
 
-  test "a court offer saves the separate flat travel amount shown to the bidder" do
+  test "a court offer saves fixed per kilometer or included travel terms shown to the bidder" do
     owner = account("travel-price-owner")
-    assignment = create_assignment_for(owner)
-    visit assignment_path(assignment, locale: :en)
-    fill_in "proposal_rate_cents", with: "180.50"
-    find("#proposal_travel_included_false").choose
-    fill_in "proposal_travel_cost_cents", with: "25.50"
-    fill_in "proposal_message", with: "A fictional fixed offer including a separate flat travel charge."
-    click_button I18n.t("marketplace.show.submit", locale: :en)
+    scenarios = [
+      [ "fixed", false, "25.50", 2_550, "+ € 25.50 travel" ],
+      [ "per_km", false, "0.45", 45, "+ € 0.45/km travel" ],
+      [ "per_km", true, "0.45", nil, "Travel included" ]
+    ]
+    scenarios.each do |kind, included, amount, cents, summary|
+      assignment = create_assignment_for(owner)
+      visit assignment_path(assignment, locale: :en)
+      fill_in "proposal_rate_cents", with: "180.50"
+      find("#proposal_travel_included_false").choose
+      find("#proposal_travel_cost_kind_#{kind}").choose
+      fill_in "proposal_travel_cost_cents", with: amount
+      find("#proposal_travel_included_true").choose if included
+      fill_in "proposal_message", with: "A fictional offer with a separate travel charge."
+      click_button I18n.t("marketplace.show.submit", locale: :en)
 
-    assert_text I18n.t("notices.proposal_created", locale: :en)
-    assert_selector ".proposal-travel-summary", text: "+ € 25.50 travel"
-    assert_selector ".proposal-panel p strong", text: "€ 180.50"
-    proposal = assignment.proposals.find_by!(user: @member.user)
-    assert_equal false, proposal.travel_included
-    assert_equal 2_550, proposal.travel_cost_cents
+      assert_text I18n.t("notices.proposal_created", locale: :en)
+      assert_selector ".proposal-travel-summary", text: summary
+      assert_selector ".proposal-panel p strong", text: "€ 180.50"
+      proposal = assignment.proposals.find_by!(user: @member.user)
+      assert_equal included, proposal.travel_included
+      included ? assert_nil(proposal.travel_cost_kind) : assert_equal(kind, proposal.travel_cost_kind)
+      included ? assert_nil(proposal.travel_cost_cents) : assert_equal(cents, proposal.travel_cost_cents)
+    end
   end
 
   private

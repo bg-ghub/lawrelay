@@ -22,17 +22,49 @@ class ProposalTravelTermsBackendTest < ActionDispatch::IntegrationTest
     proposal = @assignment.proposals.sole
     assert_equal false, proposal.travel_included
     assert_equal 1_250, proposal.travel_cost_cents
+    assert_equal "fixed", proposal.travel_cost_kind
     assert_equal 9_050, proposal.rate_cents
+  end
+
+  test "per kilometre travel rates retain decimal euros and their kind after selection" do
+    assert_difference("Proposal.count", 1) do
+      post assignment_proposals_path(@assignment, locale: :en), params: {
+        proposal: proposal_params(travel_included: "false", travel_cost_kind: "per_km", travel_cost_cents: "0,45")
+      }
+    end
+    assert_redirected_to assignment_path(@assignment, locale: :en)
+    proposal = @assignment.proposals.sole
+    assert_equal "per_km", proposal.travel_cost_kind
+    assert_equal 45, proposal.travel_cost_cents
+
+    sign_in_as(@owner.user)
+    patch accept_assignment_proposal_path(@assignment, proposal, locale: :en)
+    assert_redirected_to assignment_path(@assignment, locale: :en)
+    assert_equal "accepted", proposal.reload.status
+    assert_equal "per_km", proposal.travel_cost_kind
+    assert_equal 45, proposal.travel_cost_cents
+  end
+
+  test "unknown and blank separate travel kinds cannot create an offer" do
+    [ "", "hourly", "per_mile" ].each do |kind|
+      assert_no_difference("Proposal.count") do
+        post assignment_proposals_path(@assignment, locale: :en), params: {
+          proposal: proposal_params(travel_included: "false", travel_cost_kind: kind, travel_cost_cents: "1.00")
+        }
+      end
+      assert_response :unprocessable_content
+    end
   end
 
   test "included travel clears a stale additional amount" do
     post assignment_proposals_path(@assignment, locale: :en), params: {
-      proposal: proposal_params(travel_included: "true", travel_cost_cents: "999.99")
+      proposal: proposal_params(travel_included: "true", travel_cost_cents: "999.99", travel_cost_kind: "per_km")
     }
     assert_redirected_to assignment_path(@assignment, locale: :en)
     proposal = @assignment.proposals.sole
     assert_equal true, proposal.travel_included
     assert_nil proposal.travel_cost_cents
+    assert_nil proposal.travel_cost_kind
   end
 
   test "missing legacy travel fields remain unspecified and do not block selection" do
@@ -41,6 +73,7 @@ class ProposalTravelTermsBackendTest < ActionDispatch::IntegrationTest
     proposal = @assignment.proposals.sole
     assert_nil proposal.travel_included
     assert_nil proposal.travel_cost_cents
+    assert_nil proposal.travel_cost_kind
 
     sign_in_as(@owner.user)
     patch accept_assignment_proposal_path(@assignment, proposal, locale: :en)
@@ -89,12 +122,13 @@ class ProposalTravelTermsBackendTest < ActionDispatch::IntegrationTest
   test "legal task requests ignore travel parameters" do
     @assignment.update!(kind: "legal_task", assignment_subtype: "advice", languages: "EN", court: nil, city: nil)
     post assignment_proposals_path(@assignment, locale: :en), params: {
-      proposal: proposal_params(travel_included: "false", travel_cost_cents: "invalid")
+      proposal: proposal_params(travel_included: "false", travel_cost_cents: "invalid", travel_cost_kind: "invalid")
     }
     assert_redirected_to assignment_path(@assignment, locale: :en)
     proposal = @assignment.proposals.sole
     assert_nil proposal.travel_included
     assert_nil proposal.travel_cost_cents
+    assert_nil proposal.travel_cost_kind
   end
 
   private

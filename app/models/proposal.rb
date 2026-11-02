@@ -3,6 +3,7 @@ class Proposal < ApplicationRecord
 
   STATUSES = %w[pending accepted declined withdrawn].freeze
   RATE_KINDS = %w[fixed hourly].freeze
+  TRAVEL_COST_KINDS = %w[fixed per_km].freeze
   MAX_RATE_CENTS = (2**63) - 1 # SQLite stores integer amounts in a signed 64-bit column.
 
   belongs_to :assignment
@@ -22,6 +23,7 @@ class Proposal < ApplicationRecord
   validates :travel_cost_cents,
     numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: MAX_RATE_CENTS },
     if: :separate_travel_cost?
+  validates :travel_cost_kind, inclusion: { in: TRAVEL_COST_KINDS }, if: :separate_travel_cost?
   validate :travel_inclusion_choice_is_valid
   validate :author_account_still_active, on: :create
 
@@ -88,7 +90,12 @@ class Proposal < ApplicationRecord
     unless assignment&.court_replacement?
       self.travel_included = nil
     end
-    self.travel_cost_cents = nil unless separate_travel_cost?
+    if separate_travel_cost?
+      self.travel_cost_kind ||= "fixed"
+    else
+      self.travel_cost_cents = nil
+      self.travel_cost_kind = nil
+    end
   end
 
   def separate_travel_cost?

@@ -3,13 +3,21 @@ de:
     question: "Fahrtkosten im Preis enthalten?"
     "yes": "Ja"
     "no": "Nein"
+    kind_label: "Fahrtkosten"
+    kinds:
+      fixed: "Pauschalbetrag"
+      per_km: "Pro Kilometer"
     cost_label: "Fahrtkosten (€)"
     cost_hint: "Zusätzlicher Betrag für diesen Auftrag."
+    per_km_label: "Kilometersatz (€/km)"
+    per_km_hint: "Geben Sie den vereinbarten Satz pro Kilometer ein."
     included: "Fahrtkosten enthalten"
     additional: "+ %{amount} € Fahrtkosten"
+    additional_per_km: "+ %{amount} €/km Fahrtkosten"
     not_specified: "Fahrtkosten nicht angegeben"
   activerecord:
     attributes:
       proposal:
         travel_included: "Fahrtkosten enthalten"
         travel_cost_cents: "Fahrtkosten"
+        travel_cost_kind: "Berechnung der Fahrtkosten"

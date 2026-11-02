@@ -41,7 +41,7 @@
       <dt><%= t("settings.profile.practice_areas") %></dt>
       <dd>
         <% if profile.practice_areas.any? %>
-          <ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= area %></li><% end %></ul>
+          <ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= practice_area_label(area) %></li><% end %></ul>
         <% else %>
           <span class="directory-profile__empty"><%= t("profile_import.not_available") %></span>
         <% end %>

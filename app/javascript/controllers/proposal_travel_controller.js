@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["choice", "cost", "input"]
+  static targets = ["choice", "cost", "input", "kind", "fixedLabel", "perKmLabel", "fixedHint", "perKmHint"]
 
   connect() {
     this.toggle()
@@ -20,6 +20,12 @@ export default class extends Controller {
     this.costTarget.hidden = !additional
     this.inputTarget.disabled = !additional
     this.inputTarget.required = additional
-    if (event && additional) this.inputTarget.focus()
+    this.kindTargets.forEach((kind) => { kind.disabled = !additional })
+    const perKm = this.kindTargets.some((kind) => kind.checked && kind.value === "per_km")
+    this.fixedLabelTarget.hidden = perKm
+    this.perKmLabelTarget.hidden = !perKm
+    this.fixedHintTarget.hidden = perKm
+    this.perKmHintTarget.hidden = !perKm
+    if (event && additional && this.choiceTargets.includes(event.target)) this.inputTarget.focus()
   }
 }

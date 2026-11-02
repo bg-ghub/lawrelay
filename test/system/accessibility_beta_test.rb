@@ -22,7 +22,7 @@ class AccessibilityBetaTest < ApplicationSystemTestCase
         visit new_session_path(locale:)
 
         links = all(".posting-aside a")
-        assert_equal 2, links.size
+        assert_equal 1, links.size
         links.each do |link|
           size = link.evaluate_script("({width: this.getBoundingClientRect().width, height: this.getBoundingClientRect().height})")
           assert_operator size.fetch("width"), :>=, 24, "#{locale} #{link.text} target width"

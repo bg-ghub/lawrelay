@@ -3,7 +3,7 @@
     <% if proposal.travel_included == true %>
       <%= t("proposal_travel.included") %>
     <% elsif proposal.travel_included == false && proposal.travel_cost_cents.present? %>
-      <%= t("proposal_travel.additional", amount: euro_amount(proposal.travel_cost_cents)) %>
+      <%= t(proposal.travel_cost_kind == "per_km" ? "proposal_travel.additional_per_km" : "proposal_travel.additional", amount: euro_amount(proposal.travel_cost_cents)) %>
     <% else %>
       <%= t("proposal_travel.not_specified") %>
     <% end %>

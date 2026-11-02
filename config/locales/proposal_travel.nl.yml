@@ -3,13 +3,21 @@ nl:
     question: "Prijs inclusief verplaatsingskosten?"
     "yes": "Ja"
     "no": "Nee"
+    kind_label: "Vergoeding voor verplaatsing"
+    kinds:
+      fixed: "Vast bedrag"
+      per_km: "Per kilometer"
     cost_label: "Verplaatsingskosten (€)"
     cost_hint: "Bijkomend bedrag voor deze opdracht."
+    per_km_label: "Verplaatsingstarief (€/km)"
+    per_km_hint: "Vul het afgesproken tarief per kilometer in."
     included: "Verplaatsing inbegrepen"
     additional: "+ € %{amount} verplaatsingskosten"
+    additional_per_km: "+ € %{amount}/km verplaatsingskosten"
     not_specified: "Verplaatsingskosten niet vermeld"
   activerecord:
     attributes:
       proposal:
         travel_included: "Verplaatsing inbegrepen"
         travel_cost_cents: "Verplaatsingskosten"
+        travel_cost_kind: "Vergoeding voor verplaatsing"

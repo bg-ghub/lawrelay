@@ -57,14 +57,33 @@ class ProposalTest < ActiveSupport::TestCase
     proposal.save!
     assert_equal false, proposal.reload.travel_included
     assert_equal 2_450, proposal.travel_cost_cents
+    assert_equal "fixed", proposal.travel_cost_kind
     assert_predicate proposal, :valid?
+  end
+
+  test "separate travel can store a fixed amount or a per kilometre rate" do
+    Proposal::TRAVEL_COST_KINDS.each do |kind|
+      proposal = court_proposal(travel_included: false, travel_cost_kind: kind, travel_cost_cents: 45)
+      proposal.save!
+      assert_equal kind, proposal.reload.travel_cost_kind
+      assert_equal 45, proposal.travel_cost_cents
+    end
+  end
+
+  test "unknown or blank separate travel pricing kinds are rejected" do
+    [ "", "hourly", "per_mile", "FIXED" ].each do |kind|
+      proposal = court_proposal(travel_included: false, travel_cost_kind: kind, travel_cost_cents: 45)
+      assert_not_predicate proposal, :valid?
+      assert_includes proposal.errors.attribute_names, :travel_cost_kind
+    end
   end
 
   test "included or unspecified travel never retains an additional charge" do
     [ true, nil ].each do |included|
-      proposal = court_proposal(travel_included: included, travel_cost_cents: 2_500)
+      proposal = court_proposal(travel_included: included, travel_cost_cents: 2_500, travel_cost_kind: "per_km")
       assert_predicate proposal, :valid?
       assert_nil proposal.travel_cost_cents
+      assert_nil proposal.travel_cost_kind
       proposal.save!
       if included.nil?
         assert_nil proposal.reload.travel_included
@@ -78,6 +97,7 @@ class ProposalTest < ActiveSupport::TestCase
         assert_equal true, proposal.reload.travel_included
       end
       assert_nil proposal.travel_cost_cents
+      assert_nil proposal.travel_cost_kind
     end
   end
 
@@ -93,10 +113,11 @@ class ProposalTest < ActiveSupport::TestCase
 
   test "legal tasks ignore stale travel fields" do
     proposal = assignment.proposals.build(name: "Lena Janssens", email: "lena@example.test", rate_cents: 250_00,
-      message: "A bounded legal task.", travel_included: false, travel_cost_cents: "invalid")
+      message: "A bounded legal task.", travel_included: false, travel_cost_cents: "invalid", travel_cost_kind: "invalid")
     assert_predicate proposal, :valid?
     assert_nil proposal.travel_included
     assert_nil proposal.travel_cost_cents
+    assert_nil proposal.travel_cost_kind
   end
 
   private

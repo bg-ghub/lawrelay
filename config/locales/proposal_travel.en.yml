@@ -3,13 +3,21 @@ en:
     question: "Price includes travel?"
     "yes": "Yes"
     "no": "No"
+    kind_label: "Travel charge"
+    kinds:
+      fixed: "Fixed amount"
+      per_km: "Per kilometre"
     cost_label: "Travel costs (€)"
     cost_hint: "Additional amount for this assignment."
+    per_km_label: "Travel rate (€/km)"
+    per_km_hint: "Enter the agreed rate per kilometre."
     included: "Travel included"
     additional: "+ € %{amount} travel"
+    additional_per_km: "+ € %{amount}/km travel"
     not_specified: "Travel costs not specified"
   activerecord:
     attributes:
       proposal:
         travel_included: "Travel included"
         travel_cost_cents: "Travel costs"
+        travel_cost_kind: "Travel charge"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_01_150000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_060000) do
   create_table "assignments", force: :cascade do |t|
     t.string "kind", default: "court_replacement", null: false
     t.string "title", null: false
@@ -256,6 +256,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_150000) do
     t.string "rate_kind", default: "fixed", null: false
     t.boolean "travel_included"
     t.bigint "travel_cost_cents"
+    t.string "travel_cost_kind"
     t.index ["assignment_id", "user_id"], name: "index_proposals_on_assignment_id_and_user_id", unique: true, where: "user_id IS NOT NULL"
     t.index ["assignment_id"], name: "index_proposals_on_assignment_id"
     t.index ["assignment_id"], name: "index_proposals_on_one_accepted_per_assignment", unique: true, where: "status = 'accepted'"

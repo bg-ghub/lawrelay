@@ -23,7 +23,7 @@
       <% elsif assignment.court.present? || assignment.city.present? %>
         <div><dt><%= t("marketplace.index.where") %></dt><dd><%= [assignment.court, assignment.city].compact_blank.join(" · ") %></dd></div>
       <% end %>
-      <div><dt><%= t("marketplace.index.practice_area") %></dt><dd><%= assignment.practice_area %></dd></div>
+      <div><dt><%= t("marketplace.index.practice_area") %></dt><dd><%= practice_area_label(assignment.practice_area) %></dd></div>
     </dl>
   </div>
   <div class="assignment-card__footer">

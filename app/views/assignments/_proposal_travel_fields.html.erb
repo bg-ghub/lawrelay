@@ -1,4 +1,5 @@
 <% additional_travel_cost = proposal.travel_included == false %>
+<% per_km_travel_cost = proposal.travel_cost_kind == "per_km" %>
 <fieldset class="field-group proposal-travel-terms" data-controller="proposal-travel">
   <legend><%= t("proposal_travel.question") %></legend>
   <div class="proposal-travel-terms__choices">
@@ -11,9 +12,30 @@
       <span><%= t("proposal_travel.no") %></span>
     <% end %>
   </div>
-  <%= tag.div class: "field-group", hidden: !additional_travel_cost, data: { proposal_travel_target: "cost" } do %>
-    <%= form.label :travel_cost_cents, t("proposal_travel.cost_label") %>
-    <%= form.number_field :travel_cost_cents, min: 0, step: 0.01, value: euro_amount(proposal.travel_cost_cents, field: true), required: additional_travel_cost, disabled: !additional_travel_cost, aria: { describedby: "proposal-travel-cost-hint" }, data: { proposal_travel_target: "input" } %>
-    <p class="field-hint" id="proposal-travel-cost-hint"><%= t("proposal_travel.cost_hint") %></p>
+  <%= tag.div class: "proposal-travel-terms__cost", hidden: !additional_travel_cost, data: { proposal_travel_target: "cost" } do %>
+    <fieldset class="field-group proposal-travel-terms__kind">
+      <legend><%= t("proposal_travel.kind_label") %></legend>
+      <div class="proposal-travel-terms__choices">
+        <%= form.label :travel_cost_kind_fixed, class: "choice-row" do %>
+          <%= form.radio_button :travel_cost_kind, "fixed", checked: !per_km_travel_cost, disabled: !additional_travel_cost, data: { proposal_travel_target: "kind", action: "change->proposal-travel#toggle" } %>
+          <span><%= t("proposal_travel.kinds.fixed") %></span>
+        <% end %>
+        <%= form.label :travel_cost_kind_per_km, class: "choice-row" do %>
+          <%= form.radio_button :travel_cost_kind, "per_km", checked: per_km_travel_cost, disabled: !additional_travel_cost, data: { proposal_travel_target: "kind", action: "change->proposal-travel#toggle" } %>
+          <span><%= t("proposal_travel.kinds.per_km") %></span>
+        <% end %>
+      </div>
+    </fieldset>
+    <div class="field-group">
+      <%= form.label :travel_cost_cents do %>
+        <%= tag.span t("proposal_travel.cost_label"), hidden: per_km_travel_cost, data: { proposal_travel_target: "fixedLabel" } %>
+        <%= tag.span t("proposal_travel.per_km_label"), hidden: !per_km_travel_cost, data: { proposal_travel_target: "perKmLabel" } %>
+      <% end %>
+      <%= form.number_field :travel_cost_cents, min: 0, step: 0.01, value: euro_amount(proposal.travel_cost_cents, field: true), required: additional_travel_cost, disabled: !additional_travel_cost, aria: { describedby: "proposal-travel-cost-hint" }, data: { proposal_travel_target: "input" } %>
+      <p class="field-hint" id="proposal-travel-cost-hint">
+        <%= tag.span t("proposal_travel.cost_hint"), hidden: per_km_travel_cost, data: { proposal_travel_target: "fixedHint" } %>
+        <%= tag.span t("proposal_travel.per_km_hint"), hidden: !per_km_travel_cost, data: { proposal_travel_target: "perKmHint" } %>
+      </p>
+    </div>
   <% end %>
 </fieldset>

@@ -1,0 +1,17 @@
+.proposal-travel-terms__choices {
+  flex-wrap: wrap;
+  gap: .45rem 1.25rem;
+}
+
+.proposal-travel-terms__cost {
+  display: grid;
+  gap: .9rem;
+  margin-top: .35rem;
+}
+
+.proposal-travel-terms__kind {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}

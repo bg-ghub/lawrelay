@@ -10,7 +10,7 @@ module Privacy
     ASSIGNMENT_FIELDS = %w[id kind title description court city starts_at duration_minutes practice_area fee_cents status
       urgent languages content_rules_accepted_at assignment_subtype response_deadline_at scope_indication delivery_due_at
       created_at updated_at].freeze
-    PROPOSAL_FIELDS = %w[id assignment_id name email rate_cents rate_kind travel_included travel_cost_cents message status accepted_at declined_at
+    PROPOSAL_FIELDS = %w[id assignment_id name email rate_cents rate_kind travel_included travel_cost_cents travel_cost_kind message status accepted_at declined_at
       withdrawn_at created_at updated_at].freeze
     REGISTRY_CHECK_FIELDS = %w[source status checked_at last_definitive_status last_definitive_at
       issue_status issue_since resolved_at last_alerted_at].freeze

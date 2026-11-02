@@ -42,12 +42,14 @@ module ApplicationHelper
     return Assignment::OTHER_CHOICE unless assignment.practice_area_other.nil?
     return if assignment.practice_area.blank?
 
-    key = I18n.available_locales.filter_map do |locale|
-      I18n.t("marketplace.practice_areas", locale:).key(assignment.practice_area)
-    end.first
+    key = PracticeAreaCatalogue.key(assignment.practice_area)
     return Assignment::OTHER_CHOICE if key.nil? || key.to_s == "other"
 
     t("marketplace.practice_areas.#{key}")
+  end
+
+  def practice_area_label(value)
+    PracticeAreaCatalogue.label(value)
   end
 
   def assignment_practice_area_other_value(assignment)
