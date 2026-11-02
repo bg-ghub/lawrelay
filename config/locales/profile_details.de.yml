@@ -10,4 +10,9 @@ de:
       add_court: "Präferenz hinzufügen"
       remove_court: "Entfernen"
       availability_hint: "Zum Beispiel feste Tage oder Regionen. Höchstens 500 Zeichen. Keine Mandanten- oder Aktenangaben eintragen."
-      self_reported: "Vom Anwalt selbst angegeben."
+      self_reported: "Eigenangabe"
+  proposal_details:
+    offer: "Angebot"
+    driving_distance: "Fahrstrecke"
+    directory_title: "Berufliche Angaben"
+    experience_title: "Erfahrung"

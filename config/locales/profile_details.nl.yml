@@ -10,4 +10,9 @@ nl:
       add_court: "Voorkeur toevoegen"
       remove_court: "Verwijderen"
       availability_hint: "Bijvoorbeeld vaste dagen of regio’s. Maximaal 500 tekens. Vermeld geen cliënt- of dossiergegevens."
-      self_reported: "Door de advocaat opgegeven."
+      self_reported: "Eigenopgave"
+  proposal_details:
+    offer: "Aanbod"
+    driving_distance: "Rijafstand"
+    directory_title: "Beroepsgegevens"
+    experience_title: "Ervaring"

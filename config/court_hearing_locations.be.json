@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "reviewed_on": "2026-11-01",
+  "reviewed_on": "2026-11-02",
   "catalogue_hash_format": "parsed-json-v1",
-  "catalogue_sha256": "6c3ec3acc946a76924c7404603b36d2929aaad3a7cf6eb78d2ee25c7eebda3ac",
+  "catalogue_sha256": "fc279491e08bab93bbcec92c2f20fe0eb617c3fb87d6c5fe08c30724412dee8d",
   "official_sources_sha256": "5b8d4670705d98cb7e23b8a1400d8b9835c27375cdf791cda6917c2c5865953a",
   "official_sources_updated_at": "2026-11-01T12:10:40Z",
-  "reviewed_overrides_sha256": "4068e2387de33fbe8be8da1e11442a170e8d65c7a2c9602c3fc41d5bb24268b1",
-  "official_address_index_sha256": "956a05812ed434a26a3f086cd42247f24a51212cc0a717e11a7e3019e0cace78",
+  "reviewed_overrides_sha256": "4706569dade3012e45b1544e346cc5a7c9664fa10caa55c25402e7272c15a9af",
+  "official_address_index_sha256": "0af14646123c48cfba9df1ee3794ebe6e0f719c5046df669abc0b87e3a071d3c",
   "selection_rule": "exact-source-city-qualified-hearing-address-v1",
   "records": [
     {
@@ -1324,8 +1324,10 @@
     },
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
-      "city": "Saint-Vith",
-      "status": "unconfirmed"
+      "city": "Eupen",
+      "status": "available",
+      "address": "Rathausplatz 4, 4700 Eupen",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith"
     },
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-liege-division-huy",
@@ -1351,9 +1353,10 @@
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant",
       "city": "Dinant",
+      "hearing_address": "Rue Arthur Defoin 215B",
       "status": "available",
-      "address": "Rue A. Defoin 215 C, 5500 Dinant",
-      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant"
+      "address": "Rue Arthur Defoin 215B, 5500 Dinant",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant/info?page=n1201"
     },
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-namur",
@@ -1630,7 +1633,18 @@
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
       "city": "Neufchâteau",
-      "status": "ambiguous"
+      "hearing_address": "Place Charles Bergh 1",
+      "status": "available",
+      "address": "Place Charles Bergh 1, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau"
+    },
+    {
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "city": "Neufchâteau",
+      "hearing_address": "Place Charles Bergh 7/1",
+      "status": "available",
+      "address": "Place Charles Bergh 7/1, 6840 Neufchâteau",
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau"
     },
     {
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-francophone-de-bruxelles",

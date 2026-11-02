@@ -3,6 +3,8 @@ require "tmpdir"
 require_relative "../../../script/ops/import-court-addresses"
 
 class CourtAddressImporterTest < ActiveSupport::TestCase
+  self.fixture_table_names = []
+
   class Catalogue
     LOCALES = %i[nl fr de en].freeze
     DATA = {
@@ -30,6 +32,19 @@ class CourtAddressImporterTest < ActiveSupport::TestCase
   class MultiVenueCatalogue < Catalogue
     DATA = Catalogue::DATA.merge("courts" => Catalogue::DATA.fetch("courts") + [
       Catalogue::DATA.fetch("courts").last.merge("id" => "antwerp", "city" => "Antwerpen")
+    ]).freeze
+  end
+
+  class PublishedCoordinateCatalogue < Catalogue
+    DATA = {
+      "places" => {},
+      "courts" => [ { "city" => "Ciney", "id" => "ciney", "source" => "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney" } ]
+    }.freeze
+  end
+
+  class MultiPublishedCoordinateCatalogue < Catalogue
+    DATA = PublishedCoordinateCatalogue::DATA.merge("courts" => PublishedCoordinateCatalogue::DATA.fetch("courts") + [
+      PublishedCoordinateCatalogue::DATA.fetch("courts").first.merge("id" => "antwerp", "city" => "Antwerpen")
     ]).freeze
   end
 
@@ -290,7 +305,118 @@ class CourtAddressImporterTest < ActiveSupport::TestCase
     assert_equal 2, result[:counts]["matched"]
   end
 
+  test "a reviewed municipal published coordinate keeps its exact address and coordinate provenance" do
+    record = official_published_record
+    assert_equal({ "matched" => 1 }, import_official_published_record(record)[:counts])
+    point = Travel::AddressIndex.new(path: @output).court(name: "nl Test court ciney", city: "Ciney")
+    assert_equal 50.2950177, point.latitude
+    assert_equal 5.100674, point.longitude
+    first_hash = nil
+    SQLite3::Database.new(@output, readonly: true) do |database|
+      first_hash = database.get_first_value("SELECT source_sha256 FROM court_sources LIMIT 1")
+    end
+
+    FileUtils.rm(@output)
+    record["reviewed_point"]["coordinate_source_sha256"] = "d" * 64
+    import_official_published_record(record)
+    second_hash = nil
+    SQLite3::Database.new(@output, readonly: true) do |database|
+      second_hash = database.get_first_value("SELECT source_sha256 FROM court_sources LIMIT 1")
+    end
+    assert_not_equal first_hash, second_hash, "The court source hash must retain coordinate-source provenance"
+  end
+
+  test "an unreviewed municipal published coordinate cannot create a court destination" do
+    record = official_published_record
+    collection = JSON.parse(File.read(@sources))
+    collection["records"][record.fetch("source_url")] = record
+    File.write(@sources, JSON.generate(collection))
+    result = CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue: PublishedCoordinateCatalogue, overrides_path: nil).call
+    assert_equal({ "invalid" => 1 }, result[:counts])
+    assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court ciney", city: "Ciney")
+  end
+
+  test "municipal published coordinates require exact address binding a source checksum and evidence" do
+    invalid_changes = [
+      { "address" => "Rue Courtejoie 17 5590 Ciney" },
+      { "address" => nil },
+      { "coordinate_source_sha256" => "not-a-sha256" },
+      { "coordinate_source_sha256" => nil },
+      { "coordinate_source_url" => nil },
+      { "latitude" => "50.2950177" },
+      { "latitude" => 48.0 }
+    ]
+    invalid_changes.each do |change|
+      record = official_published_record
+      record.fetch("reviewed_point").merge!(change)
+      result = import_official_published_record(record)
+      assert_equal({ "invalid" => 1 }, result[:counts], change.inspect)
+      assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court ciney", city: "Ciney")
+      FileUtils.rm(@output)
+    end
+    record = official_published_record
+    record.delete("evidence_urls")
+    assert_equal({ "invalid" => 1 }, import_official_published_record(record)[:counts])
+    assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court ciney", city: "Ciney")
+  end
+
+  test "municipal published coordinates accept only the curated safe HTTPS origin" do
+    [
+      "http://www.ciney.be/annuaire/justice-de-paix",
+      "https://www.ciney.be.evil.example/annuaire/justice-de-paix",
+      "https://www.ciney.be@evil.example/annuaire/justice-de-paix",
+      "https://user@www.ciney.be/annuaire/justice-de-paix",
+      "https://www.ciney.be:8443/annuaire/justice-de-paix",
+      "https://www.ciney.be/annuaire/justice-de-paix#unverified",
+      "not a URL"
+    ].each do |url|
+      record = official_published_record
+      record.fetch("reviewed_point")["coordinate_source_url"] = url
+      record["evidence_urls"] = [ url ]
+      assert_equal({ "invalid" => 1 }, import_official_published_record(record)[:counts], url)
+      assert_nil Travel::AddressIndex.new(path: @output).court(name: "nl Test court ciney", city: "Ciney")
+      FileUtils.rm(@output)
+    end
+  end
+
+  test "a municipal published point cannot apply to every address of a multi-site source" do
+    record = official_published_record
+    record.fetch("addresses") << "Other Street 9, 2000 Antwerpen"
+    assert_equal({ "invalid" => 2 }, import_official_published_record(record, catalogue: MultiPublishedCoordinateCatalogue)[:counts])
+    FileUtils.rm(@output)
+
+    record["reviewed_points"] = [ record.delete("reviewed_point") ]
+    result = import_official_published_record(record, catalogue: MultiPublishedCoordinateCatalogue)
+    assert_equal({ "matched" => 1, "unmapped" => 1 }, result[:counts])
+    index = Travel::AddressIndex.new(path: @output)
+    assert_equal 50.2950177, index.court(name: "nl Test court ciney", city: "Ciney").latitude
+    assert_nil index.court(name: "nl Test court antwerp", city: "Antwerpen")
+    FileUtils.rm(@output)
+
+    record.fetch("reviewed_points").first["address"] = "Rue Courtejoie 17 (3ème étage) 5590 Ciney"
+    assert_equal({ "invalid" => 2 }, import_official_published_record(record, catalogue: MultiPublishedCoordinateCatalogue)[:counts])
+  end
+
   private
+
+  def official_published_record
+    source = PublishedCoordinateCatalogue::DATA.fetch("courts").first.fetch("source")
+    address = "Rue Courtejoie 17 ( 3ème étage ) 5590 Ciney"
+    coordinate_source = "https://www.ciney.be/annuaire/justice-de-paix"
+    { "source_url" => source, "final_url" => source, "status" => "ok", "addresses" => [ address ],
+      "evidence_urls" => [ source, coordinate_source ],
+      "reviewed_point" => { "kind" => "official_published_point", "address" => address,
+        "latitude" => 50.2950177, "longitude" => 5.100674, "coordinate_source_url" => coordinate_source,
+        "coordinate_source_sha256" => "d15d36a7275b3fe1e72bb55eb2980fc7f4904532a03494f47f85e0fdf9656a5d" } }
+  end
+
+  def import_official_published_record(record, catalogue: PublishedCoordinateCatalogue)
+    path = File.join(@directory, "official-published-point.json")
+    File.write(path, JSON.generate(reviewed_on: "2026-11-02", records: { record.fetch("source_url") => record }))
+    CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources,
+      catalogue:, overrides_path: path).call
+  end
 
   def importer
     CourtAddressImporter.new(input_path: @input, output_path: @output, sources_path: @sources, catalogue: Catalogue)

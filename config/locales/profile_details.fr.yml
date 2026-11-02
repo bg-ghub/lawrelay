@@ -10,4 +10,9 @@ fr:
       add_court: "Ajouter une préférence"
       remove_court: "Supprimer"
       availability_hint: "Par exemple des jours fixes ou des régions. Maximum 500 caractères. Ne mentionnez aucune donnée de client ou de dossier."
-      self_reported: "Informations fournies par l’avocat."
+      self_reported: "Déclaré par l’avocat"
+  proposal_details:
+    offer: "Offre"
+    driving_distance: "Distance par la route"
+    directory_title: "Profil professionnel"
+    experience_title: "Expérience"

@@ -1,7 +1,72 @@
+.candidate-proposals {
+  gap: 1.25rem;
+}
+
+.candidate-proposal__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem .65rem;
+  color: var(--ink);
+}
+
+.candidate-proposal--own {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.candidate-proposal .candidate-proposal__message {
+  margin: .5rem 0 .85rem;
+  font-size: .84rem;
+  overflow-wrap: anywhere;
+}
+
+.candidate-details__heading {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: .73rem;
+  font-weight: 780;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+.candidate-offer {
+  margin: 0 0 1rem;
+  border-radius: 9px;
+  background: var(--paper);
+  padding: .8rem .9rem;
+}
+
+.candidate-proposal .candidate-offer__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .25rem .6rem;
+  margin: .25rem 0 0;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.candidate-offer__price strong {
+  color: var(--ink);
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.candidate-offer .proposal-travel-summary {
+  margin: .25rem 0 0;
+  font-size: .77rem;
+}
+
+.candidate-directory {
+  margin: 1rem 0;
+}
+
 .candidate-location {
   display: grid;
-  gap: .6rem;
-  margin: .9rem 0;
+  gap: .55rem;
+  margin: .55rem 0 0;
   font-size: .8rem;
   line-height: 1.45;
 }
@@ -18,15 +83,28 @@
 
 .candidate-travel {
   display: grid;
-  gap: .25rem;
-  border-left: 3px solid var(--mint);
-  padding-left: .65rem;
-  font-size: .82rem;
+  gap: .1rem;
+  margin: .7rem 0 0;
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+.candidate-travel dt {
+  color: var(--muted);
+  font-size: .7rem;
+}
+
+.candidate-travel dd {
+  margin: 0;
+  color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .candidate-travel small {
+  display: block;
+  margin-top: .2rem;
   color: var(--muted);
-  font-size: .68rem;
+  font-size: .65rem;
 }
 
 .candidate-travel small a:hover {

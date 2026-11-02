@@ -10,4 +10,9 @@ en:
       add_court: "Add preference"
       remove_court: "Remove"
       availability_hint: "For example, regular days or regions. Up to 500 characters. Do not include client or case details."
-      self_reported: "Details provided by the lawyer."
+      self_reported: "Self-reported"
+  proposal_details:
+    offer: "Offer"
+    driving_distance: "Driving distance"
+    directory_title: "Professional details"
+    experience_title: "Experience"

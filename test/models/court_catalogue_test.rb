@@ -9,7 +9,7 @@ class CourtCatalogueTest < ActiveSupport::TestCase
 
     assert_equal %w[appeal assize cassation constitutional enterprise first_instance labour labour_appeal peace police state], courts.map { |court| court.fetch("type") }.uniq.sort
     assert_equal 163, courts.count { |court| court.fetch("type") == "peace" }
-    assert_equal 325, courts.size
+    assert_equal 326, courts.size
     assert_equal 320, courts.map { |court| court.fetch("source") }.uniq.size
     assert_equal courts.size, courts.map { |court| court.values_at("source", "city", "hearing_address") }.uniq.size
     assert courts.all? { |court| court.fetch("source").start_with?("https://") }
@@ -21,7 +21,7 @@ class CourtCatalogueTest < ActiveSupport::TestCase
     %i[nl fr de en].each do |locale|
       options = CourtCatalogue.options(locale:)
 
-      assert_equal 325, options.size
+      assert_equal 326, options.size
       assert_equal options.size, options.map { |option| option.fetch(:label) }.uniq.size
       assert options.all? { |option| option.fetch(:label).length <= 180 }
       assert options.all? { |option| option.fetch(:city).present? && option.fetch(:city).length <= 100 }
@@ -149,18 +149,33 @@ class CourtCatalogueTest < ActiveSupport::TestCase
     end
   end
 
-  test "unconfirmed Saint Vith police hearings remain explicit and do not invent a destination" do
+  test "Saint Vith police division retains its branch while using the published Eupen hearing site" do
     entry = CourtCatalogue::DATA.fetch("courts").find { |court| court.fetch("source").end_with?("/tribunal-de-police-deupen-division-saint-vith") }
-    assert_equal "Saint-Vith", entry.fetch("city")
-    assert_equal false, entry.fetch("hearing_verified")
-    assert_nil entry["hearing_place"]
+    assert_equal "Saint-Vith", entry.fetch("venue")
+    assert_equal "Saint-Vith", entry.fetch("judicial_city")
+    assert_equal "Eupen", entry.fetch("city")
+    assert_equal "Eupen", entry.fetch("hearing_place")
+    assert_nil entry["hearing_verified"]
 
     CourtCatalogue::LOCALES.each do |locale|
       option = CourtCatalogue.option_for(entry, locale:)
-      assert_equal false, option.fetch(:hearing_verified)
-      assert_includes option.fetch(:label), I18n.t("court_picker.hearing_unconfirmed", locale:)
-      qualification = " — #{I18n.t('court_picker.hearing_unconfirmed', locale:)}"
-      assert_includes option.fetch(:labels), option.fetch(:label).delete_suffix(qualification)
+      assert_equal true, option.fetch(:hearing_verified)
+      assert_includes option.fetch(:label), I18n.t("court_picker.division", locale:)
+      eupen = CourtCatalogue::DATA.fetch("places").dig("Eupen", locale.to_s) || "Eupen"
+      saint_vith = CourtCatalogue::DATA.fetch("places").dig("Saint-Vith", locale.to_s) || "Saint-Vith"
+      assert_includes option.fetch(:label), I18n.t("court_picker.hearing_place", locale:, place: eupen)
+      assert_includes option.fetch(:cities), saint_vith
+    end
+  end
+
+  test "Dinant police division displays the verified hearing building while retaining the published source" do
+    entry = CourtCatalogue::DATA.fetch("courts").find { |court| court.fetch("source").end_with?("/tribunal-de-police-de-namur-division-dinant") }
+    assert_equal "Rue Arthur Defoin 215B", entry.fetch("hearing_address")
+    assert_equal "Dinant", entry.fetch("hearing_place")
+    CourtCatalogue::LOCALES.each do |locale|
+      option = CourtCatalogue.option_for(entry, locale:)
+      assert_includes option.fetch(:label), "Rue Arthur Defoin 215B"
+      assert option.fetch(:hearing_verified)
     end
   end
 
@@ -198,6 +213,29 @@ class CourtCatalogueTest < ActiveSupport::TestCase
       assert_not_empty shared_labels
       shared_labels.each do |label|
         assert_equal 3, CourtCatalogue.options(locale:).count { |option| option.fetch(:labels).include?(label) && option.fetch(:cities).include?("Nivelles") }
+      end
+    end
+  end
+
+  test "Neufchateau first instance exposes its two published hearing buildings" do
+    entries = CourtCatalogue::DATA.fetch("courts").select do |court|
+      court.fetch("source").end_with?("/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau")
+    end
+    assert_equal 2, entries.size
+    assert_equal [ "Place Charles Bergh 1", "Place Charles Bergh 7/1" ], entries.map { |entry| entry.fetch("hearing_address") }
+    assert entries.all? { |entry| entry.fetch("hearing_place") == "Neufchâteau" }
+
+    CourtCatalogue::LOCALES.each do |locale|
+      options = entries.map { |entry| CourtCatalogue.option_for(entry, locale:) }
+      assert_equal 2, options.map { |option| option.fetch(:label) }.uniq.size
+      options.zip(entries).each do |option, entry|
+        assert_includes option.fetch(:label), entry.fetch("hearing_address")
+        assert_includes option.fetch(:current_labels), option.fetch(:label)
+      end
+      shared_labels = options.map { |option| option.fetch(:labels) }.reduce(:&)
+      assert_not_empty shared_labels
+      shared_labels.each do |label|
+        assert_equal 2, CourtCatalogue.options(locale:).count { |option| option.fetch(:labels).include?(label) && option.fetch(:cities).include?(option.fetch(:city)) }
       end
     end
   end

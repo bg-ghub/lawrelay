@@ -2,31 +2,32 @@
 <% if candidate&.marketplace_verified? && (profile = candidate.lawyer_profile)&.directory_matched? %>
   <% source_url = Directory::AdvocaatBeProfileLookup.canonical_profile_url(profile.directory_profile_url) %>
   <% if profile.directory_bar_name.present? || profile.directory_professional_address.present? || profile.spoken_languages.any? || profile.practice_areas.any? || source_url %>
-    <dl class="candidate-location">
-      <% if profile.directory_bar_name.present? %><div><dt><%= t("directory_location.bar") %></dt><dd><%= profile.directory_bar_name %></dd></div><% end %>
-      <% if profile.directory_professional_address.present? %><div><dt><%= t("directory_location.address") %></dt><dd><%= profile.directory_professional_address %></dd></div><% end %>
-      <% if profile.spoken_languages.any? %>
-        <div><dt><%= t("settings.profile.languages") %></dt><dd><ul class="directory-profile__tags"><% profile.spoken_languages.each do |language| %><li class="directory-profile__tag"><%= directory_profile_language_name(language) %></li><% end %></ul></dd></div>
-      <% end %>
-      <% if profile.practice_areas.any? %>
-        <div><dt><%= t("settings.profile.practice_areas") %></dt><dd><ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= area %></li><% end %></ul></dd></div>
-      <% end %>
-      <% if source_url %><div><dt><%= t("profile_import.source") %></dt><dd><%= link_to t("directory_location.profile_link"), source_url, target: "_blank", rel: "noopener noreferrer" %></dd></div><% end %>
-    </dl>
-  <% end %>
-  <% if proposal.assignment.court_replacement? %>
-    <% estimate = Travel::Estimate.call(proposal:) %>
-    <p class="candidate-travel" data-controller="travel-estimate" data-travel-estimate-url-value="<%= assignment_proposal_travel_estimate_path(proposal.assignment, proposal) %>" data-travel-estimate-pending-value="<%= estimate.status == :pending %>" data-travel-estimate-unavailable-value="<%= t('travel.unavailable') %>">
-      <span data-travel-estimate-target="text" role="status"><%= travel_estimate_text(estimate) %></span>
-      <small data-travel-estimate-target="attribution" <%= "hidden" unless estimate.ready? %>><%= link_to "© OpenStreetMap", "https://www.openstreetmap.org/copyright", target: "_blank", rel: "noopener noreferrer" %><% if Travel::AddressIndex.new.best_available? %> · <%= link_to "BeSt Address", "https://opendata.bosa.be/index.nl.html", target: "_blank", rel: "noopener noreferrer" %><% end %></small>
-    </p>
+    <section class="candidate-directory" aria-label="<%= t("proposal_details.directory_title") %>">
+      <h3 class="candidate-details__heading"><%= t("proposal_details.directory_title") %></h3>
+      <dl class="candidate-location">
+        <% if profile.directory_bar_name.present? %><div><dt><%= t("directory_location.bar") %></dt><dd><%= profile.directory_bar_name %></dd></div><% end %>
+        <% if profile.directory_professional_address.present? %><div><dt><%= t("directory_location.address") %></dt><dd><%= profile.directory_professional_address %></dd></div><% end %>
+        <% if profile.spoken_languages.any? %>
+          <div><dt><%= t("settings.profile.languages") %></dt><dd><ul class="directory-profile__tags"><% profile.spoken_languages.each do |language| %><li class="directory-profile__tag"><%= directory_profile_language_name(language) %></li><% end %></ul></dd></div>
+        <% end %>
+        <% if profile.practice_areas.any? %>
+          <div><dt><%= t("settings.profile.practice_areas") %></dt><dd><ul class="directory-profile__tags"><% profile.practice_areas.each do |area| %><li class="directory-profile__tag"><%= area %></li><% end %></ul></dd></div>
+        <% end %>
+        <% if source_url %><div><dt><%= t("profile_import.source") %></dt><dd><%= link_to t("directory_location.profile_link"), source_url, target: "_blank", rel: "noopener noreferrer" %></dd></div><% end %>
+      </dl>
+    </section>
   <% end %>
 <% end %>
 <% if candidate&.marketplace_verified? && (profile = candidate.lawyer_profile) && (proposal.assignment.owned_by?(current_user) || proposal.owned_by?(current_user)) %>
   <% if profile.bar_admission_year.present? %>
-    <dl class="candidate-location candidate-profile">
-      <div><dt><%= t("settings.profile.bar_admission_year") %></dt><dd><%= profile.bar_admission_year %></dd></div>
-    </dl>
-    <p class="candidate-profile__note"><%= t("settings.preferences.self_reported") %></p>
+    <section class="candidate-profile" aria-label="<%= t("proposal_details.experience_title") %>">
+      <header class="candidate-profile__header">
+        <h3 class="candidate-details__heading"><%= t("proposal_details.experience_title") %></h3>
+        <span class="candidate-profile__note"><%= t("settings.preferences.self_reported") %></span>
+      </header>
+      <dl>
+        <div><dt><%= t("settings.profile.bar_admission_year") %></dt><dd><strong><%= profile.bar_admission_year %></strong></dd></div>
+      </dl>
+    </section>
   <% end %>
 <% end %>

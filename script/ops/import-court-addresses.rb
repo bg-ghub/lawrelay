@@ -13,6 +13,7 @@ require_relative "collect-court-addresses"
 class CourtAddressImporter
   MAX_SOURCE_BYTES = 8 * 1024 * 1024
   REVIEWED_DESTINATION_HOSTS = %w[st.vith.be www.st.vith.be].freeze
+  OFFICIAL_COORDINATE_HOSTS = %w[ciney.be www.ciney.be].freeze
   PublishedAddress = Data.define(:value, :city, :municipality)
 
   def self.parse_published_address(address)
@@ -213,7 +214,7 @@ class CourtAddressImporter
       # A single point must never silently apply to multiple hearing buildings.
       return :invalid unless addresses.one?
 
-      return reviewed_point(source, record.fetch("reviewed_point")) || :invalid
+      return reviewed_point(source, record.fetch("reviewed_point"), record:, address: addresses.first) || :invalid
     end
 
     values = record.fetch("reviewed_points")
@@ -223,7 +224,7 @@ class CourtAddressImporter
 
     mapped = {}
     values.each do |value|
-      point = reviewed_point(source, value)
+      point = reviewed_point(source, value, record:, address: value.fetch("address"))
       return :invalid unless point
       mapped[value.fetch("address")] = point
     end
@@ -231,14 +232,18 @@ class CourtAddressImporter
     mapped[original]
   end
 
-  def reviewed_point(source, value)
+  def reviewed_point(source, value, record:, address:)
     return unless @verified_overrides.include?(source) && value.is_a?(Hash)
-    return unless value["pbf_sha256"] == @index.source_sha256 && value["osm_type"].in?(%w[node way relation])
-    return unless value["osm_id"].is_a?(Integer) && value["osm_id"].positive? && value["osm_id"] < 2**63
-    if value["osm_type"] == "relation"
-      return unless value["geometry_complete"] == true && value["geometry_valid"] == true && value["point_in_building_geometry"] == true &&
-        value["geometry_method"] == "multipolygon_interior_point" &&
-        value["geometry_sha256"].is_a?(String) && value["geometry_sha256"].match?(/\A[0-9a-f]{64}\z/)
+    if value["kind"] == "official_published_point"
+      return unless official_published_point?(value, record:, address:)
+    else
+      return unless value["pbf_sha256"] == @index.source_sha256 && value["osm_type"].in?(%w[node way relation])
+      return unless value["osm_id"].is_a?(Integer) && value["osm_id"].positive? && value["osm_id"] < 2**63
+      if value["osm_type"] == "relation"
+        return unless value["geometry_complete"] == true && value["geometry_valid"] == true && value["point_in_building_geometry"] == true &&
+          value["geometry_method"] == "multipolygon_interior_point" &&
+          value["geometry_sha256"].is_a?(String) && value["geometry_sha256"].match?(/\A[0-9a-f]{64}\z/)
+      end
     end
 
     latitude, longitude = value.values_at("latitude", "longitude")
@@ -246,6 +251,19 @@ class CourtAddressImporter
     return unless latitude.between?(49.3, 51.7) && longitude.between?(2.3, 6.7)
 
     Travel::AddressIndex::Point.new(latitude:, longitude:)
+  end
+
+  def official_published_point?(value, record:, address:)
+    return false unless value["address"] == address
+    return false unless value["coordinate_source_sha256"].is_a?(String) && value["coordinate_source_sha256"].match?(/\A[0-9a-f]{64}\z/)
+
+    source_url = value["coordinate_source_url"]
+    return false unless source_url.is_a?(String) && record["evidence_urls"].is_a?(Array) && record["evidence_urls"].include?(source_url)
+
+    uri = URI(source_url)
+    uri.is_a?(URI::HTTPS) && uri.port == 443 && OFFICIAL_COORDINATE_HOSTS.include?(uri.host) && uri.userinfo.nil? && uri.fragment.nil?
+  rescue URI::InvalidURIError
+    false
   end
 
   def normalize(value)

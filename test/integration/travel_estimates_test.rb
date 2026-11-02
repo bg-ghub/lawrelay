@@ -123,7 +123,8 @@ class TravelEstimatesTest < ActionDispatch::IntegrationTest
         assert_select ".candidate-travel[data-travel-estimate-url-value='#{assignment_proposal_travel_estimate_path(@assignment, @proposal, locale:)}']"
         assert_select ".candidate-travel [data-travel-estimate-target='text']", text: /38 km.*35/
         assert_select ".candidate-travel a[href='https://www.openstreetmap.org/copyright']", text: "© OpenStreetMap"
-        assert_select ".candidate-proposal", count: 0
+        assert_select ".candidate-proposals .candidate-proposal", count: 0
+        assert_select ".candidate-proposal--own", count: 1
         assert_not_includes response.body, "Other bidder private offer"
         assert_not_includes response.body, "Other Private Street 88"
         assert_not_includes response.body, "Other Private Bar"

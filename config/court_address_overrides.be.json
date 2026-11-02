@@ -1,5 +1,5 @@
 {
-  "reviewed_on": "2026-11-01",
+  "reviewed_on": "2026-11-02",
   "records": {
     "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven": {
       "source_url": "https://www.tribunaux-rechtbanken.be/nl/politierechtbank-leuven",
@@ -2247,6 +2247,215 @@
       "evidence_urls": [
         "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-dinant",
         "https://www.openstreetmap.org/way/250311310"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron",
+      "title": "Justice de paix de Mouscron",
+      "addresses": [
+        "Place Lamartine 1 (Bâtiment du SPF Finances) 7700 Mouscron"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:55:55Z",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.7521511,
+        "longitude": 3.1835999,
+        "osm_type": "node",
+        "osm_id": 11040079367,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "The official court page publishes Place Lamartine 1 (Bâtiment du SPF Finances), and its map link names SPF Finances on Rue de l'Echauffourée. The local OSM PBF identifies the SPF Finances government POI at this point, inside building way 682386025. The unrelated Rue de l'Echauffourée 1 industrial address is excluded.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-mouscron",
+        "https://www.openstreetmap.org/node/11040079367",
+        "https://www.openstreetmap.org/way/682386025"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde",
+      "title": "Vredegerecht Oudenaarde",
+      "addresses": [
+        "Beverstraat 7B (eerste verdieping) 9700 Oudenaarde"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-01T11:57:04Z",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.847766963150264,
+        "longitude": 3.601057416648258,
+        "osm_type": "way",
+        "osm_id": 1118642974,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "The official court page publishes Beverstraat 7B (eerste verdieping). The Flemish Sociale Kaart identifies the same Vredegerecht at Beverestraat 7B with matching court contact details; official address/building evidence identifies the realized building represented by OSM way 1118642974. This source-specific interpretation preserves the published B suffix and does not create a global alias.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-oudenaarde",
+        "https://www.desocialekaart.be/fiches/497466/adresgegevens",
+        "https://www.desocialekaart.be/api/leaflet/497466",
+        "https://api.basisregisters.vlaanderen.be/v2/adressen/3228870",
+        "https://api.basisregisters.vlaanderen.be/v2/gebouwen/15400411",
+        "https://www.openstreetmap.org/way/1118642974"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "title": "Tribunal de première instance du Luxembourg - division Neufchâteau",
+      "addresses": [
+        "Place Charles Bergh 1 6840 Neufchâteau",
+        "Place Charles Bergh 7/1 6840 Neufchâteau"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-02T00:00:00Z",
+      "address_role": "hearing",
+      "reviewed_points": [
+        {
+          "address": "Place Charles Bergh 1 6840 Neufchâteau",
+          "latitude": 49.841542966666665,
+          "longitude": 5.435696406666667,
+          "osm_type": "way",
+          "osm_id": 189587241,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        },
+        {
+          "address": "Place Charles Bergh 7/1 6840 Neufchâteau",
+          "latitude": 49.842206215,
+          "longitude": 5.435912965,
+          "osm_type": "way",
+          "osm_id": 397460234,
+          "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+        }
+      ],
+      "match_basis": "The official source publishes the combined Place Charles Bergh 1 et 7/1 destination. Independent local evidence identifies two distinct courthouse buildings: Palais de Justice / Tribunal de première instance at house 1 (way 189587241) and Tribunaux de Neufchâteau at house 7 with units 1-8 (way 397460234). The two catalogue choices bind each reviewed point to its published address; no chamber allocation is inferred.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+        "https://www.openstreetmap.org/way/189587241",
+        "https://www.openstreetmap.org/way/397460234"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant/info?page=n1201",
+      "title": "Tribunal de police de Namur - division Dinant",
+      "addresses": [
+        "Rue Arthur Defoin 215B 5500 Dinant"
+      ],
+      "published_addresses": [
+        "Rue Arthur Defoin 215 C 5500 Dinant"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-02T00:00:00Z",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.241480148174595,
+        "longitude": 4.920268138751875,
+        "osm_type": "way",
+        "osm_id": 250311309,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "The official Dinant police information page identifies Bloc A as the registry and Bloc B as the hearing entrance. Use the actual hearing building at Rue Arthur Defoin 215B for travel/display while retaining the source's published postal 215C in published_addresses; no suffix alias or unit inference is added.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant/info?page=n1201",
+        "https://www.openstreetmap.org/way/250311309"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
+      "title": "Tribunal de police d'Eupen - division Saint-Vith",
+      "addresses": [
+        "Rathausplatz 4 4700 Eupen"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-02T00:00:00Z",
+      "address_role": "court_published_address",
+      "match_basis": "Current French and German official home/contact pages publish Rathausplatz 4, 4700 Eupen for this Saint-Vith division. The catalogue retains Saint-Vith as the branch/venue and records Eupen as the published hearing site; no undated secondary Klosterstraße destination is used.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
+        "https://www.tribunaux-rechtbanken.be/de/polizeigericht-eupen-abteilung-sankt-vith"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney",
+      "title": "Justice de paix de Ciney",
+      "addresses": [
+        "Rue Courtejoie 17 ( 3ème étage ) 5590 Ciney"
+      ],
+      "published_addresses": [
+        "Rue Courtejoie 17 ( 3ème étage ) 5590 Ciney"
+      ],
+      "status": "ok",
+      "http_status": 200,
+      "fetched_at": "2026-11-02T04:06:11Z",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "kind": "official_published_point",
+        "address": "Rue Courtejoie 17 ( 3ème étage ) 5590 Ciney",
+        "latitude": 50.2950177,
+        "longitude": 5.100674,
+        "coordinate_source_url": "https://www.ciney.be/annuaire/justice-de-paix",
+        "coordinate_source_sha256": "d15d36a7275b3fe1e72bb55eb2980fc7f4904532a03494f47f85e0fdf9656a5d"
+      },
+      "source_html_sha256": "634bc3256dc5795ddfbabcd3e2376026582f615f7734629e5494baa35c7d2668",
+      "match_basis": "The official court page publishes Rue Courtejoie 17 (3ème étage), 5590 Ciney. The named Ciney municipal directory independently publishes the exact court address and coordinate. The point is retained as an official published premise coordinate; no nearby road point or invented OSM building ID is substituted.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-ciney",
+        "https://www.ciney.be/annuaire/justice-de-paix"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette",
+      "final_url": "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette",
+      "title": "Vredegerecht Jette",
+      "addresses": [
+        "Kardinaal Mercierplein 11 1090 Jette"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.88056757731444,
+        "longitude": 4.327510248040305,
+        "osm_type": "way",
+        "osm_id": 74321516,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "Official court, government Socialekaart and municipal evidence identify Kardinaal Mercierplein 11. The court premise photo matches local OSM way 74321516; its centroid is strictly inside the building footprint. Preserve the published house number and do not create a global alias.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/nl/vredegerecht-jette",
+        "https://www.desocialekaart.be/vredegerecht-jette-533051",
+        "https://jette.brussels/nl/ocmw/sociale-actie/huisvesting/folder-huisvesting-in-jette",
+        "https://www.openstreetmap.org/way/74321516"
+      ]
+    },
+    "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet": {
+      "source_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet",
+      "final_url": "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet",
+      "title": "Justice de paix de Châtelet",
+      "addresses": [
+        "Place de l'Hôtel de Ville 9 6200 Châtelet"
+      ],
+      "status": "ok",
+      "address_role": "hearing",
+      "reviewed_point": {
+        "latitude": 50.40430055,
+        "longitude": 4.524407671119331,
+        "osm_type": "way",
+        "osm_id": 1334346398,
+        "pbf_sha256": "8ac04e4723349f7abb61ea46a292d9872c0f0daa5e0cb4200b87be9f39ed064a"
+      },
+      "match_basis": "The official court page publishes Place de l'Hôtel de Ville 9. The reviewed courthouse/administrative complex matches OSM way 1334346398; the selected representative point is strictly inside the valid concave PBF footprint. Preserve the published number despite the OSM house 11 tag; no global alias is introduced.",
+      "evidence_urls": [
+        "https://www.tribunaux-rechtbanken.be/fr/justice-de-paix-de-chatelet",
+        "https://www.openstreetmap.org/way/1334346398"
       ]
     }
   }

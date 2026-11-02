@@ -1,0 +1,6 @@
+<section class="candidate-offer" aria-label="<%= t("proposal_details.offer") %>">
+  <h3 class="candidate-details__heading"><%= t("proposal_details.offer") %></h3>
+  <p class="candidate-offer__price"><strong>€ <%= euro_amount(proposal.rate_cents) %></strong><span><%= proposal.rate_kind_label %></span></p>
+  <%= render "assignments/proposal_travel_terms", proposal: proposal %>
+  <%= render "assignments/proposal_distance", proposal: proposal %>
+</section>

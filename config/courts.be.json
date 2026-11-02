@@ -1900,11 +1900,12 @@
       "type": "police",
       "district": "Eupen",
       "venue": "Saint-Vith",
-      "city": "Saint-Vith",
+      "city": "Eupen",
+      "judicial_city": "Saint-Vith",
       "division": true,
       "language": null,
       "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-deupen-division-saint-vith",
-      "hearing_verified": false
+      "hearing_place": "Eupen"
     },
     {
       "type": "police",
@@ -1940,7 +1941,9 @@
       "city": "Dinant",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-police-de-namur-division-dinant",
+      "hearing_place": "Dinant",
+      "hearing_address": "Rue Arthur Defoin 215B"
     },
     {
       "type": "police",
@@ -2306,7 +2309,20 @@
       "city": "Neufchâteau",
       "division": true,
       "language": null,
-      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau"
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "hearing_place": "Neufchâteau",
+      "hearing_address": "Place Charles Bergh 1"
+    },
+    {
+      "type": "first_instance",
+      "district": "Luxemburg",
+      "venue": "Neufchâteau",
+      "city": "Neufchâteau",
+      "division": true,
+      "language": null,
+      "source": "https://www.tribunaux-rechtbanken.be/fr/tribunal-de-premiere-instance-du-luxembourg-division-neufchateau",
+      "hearing_place": "Neufchâteau",
+      "hearing_address": "Place Charles Bergh 7/1"
     },
     {
       "type": "first_instance",

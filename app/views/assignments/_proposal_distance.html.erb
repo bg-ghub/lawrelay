@@ -1,0 +1,11 @@
+<% candidate = proposal.user %>
+<% if proposal.assignment.court_replacement? && candidate&.marketplace_verified? && candidate.lawyer_profile&.directory_matched? %>
+  <% estimate = Travel::Estimate.call(proposal:) %>
+  <dl class="candidate-travel" data-controller="travel-estimate" data-travel-estimate-url-value="<%= assignment_proposal_travel_estimate_path(proposal.assignment, proposal) %>" data-travel-estimate-pending-value="<%= estimate.status == :pending %>" data-travel-estimate-unavailable-value="<%= t('travel.unavailable') %>">
+    <dt><%= t("proposal_details.driving_distance") %></dt>
+    <dd>
+      <span data-travel-estimate-target="text" role="status"><%= travel_estimate_text(estimate) %></span>
+      <small data-travel-estimate-target="attribution" <%= "hidden" unless estimate.ready? %>><%= link_to "© OpenStreetMap", "https://www.openstreetmap.org/copyright", target: "_blank", rel: "noopener noreferrer" %><% if Travel::AddressIndex.new.best_available? %> · <%= link_to "BeSt Address", "https://opendata.bosa.be/index.nl.html", target: "_blank", rel: "noopener noreferrer" %><% end %></small>
+    </dd>
+  </dl>
+<% end %>

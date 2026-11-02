@@ -6,8 +6,8 @@ class CourtHearingLocationsTest < ActiveSupport::TestCase
   test "published address data is bound to this catalogue and public sources" do
     assert CourtHearingLocations.available?
     data = CourtHearingLocations::DATA
-    assert_equal 325, data.fetch("records").length
-    assert_equal 323, data.fetch("records").count { |row| row["status"] == "available" }
+    assert_equal 326, data.fetch("records").length
+    assert_equal 326, data.fetch("records").count { |row| row["status"] == "available" }
     assert_match(/\A\d{4}-\d{2}-\d{2}\z/, data.fetch("reviewed_on"))
     %w[official_sources_sha256 reviewed_overrides_sha256 official_address_index_sha256].each do |key|
       assert_match(/\A[0-9a-f]{64}\z/, data.fetch(key))
@@ -41,8 +41,8 @@ class CourtHearingLocationsTest < ActiveSupport::TestCase
         CourtHearingLocations.find(name: option.fetch(:label), city: option.fetch(:city), locale:)
       end
 
-      assert_equal 325, details.compact.length
-      assert_equal 323, details.count { |result| result&.address.present? }
+      assert_equal 326, details.compact.length
+      assert_equal 326, details.count { |result| result&.address.present? }
     end
   end
 
@@ -83,15 +83,30 @@ class CourtHearingLocationsTest < ActiveSupport::TestCase
     assert_nil CourtHearingLocations.find(name: "A" * 181, city: "Aalst", locale: :en)
   end
 
-  test "unconfirmed and multiple-building addresses have no invented street" do
-    %w[tribunal-de-police-deupen-division-saint-vith tribunal-de-premiere-instance-du-luxembourg-division-neufchateau].each do |slug|
-      entry = CourtCatalogue::DATA.fetch("courts").find { |court| court.fetch("source").end_with?(slug) }
+  test "Saint Vith uses its published Eupen hearing address" do
+    entry = CourtCatalogue::DATA.fetch("courts").find { |court| court.fetch("source").end_with?("tribunal-de-police-deupen-division-saint-vith") }
+    option = CourtCatalogue.option_for(entry, locale: :en)
+    result = CourtHearingLocations.find(name: option.fetch(:label), city: option.fetch(:city), locale: :en)
+
+    assert_equal "Rathausplatz 4, 4700 Eupen", result.address
+    assert_includes result.court_name, "Saint-Vith"
+    assert_includes result.court_name, "Eupen"
+  end
+
+  test "Neufchateau qualified buildings retain their own addresses and legacy name stays ambiguous" do
+    entries = CourtCatalogue::DATA.fetch("courts").select do |court|
+      court.fetch("source").end_with?("tribunal-de-premiere-instance-du-luxembourg-division-neufchateau")
+    end
+    expected = {
+      "Place Charles Bergh 1" => "Place Charles Bergh 1, 6840 Neufchâteau",
+      "Place Charles Bergh 7/1" => "Place Charles Bergh 7/1, 6840 Neufchâteau"
+    }
+    entries.each do |entry|
       option = CourtCatalogue.option_for(entry, locale: :en)
       result = CourtHearingLocations.find(name: option.fetch(:label), city: option.fetch(:city), locale: :en)
-
-      assert result.court_name.present?
-      assert_nil result.address
+      assert_equal expected.fetch(entry.fetch("hearing_address")), result.address
     end
+    assert_nil CourtHearingLocations.find(name: "Court of first instance Luxembourg — division Neufchâteau", city: "Neufchâteau", locale: :en)
   end
 
   test "stale address data falls back without hiding the institution name" do
