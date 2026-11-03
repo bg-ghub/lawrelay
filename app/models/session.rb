@@ -1,7 +1,8 @@
 class Session < ApplicationRecord
   LIFETIME = 30.days
+  ADMIN_LIFETIME = 15.minutes
   ACTIVITY_WRITE_INTERVAL = 15.minutes
-  ADMIN_MFA_LIFETIME = 12.hours
+  ADMIN_MFA_LIFETIME = ADMIN_LIFETIME
 
   belongs_to :user
 
@@ -10,7 +11,8 @@ class Session < ApplicationRecord
   validates :expires_at, presence: true
 
   def expired?(at: Time.current)
-    expires_at <= at
+    expires_at <= at ||
+      (user&.system_admin? && created_at.present? && created_at <= ADMIN_LIFETIME.ago(at))
   end
 
   def record_activity!(at: Time.current)
@@ -20,7 +22,7 @@ class Session < ApplicationRecord
   end
 
   def admin_mfa_verified?(at: Time.current)
-    admin_mfa_verified_at.present? && admin_mfa_verified_at > ADMIN_MFA_LIFETIME.ago(at)
+    !expired?(at:) && admin_mfa_verified_at.present? && admin_mfa_verified_at > ADMIN_MFA_LIFETIME.ago(at)
   end
 
   def mark_admin_mfa_verified!(at: Time.current)
@@ -39,7 +41,7 @@ class Session < ApplicationRecord
   private
 
   def set_expiry
-    self.expires_at ||= LIFETIME.from_now
+    self.expires_at ||= (user&.system_admin? ? ADMIN_LIFETIME : LIFETIME).from_now
     self.last_seen_at ||= Time.current
   end
 end

@@ -29,5 +29,3 @@ fr:
       lede: "Utilisez le code actuel de votre application d’authentification."
       legend: "Confirmer l’accès"
       submit: "Continuer"
-      aside_title: "Valable 12 heures"
-      aside_body: "Expire après 12 heures ou à la déconnexion."

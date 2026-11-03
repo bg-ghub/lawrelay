@@ -69,7 +69,7 @@ class ThoroughAccessRegressionTest < ActionDispatch::IntegrationTest
     secret = admin.user.begin_admin_mfa_setup!
     admin.user.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
     sign_in_as(admin.user, admin_mfa: true)
-    Current.session.update!(admin_mfa_verified_at: 13.hours.ago)
+    Current.session.update!(admin_mfa_verified_at: 16.minutes.ago)
 
     assert_no_difference "AuditEvent.count" do
       patch suspend_admin_user_path(target.user, locale: :en), params: {
@@ -78,6 +78,24 @@ class ThoroughAccessRegressionTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_mfa_challenge_path(locale: :en)
+    assert_predicate target.user.reload, :active?
+  end
+
+  test "a legacy expired admin session cannot mutate a user even with fresh MFA" do
+    admin = create_marketplace_account(prefix: "expiredadminsession", system_role: "admin")
+    target = create_marketplace_account(prefix: "expiredadmintarget")
+    sign_in_as(admin.user, admin_mfa: true)
+    admin_session = Current.session
+    admin_session.update_columns(created_at: 16.minutes.ago, expires_at: 30.days.from_now)
+
+    assert_no_difference "AuditEvent.count" do
+      patch suspend_admin_user_path(target.user, locale: :en), params: {
+        user_management: { reason: "This expired request must not take effect." }
+      }
+    end
+
+    assert_redirected_to admin_login_path(locale: :en)
+    assert_not Session.exists?(admin_session.id)
     assert_predicate target.user.reload, :active?
   end
 

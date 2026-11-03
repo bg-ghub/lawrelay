@@ -42,6 +42,30 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_mfa_setup_path(locale: :en)
   end
 
+  test "after fifteen minutes an administrator must repeat password and MFA" do
+    freeze_time do
+      secret = @admin.begin_admin_mfa_setup!
+      @admin.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+      post admin_login_path(locale: :en), params: { password: "password1234" }
+      admin_session = @admin.sessions.order(:id).last
+      admin_session.mark_admin_mfa_verified!
+
+      get admin_users_path(locale: :en)
+      assert_response :success
+
+      travel 15.minutes
+      get admin_users_path(locale: :en)
+
+      assert_redirected_to admin_login_path(locale: :en)
+      assert_predicate admin_session.reload, :expired?
+
+      post admin_login_path(locale: :en), params: { password: "password1234" }
+      assert_redirected_to admin_users_path(locale: :en)
+      get admin_users_path(locale: :en)
+      assert_redirected_to admin_mfa_challenge_path(locale: :en)
+    end
+  end
+
   test "invalid password does not create a session" do
     assert_no_difference "Session.count" do
       post admin_login_path(locale: :en), params: { password: "not-the-password" }

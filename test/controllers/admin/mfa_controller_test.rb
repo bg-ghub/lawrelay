@@ -88,4 +88,19 @@ class Admin::MfaControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/en/admin/verifications"
     assert Session.find(@session_id).admin_mfa_verified?
   end
+
+  test "a valid MFA code cannot renew an expired admin password session" do
+    secret = @admin.begin_admin_mfa_setup!
+    @admin.enable_admin_mfa!(ROTP::TOTP.new(secret, issuer: "LawRelay").now)
+    @admin.update!(admin_mfa_last_verified_at: 1.minute.ago)
+    Session.find(@session_id).update_columns(created_at: 16.minutes.ago, expires_at: 30.days.from_now)
+    code = ROTP::TOTP.new(secret, issuer: "LawRelay").now
+
+    assert_no_difference "AuditEvent.count" do
+      post "/en/admin/mfa/challenge", params: { mfa_code: code }
+    end
+
+    assert_redirected_to admin_login_path(locale: :en)
+    assert_not Session.exists?(@session_id)
+  end
 end

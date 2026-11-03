@@ -104,14 +104,17 @@ class AdminTrustWorkflowTest < ApplicationSystemTestCase
     end
   end
 
-  test "expired administrator MFA protects both populated queues and rejects an invalid code" do
+  test "expired administrator sessions require password and MFA before accessing populated queues" do
     sign_in_admin
 
-    travel 13.hours do
+    travel 16.minutes do
       visit admin_privacy_requests_path(locale: :en)
-      assert_current_path admin_mfa_challenge_path(locale: :en)
+      assert_current_path admin_login_path(locale: :en)
       assert_no_text @request.details
       assert_no_selector ".trust-review-form"
+      fill_in "password", with: "password1234"
+      find("form.assignment-form input[type='submit']").click
+      assert_current_path admin_mfa_challenge_path(locale: :en)
       fill_in "mfa_code", with: "invalid"
       click_button I18n.t("mfa.challenge.submit", locale: :en)
       assert_text I18n.t("mfa.notices.invalid_code", locale: :en)

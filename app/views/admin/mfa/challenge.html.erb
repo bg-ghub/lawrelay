@@ -4,7 +4,7 @@
     <h1><%= t("mfa.challenge.heading") %></h1>
   </div>
 
-  <div class="new-assignment__layout">
+  <div class="new-assignment__layout auth-form-layout">
     <%= form_with url: admin_mfa_challenge_path, method: :post, class: "assignment-form" do |form| %>
       <fieldset class="form-section">
         <legend><%= t("mfa.challenge.legend") %></legend>
@@ -12,6 +12,5 @@
       </fieldset>
       <div class="form-actions"><%= form.submit t("mfa.challenge.submit"), class: "button button--dark" %></div>
     <% end %>
-    <aside class="posting-aside"><h2><%= t("mfa.challenge.aside_title") %></h2><p><%= t("mfa.challenge.aside_body") %></p></aside>
   </div>
 </div>

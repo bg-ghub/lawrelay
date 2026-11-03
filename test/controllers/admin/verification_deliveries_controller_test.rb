@@ -151,6 +151,7 @@ class Admin::VerificationDeliveriesControllerTest < ActionDispatch::IntegrationT
 
       assert_throttled_resend
       travel 16.minutes do
+        sign_in_as(@admin, admin_mfa: true)
         assert_enqueued_jobs 1, only: EmailVerificationDeliveryJob do
           post resend_verification_admin_user_path(@user, locale: :en)
         end

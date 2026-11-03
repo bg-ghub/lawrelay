@@ -29,5 +29,3 @@ en:
       lede: "Use the current code from your authenticator app."
       legend: "Confirm access"
       submit: "Continue"
-      aside_title: "Valid for 12 hours"
-      aside_body: "Expires after 12 hours or when you sign out."
