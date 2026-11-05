@@ -57,7 +57,7 @@
           <div class="candidate-proposals">
             <% @proposals.each do |proposal| %>
               <article class="candidate-proposal">
-                <header class="candidate-proposal__header"><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.status}") %></span></header>
+                <header class="candidate-proposal__header"><strong><%= proposal.display_name %></strong><span class="status-pill"><%= t("marketplace.status.#{proposal.display_status}") %></span></header>
                 <p class="candidate-proposal__message"><%= proposal.message %></p>
                 <%= render "proposal_offer", proposal: proposal %>
                 <%= render "proposal_location", proposal: proposal %>
@@ -78,7 +78,7 @@
       <% elsif @existing_proposal %>
         <h2><%= t("workflow.ui.your_proposal") %></h2>
         <article class="candidate-proposal candidate-proposal--own">
-          <header class="candidate-proposal__header"><span class="status-pill"><%= t("marketplace.status.#{@existing_proposal.status}") %></span></header>
+          <header class="candidate-proposal__header"><span class="status-pill"><%= t("marketplace.status.#{@existing_proposal.display_status}") %></span></header>
           <p class="candidate-proposal__message"><%= @existing_proposal.message %></p>
           <%= render "proposal_offer", proposal: @existing_proposal %>
           <%= render "proposal_location", proposal: @existing_proposal %>
@@ -86,7 +86,7 @@
             <% if (contact_email = @assignment.creator_user&.marketplace_contact_email).present? %>
               <p class="contact-card"><%= mail_to contact_email %></p>
             <% end %>
-          <% elsif @existing_proposal.status == "pending" %>
+          <% elsif @existing_proposal.status == "pending" && @assignment.status == "open" && @assignment.starts_at > Time.current %>
             <%= button_to t("workflow.ui.withdraw"), withdraw_assignment_proposal_path(@assignment, @existing_proposal), method: :patch, class: "button button--ghost button--full" %>
           <% end %>
         </article>

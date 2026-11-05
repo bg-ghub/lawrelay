@@ -7,7 +7,25 @@ export default class extends Controller {
 
   connect() {
     this.source = this.sourceTarget
-    this.original = { hidden: this.source.hidden, tabindex: this.source.getAttribute("tabindex"), ariaHidden: this.source.getAttribute("aria-hidden") }
+    this.original = this.element.dataset.searchableSelectOriginal ?
+      JSON.parse(this.element.dataset.searchableSelectOriginal) :
+      { hidden: this.source.hidden, tabindex: this.source.getAttribute("tabindex"), ariaHidden: this.source.getAttribute("aria-hidden") }
+    this.element.dataset.searchableSelectOriginal = JSON.stringify(this.original)
+    // A frame-history snapshot may have been cloned before before-cache cleanup.
+    this.element.querySelectorAll(".searchable-select__input").forEach(input => {
+      Array.from(input.labels || []).forEach(label => { label.htmlFor = this.source.id })
+    })
+    this.element.querySelectorAll(".searchable-select__input, .searchable-select__list, .searchable-select__status").forEach(node => node.remove())
+    this.restoreSource()
+    this.resume = () => {
+      if (!this.input && this.element.isConnected) this.enhance()
+    }
+    document.addEventListener("turbo:frame-load", this.resume)
+    document.addEventListener("turbo:load", this.resume)
+    this.enhance()
+  }
+
+  enhance() {
     this.labels = Array.from(this.source.labels || [])
     const id = this.source.id.replace(/[^\w:-]+/g, "_").replace(/_+$/, "")
     this.input = document.createElement("input")
@@ -79,22 +97,31 @@ export default class extends Controller {
     this.listeners.push(() => target.removeEventListener(event, handler))
   }
 
-  disconnect() { this.destroy() }
+  disconnect() {
+    document.removeEventListener("turbo:frame-load", this.resume)
+    document.removeEventListener("turbo:load", this.resume)
+    this.destroy()
+  }
 
   destroy() {
     if (!this.input) return
     this.observer?.disconnect()
     clearTimeout(this.resetTimer)
-    this.listeners?.forEach((remove) => remove())
-    this.listeners = []
+    this.editing = false
     this.labels.forEach((label) => { if (label.htmlFor === this.input.id) label.htmlFor = this.source.id })
-    this.source.hidden = this.original.hidden
-    this.restoreAttribute("tabindex", this.original.tabindex)
-    this.restoreAttribute("aria-hidden", this.original.ariaHidden)
+    this.restoreSource()
     this.input.remove()
     this.list.remove()
     this.status.remove()
+    this.listeners?.forEach((remove) => remove())
+    this.listeners = []
     this.input = null
+  }
+
+  restoreSource() {
+    this.source.hidden = this.original.hidden
+    this.restoreAttribute("tabindex", this.original.tabindex)
+    this.restoreAttribute("aria-hidden", this.original.ariaHidden)
   }
 
   restoreAttribute(name, value) {

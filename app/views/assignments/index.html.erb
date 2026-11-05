@@ -11,42 +11,47 @@
 
   <section class="marketplace-content shell" aria-label="<%= t("marketplace.index.open_assignments_aria") %>">
     <aside class="filter-panel" aria-label="<%= t("marketplace.index.filters_aria") %>">
-      <div class="filter-panel__heading">
-        <p class="eyebrow"><%= t("marketplace.index.refine") %></p>
-        <%= link_to t("marketplace.index.clear_filters"), assignments_path, class: "text-link" if params[:q].present? || params[:kind].present? || params[:city].present? || params[:practice_area].present? %>
-      </div>
-
-      <%= form_with url: assignments_path, method: :get, class: "filter-form", data: { controller: "assignment-filter", action: "change->assignment-filter#submit" } do |form| %>
-        <div class="field-group">
-          <%= form.label :q, t("marketplace.index.search_label") %>
-          <div class="search-field">
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <%= form.search_field :q, value: params[:q], placeholder: t("marketplace.index.search_placeholder"), autocomplete: "off", data: { action: "input->assignment-filter#debounce" } %>
+      <details class="assignment-filters" open data-controller="assignment-filters">
+        <summary class="assignment-filters__summary"><%= t("marketplace.index.filters_aria") %></summary>
+        <div class="assignment-filters__content">
+          <div class="filter-panel__heading">
+            <p class="eyebrow"><%= t("marketplace.index.refine") %></p>
+            <%= link_to t("marketplace.index.clear_filters"), assignments_path, class: "text-link" %>
           </div>
+
+          <%= form_with url: assignments_path, method: :get, class: "filter-form", data: { controller: "assignment-filter", action: "change->assignment-filter#submit submit->assignment-filter#cancelPending", turbo_frame: "assignment-results", turbo_action: "advance" } do |form| %>
+            <div class="field-group">
+              <%= form.label :q, t("marketplace.index.search_label") %>
+              <div class="search-field">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <%= form.search_field :q, value: params[:q], placeholder: t("marketplace.index.search_placeholder"), autocomplete: "off", data: { action: "input->assignment-filter#debounce" } %>
+              </div>
+            </div>
+
+            <fieldset class="field-group">
+              <legend><%= t("marketplace.index.assignment_type") %></legend>
+              <label class="choice-row"><%= form.radio_button :kind, "", checked: params[:kind].blank? %><span><%= t("marketplace.index.all") %></span></label>
+              <label class="choice-row"><%= form.radio_button :kind, "court_replacement", checked: params[:kind] == "court_replacement" %><span><%= t("marketplace.index.court_replacement") %></span></label>
+              <label class="choice-row"><%= form.radio_button :kind, "legal_task", checked: params[:kind] == "legal_task" %><span><%= t("marketplace.kinds.legal_task") %></span></label>
+            </fieldset>
+
+            <div class="field-group">
+              <%= form.label :city, t("marketplace.index.region_label") %>
+              <%= searchable_select form, :city, options_for_select([[t("marketplace.index.all_regions"), ""]] + @cities.map { |city| [city, city] }, params[:city]), {}, class: "select-field" %>
+            </div>
+
+            <div class="field-group">
+              <%= form.label :practice_area, t("marketplace.index.practice_area_label") %>
+              <%= searchable_select form, :practice_area, options_for_select([[t("marketplace.index.all_practice_areas"), ""]] + PracticeAreaCatalogue.filter_options(@practice_areas, selected: params[:practice_area]), params[:practice_area]), {}, class: "select-field" %>
+            </div>
+
+            <noscript><%= form.submit t("marketplace.index.apply_filters"), class: "button button--dark button--full" %></noscript>
+          <% end %>
         </div>
-
-        <fieldset class="field-group">
-          <legend><%= t("marketplace.index.assignment_type") %></legend>
-          <label class="choice-row"><%= form.radio_button :kind, "", checked: params[:kind].blank? %><span><%= t("marketplace.index.all") %></span></label>
-          <label class="choice-row"><%= form.radio_button :kind, "court_replacement", checked: params[:kind] == "court_replacement" %><span><%= t("marketplace.index.court_replacement") %></span></label>
-          <label class="choice-row"><%= form.radio_button :kind, "legal_task", checked: params[:kind] == "legal_task" %><span><%= t("marketplace.kinds.legal_task") %></span></label>
-        </fieldset>
-
-        <div class="field-group">
-          <%= form.label :city, t("marketplace.index.region_label") %>
-          <%= searchable_select form, :city, options_for_select([[t("marketplace.index.all_regions"), ""]] + @cities.map { |city| [city, city] }, params[:city]), {}, class: "select-field" %>
-        </div>
-
-        <div class="field-group">
-          <%= form.label :practice_area, t("marketplace.index.practice_area_label") %>
-          <%= searchable_select form, :practice_area, options_for_select([[t("marketplace.index.all_practice_areas"), ""]] + PracticeAreaCatalogue.filter_options(@practice_areas, selected: params[:practice_area]), params[:practice_area]), {}, class: "select-field" %>
-        </div>
-
-        <noscript><%= form.submit t("marketplace.index.apply_filters"), class: "button button--dark button--full" %></noscript>
-      <% end %>
+      </details>
     </aside>
 
-    <div class="assignment-results">
+    <%= turbo_frame_tag "assignment-results", class: "assignment-results", target: "_top", data: { controller: "assignment-results", action: "turbo:frame-missing->assignment-results#visit" } do %>
       <div class="result-meta">
         <p><strong><%= @assignments.size %></strong> <%= t("marketplace.index.results", count: @assignments.size) %></p>
       </div>
@@ -65,6 +70,6 @@
           <%= link_to t("marketplace.index.all_assignments"), assignments_path, class: "button button--dark" %>
         </div>
       <% end %>
-    </div>
+    <% end %>
   </section>
 </div>

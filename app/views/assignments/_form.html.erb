@@ -13,7 +13,7 @@
 
   <fieldset class="form-section">
     <legend><%= t("marketplace.form.details_legend") %></legend>
-    <div class="field-group"><%= form.label :title, t("marketplace.form.title_label") %><%= form.text_field :title, required: true, maxlength: 160, placeholder: t("marketplace.form.title_placeholder") %></div>
+    <div class="field-group"><%= form.label :title, t("marketplace.form.title_label") %><%= form.text_field :title, required: true, maxlength: 160 %></div>
     <div class="field-group">
       <%= form.label :description, t("marketplace.form.description_label") %>
       <%= form.text_area :description, rows: 5, required: true, maxlength: 4000, placeholder: t("marketplace.form.description_placeholder"), aria: { describedby: assignment.court_replacement? ? "assignment-description-hint" : nil }, data: { assignment_kind_target: "description" } %>
