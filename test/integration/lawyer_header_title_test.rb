@@ -20,6 +20,7 @@ class LawyerHeaderTitleTest < ActionDispatch::IntegrationTest
       assert_response :success
       assert_select "html[lang='#{locale}']"
       assert_select ".site-header a.header-login[href='#{settings_path(locale:)}']", text: [ title, account.user.full_name ].compact.join(" ")
+      assert_select "#primary-navigation a.mobile-nav-only[href='#{settings_path(locale:)}']", text: I18n.t("settings.heading", locale:)
       assert_equal preferred_locale, account.user.reload.locale
       assert_equal original_name, account.user.attributes.slice("first_name", "last_name")
     end
@@ -36,6 +37,8 @@ class LawyerHeaderTitleTest < ActionDispatch::IntegrationTest
 
       assert_response :success
       assert_select ".site-header a.header-login[href='#{admin_users_path(locale:)}']", text: account.user.full_name
+      assert_select "#primary-navigation a[href='#{settings_path(locale:)}']", count: 0
+      assert_select "#primary-navigation a.mobile-nav-only[href='#{admin_users_path(locale:)}']"
     end
   end
 end

@@ -1,0 +1,54 @@
+.marketplace-content > .filter-panel,
+.marketplace-content > .assignment-results {
+  min-width: 0;
+}
+
+.assignment-filters__summary {
+  display: none;
+}
+
+.marketplace-content > .assignment-results {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .marketplace-content > .filter-panel {
+    order: 0;
+  }
+
+  .assignment-filters__summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--ink);
+    font-weight: 780;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .assignment-filters__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .assignment-filters__summary::after {
+    content: "+";
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .assignment-filters[open] > .assignment-filters__summary::after {
+    content: "−";
+  }
+
+  .assignment-filters__content {
+    border-top: 1px solid var(--line);
+    margin-top: .75rem;
+    padding-top: 1rem;
+  }
+
+  .assignment-filters .filter-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

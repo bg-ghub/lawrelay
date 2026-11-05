@@ -41,6 +41,12 @@ class Proposal < ApplicationRecord
     I18n.t("marketplace.rate_kinds.#{rate_kind}")
   end
 
+  def display_status
+    return assignment.status if status == "pending" && assignment.status.in?(%w[cancelled expired completed])
+
+    status
+  end
+
   def owned_by?(candidate)
     candidate.present? && user_id == candidate.id
   end

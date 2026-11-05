@@ -16,6 +16,7 @@
           <%= link_to t("admin.users.link"), admin_users_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
         <% else %>
           <%= link_to t("marketing.header.dashboard"), dashboard_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
+          <%= link_to t("settings.heading"), settings_path, class: "mobile-nav-only", data: { action: "mobile-nav#close" } %>
         <% end %>
         <%= button_to t("auth.sessions.sign_out"), session_path, method: :delete, class: "mobile-nav-action mobile-nav-only" %>
       <% else %>

@@ -14,7 +14,7 @@ class AssignmentsController < ApplicationController
     @assignments = @assignments.where(kind: params[:kind]) if Assignment::KINDS.value?(params[:kind])
     @assignments = @assignments.where(city: params[:city]) if params[:city].present?
     @assignments = @assignments.where(practice_area: PracticeAreaCatalogue.equivalents(params[:practice_area])) if params[:practice_area].present?
-    @cities = Assignment.accepting_proposals.distinct.order(:city).pluck(:city)
+    @cities = Assignment.accepting_proposals.distinct.order(:city).pluck(:city).compact_blank
     @practice_areas = Assignment.accepting_proposals.distinct.order(:practice_area).pluck(:practice_area)
   end
 
