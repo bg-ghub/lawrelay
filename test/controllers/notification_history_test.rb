@@ -35,6 +35,13 @@ class NotificationHistoryTest < ActionDispatch::IntegrationTest
     assert_select ".notification-center-item", count: 25
     get notifications_path(locale: :en), params: { page: 100_000 }
     assert_select ".notification-center-item", count: 5
+
+    [ "invalid", "2trailing", "1.5", [ "2" ], { number: "2" } ].each do |invalid_page|
+      get notifications_path(locale: :en), params: { page: invalid_page }
+      assert_response :success
+      assert_select ".notification-center-item", count: 25
+      assert_select ".notification-center-pagination span", text: I18n.t("notification_center.page", locale: :en, current: 1, total: 2)
+    end
   end
 
   test "unread filter and bulk read affect only the signed in member" do

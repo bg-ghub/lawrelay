@@ -1,5 +1,9 @@
 module Admin
   class MfaController < ApplicationController
+    class RevokedSession < StandardError; end
+
+    rescue_from RevokedSession, with: :reject_revoked_session
+
     before_action -> { response.headers["Cache-Control"] = "no-store" }
     rate_limit to: 5, within: 3.minutes, only: %i[confirm_setup verify], by: -> { current_user&.id },
       with: -> { redirect_to admin_mfa_challenge_path, alert: t("mfa.notices.rate_limited") }
@@ -7,6 +11,7 @@ module Admin
     before_action :require_system_admin
     before_action :redirect_verified_session
     before_action :require_initial_setup, only: %i[setup confirm_setup]
+    around_action :with_current_admin_session, only: %i[setup confirm_setup verify]
 
     def setup
       @secret = current_user.begin_admin_mfa_setup!
@@ -51,6 +56,31 @@ module Admin
     end
 
     private
+
+    def with_current_admin_session
+      user = current_user
+      session_id = Current.session&.id
+      raise RevokedSession unless user && session_id
+
+      user.with_lock do
+        active_session = user.sessions.lock.find_by(id: session_id)
+        raise RevokedSession unless user.active? && user.system_admin? && active_session && !active_session.expired?
+
+        active_session.user = user
+        Current.session = active_session
+        yield
+      end
+    rescue ActiveRecord::RecordNotFound
+      raise RevokedSession
+    end
+
+    def reject_revoked_session
+      Current.session = nil
+      cookies.delete(:session_id)
+      reset_session
+      locale = params[:locale].presence_in(I18n.available_locales.map(&:to_s)) || I18n.default_locale
+      I18n.with_locale(locale) { redirect_to admin_login_path, status: :see_other }
+    end
 
     def mfa_code
       params[:mfa_code]

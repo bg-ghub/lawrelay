@@ -110,6 +110,7 @@ en:
       guideline_rate: "Guideline fee"
       view_assignment: "View assignment"
       empty_title: "No assignments found"
+      no_open_assignments: "No open assignments yet"
       empty_body: "Try another search or adjust your filters."
       all_assignments: "View all assignments"
     new:

@@ -9,6 +9,10 @@ class AssignmentsController < ApplicationController
   before_action :require_assignment_manager, only: %i[cancel complete]
 
   def index
+    filter_values = params.values_at(:q, :kind, :city, :practice_area)
+    return head(:bad_request) unless filter_values.all? { |value| value.nil? || value.is_a?(String) }
+
+    @filters_active = params.values_at(:q, :city, :practice_area).any?(&:present?) || Assignment::KINDS.value?(params[:kind])
     @assignments = Assignment.accepting_proposals.includes(:firm, :proposals).ordered
     @assignments = @assignments.search(params[:q])
     @assignments = @assignments.where(kind: params[:kind]) if Assignment::KINDS.value?(params[:kind])

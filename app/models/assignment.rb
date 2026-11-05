@@ -66,7 +66,7 @@ class Assignment < ApplicationRecord
     next all if query.blank?
 
     term = "%#{sanitize_sql_like(query.strip)}%"
-    where("title LIKE :term OR description LIKE :term OR court LIKE :term OR city LIKE :term OR practice_area LIKE :term", term: term)
+    where("title LIKE :term ESCAPE '\\' OR description LIKE :term ESCAPE '\\' OR court LIKE :term ESCAPE '\\' OR city LIKE :term ESCAPE '\\' OR practice_area LIKE :term ESCAPE '\\'", term: term)
   end
 
   def court_replacement?

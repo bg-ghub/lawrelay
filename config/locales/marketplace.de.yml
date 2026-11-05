@@ -110,6 +110,7 @@ de:
       guideline_rate: "Richtvergütung"
       view_assignment: "Auftrag ansehen"
       empty_title: "Keine Aufträge gefunden"
+      no_open_assignments: "Derzeit keine offenen Aufträge"
       empty_body: "Ändern Sie Ihre Suche oder Filter."
       all_assignments: "Alle Aufträge ansehen"
     new:

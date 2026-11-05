@@ -23,6 +23,7 @@ class MemberTwoFactorTest < ApplicationSystemTestCase
     click_button "Continue"
     assert_current_path setup_two_factor_authentication_path(locale: :en)
     assert_selector "img.mfa-qr"
+    assert_selector "#mfa_code[required][pattern='[0-9]{6}']"
     assert page.evaluate_script("document.querySelector('img.mfa-qr').naturalWidth > 0")
     assert_no_selector ".mfa-manual[open]"
 
@@ -52,16 +53,20 @@ class MemberTwoFactorTest < ApplicationSystemTestCase
     use_recovery(codes.first)
     assert_current_path verify_two_factor_authentication_path(locale: :en)
     assert_text "That code is invalid or has already been used."
+    assert_equal 9, @account.user.reload.two_factor_recovery_codes_remaining
     use_recovery(codes.second)
     assert_current_path dashboard_path(locale: :en)
+    assert_equal 8, @account.user.reload.two_factor_recovery_codes_remaining
 
     visit two_factor_authentication_path(locale: :en)
     fill_in "current_password", with: "password1234"
+    fill_in "mfa_code", with: "123"
     find(".mfa-manual summary").click
     fill_in "recovery_code", with: codes.third
     click_button "Turn off two-factor authentication"
     assert_text "Two-factor authentication is off."
     assert_not_predicate @account.user.reload, :two_factor_enabled?
+    assert_equal 0, @account.user.two_factor_recovery_codes_remaining
     sign_out
     sign_in
     assert_current_path dashboard_path(locale: :en)
@@ -84,6 +89,7 @@ class MemberTwoFactorTest < ApplicationSystemTestCase
   end
 
   def use_recovery(code)
+    fill_in "mfa_code", with: "123"
     find(".mfa-manual summary").click unless page.has_selector?(".mfa-manual[open]")
     fill_in "recovery_code", with: code
     click_button "Continue"

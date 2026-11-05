@@ -10,7 +10,11 @@ class DirectoryVerificationsController < ApplicationController
 
   def confirm
     profile = Directory::ConfirmationToken.find_profile!(params[:token])
-    result = Directory::Verification.confirm!(profile)
+    result = profile.user.with_lock do
+      profile.lock!
+      Directory::ConfirmationToken.find_profile!(params[:token])
+      Directory::Verification.confirm!(profile)
+    end
     if result.status == :already_claimed
       redirect_to new_session_path(locale: profile.user.locale), alert: t("directory_mail.notices.already_claimed")
       return

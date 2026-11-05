@@ -110,6 +110,7 @@ nl:
       guideline_rate: "Richttarief"
       view_assignment: "Bekijk opdracht"
       empty_title: "Geen opdrachten gevonden"
+      no_open_assignments: "Nog geen openstaande opdrachten"
       empty_body: "Pas uw zoekterm of filters aan."
       all_assignments: "Alle opdrachten bekijken"
     new:

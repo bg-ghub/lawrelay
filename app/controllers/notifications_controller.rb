@@ -9,7 +9,7 @@ class NotificationsController < ApplicationController
     scope = scope.unread if @filter == "unread"
     @total_count = scope.count
     @total_pages = [ (@total_count.to_f / 25).ceil, 1 ].max
-    @page = params[:page].to_i.clamp(1, @total_pages)
+    @page = (Integer(params[:page], exception: false) || 1).clamp(1, @total_pages)
     @notifications = scope.includes(:subject).order(created_at: :desc, id: :desc)
       .offset((@page - 1) * 25).limit(25)
     load_visible_assignments

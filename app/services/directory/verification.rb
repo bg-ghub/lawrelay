@@ -77,11 +77,12 @@ module Directory
         profile.lock!
         return Result.new(status: :protected, profile:) unless @user.active?
         return Result.new(status: :invalid, profile:) unless identity_current?(profile)
-
-        profile.update!(directory_email_verified_at: Time.current)
-        audit!("verification.directory_email_confirmed", profile_id: profile.id, directory_profile_id: profile.directory_profile_id)
+        unless profile.directory_email_verified?
+          profile.update!(directory_email_verified_at: Time.current)
+          audit!("verification.directory_email_confirmed", profile_id: profile.id, directory_profile_id: profile.directory_profile_id)
+        end
       end
-      activate_if_ready!
+      activate_if_ready! unless @user.reload.marketplace_verified?
       Result.new(status: :confirmed, profile:)
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => error
       return Result.new(status: :already_claimed, profile:) if error.message.include?("directory_profile_id")

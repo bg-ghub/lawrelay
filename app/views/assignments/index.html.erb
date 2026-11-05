@@ -65,9 +65,14 @@
       <% else %>
         <div class="empty-state">
           <span class="empty-state__icon" aria-hidden="true">⌕</span>
-          <h2><%= t("marketplace.index.empty_title") %></h2>
-          <p><%= t("marketplace.index.empty_body") %></p>
-          <%= link_to t("marketplace.index.all_assignments"), assignments_path, class: "button button--dark" %>
+          <% if @filters_active %>
+            <h2><%= t("marketplace.index.empty_title") %></h2>
+            <p><%= t("marketplace.index.empty_body") %></p>
+            <%= link_to t("marketplace.index.all_assignments"), assignments_path, class: "button button--dark" %>
+          <% else %>
+            <h2><%= t("marketplace.index.no_open_assignments") %></h2>
+            <%= link_to t("marketplace.index.post_assignment"), new_assignment_path, class: "button button--dark" %>
+          <% end %>
         </div>
       <% end %>
     <% end %>

@@ -110,6 +110,7 @@ fr:
       guideline_rate: "Honoraires indicatifs"
       view_assignment: "Voir la mission"
       empty_title: "Aucune mission trouvée"
+      no_open_assignments: "Aucune mission ouverte pour le moment"
       empty_body: "Modifiez votre recherche ou vos filtres."
       all_assignments: "Voir toutes les missions"
     new:
