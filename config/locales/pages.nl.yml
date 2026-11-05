@@ -55,7 +55,7 @@ nl:
             - "Professionele profielgegevens, waaronder talen en rechtsdomeinen; ook opdracht-, kandidatuur-, aanvaardings-, annulerings- en auditgegevens."
             - "Optioneel kunt u uw jaar van toetreding tot de balie toevoegen. Dit is zichtbaar bij uw voorstellen voor de opdrachtgever. U kunt het in instellingen aanpassen of wissen."
             - "Supportcommunicatie en technische of beveiligingsgegevens, zoals IP-adres, request-ID, apparaatgegevens en beveiligingsgebeurtenissen."
-            - "Alleen voor niet-aangemelde openbare bezoeken: cookieless Umami-statistieken met een beperkt paginapad, de oorsprong van de verwijzer en gewone metadata van het browserverzoek. We sturen geen accountgegevens, private pagina's, formulieren, zoekopdrachten of opdrachtdetails door."
+            - "Bij anonieme bezoeken aan openbare pagina's meten we met cookieloze Umami-statistieken paginaweergaven en klikken op de links naar WetWijzer en Praxis bovenaan. We ontvangen een beperkt paginapad, de oorsprong van de verwijzer, taal en gewone browsermetadata. Geen accountgegevens, private pagina's, formulieren, zoekopdrachten of opdrachtdetails."
             - "Voor anonieme bezoekers buiten België gebruikt een lokale beveiligingscontrole het IP-adres om het land te bepalen en bewaart zij kort een verificatierecord."
           paragraphs:
             - "LawRelay is niet bedoeld voor cliëntnamen, dossierfeiten, conclusies, bewijsstukken, documenten of vertrouwelijke communicatie. Die informatie hoort in systemen onder controle van de betrokken advocaten."
@@ -65,7 +65,7 @@ nl:
           bullets:
             - "Accounts aanmaken en beveiligen, toegang verifiëren en matching aanbieden: uitvoering van de dienstenovereenkomst."
             - "Misbruik voorkomen, de dienst beveiligen, gebruikers helpen, betrouwbaarheid verbeteren en rechtsvorderingen instellen of verdedigen: gerechtvaardigde belangen, afgewogen tegen gebruikersrechten."
-            - "Om het gebruik van openbare pagina's te begrijpen en de dienst te verbeteren: beperkte, cookieless geaggregeerde statistieken op basis van ons gerechtvaardigd belang. U kunt statistieken in de footer uitzetten. Do Not Track en Global Privacy Control worden gerespecteerd."
+            - "Om het gebruik van openbare pagina's en onze productlinks te begrijpen en de dienst te verbeteren: beperkte, cookieless geaggregeerde statistieken op basis van ons gerechtvaardigd belang. U kunt statistieken in de footer uitzetten. Do Not Track en Global Privacy Control worden gerespecteerd."
         sharing:
           heading: "4. Met wie gegevens worden gedeeld"
           paragraphs:
@@ -167,7 +167,7 @@ nl:
         no_tracking:
           heading: "2. Analytics op openbare pagina's"
           paragraphs:
-            - "LawRelay gebruikt self-hosted Umami voor beperkte, cookieless geaggregeerde statistieken over niet-aangemelde openbare pagina's. Het volgt geen advertenties, maakt geen profielen en registreert geen accountpagina's, formulieren, paginaqueries of opdrachtdetails. Via Statistieken in de footer kunt u statistieken uit- of weer inschakelen. Do Not Track en Global Privacy Control blokkeren statistieken."
+            - "LawRelay gebruikt eigen, cookieloze Umami-statistieken voor anonieme openbare pagina's en klikken op de links naar WetWijzer en Praxis bovenaan. Umami maakt geen profielen en registreert geen accountpagina's, formulieren, paginaqueries of opdrachtdetails. Via Statistieken in de footer kunt u statistieken uit- of inschakelen. Do Not Track en Global Privacy Control blokkeren statistieken."
         retention:
           heading: "3. Duur en controle"
           paragraphs:

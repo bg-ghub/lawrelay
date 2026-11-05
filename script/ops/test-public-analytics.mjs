@@ -75,7 +75,9 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
   return {
     body,
     emitTurboLoad: () => listeners["turbo:load"](),
+    emitBeforeVisit: () => listeners["turbo:before-visit"](),
     pageviews,
+    events: () => pageviews.filter((payload) => payload.name),
     panel,
     actions,
     choiceButtons,
@@ -89,6 +91,27 @@ function createTracker({ href = "https://lawrelay.be/en?token=private#section", 
     setDnt: (value) => {
       navigator.doNotTrack = value ? "1" : "0"
       window.doNotTrack = value ? "1" : "0"
+    },
+    setGpc: (value) => { navigator.globalPrivacyControl = value },
+    failTracking: () => { window.umami.track = () => { throw new Error("Tracking unavailable") } },
+    rejectTracking: () => { window.umami.track = () => Promise.reject(new Error("Tracking unavailable")) },
+    clickProduct: (product, { type = "click", button = type === "auxclick" ? 1 : 0, detail = 1, nested = true, inHeader = true, prevented = false } = {}) => {
+      const header = {}
+      const link = {
+        dataset: { lawrelayProduct: product },
+        href: "https://product.example/private?email=private#secret",
+        textContent: "Private link text",
+        target: "_blank",
+        closest: (selector) => selector === ".product-bar" ? (inHeader ? header : null) : selector === "a[data-lawrelay-product]" ? link : null
+      }
+      const target = nested ? { closest: (selector) => selector === "a[data-lawrelay-product]" ? link : null } : link
+      const event = {
+        type, button, detail, target, defaultPrevented: prevented,
+        preventDefault() { throw new Error("Product navigation must remain native") },
+        stopPropagation() { throw new Error("Product navigation must remain native") }
+      }
+      listeners[type](event)
+      return link
     },
     choose: (choice) => listeners.click({
       target: { closest: (selector) => selector.includes("analytics-preference]") ? { dataset: { analyticsPreference: choice } } : null }
@@ -304,4 +327,156 @@ test("malformed and future-dated preference cookies are ignored", () => {
     assert.ok(tracker.script())
     assert.equal(tracker.panel.hidden, false)
   }
+})
+
+test("both header products send fixed event names and sanitized public metadata in every locale", () => {
+  for (const locale of ["nl", "fr", "de", "en"]) {
+    const tracker = createTracker({
+      href: `https://lawrelay.be/${locale}?email=private#account`,
+      referrer: "https://example.org/private/path?token=private"
+    })
+    tracker.emitTurboLoad()
+    tracker.script().onload()
+
+    const wetwijzer = tracker.clickProduct("wetwijzer")
+    const praxis = tracker.clickProduct("praxis", { nested: false })
+
+    assert.equal(JSON.stringify(tracker.events()), JSON.stringify([
+      {
+        website: "website-id", hostname: "lawrelay.be", language: "en-BE", screen: "1440x900",
+        title: "LawRelay", url: `/${locale}`, referrer: "https://example.org", name: "header_wetwijzer_click"
+      },
+      {
+        website: "website-id", hostname: "lawrelay.be", language: "en-BE", screen: "1440x900",
+        title: "LawRelay", url: `/${locale}`, referrer: "https://example.org", name: "header_praxis_click"
+      }
+    ]))
+    assert.equal(wetwijzer.target, "_blank")
+    assert.equal(praxis.href, "https://product.example/private?email=private#secret")
+    assert.doesNotMatch(JSON.stringify(tracker.events()), /private|secret|product\.example/)
+  }
+})
+
+test("header clicks preserve normal, keyboard and middle-button navigation without counting other buttons", () => {
+  const tracker = createTracker()
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+
+  tracker.clickProduct("wetwijzer", { nested: false })
+  tracker.clickProduct("praxis", { type: "click", button: 0, detail: 0 })
+  tracker.clickProduct("wetwijzer", { type: "auxclick", button: 1 })
+  tracker.clickProduct("praxis", { type: "auxclick", button: 2 })
+  tracker.clickProduct("praxis", { type: "click", button: 1 })
+  tracker.clickProduct("praxis", { prevented: true })
+
+  assert.deepEqual(tracker.events().map(({ name }) => name), ["header_wetwijzer_click", "header_praxis_click", "header_wetwijzer_click"])
+})
+
+test("only the allowlisted header links are counted", () => {
+  const tracker = createTracker()
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+
+  for (const product of ["unknown", "toString", "__proto__", "header_praxis_click", "wetwijzer?email=private"]) {
+    tracker.clickProduct(product)
+  }
+  tracker.clickProduct("wetwijzer", { inHeader: false })
+  assert.deepEqual(tracker.events(), [])
+})
+
+test("clicks during tracker loading are bounded and flush once on the same page", () => {
+  const tracker = createTracker({ href: "https://lawrelay.be/nl?secret=private" })
+  tracker.emitTurboLoad()
+  for (let index = 0; index < 12; index++) tracker.clickProduct(index % 2 ? "praxis" : "wetwijzer")
+  assert.equal(tracker.pageviews.length, 0)
+
+  tracker.script().onload()
+  assert.equal(tracker.pageviews.filter((payload) => !payload.name).length, 1)
+  assert.equal(tracker.events().length, 10)
+  tracker.script().onload()
+  assert.equal(tracker.events().length, 10)
+})
+
+test("opt out and browser privacy signals block product events and discard pending clicks", () => {
+  for (const options of [{ preference: validPreference("deny") }, { dnt: true }, { gpc: true }]) {
+    const tracker = createTracker(options)
+    tracker.emitTurboLoad()
+    tracker.clickProduct("wetwijzer")
+    tracker.clickProduct("praxis", { type: "auxclick" })
+    assert.equal(tracker.script(), undefined)
+    assert.deepEqual(tracker.events(), [])
+  }
+
+  for (const disable of [
+    (tracker) => tracker.choose("deny"),
+    (tracker) => tracker.setDnt(true),
+    (tracker) => tracker.setGpc(true)
+  ]) {
+    const tracker = createTracker()
+    tracker.emitTurboLoad()
+    tracker.clickProduct("wetwijzer")
+    disable(tracker)
+    tracker.script().onload()
+    assert.deepEqual(tracker.pageviews, [])
+    tracker.clickProduct("praxis")
+    assert.deepEqual(tracker.events(), [])
+  }
+})
+
+test("Turbo navigation, a different website and a private page prevent stale click delivery", () => {
+  for (const transition of [
+    (tracker) => { tracker.emitBeforeVisit() },
+    (tracker) => { tracker.setHref("https://lawrelay.be/fr"); tracker.emitTurboLoad() },
+    (tracker) => { tracker.body.dataset.lawrelayAnalyticsWebsiteId = "another-website" },
+    (tracker) => { tracker.body.dataset = {}; tracker.setHref("https://lawrelay.be/en/settings?email=private"); tracker.emitTurboLoad() },
+    (tracker) => { tracker.body.dataset = {} }
+  ]) {
+    const tracker = createTracker()
+    tracker.emitTurboLoad()
+    tracker.clickProduct("wetwijzer")
+    transition(tracker)
+    tracker.script().onload()
+    assert.deepEqual(tracker.events(), [])
+  }
+
+  const tracker = createTracker()
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+  tracker.emitBeforeVisit()
+  tracker.clickProduct("praxis")
+  tracker.body.dataset = {}
+  tracker.setHref("https://lawrelay.be/en/assignments/42?client=private")
+  tracker.emitTurboLoad()
+  tracker.clickProduct("wetwijzer")
+  assert.deepEqual(tracker.events(), [])
+})
+
+test("private paths never send product clicks even when a stale tracker is loaded", () => {
+  const tracker = createTracker()
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+  for (const path of ["session/new", "registration/new", "settings", "assignments/42", "dashboard", "admin/users"]) {
+    tracker.setHref(`https://lawrelay.be/en/${path}?private=secret`)
+    tracker.clickProduct("wetwijzer")
+    tracker.clickProduct("praxis")
+  }
+  assert.deepEqual(tracker.events(), [])
+})
+
+test("tracker failures discard pending events and never interrupt product links", async () => {
+  const failedLoad = createTracker()
+  failedLoad.emitTurboLoad()
+  failedLoad.clickProduct("wetwijzer")
+  failedLoad.script().onerror()
+  failedLoad.script().onload()
+  assert.deepEqual(failedLoad.events(), [])
+
+  const tracker = createTracker()
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+  tracker.failTracking()
+  assert.doesNotThrow(() => tracker.clickProduct("wetwijzer"))
+  tracker.rejectTracking()
+  assert.doesNotThrow(() => tracker.clickProduct("praxis"))
+  await Promise.resolve()
 })
