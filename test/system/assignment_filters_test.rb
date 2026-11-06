@@ -185,6 +185,25 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     assert_no_selector "#assignment-results[busy]"
   end
 
+  test "Back refetches current results instead of restoring an outdated board snapshot" do
+    initial = { q: "Ant", kind: "court_replacement", city: "Brussels", practice_area: "Commercial law" }
+    visit assignments_path(locale: :en, **initial)
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing"
+
+    find("#kind_legal_task").choose
+    assert_current_path(%r{[?&]kind=legal_task(?:&|$)})
+    assert_no_selector "#assignment-results .assignment-card"
+    @assignment.update!(title: "Antwerp hearing updated on the server")
+
+    go_back_to assignments_path(locale: :en, **initial)
+
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing updated on the server"
+    assert_checked_field "kind_court_replacement"
+    assert_field "q", with: "Ant"
+    assert_field "city-search", with: "Brussels"
+    assert_field "practice_area-search", with: "Commercial law"
+  end
+
   test "Enter submits search once without leaving a pending duplicate history entry" do
     visit assignments_path(locale: :en)
     find("#q").send_keys("Ant", :enter)

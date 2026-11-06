@@ -13,6 +13,7 @@ module GeoChallenge
     return unless GeoCountry.challenge_enabled?
     return unless anonymous_public_page?
     return if geo_verified? || GeoCountry.country_for(request.remote_ip) == "BE"
+    return if (request.get? || request.head?) && VerifiedGoogleCrawler.call(ip: request.remote_ip, user_agent: request.user_agent)
 
     cookies.signed[:geo_return_to] = {
       value: request.path,

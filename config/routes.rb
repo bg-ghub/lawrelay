@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "health/operations", to: "operational_health#show"
   get "robots.txt", to: "seo#robots", defaults: { format: :text }
   get "sitemap.xml", to: "seo#sitemap", defaults: { format: :xml }
+  get "/:verification_file", to: "seo#google_site_verification", format: false,
+    constraints: { verification_file: /google[0-9a-f]{16}\.html/ }
   post "webhooks/mollie", to: "webhooks/mollie#create"
 
   scope "(:locale)", locale: /nl|fr|de|en/ do
