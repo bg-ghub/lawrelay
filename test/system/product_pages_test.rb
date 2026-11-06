@@ -13,6 +13,7 @@ class ProductPagesTest < ApplicationSystemTestCase
       %i[court_cover legal_assignments].each do |product|
         visit public_send("#{product}_path", locale:)
         assert_selector ".product-page h1", text: I18n.t("product_pages.#{product}.heading", locale:)
+        assert_selector ".product-example", text: I18n.t("product_pages.example.label", locale:)
         assert_operator page.evaluate_script("document.documentElement.scrollWidth"), :<=, 320
         assert_selector ".product-page__actions a", count: 4
       end

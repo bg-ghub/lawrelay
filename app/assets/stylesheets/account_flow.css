@@ -1,13 +1,4 @@
 @media (max-width: 760px) {
-  body.site-shell .flash-stack {
-    position: relative;
-    top: auto;
-    right: auto;
-    z-index: auto;
-    width: calc(100% - 26px);
-    margin: 1rem auto 0;
-  }
-
   .account-flow-page.new-assignment {
     padding-top: 1.6rem;
     padding-bottom: 2.5rem;

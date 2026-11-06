@@ -52,7 +52,10 @@
     <link rel="icon" href="/icon.svg?v=<%= LawRelay::VERSION %>" type="image/svg+xml" sizes="any">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=<%= LawRelay::VERSION %>" sizes="180x180">
 
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <% page_stylesheet_names.each do |name| %>
+      <%= stylesheet_link_tag name, data: { turbo_track: shared_stylesheet?(name) ? "reload" : "dynamic", lawrelay_stylesheet: name } %>
+    <% end %>
+    <meta name="lawrelay-stylesheets-end" content="">
     <%= javascript_importmap_tags %>
   </head>
 

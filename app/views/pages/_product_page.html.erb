@@ -7,6 +7,21 @@
     <p class="lede"><%= t("#{scope}.introduction") %></p>
   </header>
 
+  <section class="product-example" aria-labelledby="product-example-heading">
+    <h2 id="product-example-heading"><%= t("product_pages.example.label") %></h2>
+    <div class="product-example__grid">
+      <section class="product-example__request">
+        <h3><%= t("product_pages.example.request") %></h3>
+        <strong><%= t("#{scope}.example.title") %></strong>
+        <p><%= t("#{scope}.example.description") %></p>
+      </section>
+      <section class="product-example__offer">
+        <h3><%= t("product_pages.example.offer") %></h3>
+        <p><%= t("#{scope}.example.reply") %></p>
+      </section>
+    </div>
+  </section>
+
   <div class="dashboard-panel product-page__content">
     <% t("#{scope}.sections").each_value do |section| %>
       <section>

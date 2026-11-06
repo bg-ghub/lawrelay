@@ -1,5 +1,9 @@
 en:
   product_pages:
+    example:
+      label: "Fictional example"
+      request: "Assignment"
+      offer: "Offer"
     links:
       label: "Assignments through LawRelay"
       court_cover: "Court cover"
@@ -14,6 +18,10 @@ en:
       meta_title: "Court cover for Belgian lawyers — LawRelay"
       meta_description: "Find another lawyer to cover a hearing. Compare professional profiles, proposed fees and travel terms, then agree the arrangements through LawRelay."
       heading: "Arrange court cover"
+      example:
+        title: "Request for an adjournment"
+        description: "Hearing in Antwerp, Monday at 10:00. Documents and submissions already deposited."
+        reply: "Available for the hearing. Fixed fee, including travel."
       introduction: "Unable to attend a hearing yourself? Post an assignment on LawRelay and receive offers from other lawyers. You decide who will handle the hearing on your behalf."
       sections:
         request:
@@ -29,6 +37,10 @@ en:
       meta_title: "Legal assignments between lawyers — LawRelay"
       meta_description: "Outsource a defined legal task to another lawyer. Set out the work, scope and deadline, then compare profiles and proposed fees on LawRelay."
       heading: "Outsource legal work"
+      example:
+        title: "Research on limitation periods"
+        description: "Short written advice in Dutch, due Friday."
+        reply: "I can deliver the advice on Thursday. Hourly rate."
       introduction: "Looking for another lawyer to undertake legal work? Post a defined assignment on LawRelay, such as research, advice, a contract or submissions. You can also respond to published assignments yourself."
       sections:
         request:

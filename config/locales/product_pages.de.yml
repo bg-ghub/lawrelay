@@ -1,5 +1,9 @@
 de:
   product_pages:
+    example:
+      label: "Fiktives Beispiel"
+      request: "Auftrag"
+      offer: "Angebot"
     links:
       label: "Aufträge über LawRelay"
       court_cover: "Terminsvertretung"
@@ -14,6 +18,10 @@ de:
       meta_title: "Terminsvertretung unter Rechtsanwälten — LawRelay"
       meta_description: "Finden Sie eine anwaltliche Terminsvertretung. Vergleichen Sie Profile, Honorare und Reisekosten und vereinbaren Sie die Vertretung über LawRelay."
       heading: "Eine Terminsvertretung organisieren"
+      example:
+        title: "Antrag auf Vertagung"
+        description: "Termin in Antwerpen, Montag um 10:00 Uhr. Unterlagen und Schriftsätze bereits eingereicht."
+        reply: "Für den Termin verfügbar. Pauschalhonorar, Reisekosten inbegriffen."
       introduction: "Sie können einen Gerichtstermin nicht selbst wahrnehmen? Veröffentlichen Sie einen Auftrag auf LawRelay und erhalten Sie Angebote von Anwaltskollegen. Sie entscheiden selbst, wem Sie die Vertretung übertragen."
       sections:
         request:
@@ -29,6 +37,10 @@ de:
       meta_title: "Juristische Aufträge zwischen Rechtsanwälten — LawRelay"
       meta_description: "Beauftragen Sie einen Anwaltskollegen mit juristischer Arbeit. Beschreiben Sie Umfang und Frist und vergleichen Sie die Angebote auf LawRelay."
       heading: "Juristische Arbeit vergeben"
+      example:
+        title: "Recherche zur Verjährung"
+        description: "Kurze schriftliche Stellungnahme auf Niederländisch, bis Freitag."
+        reply: "Ich kann die Stellungnahme am Donnerstag liefern. Abrechnung nach Stunden."
       introduction: "Sie suchen anwaltliche Unterstützung für juristische Arbeit? Veröffentlichen Sie einen klar abgegrenzten Auftrag auf LawRelay, etwa für Recherche, Beratung, einen Vertrag oder Schriftsätze. Sie können auch selbst Angebote für veröffentlichte Aufträge abgeben."
       sections:
         request:

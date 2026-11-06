@@ -1,5 +1,9 @@
 nl:
   product_pages:
+    example:
+      label: "Fictief voorbeeld"
+      request: "Opdracht"
+      offer: "Reactie"
     links:
       label: "Opdrachten via LawRelay"
       court_cover: "Zittingsvervanging"
@@ -14,6 +18,10 @@ nl:
       meta_title: "Zittingsvervanging tussen advocaten — LawRelay"
       meta_description: "Zoek een confrater voor een zittingsvervanging. Vergelijk profielen, erelonen en verplaatsingsafspraken en maak onderling afspraken via LawRelay."
       heading: "Een zittingsvervanging regelen"
+      example:
+        title: "Verzoek om uitstel"
+        description: "Zitting in Antwerpen, maandag om 10:00. Stukken en conclusies zijn al neergelegd."
+        reply: "Beschikbaar voor de zitting. Vast ereloon, inclusief verplaatsing."
       introduction: "Kunt u een zitting niet zelf waarnemen? Via LawRelay plaatst u een opdracht waarop een confrater kan reageren. U kiest zelf aan wie u de vervanging toevertrouwt."
       sections:
         request:
@@ -29,6 +37,10 @@ nl:
       meta_title: "Juridische opdrachten uitbesteden — LawRelay"
       meta_description: "Besteed juridisch werk uit aan een confrater. Beschrijf de opdracht, omvang en termijn, vergelijk reacties en maak rechtstreeks afspraken via LawRelay."
       heading: "Juridisch werk uitbesteden"
+      example:
+        title: "Onderzoek naar verjaring"
+        description: "Kort schriftelijk advies in het Nederlands, uiterlijk vrijdag."
+        reply: "Ik kan het advies donderdag bezorgen. Ereloon per uur."
       introduction: "Zoekt u een confrater voor juridisch werk? Plaats een afgebakende opdracht op LawRelay, bijvoorbeeld voor onderzoek, advies, een overeenkomst of conclusies. U kunt ook zelf reageren op opdrachten."
       sections:
         request:

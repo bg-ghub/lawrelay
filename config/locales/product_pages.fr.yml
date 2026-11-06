@@ -1,5 +1,9 @@
 fr:
   product_pages:
+    example:
+      label: "Exemple fictif"
+      request: "Mission"
+      offer: "Proposition"
     links:
       label: "Missions via LawRelay"
       court_cover: "Remplacement à l’audience"
@@ -14,6 +18,10 @@ fr:
       meta_title: "Remplacement à l’audience entre avocats — LawRelay"
       meta_description: "Trouvez un confrère pour vous remplacer à l’audience. Comparez les profils, les honoraires et les modalités de déplacement sur LawRelay."
       heading: "Organiser un remplacement à l’audience"
+      example:
+        title: "Demande de remise"
+        description: "Audience à Anvers, lundi à 10 h. Pièces et conclusions déjà déposées."
+        reply: "Disponible pour l’audience. Honoraires forfaitaires, déplacement compris."
       introduction: "Vous ne pouvez pas assister à une audience ? Publiez une mission sur LawRelay et recevez les propositions de confrères. Vous choisissez vous-même à qui confier le remplacement."
       sections:
         request:
@@ -29,6 +37,10 @@ fr:
       meta_title: "Missions juridiques entre avocats — LawRelay"
       meta_description: "Confiez une mission juridique à un confrère. Précisez le travail, son étendue et le délai, puis comparez les propositions reçues sur LawRelay."
       heading: "Confier une mission juridique"
+      example:
+        title: "Recherche sur la prescription"
+        description: "Bref avis écrit en néerlandais, pour vendredi."
+        reply: "Je peux remettre l’avis jeudi. Honoraires horaires."
       introduction: "Vous recherchez un confrère pour un travail juridique ? Publiez une mission délimitée sur LawRelay : recherche, avis, contrat ou conclusions, par exemple. Vous pouvez également répondre aux missions publiées."
       sections:
         request:

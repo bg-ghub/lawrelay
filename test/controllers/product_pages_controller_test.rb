@@ -37,6 +37,10 @@ class ProductPagesControllerTest < ActionDispatch::IntegrationTest
         assert_select "meta[name='robots'][content='index,follow']"
         assert_select "link[rel='canonical'][href$='#{path}']"
         assert_select ".product-page h1", text: I18n.t("product_pages.#{page}.heading", locale:)
+        assert_select ".product-example h2", text: I18n.t("product_pages.example.label", locale:)
+        assert_select ".product-example__request strong", text: I18n.t("product_pages.#{page}.example.title", locale:)
+        assert_select ".product-example__offer p", text: I18n.t("product_pages.#{page}.example.reply", locale:)
+        assert_select ".product-example a, .product-example button, .product-example form", count: 0
         assert_select ".product-page__actions a[href='#{new_assignment_path(locale:)}']"
         assert_select ".product-page__actions a[href='#{assignments_path(locale:)}']"
         assert_select ".product-page__actions a[href='#{new_registration_path(locale:)}']"
@@ -47,7 +51,7 @@ class ProductPagesControllerTest < ActionDispatch::IntegrationTest
           assert_select ".language-menu a[hreflang='#{alternate}'][href='#{public_send("#{page}_path", locale: alternate)}']"
         end
         words = Nokogiri::HTML(response.body).at_css(".product-page").text.squish.split.size
-        assert_operator words, :<=, 180, "#{locale}/#{page} should stay concise"
+        assert_operator words, :<=, 220, "#{locale}/#{page} including its example should stay concise"
         assert_not_includes response.body, assignment.title
         assert_not_includes response.body, private_account.user.full_name
         assert_not_includes response.body, private_account.user.email_address
