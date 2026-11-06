@@ -65,7 +65,13 @@
 
 <section class="how-section" id="how-it-works">
   <div class="shell how-grid">
-    <div class="how-intro"><h2><%= t("marketing.header.how_it_works") %></h2></div>
+    <div class="how-intro">
+      <h2><%= t("marketing.header.how_it_works") %></h2>
+      <nav class="product-page-links" aria-label="<%= t('product_pages.links.label') %>">
+        <%= link_to t("product_pages.links.court_cover"), court_cover_path, class: "text-link" %>
+        <%= link_to t("product_pages.links.legal_assignments"), legal_assignments_path, class: "text-link" %>
+      </nav>
+    </div>
     <ol class="steps-list">
       <% 3.times do |index| %>
         <li><span class="step-number"><%= format("%02d", index + 1) %></span><div><h3><%= t("marketing.home.how.steps.#{index}.heading") %></h3><p><%= t("marketing.home.how.steps.#{index}.body") %></p></div></li>

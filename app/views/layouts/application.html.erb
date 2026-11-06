@@ -31,6 +31,9 @@
       <meta name="twitter:image" content="<%= social_preview_image_url %>">
       <meta name="twitter:image:alt" content="<%= t("marketing.home.social_preview.alt") %>">
     <% end %>
+    <% if (organization = homepage_organization_schema) %>
+      <%= tag.script(json_escape(organization.to_json).html_safe, type: "application/ld+json", nonce: content_security_policy_nonce) %>
+    <% end %>
     <meta name="theme-color" content="#173f3b">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">

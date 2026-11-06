@@ -1,0 +1,42 @@
+en:
+  product_pages:
+    links:
+      label: "Assignments through LawRelay"
+      court_cover: "Court cover"
+      legal_assignments: "Legal assignments"
+    actions:
+      label: "Access assignments"
+      post: "Post an assignment"
+      browse: "Browse assignments"
+      register: "Create an account"
+      sign_in: "Sign in"
+    court_cover:
+      meta_title: "Court cover for Belgian lawyers — LawRelay"
+      meta_description: "Find another lawyer to cover a hearing. Compare professional profiles, proposed fees and travel terms, then agree the arrangements through LawRelay."
+      heading: "Arrange court cover"
+      introduction: "Unable to attend a hearing yourself? Post an assignment on LawRelay and receive offers from other lawyers. You decide who will handle the hearing on your behalf."
+      sections:
+        request:
+          heading: "Describe the assignment"
+          body: "Specify the court, date, time and practical instructions. Explain what attendance involves and whether documents or submissions have already been deposited. A guideline fee is optional."
+        choose:
+          heading: "Compare the offers"
+          body: "Review the professional profile, proposed fee and travel terms. Where available, a route estimate shows the distance and travel time. Travel costs may be included in the fee or stated separately."
+        agree:
+          heading: "Agree the arrangements"
+          body: "Confirm your choice and agree the fee with the selected lawyer. Arrange invoicing privately. Do not publish confidential case information in the assignment; share it only with the selected lawyer after agreement."
+    legal_assignments:
+      meta_title: "Legal assignments between lawyers — LawRelay"
+      meta_description: "Outsource a defined legal task to another lawyer. Set out the work, scope and deadline, then compare profiles and proposed fees on LawRelay."
+      heading: "Outsource legal work"
+      introduction: "Looking for another lawyer to undertake legal work? Post a defined assignment on LawRelay, such as research, advice, a contract or submissions. You can also respond to published assignments yourself."
+      sections:
+        request:
+          heading: "Define the work"
+          body: "Describe the expected result, scope and deadline. Specify the relevant language and practice area so that another lawyer can assess the assignment. You may suggest a guideline fee, but this is optional."
+        choose:
+          heading: "Assess the offers"
+          body: "Compare the professional profile, response and proposed fee. Choose the lawyer you wish to work with. Agree what is to be delivered and how the work will be carried out."
+        agree:
+          heading: "Confirm the details"
+          body: "Agree fees and arrange invoicing privately. Do not include client names or confidential case information in the assignment. Share the necessary documents only with the selected lawyer after agreement."

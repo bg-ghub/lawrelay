@@ -130,6 +130,13 @@ class SeoControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, "http://lawrelay.example/fr/legal-notice"
     assert_includes response.body, "http://lawrelay.example/en/terms"
     assert_not_includes response.body, "/assignments"
+    urls = Nokogiri::XML(response.body).xpath("//s:url/s:loc", "s" => "http://www.sitemaps.org/schemas/sitemap/0.9").map(&:text)
+    public_paths = [ "", "/privacy", "/terms", "/cookies", "/legal-notice", "/court-cover", "/legal-assignments" ]
+    expected = I18n.available_locales.flat_map do |locale|
+      public_paths.map { |path| "http://lawrelay.example/#{locale}#{path}" }
+    end
+    assert_equal 28, urls.length
+    assert_equal expected.sort, urls.sort
   end
 
   test "public pages have canonical and alternate language links" do
@@ -148,5 +155,142 @@ class SeoControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "meta[name='robots'][content='noindex,nofollow']"
     assert_select "link[rel='canonical']", false
+  end
+
+  test "HTML and query variants canonicalize to the clean localized page on a QA host and port" do
+    host! "seo.qa.localhost:3108"
+
+    [ "/fr/privacy.html?utm_source=synthetic&q=private", "/fr/privacy?utm_source=synthetic" ].each do |path|
+      get path
+
+      assert_response :success
+      assert_select "link[rel='canonical'][href='http://seo.qa.localhost:3108/fr/privacy']", count: 1
+      I18n.available_locales.each do |locale|
+        assert_select "link[rel='alternate'][hreflang='#{locale}'][href='http://seo.qa.localhost:3108/#{locale}/privacy']", count: 1
+      end
+      assert_select "link[rel='alternate'][hreflang='x-default'][href='http://seo.qa.localhost:3108/en/privacy']", count: 1
+    end
+
+    get "/nl.html?utm_source=synthetic"
+    assert_response :success
+    assert_select "link[rel='canonical'][href='http://seo.qa.localhost:3108/nl']", count: 1
+  end
+
+  test "production canonical URLs use the configured main host and protocol instead of request origin" do
+    environment = Rails.env
+    original_production = environment.method(:production?)
+    original_geo = GeoCountry.method(:challenge_enabled?)
+    original_protocol = ENV["APP_PROTOCOL"]
+    environment.define_singleton_method(:production?) { true }
+    GeoCountry.define_singleton_method(:challenge_enabled?) { false }
+    ENV["APP_PROTOCOL"] = "https"
+    host! "alias.example:3108"
+
+    get "/fr/privacy.html?utm_source=synthetic"
+
+    assert_response :success
+    assert_select "link[rel='canonical'][href='https://lawrelay.example/fr/privacy']", count: 1
+    I18n.available_locales.each do |locale|
+      assert_select "link[rel='alternate'][hreflang='#{locale}'][href='https://lawrelay.example/#{locale}/privacy']", count: 1
+    end
+  ensure
+    environment.define_singleton_method(:production?, original_production) if original_production
+    GeoCountry.define_singleton_method(:challenge_enabled?, original_geo) if original_geo
+    ENV["APP_PROTOCOL"] = original_protocol
+  end
+
+  test "legal pages have distinct factual descriptions in every interface language" do
+    host! "lawrelay.example"
+    pages = { "privacy" => "privacy", "terms" => "terms", "cookies" => "cookies", "legal-notice" => "legal_notice" }
+    descriptions = []
+    I18n.available_locales.each do |locale|
+      pages.each do |path, key|
+        get "/#{locale}/#{path}"
+
+        assert_response :success
+        description = I18n.t("pages.#{key}.meta_description", locale:, raise: true)
+        assert description.present?
+        assert_operator description.length, :<=, 160
+        assert_includes description, "LawRelay"
+        assert_not_equal I18n.t("marketing.layout.description", locale:), description
+        assert_equal description, css_select("meta[name='description']").sole["content"]
+        assert_equal description, css_select("meta[property='og:description']").sole["content"]
+        descriptions << description
+      end
+    end
+    assert_equal 16, descriptions.uniq.length
+  end
+
+  test "localized main homepages publish nonce protected Organization data with the existing public logo" do
+    host! "lawrelay.example"
+    https!
+    I18n.available_locales.each do |locale|
+      get "/#{locale}?utm_source=synthetic"
+
+      assert_response :success
+      script = css_select("script[type='application/ld+json']").sole
+      schema = JSON.parse(script.content)
+      assert_equal "https://schema.org", schema.fetch("@context")
+      assert_equal "Organization", schema.fetch("@type")
+      assert_equal "LawRelay", schema.fetch("name")
+      assert_equal "https://lawrelay.example/", schema.fetch("url")
+      assert_equal({ "@type" => "ImageObject", "url" => "https://lawrelay.example/icon.png", "width" => 512, "height" => 512 }, schema.fetch("logo"))
+      assert_equal %w[@context @type logo name url], schema.keys.sort
+      assert script["nonce"].present?
+      assert_includes response.headers.fetch("Content-Security-Policy"), "'nonce-#{script['nonce']}'"
+    end
+  end
+
+  test "Organization data is absent on legal private administrator and alias pages" do
+    host! "lawrelay.example"
+    [ "/nl/privacy", "/fr/terms", "/de/cookies", "/en/legal-notice", "/nl/session/new" ].each do |path|
+      get path
+      assert_response :success
+      assert_select "script[type='application/ld+json']", false
+    end
+
+    host! SiteHosts.admin_host
+    get "/nl/admin/login"
+    assert_response :success
+    assert_select "script[type='application/ld+json']", false
+
+    host! "www.lawrelay.example"
+    get "/nl"
+    assert_response :success
+    assert_select "script[type='application/ld+json']", false
+  end
+
+  test "Organization JSON escapes HTML even when the JSON encoder does not" do
+    original_schema = ApplicationHelper.instance_method(:homepage_organization_schema)
+    original_json_setting = ActiveSupport.escape_html_entities_in_json
+    synthetic_name = "Synthetic </script><script data-schema-injection>alert(1)</script>"
+    ApplicationHelper.define_method(:homepage_organization_schema) do
+      { "@context" => "https://schema.org", "@type" => "Organization", "name" => synthetic_name }
+    end
+    ActiveSupport.escape_html_entities_in_json = false
+    host! "lawrelay.example"
+
+    get "/nl"
+
+    assert_response :success
+    script = css_select("script[type='application/ld+json']").sole
+    assert_equal synthetic_name, JSON.parse(script.content).fetch("name")
+    assert_not_includes script.content, "</script>"
+    assert_select "script[data-schema-injection]", false
+  ensure
+    ApplicationHelper.define_method(:homepage_organization_schema, original_schema) if original_schema
+    ActiveSupport.escape_html_entities_in_json = original_json_setting
+  end
+
+  test "the Organization logo is a public indexable 512 pixel PNG" do
+    host! "lawrelay.example"
+    get "/icon.png"
+
+    assert_response :success
+    assert_equal "image/png", response.media_type
+    assert_nil response.headers["Location"]
+    refute_match(/noindex/i, response.headers["X-Robots-Tag"].to_s)
+    assert_equal "\x89PNG\r\n\x1a\n".b, response.body.b.byteslice(0, 8)
+    assert_equal [ 512, 512 ], response.body.b.byteslice(16, 8).unpack("NN")
   end
 end

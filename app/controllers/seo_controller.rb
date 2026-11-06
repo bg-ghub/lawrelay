@@ -1,6 +1,8 @@
 class SeoController < ActionController::Base
   PUBLIC_PATHS = [
     :root,
+    :court_cover,
+    :legal_assignments,
     :privacy,
     :terms,
     :cookies,

@@ -176,6 +176,33 @@ test("a private Turbo visit during script loading cancels a stale public pagevie
   assert.deepEqual(tracker.pageviews, [])
 })
 
+test("public product pages keep the existing sanitized tracking and privacy boundaries", () => {
+  for (const locale of ["nl", "fr", "de", "en"]) {
+    for (const product of ["court-cover", "legal-assignments"]) {
+      const path = `/${locale}/${product}`
+      const tracker = createTracker({ href: `https://lawrelay.be${path}?email=private#details` })
+      tracker.emitTurboLoad()
+      tracker.script().onload()
+      assert.equal(tracker.pageviews[0].url, path)
+      assert.equal(tracker.pageviews[0].title, "LawRelay")
+      assert.equal(tracker.pageviews[0].name, undefined)
+
+      const optedOut = createTracker({ href: `https://lawrelay.be${path}`, preference: validPreference("deny") })
+      optedOut.emitTurboLoad()
+      assert.equal(optedOut.script(), undefined)
+
+      const signedIn = createTracker({ href: `https://lawrelay.be${path}` })
+      signedIn.body.dataset = {}
+      signedIn.emitTurboLoad()
+      assert.equal(signedIn.script(), undefined)
+
+      const nested = createTracker({ href: `https://lawrelay.be${path}/private`, preference: validPreference() })
+      nested.emitTurboLoad()
+      assert.equal(nested.script(), undefined)
+    }
+  }
+})
+
 test("a privacy signal arriving before script load cancels the pending pageview", () => {
   const tracker = createTracker({ href: "https://lawrelay.be/nl" })
   tracker.choose("allow")

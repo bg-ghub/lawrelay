@@ -1,0 +1,42 @@
+nl:
+  product_pages:
+    links:
+      label: "Opdrachten via LawRelay"
+      court_cover: "Zittingsvervanging"
+      legal_assignments: "Juridische opdrachten"
+    actions:
+      label: "Aan de slag"
+      post: "Opdracht plaatsen"
+      browse: "Opdrachten bekijken"
+      register: "Account aanmaken"
+      sign_in: "Aanmelden"
+    court_cover:
+      meta_title: "Zittingsvervanging tussen advocaten — LawRelay"
+      meta_description: "Zoek een confrater voor een zittingsvervanging. Vergelijk profielen, erelonen en verplaatsingsafspraken en maak onderling afspraken via LawRelay."
+      heading: "Een zittingsvervanging regelen"
+      introduction: "Kunt u een zitting niet zelf waarnemen? Via LawRelay plaatst u een opdracht waarop een confrater kan reageren. U kiest zelf aan wie u de vervanging toevertrouwt."
+      sections:
+        request:
+          heading: "Beschrijf wat nodig is"
+          body: "Vermeld de rechtbank, datum, het uur en de praktische instructies. Geef aan welk optreden u verwacht en of stukken of conclusies al zijn neergelegd. Een richtprijs is optioneel."
+        choose:
+          heading: "Vergelijk de reacties"
+          body: "Bekijk het profiel, het voorgestelde ereloon en de verplaatsingsvoorwaarden. Waar beschikbaar ziet u een schatting van de reisafstand en reistijd. Verplaatsingskosten kunnen inbegrepen zijn of afzonderlijk worden opgegeven."
+        agree:
+          heading: "Maak onderling afspraken"
+          body: "Bevestig uw keuze en spreek het ereloon af met uw confrater. Facturatie regelt u onderling. Vermeld geen vertrouwelijke dossiergegevens in de opdracht; deel die pas na akkoord en enkel met de gekozen confrater."
+    legal_assignments:
+      meta_title: "Juridische opdrachten uitbesteden — LawRelay"
+      meta_description: "Besteed juridisch werk uit aan een confrater. Beschrijf de opdracht, omvang en termijn, vergelijk reacties en maak rechtstreeks afspraken via LawRelay."
+      heading: "Juridisch werk uitbesteden"
+      introduction: "Zoekt u een confrater voor juridisch werk? Plaats een afgebakende opdracht op LawRelay, bijvoorbeeld voor onderzoek, advies, een overeenkomst of conclusies. U kunt ook zelf reageren op opdrachten."
+      sections:
+        request:
+          heading: "Baken de opdracht af"
+          body: "Beschrijf het gevraagde werk, de omvang en de termijn. Vermeld de relevante taal en het rechtsdomein, zodat uw confrater de opdracht kan beoordelen. U kunt een richtprijs opgeven; dat is niet verplicht."
+        choose:
+          heading: "Beoordeel de voorstellen"
+          body: "Vergelijk het professionele profiel, de reactie en het voorgestelde ereloon. Kies de confrater met wie u wilt samenwerken. Maak duidelijke afspraken over het te leveren werk en de uitvoering."
+        agree:
+          heading: "Werk de afspraken uit"
+          body: "Erelonen en facturatie regelt u onderling. Neem geen cliëntnamen of vertrouwelijke dossiergegevens op in de opdracht. Deel de nodige stukken pas na akkoord en enkel met de gekozen confrater."

@@ -1,0 +1,42 @@
+fr:
+  product_pages:
+    links:
+      label: "Missions via LawRelay"
+      court_cover: "Remplacement à l’audience"
+      legal_assignments: "Missions juridiques"
+    actions:
+      label: "Accéder aux missions"
+      post: "Publier une mission"
+      browse: "Consulter les missions"
+      register: "Créer un compte"
+      sign_in: "Se connecter"
+    court_cover:
+      meta_title: "Remplacement à l’audience entre avocats — LawRelay"
+      meta_description: "Trouvez un confrère pour vous remplacer à l’audience. Comparez les profils, les honoraires et les modalités de déplacement sur LawRelay."
+      heading: "Organiser un remplacement à l’audience"
+      introduction: "Vous ne pouvez pas assister à une audience ? Publiez une mission sur LawRelay et recevez les propositions de confrères. Vous choisissez vous-même à qui confier le remplacement."
+      sections:
+        request:
+          heading: "Précisez votre demande"
+          body: "Indiquez le tribunal, la date, l’heure et les instructions pratiques. Précisez l’intervention attendue et si les pièces ou conclusions ont déjà été déposées. Un montant indicatif est facultatif."
+        choose:
+          heading: "Comparez les propositions"
+          body: "Consultez le profil, les honoraires proposés et les modalités de déplacement. Lorsqu’elle est disponible, une estimation indique la distance et la durée du trajet. Les frais de déplacement peuvent être inclus ou précisés séparément."
+        agree:
+          heading: "Convenez des modalités"
+          body: "Confirmez votre choix et convenez des honoraires avec votre confrère. Réglez la facturation entre vous. Ne publiez aucune information confidentielle du dossier ; transmettez-la uniquement au confrère choisi, après accord."
+    legal_assignments:
+      meta_title: "Missions juridiques entre avocats — LawRelay"
+      meta_description: "Confiez une mission juridique à un confrère. Précisez le travail, son étendue et le délai, puis comparez les propositions reçues sur LawRelay."
+      heading: "Confier une mission juridique"
+      introduction: "Vous recherchez un confrère pour un travail juridique ? Publiez une mission délimitée sur LawRelay : recherche, avis, contrat ou conclusions, par exemple. Vous pouvez également répondre aux missions publiées."
+      sections:
+        request:
+          heading: "Définissez le travail"
+          body: "Décrivez le résultat attendu, l’étendue du travail et le délai. Indiquez la langue et la matière concernées afin que votre confrère puisse évaluer la mission. Vous pouvez proposer un montant indicatif, sans obligation."
+        choose:
+          heading: "Examinez les propositions"
+          body: "Comparez le profil professionnel, la réponse et les honoraires proposés. Choisissez le confrère avec lequel vous souhaitez travailler. Convenez clairement du travail à remettre et des modalités d’exécution."
+        agree:
+          heading: "Finalisez votre accord"
+          body: "Réglez les honoraires et la facturation entre vous. Ne publiez aucun nom de client ni information confidentielle du dossier. Transmettez les pièces nécessaires uniquement au confrère choisi, après accord."

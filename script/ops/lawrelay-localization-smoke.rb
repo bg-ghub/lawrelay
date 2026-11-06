@@ -95,7 +95,7 @@ admin = User.create!(first_name: "Locale", last_name: "Administrator", email_add
 
 anonymous = browser
 LOCALES.each do |locale|
-  [ "", "/privacy", "/terms", "/cookies", "/legal-notice", "/session/new", "/registration/new", "/passwords/new" ].each do |suffix|
+  [ "", "/court-cover", "/legal-assignments", "/privacy", "/terms", "/cookies", "/legal-notice", "/session/new", "/registration/new", "/passwords/new" ].each do |suffix|
     visit(anonymous, "/#{locale}#{suffix}")
   end
   redirected_visit(anonymous, "/#{locale}/pricing", "/#{locale}")

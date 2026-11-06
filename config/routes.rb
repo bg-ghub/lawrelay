@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     get "altcha-challenge.json", to: "geo_challenges#challenge_json", as: :altcha_challenge
 
     get "pricing", to: "pages#pricing", as: :pricing
+    get "court-cover", to: "pages#court_cover", as: :court_cover
+    get "legal-assignments", to: "pages#legal_assignments", as: :legal_assignments
     get "privacy", to: "pages#privacy", as: :privacy
     get "terms", to: "pages#terms", as: :terms
     get "cookies", to: "pages#cookie_policy", as: :cookies

@@ -1,5 +1,5 @@
 const analyticsAttribute = "lawrelayAnalyticsWebsiteId"
-const publicPath = /^\/(?:(?:nl|fr|de|en)(?:\/(?:privacy|terms|cookies|legal-notice))?|(?:privacy|terms|cookies|legal-notice)?)\/?$/
+const publicPath = /^\/(?:(?:nl|fr|de|en)(?:\/(?:privacy|terms|cookies|legal-notice|court-cover|legal-assignments))?|(?:privacy|terms|cookies|legal-notice|court-cover|legal-assignments)?)\/?$/
 const preferenceCookie = "lawrelay_statistics"
 const noticeCookie = "lawrelay_cookie_notice"
 const preferenceLifetime = 180 * 24 * 60 * 60

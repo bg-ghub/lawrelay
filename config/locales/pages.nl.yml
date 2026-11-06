@@ -33,6 +33,7 @@ nl:
       review_notice: "Toegang tot de bèta is gratis. LawRelay int tijdens deze bèta geen platformkosten."
     privacy:
       meta_title: "Privacyverklaring — LawRelay"
+      meta_description: "Hoe LawRelay uw persoonsgegevens verwerkt, beveiligt en bewaart, en welke rechten u heeft."
       eyebrow: "privacy"
       title: "Privacy"
       introduction: "Welke gegevens we gebruiken en waarom."
@@ -96,6 +97,7 @@ nl:
             - "Belangrijke wijzigingen worden gedateerd en waar passend via de dienst of e-mail meegedeeld."
     terms:
       meta_title: "Gebruiksvoorwaarden — LawRelay"
+      meta_description: "Voorwaarden voor het gebruik van LawRelay en het plaatsen en aanvaarden van opdrachten."
       eyebrow: "gebruiksvoorwaarden"
       title: "Voorwaarden"
       introduction: "Voor de LawRelay-bèta."
@@ -156,6 +158,7 @@ nl:
             - "Belgisch recht is van toepassing op deze voorwaarden. Dwingende rechten die op u van toepassing zijn, blijven onverlet. Niets in deze voorwaarden sluit aansprakelijkheid uit die wettelijk niet kan worden uitgesloten."
     cookies:
       meta_title: "Cookieverklaring — LawRelay"
+      meta_description: "Welke cookies en cookieloze statistieken LawRelay gebruikt en hoe u uw voorkeuren beheert."
       eyebrow: "cookies"
       title: "Cookies"
       introduction: "Alleen noodzakelijke cookies."
@@ -188,6 +191,7 @@ nl:
       professional_rules_url_link: "Bekijk de beroepsregels"
     legal_notice:
       meta_title: "Colofon — LawRelay"
+      meta_description: "Contact- en identificatiegegevens van de uitbater van LawRelay."
       eyebrow: "informatie over de uitbater"
       title: "Colofon"
       introduction: ""

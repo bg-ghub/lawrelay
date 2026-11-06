@@ -28,7 +28,7 @@ module GeoChallenge
   def anonymous_public_page?
     return false if admin_host? || authenticated?
 
-    controller_path == "home" || (controller_path == "pages" && action_name.in?(%w[privacy terms cookie_policy legal_notice]))
+    controller_path == "home" || (controller_path == "pages" && action_name.in?(%w[privacy terms cookie_policy legal_notice court_cover legal_assignments]))
   end
 
   def geo_verified?

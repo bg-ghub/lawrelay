@@ -19,6 +19,10 @@ class PagesController < ApplicationController
 
   def legal_notice; end
 
+  def court_cover; end
+
+  def legal_assignments; end
+
   private
 
   def set_page_context

@@ -33,6 +33,7 @@ fr:
       review_notice: "L'accès à la bêta est gratuit. LawRelay n'encaisse aucun frais de plateforme pendant cette bêta."
     privacy:
       meta_title: "Déclaration de confidentialité — LawRelay"
+      meta_description: "Comment LawRelay traite, protège et conserve vos données personnelles, et quels sont vos droits."
       eyebrow: "vie privée"
       title: "Confidentialité"
       introduction: "Quelles données nous utilisons et pourquoi."
@@ -96,6 +97,7 @@ fr:
             - "Les modifications importantes seront datées et, le cas échéant, communiquées via le service ou par e-mail."
     terms:
       meta_title: "Conditions d'utilisation — LawRelay"
+      meta_description: "Conditions d'utilisation de LawRelay pour publier et accepter des missions."
       eyebrow: "conditions d'utilisation"
       title: "Conditions"
       introduction: "Pour la bêta de LawRelay."
@@ -156,6 +158,7 @@ fr:
             - "Le droit belge régit ces conditions. Les droits impératifs qui vous sont applicables restent préservés. Rien dans ces conditions n'exclut une responsabilité qui ne peut légalement l'être."
     cookies:
       meta_title: "Déclaration relative aux cookies — LawRelay"
+      meta_description: "Cookies et statistiques sans cookies utilisés par LawRelay, et gestion de vos préférences."
       eyebrow: "cookies"
       title: "Cookies"
       introduction: "Uniquement les cookies nécessaires."
@@ -188,6 +191,7 @@ fr:
       professional_rules_url_link: "Voir les règles professionnelles"
     legal_notice:
       meta_title: "Mentions légales — LawRelay"
+      meta_description: "Coordonnées et informations d'identification de l'exploitant de LawRelay."
       eyebrow: "informations sur l'exploitant"
       title: "Mentions légales"
       introduction: ""

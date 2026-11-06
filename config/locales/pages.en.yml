@@ -33,6 +33,7 @@ en:
       review_notice: "Beta access is free. LawRelay does not collect platform fees during this beta."
     privacy:
       meta_title: "Privacy notice — LawRelay"
+      meta_description: "How LawRelay processes, protects and retains personal data, and how to exercise your privacy rights."
       eyebrow: "privacy"
       title: "Privacy"
       introduction: "What data we use and why."
@@ -96,6 +97,7 @@ en:
             - "Material changes will be dated and communicated through the service or by email where appropriate."
     terms:
       meta_title: "Terms of service — LawRelay"
+      meta_description: "Terms for using LawRelay to post and accept court cover and legal assignments."
       eyebrow: "terms of service"
       title: "Terms"
       introduction: "For the LawRelay beta."
@@ -156,6 +158,7 @@ en:
             - "Belgian law governs these terms. Any mandatory rights that apply to you remain unaffected. Nothing in these terms excludes liability that cannot legally be excluded."
     cookies:
       meta_title: "Cookie notice — LawRelay"
+      meta_description: "The cookies and cookieless statistics LawRelay uses, and how to manage your preferences."
       eyebrow: "cookies"
       title: "Cookies"
       introduction: "Only necessary cookies."
@@ -188,6 +191,7 @@ en:
       professional_rules_url_link: "View professional rules"
     legal_notice:
       meta_title: "Legal notice — LawRelay"
+      meta_description: "Contact and identification details for the operator of LawRelay."
       eyebrow: "operator information"
       title: "Legal notice"
       introduction: ""

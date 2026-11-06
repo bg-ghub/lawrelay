@@ -5,7 +5,9 @@ module AnalyticsHelper
     [ "pages", "privacy" ],
     [ "pages", "terms" ],
     [ "pages", "cookie_policy" ],
-    [ "pages", "legal_notice" ]
+    [ "pages", "legal_notice" ],
+    [ "pages", "court_cover" ],
+    [ "pages", "legal_assignments" ]
   ].freeze
 
   def umami_analytics_enabled?

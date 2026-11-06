@@ -1,0 +1,27 @@
+<% scope = "product_pages.#{page}" %>
+<% content_for :title, t("#{scope}.meta_title") %>
+<% content_for :meta_description, t("#{scope}.meta_description") %>
+<article class="shell product-page">
+  <header class="product-page__intro">
+    <h1><%= t("#{scope}.heading") %></h1>
+    <p class="lede"><%= t("#{scope}.introduction") %></p>
+  </header>
+
+  <div class="dashboard-panel product-page__content">
+    <% t("#{scope}.sections").each_value do |section| %>
+      <section>
+        <h2><%= section[:heading] %></h2>
+        <p><%= section[:body] %></p>
+      </section>
+    <% end %>
+    <nav class="product-page__actions" aria-label="<%= t('product_pages.actions.label') %>">
+      <%= link_to t("product_pages.actions.post"), new_assignment_path, class: "button button--dark" %>
+      <%= link_to t("product_pages.actions.browse"), assignments_path, class: "button button--ghost" %>
+      <%= link_to t("product_pages.actions.register"), new_registration_path, class: "text-link" %>
+      <%= link_to t("product_pages.actions.sign_in"), new_session_path, class: "text-link" %>
+    </nav>
+  </div>
+  <nav class="product-page__related" aria-label="<%= t('product_pages.links.label') %>">
+    <%= link_to t("product_pages.links.#{other_page}"), public_send("#{other_page}_path"), class: "text-link" %>
+  </nav>
+</article>

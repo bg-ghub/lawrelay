@@ -5,7 +5,7 @@ class AnalyticsHelperTest < ActiveSupport::TestCase
 
   test "only public marketing actions are eligible for Umami" do
     assert umami_analytics_public_action?(controller_path: "home", action_name: "index")
-    %w[privacy terms cookie_policy legal_notice].each do |action|
+    %w[privacy terms cookie_policy legal_notice court_cover legal_assignments].each do |action|
       assert umami_analytics_public_action?(controller_path: "pages", action_name: action)
     end
 

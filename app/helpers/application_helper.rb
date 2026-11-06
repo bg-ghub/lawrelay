@@ -77,7 +77,21 @@ module ApplicationHelper
   end
 
   def localized_canonical_url(locale)
-    url_for(request.path_parameters.merge(locale:, only_path: false))
+    url_for(request.path_parameters.except(:format).merge(locale:, format: nil, only_path: false, **canonical_url_options))
+  end
+
+  def homepage_organization_schema
+    return unless public_marketing_page? && controller_path == "home" && action_name == "index" &&
+      !admin_host? && request.host.casecmp?(SiteHosts.app_host)
+
+    homepage = root_url(locale: nil, format: nil, **canonical_url_options)
+    {
+      "@context" => "https://schema.org",
+      "@type" => "Organization",
+      "name" => "LawRelay",
+      "url" => homepage,
+      "logo" => { "@type" => "ImageObject", "url" => "#{homepage}icon.png", "width" => 512, "height" => 512 }
+    }
   end
 
   def page_title
@@ -99,5 +113,15 @@ module ApplicationHelper
   def app_version_label
     key = Firm.beta_mode? ? "marketing.footer.beta_version" : "marketing.footer.app_version"
     t(key, version: LawRelay::VERSION)
+  end
+
+  private
+
+  def canonical_url_options
+    if Rails.env.production?
+      { host: SiteHosts.app_host, protocol: SiteHosts.protocol, port: nil }
+    else
+      { host: request.host, protocol: request.protocol.delete_suffix("://"), port: request.optional_port }
+    end
   end
 end
