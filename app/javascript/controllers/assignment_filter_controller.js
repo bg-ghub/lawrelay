@@ -36,8 +36,23 @@ export default class extends Controller {
     this.onEnd = event => {
       if (event.detail.formSubmission === this.submission) this.submission = null
     }
+    this.onBeforeVisit = event => {
+      if (!this.restoring) return
+
+      const destination = new URL(event.detail.url, window.location.href)
+      const current = new URL(window.location.href)
+      const board = new URL(this.element.action, current)
+      destination.hash = current.hash = ""
+      destination.searchParams.sort()
+      current.searchParams.sort()
+      // A delayed frame promotion must not replace an active Back restoration.
+      if (destination.origin === current.origin && destination.pathname === board.pathname && destination.href !== current.href) {
+        event.preventDefault()
+      }
+    }
     window.addEventListener("popstate", this.onRestore)
     document.addEventListener("turbo:load", this.onLoad)
+    document.addEventListener("turbo:before-visit", this.onBeforeVisit)
     this.element.addEventListener("turbo:submit-start", this.onStart)
     this.element.addEventListener("turbo:submit-end", this.onEnd)
   }
@@ -86,6 +101,7 @@ export default class extends Controller {
     this.stopSubmission()
     window.removeEventListener("popstate", this.onRestore)
     document.removeEventListener("turbo:load", this.onLoad)
+    document.removeEventListener("turbo:before-visit", this.onBeforeVisit)
     this.element.removeEventListener("turbo:submit-start", this.onStart)
     this.element.removeEventListener("turbo:submit-end", this.onEnd)
   }

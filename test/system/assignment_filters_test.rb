@@ -185,6 +185,93 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     assert_no_selector "#assignment-results[busy]"
   end
 
+  test "Back refetches current results instead of restoring an outdated board snapshot" do
+    initial = { q: "Ant", kind: "court_replacement", city: "Brussels", practice_area: "Commercial law" }
+    visit assignments_path(locale: :en, **initial)
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing"
+
+    find("#kind_legal_task").choose
+    assert_current_path(%r{[?&]kind=legal_task(?:&|$)})
+    assert_no_selector "#assignment-results .assignment-card"
+    @assignment.update!(title: "Antwerp hearing updated on the server")
+
+    go_back_to assignments_path(locale: :en, **initial)
+
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing updated on the server"
+    assert_checked_field "kind_court_replacement"
+    assert_field "q", with: "Ant"
+    assert_field "city-search", with: "Brussels"
+    assert_field "practice_area-search", with: "Commercial law"
+  end
+
+  test "a delayed filter frame promotion cannot cancel Back while restoration is loading" do
+    initial = { q: "Ant", kind: "court_replacement", city: "Brussels", practice_area: "Commercial law" }
+    visit assignments_path(locale: :en, **initial)
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing"
+    page.execute_script(<<~JS)
+      const originalFetch = window.fetch;
+      document.addEventListener('turbo:before-visit', event => {
+        const url = new URL(event.detail.url, location.href);
+        if (window.filterPromotionReleased && url.searchParams.get('kind') === 'legal_task') {
+          queueMicrotask(() => { document.documentElement.dataset.filterPromotionAttempted = 'true'; });
+        }
+      });
+      window.fetch = async (...args) => {
+        const url = new URL(args[0].url || args[0], location.href);
+        if (url.pathname === '/en/assignments' && url.searchParams.get('kind') === 'court_replacement') {
+          const signal = args[1].signal;
+          await new Promise((resolve, reject) => {
+            window.releaseBoardRestoration = () => { window.fetch = originalFetch; resolve(); };
+            signal.addEventListener('abort', () => {
+              document.documentElement.dataset.filterRestorationAborted = 'true';
+              reject(new DOMException('Aborted', 'AbortError'));
+            }, { once: true });
+            document.documentElement.dataset.filterRestorationPaused = 'true';
+          });
+        }
+        const response = await originalFetch(...args);
+        if (url.pathname === '/en/assignments' && url.searchParams.get('kind') === 'legal_task') {
+          const clone = response.clone.bind(response);
+          let reads = 0;
+          response.clone = () => {
+            const copy = clone();
+            const text = copy.text.bind(copy);
+            copy.text = async () => {
+              const html = await text();
+              if (++reads === 2) {
+                await new Promise(resolve => {
+                  window.releaseFilterPromotion = () => { window.filterPromotionReleased = true; resolve(); };
+                  document.documentElement.dataset.filterPromotionPaused = 'true';
+                });
+              }
+              return html;
+            };
+            return copy;
+          };
+        }
+        return response;
+      };
+    JS
+    find("#kind_legal_task").choose
+    assert_selector "html[data-filter-promotion-paused='true']"
+    assert_no_selector "#assignment-results .assignment-card"
+    @assignment.update!(title: "Antwerp hearing after delayed promotion")
+
+    page.go_back
+    assert_selector "html[data-filter-restoration-paused='true']"
+    page.execute_script("window.releaseFilterPromotion()")
+    assert_selector "html[data-filter-promotion-attempted='true']"
+    assert_no_selector "html[data-filter-restoration-aborted='true']"
+    page.execute_script("window.releaseBoardRestoration()")
+
+    assert_current_path assignments_path(locale: :en, **initial)
+    assert_selector "#assignment-results .assignment-card", text: "Antwerp hearing after delayed promotion"
+    assert_checked_field "kind_court_replacement"
+    assert_field "city-search", with: "Brussels"
+    assert_field "practice_area-search", with: "Commercial law"
+    assert_no_selector "#assignment-results[busy]"
+  end
+
   test "Enter submits search once without leaving a pending duplicate history entry" do
     visit assignments_path(locale: :en)
     find("#q").send_keys("Ant", :enter)
