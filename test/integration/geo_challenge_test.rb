@@ -76,4 +76,37 @@ class GeoChallengeTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes response.headers.fetch("content-security-policy"), "worker-src 'self' blob:"
   end
+
+  test "verified Google crawlers and InspectionTool can fetch only public marketing pages without a challenge" do
+    GeoCountry.define_singleton_method(:country_for) { |_| "US" }
+    original = VerifiedGoogleCrawler.method(:call)
+    VerifiedGoogleCrawler.define_singleton_method(:call) { |**| true }
+
+    [ "Googlebot/2.1", "Google-InspectionTool/1.0" ].each do |agent|
+      get privacy_path(locale: :fr), headers: { "User-Agent" => agent }
+      assert_response :success
+      assert_select "meta[name='robots'][content='index,follow']"
+      assert_nil cookies[:geo_verified]
+    end
+    head root_path(locale: :en), headers: { "User-Agent" => "Googlebot/2.1" }
+    assert_response :success
+
+    get assignments_path(locale: :en), headers: { "User-Agent" => "Googlebot/2.1" }
+    assert_redirected_to new_session_path(locale: :en)
+    get admin_users_path(locale: :en), headers: { "User-Agent" => "Google-InspectionTool/1.0" }
+    assert_redirected_to admin_login_path(locale: :en)
+  ensure
+    VerifiedGoogleCrawler.define_singleton_method(:call, original) if original
+  end
+
+  test "Google user agents and forged verification headers cannot bypass a failed DNS verification" do
+    GeoCountry.define_singleton_method(:country_for) { |_| "US" }
+    original = VerifiedGoogleCrawler.method(:call)
+    VerifiedGoogleCrawler.define_singleton_method(:call) { |**| false }
+
+    get root_path(locale: :nl), headers: { "User-Agent" => "Googlebot/2.1", "X-Verified-Crawler" => "true" }
+    assert_redirected_to geo_challenge_path(locale: :nl)
+  ensure
+    VerifiedGoogleCrawler.define_singleton_method(:call, original) if original
+  end
 end

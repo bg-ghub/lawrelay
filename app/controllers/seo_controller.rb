@@ -11,6 +11,17 @@ class SeoController < ActionController::Base
     verification_status email-verification notifications reports privacy_requests
   ].freeze
 
+  def google_site_verification
+    response.set_header("X-Robots-Tag", "noindex, nofollow")
+    filename = ENV["GOOGLE_SITE_VERIFICATION_FILE"].to_s
+    unless filename.match?(/\Agoogle[0-9a-f]{16}\.html\z/) &&
+        params[:verification_file] == filename && request.host.casecmp?(SiteHosts.app_host)
+      return head :not_found
+    end
+
+    render plain: "google-site-verification: #{filename}", content_type: "text/html"
+  end
+
   def robots
     if SiteHosts.admin?(request.host)
       return render plain: "User-agent: *\nDisallow: /\n", content_type: "text/plain"
