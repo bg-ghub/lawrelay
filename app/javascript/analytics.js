@@ -1,4 +1,5 @@
 const analyticsAttribute = "lawrelayAnalyticsWebsiteId"
+const productionOrigin = "https://lawrelay.be"
 const publicPath = /^\/(?:(?:nl|fr|de|en)(?:\/(?:privacy|terms|cookies|legal-notice|court-cover|legal-assignments))?|(?:privacy|terms|cookies|legal-notice|court-cover|legal-assignments)?)\/?$/
 const preferenceCookie = "lawrelay_statistics"
 const noticeCookie = "lawrelay_cookie_notice"
@@ -91,7 +92,7 @@ function updatePreferencePanel() {
 
 function currentPageview() {
   const url = new URL(window.location.href)
-  if (!publicPath.test(url.pathname)) return null
+  if (url.origin !== productionOrigin || !publicPath.test(url.pathname)) return null
 
   let referrer = ""
   if (document.referrer) {
@@ -138,6 +139,7 @@ function loadTracker(websiteId) {
   script.dataset.websiteId = websiteId
   script.dataset.autoTrack = "false"
   script.dataset.doNotTrack = "true"
+  script.dataset.domains = "lawrelay.be"
   script.onload = () => {
     trackerReady = true
     trackerLoading = false

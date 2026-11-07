@@ -134,6 +134,8 @@ jobs:
     needs: [ version, test ]
     steps:
       - uses: actions/checkout@v6
+      - name: Verify analytics collection excludes non-production origins
+        run: python3 script/ops/test-analytics-proxy.py
       - name: Build application image
         run: docker build --tag lawrelay-ci:${{ github.sha }} .
       - name: Render localized production pages and email in isolation

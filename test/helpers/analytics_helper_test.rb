@@ -22,4 +22,33 @@ class AnalyticsHelperTest < ActiveSupport::TestCase
     refute umami_analytics_preferences_available?(environment: production, website_id: "website-id", admin: true)
     refute umami_analytics_preferences_available?(environment: production, website_id: nil, admin: false)
   end
+
+  test "public tracking requires the exact production origin even with a production website ID" do
+    context = Object.new.extend(AnalyticsHelper)
+    context.define_singleton_method(:admin_host?) { false }
+    context.define_singleton_method(:authenticated?) { false }
+    context.define_singleton_method(:controller_path) { "home" }
+    context.define_singleton_method(:action_name) { "index" }
+    context.define_singleton_method(:umami_analytics_configured?) { true }
+
+    origins = {
+      "https://lawrelay.be" => true,
+      "http://lawrelay.be" => false,
+      "https://lawrelay.be:3106" => false,
+      "https://www.lawrelay.be" => false,
+      "https://admin.lawrelay.be" => false,
+      "https://analytics.lawrelay.be" => false,
+      "https://lawrelay.be.example.com" => false,
+      "http://localhost:3106" => false,
+      "http://clicks.qa.localhost:3106" => false,
+      "https://qa.lawrelay.test" => false,
+      "http://127.0.0.1:3106" => false
+    }
+
+    origins.each do |origin, expected|
+      request = Struct.new(:base_url, :get?).new(origin, true)
+      context.define_singleton_method(:request) { request }
+      assert_equal expected, context.umami_analytics_enabled?, origin
+    end
+  end
 end

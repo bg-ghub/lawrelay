@@ -137,6 +137,7 @@ test("loads once and sends a single sanitized public pageview", () => {
   assert.equal(tracker.script().src, "https://analytics.lawrelay.be/script.js")
   assert.equal(tracker.script().dataset.autoTrack, "false")
   assert.equal(tracker.script().dataset.doNotTrack, "true")
+  assert.equal(tracker.script().dataset.domains, "lawrelay.be")
 
   tracker.script().onload()
   assert.equal(JSON.stringify(tracker.pageviews), JSON.stringify([{
@@ -161,6 +162,81 @@ test("the shared root and unprefixed legal pages are tracked only as sanitized p
 
     assert.equal(tracker.pageviews[0].url, path)
   }
+})
+
+test("only the canonical HTTPS production origin can load analytics or send product clicks", () => {
+  for (const href of [
+    "http://localhost:3106/nl",
+    "http://127.0.0.1:3106/en",
+    "http://[::1]:3106/en",
+    "http://clicks.qa.localhost:3106/nl",
+    "https://owner.qa.localhost/en",
+    "https://lawrelay.test/fr",
+    "https://admin.lawrelay.be/nl",
+    "https://analytics.lawrelay.be/en",
+    "https://www.lawrelay.be/nl",
+    "https://lawrelay.be.evil.test/en",
+    "https://lawrelay.be@qa.localhost/en",
+    "https://preview-lawrelay.be/en",
+    "https://lawrelay.be:3106/en",
+    "http://lawrelay.be/en"
+  ]) {
+    const tracker = createTracker({ href, preference: validPreference() })
+    tracker.emitTurboLoad()
+    tracker.clickProduct("wetwijzer")
+    tracker.clickProduct("praxis", { type: "auxclick" })
+
+    assert.equal(tracker.script(), undefined, href)
+    assert.deepEqual(tracker.pageviews, [], href)
+  }
+})
+
+test("leaving the production origin discards pending pageviews and clicks", () => {
+  for (const nextHref of ["http://clicks.qa.localhost:3106/nl", "https://lawrelay.test/nl", "http://lawrelay.be/nl"]) {
+    const tracker = createTracker({ href: "https://lawrelay.be/nl" })
+    tracker.emitTurboLoad()
+    tracker.clickProduct("wetwijzer")
+    tracker.setHref(nextHref)
+    tracker.script().onload()
+    tracker.clickProduct("praxis")
+    assert.deepEqual(tracker.pageviews, [], nextHref)
+
+    tracker.setHref("https://lawrelay.be/nl")
+    tracker.script().onload()
+    assert.deepEqual(tracker.pageviews, [], "discarded clicks must not return on the production origin")
+    tracker.emitTurboLoad()
+    assert.equal(tracker.pageviews.length, 1, "a new public production visit can still be counted")
+    assert.deepEqual(tracker.events(), [])
+  }
+})
+
+test("an already loaded tracker cannot send from a QA origin", () => {
+  const tracker = createTracker({ href: "https://lawrelay.be/en" })
+  tracker.emitTurboLoad()
+  tracker.script().onload()
+  assert.equal(tracker.pageviews.length, 1)
+
+  tracker.setHref("https://clicks.qa.localhost/en")
+  tracker.clickProduct("wetwijzer")
+  tracker.emitTurboLoad()
+  tracker.clickProduct("praxis", { type: "auxclick" })
+  assert.equal(tracker.pageviews.length, 1)
+  assert.deepEqual(tracker.events(), [])
+})
+
+test("statistics controls remain usable on an excluded QA origin without loading analytics", () => {
+  const tracker = createTracker({ href: "http://clicks.qa.localhost:3106/nl" })
+  tracker.emitTurboLoad()
+  assert.equal(tracker.panel.hidden, true)
+  tracker.openPreferences()
+  assert.equal(tracker.panel.hidden, false)
+  tracker.choose("deny")
+  assert.match(tracker.cookie(), /^lawrelay_statistics=deny\.v1\.\d+$/)
+  tracker.openPreferences()
+  tracker.choose("allow")
+  assert.match(tracker.cookie(), /^lawrelay_statistics=allow\.v1\.\d+$/)
+  assert.equal(tracker.script(), undefined)
+  assert.deepEqual(tracker.pageviews, [])
 })
 
 test("a private Turbo visit during script loading cancels a stale public pageview", () => {

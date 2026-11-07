@@ -1,5 +1,6 @@
 module AnalyticsHelper
   UMAMI_ANALYTICS_HOST = "https://analytics.lawrelay.be".freeze
+  UMAMI_PUBLIC_ORIGIN = "https://lawrelay.be".freeze
   UMAMI_PUBLIC_ACTIONS = [
     [ "home", "index" ],
     [ "pages", "privacy" ],
@@ -23,7 +24,8 @@ module AnalyticsHelper
   end
 
   def umami_analytics_public_page?
-    request.get? &&
+    request.base_url == UMAMI_PUBLIC_ORIGIN &&
+      request.get? &&
       !admin_host? &&
       !authenticated? &&
       umami_analytics_public_action?(controller_path:, action_name:)

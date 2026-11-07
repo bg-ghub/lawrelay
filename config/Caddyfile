@@ -34,6 +34,14 @@ lawrelay.be, admin.lawrelay.be {
 analytics.lawrelay.be {
 	encode zstd gzip
 
+	# Only the public production site may submit browser analytics. This also
+	# excludes previously loaded QA trackers; the dashboard remains available.
+	@non_production_collection {
+		path /api/send /api/send/*
+		not header Origin https://lawrelay.be
+	}
+	respond @non_production_collection 204
+
 	header {
 		X-Content-Type-Options "nosniff"
 		Referrer-Policy "strict-origin-when-cross-origin"
