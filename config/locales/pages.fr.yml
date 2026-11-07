@@ -80,6 +80,7 @@ fr:
         retention:
           heading: "6. Conservation"
           paragraphs:
+            - "La fermeture de l’invitation à installer l’application est mémorisée sur cet appareil pendant 30 jours."
             - "Le dernier contrôle du profil reste lié à votre compte. Résumés des contrôles et alertes traitées : 90 jours. Les alertes ouvertes peuvent être conservées pour examen."
             - "Inscriptions inutilisées sans confirmation de l’e-mail ni approbation manuelle : 30 jours d’inactivité. Analyses des pages publiques : 90 jours. Notifications traitées : 90 jours après leur création ; celles en attente, en échec ou protégées peuvent être conservées pour examen. Missions et propositions clôturées : 2 ans après clôture. Demandes de confidentialité et signalements résolus : 2 ans après résolution. Échanges de support clôturés : 2 ans après clôture ou la dernière réponse, selon la date la plus tardive. Journaux d’audit : 1 an. Journaux techniques : 31 jours maximum."
             - "Lors d’une demande de suppression, votre compte est immédiatement désactivé et définitivement supprimé après 30 jours. Vous pouvez annuler la demande en vous connectant avant sa mise en œuvre. La demande et son éventuelle annulation sont confirmées par e-mail."
@@ -167,6 +168,7 @@ fr:
           heading: "1. Ce qui est utilisé aujourd'hui"
           paragraphs:
             - "Des cookies nécessaires de session signée et de sécurité des formulaires maintiennent la connexion et protègent les formulaires contre les requêtes falsifiées. Une session de connexion dure au maximum 30 jours et prend fin plus tôt en cas de déconnexion, de réinitialisation du mot de passe ou de révocation de session. Pour un visiteur anonyme hors de Belgique, le contrôle de sécurité utilise un cookie de vérification signé pendant 24 heures et un cookie de retour pendant 10 minutes au plus. Le cookie de préférence Statistiques conserve votre réglage pendant 180 jours. Un cookie d’information distinct conserve pendant 180 jours la fermeture de la bannière d’information. Umami n’utilise lui-même aucun cookie."
+            - "La fermeture de l’invitation à installer l’application est mémorisée sur cet appareil pendant 30 jours."
         no_tracking:
           heading: "2. Analyses des pages publiques"
           paragraphs:

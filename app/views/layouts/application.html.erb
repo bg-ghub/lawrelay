@@ -36,16 +36,18 @@
     <% end %>
     <meta name="theme-color" content="#173f3b">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="LawRelay">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <% if pwa_available? %>
+      <%= tag.link rel: "manifest", href: pwa_manifest_path(locale: I18n.locale) %>
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-title" content="LawRelay">
+    <% end %>
 
     <link rel="icon" href="/favicon.ico?v=<%= LawRelay::VERSION %>" type="image/x-icon" sizes="16x16 32x32 48x48">
     <link rel="icon" href="/icon.png?v=<%= LawRelay::VERSION %>" type="image/png" sizes="512x512">
@@ -85,6 +87,7 @@
       <%= yield %>
     </main>
     <%= render "shared/analytics_preference" if umami_analytics_preferences_available? %>
+    <%= render "pwa/install_banner" if pwa_available? %>
     <%= render(admin_host? ? "admin/shared/footer" : "shared/footer") %>
   </body>
 </html>

@@ -10,6 +10,7 @@ class PageStylesheetsTest < ActionDispatch::IntegrationTest
       get path
       assert_response :success
       assert_includes stylesheet_names, extra
+      assert_includes stylesheet_names, "pwa_install"
       assert_not_includes stylesheet_names, "admin_users"
       assert_not_includes stylesheet_names, "registration_profile"
       assert_not_includes stylesheet_names, "account_flow"
@@ -72,6 +73,7 @@ class PageStylesheetsTest < ActionDispatch::IntegrationTest
     assert_response :success
     %w[admin_users admin_navigation admin_shell searchable_select].each { |name| assert_includes stylesheet_names, name }
     assert_not_includes stylesheet_names, "product_bar"
+    assert_not_includes stylesheet_names, "pwa_install"
     assert_not_includes stylesheet_names, "registration_profile"
   ensure
     original_admin_id.nil? ? ENV.delete("LAWRELAY_ADMIN_USER_ID") : ENV["LAWRELAY_ADMIN_USER_ID"] = original_admin_id

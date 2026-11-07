@@ -80,6 +80,7 @@ nl:
         retention:
           heading: "6. Bewaring"
           paragraphs:
+            - "Een gesloten installatiemelding blijft op dit toestel 30 dagen verborgen."
             - "De laatste profielcontrole blijft bij uw account. Controleoverzichten en afgehandelde waarschuwingen: 90 dagen. Open waarschuwingen kunnen voor onderzoek bewaard blijven."
             - "Ongebruikte registraties zonder e-mailbevestiging of handmatige goedkeuring: 30 dagen inactiviteit. Analytics van openbare pagina's: 90 dagen. Afgehandelde meldingen: 90 dagen vanaf aanmaak; nog te verwerken, mislukte of beschermde meldingen kunnen voor onderzoek bewaard blijven. Afgesloten opdrachten en reacties: 2 jaar na afsluiting. Afgehandelde privacyverzoeken en meldingsdossiers: 2 jaar na afhandeling. Afgesloten supportgesprekken: 2 jaar na afsluiting, of na het laatste antwoord als dat later kwam. Auditlogs: 1 jaar. Technische logs: maximaal 31 dagen."
             - "Bij accountverwijdering wordt uw account meteen uitgeschakeld en na 30 dagen definitief verwijderd. Tot de uitvoering kunt u de aanvraag annuleren door aan te melden. Aanvraag en annulering bevestigen we per e-mail."
@@ -167,6 +168,7 @@ nl:
           heading: "1. Wat vandaag wordt gebruikt"
           paragraphs:
             - "Noodzakelijke ondertekende sessie- en formulierbeveiligingscookies houden u aangemeld en beschermen formulieren tegen vervalste verzoeken. Een sessie duurt maximaal 30 dagen en eindigt eerder bij afmelding, wachtwoordreset of intrekking van de sessie. Voor een anonieme bezoeker buiten België gebruikt de beveiligingscontrole een ondertekende verificatiecookie gedurende 24 uur en een return-path-cookie gedurende maximaal 10 minuten. De voorkeurcookie voor Statistieken onthoudt uw instelling 180 dagen. Een aparte informatiecookie onthoudt 180 dagen dat u de informatiebanner sloot. Umami zelf gebruikt geen cookies."
+            - "Een gesloten installatiemelding blijft op dit toestel 30 dagen verborgen."
         no_tracking:
           heading: "2. Analytics op openbare pagina's"
           paragraphs:

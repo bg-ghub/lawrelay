@@ -1,0 +1,12 @@
+nl:
+  pwa:
+    install:
+      title: "LawRelay installeren"
+      native: "Open LawRelay in een eigen venster."
+      ios: "Gebruik Delen → Zet op beginscherm."
+      safari: "Kies in Safari Archief → Voeg toe aan Dock."
+      android: "Kies in uw browsermenu Installeren of Toevoegen aan startscherm."
+      manual: "Installeer LawRelay via het browsermenu in Chrome, Edge of Safari."
+      button: "Installeren"
+      dismiss: "Niet nu"
+      footer: "LawRelay installeren"

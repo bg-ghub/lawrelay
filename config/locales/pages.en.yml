@@ -80,6 +80,7 @@ en:
         retention:
           heading: "6. Retention"
           paragraphs:
+            - "Dismissing the app installation banner is remembered locally on this device for 30 days."
             - "The latest directory check stays with your account. Check summaries and resolved alerts: 90 days. Open alerts may remain for investigation."
             - "Unused registrations without email confirmation or manual approval: 30 days of inactivity. Public-page analytics: 90 days. Completed notifications: 90 days from creation; pending, failed or protected notifications may remain for investigation. Closed assignments and proposals: 2 years after closure. Resolved privacy requests and reports: 2 years after resolution. Resolved support conversations: 2 years after closure or the last reply, whichever is later. Audit logs: 1 year. Technical logs: up to 31 days."
             - "When you request account deletion, your account is disabled immediately and permanently deleted after 30 days. You can cancel by signing in before deletion takes place. We confirm the request and any cancellation by email."
@@ -167,6 +168,7 @@ en:
           heading: "1. What is used today"
           paragraphs:
             - "Necessary signed session and form-security cookies keep you signed in and protect forms from forged requests. A login session lasts at most 30 days and ends earlier on logout, password reset, or session revocation. For an anonymous visitor outside Belgium, the security check uses a signed verification cookie for 24 hours and a return-path cookie for up to 10 minutes. The Statistics preference cookie remembers your setting for 180 days. A separate notice cookie remembers for 180 days that the information banner was closed. Umami itself uses no cookies."
+            - "Dismissing the app installation banner is remembered locally on this device for 30 days."
         no_tracking:
           heading: "2. Public-page analytics"
           paragraphs:

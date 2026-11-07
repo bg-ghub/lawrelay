@@ -1,0 +1,12 @@
+fr:
+  pwa:
+    install:
+      title: "Installer LawRelay"
+      native: "Ouvrez LawRelay dans sa propre fenêtre."
+      ios: "Utilisez Partager → Sur l’écran d’accueil."
+      safari: "Dans Safari, choisissez Fichier → Ajouter au Dock."
+      android: "Dans le menu du navigateur, choisissez Installer ou Ajouter à l’écran d’accueil."
+      manual: "Installez LawRelay depuis le menu de Chrome, Edge ou Safari."
+      button: "Installer"
+      dismiss: "Plus tard"
+      footer: "Installer LawRelay"

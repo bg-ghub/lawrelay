@@ -1,5 +1,5 @@
 module PageAssetsHelper
-  SHARED_STYLESHEETS = %w[application footer_project product_bar shared_flash].freeze
+  SHARED_STYLESHEETS = %w[application footer_project product_bar pwa_install shared_flash].freeze
   AUTH_STYLESHEETS = %w[accessibility_beta auth-copy].freeze
   ASSIGNMENT_STYLESHEETS = %w[
     accessibility_beta assignment_filters assignment_rates court_picker profile_import
@@ -10,7 +10,7 @@ module PageAssetsHelper
   ].freeze
 
   def page_stylesheet_names
-    shared = SHARED_STYLESHEETS.reject { |name| name == "product_bar" && admin_host? }
+    shared = SHARED_STYLESHEETS.reject { |name| admin_host? && name.in?(%w[product_bar pwa_install]) }
     specific = if controller_path.start_with?("admin/")
       ADMIN_STYLESHEETS
     else

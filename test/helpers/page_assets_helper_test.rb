@@ -9,11 +9,11 @@ class PageAssetsHelperTest < ActionView::TestCase
   def admin_host? = @admin_host || false
 
   test "public pages include only their shared and public styles" do
-    assert_equal %w[application footer_project home_pathways marketing_copy product_bar shared_flash], page_stylesheet_names
+    assert_equal %w[application footer_project home_pathways marketing_copy product_bar pwa_install shared_flash], page_stylesheet_names
     @page_controller, @page_action = "pages", "court_cover"
-    assert_equal %w[application footer_project product_bar product_pages shared_flash], page_stylesheet_names
+    assert_equal %w[application footer_project product_bar product_pages pwa_install shared_flash], page_stylesheet_names
     @page_action = "privacy"
-    assert_equal %w[application footer_project legal_pages product_bar shared_flash], page_stylesheet_names
+    assert_equal %w[application footer_project legal_pages product_bar pwa_install shared_flash], page_stylesheet_names
   end
 
   test "private components retain their dependencies and original alphabetical cascade" do
@@ -59,6 +59,7 @@ class PageAssetsHelperTest < ActionView::TestCase
     @admin_host = true
     @page_controller = "admin/users"
     assert_not_includes page_stylesheet_names, "product_bar"
+    assert_not_includes page_stylesheet_names, "pwa_install"
     assert shared_stylesheet?("application")
     refute shared_stylesheet?("registration_profile")
   end

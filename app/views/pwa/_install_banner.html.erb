@@ -1,0 +1,13 @@
+<section id="pwa-install-banner" class="pwa-install" data-pwa-install-banner data-service-worker-url="<%= pwa_service_worker_path(locale: nil) %>" role="region" aria-labelledby="pwa-install-title" hidden>
+  <img class="pwa-install__icon" src="/pwa-icon-192.png" alt="" width="48" height="48">
+  <div class="pwa-install__copy">
+    <p class="pwa-install__title" id="pwa-install-title"><%= t("pwa.install.title") %></p>
+    <% %w[native ios safari android manual].each do |mode| %>
+      <p data-pwa-copy="<%= mode %>" hidden><%= t("pwa.install.#{mode}") %></p>
+    <% end %>
+  </div>
+  <div class="pwa-install__actions">
+    <button class="button button--dark button--small" type="button" data-pwa-install hidden><%= t("pwa.install.button") %></button>
+    <button class="button button--outline button--small" type="button" data-pwa-dismiss><%= t("pwa.install.dismiss") %></button>
+  </div>
+</section>

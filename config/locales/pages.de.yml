@@ -80,6 +80,7 @@ de:
         retention:
           heading: "6. Aufbewahrung"
           paragraphs:
+            - "Ein geschlossener Installationshinweis bleibt auf diesem Gerät 30 Tage ausgeblendet."
             - "Das letzte Ergebnis der Profilprüfung bleibt bei Ihrem Konto. Prüfübersichten und erledigte Warnungen: 90 Tage. Offene Warnungen können für Untersuchungen aufbewahrt werden."
             - "Ungenutzte Registrierungen ohne E-Mail-Bestätigung oder manuelle Genehmigung: 30 Tage Inaktivität. Analysen öffentlicher Seiten: 90 Tage. Erledigte Benachrichtigungen: 90 Tage ab Erstellung; ausstehende, fehlgeschlagene oder geschützte Benachrichtigungen können zur Prüfung erhalten bleiben. Abgeschlossene Aufträge und Angebote: 2 Jahre ab Abschluss. Erledigte Datenschutzanfragen und Meldungen: 2 Jahre ab Erledigung. Abgeschlossene Supportgespräche: 2 Jahre ab Abschluss oder der letzten Antwort, je nachdem, was später liegt. Prüfprotokolle: 1 Jahr. Technische Protokolle: höchstens 31 Tage."
             - "Bei einem Löschantrag wird Ihr Konto sofort deaktiviert und nach 30 Tagen endgültig gelöscht. Bis zur Durchführung können Sie den Antrag durch Anmeldung zurücknehmen. Antrag und Rücknahme bestätigen wir per E-Mail."
@@ -167,6 +168,7 @@ de:
           heading: "1. Was derzeit verwendet wird"
           paragraphs:
             - "Erforderliche signierte Sitzungs- und Formularsicherheitscookies halten Sie angemeldet und schützen Formulare vor gefälschten Anfragen. Eine Anmeldungssitzung dauert höchstens 30 Tage und endet früher bei Abmeldung, Passwortzurücksetzung oder Sitzungswiderruf. Für anonyme Besucher außerhalb Belgiens verwendet die Sicherheitsprüfung ein signiertes Prüfungs-Cookie für 24 Stunden und ein Rückkehrpfad-Cookie für höchstens 10 Minuten. Das Präferenzcookie für Statistiken speichert Ihre Einstellung 180 Tage. Ein separates Hinweis-Cookie merkt sich 180 Tage, dass der Informationsbanner geschlossen wurde. Umami selbst verwendet keine Cookies."
+            - "Ein geschlossener Installationshinweis bleibt auf diesem Gerät 30 Tage ausgeblendet."
         no_tracking:
           heading: "2. Analysen öffentlicher Seiten"
           paragraphs:

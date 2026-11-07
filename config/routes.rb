@@ -6,12 +6,15 @@ Rails.application.routes.draw do
   get "health/operations", to: "operational_health#show"
   get "robots.txt", to: "seo#robots", defaults: { format: :text }
   get "sitemap.xml", to: "seo#sitemap", defaults: { format: :xml }
+  get "service-worker.js", to: "pwa#service_worker", as: :pwa_service_worker, format: false
   get "/:verification_file", to: "seo#google_site_verification", format: false,
     constraints: { verification_file: /google[0-9a-f]{16}\.html/ }
   post "webhooks/mollie", to: "webhooks/mollie#create"
 
   scope "(:locale)", locale: /nl|fr|de|en/ do
     root "home#index"
+
+    get "manifest.webmanifest", to: "pwa#manifest", as: :pwa_manifest, format: false
 
     get "geo-challenge", to: "geo_challenges#show", as: :geo_challenge
     post "geo-challenge", to: "geo_challenges#create"

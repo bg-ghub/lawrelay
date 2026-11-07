@@ -1,22 +1,17 @@
-{
-  "name": "LawRelay",
-  "icons": [
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "scope": "/",
-  "description": "Vind een confrater voor uw zitting of juridische opdracht.",
-  "theme_color": "red",
-  "background_color": "red"
-}
+<%= raw({
+  id: "/",
+  name: "LawRelay",
+  short_name: "LawRelay",
+  lang: I18n.locale.to_s,
+  start_url: root_path(locale: I18n.locale),
+  scope: "/",
+  display: "standalone",
+  description: t("marketing.layout.description"),
+  theme_color: "#173f3b",
+  background_color: "#f6f1e8",
+  icons: [
+    { src: "/pwa-icon-192.png", type: "image/png", sizes: "192x192", purpose: "any" },
+    { src: "/pwa-icon-512.png", type: "image/png", sizes: "512x512", purpose: "any" },
+    { src: "/pwa-icon-maskable-512.png", type: "image/png", sizes: "512x512", purpose: "maskable" }
+  ]
+}.to_json) %>
