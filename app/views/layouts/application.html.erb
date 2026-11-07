@@ -58,7 +58,12 @@
       <%= stylesheet_link_tag name, data: { turbo_track: shared_stylesheet?(name) ? "reload" : "dynamic", lawrelay_stylesheet: name } %>
     <% end %>
     <meta name="lawrelay-stylesheets-end" content="">
-    <%= javascript_importmap_tags %>
+    <% if pwa_available? %>
+      <%= javascript_importmap_tags "pwa" %>
+      <%= javascript_import_module_tag "application" %>
+    <% else %>
+      <%= javascript_importmap_tags %>
+    <% end %>
   </head>
 
   <% analytics_data = umami_analytics_enabled? ? { lawrelay_analytics_website_id: ENV.fetch("UMAMI_WEBSITE_ID") } : {} %>

@@ -16,6 +16,9 @@ class PwaLayoutTest < ActionDispatch::IntegrationTest
       assert_select "button[data-pwa-open-install]", count: 1
       assert_select "button[data-pwa-install]", text: I18n.t("pwa.install.button", locale: locale)
       assert_select "link[data-lawrelay-stylesheet='pwa_install']", count: 1
+      modules = css_select("script[type='module']")
+      assert_equal [ 'import "pwa"', 'import "application"' ], modules.map { |script| script.text.strip }
+      assert modules.all? { |script| script["nonce"].present? }, "Independent module entries must retain CSP nonces"
       assert_no_match(/translation missing/i, response.body)
     end
   end
@@ -31,6 +34,7 @@ class PwaLayoutTest < ActionDispatch::IntegrationTest
     assert_select "meta[name='mobile-web-app-capable']", count: 0
     assert_select "[data-pwa-install-banner], [data-pwa-open-install]", count: 0
     assert_select "link[data-lawrelay-stylesheet='pwa_install']", count: 0
+    assert_equal [ 'import "application"' ], css_select("script[type='module']").map { |script| script.text.strip }
   end
 
   test "an unrelated host does not advertise installation" do
