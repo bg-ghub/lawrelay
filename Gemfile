@@ -19,7 +19,7 @@ gem "stimulus-rails"
 gem "bcrypt", "~> 3.1.7"
 
 # Standards-based TOTP for the platform-admin MFA gate.
-gem "rotp", "~> 6.3"
+gem "rotp", "~> 6.4"
 gem "rqrcode", "~> 3.0"
 
 # Local GeoLite2 lookups for the self-hosted visitor challenge. No address is

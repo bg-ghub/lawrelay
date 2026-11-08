@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Validate Semantic Version
         shell: bash
         run: |
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -73,12 +73,12 @@ jobs:
     env:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Cache RuboCop
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.RUBOCOP_CACHE_ROOT }}
           key: rubocop-${{ runner.os }}-${{ hashFiles('.ruby-version', '**/.rubocop.yml', '**/.rubocop_todo.yml', 'Gemfile.lock') }}-${{ github.ref_name == github.event.repository.default_branch && github.run_id || 'default' }}
@@ -95,7 +95,7 @@ jobs:
     steps:
       - name: Install runtime packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -114,7 +114,7 @@ jobs:
     steps:
       - name: Install runtime packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libvips
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -123,7 +123,7 @@ jobs:
       - name: Run browser tests
         run: bin/rails test:system
       - name: Keep failure screenshots
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: system-test-screenshots
@@ -135,7 +135,7 @@ jobs:
     timeout-minutes: 20
     needs: [ version, test ]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Verify analytics collection excludes non-production origins
         run: python3 script/ops/test-analytics-proxy.py
       - name: Build application image

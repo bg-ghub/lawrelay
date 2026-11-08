@@ -4,9 +4,31 @@ updates:
   directory: "/"
   schedule:
     interval: weekly
-  open-pull-requests-limit: 10
+    day: monday
+    time: "09:00"
+    timezone: Europe/Brussels
+  open-pull-requests-limit: 0
+  groups:
+    ruby-maintenance:
+      applies-to: version-updates
+      patterns: ["*"]
+      update-types: [minor, patch]
+    ruby-security:
+      applies-to: security-updates
+      patterns: ["*"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: weekly
-  open-pull-requests-limit: 10
+    day: monday
+    time: "09:00"
+    timezone: Europe/Brussels
+  open-pull-requests-limit: 0
+  groups:
+    actions-maintenance:
+      applies-to: version-updates
+      patterns: ["*"]
+      update-types: [minor, patch]
+    actions-security:
+      applies-to: security-updates
+      patterns: ["*"]
