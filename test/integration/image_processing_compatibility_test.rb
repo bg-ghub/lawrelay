@@ -27,7 +27,7 @@ class ImageProcessingCompatibilityTest < ActiveSupport::TestCase
     image = Vips::Image.new_from_file(output.path)
     assert_equal 48, image.width
     assert_equal 48, image.height
-    assert image.hasalpha?
+    assert image.has_alpha?
   ensure
     output&.close!
   end
@@ -40,7 +40,7 @@ class ImageProcessingCompatibilityTest < ActiveSupport::TestCase
         image = Vips::Image.new_from_file(output.path)
         assert_equal 32, image.width
         assert_equal 32, image.height
-        assert image.hasalpha?
+        assert image.has_alpha?
       end
     end
   end
