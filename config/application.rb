@@ -25,6 +25,7 @@ module LawRelay
 
     # LawRelay does not accept file uploads.
     config.active_storage.draw_routes = false
+    config.active_storage.variant_processor = :vips
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

@@ -150,7 +150,7 @@ jobs:
             --env APP_HOST=i18n.lawrelay.invalid \
             --env SOLID_QUEUE_IN_PUMA=false \
             --entrypoint /bin/sh "$IMAGE" \
-            -c './bin/rails db:prepare >/dev/null && ./bin/rails runner script/ops/lawrelay-localization-smoke.rb'
+            -c './bin/rails db:prepare >/dev/null && ./bin/rails runner script/ops/lawrelay-localization-smoke.rb && ./bin/rails runner script/ops/lawrelay-image-processing-smoke.rb'
       - name: Smoke-test production container
         env:
           IMAGE: lawrelay-ci:${{ github.sha }}
