@@ -15,7 +15,7 @@ class NotifyNewAssignmentJobTest < ActiveJob::TestCase
   test "a posted assignment alerts only eligible subscribers outside the posting workspace, once" do
     colleague = subscriber("colleague")
     colleague.user.memberships.create!(firm: @owner.firm, role: "member")
-    create_marketplace_account(prefix: "not-subscribed")
+    create_marketplace_account(prefix: "not-subscribed").user.update!(new_assignment_alerts: false)
     subscriber("unverified", email_verified: false)
     subscriber("pending", verified: false)
     subscriber("admin", system_role: "admin")

@@ -62,7 +62,7 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     assert_text I18n.t("company_minimization.private_invoice_details", locale: :en)
   end
 
-  test "Dutch calendar uses the page language and keeps the entered 24-hour time" do
+  test "Dutch assignment date and clock pickers preserve both parts of the schedule" do
     account = create_system_account("dutch-calendar")
     sign_in_through_browser(account.user)
     visit new_assignment_path(locale: :nl)
@@ -78,6 +78,26 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
       find("button[data-day='#{(day + 1).iso8601}']").click
       assert_field "assignment_hearing_at", with: "#{(day + 1).strftime('%d/%m/%Y')} 14:30"
       assert_no_selector "[popover]", visible: :visible
+
+      find("button[popovertarget='assignment_hearing_at-clock']").click
+      assert_field "Uur", with: "14"
+      assert_field "Minuten", with: "30"
+      select "18", from: "Uur"
+      select "47", from: "Minuten"
+      click_button "Tijd instellen"
+      assert_field "assignment_hearing_at", with: "#{(day + 1).strftime('%d/%m/%Y')} 18:47"
+      assert_no_selector "[popover]", visible: :visible
+    end
+
+    within find("#assignment_response_deadline_at").find(:xpath, "../..") do
+      find("button[popovertarget='assignment_response_deadline_at-clock']").click
+      select "09", from: "Uur"
+      select "05", from: "Minuten"
+      click_button "Tijd instellen"
+      assert_selector "#assignment_response_deadline_at-calendar:popover-open"
+      today = Time.zone.today
+      find("button[data-day='#{today.iso8601}']").click
+      assert_field "assignment_response_deadline_at", with: "#{today.strftime('%d/%m/%Y')} 09:05"
     end
   end
 

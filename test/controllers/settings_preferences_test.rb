@@ -63,7 +63,7 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     get settings_path(locale: :nl)
 
     assert_select "#email-notifications legend", text: "Meldingen per e-mail"
-    assert_select 'input[type=checkbox][name="account[new_assignment_alerts]"]:not([checked])', count: 1
+    assert_select 'input[type=checkbox][name="account[new_assignment_alerts]"][checked]', count: 1
     assert_select 'input[type=checkbox][name="account[assignment_update_emails]"][checked]', count: 1
 
     patch settings_path(locale: :nl), params: { account: { new_assignment_alerts: "1", assignment_update_emails: "0" } }
@@ -76,6 +76,8 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
 
     assert_not_predicate @account.user.reload, :new_assignment_alerts?
     assert_predicate @account.user, :assignment_update_emails?
+    event = AuditEvent.where(auditable: @account.user, action: "account.updated").order(:id).last
+    assert_includes event.metadata.fetch("changed_fields"), "new_assignment_alerts"
   end
 
   test "invalid admission year rolls back account and profile changes" do

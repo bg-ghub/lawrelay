@@ -1,7 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
+const DATE_PREFIX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s|$)/
+const TIME_SUFFIX = /(?:^|\s)(\d{1,2}:\d{0,2})\s*$/
+
 export default class extends Controller {
-  static targets = ["input", "toggle", "calendar", "month", "days"]
+  static targets = ["input", "actions", "calendarToggle", "calendar", "month", "days", "clock", "hour", "minute"]
   static values = { today: String }
 
   connect() {
@@ -12,18 +15,20 @@ export default class extends Controller {
     this.dayFormat = new Intl.DateTimeFormat(locale, { dateStyle: "full", timeZone: "UTC" })
     this.weekdayFormat = new Intl.DateTimeFormat(locale, { weekday: "short", timeZone: "UTC" })
     this.calendarTarget.hidden = false
-    this.toggleTarget.hidden = false
+    this.clockTarget.hidden = false
+    this.actionsTarget.hidden = false
   }
 
   close() {
     this.calendarTarget.hidePopover?.()
+    this.clockTarget.hidePopover?.()
   }
 
   prepare(event) {
     if (event.newState !== "open") return
 
     const today = new Date(`${this.todayValue}T00:00:00Z`)
-    const parts = this.inputTarget.value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s|$)/)
+    const parts = this.inputTarget.value.trim().match(DATE_PREFIX)
     this.selectedDay = null
     if (parts) {
       const [, day, month, year] = parts.map(Number)
@@ -78,11 +83,34 @@ export default class extends Controller {
     if (!button) return
 
     const [year, month, day] = button.dataset.day.split("-")
-    const time = this.inputTarget.value.match(/\s+(\d{1,2}:\d{0,2})\s*$/)?.[1] || ""
+    const time = this.inputTarget.value.match(TIME_SUFFIX)?.[1] || ""
     this.inputTarget.value = `${day}/${month}/${year} ${time}`
     this.close()
     this.inputTarget.focus()
     this.inputTarget.setSelectionRange(11, this.inputTarget.value.length)
     this.inputTarget.dispatchEvent(new Event("input", { bubbles: true }))
+  }
+
+  prepareTime(event) {
+    if (event.newState !== "open") return
+
+    const [hour = "", minute = ""] = this.inputTarget.value.match(TIME_SUFFIX)?.[1].split(":") || []
+    this.hourTarget.selectedIndex = Number(hour) < 24 ? Number(hour) : 0
+    this.minuteTarget.selectedIndex = Number(minute) < 60 ? Number(minute) : 0
+  }
+
+  chooseTime() {
+    const date = this.inputTarget.value.trim().match(DATE_PREFIX)?.[0].trim()
+    const time = `${this.hourTarget.value}:${this.minuteTarget.value}`
+    this.inputTarget.value = date ? `${date} ${time}` : time
+    this.inputTarget.dispatchEvent(new Event("input", { bubbles: true }))
+    this.clockTarget.hidePopover()
+
+    if (date) {
+      this.inputTarget.focus()
+    } else {
+      this.calendarToggleTarget.focus()
+      this.calendarToggleTarget.click()
+    }
   }
 }

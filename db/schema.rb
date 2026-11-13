@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_13_090100) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_13_103000) do
   create_table "account_deletion_requests", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "privacy_request_id"
@@ -445,7 +445,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_090100) do
     t.integer "deletion_request_id"
     t.datetime "deletion_requested_at"
     t.datetime "deletion_scheduled_at"
-    t.boolean "new_assignment_alerts", default: false, null: false
+    t.boolean "new_assignment_alerts", default: true, null: false
     t.boolean "assignment_update_emails", default: true, null: false
     t.index ["deletion_request_id"], name: "index_users_on_deletion_request_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true

@@ -47,7 +47,7 @@ fr:
         scope:
           heading: "2. Données traitées"
           bullets:
-            - "Nous conservons vos préférences e-mail. Vous recevez les nouvelles missions par e-mail si vous activez ces notifications. Vous pouvez désactiver les e-mails concernant vos missions et propositions dans les paramètres."
+            - "Nous conservons vos préférences e-mail. Les notifications par e-mail sur les nouvelles missions et sur vos missions et propositions sont activées par défaut. Vous pouvez les désactiver dans les paramètres."
             - "Données de compte et de contact : nom, e-mail professionnel, langue préférée et traces d’authentification. Les demandes de changement d’adresse, décisions et notes de contrôle sont conservées avec votre profil professionnel."
             - "Si vous activez la double authentification, les clés d’authentification sont chiffrées et les codes de récupération sont hachés."
             - "Lors de l’inscription, vous pouvez rechercher votre nom sur Advocaat.be. Nous reprenons votre nom, e-mail, langues et matières publics. Les résultats sont réutilisés pendant 10 minutes au maximum ; l’aperçu du profil est valable 20 minutes."
