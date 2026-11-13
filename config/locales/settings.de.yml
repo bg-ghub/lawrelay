@@ -15,6 +15,11 @@ de:
       legend: "Konto"
       language: "Bevorzugte Sprache"
       email_hint: "Bestätigen Sie die neue Adresse, um wieder Zugang zu erhalten."
+    notifications:
+      legend: "E-Mail-Benachrichtigungen"
+      new_assignment_alerts: "Neue Aufträge"
+      assignment_update_emails: "Aktualisierungen zu Ihren Aufträgen und Angeboten"
+      security_email_hint: "E-Mails zu Ihrem Konto und dessen Sicherheit bleiben aktiv."
     profile:
       legend: "Berufliches Profil"
       review_hint: "Neue Kammerangaben oder E-Mail-Adressen werden erneut geprüft."

@@ -191,8 +191,8 @@ class BetaJourneyTest < ApplicationSystemTestCase
     fill_in "assignment_title", with: title
     fill_in "assignment_description", with: "Court cover request without client or case details."
     choose_searchable_option("assignment_practice_area", label: "Commercial law")
-    set_datetime("assignment_response_deadline_at", 2.days.from_now)
-    set_datetime("assignment_hearing_at", 3.days.from_now)
+    fill_assignment_datetime("assignment_response_deadline_at", 2.days.from_now)
+    fill_assignment_datetime("assignment_hearing_at", 3.days.from_now)
     fill_in "assignment_duration_minutes", with: "60"
     find("#assignment_court").click
     find("#assignment-court-options [role='option'][data-other='true']").click
@@ -213,15 +213,6 @@ class BetaJourneyTest < ApplicationSystemTestCase
     click_button I18n.t("marketplace.show.submit", locale: :en)
     assert_selector ".status-pill", text: /#{Regexp.escape(I18n.t("marketplace.status.pending", locale: :en))}/i
     assert_no_selector ".contact-card"
-  end
-
-  def set_datetime(id, time)
-    page.execute_script(<<~JAVASCRIPT, id, time.strftime("%Y-%m-%dT%H:%M"))
-      const input = document.getElementById(arguments[0]);
-      input.value = arguments[1];
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    JAVASCRIPT
   end
 
   def captured_email_path(recipient, path)

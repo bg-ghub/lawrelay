@@ -10,6 +10,7 @@ module Notifications
       return "unverified_recipient" if @recipient.email_verification_required?
       return "unverified_marketplace_recipient" unless @recipient.marketplace_verified?
       return "unsupported_event" unless @notification.kind.in?(Notification::EMAIL_KINDS)
+      return "email_preference_disabled" unless @recipient.assignment_email_enabled?(@notification.kind)
 
       subject = @notification.subject
       return "missing_subject" unless subject
@@ -25,6 +26,9 @@ module Notifications
 
     def current_event?(subject, assignment)
       case @notification.kind
+      when "new_assignment"
+        subject.is_a?(Assignment) && assignment.accepting_proposals?(now: @now) &&
+          assignment.creator_user_id != @recipient.id && !assignment.owned_by?(@recipient)
       when "new_proposal"
         subject.is_a?(Proposal) && subject.status == "pending" && assignment.status == "open"
       when "proposal_accepted"

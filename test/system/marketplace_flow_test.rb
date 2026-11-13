@@ -41,8 +41,8 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     fill_in "assignment_title", with: "System-test court cover"
     fill_in "assignment_description", with: "A safe summary without client or matter information."
     choose_searchable_option("assignment_practice_area", label: "Commercial law")
-    set_datetime("assignment_response_deadline_at", 2.days.from_now)
-    set_datetime("assignment_hearing_at", 3.days.from_now)
+    fill_assignment_datetime("assignment_response_deadline_at", 2.days.from_now)
+    fill_assignment_datetime("assignment_hearing_at", 3.days.from_now)
     fill_in "assignment_duration_minutes", with: "60"
     find("#assignment_court").click
     find("#assignment-court-options [role='option'][data-other='true']").click
@@ -60,6 +60,25 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     assert_selector ".proposal-panel__price strong", text: "To be agreed"
     assert_nil Assignment.find_by!(title: "System-test court cover").assignment_subtype
     assert_text I18n.t("company_minimization.private_invoice_details", locale: :en)
+  end
+
+  test "Dutch calendar uses the page language and keeps the entered 24-hour time" do
+    account = create_system_account("dutch-calendar")
+    sign_in_through_browser(account.user)
+    visit new_assignment_path(locale: :nl)
+
+    day = Time.zone.today.beginning_of_month.next_month + 4.days
+    fill_in "assignment_hearing_at", with: "#{day.strftime('%d/%m/%Y')} 14:30"
+    within find("#assignment_hearing_at").find(:xpath, "../..") do
+      find("button[popovertarget='assignment_hearing_at-calendar']").click
+      assert_text I18n.l(day, format: "%B %Y", locale: :nl)
+      find("button[aria-label='Volgende maand']").click
+      assert_text I18n.l(day.next_month, format: "%B %Y", locale: :nl)
+      find("button[aria-label='Vorige maand']").click
+      find("button[data-day='#{(day + 1).iso8601}']").click
+      assert_field "assignment_hearing_at", with: "#{(day + 1).strftime('%d/%m/%Y')} 14:30"
+      assert_no_selector "[popover]", visible: :visible
+    end
   end
 
   test "an unrelated lawyer is sent back to the board for a closed assignment" do
@@ -215,16 +234,6 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     fill_in "password", with: "password1234"
     find("form.assignment-form input[type='submit']").click
     assert_current_path dashboard_path(locale: :en)
-  end
-
-  def set_datetime(id, time)
-    value = time.strftime("%Y-%m-%dT%H:%M")
-    page.execute_script(<<~JAVASCRIPT, id, value)
-      const input = document.getElementById(arguments[0]);
-      input.value = arguments[1];
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    JAVASCRIPT
   end
 
   def remove_system_test_records

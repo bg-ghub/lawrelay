@@ -59,6 +59,25 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     assert_equal "Tuesdays", @account.profile.availability_note
   end
 
+  test "profile settings show and save separate email preferences" do
+    get settings_path(locale: :nl)
+
+    assert_select "#email-notifications legend", text: "Meldingen per e-mail"
+    assert_select 'input[type=checkbox][name="account[new_assignment_alerts]"]:not([checked])', count: 1
+    assert_select 'input[type=checkbox][name="account[assignment_update_emails]"][checked]', count: 1
+
+    patch settings_path(locale: :nl), params: { account: { new_assignment_alerts: "1", assignment_update_emails: "0" } }
+
+    assert_redirected_to settings_path(locale: :en)
+    assert_predicate @account.user.reload, :new_assignment_alerts?
+    assert_not_predicate @account.user, :assignment_update_emails?
+
+    patch settings_path(locale: :en), params: { account: { new_assignment_alerts: "0", assignment_update_emails: "1" } }
+
+    assert_not_predicate @account.user.reload, :new_assignment_alerts?
+    assert_predicate @account.user, :assignment_update_emails?
+  end
+
   test "invalid admission year rolls back account and profile changes" do
     original_user = @account.user.attributes
     original_profile = @account.profile.attributes

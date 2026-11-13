@@ -1,6 +1,6 @@
 class RegistrationsController < ApplicationController
   TERMS_VERSION = "2026-11-02-deletion-grace"
-  PRIVACY_VERSION = "2026-11-07-pwa"
+  PRIVACY_VERSION = "2026-11-13-email-preferences"
 
   allow_unauthenticated_access
   rate_limit to: 5, within: 1.hour, only: :create,

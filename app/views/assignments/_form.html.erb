@@ -46,14 +46,14 @@
 
   <fieldset class="form-section">
     <legend><%= t("marketplace.form.schedule_legend") %></legend>
-    <div class="field-group"><%= form.label :response_deadline_at, t("marketplace.form.response_deadline_label") %><%= form.datetime_local_field :response_deadline_at, required: true %></div>
+    <%= render "assignments/datetime_field", form:, field: :response_deadline_at, label: :response_deadline_label, required: true %>
     <div class="form-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
-      <div class="field-group"><%= form.label :starts_at, t("marketplace.form.hearing_at_label"), for: "assignment_hearing_at" %><%= form.datetime_local_field :starts_at, id: "assignment_hearing_at", required: assignment.court_replacement?, disabled: assignment.legal_task?, data: { assignment_kind_target: "courtInput" } %></div>
+      <%= render "assignments/datetime_field", form:, field: :starts_at, label: :hearing_at_label, id: "assignment_hearing_at", required: assignment.court_replacement?, disabled: assignment.legal_task?, data: { assignment_kind_target: "courtInput" } %>
       <div class="field-group"><%= form.label :duration_minutes, t("marketplace.form.duration_label") %><%= form.number_field :duration_minutes, min: 15, step: 15, required: assignment.court_replacement?, disabled: assignment.legal_task?, placeholder: "60", data: { assignment_kind_target: "courtInput" } %></div>
     </div>
     <div class="form-row" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
-      <div class="field-group"><%= form.label :delivery_due_at, t("marketplace.form.delivery_due_label") %><%= form.datetime_local_field :delivery_due_at, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %></div>
-      <div class="field-group"><%= form.label :starts_at, t("marketplace.form.execution_deadline_label"), for: "assignment_execution_deadline" %><%= form.datetime_local_field :starts_at, id: "assignment_execution_deadline", required: assignment.legal_task?, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %></div>
+      <%= render "assignments/datetime_field", form:, field: :delivery_due_at, label: :delivery_due_label, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %>
+      <%= render "assignments/datetime_field", form:, field: :starts_at, label: :execution_deadline_label, id: "assignment_execution_deadline", required: assignment.legal_task?, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %>
     </div>
     <%= tag.div class: "court-picker", hidden: assignment.legal_task?, data: { assignment_kind_target: "courtOnly", controller: "court-picker", court_picker_options_value: CourtCatalogue.options.to_json, court_picker_count_value: t("court_picker.result_count", number: "%{count}"), court_picker_empty_value: t("court_picker.no_results"), court_picker_other_value: t("court_picker.other"), court_picker_choose_value: t("court_picker.choose"), action: "focusout->court-picker#blur pointerdown@document->court-picker#outside pointerup@window->court-picker#finishPointer pointercancel@window->court-picker#finishPointer change@document->court-picker#kindChanged turbo:before-cache@document->court-picker#close" } do %>
       <%= form.hidden_field :court_selection, disabled: true, data: { court_picker_target: "selection" } %>

@@ -155,8 +155,8 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       fill_in "assignment_description", with: "A fictional bounded legal task without client or case data."
       choose_searchable_option("assignment_practice_area", value: I18n.t("marketplace.practice_areas.employment", locale:))
       choose_searchable_option("assignment_legal_subtype", value: "advice")
-      set_datetime("assignment_response_deadline_at", 3.days.from_now)
-      set_datetime("assignment_execution_deadline", 2.days.from_now)
+      fill_assignment_datetime("assignment_response_deadline_at", 3.days.from_now)
+      fill_assignment_datetime("assignment_execution_deadline", 2.days.from_now)
       find("#assignment_content_rules_accepted").check
       assert_field "assignment_fee_cents", with: ""
       assert_no_selector "#assignment_fee_cents[required]"
@@ -177,8 +177,8 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
       assert find("#assignment_kind_legal_task", visible: :all).checked?
       assert find("#assignment_court", visible: :all).disabled?
 
-      set_datetime("assignment_response_deadline_at", 1.day.from_now)
-      set_datetime("assignment_execution_deadline", 3.days.from_now)
+      fill_assignment_datetime("assignment_response_deadline_at", 1.day.from_now)
+      fill_assignment_datetime("assignment_execution_deadline", 3.days.from_now)
       click_button I18n.t("marketplace.form.submit", locale:)
       assert_selector "h1", text: title
       record = Assignment.find_by!(title:)
@@ -266,15 +266,6 @@ class BetaErrorSurfaceTest < ApplicationSystemTestCase
     assert_selector ".form-error[role='alert']:focus"
     assert_includes page.driver.browser.switch_to.active_element.attribute("class"), "form-error"
     assert_localized_layout(locale)
-  end
-
-  def set_datetime(id, time)
-    page.execute_script(<<~JAVASCRIPT, id, time.strftime("%Y-%m-%dT%H:%M"))
-      const input = document.getElementById(arguments[0]);
-      input.value = arguments[1];
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-      input.dispatchEvent(new Event("change", { bubbles: true }));
-    JAVASCRIPT
   end
 
   def remove_surface_records

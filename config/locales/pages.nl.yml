@@ -47,6 +47,7 @@ nl:
         scope:
           heading: "2. Welke gegevens we verwerken"
           bullets:
+            - "We bewaren uw e-mailvoorkeuren. Nieuwe opdrachten ontvangt u per e-mail als u die meldingen inschakelt. Meldingen over uw eigen opdrachten en voorstellen kunt u uitschakelen in Instellingen."
             - "Account- en contactgegevens, zoals naam, professioneel e-mailadres, taalvoorkeur en authenticatiegegevens. Aanvragen voor een ander e-mailadres, beslissingen en controlenotities bewaren we bij uw professionele profiel."
             - "Als u tweestapsverificatie inschakelt, bewaren we authenticatorsleutels versleuteld en herstelcodes als hashes."
             - "Bij inschrijving kunt u op naam zoeken in Advocaat.be. We nemen uw openbare naam, e-mailadres, talen en rechtsdomeinen over. Zoekresultaten hergebruiken we maximaal 10 minuten; het profielvoorbeeld is 20 minuten geldig."

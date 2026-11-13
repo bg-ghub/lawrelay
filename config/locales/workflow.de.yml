@@ -20,6 +20,7 @@ de:
       recent_notifications: "Letzte Aktualisierungen"
       mark_all_read: "Alle als gelesen markieren"
     notifications:
+      new_assignment: "Ein neuer Auftrag ist verfügbar."
       new_proposal: "Ein Kollege hat auf einen Ihrer Aufträge geantwortet."
       proposal_accepted: "Eines Ihrer Angebote wurde angenommen."
       proposal_declined: "Eines Ihrer Angebote wurde nicht ausgewählt."
@@ -51,6 +52,11 @@ de:
       cannot_withdraw_proposal: "Dieses Angebot kann nicht mehr zurückgezogen werden."
       only_matched_can_complete: "Nur ein vergebener Auftrag kann abgeschlossen werden."
     mailers:
+      new_assignment:
+        subject: "Neuer Auftrag auf LawRelay"
+        heading: "Neuer Auftrag"
+        body: "Melden Sie sich bei LawRelay an, um den Auftrag anzusehen."
+        preferences: "E-Mail-Einstellungen ändern"
       view_assignment: "Auftrag ansehen"
       browse_assignments: "Aufträge ansehen"
       new_proposal:

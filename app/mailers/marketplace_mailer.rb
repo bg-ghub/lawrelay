@@ -1,4 +1,9 @@
 class MarketplaceMailer < ApplicationMailer
+  def new_assignment(assignment, recipient:)
+    @assignment = assignment
+    localized_mail(recipient, "new_assignment")
+  end
+
   def new_proposal(proposal, recipient: proposal.assignment.creator_user)
     @proposal = proposal
     @assignment = proposal.assignment
@@ -52,7 +57,7 @@ class MarketplaceMailer < ApplicationMailer
     end
 
     recipients = assignment.proposals.where(status: %w[pending accepted]).includes(:user).filter_map(&:user).uniq
-    recipients.select! { |candidate| deliverable_recipient?(candidate) }
+    recipients.select! { |candidate| deliverable_recipient?(candidate, "assignment_cancelled") }
     recipients.select! { |recipient| recipient.locale == locale.to_s } if locale.present?
     return if recipients.empty?
 
@@ -68,7 +73,7 @@ class MarketplaceMailer < ApplicationMailer
   private
 
   def localized_mail(recipient, key, template_name: nil)
-    return unless deliverable_recipient?(recipient)
+    return unless deliverable_recipient?(recipient, key)
 
     @recipient = recipient
     @event_key = key
@@ -82,8 +87,8 @@ class MarketplaceMailer < ApplicationMailer
     end
   end
 
-  def deliverable_recipient?(recipient)
-    recipient&.reload&.marketplace_verified?
+  def deliverable_recipient?(recipient, kind)
+    recipient&.reload&.marketplace_verified? && recipient.assignment_email_enabled?(kind)
   rescue ActiveRecord::RecordNotFound
     false
   end

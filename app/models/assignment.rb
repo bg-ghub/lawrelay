@@ -25,6 +25,8 @@ class Assignment < ApplicationRecord
 
   before_validation :normalize_structured_fields
   before_save :record_closed_at, if: :will_save_change_to_status?
+  before_create :mark_new_assignment_alerts_pending
+  after_create_commit :enqueue_new_assignment_alerts, if: :new_assignment_alerts_pending?
 
   validates :kind, inclusion: { in: KINDS.values }
   validates :status, inclusion: { in: STATUSES }
@@ -180,6 +182,16 @@ class Assignment < ApplicationRecord
   end
 
   private
+
+  def mark_new_assignment_alerts_pending
+    self.new_assignment_alerts_pending = accepting_proposals? && firm_id.present? && creator_user_id.present?
+  end
+
+  def enqueue_new_assignment_alerts
+    NotifyNewAssignmentJob.perform_later(id)
+  rescue StandardError => error
+    Rails.logger.error("New assignment alert enqueue failed: #{error.class} (assignment #{id})")
+  end
 
   def invoice_enterprise_number_is_valid
     return if invoice_enterprise_number.blank?

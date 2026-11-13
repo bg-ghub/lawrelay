@@ -1,0 +1,25 @@
+<% id = local_assigns.fetch(:id) { form.field_id(field) } %>
+<% disabled = local_assigns.fetch(:disabled, false) %>
+<% value = @local_schedule&.fetch(field, nil) || form.object.public_send(field)&.strftime("%d/%m/%Y %H:%M") unless disabled %>
+<div class="field-group assignment-datetime" data-controller="assignment-datetime" data-assignment-datetime-today-value="<%= Time.zone.today.iso8601 %>" data-action="turbo:before-cache@document->assignment-datetime#close">
+  <%= label_tag id, t("marketplace.form.#{label}"), id: "#{id}-label" %>
+  <div class="assignment-datetime__control">
+    <%= text_field_tag form.field_name(:local_schedule, field), value, id:, disabled:,
+      required: local_assigns.fetch(:required, false), maxlength: 24, autocomplete: "off",
+      placeholder: t("marketplace.form.datetime_placeholder"), aria: { describedby: "#{id}-format" },
+      data: local_assigns.fetch(:data, {}).merge(assignment_datetime_target: "input") %>
+    <span id="<%= id %>-calendar-label" hidden><%= t("marketplace.form.datetime_calendar") %></span>
+    <button type="button" class="assignment-datetime__toggle" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" popovertarget="<%= id %>-calendar" data-assignment-datetime-target="toggle" hidden>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg>
+    </button>
+    <div id="<%= id %>-calendar" class="assignment-datetime__calendar" popover hidden role="group" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" data-assignment-datetime-target="calendar" data-action="beforetoggle->assignment-datetime#prepare">
+      <div class="assignment-datetime__heading">
+        <button type="button" aria-label="<%= t('marketplace.form.datetime_previous_month') %>" data-action="assignment-datetime#previous">‹</button>
+        <strong data-assignment-datetime-target="month" aria-live="polite"></strong>
+        <button type="button" aria-label="<%= t('marketplace.form.datetime_next_month') %>" data-action="assignment-datetime#next">›</button>
+      </div>
+      <div class="assignment-datetime__days" data-assignment-datetime-target="days" data-action="click->assignment-datetime#choose"></div>
+    </div>
+  </div>
+  <p class="field-hint" id="<%= id %>-format"><%= t("marketplace.form.datetime_hint") %></p>
+</div>

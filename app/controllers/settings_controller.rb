@@ -55,7 +55,12 @@ class SettingsController < ApplicationController
   end
 
   def user_params
-    parameter_group(:account).permit(:locale)
+    account = parameter_group(:account)
+    return account.permit(:locale) if @user.system_admin?
+
+    account.permit(:locale, :new_assignment_alerts, :assignment_update_emails).select do |key, value|
+      key == "locale" || [ "0", "1", false, true ].include?(value)
+    end
   end
 
   def preference_params

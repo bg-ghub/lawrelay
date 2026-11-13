@@ -1,4 +1,6 @@
 class AssignmentsController < ApplicationController
+  LOCAL_SCHEDULE_FIELDS = %i[response_deadline_at starts_at delivery_due_at].freeze
+
   rate_limit to: 10, within: 1.hour, only: :create, by: -> { current_user&.id },
     with: -> { redirect_to new_assignment_path, alert: t("workflow.errors.rate_limited") }
 
@@ -37,13 +39,22 @@ class AssignmentsController < ApplicationController
   end
 
   def create
-    @assignment = current_firm.assignments.build(assignment_params)
+    attributes = assignment_params
+    invalid_schedule = parse_local_schedule(attributes)
+    @assignment = current_firm.assignments.build(attributes)
     @assignment.creator_user = current_user
     @assignment.status = "open"
     @assignment.urgent = false
     @assignment.content_rules_accepted_at = Time.current if content_rules_accepted?
 
-    if @assignment.save
+    if invalid_schedule.any?
+      @assignment.valid?
+      invalid_schedule.each do |field|
+        @assignment.errors.delete(field, :blank)
+        @assignment.errors.add(field, :invalid, message: t("marketplace.form.datetime_invalid"))
+      end
+      render :new, status: :unprocessable_content
+    elsif @assignment.save
       @assignment.audit_events.create!(actor_user: current_user, firm: current_firm, action: "assignment.created")
       redirect_to @assignment, notice: t("notices.assignment_created")
     else
@@ -91,12 +102,37 @@ class AssignmentsController < ApplicationController
     attributes = params.require(:assignment).permit(
       :kind, :title, :description, :court, :court_selection, :court_other, :city, :starts_at,
       :duration_minutes, :practice_area, :practice_area_other, :fee_cents, :languages,
-      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at
+      :assignment_subtype, :response_deadline_at, :scope_indication, :delivery_due_at,
+      local_schedule: LOCAL_SCHEDULE_FIELDS
     )
     attributes.delete(:practice_area_other) unless attributes[:practice_area] == Assignment::OTHER_CHOICE
     attributes.delete(:assignment_subtype) unless attributes[:kind] == Assignment::KINDS[:legal_task]
     attributes[:fee_cents] = euros_to_cents(attributes[:fee_cents])
     attributes
+  end
+
+  def parse_local_schedule(attributes)
+    @local_schedule = attributes.delete(:local_schedule)
+    return [] unless @local_schedule
+
+    LOCAL_SCHEDULE_FIELDS.select do |field|
+      next false unless @local_schedule.key?(field)
+
+      text = @local_schedule[field].to_s.strip
+      attributes[field] = local_schedule_time(text)
+      attributes[field].nil? && (field != :delivery_due_at || text.present?)
+    end
+  end
+
+  def local_schedule_time(text)
+    match = /\A(\d{1,2})\/(\d{1,2})\/(\d{4})[ \t]+(\d{1,2}):(\d{2})\z/.match(text)
+    return unless match
+
+    day, month, year, hour, minute = match.captures.map(&:to_i)
+    return unless year.positive? && Date.valid_date?(year, month, day) && hour < 24 && minute < 60
+
+    time = Time.zone.local(year, month, day, hour, minute)
+    time if time.hour == hour && time.min == minute
   end
 
   def content_rules_accepted?

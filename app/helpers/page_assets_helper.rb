@@ -2,7 +2,7 @@ module PageAssetsHelper
   SHARED_STYLESHEETS = %w[application footer_project product_bar pwa_install shared_flash].freeze
   AUTH_STYLESHEETS = %w[accessibility_beta auth-copy].freeze
   ASSIGNMENT_STYLESHEETS = %w[
-    accessibility_beta assignment_filters assignment_rates court_picker profile_import
+    accessibility_beta assignment_datetime assignment_filters assignment_rates court_picker profile_import
     profile_preferences proposal_location proposal_travel searchable_select
   ].freeze
   ADMIN_STYLESHEETS = %w[

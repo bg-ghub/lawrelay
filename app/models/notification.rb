@@ -1,5 +1,5 @@
 class Notification < ApplicationRecord
-  EMAIL_KINDS = %w[new_proposal proposal_accepted proposal_declined proposal_withdrawn assignment_matched
+  EMAIL_KINDS = %w[new_assignment new_proposal proposal_accepted proposal_declined proposal_withdrawn assignment_matched
     assignment_cancelled assignment_completed assignment_expired response_deadline_closed].freeze
   EMAIL_STATUSES = %w[pending sending sent skipped failed].freeze
   EMAIL_LEASE = 10.minutes

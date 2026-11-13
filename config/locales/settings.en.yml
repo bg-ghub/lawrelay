@@ -15,6 +15,11 @@ en:
       legend: "Account"
       language: "Preferred language"
       email_hint: "Confirm a new email address before regaining access."
+    notifications:
+      legend: "Email notifications"
+      new_assignment_alerts: "New assignments"
+      assignment_update_emails: "Updates about your assignments and offers"
+      security_email_hint: "Account and security emails stay on."
     profile:
       legend: "Professional profile"
       review_hint: "Changes to bar details or email require another check."

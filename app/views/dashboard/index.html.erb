@@ -35,7 +35,7 @@
   <section class="dashboard-panel notification-panel">
     <div class="panel-heading"><div><h2><%= t("workflow.ui.recent_notifications") %></h2></div><div class="notification-panel-actions"><%= link_to t("notification_center.all_notifications"), notifications_path, class: "text-link" %><% if @notifications.any? %><%= button_to t("workflow.ui.mark_all_read"), mark_all_notifications_path, method: :patch, class: "text-link notification-mark-all" %><% end %></div></div>
     <% if @notifications.any? %>
-      <ul class="notification-list"><% @notifications.each do |notification| %><li><%= link_to notification_path(notification), class: "notification-list__item" do %><span><%= t("workflow.notifications.#{notification.kind}") %></span><span aria-hidden="true">→</span><% end %></li><% end %></ul>
+      <ul class="notification-list"><% @notifications.each do |notification| %><li><%= link_to notification_path(notification), class: "notification-list__item" do %><span><%= t("workflow.notifications.#{notification.kind}", default: t("notification_center.updated")) %></span><span aria-hidden="true">→</span><% end %></li><% end %></ul>
     <% else %><p class="muted-copy"><%= t("notification_center.caught_up") %></p><% end %>
   </section>
 </div>

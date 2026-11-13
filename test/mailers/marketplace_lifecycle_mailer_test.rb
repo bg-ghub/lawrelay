@@ -10,6 +10,7 @@ class MarketplaceLifecycleMailerTest < ActionMailer::TestCase
   setup do
     @owner = create_marketplace_account(prefix: "lifecycleowner")
     @candidate = create_marketplace_account(prefix: "lifecyclecandidate")
+    @candidate.user.update!(new_assignment_alerts: true)
     @assignment = create_assignment_for(@owner, title: "Lifecycle <hearing> & task")
     @proposal = create_proposal_for(@assignment, @candidate)
   end
@@ -91,6 +92,7 @@ class MarketplaceLifecycleMailerTest < ActionMailer::TestCase
 
   def events
     [
+      [ "new_assignment", @assignment, @candidate.user ],
       [ "new_proposal", @proposal, @owner.user ],
       [ "proposal_accepted", @proposal, @candidate.user ],
       [ "proposal_declined", @proposal, @candidate.user ],

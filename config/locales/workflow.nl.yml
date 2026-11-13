@@ -20,6 +20,7 @@ nl:
       recent_notifications: "Recente updates"
       mark_all_read: "Alles als gelezen markeren"
     notifications:
+      new_assignment: "Er staat een nieuwe opdracht open."
       new_proposal: "Een confrater reageerde op een van uw opdrachten."
       proposal_accepted: "Een van uw voorstellen is aanvaard."
       proposal_declined: "Een van uw voorstellen werd niet gekozen."
@@ -51,6 +52,11 @@ nl:
       cannot_withdraw_proposal: "Dit voorstel kan niet meer worden ingetrokken."
       only_matched_can_complete: "Alleen een toegewezen opdracht kan worden afgerond."
     mailers:
+      new_assignment:
+        subject: "Nieuwe opdracht op LawRelay"
+        heading: "Nieuwe opdracht"
+        body: "Meld u aan bij LawRelay om de opdracht te bekijken."
+        preferences: "E-mailvoorkeuren aanpassen"
       view_assignment: "Bekijk opdracht"
       browse_assignments: "Bekijk opdrachten"
       new_proposal:

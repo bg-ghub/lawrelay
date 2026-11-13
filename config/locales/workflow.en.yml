@@ -20,6 +20,7 @@ en:
       recent_notifications: "Recent updates"
       mark_all_read: "Mark all read"
     notifications:
+      new_assignment: "A new assignment is available."
       new_proposal: "A colleague responded to one of your assignments."
       proposal_accepted: "One of your proposals was accepted."
       proposal_declined: "One of your proposals was not selected."
@@ -51,6 +52,11 @@ en:
       cannot_withdraw_proposal: "This proposal can no longer be withdrawn."
       only_matched_can_complete: "Only a matched assignment can be marked complete."
     mailers:
+      new_assignment:
+        subject: "New assignment on LawRelay"
+        heading: "New assignment"
+        body: "Sign in to LawRelay to view the assignment."
+        preferences: "Manage email preferences"
       view_assignment: "View assignment"
       browse_assignments: "Browse assignments"
       new_proposal:

@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   allow_unauthenticated_access
 
   LEGAL_VERSION = Date.new(2026, 11, 7)
+  PRIVACY_VERSION = Date.new(2026, 11, 13)
   OPERATOR_ENV = PlatformOperator::ENVIRONMENT_FIELDS
   REQUIRED_OPERATOR_FIELDS = PlatformOperator::REQUIRED_FIELDS
 
@@ -26,7 +27,7 @@ class PagesController < ApplicationController
   private
 
   def set_page_context
-    @legal_version = LEGAL_VERSION.iso8601
+    @legal_version = (action_name == "privacy" ? PRIVACY_VERSION : LEGAL_VERSION).iso8601
     @operator = PlatformOperator.details
     @operator_configured = REQUIRED_OPERATOR_FIELDS.all? { |field| @operator[field].present? }
   end

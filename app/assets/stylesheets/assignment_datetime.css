@@ -1,0 +1,14 @@
+.assignment-datetime__control{position:relative}
+.assignment-datetime__control:has(.assignment-datetime__toggle:not([hidden])) input{padding-inline-end:3rem}
+.assignment-datetime__toggle{position:absolute;inset-inline-end:.4rem;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:2.5rem;height:2.5rem}
+.assignment-datetime__control button{border:0;border-radius:8px;background:transparent;color:var(--ink);cursor:pointer;font:inherit}
+.assignment-datetime__calendar{width:min(20rem,calc(100% - 2rem));margin:auto;padding:.8rem;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);box-shadow:var(--shadow-soft)}
+@supports(position-area:bottom span-left){
+  .assignment-datetime__calendar{position-area:bottom span-left;position-try-fallbacks:flip-block,flip-inline;margin:.3rem 0}
+}
+.assignment-datetime__heading{display:flex;align-items:center;justify-content:space-between;gap:.25rem;margin-bottom:.4rem;text-align:center}
+.assignment-datetime__heading button{width:2.5rem;height:2.5rem;font-size:1.35rem}
+.assignment-datetime__days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.12rem;text-align:center}
+.assignment-datetime__days span{font-size:.72rem}
+.assignment-datetime__days button{min-height:2.4rem;font-size:.85rem}
+.assignment-datetime__control button:hover,.assignment-datetime__control button[aria-pressed="true"]{background:var(--mint)}

@@ -108,6 +108,10 @@ class User < ApplicationRecord
     email_address if marketplace_verified?
   end
 
+  def assignment_email_enabled?(kind)
+    kind == "new_assignment" ? new_assignment_alerts? : assignment_update_emails?
+  end
+
   def system_admin?
     system_role == "admin"
   end

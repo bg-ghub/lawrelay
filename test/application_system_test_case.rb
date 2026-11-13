@@ -7,6 +7,10 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # test must be committed before the browser can read them.
   self.use_transactional_tests = false
 
+  def fill_assignment_datetime(id, time)
+    fill_in id, with: time.strftime("%d/%m/%Y %H:%M")
+  end
+
   def choose_searchable_option(id, value: nil, label: nil)
     source = find("select[id='#{id}']", visible: :all)
     option = source.all("option", visible: :all).find do |candidate|

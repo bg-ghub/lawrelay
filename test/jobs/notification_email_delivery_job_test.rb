@@ -127,6 +127,19 @@ class NotificationEmailDeliveryJobTest < ActiveJob::TestCase
     assert_equal "missing_subject", @event.email_status_reason
   end
 
+  test "disabling assignment and offer emails preserves the in-app notification" do
+    @candidate.user.update!(assignment_update_emails: false)
+
+    assert_no_difference(-> { ActionMailer::Base.deliveries.length }) do
+      NotificationEmailDeliveryJob.perform_now(@event.id)
+    end
+
+    assert_equal "skipped", @event.reload.email_status
+    assert_equal "email_preference_disabled", @event.email_status_reason
+    assert_nil @event.read_at
+    assert_includes @candidate.user.notifications, @event
+  end
+
   test "queued mail is skipped when current lawyer or firm verification is lost" do
     [ @candidate.profile, @candidate.firm ].each do |record|
       %w[pending rejected suspended].each do |status|

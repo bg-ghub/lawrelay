@@ -15,6 +15,11 @@ fr:
       legend: "Compte"
       language: "Langue préférée"
       email_hint: "Confirmez la nouvelle adresse avant de retrouver l’accès."
+    notifications:
+      legend: "Notifications par e-mail"
+      new_assignment_alerts: "Nouvelles missions"
+      assignment_update_emails: "Mises à jour de vos missions et propositions"
+      security_email_hint: "Les e-mails liés à votre compte et à sa sécurité restent actifs."
     profile:
       legend: "Profil professionnel"
       review_hint: "Toute modification du barreau ou de l’e-mail sera vérifiée."

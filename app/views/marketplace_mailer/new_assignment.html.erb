@@ -1,0 +1,5 @@
+<%= render "shared/mail_greeting", recipient: @recipient %>
+<h1><%= t("workflow.mailers.new_assignment.heading") %></h1>
+<p><%= t("workflow.mailers.new_assignment.body") %></p>
+<p><%= link_to t("workflow.mailers.view_assignment"), assignment_url(@assignment, locale: @recipient.locale) %></p>
+<p><%= link_to t("workflow.mailers.new_assignment.preferences"), settings_url(locale: @recipient.locale, anchor: "email-notifications") %></p>

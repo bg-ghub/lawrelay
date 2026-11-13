@@ -2,7 +2,7 @@ module Privacy
   class AccountExport
     USER_FIELDS = %w[id public_id first_name last_name email_address locale created_at updated_at email_verified_at
       accepted_terms_at accepted_terms_version accepted_privacy_version suspended_at two_factor_enabled_at
-      deletion_requested_at deletion_scheduled_at].freeze
+      deletion_requested_at deletion_scheduled_at new_assignment_alerts assignment_update_emails].freeze
     PROFILE_FIELDS = %w[bar_association bar_number professional_email spoken_languages practice_areas verification_status
       verified_at bar_admission_year court_preferences availability_note directory_profile_url directory_profile_id
       directory_name directory_email directory_professional_address directory_bar_name directory_checked_at directory_email_verified_at

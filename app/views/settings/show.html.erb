@@ -23,6 +23,21 @@
 
       <%= render "preferences", form: form, profile: @profile unless @user.system_admin? %>
 
+      <% unless @user.system_admin? %>
+        <fieldset class="form-section" id="email-notifications">
+          <legend><%= t("settings.notifications.legend") %></legend>
+          <label class="form-check">
+            <%= form.check_box "account[new_assignment_alerts]", checked: @user.new_assignment_alerts? %>
+            <span><%= t("settings.notifications.new_assignment_alerts") %></span>
+          </label>
+          <label class="form-check">
+            <%= form.check_box "account[assignment_update_emails]", checked: @user.assignment_update_emails? %>
+            <span><%= t("settings.notifications.assignment_update_emails") %></span>
+          </label>
+          <p class="field-hint"><%= t("settings.notifications.security_email_hint") %></p>
+        </fieldset>
+      <% end %>
+
       <div class="form-actions"><%= link_to t("trust.privacy_requests.index.heading"), privacy_requests_path, class: "button button--ghost" %><%= form.submit t("settings.save"), class: "button button--dark" %></div>
     <% end %>
 

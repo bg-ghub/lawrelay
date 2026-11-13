@@ -114,8 +114,8 @@ class SearchableSelectTest < ApplicationSystemTestCase
     fill_in "assignment_practice_area_other", with: "   "
     choose_searchable_option("assignment_legal_subtype", value: "advice")
     fill_in "assignment_languages", with: "EN"
-    set_datetime("assignment_response_deadline_at", 1.day.from_now)
-    set_datetime("assignment_execution_deadline", 3.days.from_now)
+    fill_assignment_datetime("assignment_response_deadline_at", 1.day.from_now)
+    fill_assignment_datetime("assignment_execution_deadline", 3.days.from_now)
     find("#assignment_content_rules_accepted").check
     click_button I18n.t("marketplace.form.submit", locale: :en)
     assert_selector ".form-error[role='alert']:focus"
@@ -349,14 +349,5 @@ class SearchableSelectTest < ApplicationSystemTestCase
 
   def assert_native_value(id, value)
     assert_selector("select[id='#{id}']", visible: :all) { |select| select.value == value }
-  end
-
-  def set_datetime(id, value)
-    page.execute_script(<<~JS, id, value.strftime("%Y-%m-%dT%H:%M"))
-      const input = document.getElementById(arguments[0])
-      input.value = arguments[1]
-      input.dispatchEvent(new Event('input', {bubbles: true}))
-      input.dispatchEvent(new Event('change', {bubbles: true}))
-    JS
   end
 end
