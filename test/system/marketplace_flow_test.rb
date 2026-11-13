@@ -62,41 +62,56 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
     assert_text I18n.t("company_minimization.private_invoice_details", locale: :en)
   end
 
-  test "Dutch assignment date and clock pickers preserve both parts of the schedule" do
+  test "Dutch assignments use one picker to set both date and time" do
     account = create_system_account("dutch-calendar")
     sign_in_through_browser(account.user)
     visit new_assignment_path(locale: :nl)
 
     day = Time.zone.today.beginning_of_month.next_month + 4.days
-    fill_in "assignment_hearing_at", with: "#{day.strftime('%d/%m/%Y')} 14:30"
+    initial_value = "#{day.strftime('%d/%m/%Y')} 14:30"
+    selected_day = day + 1
+    saved_value = "#{selected_day.strftime('%d/%m/%Y')} 18:47"
+    fill_in "assignment_hearing_at", with: initial_value
     within find("#assignment_hearing_at").find(:xpath, "../..") do
-      find("button[popovertarget='assignment_hearing_at-calendar']").click
+      assert_selector "button[popovertarget]", count: 1
+      toggle = find("button[popovertarget='assignment_hearing_at-calendar']")
+      toggle.click
       assert_text I18n.l(day, format: "%B %Y", locale: :nl)
       find("button[aria-label='Volgende maand']").click
       assert_text I18n.l(day.next_month, format: "%B %Y", locale: :nl)
       find("button[aria-label='Vorige maand']").click
-      find("button[data-day='#{(day + 1).iso8601}']").click
-      assert_field "assignment_hearing_at", with: "#{(day + 1).strftime('%d/%m/%Y')} 14:30"
-      assert_no_selector "[popover]", visible: :visible
+      find("button[data-day='#{selected_day.iso8601}']").click
+      assert_selector "#assignment_hearing_at-calendar:popover-open"
 
-      find("button[popovertarget='assignment_hearing_at-clock']").click
       assert_field "Uur", with: "14"
       assert_field "Minuten", with: "30"
       select "18", from: "Uur"
       select "47", from: "Minuten"
-      click_button "Tijd instellen"
-      assert_field "assignment_hearing_at", with: "#{(day + 1).strftime('%d/%m/%Y')} 18:47"
+      assert_field "assignment_hearing_at", with: initial_value
+      click_button "Datum en tijd instellen"
+      assert_field "assignment_hearing_at", with: saved_value
       assert_no_selector "[popover]", visible: :visible
+
+      toggle.click
+      assert_selector "button[data-day='#{selected_day.iso8601}'][aria-pressed='true']"
+      assert_field "Uur", with: "18"
+      assert_field "Minuten", with: "47"
+      find("button[data-day='#{day.iso8601}']").click
+      select "55", from: "Minuten"
+      find("button[data-day='#{day.iso8601}']").send_keys(:escape)
+      assert_no_selector "[popover]", visible: :visible
+      assert_field "assignment_hearing_at", with: saved_value
     end
 
     within find("#assignment_response_deadline_at").find(:xpath, "../..") do
-      find("button[popovertarget='assignment_response_deadline_at-clock']").click
+      assert_selector "button[popovertarget]", count: 1
+      find("button[popovertarget='assignment_response_deadline_at-calendar']").click
+      assert_button "Datum en tijd instellen", disabled: true
       select "09", from: "Uur"
       select "05", from: "Minuten"
-      click_button "Tijd instellen"
-      assert_selector "#assignment_response_deadline_at-calendar:popover-open"
       today = Time.zone.today
       find("button[data-day='#{today.iso8601}']").click
+      click_button "Datum en tijd instellen"
       assert_field "assignment_response_deadline_at", with: "#{today.strftime('%d/%m/%Y')} 09:05"
     end
   end

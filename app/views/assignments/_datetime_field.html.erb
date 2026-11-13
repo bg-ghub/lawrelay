@@ -8,36 +8,28 @@
       required: local_assigns.fetch(:required, false), maxlength: 24, autocomplete: "off",
       placeholder: t("marketplace.form.datetime_placeholder"), aria: { describedby: "#{id}-format" },
       data: local_assigns.fetch(:data, {}).merge(assignment_datetime_target: "input") %>
-    <div class="assignment-datetime__actions" data-assignment-datetime-target="actions" hidden>
-      <span id="<%= id %>-calendar-label" hidden><%= t("marketplace.form.datetime_calendar") %></span>
-      <button type="button" class="assignment-datetime__toggle" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" popovertarget="<%= id %>-calendar" data-assignment-datetime-target="calendarToggle">
-        <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></svg>
-      </button>
-      <span id="<%= id %>-clock-label" hidden><%= t("marketplace.form.datetime_clock") %></span>
-      <button type="button" class="assignment-datetime__toggle" aria-labelledby="<%= id %>-clock-label <%= id %>-label" popovertarget="<%= id %>-clock">
-        <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      </button>
-    </div>
-    <div id="<%= id %>-calendar" class="assignment-datetime__picker assignment-datetime__calendar" popover hidden role="group" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" data-assignment-datetime-target="calendar" data-action="beforetoggle->assignment-datetime#prepare">
+    <span id="<%= id %>-calendar-label" hidden><%= t("marketplace.form.datetime_picker") %></span>
+    <button type="button" class="assignment-datetime__toggle" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" popovertarget="<%= id %>-calendar" data-assignment-datetime-target="toggle" hidden>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18M12 12.5V16l2 1.5"/></svg>
+    </button>
+    <div id="<%= id %>-calendar" class="assignment-datetime__picker" popover hidden role="group" aria-labelledby="<%= id %>-calendar-label <%= id %>-label" data-assignment-datetime-target="picker" data-action="beforetoggle->assignment-datetime#prepare">
       <div class="assignment-datetime__heading">
         <button type="button" aria-label="<%= t('marketplace.form.datetime_previous_month') %>" data-action="assignment-datetime#previous">‹</button>
         <strong data-assignment-datetime-target="month" aria-live="polite"></strong>
         <button type="button" aria-label="<%= t('marketplace.form.datetime_next_month') %>" data-action="assignment-datetime#next">›</button>
       </div>
       <div class="assignment-datetime__days" data-assignment-datetime-target="days" data-action="click->assignment-datetime#choose"></div>
-    </div>
-    <div id="<%= id %>-clock" class="assignment-datetime__picker assignment-datetime__clock" popover hidden role="group" aria-labelledby="<%= id %>-clock-label <%= id %>-label" data-assignment-datetime-target="clock" data-action="beforetoggle->assignment-datetime#prepareTime">
       <div class="assignment-datetime__time-fields">
         <div class="field-group">
           <%= label_tag "#{id}-hour", t("marketplace.form.datetime_hour") %>
-          <%= select_tag nil, options_for_select((0..23).map { |hour| "%02d" % hour }), id: "#{id}-hour", autofocus: true, data: { assignment_datetime_target: "hour" } %>
+          <%= select_tag nil, options_for_select((0..23).map { |hour| "%02d" % hour }), id: "#{id}-hour", data: { assignment_datetime_target: "hour" } %>
         </div>
         <div class="field-group">
           <%= label_tag "#{id}-minute", t("marketplace.form.datetime_minute") %>
           <%= select_tag nil, options_for_select((0..59).map { |minute| "%02d" % minute }), id: "#{id}-minute", data: { assignment_datetime_target: "minute" } %>
         </div>
       </div>
-      <%= button_tag t("marketplace.form.datetime_apply_time"), type: :button, class: "button button--dark", data: { action: "assignment-datetime#chooseTime" } %>
+      <%= button_tag t("marketplace.form.datetime_apply"), type: :button, class: "button button--dark", disabled: true, data: { action: "assignment-datetime#apply", assignment_datetime_target: "apply" } %>
     </div>
   </div>
   <p class="field-hint" id="<%= id %>-format"><%= t("marketplace.form.datetime_hint") %></p>
