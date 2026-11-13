@@ -105,14 +105,27 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
 
     within find("#assignment_response_deadline_at").find(:xpath, "../..") do
       assert_selector "button[popovertarget]", count: 1
-      find("button[popovertarget='assignment_response_deadline_at-calendar']").click
+      toggle = find("button[popovertarget='assignment_response_deadline_at-calendar']")
+      toggle.click
       assert_button "Datum en tijd instellen", disabled: true
       select "09", from: "Uur"
       select "05", from: "Minuten"
-      today = Time.zone.today
-      find("button[data-day='#{today.iso8601}']").click
+      before_today = Time.zone.today
+      click_button "Vandaag"
+      today_values = [ before_today, Time.zone.today ].map { |date| "#{date.strftime('%d/%m/%Y')} 09:05" }
+      assert_field "assignment_response_deadline_at", with: ""
       click_button "Datum en tijd instellen"
-      assert_field "assignment_response_deadline_at", with: "#{today.strftime('%d/%m/%Y')} 09:05"
+      today_value = find_field("assignment_response_deadline_at").value
+      assert_includes today_values, today_value
+
+      toggle.click
+      before_now = Time.current
+      click_button "Nu"
+      after_now = Time.current
+      assert_field "assignment_response_deadline_at", with: today_value
+      click_button "Datum en tijd instellen"
+      expected_values = [ before_now, after_now ].map { |time| time.strftime("%d/%m/%Y %H:%M") }
+      assert_includes expected_values, find_field("assignment_response_deadline_at").value
     end
   end
 

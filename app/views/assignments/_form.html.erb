@@ -47,11 +47,11 @@
   <fieldset class="form-section">
     <legend><%= t("marketplace.form.schedule_legend") %></legend>
     <%= render "assignments/datetime_field", form:, field: :response_deadline_at, label: :response_deadline_label, required: true %>
-    <div class="form-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
+    <div class="form-row assignment-schedule-row" data-assignment-kind-target="courtOnly" <%= "hidden" if assignment.legal_task? %>>
       <%= render "assignments/datetime_field", form:, field: :starts_at, label: :hearing_at_label, id: "assignment_hearing_at", required: assignment.court_replacement?, disabled: assignment.legal_task?, data: { assignment_kind_target: "courtInput" } %>
       <div class="field-group"><%= form.label :duration_minutes, t("marketplace.form.duration_label") %><%= form.number_field :duration_minutes, min: 15, step: 15, required: assignment.court_replacement?, disabled: assignment.legal_task?, placeholder: "60", data: { assignment_kind_target: "courtInput" } %></div>
     </div>
-    <div class="form-row" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
+    <div class="form-row assignment-schedule-row" data-assignment-kind-target="legalOnly" <%= "hidden" unless assignment.legal_task? %>>
       <%= render "assignments/datetime_field", form:, field: :delivery_due_at, label: :delivery_due_label, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput", required: false } %>
       <%= render "assignments/datetime_field", form:, field: :starts_at, label: :execution_deadline_label, id: "assignment_execution_deadline", required: assignment.legal_task?, disabled: !assignment.legal_task?, data: { assignment_kind_target: "legalInput" } %>
     </div>

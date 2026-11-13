@@ -2,10 +2,20 @@ import { Controller } from "@hotwired/stimulus"
 
 const DATE_PREFIX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s|$)/
 const TIME_SUFFIX = /(?:^|\s)(\d{1,2}:\d{0,2})\s*$/
+const BRUSSELS_CLOCK = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Brussels", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+})
+
+function brusselsTime() {
+  const { year, month, day, hour, minute } = Object.fromEntries(
+    BRUSSELS_CLOCK.formatToParts().map(({ type, value }) => [type, value])
+  )
+  return { date: new Date(`${year}-${month}-${day}T00:00:00Z`), hour, minute }
+}
 
 export default class extends Controller {
   static targets = ["input", "toggle", "picker", "month", "days", "hour", "minute", "apply"]
-  static values = { today: String }
 
   connect() {
     if (!this.pickerTarget.showPopover) return
@@ -25,7 +35,7 @@ export default class extends Controller {
   prepare(event) {
     if (event.newState !== "open") return
 
-    const today = new Date(`${this.todayValue}T00:00:00Z`)
+    const today = brusselsTime().date
     const parts = this.inputTarget.value.trim().match(DATE_PREFIX)
     this.selectedDay = null
     if (parts) {
@@ -39,13 +49,34 @@ export default class extends Controller {
     const [hour = "", minute = ""] = this.inputTarget.value.match(TIME_SUFFIX)?.[1].split(":") || []
     this.hourTarget.selectedIndex = Number(hour) < 24 ? Number(hour) : 0
     this.minuteTarget.selectedIndex = Number(minute) < 60 ? Number(minute) : 0
-    this.displayMonth = new Date(this.selectedDay || today)
+    this.showMonth(this.selectedDay || today)
+  }
+
+  showMonth(date) {
+    this.displayMonth = new Date(date)
     this.displayMonth.setUTCDate(1)
     this.render()
   }
 
   previous() { this.moveMonth(-1) }
   next() { this.moveMonth(1) }
+
+  today() {
+    this.selectShortcutDate(brusselsTime().date)
+  }
+
+  now() {
+    const { date, hour, minute } = brusselsTime()
+    this.hourTarget.value = hour
+    this.minuteTarget.value = minute
+    this.selectShortcutDate(date)
+  }
+
+  selectShortcutDate(date) {
+    this.selectedDay = date
+    this.applyTarget.disabled = false
+    this.showMonth(date)
+  }
 
   moveMonth(offset) {
     this.displayMonth.setUTCMonth(this.displayMonth.getUTCMonth() + offset)
