@@ -20,6 +20,7 @@ class ProfileImportTest < ApplicationSystemTestCase
     html = <<~HTML
       <main id="main">
         <h1>#{ERB::Util.html_escape(@account.user.full_name)}</h1>
+        <a href="mailto:listed@example.test">listed@example.test</a>
         <section><h2>Talen</h2><p>Nederlands, Frans</p></section>
         <section><h2>Voorkeurmateries</h2><p>Family law</p></section>
       </main>

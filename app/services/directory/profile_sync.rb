@@ -25,7 +25,7 @@ module Directory
       return result(:ineligible) unless eligible?(user, profile)
 
       identity = identity_for(user, profile)
-      imported = @import.call(profile_url: profile.directory_profile_url, full_name: user.full_name)
+      imported = @import.call(profile_url: profile.directory_profile_url, full_name: user.full_name, expected_email: profile.directory_email)
       return result(imported.status) unless imported.success?
 
       attributes = imported.profile_attributes.to_h.stringify_keys.slice(*IMPORTED_FIELDS)
@@ -35,6 +35,9 @@ module Directory
         current_user = User.lock.find_by(id: @user_id)
         current_profile = LawyerProfile.lock.find_by(user_id: @user_id)
         next result(:stale) unless eligible?(current_user, current_profile) && identity_for(current_user, current_profile) == identity
+        if imported.redirected_profile_id && LawyerProfile.where.not(id: current_profile.id).exists?(directory_profile_id: imported.redirected_profile_id)
+          next result(:identity_mismatch)
+        end
 
         current_profile.assign_attributes(attributes)
         changed_fields = IMPORTED_FIELDS.select { |field| current_profile.will_save_change_to_attribute?(field) }

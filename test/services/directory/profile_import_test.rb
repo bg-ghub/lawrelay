@@ -2,6 +2,7 @@ require "test_helper"
 
 class DirectoryProfileImportTest < ActiveSupport::TestCase
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+  MOVED_URL = PROFILE_URL.sub("63fee2a5", "73fee2a5")
 
   test "imports only supported professional profile fields from the main content" do
     result = lookup(profile_html)
@@ -41,6 +42,61 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
 
     result = lookup("<h1>Jane Lawyer</h1><h2>Talen</h2><p>Nederlands</p>")
     assert_equal :unavailable, result.status
+  end
+
+  test "matched profiles require the stored name and published directory email on direct and moved pages" do
+    [ nil, "301", "308" ].each do |code|
+      [ [ "Jane Lawyer", "LISTED@example.test", :ok ], [ "Other Lawyer", "listed@example.test", :identity_mismatch ],
+        [ "Jane Lawyer", "different@example.test", :identity_mismatch ] ].each do |name, email, expected_status|
+        requests = []
+        fetcher = lambda do |uri|
+          requests << uri.to_s
+          code && uri.to_s == PROFILE_URL ? redirect(code, URI(MOVED_URL).path) : profile_html
+        end
+        result = Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: name, expected_email: email, fetcher:)
+
+        assert_equal expected_status, result.status
+        assert_equal(code ? [ PROFILE_URL, MOVED_URL ] : [ PROFILE_URL ], requests)
+        if result.success? && code
+          assert_equal MOVED_URL.split("/").last, result.redirected_profile_id
+        else
+          assert_nil result.redirected_profile_id
+        end
+        assert_empty result.profile_attributes unless result.success?
+      end
+    end
+    html = profile_html.sub("mailto:listed@example.test", "tel:123")
+    result = Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer",
+      expected_email: "listed@example.test", fetcher: ->(_) { html })
+    assert_equal :identity_mismatch, result.status
+    assert_empty result.profile_attributes
+  end
+
+  test "a redirect requires a stored email and exactly one permanent official profile destination" do
+    cases = [
+      [ "301", MOVED_URL, nil ], [ "302", MOVED_URL, "listed@example.test" ],
+      [ "307", MOVED_URL, "listed@example.test" ], [ "301", PROFILE_URL, "listed@example.test" ],
+      [ "308", MOVED_URL.sub("https:", "http:"), "listed@example.test" ],
+      [ "301", MOVED_URL.sub("www.advocaat.be", "example.test"), "listed@example.test" ],
+      [ "301", MOVED_URL.sub("www.advocaat.be", "name@www.advocaat.be"), "listed@example.test" ],
+      [ "308", MOVED_URL.sub("www.advocaat.be", "www.advocaat.be:444"), "listed@example.test" ],
+      [ "301", "#{MOVED_URL}?page=1", "listed@example.test" ], [ "308", "#{MOVED_URL}#profile", "listed@example.test" ],
+      [ "301", "/nl/zoek-een-advocaat", "listed@example.test" ], [ "308", "mailto:invalid", "listed@example.test" ],
+      [ "301", "https://[", "listed@example.test" ]
+    ]
+    cases.each do |code, location, expected_email|
+      requests = []
+      fetcher = ->(uri) { requests << uri.to_s; redirect(code, location) }
+      result = Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", expected_email:, fetcher:)
+      assert_not result.success?
+      assert_equal [ PROFILE_URL ], requests
+    end
+
+    requests = []
+    fetcher = ->(uri) { requests << uri.to_s; redirect("301", MOVED_URL) }
+    result = Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", expected_email: "listed@example.test", fetcher:)
+    assert_not result.success?
+    assert_equal [ PROFILE_URL, MOVED_URL ], requests
   end
 
   test "empty malformed oversized and unavailable responses fail without details" do
@@ -101,6 +157,10 @@ class DirectoryProfileImportTest < ActiveSupport::TestCase
   end
 
   private
+
+  def redirect(code, location)
+    Net::HTTPResponse::CODE_TO_OBJ.fetch(code).new("1.1", code, "Redirect").tap { |response| response["location"] = location }
+  end
 
   def lookup(html)
     Directory::ProfileImport.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", fetcher: ->(_) { html })

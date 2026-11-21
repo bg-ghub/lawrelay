@@ -30,7 +30,7 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
       end
     end
 
-    assert_equal [ { profile_url: PROFILE_URL, full_name: @account.user.full_name } ], calls
+    assert_equal [ { profile_url: PROFILE_URL, full_name: @account.user.full_name, expected_email: @account.profile.directory_email } ], calls
     assert_equal %w[NL FR], @account.profile.reload.spoken_languages
     assert_equal [ "Familierecht" ], @account.profile.practice_areas
     assert_equal original_user, @account.user.reload.attributes
@@ -56,6 +56,25 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
 
     assert_equal original_profile, @account.profile.reload.attributes
     assert_nil AuditEvent.where(action: "profile.directory_synced").order(:id).last.actor_user
+  end
+
+  test "a moved listing can refresh display fields but cannot replace identity or use another member's listing" do
+    moved_id = SecureRandom.uuid
+    original = @account.profile.attributes.except("spoken_languages", "updated_at")
+    importer = lambda do |**|
+      Directory::ProfileImport::Result.new(status: :ok, profile_attributes: { spoken_languages: [ "NL" ] }, redirected_profile_id: moved_id)
+    end
+    assert_equal :updated, Directory::ProfileSync.call(user: @account.user, import: importer).status
+    assert_equal [ "NL" ], @account.profile.reload.spoken_languages
+    assert_equal original, @account.profile.attributes.except("spoken_languages", "updated_at")
+
+    other = create_marketplace_account(prefix: "movedlisting")
+    other.profile.update!(directory_profile_id: moved_id)
+    before = @account.profile.attributes
+    assert_no_difference "AuditEvent.count" do
+      assert_equal :identity_mismatch, Directory::ProfileSync.call(user: @account.user, import: importer).status
+    end
+    assert_equal before, @account.profile.reload.attributes
   end
 
   test "missing source fields preserve stored values and never infer court or availability" do
