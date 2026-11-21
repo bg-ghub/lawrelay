@@ -11,21 +11,16 @@ class SignupProfileTest < ApplicationSystemTestCase
     @working_email = "working-#{@nonce}@example.test"
     @registered_emails = [ @listed_email, @working_email ]
     @pages = {
-      @profile_url => profile_html("Jean Pierre Example", @listed_email),
-      @second_url => profile_html("Grace Example", "second-#{@nonce}@example.test")
+      @profile_url => [ "200", profile_html("Jean Pierre Example", @listed_email) ],
+      @second_url => [ "200", profile_html("Grace Example", "second-#{@nonce}@example.test") ]
     }
     @gate = { unavailable: false, hold: false, calls: [], release: Queue.new }
     pages, gate = @pages, @gate
-    @original_signup_fetch = Directory::SignupProfile.instance_method(:fetch_html)
-    Directory::SignupProfile.define_method(:fetch_html) do |uri|
+    stub_directory_profile_fetch do |uri|
       gate[:calls] << uri.to_s
       gate[:release].pop if gate[:hold]
       gate[:unavailable] ? nil : pages.fetch(uri.to_s)
     end
-    Directory::SignupProfile.send(:private, :fetch_html)
-    @original_verification_fetch = Directory::AdvocaatBeProfileLookup.instance_method(:fetch_html)
-    Directory::AdvocaatBeProfileLookup.define_method(:fetch_html) { |uri| pages.fetch(uri.to_s) }
-    Directory::AdvocaatBeProfileLookup.send(:private, :fetch_html)
     ActionMailer::Base.deliveries.clear
   end
 
@@ -36,10 +31,6 @@ class SignupProfileTest < ApplicationSystemTestCase
     page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
     page.current_window.resize_to(1400, 1400)
     Capybara.reset_sessions!
-    Directory::SignupProfile.define_method(:fetch_html, @original_signup_fetch)
-    Directory::SignupProfile.send(:private, :fetch_html)
-    Directory::AdvocaatBeProfileLookup.define_method(:fetch_html, @original_verification_fetch)
-    Directory::AdvocaatBeProfileLookup.send(:private, :fetch_html)
     users = User.where(email_address: @registered_emails)
     user_ids = users.pluck(:id)
     firm_ids = Membership.where(user_id: user_ids).pluck(:firm_id)
@@ -54,7 +45,9 @@ class SignupProfileTest < ApplicationSystemTestCase
     ActionMailer::Base.deliveries.clear
   end
 
-  test "the directory supplies read-only identity and access waits for email confirmation" do
+  test "a moved directory profile supplies read-only identity and access waits for email confirmation" do
+    @pages[@second_url] = @pages.fetch(@profile_url)
+    @pages[@profile_url] = [ "301", @second_url ]
     visit_signup
     assert_no_selector "#registration_first_name", visible: :visible
     assert find("#registration_password", visible: :all).disabled?
@@ -62,6 +55,7 @@ class SignupProfileTest < ApplicationSystemTestCase
       load_profile
     end
     assert_empty ActionMailer::Base.deliveries
+    assert_field "registration_directory_profile_url", with: @second_url
     assert_selector ".registration-profile__summary", text: "Jean Pierre Example"
     assert_field "registration_username", with: @listed_email, readonly: true
     assert_selector "input[name='username'][autocomplete='username']"
@@ -80,6 +74,9 @@ class SignupProfileTest < ApplicationSystemTestCase
       assert_current_path verification_status_path(locale: :en)
     end
     user = User.find_by!(email_address: @listed_email)
+    assert_equal @second_url, user.lawyer_profile.directory_profile_url
+    assert_equal [ @profile_url, @second_url ].map { |url| url.split("/").last }.sort,
+      DirectoryProfileLink.where(lawyer_profile: user.lawyer_profile).order(:directory_profile_id).pluck(:directory_profile_id)
     assert_equal "Jean", user.first_name
     assert_equal "Pierre Example", user.last_name
     assert_equal %w[NL FR], user.lawyer_profile.spoken_languages

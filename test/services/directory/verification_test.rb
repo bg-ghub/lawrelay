@@ -45,6 +45,19 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     assert @profile.reload.directory_email_verified?
   end
 
+  test "a move between signup preview and onboarding must still match the email in the preview" do
+    @profile.update!(directory_profile_url: @evidence.source_url, directory_name: @evidence.name, directory_email: @evidence.email)
+    destination = SecureRandom.uuid
+    @lookup.result = @evidence.with(original_profile_id: @evidence.profile_id, profile_id: destination,
+      source_url: @evidence.source_url.sub(@evidence.profile_id, destination), email: "changed@example.test")
+    assert_no_difference "DirectoryProfileLink.count" do
+      assert_equal :identity_mismatch, Directory::Verification.request!(user: @user, lookup: @lookup).status
+    end
+    assert_equal @evidence.email, @profile.reload.directory_email
+    assert_nil @profile.directory_checked_at
+    refute @profile.verified?
+  end
+
   test "an unverified claimant cannot block the rightful verified claimant" do
     Directory::Verification.request!(user: @user, lookup: @lookup)
     second = users(:two)

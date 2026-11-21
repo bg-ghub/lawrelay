@@ -14,7 +14,6 @@ class ProfileImportTest < ApplicationSystemTestCase
     @account.profile.update!(email_review_status: "approved", email_review_email_address: @account.user.email_address,
       email_review_requested_at: 1.minute.ago, email_reviewed_at: Time.current,
       email_review_identity_digest: @account.profile.email_review_current_identity_digest)
-    @original_fetch = Directory::ProfileImport.instance_method(:fetch_html)
     @sync_calls = []
     calls = @sync_calls
     html = <<~HTML
@@ -25,22 +24,22 @@ class ProfileImportTest < ApplicationSystemTestCase
         <section><h2>Voorkeurmateries</h2><p>Family law</p></section>
       </main>
     HTML
-    Directory::ProfileImport.define_method(:fetch_html) do |uri|
+    stub_directory_profile_fetch do |uri|
       calls << uri.to_s
-      html
+      [ "200", html ]
     end
-    Directory::ProfileImport.send(:private, :fetch_html)
   end
 
   teardown do
-    Directory::ProfileImport.define_method(:fetch_html, @original_fetch)
-    Directory::ProfileImport.send(:private, :fetch_html)
     page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride")
     page.current_window.resize_to(1400, 1400)
     Capybara.reset_sessions!
-    AuditEvent.where(actor_user_id: @account.user.id).delete_all
-    @account.user.destroy!
-    @account.firm.destroy!
+  ensure
+    if @account
+      AuditEvent.where(actor_user_id: @account.user.id).delete_all
+      @account.user.destroy!
+      @account.firm.destroy!
+    end
   end
 
   test "the refresh button persists directory values immediately" do

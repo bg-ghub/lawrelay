@@ -46,13 +46,15 @@ module Directory
         return Result.new(status: :stale, profile: @profile) unless @profile.directory_profile_url == stored_url && @user.full_name == requested_name
         ids = [ evidence.original_profile_id, evidence.profile_id ].uniq
         raise ProfileLinks::Conflict if ProfileLinks.claimed_by_other?(profile: @profile, profile_ids: ids)
-        if @profile.directory_matched? && (ids.size > 1 || evidence.profile_id != @profile.directory_profile_id)
+        moved = ids.size > 1 || (@profile.directory_matched? && evidence.profile_id != @profile.directory_profile_id)
+        if moved && @profile.directory_email.present? &&
+            (!same_email?(@profile.directory_email, evidence.email) || !AdvocaatBeProfileLookup.names_match?(@profile.directory_name, evidence.name))
+          return Result.new(status: :identity_mismatch, profile: @profile)
+        end
+        if moved && @profile.directory_matched?
           source_owned = @profile.directory_profile_id == evidence.original_profile_id ||
             DirectoryProfileLink.exists?(lawyer_profile: @profile, directory_profile_id: evidence.original_profile_id)
-          unless source_owned && same_email?(@profile.directory_email, evidence.email) &&
-              AdvocaatBeProfileLookup.names_match?(@profile.directory_name, evidence.name)
-            return Result.new(status: :identity_mismatch, profile: @profile)
-          end
+          return Result.new(status: :identity_mismatch, profile: @profile) unless source_owned
           # The official redirect identifies another URL for the same lawyer.
           # Keep the original identity covered by approvals and email tokens.
           ProfileLinks.register!(profile: @profile, profile_ids: ids)

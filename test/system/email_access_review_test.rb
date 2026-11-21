@@ -20,13 +20,11 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
     @mfa_secret = @admin.begin_admin_mfa_setup!
     @admin.enable_admin_mfa!(ROTP::TOTP.new(@mfa_secret, issuer: "LawRelay").now)
     @admin.update!(admin_mfa_last_verified_at: 2.minutes.ago)
-    @original_fetch = Directory::AdvocaatBeProfileLookup.instance_method(:fetch_html)
     html = <<~HTML
       <main id="main"><h1>#{ERB::Util.html_escape(@account.user.full_name)}</h1>
         <a href="mailto:#{ERB::Util.html_escape(@directory_email)}">Email</a></main>
     HTML
-    Directory::AdvocaatBeProfileLookup.define_method(:fetch_html) { |_uri| html }
-    Directory::AdvocaatBeProfileLookup.send(:private, :fetch_html)
+    stub_directory_profile_fetch { |_uri| [ "200", html ] }
     ActionMailer::Base.deliveries.clear
   end
 
@@ -34,10 +32,6 @@ class EmailAccessReviewTest < ApplicationSystemTestCase
     Capybara.reset_sessions!
     page.driver.browser.execute_cdp("Emulation.clearDeviceMetricsOverride") if page.driver.browser.respond_to?(:execute_cdp)
     page.current_window.resize_to(1400, 1400)
-    if @original_fetch
-      Directory::AdvocaatBeProfileLookup.define_method(:fetch_html, @original_fetch)
-      Directory::AdvocaatBeProfileLookup.send(:private, :fetch_html)
-    end
     @previous_admin_id.nil? ? ENV.delete("LAWRELAY_ADMIN_USER_ID") : ENV["LAWRELAY_ADMIN_USER_ID"] = @previous_admin_id
     user_ids = [ @admin&.id, @account&.user&.id ].compact
     firm_ids = [ @account&.firm&.id ].compact

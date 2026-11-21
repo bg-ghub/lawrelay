@@ -246,11 +246,9 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
 
   test "registration validation moves focus to the error summary" do
     email = "system-invalid-#{SecureRandom.hex(5)}@example.test"
-    original = Directory::SignupProfile.instance_method(:fetch_html)
-    Directory::SignupProfile.define_method(:fetch_html) do |_uri|
-      "<main id='main'><h1>Test Lawyer</h1><a href='mailto:#{email}'>Email</a></main>"
+    stub_directory_profile_fetch do |_uri|
+      [ "200", "<main id='main'><h1>Test Lawyer</h1><a href='mailto:#{email}'>Email</a></main>" ]
     end
-    Directory::SignupProfile.send(:private, :fetch_html)
     visit new_registration_path(locale: :en)
     find(".registration-search__fallback summary").click
     fill_in "registration_directory_profile_url", with: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
@@ -263,9 +261,6 @@ class MarketplaceFlowTest < ApplicationSystemTestCase
 
     assert_selector ".form-error[role='alert']"
     assert_includes page.driver.browser.switch_to.active_element.attribute("class"), "form-error"
-  ensure
-    Directory::SignupProfile.define_method(:fetch_html, original) if original
-    Directory::SignupProfile.send(:private, :fetch_html)
   end
 
   private

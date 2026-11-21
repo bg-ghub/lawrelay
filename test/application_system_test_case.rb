@@ -7,6 +7,23 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # test must be committed before the browser can read them.
   self.use_transactional_tests = false
 
+  def stub_directory_profile_fetch(&response)
+    transport = Directory::ProfilePage.singleton_class
+    @original_directory_fetch = transport.instance_method(:fetch)
+    transport.define_method(:fetch, &response)
+    transport.send(:private, :fetch)
+  end
+
+  def after_teardown
+    super
+  ensure
+    if @original_directory_fetch
+      transport = Directory::ProfilePage.singleton_class
+      transport.define_method(:fetch, @original_directory_fetch)
+      transport.send(:private, :fetch)
+    end
+  end
+
   def fill_assignment_datetime(id, time)
     fill_in id, with: time.strftime("%d/%m/%Y %H:%M")
   end
