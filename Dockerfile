@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG RUBY_VERSION=4.0.5
+ARG RUBY_VERSION=4.0.10
 FROM ruby:${RUBY_VERSION}-slim AS base
 
 WORKDIR /rails
