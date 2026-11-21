@@ -47,6 +47,9 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{color:var(--ink);letter-spacing:-.04em;line-hei
   .primary-nav .mobile-nav-only{display:block!important}.primary-nav form.mobile-nav-only{display:block!important}.mobile-nav-action{width:100%;border-top:1px solid rgba(246,241,232,.14);padding:1rem .1rem;text-align:left;color:var(--paper);font-weight:680}
 }
 .form-check{display:flex;align-items:flex-start;gap:.7rem;margin-top:1rem;border:1px solid var(--line);border-radius:10px;background:#fbf8f1;padding:.85rem;color:var(--ink);font-size:.78rem;font-weight:680;line-height:1.45;cursor:pointer}.form-check input{width:auto;margin:.18rem 0 0;padding:0;accent-color:var(--ink);flex:0 0 auto}
+.form-check:has(input:disabled){background:#f1f1ef;color:#595b59;cursor:default}
+.form-actions .button{text-align:center}
+@media(min-width:521px){.form-actions>input.button[type=submit]{width:auto}}
 .assignment-report-link{margin-top:2rem}.trust-list{display:grid;gap:.8rem}.trust-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:1rem;border-bottom:1px solid var(--line);padding:1rem 0}.trust-row:last-child{border-bottom:0}.trust-row p{margin:.2rem 0 0;color:var(--muted);font-size:.8rem}.trust-row--admin{grid-template-columns:minmax(0,1fr) auto;align-items:start}.trust-review-form{grid-column:1/-1;display:grid;gap:.6rem}.trust-review-form>div{display:flex;flex-wrap:wrap;gap:.5rem}
 .trust-page .dashboard-heading>*,.trust-page .new-assignment__intro,.trust-list,.trust-row,.trust-row>div,.trust-review-form{min-width:0}.trust-page h1,.trust-row>div{overflow-wrap:anywhere}
 @media(max-width:520px){.trust-page .dashboard-heading,.trust-row,.trust-row--admin{grid-template-columns:minmax(0,1fr)}.trust-row>.status-pill{justify-self:start;max-width:100%}.trust-page .button{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}}
@@ -110,3 +113,17 @@ input,select,textarea{border-color:#7c8c84}
 @media(max-width:760px){.analytics-preference{bottom:10px;width:calc(100% - 20px);border-radius:14px}.analytics-preference__inner{grid-template-columns:1fr;gap:.75rem;padding:.85rem}.analytics-preference__controls,.analytics-preference__actions{width:100%;min-width:0}.analytics-preference__controls .button{min-width:0;min-height:44px;white-space:normal;font-size:.875rem;line-height:1.3}}
 
 body.site-shell{display:flex;min-height:100vh;min-height:100dvh;flex-direction:column}body.site-shell>main{flex:1 0 auto}
+
+.detail-main {
+  overflow-wrap: anywhere;
+}
+
+.detail-main h1 {
+  hyphens: auto;
+}
+
+@media (max-width: 520px) {
+  .detail-main h1 {
+    font-size: clamp(2rem, 8.5vw, 2.75rem);
+  }
+}

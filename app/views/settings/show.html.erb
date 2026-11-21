@@ -34,7 +34,10 @@
             <%= form.check_box "account[assignment_update_emails]", checked: @user.assignment_update_emails? %>
             <span><%= t("settings.notifications.assignment_update_emails") %></span>
           </label>
-          <p class="field-hint"><%= t("settings.notifications.security_email_hint") %></p>
+          <label class="form-check">
+            <input type="checkbox" checked disabled>
+            <span><%= t("settings.notifications.account_security_emails") %></span>
+          </label>
         </fieldset>
       <% end %>
 

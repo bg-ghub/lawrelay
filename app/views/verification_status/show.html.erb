@@ -16,8 +16,7 @@
       <p><%= t("auth.verification_status.check_inbox_body", email: @user.email_address) %></p>
       <%= advocaat_webmail_hint(@user.email_address) %>
       <%= button_to t("auth.verification_status.resend"), verification_status_path, method: :post, class: "button button--dark" %>
-      <%= render "shared/confirmation_support", email: @user.email_address %>
-      <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
+      <%= render "shared/confirmation_support", email: @user.email_address, access_link: !@user.system_admin? %>
     </section>
     <%= render "shared/email_access_status", user: @user, profile: @lawyer_profile if @lawyer_profile&.email_review_status.present? %>
   <% else %>
@@ -29,8 +28,7 @@
         <h2><%= t("directory_onboarding.status.confirmation_title") %></h2>
         <p><%= t(@lawyer_profile.directory_confirmation_requested_at.present? ? "directory_onboarding.status.confirmation_body" : "directory_onboarding.status.confirmation_not_sent_body", email: @lawyer_profile.directory_email) %></p>
         <%= button_to t("directory_feedback.resend_confirmation"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
-        <%= render "shared/confirmation_support", email: @lawyer_profile.directory_email %>
-        <% unless @user.system_admin? %><p><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p><% end %>
+        <%= render "shared/confirmation_support", email: @lawyer_profile.directory_email, access_link: !@user.system_admin? %>
       <% elsif @lawyer_profile&.directory_email_verified? %>
         <h2><%= t("directory_onboarding.status.ready_title") %></h2>
         <p><%= t("directory_onboarding.status.ready_body") %></p>
@@ -40,8 +38,10 @@
         <p><%= t(failure ? "directory_feedback.failures.#{failure}" : "directory_onboarding.status.pending_body") %></p>
         <%= mail_to email_change_support_address, t("directory_feedback.check_name"), class: "text-link" if failure == "name_mismatch" %>
         <%= button_to t("directory_onboarding.status.retry"), retry_directory_verification_status_path, method: :post, class: "button button--ghost" %>
+        <% unless failure == "name_mismatch" %>
+          <p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to(email_change_support_address)) %></p>
+        <% end %>
       <% end %>
-      <% unless failure == "name_mismatch" %><p class="field-hint"><%= t("directory_onboarding.status.fallback_html", support_email: mail_to(email_change_support_address)) %></p><% end %>
     </section>
     <% end %>
   <% end %>

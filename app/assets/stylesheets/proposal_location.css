@@ -110,3 +110,17 @@
 .candidate-travel small a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 520px) {
+  .assignment-detail .detail-actions,
+  .assignment-detail .proposal-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .assignment-detail .detail-actions .button,
+  .assignment-detail .proposal-actions .button,
+  .assignment-detail .proposal-actions form {
+    width: 100%;
+  }
+}

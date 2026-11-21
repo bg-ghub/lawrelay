@@ -32,7 +32,9 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     @user.memberships.create!(firm: second_firm, role: "member")
     get "/en/admin/users", params: { q: "managed" }
     assert_response :success
-    assert_select "a[href='#{admin_user_path(@user, locale: :en)}']", minimum: 1
+    assert_select ".admin-user-row a[href='#{admin_user_path(@user, locale: :en)}']", count: 1
+    assert_select ".admin-user-identity h2", text: @user.full_name
+    assert_select ".admin-user-manage .admin-users-sr-only", text: @user.full_name
     assert_select ".admin-user-row", count: 1
     get "/en/admin/users", params: { q: second_firm.name }
     assert_response :success

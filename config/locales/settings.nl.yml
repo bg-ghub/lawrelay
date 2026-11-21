@@ -19,7 +19,7 @@ nl:
       legend: "Meldingen per e-mail"
       new_assignment_alerts: "Nieuwe opdrachten"
       assignment_update_emails: "Updates over uw opdrachten en voorstellen"
-      security_email_hint: "Account- en beveiligingsmails blijven actief."
+      account_security_emails: "Account- en beveiligingsmails (altijd aan)"
     profile:
       legend: "Professioneel profiel"
       review_hint: "Nieuwe baliegegevens of een nieuw e-mailadres worden opnieuw gecontroleerd."

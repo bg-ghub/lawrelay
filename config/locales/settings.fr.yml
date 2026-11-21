@@ -19,7 +19,7 @@ fr:
       legend: "Notifications par e-mail"
       new_assignment_alerts: "Nouvelles missions"
       assignment_update_emails: "Mises à jour de vos missions et propositions"
-      security_email_hint: "Les e-mails liés à votre compte et à sa sécurité restent actifs."
+      account_security_emails: "E-mails de compte et de sécurité (toujours activés)"
     profile:
       legend: "Profil professionnel"
       review_hint: "Toute modification du barreau ou de l’e-mail sera vérifiée."

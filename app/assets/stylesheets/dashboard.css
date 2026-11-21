@@ -1,0 +1,30 @@
+.proposal-preview {
+  min-width: 0;
+}
+
+.proposal-preview > div {
+  min-width: 0;
+}
+
+.proposal-preview strong {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .dashboard-grid > .dashboard-panel {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .proposal-preview {
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .proposal-preview > .text-link {
+    grid-column: 2;
+    justify-self: start;
+    min-height: 32px;
+  }
+}

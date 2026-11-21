@@ -19,7 +19,7 @@ de:
       legend: "E-Mail-Benachrichtigungen"
       new_assignment_alerts: "Neue Aufträge"
       assignment_update_emails: "Aktualisierungen zu Ihren Aufträgen und Angeboten"
-      security_email_hint: "E-Mails zu Ihrem Konto und dessen Sicherheit bleiben aktiv."
+      account_security_emails: "Konto- und Sicherheits-E-Mails (immer aktiviert)"
     profile:
       legend: "Berufliches Profil"
       review_hint: "Neue Kammerangaben oder E-Mail-Adressen werden erneut geprüft."

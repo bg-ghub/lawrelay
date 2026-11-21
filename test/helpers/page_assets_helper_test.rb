@@ -27,7 +27,7 @@ class PageAssetsHelperTest < ActionView::TestCase
       "account_deletions" => %w[account_deletion],
       "two_factor_authentications" => %w[admin_mfa two_factor],
       "settings" => %w[profile_import profile_preferences searchable_select two_factor],
-      "dashboard" => %w[assignment_rates profile_import profile_preferences proposal_location proposal_travel],
+      "dashboard" => %w[assignment_rates dashboard notifications profile_import profile_preferences proposal_location proposal_travel],
       "assignments" => %w[court_picker searchable_select assignment_filters proposal_location proposal_travel],
       "proposals" => %w[court_picker searchable_select profile_import],
       "notifications" => %w[notifications],

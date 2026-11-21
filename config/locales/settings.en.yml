@@ -19,7 +19,7 @@ en:
       legend: "Email notifications"
       new_assignment_alerts: "New assignments"
       assignment_update_emails: "Updates about your assignments and offers"
-      security_email_hint: "Account and security emails stay on."
+      account_security_emails: "Account and security emails (always on)"
     profile:
       legend: "Professional profile"
       review_hint: "Changes to bar details or email require another check."

@@ -17,12 +17,13 @@ class AssignmentEmptyStateTest < ActionDispatch::IntegrationTest
     sign_in_as(@account.user)
   end
 
-  test "an unfiltered empty board invites posting instead of changing filters in every language" do
+  test "an unfiltered empty board has one posting action in every language" do
     EMPTY_TITLES.each_key do |locale|
       get assignments_path(locale:)
 
       assert_response :success
       assert_empty_board(locale)
+      assert_select ".marketplace-page a[href='#{new_assignment_path(locale:)}']", count: 1
     end
   end
 
@@ -87,7 +88,7 @@ class AssignmentEmptyStateTest < ActionDispatch::IntegrationTest
     assert_select "#assignment-results .empty-state" do
       assert_select "h2", text: EMPTY_TITLES.fetch(locale)
       assert_select "p", count: 0
-      assert_select "a[href='#{new_assignment_path(locale:)}']", text: I18n.t("marketplace.index.post_assignment", locale:)
+      assert_select "a[href='#{new_assignment_path(locale:)}']", count: 0
       assert_select "a[href='#{assignments_path(locale:)}']", count: 0
     end
   end

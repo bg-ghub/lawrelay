@@ -30,6 +30,14 @@
   line-height: 1.5;
 }
 
+.verification-status-page .confirmation-help {
+  display: grid;
+  gap: .55rem;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+
 .verification-status-page .confirmation-support a {
   color: var(--ink);
   font-weight: 700;

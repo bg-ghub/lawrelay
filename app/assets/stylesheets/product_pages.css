@@ -101,13 +101,6 @@
   margin-top: 1.5rem;
 }
 
-.product-page-links {
-  display: grid;
-  justify-items: start;
-  gap: .75rem;
-  margin-top: 1.5rem;
-}
-
 @media (max-width: 520px) {
   .product-page {
     padding-block: 2.5rem 3rem;

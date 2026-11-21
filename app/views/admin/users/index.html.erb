@@ -35,7 +35,7 @@
         <% profile = user.lawyer_profile %>
         <li class="dashboard-panel admin-user-row">
           <div class="admin-user-identity">
-            <h2><%= link_to user.full_name, admin_user_path(user), class: "text-link" %></h2>
+            <h2><%= user.full_name %></h2>
             <p><%= user.email_address %></p>
           </div>
           <div class="admin-user-row-fact">

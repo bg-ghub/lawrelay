@@ -60,17 +60,31 @@ class ProductPagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "the homepage and footer expose localized product links" do
+  test "the first homepage step and footer link to both localized product pages" do
     %i[nl fr de en].each do |locale|
       get root_path(locale:)
       assert_response :success
       PAGES.each_key do |page|
         path = public_send("#{page}_path", locale:)
-        assert_select "#how-it-works .product-page-links a[href='#{path}']"
+        assert_select "#how-it-works .steps-list > li:first-child .product-page-links a[href='#{path}']", count: 1
+        assert_select "#how-it-works a[href='#{path}']", count: 1
         assert_select ".site-footer a[href='#{path}']"
       end
       assert_select ".pathway-card a", count: 0
     end
+  end
+
+  test "authenticated visitors see marketplace actions without sign-up or sign-in prompts" do
+    account = create_marketplace_account(prefix: "signed-in-product-page")
+    sign_in_as account.user
+
+    get court_cover_path(locale: :en)
+
+    assert_response :success
+    assert_select ".product-page__actions a[href='#{new_assignment_path(locale: :en)}']", count: 1
+    assert_select ".product-page__actions a[href='#{assignments_path(locale: :en)}']", count: 1
+    assert_select ".product-page__actions a[href='#{new_registration_path(locale: :en)}']", count: 0
+    assert_select ".product-page__actions a[href='#{new_session_path(locale: :en)}']", count: 0
   end
 
   test "the beta sitemap contains the 28 translated public URLs and no private application paths" do

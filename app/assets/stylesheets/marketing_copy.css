@@ -17,3 +17,14 @@
 .pathways-section .pathway-card-ink h2 {
   color: var(--paper);
 }
+
+.steps-list .product-page-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1rem;
+  margin-top: .75rem;
+}
+
+.steps-list .product-page-links a {
+  min-height: 24px;
+}

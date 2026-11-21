@@ -45,6 +45,7 @@ class VerificationStatusControllerTest < ActionDispatch::IntegrationTest
     %i[nl fr de en].each do |locale|
       assert_no_enqueued_jobs { get verification_status_path(locale:) }
       assert_response :success
+      assert_select ".confirmation-help a[href='#{email_access_request_path(locale:)}']", count: 1
       assert_select ".confirmation-support a[href='mailto:support@lawrelay.be']",
         text: I18n.t("auth.verification_status.confirmation_support_link", locale:), count: 1
       assert_select ".confirmation-delivery-note",

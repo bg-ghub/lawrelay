@@ -32,8 +32,10 @@
     <nav class="product-page__actions" aria-label="<%= t('product_pages.actions.label') %>">
       <%= link_to t("product_pages.actions.post"), new_assignment_path, class: "button button--dark" %>
       <%= link_to t("product_pages.actions.browse"), assignments_path, class: "button button--ghost" %>
-      <%= link_to t("product_pages.actions.register"), new_registration_path, class: "text-link" %>
-      <%= link_to t("product_pages.actions.sign_in"), new_session_path, class: "text-link" %>
+      <% unless authenticated? %>
+        <%= link_to t("product_pages.actions.register"), new_registration_path, class: "text-link" %>
+        <%= link_to t("product_pages.actions.sign_in"), new_session_path, class: "text-link" %>
+      <% end %>
     </nav>
   </div>
   <nav class="product-page__related" aria-label="<%= t('product_pages.links.label') %>">

@@ -40,7 +40,7 @@ module PageAssetsHelper
       when "assignments", "proposals", "travel_estimates"
         ASSIGNMENT_STYLESHEETS
       when "dashboard"
-        %w[assignment_rates profile_import profile_preferences proposal_location proposal_travel]
+        %w[assignment_rates dashboard notifications profile_import profile_preferences proposal_location proposal_travel]
       when "notifications"
         %w[notifications]
       when "reports", "privacy_requests"

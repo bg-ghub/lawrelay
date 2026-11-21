@@ -8,6 +8,14 @@
   grid-template-columns: minmax(0, 48rem);
 }
 
+.settings-page .two-factor-settings {
+  max-width: 48rem;
+}
+
+.settings-page .field-group > p {
+  overflow-wrap: anywhere;
+}
+
 .directory-profile h2 {
   margin: 0;
   font-family: var(--sans);

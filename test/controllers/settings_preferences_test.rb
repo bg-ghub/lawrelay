@@ -65,6 +65,9 @@ class SettingsPreferencesTest < ActionDispatch::IntegrationTest
     assert_select "#email-notifications legend", text: "Meldingen per e-mail"
     assert_select 'input[type=checkbox][name="account[new_assignment_alerts]"][checked]', count: 1
     assert_select 'input[type=checkbox][name="account[assignment_update_emails]"][checked]', count: 1
+    assert_select "#email-notifications label", text: "Account- en beveiligingsmails (altijd aan)" do
+      assert_select "input[type=checkbox][checked][disabled]:not([name])", count: 1
+    end
 
     patch settings_path(locale: :nl), params: { account: { new_assignment_alerts: "1", assignment_update_emails: "0" } }
 

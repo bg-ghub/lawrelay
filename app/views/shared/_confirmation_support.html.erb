@@ -1,4 +1,10 @@
-<% if advocaat_webmail_address?(email) %>
-  <p class="confirmation-delivery-note"><%= t("auth.verification_status.advocaat_delivery_notice", email: email) %></p>
-<% end %>
-<p class="confirmation-support"><%= t("auth.verification_status.confirmation_support_html", email: email, link: mail_to("support@lawrelay.be", t("auth.verification_status.confirmation_support_link"))) %></p>
+<% access_link = local_assigns.fetch(:access_link, false) %>
+<div class="confirmation-help">
+  <% if advocaat_webmail_address?(email) %>
+    <p class="confirmation-delivery-note"><%= t("auth.verification_status.advocaat_delivery_notice", email: email) %></p>
+  <% end %>
+  <p class="confirmation-support"><%= t("auth.verification_status.confirmation_support_html", email: email, link: mail_to("support@lawrelay.be", t("auth.verification_status.confirmation_support_link"))) %></p>
+  <% if access_link %>
+    <p class="confirmation-access-link"><%= link_to t("email_access.link"), email_access_request_path, class: "text-link" %></p>
+  <% end %>
+</div>

@@ -20,7 +20,6 @@
         <div class="assignment-filters__content">
           <div class="filter-panel__heading">
             <p class="eyebrow"><%= t("marketplace.index.refine") %></p>
-            <%= link_to t("marketplace.index.clear_filters"), assignments_path, class: "text-link" %>
           </div>
 
           <%= form_with url: assignments_path, method: :get, class: "filter-form", data: { controller: "assignment-filter", action: "change->assignment-filter#submit submit->assignment-filter#cancelPending", turbo_frame: "assignment-results", turbo_action: "advance" } do |form| %>
@@ -56,11 +55,13 @@
     </aside>
 
     <%= turbo_frame_tag "assignment-results", class: "assignment-results", target: "_top", data: { controller: "assignment-results", action: "turbo:frame-missing->assignment-results#visit" } do %>
-      <div class="result-meta">
-        <p><strong><%= @assignments.size %></strong> <%= t("marketplace.index.results", count: @assignments.size) %></p>
-      </div>
-
       <% if @assignments.any? %>
+        <div class="result-meta">
+          <p><strong><%= @assignments.size %></strong> <%= t("marketplace.index.results", count: @assignments.size) %></p>
+          <% if @filters_active %>
+            <%= link_to t("marketplace.index.clear_filters"), assignments_path, class: "text-link" %>
+          <% end %>
+        </div>
         <div class="assignment-list">
           <% @assignments.each do |assignment| %>
               <%= render "card", assignment: assignment %>
@@ -75,7 +76,6 @@
             <%= link_to t("marketplace.index.all_assignments"), assignments_path, class: "button button--dark" %>
           <% else %>
             <h2><%= t("marketplace.index.no_open_assignments") %></h2>
-            <%= link_to t("marketplace.index.post_assignment"), new_assignment_path, class: "button button--dark" %>
           <% end %>
         </div>
       <% end %>
