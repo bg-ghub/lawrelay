@@ -82,6 +82,9 @@ nl:
         rate_limited: "Te veel registratiepogingen. Probeer het later opnieuw."
         accept_terms: "U moet de voorwaarden aanvaarden en bevestigen dat u de privacyverklaring hebt gelezen."
         already_registered: "Deze account-, kantoor- of baliegegevens zijn al geregistreerd."
+      recovery_sign_in: "meld u aan"
+      recovery_reset: "stel uw wachtwoord opnieuw in"
+      recovery_html: "Als u dit profiel al registreerde, %{sign_in} of %{reset}. Neem bij problemen contact op met %{support}."
     email_verifications:
       review:
         title: "E-mailadres bevestigen"

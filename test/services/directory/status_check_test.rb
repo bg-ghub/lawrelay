@@ -6,6 +6,7 @@ require_relative "../../../app/services/directory/status_check"
 
 class DirectoryStatusCheckTest < Minitest::Test
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+  MOVED_URL = PROFILE_URL.sub("63fee2a5", "73fee2a5")
 
   class HttpClient
     attr_accessor :use_ssl, :verify_mode, :verify_hostname, :open_timeout,
@@ -35,15 +36,61 @@ class DirectoryStatusCheckTest < Minitest::Test
     result = check(body: html(name: "Jàne-Lawyer"), expected_email: " JANE@example.test ")
 
     assert_equal :active, result.status
-    assert_equal [ :status, :checked_at ], result.members
+    assert_equal PROFILE_URL.split("/").last, result.resolved_profile_id
     assert_kind_of Time, result.checked_at
   end
 
   def test_expected_email_is_optional_but_a_valid_listed_email_is_required
     assert_equal :active, check.status
+    assert_nil check.resolved_profile_id
     assert_equal :unavailable, check(body: html(email: "")).status
     assert_equal :unavailable, check(body: html(email: "invalid")).status
     assert_equal :unavailable, check(expected_email: "invalid").status
+  end
+
+  def test_a_permanent_move_identifies_the_final_uuid_only_after_both_stored_fields_match
+    [ 301, 308 ].each do |code|
+      [ [ html, :active ], [ html(name: "Another Name"), :changed ], [ html(email: "other@example.test"), :changed ],
+        [ html(email: ""), :unavailable ], [ html + html, :unavailable ] ].each do |body, expected|
+        calls = []
+        transport = lambda do |uri, request|
+          calls << uri.to_s
+          assert_equal uri.request_uri, request.path
+          calls.size == 1 ? [ code, URI(MOVED_URL).path ] : [ 200, body ]
+        end
+        result = Directory::StatusCheck.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer",
+          expected_email: "jane@example.test", transport:)
+        assert_equal [ PROFILE_URL, MOVED_URL ], calls
+        assert_equal expected, result.status
+        if expected == :active
+          assert_equal MOVED_URL.split("/").last, result.resolved_profile_id
+        else
+          assert_nil result.resolved_profile_id
+        end
+      end
+    end
+  end
+
+  def test_a_missing_redirect_destination_or_redirect_chain_does_not_prove_removal
+    [ [ 404, nil ], [ 410, nil ], [ 308, PROFILE_URL ] ].each do |final_response|
+      calls = []
+      transport = ->(uri, _) { calls << uri.to_s; calls.size == 1 ? [ 301, MOVED_URL ] : final_response }
+      result = Directory::StatusCheck.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer",
+        expected_email: "jane@example.test", transport:)
+      assert_equal :unavailable, result.status
+      assert_nil result.resolved_profile_id
+      assert_equal [ PROFILE_URL, MOVED_URL ], calls
+    end
+  end
+
+  def test_a_move_is_not_followed_without_the_stored_mailbox
+    calls = []
+    transport = ->(uri, _) { calls << uri.to_s; [ 301, MOVED_URL ] }
+    result = Directory::StatusCheck.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", transport:)
+
+    assert_equal :unavailable, result.status
+    assert_nil result.resolved_profile_id
+    assert_equal [ PROFILE_URL ], calls
   end
 
   def test_a_real_profile_name_or_expected_email_change_is_changed
@@ -122,7 +169,7 @@ class DirectoryStatusCheckTest < Minitest::Test
       result = Directory::StatusCheck.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", transport:)
 
       assert_equal :unavailable, result.status
-      assert_equal [ :status, :checked_at ], result.members
+      assert_nil result.resolved_profile_id
     end
   end
 

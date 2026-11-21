@@ -2,6 +2,7 @@ require "test_helper"
 
 class AdvocaatBeProfileLookupTest < ActiveSupport::TestCase
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+  MOVED_URL = PROFILE_URL.sub("63fee2a5", "73fee2a5")
 
   def html(name: "Jane Lawyer", email: "jane@example.test")
     <<~HTML
@@ -18,10 +19,40 @@ class AdvocaatBeProfileLookupTest < ActiveSupport::TestCase
     assert_equal PROFILE_URL, Directory::AdvocaatBeProfileLookup.canonical_profile_url(PROFILE_URL.sub("www.", ""))
   end
 
-  test "rejects redirects rather than following a new endpoint" do
+  test "an unavailable provider returns no identity evidence" do
     result = Directory::AdvocaatBeProfileLookup.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", fetcher: ->(_) { nil })
 
     assert_equal :unavailable, result.status
+  end
+
+  test "one official permanent redirect returns the final verified identity and its original UUID" do
+    %w[301 308].each do |code|
+      calls = []
+      fetcher = lambda do |uri|
+        calls << uri.to_s
+        calls.size == 1 ? [ code, URI(MOVED_URL).path ] : html
+      end
+      result = Directory::AdvocaatBeProfileLookup.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", fetcher:)
+
+      assert result.success?
+      assert_equal [ PROFILE_URL, MOVED_URL ], calls
+      assert_equal MOVED_URL, result.source_url
+      assert_equal MOVED_URL.split("/").last, result.profile_id
+      assert_equal PROFILE_URL.split("/").last, result.original_profile_id
+      assert_equal "jane@example.test", result.email
+    end
+  end
+
+  test "a moved profile still needs the requested name and a valid listed mailbox" do
+    [ [ html(name: "Another Person"), :name_mismatch ], [ html(email: ""), :email_missing ],
+      [ html + html, :malformed ], [ [ 404, nil ], :unavailable ] ].each do |response, expected|
+      fetcher = ->(uri) { uri.to_s == PROFILE_URL ? [ 301, MOVED_URL ] : response }
+      result = Directory::AdvocaatBeProfileLookup.call(profile_url: PROFILE_URL, full_name: "Jane Lawyer", fetcher:)
+      assert_equal expected, result.status
+      assert_nil result.original_profile_id
+      assert_nil result.profile_id
+      assert_nil result.source_url
+    end
   end
 
   test "uses the heading and mailto within main content only" do
@@ -98,7 +129,7 @@ class AdvocaatBeProfileLookupTest < ActiveSupport::TestCase
 
   def with_http_response(response)
     client_class = Class.new do
-      attr_accessor :use_ssl, :verify_mode, :open_timeout, :read_timeout
+      attr_accessor :use_ssl, :verify_mode, :verify_hostname, :open_timeout, :read_timeout, :write_timeout, :max_retries
       attr_reader :requests
 
       def initialize(response)

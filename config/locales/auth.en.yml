@@ -82,6 +82,9 @@ en:
         rate_limited: "Too many registration attempts. Please try again later."
         accept_terms: "You must accept the terms and confirm that you have read the privacy notice."
         already_registered: "These account, firm, or bar details are already registered."
+      recovery_sign_in: "sign in"
+      recovery_reset: "reset your password"
+      recovery_html: "If you already registered this profile, %{sign_in} or %{reset}. If you need help, contact %{support}."
     email_verifications:
       review:
         title: "Confirm your email"

@@ -39,6 +39,16 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_equal %w[email_address first_name last_name name profile_attributes profile_url status token], body.keys.sort
   end
 
+  test "a signed canonical preview can be submitted through the legacy directory alias only" do
+    token = Directory::SignupPreview.issue(@result)
+    legacy_url = PROFILE_URL.sub("www.", "")
+
+    payload = Directory::SignupPreview.read(token:, profile_url: legacy_url)
+    assert_equal PROFILE_URL, payload.fetch("profile_url")
+    assert_equal PROFILE_URL, payload.fetch("original_profile_url")
+    assert_nil Directory::SignupPreview.read(token:, profile_url: PROFILE_URL.sub("11111111", "22222222"))
+  end
+
   test "HTML preview shows read-only identity without echoing passwords or forged company details" do
     post registration_profile_path(locale: :en), params: { registration: {
       directory_profile_url: PROFILE_URL, password: "do-not-echo-this-password", password_confirmation: "do-not-echo-this-password",
@@ -83,7 +93,7 @@ class RegistrationProfilePreviewsControllerTest < ActionDispatch::IntegrationTes
     assert_nil user.email_verified_at
     assert_equal "pending", user.lawyer_profile.verification_status
     assert_nil user.lawyer_profile.directory_profile_id
-    assert_nil user.lawyer_profile.directory_email
+    assert_equal "listed@advocaat.be", user.lawyer_profile.directory_email
     assert_nil user.lawyer_profile.directory_email_verified_at
     assert_equal %w[NL FR], user.lawyer_profile.spoken_languages
     assert_equal [ "Familierecht" ], user.lawyer_profile.practice_areas

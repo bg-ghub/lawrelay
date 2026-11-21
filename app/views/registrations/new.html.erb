@@ -30,6 +30,12 @@
         <div class="form-error" role="alert" tabindex="-1" data-controller="form-errors">
           <strong><%= t("auth.registration.error_heading") %></strong>
           <ul><% @registration_errors.each do |message| %><li><%= message %></li><% end %></ul>
+          <% if @registration_recovery %>
+            <p class="registration-recovery"><%= t("auth.registration.recovery_html",
+              sign_in: link_to(t("auth.registration.recovery_sign_in"), new_session_path),
+              reset: link_to(t("auth.registration.recovery_reset"), new_password_path),
+              support: mail_to("support@lawrelay.be", "support@lawrelay.be")) %></p>
+          <% end %>
         </div>
       <% end %>
 

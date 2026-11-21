@@ -82,6 +82,9 @@ de:
         rate_limited: "Zu viele Registrierungsversuche. Bitte versuchen Sie es später erneut."
         accept_terms: "Sie müssen die Nutzungsbedingungen akzeptieren und bestätigen, dass Sie die Datenschutzerklärung gelesen haben."
         already_registered: "Diese Konto-, Kanzlei- oder Kammerdaten sind bereits registriert."
+      recovery_sign_in: "melden Sie sich an"
+      recovery_reset: "setzen Sie Ihr Passwort zurück"
+      recovery_html: "Wenn Sie dieses Profil bereits registriert haben, %{sign_in} oder %{reset}. Bei Problemen kontaktieren Sie %{support}."
     email_verifications:
       review:
         title: "E-Mail-Adresse bestätigen"

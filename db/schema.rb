@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_13_103000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_090000) do
   create_table "account_deletion_requests", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "privacy_request_id"
@@ -137,6 +137,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_103000) do
     t.index ["provider", "provider_payment_id"], name: "index_billing_payments_on_provider_payment", unique: true, where: "provider_payment_id IS NOT NULL"
     t.index ["status"], name: "index_billing_payments_on_status"
     t.index ["subscription_id"], name: "index_billing_payments_on_subscription_id"
+  end
+
+  create_table "directory_profile_links", force: :cascade do |t|
+    t.integer "lawyer_profile_id", null: false
+    t.string "directory_profile_id", limit: 36, null: false, collation: "NOCASE"
+    t.index ["directory_profile_id"], name: "index_directory_profile_links_on_directory_profile_id", unique: true
+    t.index ["lawyer_profile_id"], name: "index_directory_profile_links_on_lawyer_profile_id"
   end
 
   create_table "firms", force: :cascade do |t|
@@ -477,6 +484,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_103000) do
   add_foreign_key "billing_accounts", "firms"
   add_foreign_key "billing_payments", "billing_accounts"
   add_foreign_key "billing_payments", "subscriptions"
+  add_foreign_key "directory_profile_links", "lawyer_profiles", on_delete: :cascade
   add_foreign_key "invoices", "billing_accounts"
   add_foreign_key "invoices", "subscriptions"
   add_foreign_key "lawyer_profiles", "users"

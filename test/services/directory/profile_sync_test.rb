@@ -5,10 +5,11 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
   include MarketplaceTestFactory
   include ActiveJob::TestHelper
 
-  PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+  DIRECTORY_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/"
+  PROFILE_URL = DIRECTORY_URL + "10000000-0000-4000-8000-000000000001"
 
   setup do
-    @account = linked_account("profilesync")
+    @account = linked_account("profilesync", url: PROFILE_URL)
   end
 
   test "refresh persists only importable fields and audits their names without altering verification or account identity" do
@@ -67,8 +68,14 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
     assert_equal :updated, Directory::ProfileSync.call(user: @account.user, import: importer).status
     assert_equal [ "NL" ], @account.profile.reload.spoken_languages
     assert_equal original, @account.profile.attributes.except("spoken_languages", "updated_at")
+    assert_equal [ PROFILE_URL.split("/").last, moved_id ].sort,
+      DirectoryProfileLink.where(lawyer_profile: @account.profile).order(:directory_profile_id).pluck(:directory_profile_id)
+    assert_no_difference "DirectoryProfileLink.count" do
+      assert_equal :unchanged, Directory::ProfileSync.call(user: @account.user, import: importer).status
+    end
 
     other = create_marketplace_account(prefix: "movedlisting")
+    moved_id = SecureRandom.uuid
     other.profile.update!(directory_profile_id: moved_id)
     before = @account.profile.attributes
     assert_no_difference "AuditEvent.count" do
@@ -156,7 +163,7 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
       ->(account) { account.user.update_columns(system_role: "admin") },
       ->(account) { account.user.update_columns(suspended_at: Time.current) },
       ->(account) { account.user.update_columns(erased_at: Time.current) },
-      ->(account) { account.profile.update_columns(directory_profile_url: PROFILE_URL.sub("63fee2a5", "73fee2a5")) },
+      ->(account) { account.profile.update_columns(directory_profile_url: DIRECTORY_URL + SecureRandom.uuid) },
       ->(account) { account.profile.update_columns(directory_email: "changed-directory@example.test") },
       ->(account) { account.profile.update_columns(verification_status: "suspended") }
     ]
@@ -204,10 +211,10 @@ class DirectoryProfileSyncTest < ActiveSupport::TestCase
 
   private
 
-  def linked_account(prefix)
+  def linked_account(prefix, url: DIRECTORY_URL + SecureRandom.uuid)
     account = create_marketplace_account(prefix:)
-    account.profile.update!(directory_profile_url: PROFILE_URL,
-      directory_profile_id: "#{prefix}-#{SecureRandom.hex(4)}", directory_name: account.user.full_name,
+    account.profile.update!(directory_profile_url: url,
+      directory_profile_id: url.split("/").last, directory_name: account.user.full_name,
       directory_email: account.user.email_address, directory_checked_at: Time.current)
     account
   end

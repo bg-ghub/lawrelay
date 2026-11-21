@@ -9,7 +9,9 @@ module Directory
     def self.issue(result)
       raise ArgumentError, "A successful profile lookup is required" unless result.success?
 
-      verifier.generate({ "profile_url" => result.profile_url, "name" => result.name,
+      original_profile_url = result.original_profile_url.presence || result.profile_url
+      verifier.generate({ "profile_url" => result.profile_url, "original_profile_url" => original_profile_url,
+        "name" => result.name,
         "first_name" => result.first_name, "last_name" => result.last_name, "email_address" => result.email_address,
         "profile_attributes" => result.profile_attributes.stringify_keys.slice(*PROFILE_FIELDS) },
         purpose: PURPOSE, expires_in: LIFETIME)
@@ -21,8 +23,12 @@ module Directory
       return unless token.is_a?(String) && token.present? && token.bytesize <= 16_384
 
       payload = verifier.verified(token, purpose: PURPOSE)
-      return unless payload.is_a?(Hash) && payload["profile_url"].present? &&
-        payload["profile_url"] == AdvocaatBeProfileLookup.canonical_profile_url(profile_url)
+      canonical_url = AdvocaatBeProfileLookup.canonical_profile_url(profile_url)
+      return unless canonical_url && payload.is_a?(Hash)
+
+      final_url = AdvocaatBeProfileLookup.canonical_profile_url(payload["profile_url"])
+      original_url = AdvocaatBeProfileLookup.canonical_profile_url(payload.fetch("original_profile_url", final_url))
+      return unless final_url && original_url && [ final_url, original_url ].include?(canonical_url)
       return unless payload["name"].is_a?(String) && payload["name"].present? && payload["name"].length <= 201
       return unless %w[first_name last_name].all? { |key| payload[key].is_a?(String) && payload[key].length <= 100 }
       email = payload["email_address"]

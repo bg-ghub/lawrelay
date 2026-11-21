@@ -132,9 +132,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "uses the directory's strict canonical URL rules" do
     invalid_urls = [
-      "https://www.advocaat.be:444/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
-      "https://user@www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a",
-      "https://www.advocaat.be/fr/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
+      "https://www.advocaat.be:444/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "https://user@www.advocaat.be/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "https://www.advocaat.be/fr/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
     ]
 
     invalid_urls.each do |url|
@@ -144,10 +144,92 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "does not reserve a public directory UUID while registration is pending" do
+  test "legacy directory aliases create one canonical profile and retain signed identity" do
+    canonical = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    legacy = canonical.sub("www.", "")
+    attributes = valid_registration(profile_url: legacy)
+
+    assert_difference "User.count", 1 do
+      post registration_path(locale: :en), params: { registration: attributes }
+    end
+
+    assert_redirected_to verification_status_path(locale: :en)
+    profile = User.order(:id).last.lawyer_profile
+    assert_equal canonical, profile.directory_profile_url
+    assert Directory::SignupPreview.read(token: attributes[:directory_preview_token], profile_url: legacy)
+  end
+
+  test "a canonical profile cannot be registered a second time through its legacy alias" do
+    canonical = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    legacy = canonical.sub("www.", "")
+    first = valid_registration(profile_url: canonical)
+    second = valid_registration(profile_url: legacy).merge(
+      request_alternative_email: "1", alternative_email_address: "second@law.example"
+    )
+
+    post registration_path(locale: :en), params: { registration: first }
+    assert_redirected_to verification_status_path(locale: :en)
+
+    assert_no_difference [ "User.count", "Firm.count", "Membership.count", "LawyerProfile.count" ] do
+      assert_no_enqueued_jobs do
+        post registration_path(locale: :en), params: { registration: second }
+      end
+    end
+    assert_response :unprocessable_content
+    assert_select "a[href='#{new_session_path(locale: :en)}']"
+    assert_select "a[href='#{new_password_path(locale: :en)}']"
+    assert_select "a[href='mailto:support@lawrelay.be']"
+  end
+
+  test "old directory URL first then new UUID cannot create a second account" do
+    old_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    new_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb"
+    first = valid_registration(profile_url: old_url, resolved_profile_url: new_url,
+      email_address: "old-first@law.example")
+    second = valid_registration(profile_url: new_url, resolved_profile_url: new_url,
+      email_address: "new-second@law.example").merge(
+        request_alternative_email: "1", alternative_email_address: "second-manual@law.example"
+      )
+
+    post registration_path(locale: :en), params: { registration: first }
+    assert_redirected_to verification_status_path(locale: :en)
+    counts = [ User.count, Session.count, Firm.count, Membership.count, LawyerProfile.count, Notification.count ]
+    deliveries = ActionMailer::Base.deliveries.length
+    assert_no_enqueued_jobs do
+      post registration_path(locale: :en), params: { registration: second }
+    end
+    assert_response :unprocessable_content
+    assert_equal counts, [ User.count, Session.count, Firm.count, Membership.count, LawyerProfile.count, Notification.count ]
+    assert_equal deliveries, ActionMailer::Base.deliveries.length
+  end
+
+  test "new directory URL first then old UUID cannot create a second account" do
+    old_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/cccccccc-cccc-4ccc-8ccc-cccccccccccc"
+    new_url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/dddddddd-dddd-4ddd-8ddd-dddddddddddd"
+    first = valid_registration(profile_url: new_url, resolved_profile_url: new_url,
+      email_address: "new-first@law.example")
+    second = valid_registration(profile_url: old_url, resolved_profile_url: new_url,
+      email_address: "old-second@law.example").merge(
+        request_alternative_email: "1", alternative_email_address: "old-manual@law.example"
+      )
+
+    post registration_path(locale: :en), params: { registration: first }
+    assert_redirected_to verification_status_path(locale: :en)
+    counts = [ User.count, Session.count, Firm.count, Membership.count, LawyerProfile.count, Notification.count ]
+    deliveries = ActionMailer::Base.deliveries.length
+    assert_no_enqueued_jobs do
+      post registration_path(locale: :en), params: { registration: second }
+    end
+    assert_response :unprocessable_content
+    assert_equal counts, [ User.count, Session.count, Firm.count, Membership.count, LawyerProfile.count, Notification.count ]
+    assert_equal deliveries, ActionMailer::Base.deliveries.length
+  end
+
+  test "separate pending profiles receive unique opaque bar numbers" do
     first = valid_registration
     second = valid_registration(
-      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example"
+      first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example",
+      profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111"
     )
 
     assert_difference "LawyerProfile.count", 2 do
@@ -156,14 +238,15 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     profiles = LawyerProfile.order(:id).last(2)
-    assert_equal [ first[:directory_profile_url] ], profiles.pluck(:directory_profile_url).uniq
+    assert_equal [ first[:directory_profile_url], second[:directory_profile_url] ], profiles.pluck(:directory_profile_url).uniq
     assert_not_equal profiles.first.bar_number, profiles.second.bar_number
     assert profiles.all? { |profile| profile.bar_number.start_with?("PENDING-") }
   end
 
   test "accounts receive separate workspaces without a supplied company identity" do
     first = valid_registration
-    second = valid_registration(first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example")
+    second = valid_registration(first_name: "Grace", last_name: "Hopper", email_address: "grace@law.example",
+      profile_url: "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111")
 
     assert_difference [ "User.count", "Firm.count", "Membership.count" ], 2 do
       post registration_path(locale: :en), params: { registration: first }
@@ -354,10 +437,11 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     EmailVerificationMailer.define_singleton_method(:verify, original) if original
   end
 
-  def valid_registration(first_name: "Ada", last_name: "Lovelace", email_address: "ada@law.example")
-    url = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/63fee2a5-637a-4839-a5a6-c833482f1e3a"
-    result = Directory::SignupProfile::Result.new(status: :ok, profile_url: url, name: "#{first_name} #{last_name}",
-      first_name:, last_name:, email_address:, profile_attributes: {})
+  def valid_registration(first_name: "Ada", last_name: "Lovelace", email_address: "ada@law.example", profile_url: nil, resolved_profile_url: nil)
+    url = profile_url || "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+    result = Directory::SignupProfile::Result.new(status: :ok,
+      profile_url: Directory::AdvocaatBeProfileLookup.canonical_profile_url(resolved_profile_url || url), original_profile_url: url,
+      name: "#{first_name} #{last_name}", first_name:, last_name:, email_address:, profile_attributes: {})
     {
       first_name:,
       last_name:,

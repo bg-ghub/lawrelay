@@ -30,25 +30,36 @@ module Directory
     def request!(directory_profile_url: nil)
       return Result.new(status: :protected, profile: @profile) unless @user.active?
       return Result.new(status: :missing_profile, profile: nil) unless @profile
-      @profile.update!(directory_profile_url:) if directory_profile_url.present?
-      requested_url = @profile.directory_profile_url
+      @profile.update!(directory_profile_url:) if directory_profile_url.present? && !@profile.directory_matched?
+      stored_url = @profile.directory_profile_url
+      requested_url = directory_profile_url.presence || stored_url
       requested_name = @user.full_name
       evidence = @lookup.call(profile_url: requested_url, full_name: requested_name)
       unless evidence.success?
         record_lookup_failure(evidence.status, requested_url:, requested_name:)
         return Result.new(status: evidence.status, profile: @profile)
       end
-      if LawyerProfile.where.not(id: @profile.id).where(directory_profile_id: evidence.profile_id)
-        .where("directory_email_verified_at IS NOT NULL OR email_review_status = ? OR manual_activation_approved_at IS NOT NULL", "approved").exists?
-        record_lookup_failure(:already_claimed, requested_url:, requested_name:)
-        return Result.new(status: :already_claimed, profile: @profile)
-      end
-
       ApplicationRecord.transaction do
         @user.lock!
         @profile.lock!
         return Result.new(status: :protected, profile: @profile) unless @user.active?
-        return Result.new(status: :stale, profile: @profile) unless @profile.directory_profile_url == requested_url && @user.full_name == requested_name
+        return Result.new(status: :stale, profile: @profile) unless @profile.directory_profile_url == stored_url && @user.full_name == requested_name
+        ids = [ evidence.original_profile_id, evidence.profile_id ].uniq
+        raise ProfileLinks::Conflict if ProfileLinks.claimed_by_other?(profile: @profile, profile_ids: ids)
+        if @profile.directory_matched? && (ids.size > 1 || evidence.profile_id != @profile.directory_profile_id)
+          source_owned = @profile.directory_profile_id == evidence.original_profile_id ||
+            DirectoryProfileLink.exists?(lawyer_profile: @profile, directory_profile_id: evidence.original_profile_id)
+          unless source_owned && same_email?(@profile.directory_email, evidence.email) &&
+              AdvocaatBeProfileLookup.names_match?(@profile.directory_name, evidence.name)
+            return Result.new(status: :identity_mismatch, profile: @profile)
+          end
+          # The official redirect identifies another URL for the same lawyer.
+          # Keep the original identity covered by approvals and email tokens.
+          ProfileLinks.register!(profile: @profile, profile_ids: ids)
+          @profile.update!(directory_checked_at: evidence.checked_at)
+          next
+        end
+        ProfileLinks.register!(profile: @profile, profile_ids: ids) if ids.size > 1
 
         @profile.assign_attributes(
           directory_profile_id: evidence.profile_id, directory_profile_url: evidence.source_url,
@@ -63,6 +74,9 @@ module Directory
       end
       activate_if_ready!
       Result.new(status: :matched, profile: @profile)
+    rescue ProfileLinks::Conflict
+      record_lookup_failure(:already_claimed, requested_url:, requested_name:)
+      Result.new(status: :already_claimed, profile: @profile)
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => error
       return Result.new(status: :already_claimed, profile: @profile) if error.message.include?("directory_profile_id")
 
@@ -77,6 +91,7 @@ module Directory
         profile.lock!
         return Result.new(status: :protected, profile:) unless @user.active?
         return Result.new(status: :invalid, profile:) unless identity_current?(profile)
+        return Result.new(status: :already_claimed, profile:) if ProfileLinks.claimed_by_other?(profile:, profile_ids: [ profile.directory_profile_id ])
         unless profile.directory_email_verified?
           profile.update!(directory_email_verified_at: Time.current)
           audit!("verification.directory_email_confirmed", profile_id: profile.id, directory_profile_id: profile.directory_profile_id)
@@ -104,6 +119,7 @@ module Directory
         return Result.new(status: :protected, profile: @profile) unless @user.active?
         return Result.new(status: :protected, profile: @profile) if protected?(@profile) || protected?(firm)
         return Result.new(status: :pending, profile: @profile) unless identity_current?(@profile)
+        return Result.new(status: :already_claimed, profile: @profile) if ProfileLinks.claimed_by_other?(profile: @profile, profile_ids: [ @profile.directory_profile_id ])
         return Result.new(status: :pending, profile: @profile) unless @profile.email_review_allows_access?
         return Result.new(status: :pending, profile: @profile) unless same_email?(@user.email_address, @profile.directory_email) || @profile.email_review_approved?
         if @user.email_verified? && !@profile.directory_email_verified? && same_email?(@user.email_address, @profile.directory_email)

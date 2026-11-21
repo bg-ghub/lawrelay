@@ -39,8 +39,7 @@ module Admin
             profile.directory_email.to_s.casecmp?(user.email_address.to_s)
           return failure(:directory_required, user, profile)
         end
-        if LawyerProfile.where.not(id: profile.id).where(directory_profile_id: profile.directory_profile_id)
-            .where("directory_email_verified_at IS NOT NULL OR email_review_status = ? OR manual_activation_approved_at IS NOT NULL", "approved").exists?
+        if Directory::ProfileLinks.claimed_by_other?(profile:, profile_ids: [ profile.directory_profile_id ])
           return failure(:claimed, user, profile)
         end
         return Result.new(status: :activated, user:, profile:) if profile.manual_activation_valid? && user.marketplace_verified?

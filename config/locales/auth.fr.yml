@@ -82,6 +82,9 @@ fr:
         rate_limited: "Trop de tentatives d’inscription. Réessayez plus tard."
         accept_terms: "Vous devez accepter les conditions et confirmer avoir lu la déclaration de confidentialité."
         already_registered: "Ces données de compte, cabinet ou barreau sont déjà enregistrées."
+      recovery_sign_in: "connectez-vous"
+      recovery_reset: "réinitialisez votre mot de passe"
+      recovery_html: "Si vous avez déjà inscrit ce profil, %{sign_in} ou %{reset}. En cas de problème, contactez %{support}."
     email_verifications:
       review:
         title: "Confirmer votre adresse e-mail"

@@ -46,7 +46,7 @@ module RegistryStatus
         if current
           check = RegistryStatusCheck.find_or_initialize_by(source: current.source, target_digest: current.digest)
           check.assign_attributes(firm_id: current.firm_id, lawyer_profile_id: current.lawyer_profile_id)
-          new_issue = check.record_result!(outcome: result.status, checked_at: now,
+          new_issue = check.record_result!(outcome: record_profile_move(current, result), checked_at: now,
             run_on: @run.run_on, identity_digest: current.identity_digest)
           findings << check.finding_snapshot if new_issue
         end
@@ -54,6 +54,21 @@ module RegistryStatus
           checked_target_digests: @run.checked_target_digests + [ target.digest ], lease_expires_at: now + RegistryStatusRun::RUN_LEASE)
         true
       end
+    end
+
+    def record_profile_move(target, result)
+      return result.status unless result.status == :active && result.resolved_profile_id && target.expected_email.present?
+
+      source_id = Directory::ProfileLinks.id_from_url(target.value)
+      return :active if source_id == result.resolved_profile_id
+
+      profile = LawyerProfile.find(target.lawyer_profile_id)
+      if profile.directory_matched?
+        Directory::ProfileLinks.register!(profile:, profile_ids: [ source_id, result.resolved_profile_id ])
+      end
+      :active
+    rescue Directory::ProfileLinks::Conflict
+      :changed
     end
   end
 end

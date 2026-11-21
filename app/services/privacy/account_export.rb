@@ -54,6 +54,7 @@ module Privacy
         ],
         account: user.attributes.slice(*USER_FIELDS),
         professional_profile: user.lawyer_profile&.attributes&.slice(*PROFILE_FIELDS),
+        directory_profile_links: DirectoryProfileLink.where(lawyer_profile_id: user.lawyer_profile&.id).order(:directory_profile_id).pluck(:directory_profile_id),
         professional_status_checks: user.lawyer_profile ? rows(RegistryStatusCheck.where(lawyer_profile: user.lawyer_profile), REGISTRY_CHECK_FIELDS) : [],
         memberships: rows(user.memberships, %w[firm_id role created_at updated_at]),
         authored_assignments: rows(user.created_assignments, ASSIGNMENT_FIELDS),

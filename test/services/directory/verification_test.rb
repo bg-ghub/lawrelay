@@ -93,6 +93,33 @@ class DirectoryVerificationTest < ActiveSupport::TestCase
     assert_raises(ActiveSupport::MessageVerifier::InvalidSignature) { Directory::ConfirmationToken.find_profile!(token) }
   end
 
+  test "an authenticated move of a matched listing preserves the existing confirmation and email evidence" do
+    Directory::Verification.request!(user: @user, lookup: @lookup)
+    token = Directory::ConfirmationToken.generate(@profile.reload)
+    identity = @profile.attributes.slice("directory_profile_id", "directory_profile_url", "directory_identity_digest",
+      "directory_email", "directory_name", "directory_email_verified_at", "verification_status")
+    destination = SecureRandom.uuid
+    moved = @evidence.with(profile_id: destination, original_profile_id: @evidence.profile_id,
+      source_url: @evidence.source_url.sub(@evidence.profile_id, destination))
+    lookup = Struct.new(:evidence) { def call(**) = evidence }.new(moved)
+
+    assert_equal :matched, Directory::Verification.request!(user: @user, lookup:).status
+    assert_equal identity, @profile.reload.attributes.slice(*identity.keys)
+    assert_equal @profile, Directory::ConfirmationToken.find_profile!(token)
+    assert_equal [ @evidence.profile_id, destination ].sort, DirectoryProfileLink.where(lawyer_profile: @profile).pluck(:directory_profile_id).sort
+    lookup.evidence = moved.with(email: "different@example.test", profile_id: SecureRandom.uuid)
+    assert_equal :identity_mismatch, Directory::Verification.request!(user: @user, lookup:).status
+    assert_equal 2, DirectoryProfileLink.where(lawyer_profile: @profile).count
+    direct = moved.with(original_profile_id: destination)
+    lookup.evidence = direct
+    assert_equal :matched, Directory::Verification.request!(user: @user, directory_profile_url: direct.source_url, lookup:).status
+    [ direct.with(email: "different@example.test"), direct.with(name: "Someone Else") ].each do |different|
+      lookup.evidence = different
+      assert_equal :identity_mismatch, Directory::Verification.request!(user: @user, directory_profile_url: direct.source_url, lookup:).status
+      assert_equal identity, @profile.reload.attributes.slice(*identity.keys)
+    end
+  end
+
   test "a name change makes an old confirmation token and activation unusable" do
     @profile.update!(directory_profile_id: @evidence.profile_id, directory_profile_url: @evidence.source_url, directory_name: @evidence.name,
       directory_email: @evidence.email, directory_checked_at: Time.current, directory_identity_digest: "digest")

@@ -35,8 +35,10 @@ module Directory
         current_user = User.lock.find_by(id: @user_id)
         current_profile = LawyerProfile.lock.find_by(user_id: @user_id)
         next result(:stale) unless eligible?(current_user, current_profile) && identity_for(current_user, current_profile) == identity
-        if imported.redirected_profile_id && LawyerProfile.where.not(id: current_profile.id).exists?(directory_profile_id: imported.redirected_profile_id)
-          next result(:identity_mismatch)
+        if imported.redirected_profile_id
+          ProfileLinks.register!(profile: current_profile, profile_ids: [
+            ProfileLinks.id_from_url(current_profile.directory_profile_url), imported.redirected_profile_id
+          ])
         end
 
         current_profile.assign_attributes(attributes)
@@ -48,6 +50,8 @@ module Directory
           action: "profile.directory_synced", metadata: { changed_fields:, source: "advocaat.be" })
         result(:updated, changed_fields:)
       end
+    rescue ProfileLinks::Conflict
+      result(:identity_mismatch)
     rescue ActiveRecord::RecordInvalid
       result(:invalid_data)
     end

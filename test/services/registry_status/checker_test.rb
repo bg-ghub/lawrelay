@@ -101,6 +101,48 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     assert_enqueued_jobs 1
   end
 
+  test "daily checks associate both links with the member only after a matching move" do
+    original_id = @account.profile.directory_profile_url.split("/").last
+    moved_id = SecureRandom.uuid
+    @account.profile.update!(directory_profile_id: original_id, directory_checked_at: Time.current)
+    before = @account.profile.attributes
+    day = Time.current.utc.to_date
+    original_url = @account.profile.directory_profile_url
+    moved_url = original_url.sub(original_id, moved_id)
+    lookup = Directory::StatusCheck.method(:call)
+    requests = []
+    html = %(<main id="main"><h1>Persisted Directory Identity</h1><a href="mailto:expected@example.test">Email</a></main>)
+    responses = { original_url => [ 301, moved_url ], moved_url => [ 200, html ] }
+    transport = ->(uri, _) { requests << uri.to_s; responses.fetch(uri.to_s) }
+    evidence = ->(arguments) { lookup.call(**arguments, transport:) }
+    with_lookup(directory: evidence) { DailyRegistryStatusJob.perform_now(day.iso8601) }
+    assert_equal [ original_url, moved_url ], requests
+    assert_equal "completed", RegistryStatusRun.sole.status
+    assert_equal 0, RegistryStatusRun.sole.new_findings_count
+    assert_equal "active", RegistryStatusCheck.sole.status
+    assert_equal [ original_id, moved_id ].sort, DirectoryProfileLink.where(lawyer_profile: @account.profile)
+      .order(:directory_profile_id).pluck(:directory_profile_id)
+    assert_no_difference "DirectoryProfileLink.count" do
+      assert_equal 0, execute(day + 1, directory: evidence).new_findings_count
+    end
+    assert_equal before, @account.profile.reload.attributes
+    assert_no_enqueued_jobs
+  end
+
+  test "a moved listing already belonging to another lawyer raises a changed finding without transferring ownership" do
+    original_id = @account.profile.directory_profile_url.split("/").last
+    @account.profile.update!(directory_profile_id: original_id, directory_checked_at: Time.current)
+    other = add_profile(users(:two))
+    moved_id = other.directory_profile_url.split("/").last
+    Directory::ProfileLinks.register!(profile: other, profile_ids: [ moved_id ])
+    evidence = ->(args) { args.fetch(:profile_url) == other.directory_profile_url ? result(:unavailable) : result(:active, resolved_profile_id: moved_id) }
+    assert_no_difference "DirectoryProfileLink.count" do
+      assert_equal 1, execute(Date.current, directory: evidence).new_findings_count
+    end
+    assert_equal "changed", RegistryStatusCheck.find_by!(lawyer_profile: @account.profile).issue_status
+    assert_equal other.id, DirectoryProfileLink.find_by!(directory_profile_id: moved_id).lawyer_profile_id
+  end
+
   test "a retried partial run preserves findings and skips completed profile requests" do
     second_profile = add_profile(users(:two))
     calls = []
@@ -260,8 +302,8 @@ class RegistryStatus::CheckerTest < ActiveSupport::TestCase
     "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/#{SecureRandom.uuid}"
   end
 
-  def result(status)
-    Struct.new(:status).new(status)
+  def result(status, resolved_profile_id: nil)
+    Directory::StatusCheck::Result.new(status:, checked_at: Time.current, resolved_profile_id:)
   end
 
   def with_lookup(directory:, calls: [])

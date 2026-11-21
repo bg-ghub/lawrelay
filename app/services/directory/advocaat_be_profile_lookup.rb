@@ -1,35 +1,33 @@
 require "net/http"
 require "nokogiri"
+require_relative "profile_page"
 
 module Directory
   class AdvocaatBeProfileLookup
-    class ProfileNotFound < StandardError; end
-    private_constant :ProfileNotFound
+    Result = Data.define(:status, :profile_id, :source_url, :name, :email, :checked_at, :original_profile_id) do
+      def initialize(profile_id:, original_profile_id: profile_id, **attributes)
+        super(profile_id:, original_profile_id:, **attributes)
+      end
 
-    Result = Data.define(:status, :profile_id, :source_url, :name, :email, :checked_at) do
       def success? = status == :ok
     end
 
     UUID = "[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}"
-    PATH = %r{\A/nl/zoek-een-advocaat/advocaat/(#{UUID})\z}i
     HOSTS = %w[advocaat.be www.advocaat.be].freeze
-    MAX_BODY_BYTES = 1.megabyte
+    PROFILE_URL = %r{\Ahttps://(?:#{Regexp.union(HOSTS).source})(?::443)?(/nl/zoek-een-advocaat/advocaat/#{UUID})\z}i
+    MAX_BODY_BYTES = ProfilePage::MAX_BODY_BYTES
 
     def self.call(profile_url:, full_name:, fetcher: nil)
       new(profile_url:, full_name:, fetcher:).call
     end
 
     def self.canonical_profile_url(profile_url)
-      uri = URI.parse(profile_url.to_s)
-      return unless uri.is_a?(URI::HTTPS) && HOSTS.include?(uri.host&.downcase)
-      return unless uri.port == 443 && uri.userinfo.blank? && uri.query.blank? && uri.fragment.blank?
-
-      match = PATH.match(uri.path)
+      url = profile_url.to_s
+      return unless url.ascii_only?
+      match = PROFILE_URL.match(url)
       return unless match
 
-      "https://www.advocaat.be#{uri.path}"
-    rescue URI::InvalidURIError
-      nil
+      "https://www.advocaat.be#{match[1].downcase}"
     end
 
     def self.valid_profile_url?(profile_url)
@@ -45,80 +43,36 @@ module Directory
     end
 
     def initialize(profile_url:, full_name:, fetcher: nil)
-      @profile_url = profile_url.to_s
+      @profile_url = self.class.canonical_profile_url(profile_url)
       @full_name = full_name.to_s
-      @fetcher = fetcher || method(:fetch_html)
+      @fetcher = fetcher
     end
 
     def call
-      uri, profile_id = canonical_uri
-      return failure(:invalid_url) unless uri
+      return failure(:invalid_url) unless @profile_url
 
-      html = @fetcher.call(uri)
-      return failure(:unavailable) if html.blank?
+      page = Timeout.timeout(ProfilePage::TIMEOUT_SECONDS) { ProfilePage.resolve(@profile_url, fetcher: @fetcher) }
+      return failure(:invalid_url) if page&.missing? && page.uri.to_s == @profile_url
+      return failure(:unavailable) unless page&.html?
 
-      main = Nokogiri::HTML(html).at_css("main#main")
+      main = ProfilePage.main(page.body)
       return failure(:malformed) unless main
 
       name = main.at_css("h1")&.text&.squish
       return failure(:name_mismatch) unless self.class.names_match?(name, @full_name)
 
-      email = main.css('a[href^="mailto:"]').map { |link| mailto(link["href"]) }.compact.first
+      email = ProfilePage.listed_email(main)
       return failure(:email_missing) unless email
 
-      Result.new(status: :ok, profile_id:, source_url: uri.to_s, name:, email:, checked_at: Time.current)
-    rescue ProfileNotFound
-      failure(:invalid_url)
-    rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, IOError, SystemCallError, OpenSSL::SSL::SSLError
+      Result.new(status: :ok, profile_id: page.uri.path.split("/").last, original_profile_id: @profile_url.split("/").last,
+        source_url: page.uri.to_s, name:, email:, checked_at: Time.current)
+    rescue Timeout::Error, SocketError, IOError, SystemCallError, OpenSSL::SSL::SSLError, Net::HTTPBadResponse, Net::ProtocolError
       failure(:unavailable)
     rescue Nokogiri::XML::SyntaxError
       failure(:malformed)
     end
 
     private
-
-    def canonical_uri
-      canonical_url = self.class.canonical_profile_url(@profile_url)
-      return unless canonical_url
-
-      [ URI(canonical_url), PATH.match(URI(canonical_url).path)[1].downcase ]
-    end
-
-    def fetch_html(uri)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      http.open_timeout = 5
-      http.read_timeout = 8
-      request = Net::HTTP::Get.new(uri.request_uri, "Accept" => "text/html")
-      http.start do |client|
-        body = nil
-        client.request(request) do |response|
-          raise ProfileNotFound if response.is_a?(Net::HTTPNotFound) || response.is_a?(Net::HTTPGone)
-
-          next unless response.is_a?(Net::HTTPSuccess)
-          next unless response["content-type"].to_s.downcase.include?("text/html")
-
-          body = +"".b
-          too_large = false
-          response.read_body do |chunk|
-            if body.bytesize + chunk.bytesize > MAX_BODY_BYTES
-              too_large = true
-              break
-            end
-
-            body << chunk
-          end
-          body = nil if too_large
-        end
-        body
-      end
-    end
-
-    def mailto(href)
-      address = href.to_s.delete_prefix("mailto:").split(/[?]/).first.to_s.strip.downcase
-      address if address.match?(URI::MailTo::EMAIL_REGEXP)
-    end
 
     def failure(status)
       Result.new(status:, profile_id: nil, source_url: nil, name: nil, email: nil, checked_at: nil)

@@ -2,6 +2,7 @@ require "test_helper"
 
 class DirectorySignupProfileTest < ActiveSupport::TestCase
   PROFILE_URL = "https://www.advocaat.be/nl/zoek-een-advocaat/advocaat/11111111-1111-4111-8111-111111111111"
+  MOVED_URL = PROFILE_URL.sub("11111111-", "22222222-")
 
   test "previews the name email and supported public professional data" do
     calls = []
@@ -15,8 +16,40 @@ class DirectorySignupProfileTest < ActiveSupport::TestCase
     assert_equal "listed@example.test", result.email_address
     assert_equal({ spoken_languages: %w[NL EN FR], practice_areas: %w[Familierecht Handelsrecht],
       directory_bar_name: "Unverified public bar details", directory_professional_address: "Do not use as billing address 1000 Brussels" }, result.profile_attributes)
-    assert_equal %i[status profile_url name first_name last_name email_address profile_attributes], result.members
+    assert_equal PROFILE_URL, result.profile_url
+    assert_equal PROFILE_URL, result.original_profile_url
     assert_empty(result.profile_attributes.keys & %i[name address_line_1 postal_code city phone iban bar_number verification_status directory_email_verified_at])
+  end
+
+  test "one official permanent move previews the final details and records both canonical URLs" do
+    [ [ 301, URI(MOVED_URL).path ], [ 308, MOVED_URL.sub("www.", "") ] ].each do |code, location|
+      calls = []
+      fetcher = lambda do |uri|
+        calls << uri.to_s
+        calls.size == 1 ? [ code, location ] : profile_html
+      end
+      result = Directory::SignupProfile.call(profile_url: PROFILE_URL, fetcher:)
+      assert result.success?
+      assert_equal [ PROFILE_URL, MOVED_URL ], calls
+      assert_equal PROFILE_URL, result.original_profile_url
+      assert_equal MOVED_URL, result.profile_url
+      assert_equal "Jane van den Berg", result.name
+      assert_equal "listed@example.test", result.email_address
+    end
+  end
+
+  test "a redirect chain temporary move or unrelated destination cannot produce a signup preview" do
+    [ [ 302, MOVED_URL ], [ 307, MOVED_URL ], [ 301, PROFILE_URL ], [ 301, "//example.test/profile" ],
+      [ 301, MOVED_URL.sub("https:", "http:") ], [ 301, MOVED_URL + "?" ], [ 308, MOVED_URL + "#" ],
+      [ 301, MOVED_URL.sub("www.", "a@www.") ], [ 308, MOVED_URL.sub("advocaat.be", "example.test") ],
+      [ 301, "mailto:invalid" ], [ 308, "https://[" ], [ 301, MOVED_URL ] ].each do |code, location|
+      calls = []
+      fetcher = ->(uri) { calls << uri.to_s; [ code, location ] }
+      result = Directory::SignupProfile.call(profile_url: PROFILE_URL, fetcher:)
+      assert_equal :unavailable, result.status
+      assert_nil result.email_address
+      assert_equal(code == 301 && location == MOVED_URL ? [ PROFILE_URL, MOVED_URL ] : [ PROFILE_URL ], calls)
+    end
   end
 
   test "invalid URLs cannot cause an outbound request" do
@@ -25,7 +58,8 @@ class DirectorySignupProfileTest < ActiveSupport::TestCase
     [ nil, "https://evil.example/profile", PROFILE_URL.sub("https", "http"),
       "#{PROFILE_URL}?redirect=https://evil.example", "#{PROFILE_URL}#fragment",
       PROFILE_URL.sub("www.advocaat.be", "www.advocaat.be:444"),
-      PROFILE_URL.sub("www.advocaat.be", "user@www.advocaat.be") ].each do |url|
+      PROFILE_URL.sub("www.advocaat.be", "user@www.advocaat.be"), PROFILE_URL.sub("www.", "@www."),
+      PROFILE_URL.sub("advocaat.be/", "advocaat.be:/") ].each do |url|
       assert_equal :invalid_url, Directory::SignupProfile.call(profile_url: url, fetcher:).status
     end
     assert_empty calls
@@ -101,7 +135,7 @@ class DirectorySignupProfileTest < ActiveSupport::TestCase
 
   def fake_transport(response)
     Class.new do
-      attr_accessor :use_ssl, :verify_mode, :open_timeout, :read_timeout, :max_retries
+      attr_accessor :use_ssl, :verify_mode, :verify_hostname, :open_timeout, :read_timeout, :write_timeout, :max_retries
 
       define_method(:start) { |&block| block.call(self) }
       define_method(:request) { |_request, &block| block.call(response) }

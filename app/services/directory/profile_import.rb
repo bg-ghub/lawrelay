@@ -4,7 +4,6 @@ require "timeout"
 
 module Directory
   class ProfileImport
-    class ResponseTooLarge < StandardError; end
     Result = Data.define(:status, :profile_attributes, :redirected_profile_id) do
       def initialize(status:, profile_attributes:, redirected_profile_id: nil)
         super
@@ -13,8 +12,8 @@ module Directory
       def success? = status == :ok
     end
 
-    MAX_BODY_BYTES = 1.megabyte
-    TIMEOUT_SECONDS = 15
+    MAX_BODY_BYTES = ProfilePage::MAX_BODY_BYTES
+    TIMEOUT_SECONDS = ProfilePage::TIMEOUT_SECONDS
     LANGUAGE_CODES = { "nederlands" => "NL", "frans" => "FR", "duits" => "DE", "engels" => "EN" }.freeze
     PRACTICE_LABELS = %w[voorkeurmateries rechtsdomeinen vakgebieden].freeze
     BAR_LABELS = %w[balies balie barreaux barreau anwaltskammer anwaltskammern bars].freeze
@@ -70,21 +69,23 @@ module Directory
       @profile_url = AdvocaatBeProfileLookup.canonical_profile_url(profile_url)
       @full_name = full_name
       @expected_email = expected_email&.strip
-      @fetcher = fetcher || method(:fetch_html)
+      @fetcher = fetcher
     end
 
     def call
       return failure(:missing_profile) unless @profile_url
 
-      html, redirected_profile_id = Timeout.timeout(TIMEOUT_SECONDS) { fetch_profile }
-      return failure(:unavailable) unless html.is_a?(String) && html.present? && html.bytesize <= MAX_BODY_BYTES
+      page = Timeout.timeout(TIMEOUT_SECONDS) do
+        ProfilePage.resolve(@profile_url, allow_redirect: @expected_email.present?, fetcher: @fetcher)
+      end
+      return failure(:unavailable) unless page&.html?
 
-      mains = Nokogiri::HTML(html).css("main#main")
+      mains = Nokogiri::HTML(page.body).css("main#main")
       return failure(:identity_mismatch) if @expected_email && mains.many?
       main = mains.first
       return failure(:unavailable) unless main
       return failure(:identity_mismatch) unless AdvocaatBeProfileLookup.names_match?(main.at_css("h1")&.text&.squish, @full_name)
-      if @expected_email && (!main.css("h1").one? || !listed_email(main)&.casecmp?(@expected_email))
+      if @expected_email && (!main.css("h1").one? || !ProfilePage.listed_email(main)&.casecmp?(@expected_email))
         return failure(:identity_mismatch)
       end
 
@@ -94,67 +95,14 @@ module Directory
       # with no supported data at all is still treated as empty.
       return failure(:empty) if profile.empty? || profile.values.all?(&:blank?)
 
+      redirected_profile_id = page.uri.path.split("/").last if page.uri.to_s != @profile_url
       Result.new(status: :ok, profile_attributes: profile, redirected_profile_id:)
     rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error, SocketError, IOError, SystemCallError,
-      OpenSSL::SSL::SSLError, Net::HTTPBadResponse, Net::ProtocolError, Nokogiri::XML::SyntaxError, ResponseTooLarge
+      OpenSSL::SSL::SSLError, Net::HTTPBadResponse, Net::ProtocolError, Nokogiri::XML::SyntaxError
       failure(:unavailable)
     end
 
     private
-
-    def fetch_profile
-      response = @fetcher.call(URI(@profile_url))
-      return [ response, nil ] unless response.is_a?(Net::HTTPRedirection)
-      return unless %w[301 308].include?(response.code) && @expected_email.present?
-
-      location = response["location"].to_s
-      location = "https://www.advocaat.be#{location}" if location.start_with?("/")
-      return unless location.match?(%r{\Ahttps://}i)
-      target = URI.parse(location)
-      return unless target.userinfo.nil? && target.query.nil? && target.fragment.nil?
-      canonical = AdvocaatBeProfileLookup.canonical_profile_url(location)
-      return unless canonical && canonical != @profile_url
-
-      uri = URI(canonical)
-      [ @fetcher.call(uri), AdvocaatBeProfileLookup::PATH.match(uri.path)[1].downcase ]
-    rescue URI::Error
-      nil
-    end
-
-    def listed_email(main)
-      main.css("a[href]").each do |link|
-        email = link["href"][/\Amailto:([^?]+)/i, 1]&.strip
-        return email if email&.match?(URI::MailTo::EMAIL_REGEXP)
-      end
-      nil
-    end
-
-    def fetch_html(uri)
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      http.open_timeout = 5
-      http.read_timeout = 8
-      http.max_retries = 0
-      request = Net::HTTP::Get.new(uri.request_uri, "Accept" => "text/html")
-      http.start do |client|
-        body = nil
-        client.request(request) do |response|
-          return response if response.is_a?(Net::HTTPRedirection)
-          return unless response.is_a?(Net::HTTPSuccess)
-          return unless response.content_type.to_s.casecmp?("text/html")
-
-          body = +"".b
-          response.read_body do |chunk|
-            if body.bytesize + chunk.bytesize > MAX_BODY_BYTES
-              raise ResponseTooLarge
-            end
-            body << chunk
-          end
-        end
-        body
-      end
-    end
 
     def failure(status)
       Result.new(status:, profile_attributes: {})

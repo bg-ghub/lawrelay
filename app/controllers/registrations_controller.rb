@@ -103,6 +103,11 @@ class RegistrationsController < ApplicationController
       collect_errors
       render :new, status: :unprocessable_content
     end
+  rescue Directory::ProfileLinks::Conflict
+    @registration_recovery = true
+    @user.errors.add(:base, t("auth.registration.errors.already_registered"))
+    collect_errors
+    render :new, status: :unprocessable_content
   rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
     @user.errors.add(:base, t("auth.registration.errors.already_registered"))
     collect_errors
@@ -188,17 +193,18 @@ class RegistrationsController < ApplicationController
     @firm = Firm.new(name: Firm::INTERNAL_WORKSPACE_NAME)
     @lawyer_profile = @user.build_lawyer_profile(
       # Existing schema requires a registry value before the official lookup.
-      # Keep it opaque so a public directory UUID cannot be squatted at signup.
+      # The bar-number field is separate from the official profile identifiers.
       bar_association: "OVB",
       bar_number: "PENDING-#{SecureRandom.uuid}",
       professional_email: email,
-      directory_profile_url: Directory::AdvocaatBeProfileLookup.canonical_profile_url(attributes[:directory_profile_url]),
+      directory_profile_url: @directory_identity&.fetch("profile_url") || Directory::AdvocaatBeProfileLookup.canonical_profile_url(attributes[:directory_profile_url]),
       spoken_languages: [ locale.upcase ]
     )
     @form_values = attributes.except(:password, :password_confirmation, :email_address).stringify_keys
     @form_values.delete("directory_preview_token") unless @directory_identity
     @form_values.merge!(@user.attributes.slice("first_name", "last_name"))
     @registration_errors = []
+    @registration_recovery = false
   end
 
   def persist_registration!
@@ -207,6 +213,7 @@ class RegistrationsController < ApplicationController
       @firm.save!
       @user.memberships.create!(firm: @firm, role: "owner")
       @lawyer_profile.save!
+      Directory::ProfileLinks.register_signup!(profile: @lawyer_profile, identity: @directory_identity)
       if @lawyer_profile.email_review_pending?
         AuditEvent.create!(auditable: @lawyer_profile, actor_user: @user, firm: @firm,
           action: "email_access.requested", metadata: {})
