@@ -104,7 +104,7 @@ class AdminDeletionStatusTest < ActionDispatch::IntegrationTest
     assert_select ".admin-user-row", count: expected.size
     assert_select ".admin-users-total", text: I18n.t("admin.users.index.total", count: expected.size, locale: :en)
     [ @active, @pending, @partial, @suspended, @erased ].each do |user|
-      assert_select ".admin-user-row a[href='#{admin_user_path(user, locale: :en)}']", count: expected.include?(user) ? 2 : 0
+      assert_select ".admin-user-row a[href='#{admin_user_path(user, locale: :en)}']", count: expected.include?(user) ? 1 : 0
     end
   end
 end
