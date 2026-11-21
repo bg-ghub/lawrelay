@@ -85,7 +85,9 @@ class AssignmentFiltersTest < ApplicationSystemTestCase
     assert_current_path(%r{/en/assignments\?q=Ant(?:&|$)})
     assert_field "q", with: "Ant", visible: :all
     assert_field "q", with: "Ant"
-    find(".filter-panel .text-link").click
+    within "#assignment-results .result-meta" do
+      click_link I18n.t("marketplace.index.clear_filters", locale: :en)
+    end
     assert_current_path assignments_path(locale: :en)
     assert_selector "#assignment-results .assignment-card", text: "Brussels hearing"
     within "#assignment-results" do

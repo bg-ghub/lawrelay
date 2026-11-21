@@ -32,7 +32,7 @@
 
 .verification-status-page .confirmation-help {
   display: grid;
-  gap: .55rem;
+  gap: .875rem;
   width: 100%;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
